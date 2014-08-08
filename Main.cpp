@@ -8,7 +8,7 @@
 #include "Pipeline.h"
 #include "FilterFactory.h"
 
-#define APP2
+#define APP1
 
 int main(int argc, char** argv) {
 

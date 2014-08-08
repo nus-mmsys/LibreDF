@@ -21,9 +21,9 @@
 #ifndef VIDEODECODER_H_
 #define VIDEODECODER_H_
 
-
 #include "Filter.h"
 #include "Port.h"
+#include "tools/VideoReader.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,26 +34,51 @@ extern "C" {
 }
 #endif
 
-
-class VideoDecoder : public Filter {
+class VideoDecoder: public Filter {
 
 private:
-	AVFormatContext *pFormatCtx;
-	int vstream_idx;
+	VideoReader * videoReader;
 
 	OutputPort<AVFrame> * outputFrame;
 public:
-	VideoDecoder(string name);
+	VideoDecoder(string name) :
+			Filter(name) {
 
-	FilterStatus init();
+		outputFrame = new OutputPort<AVFrame>("videoDecoder, output 1, AVFrame",
+				this);
 
-	FilterStatus process();
+		outputPorts.push_back(outputFrame);
 
-	~VideoDecoder();
+		videoReader = 0;
+	}
 
+	FilterStatus init() {
+		string videoName = getProp("input_video");
+
+		videoReader = new VideoReader(videoName);
+
+		//AVCodecContext * pCodecCtx = videoReader->getCodecContext();
+
+		//cout << "w: " << pCodecCtx->width << ", h: " << pCodecCtx->height
+		//		<< ", p: " << pCodecCtx->pix_fmt << endl;
+		return FILTER_SUCCESS;
+	}
+
+	FilterStatus process() {
+		AVFrame * pFrame = videoReader->readFrame();
+
+		BufferNode<AVFrame> bn;
+
+		bn.setData(pFrame);
+		outputFrame->produce(&bn);
+		outputFrame->process();
+
+		return FILTER_ERROR;
+	}
+
+	~VideoDecoder() {
+	}
 
 };
-
-
 
 #endif /* VIDEODECODER_H_ */

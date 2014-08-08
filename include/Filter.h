@@ -49,6 +49,7 @@ enum FilterStatus {
  */
 class Filter {
 private:
+	string name;
 	int linked;
 	int inputFed;
 	Bus * bus;
@@ -62,13 +63,6 @@ protected:
 	 */
 	virtual FilterStatus process() = 0;
 
-	/*!
-	 * Perform initialization of the filter.
-	 * To be overridden in subclasses to allow initialization of specific filter values.
-	 */
-	virtual FilterStatus init() {
-		return FILTER_SUCCESS;
-	}
 
 	/*!
 	 * \param name
@@ -77,6 +71,14 @@ protected:
 	Filter(const string & name);
 
 public:
+
+	/*!
+	 * Perform initialization of the filter.
+	 * To be overridden in subclasses to allow initialization of specific filter values.
+	 */
+	virtual FilterStatus init() {
+		return FILTER_SUCCESS;
+	}
 
 	/*!
 	 * Set a property of the filter.
@@ -117,7 +119,7 @@ public:
 	 * Initialize this filter.
 	 * Should be called before the first call to executeFilter(), after all properties for the filter are set.
 	 */
-	void initializeFilter();
+	//void initializeFilter();
 
 	void increaseLinked() {
 		linked++;

@@ -55,13 +55,22 @@ void Pipeline::connectFilters(Filter * inf, Filter * outf) {
 
 
 PipelineStatus Pipeline::init() {
+
+	FilterStatus ret;
 	if (start == NULL) {
 		cerr << "Pipeline does not have enough filters to run.\n";
 		return PIPELINE_STOPPED;
 	}
 
-	for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it)
-		(*it)->initializeFilter();
+	for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
+
+		ret = (*it)->init();
+
+		if (ret == FILTER_ERROR) {
+			cerr << "Pipeline cannot initialize a filter.\n";
+			return PIPELINE_STOPPED;
+		}
+	}
 	return PIPELINE_RUNNING;
 
 }

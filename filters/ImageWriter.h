@@ -9,21 +9,13 @@
 #define IMAGEWRITER_H_
 
 #include "Filter.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libswscale/swscale.h>
-#ifdef __cplusplus
-}
-#endif
+#include "tools/VideoFrameWriter.h"
 
 class ImageWriter: public Filter {
 
 private:
-	AVFrame *pFrameRGB;
+
+	VideoFrameWriter * videoFrameWriter;
 
 	InputPort<AVFrame> * inputFrame;
 public:
@@ -35,63 +27,32 @@ public:
 
 		inputPorts.push_back(inputFrame);
 
-		pFrameRGB = 0;
+		videoFrameWriter = 0;
 	}
 
 	FilterStatus init() {
 
-		// Allocate an AVFrame structure
-		pFrameRGB = avcodec_alloc_frame();
+		string videoName = getProp("input_video");
 
-		if (pFrameRGB == NULL) {
-			std::cerr << "Cannot allocate frame." << endl;
-			return FILTER_ERROR;
-		}
+		VideoReader media = VideoReader(videoName);
+		int width = media.getCodecContext()->width;
+		int height = media.getCodecContext()->height;
+		AVPixelFormat format = media.getCodecContext()->pix_fmt;
 
-		/*
-		// Determine required buffer size and allocate buffer
-		numBytes = avpicture_get_size(PIX_FMT_RGB24, pCodecCtx->width,
-				pCodecCtx->height);
-		buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
-
-		sws_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height,
-				pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height,
-				PIX_FMT_RGB24,
-				SWS_BILINEAR,
-				NULL,
-				NULL,
-				NULL);
-
-		// Assign appropriate parts of buffer to image planes in pFrameRGB
-		// Note that pFrameRGB is an AVFrame, but AVFrame is a superset
-		// of AVPicture
-		avpicture_fill((AVPicture *) pFrameRGB, buffer, PIX_FMT_RGB24,
-				pCodecCtx->width, pCodecCtx->height);
-
-
-		); */
+		videoFrameWriter = new VideoFrameWriter(width, height, format);
 
 		return FILTER_SUCCESS;
 	}
 
 	FilterStatus process() {
 
-		/*
 		BufferNode<AVFrame> * bn = inputFrame->read();
 
+		AVFrame * pFrame = bn->getData();
 
-		AVFrame * vframe = bn->getData();
+		videoFrameWriter->writeImage(pFrame);
 
-		sws_scale(sws_ctx, (uint8_t const * const *) pFrame->data,
-				pFrame->linesize, 0, pCodecCtx->height, pFrameRGB->data,
-				pFrameRGB->linesize);
-
-		// Save the frame to disk
-		if(++i<=5)
-			SaveFrame(pFrameRGB, pCodecCtx->width, pCodecCtx->height,i);
-
-	*/
-			return FILTER_SUCCESS;
+		return FILTER_SUCCESS;
 	}
 
 	~ImageWriter() {

@@ -23,7 +23,7 @@
 
 Filter::Filter(const string &name) {
 
-	this->setProp("name", name);
+	this->name = name;
 	linked = 0;
 	inputFed = 0;
 	bus = 0;
@@ -76,9 +76,9 @@ FilterStatus Filter::executeFilter() {
 	return status;
 }
 
-void Filter::initializeFilter() {
-	init();
-}
+//void Filter::initializeFilter() {
+//	init();
+//}
 
 Filter::~Filter() {
 
