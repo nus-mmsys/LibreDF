@@ -24,12 +24,12 @@
 #include <string>
 
 #include "filters/Add2Filter.h"
-#include "filters/Addition.h"
-#include "filters/Duplicate.h"
+#include "filters/AdditionFilter.h"
+#include "filters/DuplicateFilter.h"
 #include "filters/Multiply2Filter.h"
 #include "filters/NumberGeneratorFilter.h"
-#include "filters/VideoDecoder.h"
-#include "filters/ImageWriter.h"
+#include "filters/VideoDecoderFilter.h"
+#include "filters/ImageWriterFilter.h"
 #include "Pipeline.h"
 
 using namespace std;
@@ -87,10 +87,10 @@ public:
 			return new AdditionFilter(name);
 
 		case VIDEO_DECODER_FILTER:
-			return new VideoDecoder(name);
+			return new VideoDecoderFilter(name);
 
 		case IMAGE_WRITER_FILTER:
-			return new ImageWriter(name);
+			return new ImageWriterFilter(name);
 		}
 
 		return NULL;

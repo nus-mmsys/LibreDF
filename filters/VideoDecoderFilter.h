@@ -25,23 +25,15 @@
 #include "Port.h"
 #include "tools/VideoReader.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#ifdef __cplusplus
-}
-#endif
 
-class VideoDecoder: public Filter {
+class VideoDecoderFilter: public Filter {
 
 private:
 	VideoReader * videoReader;
 
 	OutputPort<AVFrame> * outputFrame;
 public:
-	VideoDecoder(string name) :
+	VideoDecoderFilter(string name) :
 			Filter(name) {
 
 		outputFrame = new OutputPort<AVFrame>("videoDecoder, output 1, AVFrame",
@@ -75,7 +67,7 @@ public:
 		return FILTER_SUCCESS;
 	}
 
-	~VideoDecoder() {
+	~VideoDecoderFilter() {
 	}
 
 };
