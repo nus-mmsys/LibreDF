@@ -30,6 +30,7 @@
 #include "filters/NumberGeneratorFilter.h"
 #include "filters/VideoDecoder.h"
 #include "filters/ImageWriter.h"
+#include "Pipeline.h"
 
 using namespace std;
 
@@ -53,7 +54,7 @@ enum FiltersType {
  * \class FilterFactory
  * Factory for creating filter objects.
  */
-class FilterFactory {
+class TMF {
 public:
 	/*!
 	 * Create a filter of a specific type.
@@ -65,7 +66,7 @@ public:
 	 *
 	 * \return the created filter.
 	 */
-	Filter* createFilter(const FiltersType type, const string& name) const {
+	Filter * createFilter(const FiltersType type, const string& name) const {
 		if (name.empty())
 			return NULL;
 
@@ -93,6 +94,10 @@ public:
 		}
 
 		return NULL;
+	}
+
+	Pipeline * createPipeline(const string & name) {
+		return new Pipeline(name);
 	}
 };
 

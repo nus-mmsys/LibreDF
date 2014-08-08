@@ -22,7 +22,7 @@
 #define ADDITIONFILTER_H_
 
 #include "Filter.h"
-#include <unistd.h>
+#include <iostream>
 
 struct AdditionFilter: public Filter {
 

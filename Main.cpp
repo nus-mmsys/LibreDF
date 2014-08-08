@@ -5,26 +5,25 @@
  *      Author: arash
  */
 
-#include "Pipeline.h"
-#include "FilterFactory.h"
+#include "tmf.h"
 
-#define APP1
+#define APP2
 
 int main(int argc, char** argv) {
 
-	Pipeline* pipe = new Pipeline("DashCast++");
+	TMF tmf;
 
-	FilterFactory factory;
+	Pipeline* pipe = tmf.createPipeline("DashCast++");
 
 #ifdef APP1
-	Filter* numberGeneratorFilter = factory.createFilter(NUMBERGENERATOR_FILTER,
+	Filter* numberGeneratorFilter = tmf.createFilter(NUMBERGENERATOR_FILTER,
 			"numberGeneratorFilter");
-	Filter* add2Filter = factory.createFilter(ADD2_FILTER, "add2Filter");
-	Filter* multiply2Filter = factory.createFilter(MULTIPLY2_FILTER,
+	Filter* add2Filter = tmf.createFilter(ADD2_FILTER, "add2Filter");
+	Filter* multiply2Filter = tmf.createFilter(MULTIPLY2_FILTER,
 			"multiply2Filter");
-	Filter* duplicateFilter = factory.createFilter(DUPLICATE_FILTER,
+	Filter* duplicateFilter = tmf.createFilter(DUPLICATE_FILTER,
 			"duplicateFilter");
-	Filter* additionFilter = factory.createFilter(ADDITION_FILTER,
+	Filter* additionFilter = tmf.createFilter(ADDITION_FILTER,
 			"additionFilter");
 
 	pipe->connectFilters(numberGeneratorFilter, multiply2Filter);
@@ -38,15 +37,14 @@ int main(int argc, char** argv) {
 
 #ifdef APP2
 
-	Filter* videoDecoder = factory.createFilter(VIDEO_DECODER_FILTER, "videoDecoder");
-	Filter* imageWriter = factory.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
+	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER, "videoDecoder");
+	Filter* imageWriter = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
 
 	pipe->setProp("input_video", "/home/arash/test_videos/molana.mp4");
 
 	pipe->connectFilters(videoDecoder, imageWriter);
 
 	//pipe->setStarter(videoDecoder);
-
 
 #endif
 

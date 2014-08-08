@@ -22,7 +22,7 @@ public:
 	ImageWriter(string name) :
 			Filter(name) {
 
-		inputFrame = new InputPort<AVFrame>("imageWriter, input 1, AVPacket",
+		inputFrame = new InputPort<AVFrame>("imageWriter, input 1, AVFrame",
 				this);
 
 		inputPorts.push_back(inputFrame);
