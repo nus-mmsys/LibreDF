@@ -39,8 +39,6 @@ public:
 		outputPorts.push_back(output);
 	}
 
-	void init() {
-	}
 
 	FilterStatus process() {
 

@@ -8,12 +8,15 @@
 #include "Pipeline.h"
 #include "FilterFactory.h"
 
+#define APP1
+
 int main(int argc, char** argv) {
 
 	Pipeline* pipe = new Pipeline("DashCast++");
 
 	FilterFactory factory;
 
+#ifdef APP1
 	Filter* numberGeneratorFilter = factory.createFilter(NUMBERGENERATOR_FILTER,
 			"numberGeneratorFilter");
 	Filter* add2Filter = factory.createFilter(ADD2_FILTER, "add2Filter");
@@ -30,7 +33,22 @@ int main(int argc, char** argv) {
 	pipe->connectFilters(multiply2Filter, additionFilter);
 	pipe->connectFilters(add2Filter, additionFilter);
 
-	pipe->setStarter(numberGeneratorFilter);
+	//pipe->setStarter(numberGeneratorFilter);
+#endif
+
+#ifdef APP2
+
+	Filter* videoDecoder = factory.createFilter(VIDEO_DECODER_FILTER, "videoDecoder");
+	Filter* imageWriter = factory.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
+
+	pipe->setProp("input_video", "/home/arash/test_videos/molana.mp4");
+
+	pipe->connectFilters(videoDecoder, imageWriter);
+
+	pipe->setStarter(videoDecoder);
+
+
+#endif
 
 	pipe->init();
 	while (pipe->run() != PIPELINE_FINISHED) {

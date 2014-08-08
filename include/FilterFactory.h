@@ -28,6 +28,8 @@
 #include "filters/Duplicate.h"
 #include "filters/Multiply2Filter.h"
 #include "filters/NumberGeneratorFilter.h"
+#include "filters/VideoDecoder.h"
+#include "filters/ImageWriter.h"
 
 using namespace std;
 
@@ -42,6 +44,9 @@ enum FiltersType {
 	DUPLICATE_FILTER,
 	MULTIPLY2_FILTER,
 	NUMBERGENERATOR_FILTER,
+	VIDEO_DECODER_FILTER,
+	IMAGE_WRITER_FILTER
+
 };
 
 /*!
@@ -79,6 +84,12 @@ public:
 
 		case ADDITION_FILTER:
 			return new AdditionFilter(name);
+
+		case VIDEO_DECODER_FILTER:
+			return new VideoDecoder(name);
+
+		case IMAGE_WRITER_FILTER:
+			return new ImageWriter(name);
 		}
 
 		return NULL;

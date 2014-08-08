@@ -18,49 +18,42 @@
  *
  */
 
-#ifndef ADD2FILTER_H_
-#define ADD2FILTER_H_
+#ifndef VIDEODECODER_H_
+#define VIDEODECODER_H_
+
 
 #include "Filter.h"
 #include "Port.h"
 
-struct Add2Filter: public Filter {
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#ifdef __cplusplus
+}
+#endif
+
+
+class VideoDecoder : public Filter {
+
 private:
-	InputPort<int> * input;
-	OutputPort<int> * output;
+	AVFormatContext *pFormatCtx;
+	int vstream_idx;
+
+	OutputPort<AVFrame> * outputFrame;
 public:
+	VideoDecoder(string name);
 
-	Add2Filter(const string & name) :
-			Filter(name) {
-		input = new InputPort<int>("add2, input 1, int", this);
-		output = new OutputPort<int>("add2, output 1, int", this);
+	FilterStatus init();
 
-		inputPorts.push_back(input);
-		outputPorts.push_back(output);
-	}
+	FilterStatus process();
 
-	FilterStatus process() {
+	~VideoDecoder();
 
-		BufferNode<int>  * bn;
-
-		bn = input->read();
-
-		int * inputData = bn->getData();
-		//int * outputData = new int;
-		int outputData = *inputData + 2;
-
-		bn->setData(&outputData);
-
-		output->produce(bn);
-
-		output->process();
-
-		return FILTER_SUCCESS;
-	}
-
-	~Add2Filter() {
-	}
 
 };
 
-#endif /* ADD2FILTER_H_ */
+
+
+#endif /* VIDEODECODER_H_ */

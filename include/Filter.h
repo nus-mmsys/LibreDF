@@ -66,9 +66,9 @@ protected:
 	 * Perform initialization of the filter.
 	 * To be overridden in subclasses to allow initialization of specific filter values.
 	 */
-	virtual void init() {
+	virtual FilterStatus init() {
+		return FILTER_SUCCESS;
 	}
-	;
 
 	/*!
 	 * \param name
@@ -121,6 +121,14 @@ public:
 
 	void increaseLinked() {
 		linked++;
+	}
+
+	int inputPortNum() {
+		return inputPorts.size();
+	}
+
+	int outputPortNum() {
+		return outputPorts.size();
 	}
 
 	virtual ~Filter();

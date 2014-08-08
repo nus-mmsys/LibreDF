@@ -49,6 +49,8 @@ class Pipeline {
 	set<Filter *> filters; /**< The set of all filters in the pipeline. */
 	Filter* start; /**< The initial element of the pipeline. Must be a data source (0 inputs). */
 
+	map<string, string> props;/**< The map of properties for the filter. */
+
 public:
 	/*!
 	 * \param name
@@ -73,7 +75,7 @@ public:
 	 * \param starter
 	 *   The new initial filter for the pipeline. Should be a source (no input connections).
 	 */
-	void setStarter(Filter *starter);
+	//void setStarter(Filter *starter);
 
 	/*!
 	 * Initialize the pipeline.
@@ -88,6 +90,25 @@ public:
 	 * \return the current pipeline status.
 	 */
 	PipelineStatus run();
+
+	/*!
+	 * Set a property of the filter.
+	 *
+	 * \param key
+	 *   The property name.
+	 * \param val
+	 *   The property value.
+	 */
+	void setProp(const string & key, const string & val);
+
+	/*!
+	 * Get the value of a filter property.
+	 *
+	 * \param key
+	 *   The property name.
+	 */
+	string getProp(const string & key);
+
 
 	/*!
 	 */

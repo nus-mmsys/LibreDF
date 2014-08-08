@@ -33,11 +33,25 @@ Pipeline::~Pipeline() {
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
 	filters.insert(inf);
 	filters.insert(outf);
+	if (this->start == 0 && inf->inputPortNum() == 0)
+		this->start = inf;
+
+	if (this->start == 0 && outf->inputPortNum() == 0)
+		this->start = outf;
+
 	inf->connectFilter(outf);
 }
 
-void Pipeline::setStarter(Filter *starter) {
-	this->start = starter;
+//void Pipeline::setStarter(Filter *starter) {
+//	this->start = starter;
+//}
+
+void Pipeline::setProp(const string & key, const string & val) {
+	props.insert(std::make_pair(key, val));
+}
+
+string Pipeline::getProp(const string & key) {
+	return props[key];
 }
 
 PipelineStatus Pipeline::init() {

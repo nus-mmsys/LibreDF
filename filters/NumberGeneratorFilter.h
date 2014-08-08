@@ -45,8 +45,6 @@ public:
 		outputPorts.push_back(outputString);
 	}
 
-	void init() {
-	}
 
 	FilterStatus process() {
 		static int number = 1;

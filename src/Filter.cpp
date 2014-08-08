@@ -33,6 +33,7 @@ void Filter::connectFilter(Filter * f) {
 
 	vector<Port*>::iterator itOut;
 	vector<Port*>::iterator itIn;
+
 	bool linked = false;
 	for (itOut = this->outputPorts.begin(); itOut != this->outputPorts.end();
 			++itOut) {
