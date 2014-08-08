@@ -26,6 +26,7 @@ Filter::Filter(const string &name) {
 	this->setProp("name", name);
 	linked = 0;
 	inputFed = 0;
+	bus = 0;
 
 }
 
@@ -55,11 +56,11 @@ void Filter::connectFilter(Filter * f) {
 }
 
 void Filter::setProp(const string & key, const string & val) {
-	props.insert(std::make_pair(key, val));
+	bus->setProp(key,val);
 }
 
 string Filter::getProp(const string & key) {
-	return props[key];
+	return bus->getProp(key);
 }
 
 FilterStatus Filter::executeFilter() {

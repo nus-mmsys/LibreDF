@@ -18,13 +18,14 @@
  *
  */
 
-#ifndef FITLER_H__
-#define FITLER_H__
+#ifndef FITLER_H_
+#define FITLER_H_
 
 #include <string>
 #include <vector>
 #include <map>
 #include <memory>
+#include "Bus.h"
 
 using namespace std;
 
@@ -50,12 +51,11 @@ class Filter {
 private:
 	int linked;
 	int inputFed;
+	Bus * bus;
 protected:
 
 	vector<Port*> inputPorts;
 	vector<Port*> outputPorts;
-
-	map<string, string> props;/**< The map of properties for the filter. */
 
 	/*!
 	 * Process the input data using the filter.
@@ -130,6 +130,8 @@ public:
 	int outputPortNum() {
 		return outputPorts.size();
 	}
+
+	void setBus(Bus * b) {bus = b;}
 
 	virtual ~Filter();
 };

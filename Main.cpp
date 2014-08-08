@@ -8,7 +8,7 @@
 #include "Pipeline.h"
 #include "FilterFactory.h"
 
-#define APP1
+#define APP2
 
 int main(int argc, char** argv) {
 
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 
 	pipe->connectFilters(videoDecoder, imageWriter);
 
-	pipe->setStarter(videoDecoder);
+	//pipe->setStarter(videoDecoder);
 
 
 #endif
