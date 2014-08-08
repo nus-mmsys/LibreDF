@@ -32,7 +32,6 @@ int main(int argc, char** argv) {
 	pipe->connectFilters(multiply2Filter, additionFilter);
 	pipe->connectFilters(add2Filter, additionFilter);
 
-	//pipe->setStarter(numberGeneratorFilter);
 #endif
 
 #ifdef APP2
@@ -43,8 +42,6 @@ int main(int argc, char** argv) {
 	pipe->setProp("input_video", "/home/arash/test_videos/molana.mp4");
 
 	pipe->connectFilters(videoDecoder, imageWriter);
-
-	//pipe->setStarter(videoDecoder);
 
 #endif
 

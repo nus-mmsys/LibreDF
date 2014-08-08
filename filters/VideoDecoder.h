@@ -67,13 +67,12 @@ public:
 	FilterStatus process() {
 		AVFrame * pFrame = videoReader->readFrame();
 
-		BufferNode<AVFrame> bn;
+		BufferNode<AVFrame> bn(pFrame);
 
-		bn.setData(pFrame);
 		outputFrame->produce(&bn);
 		outputFrame->process();
 
-		return FILTER_ERROR;
+		return FILTER_SUCCESS;
 	}
 
 	~VideoDecoder() {
