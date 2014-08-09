@@ -69,9 +69,10 @@ int main(int argc, char** argv) {
 #endif
 
 	pipe->init();
-	while (pipe->run() != PIPELINE_FINISHED) {
-	}
-	delete pipe;
+
+	pipe->run();
+
+	tmf.destroyPipeline(pipe);
 
 	return 0;
 }

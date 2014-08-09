@@ -99,6 +99,10 @@ public:
 	Pipeline * createPipeline(const string & name) {
 		return new Pipeline(name);
 	}
+
+	void destroyPipeline(Pipeline * pipe) {
+		delete pipe;
+	}
 };
 
 #endif /* FILTERFACTORY_H_ */

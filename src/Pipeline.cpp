@@ -81,14 +81,26 @@ PipelineStatus Pipeline::init() {
 
 PipelineStatus Pipeline::run() {
 
-	FilterStatus status = start->executeFilter();
+	FilterStatus status;
+	while(1) {
 
-	if (status == FILTER_FINISHED)
-		return PIPELINE_FINISHED;
-	if (status == FILTER_ERROR)
-		return PIPELINE_STOPPED;
+		status = start->executeFilter();
 
-	return PIPELINE_RUNNING;
+		switch(status) {
+		case FILTER_SUCCESS:
+		case FILTER_WAIT_FOR_INPUT:
+			break;
+		case FILTER_ERROR:
+			return PIPELINE_STOPPED;
+		case FILTER_FINISHED:
+			return PIPELINE_FINISHED;
+
+		}
+
+	}
+
+	return PIPELINE_STATE_UNKNOWN;
+
 }
 
 void Pipeline::destroy() {

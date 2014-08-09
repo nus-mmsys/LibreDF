@@ -33,6 +33,7 @@ using namespace std;
  * Status of a filter.
  */
 enum PipelineStatus {
+	PIPELINE_STATE_UNKNOWN,
 	PIPELINE_RUNNING, /**< The pipeline is currently running. */
 	PIPELINE_STOPPED, /**< The pipeline has stopped. */
 	PIPELINE_PAUSED, /**< The pipeline is currently paused. */
