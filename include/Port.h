@@ -115,13 +115,7 @@ public:
 		outBuf->insert(bn);
 	}
 
-	Type getNextNode() {
-		return outBuf->getNextNode();
-	}
-
-	int getBufferSize() {return outBuf->getSize();}
-
-	Type getNode(int i) {return outBuf->getNode(i);}
+	Buffer<Type> * getBuffer() {return outBuf;}
 
 	//This function must run on a separate thread.
 	int process() {

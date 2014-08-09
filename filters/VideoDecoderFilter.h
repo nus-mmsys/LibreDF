@@ -44,20 +44,29 @@ public:
 	}
 
 	FilterStatus init() {
+
+		AVFrame * pFrame;
+
 		string videoName = getProp("input_video");
 
 		videoReader = new VideoReader(videoName);
 
 		videoReader->dump();
 
+		for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
+			pFrame = outputFrame->getBuffer()->getNode(i);
+
+			videoReader->allocateFrame(pFrame);
+		}
+
 		return FILTER_SUCCESS;
 	}
 
 	FilterStatus process() {
 
-		AVFrame * pFrame = outputFrame->getNextNode();
-		if (pFrame == 0)
-			pFrame = avcodec_alloc_frame();
+		AVFrame * pFrame = outputFrame->getBuffer()->getNextNode();
+		//if (pFrame == 0)
+		//	pFrame = avcodec_alloc_frame();
 		int ret = videoReader->readFrame(pFrame);
 
 		if (ret == -1)
@@ -72,11 +81,10 @@ public:
 
 	~VideoDecoderFilter() {
 
-		for (int i = 0; i < outputFrame->getBufferSize(); i++) {
-			AVFrame * pFrame = outputFrame->getNode(i);
+		for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
+			AVFrame * pFrame = outputFrame->getBuffer()->getNode(i);
 			if (pFrame != 0)
-				// Free the YUV frame
-				av_free(pFrame);
+				videoReader->freeFrame(pFrame);
 		}
 
 		delete outputFrame;

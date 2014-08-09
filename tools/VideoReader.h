@@ -134,11 +134,11 @@ public:
 			if (packet.stream_index == vstream_idx) {
 
 				// Decode video frame
-				avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished, &packet);
+				avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished,
+						&packet);
 
 				// Did we get a video frame?
 				if (frameFinished) {
-
 
 					av_free_packet(&packet);
 					return 0;
@@ -153,6 +153,14 @@ public:
 		return -1;
 	}
 
+	void allocateFrame(AVFrame * f) {
+		f = avcodec_alloc_frame();
+	}
+
+	void freeFrame(AVFrame * f) {
+		av_free(f);
+	}
+
 	~VideoReader() {
 
 		// Close the codec
@@ -161,8 +169,6 @@ public:
 		// Close the video file
 		avformat_close_input(&pFormatCtx);
 	}
-
-
 
 };
 
