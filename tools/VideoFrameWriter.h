@@ -38,6 +38,7 @@ using namespace std;
 class VideoFrameWriter {
 
 private:
+	string path;
 	struct SwsContext *sws_ctx;
 	AVFrame * pFrameRGB;
 	uint8_t *buffer;
@@ -52,7 +53,7 @@ public:
 
 		int numBytes;
 		buffer = 0;
-
+		path = "./";
 		this->width = width;
 		this->height = height;
 		this->format = format;
@@ -96,7 +97,7 @@ public:
 		int y;
 
 		// Open file
-		sprintf(szFilename, "out/frame%d.ppm", frameNumber++);
+		sprintf(szFilename, "%s/frame%d.ppm", path.c_str(), frameNumber++);
 		pFile = fopen(szFilename, "wb");
 		if (pFile == NULL)
 			return;
@@ -106,12 +107,16 @@ public:
 
 		// Write pixel data
 		for (y = 0; y < height; y++)
-			fwrite(pFrameRGB->data[0] + y * pFrameRGB->linesize[0], 1, width * 3,
-					pFile);
+			fwrite(pFrameRGB->data[0] + y * pFrameRGB->linesize[0], 1,
+					width * 3, pFile);
 
 		// Close file
 		fclose(pFile);
 
+	}
+
+	void setPath(string path) {
+		this->path = path;
 	}
 
 	~VideoFrameWriter() {

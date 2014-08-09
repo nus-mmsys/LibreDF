@@ -49,18 +49,20 @@ int main(int argc, char** argv) {
 
 #ifdef APP2
 
-	if (argc < 2) {
-		cerr << "Usage: " << argv[0] << " <input video>";
+	if (argc < 3) {
+		cerr << "Usage: " << argv[0] << " <input video> <output path>";
 		return -1;
 	}
 
 	string inputVideo = argv[1];
+	string outputPath = argv[2];
 
 	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
 			"videoDecoder");
 	Filter* imageWriter = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
 
 	pipe->setProp("input_video", inputVideo);
+	pipe->setProp("output_path", outputPath);
 
 	pipe->connectFilters(videoDecoder, imageWriter);
 

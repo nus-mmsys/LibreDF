@@ -30,6 +30,7 @@ private:
 
 	VideoFrameWriter * videoFrameWriter;
 
+
 	InputPort<AVFrame*> * inputFrame;
 public:
 	ImageWriterFilter(string name) :
@@ -53,6 +54,7 @@ public:
 		AVPixelFormat format = media.getCodecContext()->pix_fmt;
 
 		videoFrameWriter = new VideoFrameWriter(width, height, format);
+		videoFrameWriter->setPath(getProp("output_path"));
 
 		return FILTER_SUCCESS;
 	}
