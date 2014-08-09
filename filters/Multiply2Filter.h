@@ -60,6 +60,8 @@ public:
 	}
 
 	~Multiply2Filter() {
+		delete input;
+		delete output;
 	}
 
 };

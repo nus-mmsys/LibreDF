@@ -95,7 +95,7 @@ public:
 				pFrameRGB->linesize);
 
 		FILE *pFile;
-		char szFilename[32];
+		char szFilename[128];
 		int y;
 
 		// Open file

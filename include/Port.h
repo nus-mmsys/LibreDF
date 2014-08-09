@@ -65,6 +65,7 @@ public:
 		n->owner->increaseLinked();
 	}
 
+	virtual void destroy() {}
 	virtual ~Port() {}
 };
 
@@ -130,6 +131,9 @@ public:
 		return 0;
 	}
 
+	void destroy() {
+		delete outBuf;
+	}
 	~OutputPort() {
 		delete outBuf;
 	}

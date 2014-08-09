@@ -81,15 +81,5 @@ FilterStatus Filter::executeFilter() {
 //}
 
 Filter::~Filter() {
-	vector<Port*>::iterator itOut;
-	vector<Port*>::iterator itIn;
-
-	for (itOut = this->outputPorts.begin(); itOut != this->outputPorts.end();
-			++itOut)
-		delete *itOut;
-
-	for (itIn = this->inputPorts.begin(); itIn != this->inputPorts.end();
-					++itIn)
-		delete *itIn;
 
 }

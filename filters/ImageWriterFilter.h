@@ -69,6 +69,7 @@ public:
 	}
 
 	~ImageWriterFilter() {
+		delete inputFrame;
 	}
 
 };

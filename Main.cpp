@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 #ifdef APP2
 
 	if (argc < 3) {
-		cerr << "Usage: " << argv[0] << " <input video> <output path>";
+		cerr << "Usage: " << argv[0] << " <input video> <output path>" << endl;
 		return -1;
 	}
 

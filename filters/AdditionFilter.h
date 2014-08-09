@@ -73,6 +73,9 @@ public:
 	}
 
 	~AdditionFilter() {
+		delete input1;
+		delete input2;
+		delete output;
 	}
 
 };

@@ -65,6 +65,8 @@ public:
 	}
 
 	~DuplicateFilter() {
+		delete input;
+		delete output;
 	}
 
 };

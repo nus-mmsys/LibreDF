@@ -72,6 +72,8 @@ public:
 	}
 
 	~NumberGeneratorFilter() {
+		delete outputInt;
+		delete outputString;
 	}
 
 };

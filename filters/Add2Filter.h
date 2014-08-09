@@ -59,6 +59,8 @@ public:
 	}
 
 	~Add2Filter() {
+		delete input;
+		delete output;
 	}
 
 };
