@@ -40,6 +40,7 @@ class VideoFrameWriter {
 private:
 	struct SwsContext *sws_ctx;
 	AVFrame * pFrameRGB;
+	uint8_t *buffer;
 	int width;
 	int height;
 	AVPixelFormat format;
@@ -50,7 +51,7 @@ public:
 	VideoFrameWriter(int width, int height, AVPixelFormat format) {
 
 		int numBytes;
-		uint8_t *buffer = 0;
+		buffer = 0;
 
 		this->width = width;
 		this->height = height;
@@ -66,7 +67,7 @@ public:
 		}
 
 		// Determine required buffer size and allocate buffer
-		numBytes = avpicture_get_size(PIX_FMT_RGB24, width, height);
+		numBytes = avpicture_get_size(AV_PIX_FMT_RGB24, width, height);
 		buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
 
 		sws_ctx = sws_getContext(width, height, format, width, height,
@@ -79,7 +80,7 @@ public:
 		// Assign appropriate parts of buffer to image planes in pFrameRGB
 		// Note that pFrameRGB is an AVFrame, but AVFrame is a superset
 		// of AVPicture
-		avpicture_fill((AVPicture *) pFrameRGB, buffer, PIX_FMT_RGB24, width,
+		avpicture_fill((AVPicture *) pFrameRGB, buffer, AV_PIX_FMT_RGB24, width,
 				height);
 
 	}
@@ -95,7 +96,7 @@ public:
 		int y;
 
 		// Open file
-		sprintf(szFilename, "frame%d.ppm", frameNumber++);
+		sprintf(szFilename, "out/frame%d.ppm", frameNumber++);
 		pFile = fopen(szFilename, "wb");
 		if (pFile == NULL)
 			return;
@@ -105,12 +106,18 @@ public:
 
 		// Write pixel data
 		for (y = 0; y < height; y++)
-			fwrite(pFrame->data[0] + y * pFrame->linesize[0], 1, width * 3,
+			fwrite(pFrameRGB->data[0] + y * pFrameRGB->linesize[0], 1, width * 3,
 					pFile);
 
 		// Close file
 		fclose(pFile);
 
+	}
+
+	~VideoFrameWriter() {
+		// Free the RGB image
+		av_free(buffer);
+		av_free(pFrameRGB);
 	}
 
 };

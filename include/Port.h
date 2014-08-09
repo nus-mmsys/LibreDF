@@ -64,30 +64,35 @@ public:
 		n->increaseLinked();
 		n->owner->increaseLinked();
 	}
+
+	virtual ~Port() {}
 };
 
 template<class Type>
 class InputPort: public Port {
 
 private:
-	BufferNode<Type> * inBufNode;
+	Type inBufNode;
 
 public:
 
 	InputPort(string name, Filter * owner) :
 			Port(name, owner) {
 		type = string((typeid(Type).name()));
-		inBufNode = 0;
+		//inBufNode = 0;
 
 	}
 
-	void consume(BufferNode<Type> * bn) {
+	void consume(Type bn) {
 		inBufNode = bn;
 		owner->executeFilter();
 	}
 
-	BufferNode<Type> * read() {
+	Type read() {
 		return inBufNode;
+	}
+
+	~InputPort() {
 	}
 
 };
@@ -106,21 +111,33 @@ public:
 		type = string(typeid(Type).name());
 	}
 
-	void produce(BufferNode<Type> * bn) {
+	void produce(Type bn) {
 		outBuf->insert(bn);
 	}
 
+	Type getNextNode() {
+		return outBuf->getNextNode();
+	}
+
+	int getBufferSize() {return outBuf->getSize();}
+
+	Type getNode(int i) {return outBuf->getNode(i);}
+
 	//This function must run on a separate thread.
 	int process() {
-		BufferNode<Type> * bn = outBuf->getLast();
-		if (bn == NULL)
-			return -1;
+		Type  bn = outBuf->getNode();
+		//if (bn == NULL)
+		//	return -1;
 
 		vector<Port*>::iterator it;
 		for (it = nextPorts.begin(); it != nextPorts.end(); ++it) {
 			((InputPort<Type>*) (*it))->consume(bn);
 		}
 		return 0;
+	}
+
+	~OutputPort() {
+		delete outBuf;
 	}
 };
 

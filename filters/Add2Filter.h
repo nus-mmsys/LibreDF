@@ -41,17 +41,17 @@ public:
 
 	FilterStatus process() {
 
-		BufferNode<int>  * bn;
+		//BufferNode<int>  * bn;
 
-		bn = input->read();
+		int inputData = input->read();
 
-		int * inputData = bn->getData();
+		//int * inputData = bn->getData();
 		//int * outputData = new int;
-		int outputData = *inputData + 2;
+		int outputData = inputData + 2;
 
-		bn->setData(&outputData);
+		//bn->setData(&outputData);
 
-		output->produce(bn);
+		output->produce(outputData);
 
 		output->process();
 

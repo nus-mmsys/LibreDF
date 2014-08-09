@@ -95,6 +95,7 @@ public:
 	string getProp(const string & key) {return bus->getProp(key);}
 	/*!
 	 */
+	void destroy();
 	virtual ~Pipeline();
 };
 

@@ -50,15 +50,15 @@ public:
 		static int number = 1;
 
 		//int * n = new int;
-		int n = number;
-		BufferNode<int> bn(&n);
+		int num = number;
+		//BufferNode<int> bn(&n);
 
 		//string * numstr = new string;
 		string numstr = std::to_string(number);
-		BufferNode<string> bns(&numstr);
+		//BufferNode<string> bns(&numstr);
 
-		outputInt->produce(&bn);
-		outputString->produce(&bns);
+		outputInt->produce(num);
+		outputString->produce(numstr);
 
 		//This function must run on a separate therad.
 		outputInt->process();

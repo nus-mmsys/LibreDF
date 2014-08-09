@@ -30,12 +30,12 @@ private:
 
 	VideoFrameWriter * videoFrameWriter;
 
-	InputPort<AVFrame> * inputFrame;
+	InputPort<AVFrame*> * inputFrame;
 public:
 	ImageWriterFilter(string name) :
 			Filter(name) {
 
-		inputFrame = new InputPort<AVFrame>("imageWriter, input 1, AVFrame",
+		inputFrame = new InputPort<AVFrame*>("imageWriter, input 1, AVFrame",
 				this);
 
 		inputPorts.push_back(inputFrame);
@@ -59,9 +59,7 @@ public:
 
 	FilterStatus process() {
 
-		BufferNode<AVFrame> * bn = inputFrame->read();
-
-		AVFrame * pFrame = bn->getData();
+		AVFrame * pFrame = inputFrame->read();
 
 		videoFrameWriter->writeImage(pFrame);
 

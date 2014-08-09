@@ -29,6 +29,10 @@ Pipeline::Pipeline(const string& name) {
 
 Pipeline::~Pipeline() {
 
+	for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it)
+		 delete *it;
+
+	delete this->bus;
 }
 
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
@@ -85,4 +89,8 @@ PipelineStatus Pipeline::run() {
 		return PIPELINE_STOPPED;
 
 	return PIPELINE_RUNNING;
+}
+
+void Pipeline::destroy() {
+
 }

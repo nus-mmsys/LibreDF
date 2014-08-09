@@ -122,9 +122,8 @@ public:
 		return pFormatCtx;
 	}
 
-	AVFrame * readFrame() {
+	int readFrame(AVFrame * pFrame) {
 
-		AVFrame * pFrame = avcodec_alloc_frame();
 		AVPacket packet;
 		int frameFinished;
 
@@ -142,7 +141,7 @@ public:
 
 
 					av_free_packet(&packet);
-					return pFrame;
+					return 0;
 
 				}
 			}
@@ -151,7 +150,16 @@ public:
 			av_free_packet(&packet);
 		}
 
-		return 0;
+		return -1;
+	}
+
+	~VideoReader() {
+
+		// Close the codec
+		avcodec_close(pCodecCtx);
+
+		// Close the video file
+		avformat_close_input(&pFormatCtx);
 	}
 
 

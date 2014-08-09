@@ -49,10 +49,18 @@ int main(int argc, char** argv) {
 
 #ifdef APP2
 
-	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER, "videoDecoder");
+	if (argc < 2) {
+		cerr << "Usage: " << argv[0] << " <input video>";
+		return -1;
+	}
+
+	string inputVideo = argv[1];
+
+	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
+			"videoDecoder");
 	Filter* imageWriter = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
 
-	pipe->setProp("input_video", "/home/arash/test_videos/molana.mp4");
+	pipe->setProp("input_video", inputVideo);
 
 	pipe->connectFilters(videoDecoder, imageWriter);
 
@@ -61,6 +69,7 @@ int main(int argc, char** argv) {
 	pipe->init();
 	while (pipe->run() != PIPELINE_FINISHED) {
 	}
+	delete pipe;
 
 	return 0;
 }

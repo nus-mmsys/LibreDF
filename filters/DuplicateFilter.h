@@ -44,14 +44,14 @@ public:
 
 	FilterStatus process() {
 
-		BufferNode<string> * bn;
+		//BufferNode<string> * bn;
 
-		bn = input->read();
+		string inputData = input->read();
 
-		string * inputData = bn->getData();
+		//string * inputData = bn->getData();
 
 		//string * outputData = new string;
-		string outputData = *inputData + *inputData;
+		string outputData = inputData + inputData;
 
 		//bn.setData(&outputData);
 

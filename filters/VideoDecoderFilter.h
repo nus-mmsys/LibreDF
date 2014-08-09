@@ -25,19 +25,18 @@
 #include "Port.h"
 #include "tools/VideoReader.h"
 
-
 class VideoDecoderFilter: public Filter {
 
 private:
 	VideoReader * videoReader;
 
-	OutputPort<AVFrame> * outputFrame;
+	OutputPort<AVFrame*> * outputFrame;
 public:
 	VideoDecoderFilter(string name) :
 			Filter(name) {
 
-		outputFrame = new OutputPort<AVFrame>("videoDecoder, output 1, AVFrame",
-				this);
+		outputFrame = new OutputPort<AVFrame*>(
+				"videoDecoder, output 1, AVFrame", this);
 
 		outputPorts.push_back(outputFrame);
 
@@ -49,25 +48,39 @@ public:
 
 		videoReader = new VideoReader(videoName);
 
-		//AVCodecContext * pCodecCtx = videoReader->getCodecContext();
+		videoReader->dump();
 
-		//cout << "w: " << pCodecCtx->width << ", h: " << pCodecCtx->height
-		//		<< ", p: " << pCodecCtx->pix_fmt << endl;
 		return FILTER_SUCCESS;
 	}
 
 	FilterStatus process() {
-		AVFrame * pFrame = videoReader->readFrame();
 
-		BufferNode<AVFrame> bn(pFrame);
+		AVFrame * pFrame = outputFrame->getNextNode();
+		if (pFrame == 0)
+			pFrame = avcodec_alloc_frame();
+		int ret = videoReader->readFrame(pFrame);
 
-		outputFrame->produce(&bn);
+		if (ret == -1)
+			return FILTER_FINISHED;
+		//BufferNode<AVFrame> bn(pFrame);
+
+		outputFrame->produce(pFrame);
 		outputFrame->process();
 
 		return FILTER_SUCCESS;
 	}
 
 	~VideoDecoderFilter() {
+
+		for (int i = 0; i < outputFrame->getBufferSize(); i++) {
+			AVFrame * pFrame = outputFrame->getNode(i);
+			if (pFrame != 0)
+				// Free the YUV frame
+				av_free(pFrame);
+		}
+
+		delete outputFrame;
+		delete videoReader;
 	}
 
 };

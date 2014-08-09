@@ -29,11 +29,12 @@ using namespace std;
  *
  * What the status of the data is. Used for describing corrupt or missing data.
  */
-enum BufferNodeStatus {
-	VALID, /**< The data is valid and can be used freely. */
-	INVALID /**< The data is invalid (corrupt or missing). */
-};
+//enum BufferNodeStatus {
+//	VALID, /**< The data is valid and can be used freely. */
+//	INVALID /**< The data is invalid (corrupt or missing). */
+//};
 
+/*
 template<class Type>
 class BufferNode {
 
@@ -56,8 +57,9 @@ public:
 		return data;
 	}
 	void setData(Type * d) {
-		if (data == 0)
-			delete data;
+		//if (data == 0)
+		//	delete data;
+		setStatus(VALID);
 		data = d;
 	}
 
@@ -68,7 +70,14 @@ public:
 		return status;
 	}
 
+	~BufferNode() {
+
+	}
+
+
+
 };
+*/
 
 /*!
  * \class PipelineData
@@ -82,29 +91,39 @@ class Buffer {
 private:
 	//DataStatus status;	/**< The current status of the data. */
 
-	BufferNode<Type> ** buf;
+	Type * buf;
 	int curIndex;
 	int size;
 
 public:
 	Buffer(int size) {
-		buf = new BufferNode<Type> * [size];
-		curIndex = 0;
+		buf = new Type[size];
+		curIndex = -1;
 		this->size = size;
-
 	}
 
-	void insert(BufferNode<Type> * bn) {
-		buf[curIndex] = bn;
+	void insert(Type bn) {
 		curIndex = (curIndex + 1) % size;
+		buf[curIndex] = bn;
 	}
 
-	BufferNode<Type> * getLast() {
-		int prevIndex = (curIndex - 1 + size) % size;
-		if (buf[prevIndex]->getStatus() == VALID) {
-			return buf[prevIndex];
-		}
-		return 0;
+	Type getNode() {
+		return buf[curIndex];
+	}
+
+	int getSize() {return size;}
+
+	Type getNode(int i) {
+		return buf[i];
+	}
+
+	Type getNextNode() {
+		int nextIndex = (curIndex + 1) % size;
+		return buf[nextIndex];
+	}
+
+	~Buffer() {
+		delete buf;
 	}
 };
 
