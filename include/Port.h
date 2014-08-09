@@ -72,23 +72,23 @@ template<class Type>
 class InputPort: public Port {
 
 private:
-	Type inBufNode;
+	Type * inBufNode;
 
 public:
 
 	InputPort(string name, Filter * owner) :
 			Port(name, owner) {
 		type = string((typeid(Type).name()));
-		//inBufNode = 0;
+		inBufNode = 0;
 
 	}
 
-	void consume(Type bn) {
+	void consume(Type * bn) {
 		inBufNode = bn;
 		owner->executeFilter();
 	}
 
-	Type read() {
+	Type * read() {
 		return inBufNode;
 	}
 
@@ -111,7 +111,7 @@ public:
 		type = string(typeid(Type).name());
 	}
 
-	void produce(Type bn) {
+	void produce(Type * bn) {
 		outBuf->insert(bn);
 	}
 
@@ -119,7 +119,7 @@ public:
 
 	//This function must run on a separate thread.
 	int process() {
-		Type  bn = outBuf->getNode();
+		Type * bn = outBuf->getNode();
 		//if (bn == NULL)
 		//	return -1;
 

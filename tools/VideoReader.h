@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <string>
+#include <types/Frame.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -122,16 +123,21 @@ public:
 		return pFormatCtx;
 	}
 
-	int readFrame(AVFrame * pFrame) {
+	int readFrame(Frame * frame) {
 
+		AVFrame * pFrame = frame->getFrame();
 		AVPacket packet;
 		int frameFinished;
 
-		/* Read frames */
+		avcodec_get_frame_defaults(pFrame);
+
+		// Read frames
 		while (av_read_frame(pFormatCtx, &packet) >= 0) {
 
 			// Is this a packet from the video stream?
 			if (packet.stream_index == vstream_idx) {
+
+
 
 				// Decode video frame
 				avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished,
@@ -148,6 +154,17 @@ public:
 
 			// Free the packet that was allocated by av_read_frame
 			av_free_packet(&packet);
+		}
+
+		// Flush decoder
+		avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished, &packet);
+
+		// Did we get a video frame?
+		if (frameFinished) {
+
+			av_free_packet(&packet);
+			return 0;
+
 		}
 
 		return -1;

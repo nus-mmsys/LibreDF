@@ -24,18 +24,19 @@
 #include "Filter.h"
 #include "Port.h"
 #include "tools/VideoReader.h"
+#include "types/Frame.h"
 
 class VideoDecoderFilter: public Filter {
 
 private:
 	VideoReader * videoReader;
 
-	OutputPort<AVFrame*> * outputFrame;
+	OutputPort<Frame> * outputFrame;
 public:
 	VideoDecoderFilter(string name) :
 			Filter(name) {
 
-		outputFrame = new OutputPort<AVFrame*>(
+		outputFrame = new OutputPort<Frame>(
 				"videoDecoder, output 1, AVFrame", this);
 
 		outputPorts.push_back(outputFrame);
@@ -45,7 +46,7 @@ public:
 
 	FilterStatus init() {
 
-		AVFrame * pFrame;
+		//AVFrame * pFrame;
 
 		string videoName = getProp("input_video");
 
@@ -53,18 +54,18 @@ public:
 
 		videoReader->dump();
 
-		for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
-			pFrame = outputFrame->getBuffer()->getNode(i);
+		//for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
+		//	pFrame = outputFrame->getBuffer()->getNode(i);
 
-			videoReader->allocateFrame(pFrame);
-		}
+		//	videoReader->allocateFrame(pFrame);
+		//}
 
 		return FILTER_SUCCESS;
 	}
 
 	FilterStatus process() {
 
-		AVFrame * pFrame = outputFrame->getBuffer()->getNextNode();
+		Frame * pFrame = outputFrame->getBuffer()->getNextNode();
 		//if (pFrame == 0)
 		//	pFrame = avcodec_alloc_frame();
 		int ret = videoReader->readFrame(pFrame);
@@ -81,11 +82,11 @@ public:
 
 	~VideoDecoderFilter() {
 
-		for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
-			AVFrame * pFrame = outputFrame->getBuffer()->getNode(i);
-			if (pFrame != 0)
-				videoReader->freeFrame(pFrame);
-		}
+		//for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
+		//	AVFrame * pFrame = outputFrame->getBuffer()->getNode(i);
+		//	if (pFrame != 0)
+		//		videoReader->freeFrame(pFrame);
+		//}
 
 		delete outputFrame;
 		delete videoReader;

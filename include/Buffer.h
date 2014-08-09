@@ -35,7 +35,7 @@ class Buffer {
 
 private:
 
-	Type * buf; /**< the list of data */
+	Type ** buf; /**< the list of data */
 	int curIndex; /**< the current index in the buffer */
 	int size; /**< The size of the buffer */
 
@@ -47,9 +47,12 @@ public:
 	 * \param size the size of the buffer
 	 */
 	Buffer(int size) {
-		buf = new Type[size];
+		buf = new Type*[size];
 		curIndex = -1;
 		this->size = size;
+
+		for (int i = 0; i < size; i++)
+			buf[i] = new Type();
 	}
 
 	/*!
@@ -57,7 +60,7 @@ public:
 	 *
 	 * \param e the element to be inserted
 	 */
-	void insert(Type e) {
+	void insert(Type * e) {
 		curIndex = (curIndex + 1) % size;
 		buf[curIndex] = e;
 	}
@@ -67,7 +70,7 @@ public:
 	 *
 	 * \return the current element of the buffer
 	 */
-	Type getNode() {
+	Type * getNode() {
 		return buf[curIndex];
 	}
 
@@ -86,7 +89,7 @@ public:
 	 * \param i the number of the element
 	 * \return the element number i
 	 */
-	Type getNode(int i) {
+	Type * getNode(int i) {
 		if (i < 0 || i >= size)
 			return 0;
 		return buf[i];
@@ -98,7 +101,7 @@ public:
 	 *
 	 * \return the next element of the buffer
 	 */
-	Type getNextNode() {
+	Type * getNextNode() {
 		int nextIndex = (curIndex + 1) % size;
 		return buf[nextIndex];
 	}
@@ -108,6 +111,9 @@ public:
 	 *
 	 */
 	~Buffer() {
+		for (int i = 0; i < size; i++)
+			delete buf[i];
+
 		delete buf;
 	}
 };

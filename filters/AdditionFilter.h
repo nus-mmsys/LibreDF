@@ -49,16 +49,16 @@ public:
 
 		//BufferNode<int> * bn;
 
-		int inputData1 = input1->read();
+		int * inputData1 = input1->read();
 
 		//int * inputData1 = bn->getData();
 
-		int inputData2 = input2->read();
+		int * inputData2 = input2->read();
 
 		//int * inputData2 = bn->getData();
 
 		//int * outputData = new int;
-		int outputData = inputData1 + inputData2;
+		int outputData = *inputData1 + *inputData2;
 
 		//bn.setData(&outputData);
 

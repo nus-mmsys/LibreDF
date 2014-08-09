@@ -46,12 +46,12 @@ public:
 
 		//BufferNode<string> * bn;
 
-		string inputData = input->read();
+		string * inputData = input->read();
 
 		//string * inputData = bn->getData();
 
 		//string * outputData = new string;
-		string outputData = inputData + inputData;
+		string outputData = *inputData + *inputData;
 
 		//bn.setData(&outputData);
 

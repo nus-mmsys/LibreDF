@@ -86,7 +86,9 @@ public:
 
 	}
 
-	void writeImage(AVFrame * pFrame) {
+	void writeImage(Frame * frame) {
+
+		AVFrame * pFrame = frame->getFrame();
 
 		sws_scale(sws_ctx, (uint8_t const * const *) pFrame->data,
 				pFrame->linesize, 0, height, pFrameRGB->data,

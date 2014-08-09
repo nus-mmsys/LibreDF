@@ -44,16 +44,16 @@ public:
 
 		//BufferNode<int> * bn;
 
-		int inputData = input->read();
+		int * inputData = input->read();
 
 		//int * inputData = bn->getData();
 
 		//int * outputData = new int;
-		int outputData = inputData * 2;
+		int outputData = *inputData * 2;
 
 		//bn->setData(&outputData);
 
-		output->produce(outputData);
+		output->produce(&outputData);
 
 		output->process();
 		return FILTER_SUCCESS;

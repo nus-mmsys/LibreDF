@@ -57,8 +57,8 @@ public:
 		string numstr = std::to_string(number);
 		//BufferNode<string> bns(&numstr);
 
-		outputInt->produce(num);
-		outputString->produce(numstr);
+		outputInt->produce(&num);
+		outputString->produce(&numstr);
 
 		//This function must run on a separate therad.
 		outputInt->process();
