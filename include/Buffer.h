@@ -18,110 +18,95 @@
  *
  */
 
-
 #ifndef PIPELINEDATA_H_
 #define PIPELINEDATA_H_
 
 using namespace std;
 
 /*!
- * \enum DataStatus
+ * \class Buffer
  *
- * What the status of the data is. Used for describing corrupt or missing data.
- */
-//enum BufferNodeStatus {
-//	VALID, /**< The data is valid and can be used freely. */
-//	INVALID /**< The data is invalid (corrupt or missing). */
-//};
-
-/*
-template<class Type>
-class BufferNode {
-
-private:
-	Type * data;
-	BufferNodeStatus status;
-
-public:
-	BufferNode() {
-		setStatus(INVALID);
-		setData(0);
-	}
-
-	BufferNode(Type * d) {
-		setStatus(VALID);
-		setData(d);
-	}
-
-	Type * getData() {
-		return data;
-	}
-	void setData(Type * d) {
-		//if (data == 0)
-		//	delete data;
-		setStatus(VALID);
-		data = d;
-	}
-
-	void setStatus(BufferNodeStatus bns) {
-		status = bns;
-	}
-	BufferNodeStatus getStatus() {
-		return status;
-	}
-
-	~BufferNode() {
-
-	}
-
-
-
-};
-*/
-
-/*!
- * \class PipelineData
- *
- * Data that are being sent over the pipeline.
- * Subclasses describe the concrete data.
+ * Buffer is a circular list of data.
+ * Buffer is used in output ports.
  */
 
 template<class Type>
 class Buffer {
-private:
-	//DataStatus status;	/**< The current status of the data. */
 
-	Type * buf;
-	int curIndex;
-	int size;
+private:
+
+	Type * buf; /**< the list of data */
+	int curIndex; /**< the current index in the buffer */
+	int size; /**< The size of the buffer */
 
 public:
+
+	/*!
+	 * Buffer constructor
+	 *
+	 * \param size the size of the buffer
+	 */
 	Buffer(int size) {
 		buf = new Type[size];
 		curIndex = -1;
 		this->size = size;
 	}
 
-	void insert(Type bn) {
+	/*!
+	 * Insert an element into the buffer
+	 *
+	 * \param e the element to be inserted
+	 */
+	void insert(Type e) {
 		curIndex = (curIndex + 1) % size;
-		buf[curIndex] = bn;
+		buf[curIndex] = e;
 	}
 
+	/*!
+	 * Get the current node in the buffer
+	 *
+	 * \return the current element of the buffer
+	 */
 	Type getNode() {
 		return buf[curIndex];
 	}
 
-	int getSize() {return size;}
+	/*!
+	 * Get the size of the buffer
+	 *
+	 * \return the size of the buffer
+	 */
+	int getSize() {
+		return size;
+	}
 
+	/*!
+	 * Get an element of the buffer by index
+	 *
+	 * \param i the number of the element
+	 * \return the element number i
+	 */
 	Type getNode(int i) {
+		if (i < 0 || i >= size)
+			return 0;
 		return buf[i];
 	}
 
+	/*!
+	 * Get the next element of the buffer. Used when the node is a reference and the client
+	 * of the buffer wants to initialize the node.
+	 *
+	 * \return the next element of the buffer
+	 */
 	Type getNextNode() {
 		int nextIndex = (curIndex + 1) % size;
 		return buf[nextIndex];
 	}
 
+	/*!
+	 * Buffer destructor
+	 *
+	 */
 	~Buffer() {
 		delete buf;
 	}
