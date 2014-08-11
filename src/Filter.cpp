@@ -26,7 +26,8 @@ Filter::Filter(const string &name) {
 	this->name = name;
 	linked = 0;
 	inputFed = 0;
-	bus = 0;
+	inMsg = 0;
+	outMsg = new Message();
 
 }
 
@@ -56,12 +57,13 @@ void Filter::connectFilter(Filter * f) {
 }
 
 void Filter::setProp(const string & key, const string & val) {
-	bus->setProp(key, val);
+	props.emplace(this->name+"::"+key, val);
 }
 
 string Filter::getProp(const string & key) {
-	return bus->getProp(key);
+	return props[this->name+"::"+key];
 }
+
 
 FilterStatus Filter::executeFilter() {
 	FilterStatus status = FILTER_SUCCESS;
@@ -76,10 +78,30 @@ FilterStatus Filter::executeFilter() {
 	return status;
 }
 
-//void Filter::initializeFilter() {
-//	init();
-//}
+FilterStatus Filter::initFilter(Message  * msg) {
+	FilterStatus status = FILTER_SUCCESS;
+
+	inMsg = msg;
+
+	status = init();
+
+	if (status == FILTER_WAIT_FOR_INPUT)
+		return FILTER_WAIT_FOR_INPUT;
+
+	vector<Port*>::iterator itIn;
+	for (itIn = outputPorts.begin() ; itIn != outputPorts.end() ; ++itIn) {
+		vector<Port*>::iterator itNxt;
+		Port * curPort = (*itIn);
+		for (itNxt = curPort->nextPorts.begin() ; itNxt != curPort->nextPorts.end() ; ++itNxt) {
+			(*itNxt)->getOwner()->initFilter(outMsg);
+		}
+	}
+
+	return status;
+}
 
 Filter::~Filter() {
+
+	delete outMsg;
 
 }

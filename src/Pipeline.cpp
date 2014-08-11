@@ -24,7 +24,6 @@ Pipeline::Pipeline(const string& name) {
 	this->name = name;
 	this->start = 0;
 	this->status = PIPELINE_STOPPED;
-	this->bus = new Bus();
 }
 
 Pipeline::~Pipeline() {
@@ -32,7 +31,6 @@ Pipeline::~Pipeline() {
 	for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it)
 		 delete *it;
 
-	delete this->bus;
 }
 
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
@@ -45,9 +43,6 @@ void Pipeline::connectFilters(Filter * inf, Filter * outf) {
 
 	if (this->start == 0 && outf->inputPortNum() == 0)
 		this->start = outf;
-
-	inf->setBus(bus);
-	outf->setBus(bus);
 
 	inf->connectFilter(outf);
 }
@@ -66,15 +61,22 @@ PipelineStatus Pipeline::init() {
 		return PIPELINE_STOPPED;
 	}
 
-	for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
+	ret = start->initFilter(0);
 
-		ret = (*it)->init();
+	if (ret == FILTER_ERROR) {
+		cerr << "Pipeline cannot initialize a filter.\n";
+		return PIPELINE_STOPPED;
+	}
+	/*for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
+
+		ret = (*it)->initFilter(0);
 
 		if (ret == FILTER_ERROR) {
 			cerr << "Pipeline cannot initialize a filter.\n";
 			return PIPELINE_STOPPED;
 		}
 	}
+	*/
 	return PIPELINE_RUNNING;
 
 }
@@ -89,7 +91,7 @@ PipelineStatus Pipeline::run() {
 		switch(status) {
 		case FILTER_SUCCESS:
 		case FILTER_WAIT_FOR_INPUT:
-			break;
+			continue;
 		case FILTER_ERROR:
 			return PIPELINE_STOPPED;
 		case FILTER_FINISHED:
@@ -103,6 +105,3 @@ PipelineStatus Pipeline::run() {
 
 }
 
-void Pipeline::destroy() {
-
-}

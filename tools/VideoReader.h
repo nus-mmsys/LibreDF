@@ -115,6 +115,18 @@ public:
 		av_dump_format(pFormatCtx, 0, name.c_str(), 0);
 	}
 
+	int getWidth() {
+		return pCodecCtx->width;
+	}
+
+	int getHeight() {
+		return pCodecCtx->height;
+	}
+
+	AVPixelFormat getPixFormat() {
+		return pCodecCtx->pix_fmt;
+	}
+
 	AVCodecContext * getCodecContext() {
 		return pCodecCtx;
 	}
@@ -170,13 +182,6 @@ public:
 		return -1;
 	}
 
-	void allocateFrame(AVFrame * f) {
-		f = avcodec_alloc_frame();
-	}
-
-	void freeFrame(AVFrame * f) {
-		av_free(f);
-	}
 
 	~VideoReader() {
 

@@ -35,10 +35,14 @@ private:
 
 protected:
 	string type;
-	vector<Port*> nextPorts;
+
 	Filter * owner;
 
 public:
+
+	vector<Port*> nextPorts;
+
+
 	Port(string name, Filter * owner) :
 			name(name), linked(0), type("") {
 		this->owner = owner;
@@ -56,6 +60,10 @@ public:
 	}
 	string getType() {
 		return type;
+	}
+
+	Filter * getOwner() {
+		return owner;
 	}
 
 	void addNextPort(Port* n) {

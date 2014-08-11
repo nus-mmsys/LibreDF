@@ -22,6 +22,7 @@
 #define FILTERFACTORY_H_
 
 #include <string>
+#include <set>
 
 #include "filters/Add2Filter.h"
 #include "filters/AdditionFilter.h"
@@ -30,6 +31,7 @@
 #include "filters/NumberGeneratorFilter.h"
 #include "filters/VideoDecoderFilter.h"
 #include "filters/ImageWriterFilter.h"
+#include "filters/ImageScalerFilter.h"
 #include "Pipeline.h"
 
 using namespace std;
@@ -46,6 +48,7 @@ enum FiltersType {
 	MULTIPLY2_FILTER,
 	NUMBERGENERATOR_FILTER,
 	VIDEO_DECODER_FILTER,
+	IMAGE_SCALER_FILTER,
 	IMAGE_WRITER_FILTER
 
 };
@@ -55,6 +58,8 @@ enum FiltersType {
  * Factory for creating filter objects.
  */
 class TMF {
+private:
+	set<string> elements;
 public:
 	/*!
 	 * Create a filter of a specific type.
@@ -67,8 +72,16 @@ public:
 	 * \return the created filter.
 	 */
 	Filter * createFilter(const FiltersType type, const string& name) const {
-		if (name.empty())
-			return NULL;
+		if (name.empty()) {
+			std::cerr << "Filter name cannot be empty." << endl;
+			return 0;
+		}
+
+		const bool is_in = elements.find(name) != elements.end();
+		if (is_in) {
+			std::cerr << "Filter name cannot be repeated." << endl;
+			return 0;
+		}
 
 		switch (type) {
 		case NUMBERGENERATOR_FILTER:
@@ -91,6 +104,9 @@ public:
 
 		case IMAGE_WRITER_FILTER:
 			return new ImageWriterFilter(name);
+
+		case IMAGE_SCALER_FILTER:
+			return new ImageScalerFilter(name);
 		}
 
 		return NULL;

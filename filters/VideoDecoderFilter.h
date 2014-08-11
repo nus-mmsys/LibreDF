@@ -36,8 +36,8 @@ public:
 	VideoDecoderFilter(string name) :
 			Filter(name) {
 
-		outputFrame = new OutputPort<Frame>(
-				"videoDecoder, output 1, AVFrame", this);
+		outputFrame = new OutputPort<Frame>("videoDecoder, output 1, AVFrame",
+				this);
 
 		outputPorts.push_back(outputFrame);
 
@@ -60,6 +60,11 @@ public:
 		//	videoReader->allocateFrame(pFrame);
 		//}
 
+		outMsg->setPropInt("width", videoReader->getWidth());
+		outMsg->setPropInt("height", videoReader->getHeight());
+		outMsg->setPropInt("format",
+				static_cast<int>(videoReader->getPixFormat()));
+
 		return FILTER_SUCCESS;
 	}
 
@@ -81,12 +86,6 @@ public:
 	}
 
 	~VideoDecoderFilter() {
-
-		//for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
-		//	AVFrame * pFrame = outputFrame->getBuffer()->getNode(i);
-		//	if (pFrame != 0)
-		//		videoReader->freeFrame(pFrame);
-		//}
 
 		delete outputFrame;
 		delete videoReader;

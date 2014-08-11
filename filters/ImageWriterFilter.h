@@ -46,14 +46,27 @@ public:
 
 	FilterStatus init() {
 
-		string videoName = getProp("input_video");
+		MessageError err;
+		//string videoName = getProp("input_video");
 
-		VideoReader media = VideoReader(videoName);
-		int width = media.getCodecContext()->width;
-		int height = media.getCodecContext()->height;
-		AVPixelFormat format = media.getCodecContext()->pix_fmt;
+		int srcWidth, srcHeight, srcFormatInt;
 
-		videoFrameWriter = new VideoFrameWriter(width, height, format);
+
+		err = inMsg->getPropInt("width", srcWidth);
+		if (err == MSG_NOT_FOUND)
+			return FILTER_WAIT_FOR_INPUT;
+
+		err = inMsg->getPropInt("height", srcHeight);
+		if (err == MSG_NOT_FOUND)
+			return FILTER_WAIT_FOR_INPUT;
+
+		err = inMsg->getPropInt("format", srcFormatInt);
+		if (err == MSG_NOT_FOUND)
+			return FILTER_WAIT_FOR_INPUT;
+
+		AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
+
+		videoFrameWriter = new VideoFrameWriter(srcWidth, srcHeight, srcFormat);
 		videoFrameWriter->setPath(getProp("output_path"));
 
 		return FILTER_SUCCESS;
@@ -70,6 +83,7 @@ public:
 
 	~ImageWriterFilter() {
 		delete inputFrame;
+		delete videoFrameWriter;
 	}
 
 };

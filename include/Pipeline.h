@@ -24,7 +24,6 @@
 #include <iostream>
 #include <set>
 #include "Filter.h"
-#include "Bus.h"
 
 using namespace std;
 
@@ -50,7 +49,6 @@ class Pipeline {
 	PipelineStatus status; /**< The current status of the pipeline. */
 	set<Filter *> filters; /**< The set of all filters in the pipeline. */
 	Filter* start; /**< The initial element of the pipeline. Must be a data source (0 inputs). */
-	Bus * bus;
 public:
 	/*!
 	 * \param name
@@ -91,13 +89,9 @@ public:
 	 */
 	PipelineStatus run();
 
-
-	void setProp(const string & key, const string & val) {bus->setProp(key,val);}
-	string getProp(const string & key) {return bus->getProp(key);}
 	/*!
 	 */
-	void destroy();
-	virtual ~Pipeline();
+	~Pipeline();
 };
 
 #endif /* PIPELINE_H_ */

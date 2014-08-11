@@ -21,11 +21,11 @@
 #ifndef FITLER_H_
 #define FITLER_H_
 
+#include "Message.h"
 #include <string>
 #include <vector>
 #include <map>
 #include <memory>
-#include "Bus.h"
 
 using namespace std;
 
@@ -49,11 +49,15 @@ enum FilterStatus {
  */
 class Filter {
 private:
+
 	string name;
 	int linked;
 	int inputFed;
-	Bus * bus;
+	map<string, string> props;
+
 protected:
+	Message * inMsg;
+	Message * outMsg;
 
 	vector<Port*> inputPorts;
 	vector<Port*> outputPorts;
@@ -115,6 +119,8 @@ public:
 	 */
 	FilterStatus executeFilter();
 
+	FilterStatus initFilter(Message * msg);
+
 	/*!
 	 * Initialize this filter.
 	 * Should be called before the first call to executeFilter(), after all properties for the filter are set.
@@ -132,8 +138,6 @@ public:
 	int outputPortNum() {
 		return outputPorts.size();
 	}
-
-	void setBus(Bus * b) {bus = b;}
 
 	virtual ~Filter();
 };
