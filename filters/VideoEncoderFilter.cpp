@@ -41,6 +41,12 @@ FilterStatus VideoEncoderFilter::init() {
 
 	int width, height, bitrate, framerate;
 
+	string output_video = getProp("output_video");
+
+	bitrate = std::stoi(getProp("bitrate"));
+
+	framerate = std::stoi(getProp("framerate"));
+
 	err = inMsg->getPropInt("width", width);
 	if (err == MSG_NOT_FOUND)
 		return FILTER_WAIT_FOR_INPUT;
@@ -49,13 +55,13 @@ FilterStatus VideoEncoderFilter::init() {
 	if (err == MSG_NOT_FOUND)
 		return FILTER_WAIT_FOR_INPUT;
 
-	bitrate = 1000000;
-	framerate = 25;
-
-	videoEncoder->init("mpeg4", width, height, bitrate, framerate);
+	videoEncoder->init(output_video, width, height, bitrate, framerate);
 
 	outMsg->setPropInt("width", width);
 	outMsg->setPropInt("height", height);
+	outMsg->setPropInt("bitrate", bitrate);
+	outMsg->setPropInt("framerate", framerate);
+	outMsg->setProp("output_video", output_video);
 
 	return FILTER_SUCCESS;
 }

@@ -19,11 +19,7 @@ enum MessageError {
 class Message {
 private:
 	map<string, string> props;/**< The map of properties for the filter. */
-public:
 
-	void setProp(const string & key, const string & val) {
-		props.insert(std::make_pair(key, val));
-	}
 
 	string getProp(const string & key) {
 		std::map<string, string>::iterator it;
@@ -36,6 +32,13 @@ public:
 		return props[key];
 	}
 
+public:
+
+	void setProp(const string & key, const string & val) {
+		props.insert(std::make_pair(key, val));
+	}
+
+
 	MessageError getPropInt(const string & key, int & val) {
 		string valstr = getProp(key);
 
@@ -43,6 +46,16 @@ public:
 			return MSG_NOT_FOUND;
 
 		val = std::stoi(valstr);
+		return MSG_OK;
+	}
+
+	MessageError getPropString(const string & key, string & val) {
+		string valstr = getProp(key);
+
+		if (valstr == "")
+			return MSG_NOT_FOUND;
+
+		val = valstr;
 		return MSG_OK;
 	}
 

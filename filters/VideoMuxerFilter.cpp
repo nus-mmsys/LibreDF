@@ -35,9 +35,12 @@ VideoMuxerFilter::VideoMuxerFilter(string name) :
 FilterStatus VideoMuxerFilter::init() {
 
 	MessageError err;
-	int width, height, bitrate;
+	string output_video;
+	int width, height, bitrate, framerate;
 
-	string output_video = getProp("output_video");
+	err = inMsg->getPropString("output_video", output_video);
+	if (err == MSG_NOT_FOUND)
+		return FILTER_WAIT_FOR_INPUT;
 
 	err = inMsg->getPropInt("width", width);
 	if (err == MSG_NOT_FOUND)
@@ -47,9 +50,15 @@ FilterStatus VideoMuxerFilter::init() {
 	if (err == MSG_NOT_FOUND)
 		return FILTER_WAIT_FOR_INPUT;
 
-	bitrate = 1000000;
+	err = inMsg->getPropInt("bitrate", bitrate);
+	if (err == MSG_NOT_FOUND)
+		return FILTER_WAIT_FOR_INPUT;
 
-	videoMuxer->init(output_video, width, height, bitrate);
+	err = inMsg->getPropInt("framerate", framerate);
+	if (err == MSG_NOT_FOUND)
+		return FILTER_WAIT_FOR_INPUT;
+
+	videoMuxer->init(output_video, width, height, bitrate, framerate);
 
 	return FILTER_SUCCESS;
 }

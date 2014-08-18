@@ -25,16 +25,32 @@ VideoEncoder::VideoEncoder() {
 	video_outbuf_size = 2000000;
 	video_outbuf = (uint8_t*) av_malloc(video_outbuf_size);
 
-
 }
 
-int VideoEncoder::init(string codec_name, int width, int height, int bitrate, int framerate) {
+int VideoEncoder::init(string filename, int width, int height, int bitrate,
+		int framerate) {
 
-	AVCodec * codec = avcodec_find_encoder_by_name(codec_name.c_str());
-	if (codec == NULL) {
-		cout << "Output video codec " << codec_name << " not found\n";
+	AVOutputFormat *output_fmt;
+
+	/* Find output format */
+	output_fmt = av_guess_format(0, filename.c_str(), 0);
+	if (!output_fmt) {
+		cout << "Cannot find suitable output format\n";
 		return -1;
 	}
+
+	/* find the video encoder */
+	AVCodec * codec = avcodec_find_encoder(output_fmt->video_codec);//(output_fmt->video_codec);
+	if (!codec) {
+		cout << "Codec not found\n";
+		return -1;
+	}
+
+	//AVCodec * codec = avcodec_find_encoder_by_name(codec_name.c_str());
+	//if (codec == NULL) {
+	//	cout << "Output video codec " << codec_name << " not found\n";
+	//	return -1;
+	//}
 
 	codec_ctx = avcodec_alloc_context3(codec);
 
@@ -65,7 +81,7 @@ int VideoEncoder::init(string codec_name, int width, int height, int bitrate, in
 	//codec_ctx->max_b_frames = 0;
 
 	//the global header gives access to the extradata (SPS/PPS)
-	codec_ctx->flags |= CODEC_FLAG_GLOBAL_HEADER;
+	//codec_ctx->flags |= CODEC_FLAG_GLOBAL_HEADER;
 
 	//vstream_idx = 0;
 
@@ -92,7 +108,6 @@ int VideoEncoder::encode(RawFrame * rawFrame, EncodedFrame * encodedFrame) {
 	/* Encoding video */
 
 	//int got_packet = 0;
-
 	av_init_packet(encodedFrame->pkt);
 
 	//encodedFrame->pkt->pts = encodedFrame->pkt->dts = vframe->pkt_dts =

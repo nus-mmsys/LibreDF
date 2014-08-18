@@ -44,7 +44,7 @@ private:
 	int vstream_idx;
 public:
 	VideoMuxer();
-	int init(string filename, int width, int height, int bitrate);
+	int init(string filename, int width, int height, int bitrate, int framerate);
 	int mux(EncodedFrame * encodedFrame);
 	~VideoMuxer();
 };

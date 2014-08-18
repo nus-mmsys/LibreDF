@@ -26,7 +26,8 @@ VideoMuxer::VideoMuxer() {
 
 }
 
-int VideoMuxer::init(string filename, int width, int height, int bitrate) {
+int VideoMuxer::init(string filename, int width, int height, int bitrate,
+		int framerate) {
 
 	AVCodec *codec;
 	AVStream *video_stream;
@@ -59,7 +60,7 @@ int VideoMuxer::init(string filename, int width, int height, int bitrate) {
 	}
 
 	/* find the video encoder */
-	codec = avcodec_find_encoder(output_fmt->video_codec);//(output_fmt->video_codec);
+	codec = avcodec_find_encoder(output_fmt->video_codec); //(output_fmt->video_codec);
 	if (!codec) {
 		cout << "Codec not found\n";
 		return -1;
@@ -75,11 +76,9 @@ int VideoMuxer::init(string filename, int width, int height, int bitrate) {
 	video_stream->codec->codec_type = AVMEDIA_TYPE_VIDEO;
 	video_stream->codec->width = width;
 	video_stream->codec->height = height;
-	video_stream->codec->time_base = AVRational { 1, 25 };
+	video_stream->codec->time_base = AVRational { 1, framerate };
 	video_stream->codec->pix_fmt = PIX_FMT_YUV420P;
-
-	//video_stream->codec->bit_rate = bitrate;
-
+	video_stream->codec->bit_rate = bitrate;
 
 	//video_stream->codec->time_base = time_base;
 
