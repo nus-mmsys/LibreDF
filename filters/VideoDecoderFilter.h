@@ -24,19 +24,19 @@
 #include "Filter.h"
 #include "Port.h"
 #include "tools/VideoReader.h"
-#include "types/Frame.h"
+#include "types/RawFrame.h"
 
 class VideoDecoderFilter: public Filter {
 
 private:
 	VideoReader * videoReader;
 
-	OutputPort<Frame> * outputFrame;
+	OutputPort<RawFrame> * outputFrame;
 public:
 	VideoDecoderFilter(string name) :
 			Filter(name) {
 
-		outputFrame = new OutputPort<Frame>("videoDecoder, output 1, AVFrame",
+		outputFrame = new OutputPort<RawFrame>("videoDecoder, output 1, AVFrame",
 				this);
 
 		outputPorts.push_back(outputFrame);
@@ -70,7 +70,7 @@ public:
 
 	FilterStatus process() {
 
-		Frame * pFrame = outputFrame->getBuffer()->getNextNode();
+		RawFrame * pFrame = outputFrame->getBuffer()->getNextNode();
 		//if (pFrame == 0)
 		//	pFrame = avcodec_alloc_frame();
 		int ret = videoReader->readFrame(pFrame);

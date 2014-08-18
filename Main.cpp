@@ -20,12 +20,11 @@
 
 #include "tmf.h"
 
-#define APP4
+#define APP5
 
 int main(int argc, char** argv) {
 
 	TMF tmf;
-
 
 #ifdef APP1
 
@@ -144,6 +143,45 @@ int main(int argc, char** argv) {
 
 	imageWriter1->setProp("output_path", outputPath1);
 	imageWriter2->setProp("output_path", outputPath2);
+
+#endif
+
+#ifdef APP5
+
+	if (argc < 3) {
+		cerr << "Usage: " << argv[0]
+				<< " <input video> <output video> " << endl;
+		return -1;
+	}
+
+	Pipeline* pipe = tmf.createPipeline("Reader/Writer");
+
+	string inputVideo = argv[1];
+	string outputVideo = argv[2];
+
+	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
+			"videoDecoder");
+	//Filter* videoWriter = tmf.createFilter(VIDEO_WRITER_FILTER,
+	//		"videoWriter");
+	//Filter* imageScaler = tmf.createFilter(IMAGE_SCALER_FILTER, "imageScaler");
+	Filter* videoEncoder = tmf.createFilter(VIDEO_ENCODER_FILTER,
+			"videoEncoder");
+	Filter* videoMuxer = tmf.createFilter(VIDEO_MUXER_FILTER, "videoMuxer");
+
+
+	//pipe->connectFilters(videoDecoder, imageScaler);
+	//pipe->connectFilters(imageScaler, videoEncoder);
+	pipe->connectFilters(videoDecoder, videoEncoder);
+	pipe->connectFilters(videoEncoder, videoMuxer);
+
+	videoDecoder->setProp("input_video", inputVideo);
+
+	//imageScaler->setProp("width", width);
+	//imageScaler->setProp("height", height);
+
+	//videoEncoder->setProp("framerate", "25");
+
+	videoMuxer->setProp("output_video", outputVideo);
 
 #endif
 

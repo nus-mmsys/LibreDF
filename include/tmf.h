@@ -30,6 +30,9 @@
 #include "filters/Multiply2Filter.h"
 #include "filters/NumberGeneratorFilter.h"
 #include "filters/VideoDecoderFilter.h"
+#include "filters/VideoEncoderFilter.h"
+#include "filters/VideoWriterFilter.h"
+#include "filters/VideoMuxerFilter.h"
 #include "filters/ImageWriterFilter.h"
 #include "filters/ImageScalerFilter.h"
 #include "Pipeline.h"
@@ -48,6 +51,9 @@ enum FiltersType {
 	MULTIPLY2_FILTER,
 	NUMBERGENERATOR_FILTER,
 	VIDEO_DECODER_FILTER,
+	VIDEO_WRITER_FILTER,
+	VIDEO_ENCODER_FILTER,
+	VIDEO_MUXER_FILTER,
 	IMAGE_SCALER_FILTER,
 	IMAGE_WRITER_FILTER
 
@@ -101,6 +107,15 @@ public:
 
 		case VIDEO_DECODER_FILTER:
 			return new VideoDecoderFilter(name);
+
+		case VIDEO_ENCODER_FILTER:
+			return new VideoEncoderFilter(name);
+
+		case VIDEO_WRITER_FILTER:
+			return new VideoWriterFilter(name);
+
+		case VIDEO_MUXER_FILTER:
+			return new VideoMuxerFilter(name);
 
 		case IMAGE_WRITER_FILTER:
 			return new ImageWriterFilter(name);

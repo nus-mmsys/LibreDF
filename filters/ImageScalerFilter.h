@@ -31,17 +31,17 @@ private:
 
 	VideoScaler * videoScaler;
 
-	InputPort<Frame> * inputPortFrame;
-	OutputPort<Frame> * outputPortFrame;
+	InputPort<RawFrame> * inputPortFrame;
+	OutputPort<RawFrame> * outputPortFrame;
 
 public:
 
 	ImageScalerFilter(string name) : Filter(name) {
 
-		inputPortFrame = new InputPort<Frame>("imageScaler, input, Frame",
+		inputPortFrame = new InputPort<RawFrame>("imageScaler, input, Frame",
 				this);
 
-		outputPortFrame = new OutputPort<Frame>("imageScaler, output, Frame",
+		outputPortFrame = new OutputPort<RawFrame>("imageScaler, output, Frame",
 				this);
 
 		inputPorts.push_back(inputPortFrame);
@@ -61,13 +61,7 @@ public:
 		int dstWidth = std::stoi(width);
 		int dstHeight = std::stoi(height);
 
-		//string videoName = getProp("input_video");
-
 		int srcWidth, srcHeight, srcFormatInt;
-		//VideoReader media = VideoReader(videoName);
-		//int srcwidth = media.getWidth();
-		//int srcheight = media.getHeight();
-		//AVPixelFormat srcformat = media.getPixFormat();
 
 		err = inMsg->getPropInt("width", srcWidth);
 		if (err == MSG_NOT_FOUND)
@@ -88,7 +82,7 @@ public:
 		videoScaler = new VideoScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
 
 		for (int i=0; i<outputPortFrame->getBuffer()->getSize(); i++) {
-			Frame * frame = outputPortFrame->getBuffer()->getNode(i);
+			RawFrame * frame = outputPortFrame->getBuffer()->getNode(i);
 			frame->fill(dstWidth, dstHeight, srcFormat);
 		}
 
@@ -103,9 +97,9 @@ public:
 	FilterStatus process() {
 		FilterStatus status = FILTER_SUCCESS;
 
-		Frame * inFrame = inputPortFrame->read();
+		RawFrame * inFrame = inputPortFrame->read();
 
-		Frame * outFrame = outputPortFrame->getBuffer()->getNextNode();
+		RawFrame * outFrame = outputPortFrame->getBuffer()->getNextNode();
 
 		videoScaler->scale(inFrame, outFrame);
 

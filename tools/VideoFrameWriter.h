@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef VIDEOFRAME_H_
-#define VIDEOFRAME_H_
+#ifndef VIDEOFRAMEWRITER_H_
+#define VIDEOFRAMEWRITER_H_
 
 #include <iostream>
 
@@ -45,7 +45,7 @@ private:
 	int width;
 	int height;
 	AVPixelFormat format;
-	int frameNumber;
+	//int frameNumber;
 
 public:
 
@@ -57,7 +57,7 @@ public:
 		this->width = width;
 		this->height = height;
 		this->format = format;
-		frameNumber = 0;
+		//frameNumber = 0;
 
 		// Allocate an AVFrame structure
 		pFrameRGB = avcodec_alloc_frame();
@@ -86,7 +86,7 @@ public:
 
 	}
 
-	void writeImage(Frame * frame) {
+	void writeImage(RawFrame * frame) {
 
 		AVFrame * pFrame = frame->getFrame();
 
@@ -99,7 +99,7 @@ public:
 		int y;
 
 		// Open file
-		sprintf(szFilename, "%s/frame%d.ppm", path.c_str(), frameNumber++);
+		sprintf(szFilename, "%s/frame%d.ppm", path.c_str(), frame->number);
 		pFile = fopen(szFilename, "wb");
 		if (pFile == NULL)
 			return;
@@ -129,4 +129,4 @@ public:
 
 };
 
-#endif /* VIDEOFRAME_H_ */
+#endif /* VIDEOFRAMEWRITER_H_ */

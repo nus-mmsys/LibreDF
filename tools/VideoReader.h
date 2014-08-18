@@ -18,12 +18,12 @@
  *
  */
 
-#ifndef MEDIA_H_
-#define MEDIA_H_
+#ifndef VIDEOREADER_H_
+#define VIDEOREADER_H_
 
 #include <iostream>
 #include <string>
-#include <types/Frame.h>
+#include <types/RawFrame.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,6 +44,7 @@ private:
 	AVFormatContext *pFormatCtx;
 	AVCodecContext * pCodecCtx;
 	int vstream_idx;
+	int frameNumber;
 
 public:
 
@@ -61,6 +62,7 @@ public:
 		pFormatCtx = 0;
 		pCodecCtx = 0;
 		vstream_idx = -1;
+		frameNumber = 0;
 
 		unsigned int i;
 
@@ -135,7 +137,7 @@ public:
 		return pFormatCtx;
 	}
 
-	int readFrame(Frame * frame) {
+	int readFrame(RawFrame * frame) {
 
 		AVFrame * pFrame = frame->getFrame();
 		AVPacket packet;
@@ -159,6 +161,8 @@ public:
 				if (frameFinished) {
 
 					av_free_packet(&packet);
+					frame->number = frameNumber;
+					frameNumber++;
 					return 0;
 
 				}
@@ -175,6 +179,8 @@ public:
 		if (frameFinished) {
 
 			av_free_packet(&packet);
+			frame->number = frameNumber;
+			frameNumber++;
 			return 0;
 
 		}
@@ -194,4 +200,4 @@ public:
 
 };
 
-#endif /* MEDIA_H_ */
+#endif /* VIDEOREADER_H_ */
