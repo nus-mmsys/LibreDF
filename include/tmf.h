@@ -60,8 +60,8 @@ enum FiltersType {
 };
 
 /*!
- * \class FilterFactory
- * Factory for creating filter objects.
+ * \class TMF
+ * Factory for creating filter objects and pipeline.
  */
 class TMF {
 private:
@@ -127,10 +127,25 @@ public:
 		return NULL;
 	}
 
+	/*!
+	 * Create a pipeline.
+	 *
+	 * \param name
+	 *   The name of the pipeline.
+	 *
+	 * \return the created pipelines.
+	 */
 	Pipeline * createPipeline(const string & name) {
 		return new Pipeline(name);
 	}
 
+	/*!
+	 * Destroy the pipeline.
+	 *
+	 * \param pipe
+	 *   The reference to the pipeline.
+	 *
+	 */
 	void destroyPipeline(Pipeline * pipe) {
 		delete pipe;
 	}

@@ -91,8 +91,8 @@ FilterStatus Filter::initFilter(Message * msg) {
 	for (itIn = outputPorts.begin(); itIn != outputPorts.end(); ++itIn) {
 		vector<Port*>::iterator itNxt;
 		Port * curPort = (*itIn);
-		for (itNxt = curPort->nextPorts.begin();
-				itNxt != curPort->nextPorts.end(); ++itNxt) {
+		for (itNxt = curPort->getNextPorts().begin();
+				itNxt != curPort->getNextPorts().end(); ++itNxt) {
 			(*itNxt)->getOwner()->initFilter(outMsg);
 		}
 	}
