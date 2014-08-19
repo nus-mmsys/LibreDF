@@ -38,7 +38,6 @@ enum PipelineStatus {
 	PIPELINE_PAUSED, /**< The pipeline is currently paused. */
 	PIPELINE_FINISHED /**< The pipeline has finished processing its last item. */
 };
-
 /*!
  * \class Pipeline
  * A pipeline, consisting of a number of interconnected filters.
@@ -51,8 +50,9 @@ class Pipeline {
 	Filter* start; /**< The initial element of the pipeline. Must be a data source (0 inputs). */
 public:
 	/*!
-	 * \param name
-	 *   The name of the pipeline.
+	 * Pipeline constructor
+	 *
+	 * \param name The name of the pipeline.
 	 */
 	Pipeline(const string& name);
 
@@ -60,20 +60,10 @@ public:
 	 * Create a pipe between two filters in the pipeline.
 	 * These filters should be in the pipeline.
 	 *
-	 * \param fi
-	 *   The source filter for the pipe.
-	 * \param fo
-	 *   The target filter for the pipe.
+	 * \param fi The source filter for the pipe.
+	 * \param fo The target filter for the pipe.
 	 */
 	void connectFilters(Filter * fi, Filter * fo);
-
-	/*!
-	 * Set the initial filter for the pipeline.
-	 *
-	 * \param starter
-	 *   The new initial filter for the pipeline. Should be a source (no input connections).
-	 */
-	//void setStarter(Filter *starter);
 
 	/*!
 	 * Initialize the pipeline.
@@ -90,6 +80,7 @@ public:
 	PipelineStatus run();
 
 	/*!
+	 * Pipeline destructor
 	 */
 	~Pipeline();
 };

@@ -25,16 +25,30 @@
 
 using namespace std;
 
-
+/*!
+ * \enum MessageError
+ * Error code of the message
+ */
 enum MessageError {
-	MSG_OK, MSG_NOT_FOUND
+	MSG_OK, /**< Message is found */
+	MSG_NOT_FOUND /**< Message is not found */
 };
 
+/*!
+ * \class Message
+ *
+ * Message to communicate between the filters.
+ *
+ */
 class Message {
 private:
-	map<string, string> props;/**< The map of properties for the filter. */
+	map<string, string> props; /**< The map containing the message (key, value). */
 
-
+	/*!
+	 * Get the message value by passing the key
+	 *
+	 * \param key the key to retrieve the message value
+	 */
 	string getProp(const string & key) {
 		std::map<string, string>::iterator it;
 
@@ -48,11 +62,27 @@ private:
 
 public:
 
+	/*!
+	 * Set the string message by key and value
+	 *
+	 * \param key the key of the message
+	 * \param val the string value of the message
+	 *
+	 */
 	void setProp(const string & key, const string & val) {
 		props.insert(std::make_pair(key, val));
 	}
 
 
+	/*!
+	 * Get the integer message by passing the key
+	 *
+	 * \param key the key of the message
+	 * \param val reference to receive the value of the message
+	 *
+	 * \return MSG_OK if the message is found and MSG_NOT_FOUND if the message is not found.
+	 *
+	 */
 	MessageError getPropInt(const string & key, int & val) {
 		string valstr = getProp(key);
 
@@ -63,6 +93,15 @@ public:
 		return MSG_OK;
 	}
 
+	/*!
+	 * Get the string message by passing the key
+	 *
+	 * \param key the key of the message
+	 * \param val reference to receive the value of the message
+	 *
+	 * \return MSG_OK if the message is found and MSG_NOT_FOUND if the message is not found.
+	 *
+	 */
 	MessageError getPropString(const string & key, string & val) {
 		string valstr = getProp(key);
 
@@ -73,6 +112,13 @@ public:
 		return MSG_OK;
 	}
 
+	/*!
+	 * Set the integer message by key and value
+	 *
+	 * \param key the key of the message
+	 * \param val the integer value of the message
+	 *
+	 */
 	void setPropInt(const string & key, const int & val) {
 		setProp(key, std::to_string(val));
 	}
