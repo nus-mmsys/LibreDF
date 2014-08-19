@@ -150,4 +150,4 @@ Here is an example of a filter implementation:
 			delete inputPortFrame;
 			delete outputPortFrame;
 		}
-};
+	};
