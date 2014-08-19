@@ -57,11 +57,15 @@ Here is an example of a filter implementation:
 
 		VideoScaler * videoScaler;
 
+		// input port which has the buffer of RawFrame type
 		InputPort<RawFrame> * inputPortFrame;
+		
+		// output port which has the buffer of RawFrame type
 		OutputPort<RawFrame> * outputPortFrame;
 
 	public:
 
+		// filter constructor - it has to call the constructor of the Filter as well
 		ImageScalerFilter(string name) : Filter(name) {
 
 			inputPortFrame = new InputPort<RawFrame>("imageScaler, input, Frame",
@@ -70,6 +74,7 @@ Here is an example of a filter implementation:
 			outputPortFrame = new OutputPort<RawFrame>("imageScaler, output, Frame",
 				this);
 
+			// all ports of subclass filter must be added to the list of superclass filters
 			inputPorts.push_back(inputPortFrame);
 			outputPorts.push_back(outputPortFrame);
 
@@ -79,8 +84,8 @@ Here is an example of a filter implementation:
 		FilterStatus init() {
 
 			MessageError err;
-			FilterStatus status = FILTER_SUCCESS;
 
+			// get the properties which are set by the user
 			string width = getProp("width");
 			string height = getProp("height");
 
@@ -89,6 +94,7 @@ Here is an example of a filter implementation:
 
 			int srcWidth, srcHeight, srcFormatInt;
 
+			// read input message from previous filter
 			err = inMsg->getPropInt("width", srcWidth);
 			if (err == MSG_NOT_FOUND)
 				return FILTER_WAIT_FOR_INPUT;
@@ -110,27 +116,33 @@ Here is an example of a filter implementation:
 				frame->fill(dstWidth, dstHeight, srcFormat);
 			}
 
+			// write output message for the next filters
 			outMsg->setProp("width", width);
 			outMsg->setProp("height", height);
 			outMsg->setPropInt("format", srcFormatInt);
 
-			return status;
+			return FILTER_SUCCESS;
 
 		}
 
 		FilterStatus process() {
-			FilterStatus status = FILTER_SUCCESS;
 
+			// read input frame from the input port
 			RawFrame * inFrame = inputPortFrame->read();
 
+			// Get a reference to the output frame from the output port
 			RawFrame * outFrame = outputPortFrame->getBuffer()->getNextNode();
 
+			// scale the frame
 			videoScaler->scale(inFrame, outFrame);
-
+			
+			// push the putput frame so that the next filters start using them
 			outputPortFrame->produce(outFrame);
+			
+			// processing the output port executes next filters
 			outputPortFrame->process();
 
-			return status;
+			return FILTER_SUCCESS;
 		}
 
 
