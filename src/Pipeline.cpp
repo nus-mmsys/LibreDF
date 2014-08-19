@@ -18,7 +18,7 @@
  *
  */
 
-#include <Pipeline.h>
+#include <include/Pipeline.h>
 
 Pipeline::Pipeline(const string& name) {
 	this->name = name;

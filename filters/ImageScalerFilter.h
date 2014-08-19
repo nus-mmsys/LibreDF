@@ -21,9 +21,11 @@
 #ifndef IMAGESCALERFILTER_H_
 #define IMAGESCALERFILTER_H_
 
-#include <string>
 #include "tools/VideoScaler.h"
-#include "Filter.h"
+#include "include/Filter.h"
+
+#include <string>
+
 
 class ImageScalerFilter : public Filter {
 

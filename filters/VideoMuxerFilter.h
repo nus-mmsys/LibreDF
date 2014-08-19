@@ -21,8 +21,8 @@
 #ifndef VIDEOMUXERFILTER_H_
 #define VIDEOMUXERFILTER_H_
 
-#include "Filter.h"
-#include "Port.h"
+#include "include/Filter.h"
+#include "include/Port.h"
 #include "types/EncodedFrame.h"
 #include "tools/VideoMuxer.h"
 

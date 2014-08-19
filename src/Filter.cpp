@@ -18,8 +18,8 @@
  *
  */
 
-#include "Filter.h"
-#include "Port.h"
+#include "include/Filter.h"
+#include "include/Port.h"
 
 Filter::Filter(const string &name) {
 
@@ -57,13 +57,12 @@ void Filter::connectFilter(Filter * f) {
 }
 
 void Filter::setProp(const string & key, const string & val) {
-	props.emplace(this->name+"::"+key, val);
+	props.emplace(this->name + "::" + key, val);
 }
 
 string Filter::getProp(const string & key) {
-	return props[this->name+"::"+key];
+	return props[this->name + "::" + key];
 }
-
 
 FilterStatus Filter::executeFilter() {
 	FilterStatus status = FILTER_SUCCESS;
@@ -78,7 +77,7 @@ FilterStatus Filter::executeFilter() {
 	return status;
 }
 
-FilterStatus Filter::initFilter(Message  * msg) {
+FilterStatus Filter::initFilter(Message * msg) {
 	FilterStatus status = FILTER_SUCCESS;
 
 	inMsg = msg;
@@ -89,15 +88,28 @@ FilterStatus Filter::initFilter(Message  * msg) {
 		return FILTER_WAIT_FOR_INPUT;
 
 	vector<Port*>::iterator itIn;
-	for (itIn = outputPorts.begin() ; itIn != outputPorts.end() ; ++itIn) {
+	for (itIn = outputPorts.begin(); itIn != outputPorts.end(); ++itIn) {
 		vector<Port*>::iterator itNxt;
 		Port * curPort = (*itIn);
-		for (itNxt = curPort->nextPorts.begin() ; itNxt != curPort->nextPorts.end() ; ++itNxt) {
+		for (itNxt = curPort->nextPorts.begin();
+				itNxt != curPort->nextPorts.end(); ++itNxt) {
 			(*itNxt)->getOwner()->initFilter(outMsg);
 		}
 	}
 
 	return status;
+}
+
+void Filter::increaseLinked() {
+	linked++;
+}
+
+int Filter::inputPortNum() {
+	return inputPorts.size();
+}
+
+int Filter::outputPortNum() {
+	return outputPorts.size();
 }
 
 Filter::~Filter() {

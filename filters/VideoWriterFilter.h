@@ -8,8 +8,8 @@
 #ifndef VIDEOWRITERFILTER_H_
 #define VIDEOWRITERFILTER_H_
 
-#include "Filter.h"
-#include "Port.h"
+#include "include/Filter.h"
+#include "include/Port.h"
 #include "types/RawFrame.h"
 #include "tools/VideoWriter.h"
 

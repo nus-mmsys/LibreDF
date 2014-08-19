@@ -39,40 +39,42 @@ enum FilterStatus {
 	FILTER_SUCCESS, /**< Filter processed successfully. */
 	FILTER_ERROR, /**< An error occurred while processing. */
 	FILTER_FINISHED, /**< Filter is done generating more data. Used in data sources. */
-	FILTER_WAIT_FOR_INPUT
+	FILTER_WAIT_FOR_INPUT /**< Filter is waiting for input. */
 };
 
 /*!
  * \class Filter
- * A single filter in a pipeline.
- * Can be connected to multiple filters, and receive data from multiple filters.
+ * Abstraction of a filter in a pipeline.
+ * Every concrete filter inherits from filter and can be connected to multiple filters,
+ * and receive various data from predecessor filters and send data to accessor filter.
  */
 class Filter {
 private:
 
-	string name;
-	int linked;
-	int inputFed;
-	map<string, string> props;
+	string name; /**< The name f the filter */
+	int linked; /**< The number of filters which are connected to this filter */
+	int inputFed; /**< The number of data which are already fed to the filter */
+	map<string, string> props; /**< A map containing the message keys and values transfered to filter from a pipeline */
 
 protected:
-	Message * inMsg;
-	Message * outMsg;
+	Message * inMsg; /**< Input message of the filter */
+	Message * outMsg; /**< Output message of the filter */
 
-	vector<Port*> inputPorts;
-	vector<Port*> outputPorts;
-
-	/*!
-	 * Process the input data using the filter.
-	 */
-	virtual FilterStatus process() = 0;
-
+	vector<Port*> inputPorts; /**< List of the input ports  */
+	vector<Port*> outputPorts; /**< List of the output ports */
 
 	/*!
+	 * Filter constructor
 	 * \param name
 	 *   The name of the filter.
 	 */
 	Filter(const string & name);
+
+	/*!
+	 * Virtual function, to be implemented in the subclass filters.
+	 * Read data from input filter, process the data, and write the result to the output port.
+	 */
+	virtual FilterStatus process() = 0;
 
 public:
 
@@ -104,7 +106,7 @@ public:
 
 	/*!
 	 * Connect this filter to another filter in the pipeline.
-	 * Use Pipeline::connect instead of this.
+	 * It is used by pipeline. User must use Pipeline::connectFilters
 	 *
 	 * \param f
 	 *   The filter to connect to.
@@ -113,32 +115,38 @@ public:
 
 	/*!
 	 * Execute the processing of this filter.
-	 * In case more information is needed, wait until it is provided.
+	 * The filters are connected by a link list and each filter calls executeFilter of the next filter.
 	 *
 	 * \return The new status of the filter.
 	 */
 	FilterStatus executeFilter();
 
+	/*!
+	 * Execute the init of this filter.
+	 * The filters are connected by a link list and each filter calls initFilter of the next filter.
+	 *
+	 * \return The new status of the filter.
+	 */
 	FilterStatus initFilter(Message * msg);
 
 	/*!
-	 * Initialize this filter.
-	 * Should be called before the first call to executeFilter(), after all properties for the filter are set.
+	 * Increase the number of the linked filters.
 	 */
-	//void initializeFilter();
+	void increaseLinked();
 
-	void increaseLinked() {
-		linked++;
-	}
+	/*!
+	 * Get the number of input ports.
+	 */
+	int inputPortNum();
 
-	int inputPortNum() {
-		return inputPorts.size();
-	}
+	/*!
+	 * Get the number of output port.
+	 */
+	int outputPortNum();
 
-	int outputPortNum() {
-		return outputPorts.size();
-	}
-
+	/*!
+	 * Destructor of the filter.
+	 */
 	virtual ~Filter();
 };
 

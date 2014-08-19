@@ -1,4 +1,12 @@
-tmf
-===
+Tiny Multimedia Framework (tmf)
+===============================
 
-Tiny Multimedia Framework
+
+User manual
+===========
+
+
+
+
+Plugin developer manual
+=======================

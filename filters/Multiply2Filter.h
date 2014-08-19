@@ -21,7 +21,7 @@
 #ifndef MULTIPLY2FILTER_H_
 #define MULTIPLY2FILTER_H_
 
-#include "Filter.h"
+#include "include/Filter.h"
 
 class Multiply2Filter: public Filter {
 private:

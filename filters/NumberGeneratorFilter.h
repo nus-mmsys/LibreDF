@@ -21,10 +21,12 @@
 #ifndef NUMBERGENERATORFILTER_H_
 #define NUMBERGENERATORFILTER_H_
 
-#include "Filter.h"
+#include "include/Filter.h"
 
 #include <string>
 #include <unistd.h>
+
+using namespace std;
 
 class NumberGeneratorFilter: public Filter {
 
