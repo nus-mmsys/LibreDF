@@ -3,7 +3,7 @@
 
 Tiny Multimedia Framework is a simple multimedia framework to implement multimedia application. A multimedia application consists of a pipeline and a series of filters connected to each other. An application developer need to know about filter types, and how to connect them to each other.
 
-Each filter has a number of unput and output ports. Each port has a buffer type and can be connected to other ports with the same type of data. Filters with same type of ports can be connected to each other.
+Each filter has a number of input and output ports. Each port has a buffer type and can be connected to other ports with the same type of data. Filters with same type of ports can be connected to each other. A port push the data to its accessors.
 
 In section 2 we explain how a multimedia application developers create an application using the APIs of the framework. In section 3 we exlpain how plugin developers create a new filter using APIs of the framework.
 
@@ -55,6 +55,7 @@ Here is an example of a filter implementation:
 
 	private:
 
+		// This is a class implemented in "tools" to ease implementing this filter
 		VideoScaler * videoScaler;
 
 		// input port which has the buffer of RawFrame type
