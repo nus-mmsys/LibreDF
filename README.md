@@ -55,6 +55,7 @@ Here is an example of a filter implementation:
 
 	private:
 
+		// This is a class implemented in "tools" to ease implementing this filter
 		VideoScaler * videoScaler;
 
 		// input port which has the buffer of RawFrame type
