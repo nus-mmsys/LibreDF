@@ -20,7 +20,7 @@
 
 #include "include/tmf.h"
 
-#define APP5
+#define APP6
 
 int main(int argc, char** argv) {
 
@@ -180,6 +180,29 @@ int main(int argc, char** argv) {
 	videoEncoder->setProp("bitrate", "1000000");
 	videoEncoder->setProp("framerate", "25");
 	videoEncoder->setProp("output_video", outputVideo);
+
+#endif
+
+#ifdef APP6
+
+	if (argc < 2) {
+		cerr << "Usage: " << argv[0]
+				<< " <input video> " << endl;
+		return -1;
+	}
+
+	Pipeline* pipe = tmf.createPipeline("Media Player");
+
+	string inputVideo = argv[1];
+
+	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
+			"videoDecoder");
+
+	Filter* videoDisplay = tmf.createFilter(VIDEO_DISPLAY_FILTER, "videoDisplay");
+
+	pipe->connectFilters(videoDecoder, videoDisplay);
+
+	videoDecoder->setProp("input_video", inputVideo);
 
 #endif
 

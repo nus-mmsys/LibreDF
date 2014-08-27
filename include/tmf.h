@@ -35,6 +35,7 @@
 #include "filters/VideoMuxerFilter.h"
 #include "filters/ImageWriterFilter.h"
 #include "filters/ImageScalerFilter.h"
+#include "filters/VideoDisplayFilter.h"
 #include "Pipeline.h"
 
 using namespace std;
@@ -54,6 +55,7 @@ enum FiltersType {
 	VIDEO_WRITER_FILTER,
 	VIDEO_ENCODER_FILTER,
 	VIDEO_MUXER_FILTER,
+	VIDEO_DISPLAY_FILTER,
 	IMAGE_SCALER_FILTER,
 	IMAGE_WRITER_FILTER
 
@@ -116,6 +118,9 @@ public:
 
 		case VIDEO_MUXER_FILTER:
 			return new VideoMuxerFilter(name);
+
+		case VIDEO_DISPLAY_FILTER:
+			return new VideoDisplayFilter(name);
 
 		case IMAGE_WRITER_FILTER:
 			return new ImageWriterFilter(name);
