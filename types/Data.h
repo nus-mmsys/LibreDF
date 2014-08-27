@@ -25,12 +25,21 @@
 //template<class Type>
 class Data {
 
+private:
+	int number;
 	//Type data;
 public:
-	int number;
 
 	Data() {
 		number = 0;
+	}
+
+	int getNumber() {
+		return number;
+	}
+
+	void setNumber(int n) {
+		this->number = n;
 	}
 
 };

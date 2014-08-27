@@ -161,7 +161,7 @@ public:
 				if (frameFinished) {
 
 					av_free_packet(&packet);
-					frame->number = frameNumber;
+					frame->setNumber(frameNumber);
 					frameNumber++;
 					return 0;
 
@@ -179,7 +179,7 @@ public:
 		if (frameFinished) {
 
 			av_free_packet(&packet);
-			frame->number = frameNumber;
+			frame->setNumber(frameNumber);
 			frameNumber++;
 			return 0;
 

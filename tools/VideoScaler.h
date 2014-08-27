@@ -64,13 +64,12 @@ public:
 		AVFrame * inAvFrame = inFrame->getFrame();
 		AVFrame * outAvFrame = outFrame->getFrame();
 
-		outFrame->number = inFrame->number;
+		outFrame->setNumber(inFrame->getNumber());
 
 		//avcodec_get_frame_defaults(outAvFrame);
 		return sws_scale(sws_ctx, (uint8_t const * const *) inAvFrame->data,
 				inAvFrame->linesize, 0, srcHeight, outAvFrame->data,
 				outAvFrame->linesize);
-
 
 	}
 };

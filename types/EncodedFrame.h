@@ -33,12 +33,19 @@ extern "C" {
 #endif
 
 class EncodedFrame : public Data {
-public:
+
+private:
 	AVPacket * pkt;
+
+public:
 
 	EncodedFrame() {
 		pkt = (AVPacket *) av_malloc(sizeof(AVPacket));
 		//av_new_packet(pkt,20000000);
+	}
+
+	AVPacket * getPacket() {
+		return pkt;
 	}
 
 };

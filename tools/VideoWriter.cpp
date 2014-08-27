@@ -187,7 +187,7 @@ int VideoWriter::write(RawFrame * rawFrame) {
 
 	c = video_st->codec;
 
-	picture->pts = rawFrame->number;
+	picture->pts = rawFrame->getNumber();
 
 
 	/* encode the image */

@@ -105,8 +105,10 @@ int VideoMuxer::init(string filename, int width, int height, int bitrate,
 
 int VideoMuxer::mux(EncodedFrame * encodedFrame) {
 
+	AVPacket * encPkt = encodedFrame->getPacket();
+
 	//Encoder is still buffering.
-	if (encodedFrame->pkt->size == 0)
+	if (encPkt->size == 0)
 		return 0;
 
 	AVPacket pkt;
@@ -126,8 +128,8 @@ int VideoMuxer::mux(EncodedFrame * encodedFrame) {
 		pkt.flags |= AV_PKT_FLAG_KEY;
 
 	pkt.stream_index = video_stream->index;
-	pkt.data = encodedFrame->pkt->data;
-	pkt.size = encodedFrame->pkt->size;
+	pkt.data = encPkt->data;
+	pkt.size = encPkt->size;
 
 	// write the compressed frame in the media file
 	if (av_interleaved_write_frame(av_fmt_ctx, &pkt) != 0) {

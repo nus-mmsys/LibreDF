@@ -99,7 +99,7 @@ public:
 		int y;
 
 		// Open file
-		sprintf(szFilename, "%s/frame%d.ppm", path.c_str(), frame->number);
+		sprintf(szFilename, "%s/frame%d.ppm", path.c_str(), frame->getNumber());
 		pFile = fopen(szFilename, "wb");
 		if (pFile == NULL)
 			return;

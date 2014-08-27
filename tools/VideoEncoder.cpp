@@ -101,14 +101,15 @@ int VideoEncoder::encode(RawFrame * rawFrame, EncodedFrame * encodedFrame) {
 	int out_size;
 
 	AVFrame * vframe = rawFrame->getFrame();
+	AVPacket * pkt = encodedFrame->getPacket();
 
-	vframe->pts = rawFrame->number;
+	vframe->pts = rawFrame->getNumber();
 	//encodedFrame->number = rawFrame->number;
 
 	/* Encoding video */
 
 	//int got_packet = 0;
-	av_init_packet(encodedFrame->pkt);
+	av_init_packet(pkt);
 
 	//encodedFrame->pkt->pts = encodedFrame->pkt->dts = vframe->pkt_dts =
 	//		vframe->pkt_pts = vframe->pts;
@@ -120,10 +121,10 @@ int VideoEncoder::encode(RawFrame * rawFrame, EncodedFrame * encodedFrame) {
 			vframe);
 
 	if (out_size > 0) {
-		av_init_packet(encodedFrame->pkt);
+		av_init_packet(pkt);
 
-		encodedFrame->pkt->data = video_outbuf;
-		encodedFrame->pkt->size = out_size;
+		pkt->data = video_outbuf;
+		pkt->size = out_size;
 		ret = out_size;
 	} else {
 		ret = 0;
