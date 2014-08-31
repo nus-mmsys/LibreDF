@@ -8,8 +8,8 @@
 #ifndef VIDEODISPLAYFILTER_H_
 #define VIDEODISPLAYFILTER_H_
 
-#include "include/Filter.h"
-#include "include/Port.h"
+#include "core/Filter.h"
+#include "core/Port.h"
 #include "types/RawFrame.h"
 #include "tools/VideoDisplay.h"
 

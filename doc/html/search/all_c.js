@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['read',['read',['../classInputPort.html#a1022cb16047cf6f8d5510fbdd187333c',1,'InputPort']]],
-  ['run',['run',['../classPipeline.html#a519b34f00a529a0abb106d91396da99b',1,'Pipeline']]]
+  ['setprop',['setProp',['../classFilter.html#ae089d87624ac09bedb2f14c828883059',1,'Filter::setProp()'],['../classMessage.html#a11b6668bc87e2768d4f4049796a1c8c8',1,'Message::setProp()']]],
+  ['setpropint',['setPropInt',['../classMessage.html#af57b11eb741f83481ab73387f1d595bb',1,'Message']]]
 ];

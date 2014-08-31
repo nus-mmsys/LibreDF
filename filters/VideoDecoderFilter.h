@@ -21,8 +21,8 @@
 #ifndef VIDEODECODER_H_
 #define VIDEODECODER_H_
 
-#include "include/Filter.h"
-#include "include/Port.h"
+#include "core/Filter.h"
+#include "core/Port.h"
 #include "tools/VideoReader.h"
 #include "types/RawFrame.h"
 

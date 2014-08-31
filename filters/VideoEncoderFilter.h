@@ -21,8 +21,8 @@
 #ifndef VIDEOENCODERFILTER_H_
 #define VIDEOENCODERFILTER_H_
 
-#include "include/Filter.h"
-#include "include/Port.h"
+#include "core/Filter.h"
+#include "core/Port.h"
 #include "types/RawFrame.h"
 #include "types/EncodedFrame.h"
 #include "tools/VideoEncoder.h"
