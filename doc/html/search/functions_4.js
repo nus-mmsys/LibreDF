@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['executefilter',['executeFilter',['../classFilter.html#a4a64945919a215c51f4fb91a30c07019',1,'Filter']]]
+  ['filter',['Filter',['../classFilter.html#a7ae8f58626026a84e7eabde716776ec1',1,'Filter']]]
 ];
