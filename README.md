@@ -10,22 +10,24 @@ In section 2 we explain how a multimedia application developers create an applic
 2) Folder structure
 ===================
 
-core (core package)
-doc (documentations)
-  design
-    tmf.docx (desing document in docx)
-    tmf.pdf (design document in pdf)
-    tmf.eap (UML diagrams in Enterprise Architect)
-  latex (reference manuals in latex)
-  html (reference manuals in html)
-filters
-tmf
-tools
-types
-LICENCE
-Main.cpp
-README.md
-tmf.doxyfile
+Here is how the project is organized.
+
+	core (core package)
+	doc (documentations)
+	  design
+	    tmf.docx (desing document in docx)
+	    tmf.pdf (design document in pdf)
+	    tmf.eap (UML diagrams in Enterprise Architect)
+	  latex (reference manuals in latex)
+	  html (reference manuals in html)
+	filters
+	tmf
+	tools
+	types
+	LICENCE
+	Main.cpp
+	README.md
+	tmf.doxyfile
 
 3) Installation
 ===============
@@ -34,12 +36,12 @@ The project is made by Eclipse Luna and can be directly imported to Eclipse and 
 
 Before compilation make sure that the following libraries are installed:
 
-libavformat-dev
-libavcodec-dev
-libavutil-dev
-libswscale-dev
-libsdl1.2-dev
-zlib1g-dev
+	libavformat-dev
+	libavcodec-dev
+	libavutil-dev
+	libswscale-dev
+	libsdl1.2-dev
+	zlib1g-dev
 
 2) User manual
 ===========
