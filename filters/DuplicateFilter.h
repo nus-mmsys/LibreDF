@@ -21,7 +21,7 @@
 #ifndef DUPLICATEFILTER_H_
 #define DUPLICATEFILTER_H_
 
-#include "include/Filter.h"
+#include "core/Filter.h"
 #include <unistd.h>
 
 struct DuplicateFilter: public Filter {

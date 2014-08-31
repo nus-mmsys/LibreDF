@@ -36,7 +36,7 @@
 #include "filters/ImageWriterFilter.h"
 #include "filters/ImageScalerFilter.h"
 #include "filters/VideoDisplayFilter.h"
-#include "Pipeline.h"
+#include "core/Pipeline.h"
 
 using namespace std;
 

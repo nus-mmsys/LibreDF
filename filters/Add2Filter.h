@@ -21,8 +21,8 @@
 #ifndef ADD2FILTER_H_
 #define ADD2FILTER_H_
 
-#include "include/Filter.h"
-#include "include/Port.h"
+#include "core/Filter.h"
+#include "core/Port.h"
 
 struct Add2Filter: public Filter {
 private:

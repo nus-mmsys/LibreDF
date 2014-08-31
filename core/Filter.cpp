@@ -18,8 +18,8 @@
  *
  */
 
-#include "include/Filter.h"
-#include "include/Port.h"
+#include "Filter.h"
+#include "Port.h"
 
 Filter::Filter(const string &name) {
 

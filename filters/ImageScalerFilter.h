@@ -22,7 +22,7 @@
 #define IMAGESCALERFILTER_H_
 
 #include "tools/VideoScaler.h"
-#include "include/Filter.h"
+#include "core/Filter.h"
 
 #include <string>
 

@@ -21,7 +21,7 @@
 #ifndef IMAGEWRITER_H_
 #define IMAGEWRITER_H_
 
-#include "include/Filter.h"
+#include "core/Filter.h"
 #include "tools/VideoFrameWriter.h"
 
 class ImageWriterFilter: public Filter {

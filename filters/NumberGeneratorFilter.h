@@ -21,7 +21,7 @@
 #ifndef NUMBERGENERATORFILTER_H_
 #define NUMBERGENERATORFILTER_H_
 
-#include "include/Filter.h"
+#include "core/Filter.h"
 
 #include <string>
 #include <unistd.h>

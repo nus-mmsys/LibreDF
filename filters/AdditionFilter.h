@@ -21,7 +21,7 @@
 #ifndef ADDITIONFILTER_H_
 #define ADDITIONFILTER_H_
 
-#include "include/Filter.h"
+#include "core/Filter.h"
 #include <iostream>
 
 struct AdditionFilter: public Filter {
