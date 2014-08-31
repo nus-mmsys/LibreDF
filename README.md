@@ -5,8 +5,41 @@ Tiny Multimedia Framework is a simple multimedia framework to implement multimed
 
 Each filter has a number of input and output ports. Each port has a buffer type and can be connected to other ports with the same type of data. Filters with same type of ports can be connected to each other. A port push the data to its accessors.
 
-In section 2 we explain how a multimedia application developers create an application using the APIs of the framework. In section 3 we exlpain how plugin developers create a new filter using APIs of the framework.
+In section 2 we explain how a multimedia application developers create an application using the APIs of the framework. In section 3 we explain how plug-in developers create a new filter using APIs of the framework.
 
+2) Folder structure
+===================
+
+core (core package)
+doc (documentations)
+  design
+    tmf.docx (desing document in docx)
+    tmf.pdf (design document in pdf)
+    tmf.eap (UML diagrams in Enterprise Architect)
+  latex (reference manuals in latex)
+  html (reference manuals in html)
+filters
+tmf
+tools
+types
+LICENCE
+Main.cpp
+README.md
+tmf.doxyfile
+
+3) Installation
+===============
+
+The project is made by Eclipse Luna and can be directly imported to Eclipse and be compiled.
+
+Before compilation make sure that the following libraries are installed:
+
+libavformat-dev
+libavcodec-dev
+libavutil-dev
+libswscale-dev
+libsdl1.2-dev
+zlib1g-dev
 
 2) User manual
 ===========
@@ -47,7 +80,7 @@ Example:
 3) Plugin developer manual
 =======================
 
-Plugin developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements init() and process() functions.
+Plug-in developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements init() and process() functions.
 
 Here is an example of a filter implementation:
 	
