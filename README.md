@@ -20,10 +20,10 @@ Here is how the project is organized.
 	    tmf.eap (UML diagrams in Enterprise Architect)
 	  latex (reference manuals in latex)
 	  html (reference manuals in html)
-	filters
-	tmf
-	tools
-	types
+	filters (implementation of the filters)
+	tmf (implementations of factories used by application developers)
+	tools (tools to be used by filter implementors)
+	types (implementation of new buffer types)
 	LICENCE
 	Main.cpp
 	README.md
