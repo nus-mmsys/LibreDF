@@ -24,6 +24,7 @@
 #include "Buffer.h"
 #include "Filter.h"
 #include <typeinfo>
+#include <thread>
 
 #define TMF_BUFFER_SIZE 10
 
@@ -248,7 +249,7 @@ public:
 	 */
 
 	//This function must run on a separate thread.
-	void process(Filter *f) {
+	void processThread(Filter *f) {
 		Type * bn = outBuf->getNode();
 
 		vector<Port*>::iterator it;
@@ -258,6 +259,13 @@ public:
 
 		f->processNextFilters(this);
 	}
+
+	void process(Filter *f) {
+		std::thread thr(&OutputPort<Type>::processThread, this, f);
+		thr.join();
+	}
+
+
 
 	/*!
 	 * OutputPort desctructor
