@@ -24,7 +24,7 @@ VideoMuxerFilter::VideoMuxerFilter(string name) :
 		Filter(name) {
 
 	inputPortEncodedFrame = new InputPort<EncodedFrame>(
-			"videoMuxer, input 1, EncodedFrame", this);
+			"videoMuxer, input 1, EncodedFrame");
 
 	inputPorts.push_back(inputPortEncodedFrame);
 

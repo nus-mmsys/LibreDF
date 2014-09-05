@@ -40,11 +40,11 @@ private:
 
 protected:
 	string type; /**< The type of the buffer of the port (note: the typeid is used to
-	                  retrieve the type of the buffer and the type name is not complete.
-	                  This is used when a filter wants to connect ports and needs to know
-	                  the type of the ports) */
+	 retrieve the type of the buffer and the type name is not complete.
+	 This is used when a filter wants to connect ports and needs to know
+	 the type of the ports) */
 
-	Filter * owner; /**< The filter which owns this port */
+	//Filter * owner; /**< The filter which owns this port */
 
 	vector<Port*> nextPorts; /**< A list of the next ports. A subclass filter must add its filters to this list */
 
@@ -56,9 +56,9 @@ public:
 	 * \param name The name of the filter.
 	 * \param owner The owner of the filter
 	 */
-	Port(string name, Filter * owner) :
+	Port(string name /*, Filter * owner*/) :
 			name(name), linked(0), type("") {
-		this->owner = owner;
+		//this->owner = owner;
 	}
 
 	/*!
@@ -102,10 +102,9 @@ public:
 	 *
 	 * \return the owner of the filter
 	 */
-	Filter * getOwner() {
-		return owner;
-	}
-
+	//Filter * getOwner() {
+	//	return owner;
+	//}
 	/*!
 	 * Get next ports
 	 *
@@ -124,14 +123,15 @@ public:
 		nextPorts.push_back(n);
 		this->increaseLinked();
 		n->increaseLinked();
-		n->owner->increaseLinked();
+		//n->owner->increaseLinked();
 	}
 
 	/*!
 	 * Port descructor
 	 *
 	 */
-	virtual ~Port() {}
+	virtual ~Port() {
+	}
 };
 
 /*!
@@ -156,8 +156,8 @@ public:
 	 * \param owner The owner of the port
 	 *
 	 */
-	InputPort(string name, Filter * owner) :
-			Port(name, owner) {
+	InputPort(string name/*, Filter * owner*/) :
+			Port(name/*, owner*/) {
 		type = string((typeid(Type).name()));
 		inBufNode = 0;
 
@@ -172,7 +172,7 @@ public:
 	 */
 	void consume(Type * bn) {
 		inBufNode = bn;
-		owner->executeFilter();
+		//owner->executeFilter();
 	}
 
 	/*!
@@ -215,8 +215,8 @@ public:
 	 * \param owner The owner of the port
 	 *
 	 */
-	OutputPort(string name, Filter * owner) :
-			Port(name, owner) {
+	OutputPort(string name/*, Filter * owner*/) :
+			Port(name/*, owner*/) {
 		outBuf = new Buffer<Type>(TMF_BUFFER_SIZE);
 		type = string(typeid(Type).name());
 	}
@@ -237,7 +237,9 @@ public:
 	 *
 	 * \return the output port buffer
 	 */
-	Buffer<Type> * getBuffer() {return outBuf;}
+	Buffer<Type> * getBuffer() {
+		return outBuf;
+	}
 
 	/*!
 	 * Process the port
@@ -246,13 +248,15 @@ public:
 	 */
 
 	//This function must run on a separate thread.
-	void process() {
+	void process(Filter *f) {
 		Type * bn = outBuf->getNode();
 
 		vector<Port*>::iterator it;
 		for (it = nextPorts.begin(); it != nextPorts.end(); ++it) {
 			((InputPort<Type>*) (*it))->consume(bn);
 		}
+
+		f->processNextFilters(this);
 	}
 
 	/*!

@@ -39,9 +39,9 @@ public:
 
 	NumberGeneratorFilter(const string & name) :
 			Filter(name) {
-		outputInt = new OutputPort<int>("numbergenerator, output 1, int", this);
+		outputInt = new OutputPort<int>("numbergenerator, output 1, int");
 		outputString = new OutputPort<string>(
-				"numbergenerator, output 2, string", this);
+				"numbergenerator, output 2, string");
 
 		outputPorts.push_back(outputInt);
 		outputPorts.push_back(outputString);
@@ -63,9 +63,9 @@ public:
 		outputString->produce(&numstr);
 
 		//This function must run on a separate therad.
-		outputInt->process();
+		outputInt->process(this);
 		//This function must run on a separate therad.
-		outputString->process();
+		outputString->process(this);
 
 		number++;
 

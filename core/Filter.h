@@ -56,6 +56,8 @@ private:
 	int inputFed; /**< The number of data which are already fed to the filter */
 	map<string, string> props; /**< A map containing the message keys and values transfered to filter from a pipeline */
 
+	map<Port*, vector<Filter*>*> nextFilters; /**< A map containing the next filters based on one port. */
+
 protected:
 	Message * inMsg; /**< Input message of the filter */
 	Message * outMsg; /**< Output message of the filter */
@@ -75,6 +77,11 @@ protected:
 	 * Read data from input filter, process the data, and write the result to the output port.
 	 */
 	virtual FilterStatus process() = 0;
+
+	void initNextFilters(Port *p, Message * msg);
+	void addNextFilter(Port * p, Filter *f);
+
+	vector<Filter*> * getNextFilters(Port *);
 
 public:
 
@@ -143,6 +150,16 @@ public:
 	 * Get the number of output port.
 	 */
 	int outputPortNum();
+
+
+	/*!
+	 *
+	 * TODO
+	 * Process all filters which are connected to a port
+	 *
+	 * \param p The output port
+	 */
+	void processNextFilters(Port * p);
 
 	/*!
 	 * Destructor of the filter.

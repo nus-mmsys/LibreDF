@@ -32,8 +32,8 @@ public:
 
 	Multiply2Filter(const string & name) :
 			Filter(name) {
-		input = new InputPort<int>("multiply2, input 1, int", this);
-		output = new OutputPort<int>("multiply2, output 1, int", this);
+		input = new InputPort<int>("multiply2, input 1, int");
+		output = new OutputPort<int>("multiply2, output 1, int");
 
 		inputPorts.push_back(input);
 		outputPorts.push_back(output);
@@ -55,7 +55,8 @@ public:
 
 		output->produce(&outputData);
 
-		output->process();
+		output->process(this);
+
 		return FILTER_SUCCESS;
 	}
 

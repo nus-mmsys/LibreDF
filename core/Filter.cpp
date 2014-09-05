@@ -47,6 +47,9 @@ void Filter::connectFilter(Filter * f) {
 			if (((Port*) (*itIn))->getLinked() == 0 && (typeOut == typeIn)) {
 
 				((Port*) (*itOut))->addNextPort(((Port*) (*itIn)));
+
+				addNextFilter(((Port*) (*itOut)), f);
+
 				linked = true;
 				break;
 			}
@@ -89,12 +92,19 @@ FilterStatus Filter::initFilter(Message * msg) {
 
 	vector<Port*>::iterator itIn;
 	for (itIn = outputPorts.begin(); itIn != outputPorts.end(); ++itIn) {
-		vector<Port*>::iterator itNxt;
+
 		Port * curPort = (*itIn);
-		for (itNxt = curPort->getNextPorts().begin();
-				itNxt != curPort->getNextPorts().end(); ++itNxt) {
-			(*itNxt)->getOwner()->initFilter(outMsg);
-		}
+		initNextFilters(curPort, outMsg);
+
+		/*
+		 vector<Filter*>::iterator itNxt;
+		 vector<Filter*> nextFilter = getNextFilters(curPort);
+
+		 for (itNxt = nextFilter.begin(); itNxt != nextFilter.end(); ++itNxt) {
+		 //this->nextFilters[(*itNxt)]
+		 (*itNxt)->initFilter(outMsg);
+		 }
+		 */
 	}
 
 	return status;
@@ -110,6 +120,45 @@ int Filter::inputPortNum() {
 
 int Filter::outputPortNum() {
 	return outputPorts.size();
+}
+
+void Filter::processNextFilters(Port * p) {
+	vector<Filter*> * nextFilters = getNextFilters(p);
+	vector<Filter*>::iterator itNxt;
+	for (itNxt = nextFilters->begin(); itNxt != nextFilters->end(); ++itNxt) {
+		(*itNxt)->executeFilter();
+	}
+}
+
+void Filter::initNextFilters(Port *p, Message * msg) {
+	vector<Filter*> * nextFilters = getNextFilters(p);
+	vector<Filter*>::iterator itNxt;
+	for (itNxt = nextFilters->begin(); itNxt != nextFilters->end(); ++itNxt) {
+		(*itNxt)->initFilter(msg);
+	}
+}
+
+vector<Filter*> * Filter::getNextFilters(Port *p) {
+	return this->nextFilters[p];
+}
+
+void Filter::addNextFilter(Port * p, Filter *f) {
+	std::map<Port*, vector<Filter*>*>::iterator it;
+
+	it = this->nextFilters.find(p);
+
+	vector<Filter*> * nf;
+	if (it == this->nextFilters.end()) {
+		nf = new vector<Filter*>();
+		this->nextFilters.emplace(p, nf);
+	} else {
+		nf = getNextFilters(p);
+	}
+
+	nf->push_back(f);
+
+	f->increaseLinked();
+
 }
 
 Filter::~Filter() {

@@ -36,8 +36,7 @@ public:
 	ImageWriterFilter(string name) :
 			Filter(name) {
 
-		inputFrame = new InputPort<RawFrame>("imageWriter, input 1, AVFrame",
-				this);
+		inputFrame = new InputPort<RawFrame>("imageWriter, input 1, AVFrame");
 
 		inputPorts.push_back(inputFrame);
 

@@ -34,8 +34,8 @@ public:
 
 	DuplicateFilter(const string & name) :
 			Filter(name) {
-		input = new InputPort<string>("duplicate, input 1, string", this);
-		output = new OutputPort<string>("duplicate, output 1, string", this);
+		input = new InputPort<string>("duplicate, input 1, string");
+		output = new OutputPort<string>("duplicate, output 1, string");
 
 		inputPorts.push_back(input);
 		outputPorts.push_back(output);

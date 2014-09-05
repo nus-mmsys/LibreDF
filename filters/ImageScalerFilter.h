@@ -40,11 +40,9 @@ public:
 
 	ImageScalerFilter(string name) : Filter(name) {
 
-		inputPortFrame = new InputPort<RawFrame>("imageScaler, input, Frame",
-				this);
+		inputPortFrame = new InputPort<RawFrame>("imageScaler, input, Frame");
 
-		outputPortFrame = new OutputPort<RawFrame>("imageScaler, output, Frame",
-				this);
+		outputPortFrame = new OutputPort<RawFrame>("imageScaler, output, Frame");
 
 		inputPorts.push_back(inputPortFrame);
 		outputPorts.push_back(outputPortFrame);
@@ -106,7 +104,8 @@ public:
 		videoScaler->scale(inFrame, outFrame);
 
 		outputPortFrame->produce(outFrame);
-		outputPortFrame->process();
+		outputPortFrame->process(this);
+
 
 		return status;
 	}

@@ -36,8 +36,7 @@ public:
 	VideoDecoderFilter(string name) :
 			Filter(name) {
 
-		outputFrame = new OutputPort<RawFrame>("videoDecoder, output 1, AVFrame",
-				this);
+		outputFrame = new OutputPort<RawFrame>("videoDecoder, output 1, AVFrame");
 
 		outputPorts.push_back(outputFrame);
 
@@ -80,7 +79,7 @@ public:
 		//BufferNode<AVFrame> bn(pFrame);
 
 		outputFrame->produce(pFrame);
-		outputFrame->process();
+		outputFrame->process(this);
 
 		return FILTER_SUCCESS;
 	}

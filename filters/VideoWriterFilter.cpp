@@ -11,7 +11,7 @@ VideoWriterFilter::VideoWriterFilter(string name) :
 		Filter(name) {
 
 	inputPortRawFrame = new InputPort<RawFrame>(
-			"videoMuxer, input 1, EncodedFrame", this);
+			"videoMuxer, input 1, EncodedFrame");
 
 	inputPorts.push_back(inputPortRawFrame);
 

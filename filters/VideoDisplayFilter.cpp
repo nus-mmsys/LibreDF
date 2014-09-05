@@ -11,7 +11,7 @@ VideoDisplayFilter::VideoDisplayFilter(string name) :
 		Filter(name) {
 
 	inputPortRawFrame = new InputPort<RawFrame>(
-			"videoEncoder, input 1, RawFrame", this);
+			"videoEncoder, input 1, RawFrame");
 
 	inputPorts.push_back(inputPortRawFrame);
 

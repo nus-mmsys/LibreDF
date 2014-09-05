@@ -24,9 +24,9 @@ VideoEncoderFilter::VideoEncoderFilter(string name) :
 		Filter(name) {
 
 	inputPortRawFrame = new InputPort<RawFrame>(
-			"videoEncoder, input 1, RawFrame", this);
+			"videoEncoder, input 1, RawFrame");
 	outputPortEncodedFrame = new OutputPort<EncodedFrame>(
-			"videoEncoder, output 1, EncodedFrame", this);
+			"videoEncoder, output 1, EncodedFrame");
 
 	inputPorts.push_back(inputPortRawFrame);
 	outputPorts.push_back(outputPortEncodedFrame);
@@ -76,7 +76,7 @@ FilterStatus VideoEncoderFilter::process() {
 	videoEncoder->encode(inFrame, outFrame);
 
 	outputPortEncodedFrame->produce(outFrame);
-	outputPortEncodedFrame->process();
+	outputPortEncodedFrame->process(this);
 
 	return FILTER_SUCCESS;
 }

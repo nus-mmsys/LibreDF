@@ -35,9 +35,9 @@ public:
 
 	AdditionFilter(const string & name) :
 			Filter(name) {
-		input1 = new InputPort<int>("addition, input 1, int", this);
-		input2 = new InputPort<int>("addition, input 2, int", this);
-		output = new OutputPort<int>("addition, output 1, int", this);
+		input1 = new InputPort<int>("addition, input 1, int");
+		input2 = new InputPort<int>("addition, input 2, int");
+		output = new OutputPort<int>("addition, output 1, int");
 
 		inputPorts.push_back(input1);
 		inputPorts.push_back(input2);
@@ -67,6 +67,7 @@ public:
 		//output->process();
 
 		cout << "Addition= " << outputData << endl;
+
 		//usleep(100000);
 		return FILTER_SUCCESS;
 
