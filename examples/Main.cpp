@@ -18,7 +18,7 @@
  *
  */
 
-#include "tmffactory/tmf.h"
+#include "tmf.h"
 
 #define APP6
 
