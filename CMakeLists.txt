@@ -20,3 +20,13 @@ add_library(tmf SHARED ${core_headers} ${core_sources}
                              ${tools_headers} ${tools_sources}
                              ${types_headers} ${types_sources}
                              ${tmffactory_headers} ${tmffactory_sources} )
+
+
+target_link_libraries(tmf avformat avcodec avutil avdevice swscale SDL)
+
+add_subdirectory(examples)
+
+add_executable(example ${examples_sources})
+
+target_link_libraries(example tmf)
+
