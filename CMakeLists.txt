@@ -6,7 +6,7 @@ set (VERSION_MAJOR 1)
 set (VERSION_MINOR 0)
 
 set(CMAKE_CXX_FLAGS "-std=c++0x")
-set(EXTERNAL_LIBRARIES avformat avcodec avutil avdevice swscale SDL)
+set(EXTERNAL_LIBRARIES m z avformat avcodec avutil avdevice swscale SDL)
 
 include_directories(. core filters tools types tmffactory)
 
