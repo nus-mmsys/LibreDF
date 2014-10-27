@@ -132,9 +132,15 @@ void Filter::processNextFilters(Port * p) {
 
 void Filter::initNextFilters(Port *p, Message * msg) {
 	vector<Filter*> * nextFilters = getNextFilters(p);
-	vector<Filter*>::iterator itNxt;
-	for (itNxt = nextFilters->begin(); itNxt != nextFilters->end(); ++itNxt) {
-		(*itNxt)->initFilter(msg);
+	if (nextFilters) {
+
+		for (auto i : *nextFilters) {
+			i->initFilter(msg);
+		}
+		//for (vector<Filter*>::iterator itNxt = nextFilters->begin(); itNxt != nextFilters->end();
+		//		++itNxt) {
+		//	(*itNxt)->initFilter(msg);
+		//}
 	}
 }
 
