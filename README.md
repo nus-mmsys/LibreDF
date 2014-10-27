@@ -12,6 +12,7 @@ In section 2 we explain how a multimedia application developers create an applic
 
 Here is how the project is organized.
 
+	build (cmake build directory)
 	core (core package)
 	doc (documentations)
 	  design
@@ -20,12 +21,12 @@ Here is how the project is organized.
 	    tmf.eap (UML diagrams in Enterprise Architect)
 	  latex (reference manuals in latex)
 	  html (reference manuals in html)
+	examples (contains examples using tmf library)
 	filters (implementation of the filters)
 	tmffactory (implementations of factories used by application developers)
 	tools (tools to be used by filter implementors)
 	types (implementation of new buffer types)
 	LICENCE
-	Main.cpp
 	README.md
 	tmf.doxyfile
 
