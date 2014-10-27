@@ -21,7 +21,7 @@ Here is how the project is organized.
 	  latex (reference manuals in latex)
 	  html (reference manuals in html)
 	filters (implementation of the filters)
-	tmf (implementations of factories used by application developers)
+	tmffactory (implementations of factories used by application developers)
 	tools (tools to be used by filter implementors)
 	types (implementation of new buffer types)
 	LICENCE
@@ -35,7 +35,7 @@ Here is how the project is organized.
 	cd build
 	./build.sh
 	# or
-	./build-debug.sh #for debuging
+	./build-debug.sh # for debuging
 
 Before compilation make sure that the following libraries are installed:
 
