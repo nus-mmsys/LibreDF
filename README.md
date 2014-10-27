@@ -32,7 +32,10 @@ Here is how the project is organized.
 3) Installation
 ===============
 
-The project is made by Eclipse Luna and can be directly imported to Eclipse and be compiled.
+	cd build
+	./build.sh
+	# or
+	./build-debug.sh #for debuging
 
 Before compilation make sure that the following libraries are installed:
 
