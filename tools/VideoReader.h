@@ -172,7 +172,11 @@ public:
 			av_free_packet(&packet);
 		}
 
+
+
 		// Flush decoder
+		packet.data = NULL;
+		packet.size = 0;
 		avcodec_decode_video2(pCodecCtx, pFrame, &frameFinished, &packet);
 
 		// Did we get a video frame?
