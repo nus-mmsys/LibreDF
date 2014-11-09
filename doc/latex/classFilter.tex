@@ -26,6 +26,8 @@ int \hyperlink{classFilter_adc71a72a2a0547864ecfb22d5c25a296}{input\-Port\-Num} 
 \item 
 int \hyperlink{classFilter_a73560f4a4872c4598f5b6842c278b34b}{output\-Port\-Num} ()
 \item 
+void \hyperlink{classFilter_a5c37b57c7c53d5712d28161a58ba6bb9}{process\-Next\-Filters} (\hyperlink{classPort}{Port} $\ast$p)
+\item 
 virtual \hyperlink{classFilter_a502ee334d42eac3edbaf32b599f9c35e}{$\sim$\-Filter} ()
 \end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
@@ -34,6 +36,15 @@ virtual \hyperlink{classFilter_a502ee334d42eac3edbaf32b599f9c35e}{$\sim$\-Filter
 \hyperlink{classFilter_a7ae8f58626026a84e7eabde716776ec1}{Filter} (const string \&name)
 \item 
 virtual Filter\-Status \hyperlink{classFilter_afc96de71a53a15012de467491cf4e295}{process} ()=0
+\item 
+\hypertarget{classFilter_a8bd672f5b5632a7ec832d5e53fb9df7b}{void {\bfseries init\-Next\-Filters} (\hyperlink{classPort}{Port} $\ast$p, \hyperlink{classMessage}{Message} $\ast$msg)}\label{classFilter_a8bd672f5b5632a7ec832d5e53fb9df7b}
+
+\item 
+\hypertarget{classFilter_a408bb81b8b89ec1f29406099885bca21}{void {\bfseries add\-Next\-Filter} (\hyperlink{classPort}{Port} $\ast$p, \hyperlink{classFilter}{Filter} $\ast$f)}\label{classFilter_a408bb81b8b89ec1f29406099885bca21}
+
+\item 
+\hypertarget{classFilter_a754fdff6368404b07e32b802b1a1b80c}{vector$<$ \hyperlink{classFilter}{Filter} $\ast$ $>$ $\ast$ {\bfseries get\-Next\-Filters} (\hyperlink{classPort}{Port} $\ast$)}\label{classFilter_a754fdff6368404b07e32b802b1a1b80c}
+
 \end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
@@ -161,7 +172,21 @@ Get the number of output port. \hypertarget{classFilter_afc96de71a53a15012de4674
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classFilter_afc96de71a53a15012de467491cf4e295}
-Virtual function, to be implemented in the subclass filters. Read data from input filter, process the data, and write the result to the output port. \hypertarget{classFilter_ae089d87624ac09bedb2f14c828883059}{\index{Filter@{Filter}!set\-Prop@{set\-Prop}}
+Virtual function, to be implemented in the subclass filters. Read data from input filter, process the data, and write the result to the output port. \hypertarget{classFilter_a5c37b57c7c53d5712d28161a58ba6bb9}{\index{Filter@{Filter}!process\-Next\-Filters@{process\-Next\-Filters}}
+\index{process\-Next\-Filters@{process\-Next\-Filters}!Filter@{Filter}}
+\subsubsection[{process\-Next\-Filters}]{\setlength{\rightskip}{0pt plus 5cm}void Filter\-::process\-Next\-Filters (
+\begin{DoxyParamCaption}
+\item[{{\bf Port} $\ast$}]{p}
+\end{DoxyParamCaption}
+)}}\label{classFilter_a5c37b57c7c53d5712d28161a58ba6bb9}
+T\-O\-D\-O Process all filters which are connected to a port
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & The output port \\
+\hline
+\end{DoxyParams}
+\hypertarget{classFilter_ae089d87624ac09bedb2f14c828883059}{\index{Filter@{Filter}!set\-Prop@{set\-Prop}}
 \index{set\-Prop@{set\-Prop}!Filter@{Filter}}
 \subsubsection[{set\-Prop}]{\setlength{\rightskip}{0pt plus 5cm}void Filter\-::set\-Prop (
 \begin{DoxyParamCaption}

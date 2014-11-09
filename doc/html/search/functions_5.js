@@ -6,7 +6,6 @@ var searchData=
   ['getnextnode',['getNextNode',['../classBuffer.html#a7d9e40fc3292f66d621cf37c6619fa8c',1,'Buffer']]],
   ['getnextports',['getNextPorts',['../classPort.html#a9004fcb7c9568ca55857ca37fc3c5c61',1,'Port']]],
   ['getnode',['getNode',['../classBuffer.html#a87f91c2965778908f3c38076b10c0799',1,'Buffer::getNode()'],['../classBuffer.html#a8de2839a0d95f8473a8da54c49e5067f',1,'Buffer::getNode(int i)']]],
-  ['getowner',['getOwner',['../classPort.html#ac579bc6a77317e121b3922757449018c',1,'Port']]],
   ['getprop',['getProp',['../classFilter.html#a18ef0744ac52a3eacf40f3f51b94ebff',1,'Filter']]],
   ['getpropint',['getPropInt',['../classMessage.html#a13afe897a221adcd40f5d79cfd6ca2c9',1,'Message']]],
   ['getpropstring',['getPropString',['../classMessage.html#a7f96d564782e4c2fdccdd92f3c73d617',1,'Message']]],

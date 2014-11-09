@@ -14,7 +14,7 @@ Inheritance diagram for Port\-:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classPort_a664b8cba25b5e7201a80e96827acaa60}{Port} (string name, \hyperlink{classFilter}{Filter} $\ast$\hyperlink{classPort_a09f3613b92c0d46d0aa8c3239102a3ca}{owner})
+\hyperlink{classPort_abfb87277bc422b768ccdabd53b23fb83}{Port} (string name)
 \item 
 string \hyperlink{classPort_a16e393f7d744d91a7d7f8eb6bd675860}{get\-Name} ()
 \item 
@@ -23,8 +23,6 @@ int \hyperlink{classPort_a8bcebf2e996d12b8bc57cbf17a44ceed}{get\-Linked} ()
 void \hyperlink{classPort_ab3f05bf2221eff2c073e43c215b9507d}{increase\-Linked} ()
 \item 
 string \hyperlink{classPort_a9a42f2968f394a57b146e8909349c65e}{get\-Type} ()
-\item 
-\hyperlink{classFilter}{Filter} $\ast$ \hyperlink{classPort_ac579bc6a77317e121b3922757449018c}{get\-Owner} ()
 \item 
 vector$<$ \hyperlink{classPort}{Port} $\ast$ $>$ \& \hyperlink{classPort_a9004fcb7c9568ca55857ca37fc3c5c61}{get\-Next\-Ports} ()
 \item 
@@ -37,8 +35,6 @@ virtual \hyperlink{classPort_a2a6f52a2c46c5f98a3f557707be45c54}{$\sim$\-Port} ()
 \item 
 string \hyperlink{classPort_af6073dc317b75da3997f7214e4bcc936}{type}
 \item 
-\hyperlink{classFilter}{Filter} $\ast$ \hyperlink{classPort_a09f3613b92c0d46d0aa8c3239102a3ca}{owner}
-\item 
 vector$<$ \hyperlink{classPort}{Port} $\ast$ $>$ \hyperlink{classPort_a8fc5c440becfcd3ea02cac7656097de1}{next\-Ports}
 \end{DoxyCompactItemize}
 
@@ -47,14 +43,13 @@ vector$<$ \hyperlink{classPort}{Port} $\ast$ $>$ \hyperlink{classPort_a8fc5c440b
 Abstraction of a port in a filter. A port can be either input port of output port. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classPort_a664b8cba25b5e7201a80e96827acaa60}{\index{Port@{Port}!Port@{Port}}
+\hypertarget{classPort_abfb87277bc422b768ccdabd53b23fb83}{\index{Port@{Port}!Port@{Port}}
 \index{Port@{Port}!Port@{Port}}
 \subsubsection[{Port}]{\setlength{\rightskip}{0pt plus 5cm}Port\-::\-Port (
 \begin{DoxyParamCaption}
-\item[{string}]{name, }
-\item[{{\bf Filter} $\ast$}]{owner}
+\item[{string}]{name}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPort_a664b8cba25b5e7201a80e96827acaa60}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPort_abfb87277bc422b768ccdabd53b23fb83}
 \hyperlink{classPort}{Port} constructor
 
 
@@ -119,22 +114,15 @@ the name of the port.
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPort_a9004fcb7c9568ca55857ca37fc3c5c61}
+Get the owner of the port
+
+\begin{DoxyReturn}{Returns}
+the owner of the filter
+\end{DoxyReturn}
 Get next ports
 
 \begin{DoxyReturn}{Returns}
 the next ports 
-\end{DoxyReturn}
-\hypertarget{classPort_ac579bc6a77317e121b3922757449018c}{\index{Port@{Port}!get\-Owner@{get\-Owner}}
-\index{get\-Owner@{get\-Owner}!Port@{Port}}
-\subsubsection[{get\-Owner}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Filter}$\ast$ Port\-::get\-Owner (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPort_ac579bc6a77317e121b3922757449018c}
-Get the owner of the port
-
-\begin{DoxyReturn}{Returns}
-the owner of the filter 
 \end{DoxyReturn}
 \hypertarget{classPort_a9a42f2968f394a57b146e8909349c65e}{\index{Port@{Port}!get\-Type@{get\-Type}}
 \index{get\-Type@{get\-Type}!Port@{Port}}
@@ -161,10 +149,7 @@ Increase the number of the ports linked to the port. (The filter uses this funct
 \hypertarget{classPort_a8fc5c440becfcd3ea02cac7656097de1}{\index{Port@{Port}!next\-Ports@{next\-Ports}}
 \index{next\-Ports@{next\-Ports}!Port@{Port}}
 \subsubsection[{next\-Ports}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf Port}$\ast$$>$ Port\-::next\-Ports\hspace{0.3cm}{\ttfamily [protected]}}}\label{classPort_a8fc5c440becfcd3ea02cac7656097de1}
-A list of the next ports. A subclass filter must add its filters to this list \hypertarget{classPort_a09f3613b92c0d46d0aa8c3239102a3ca}{\index{Port@{Port}!owner@{owner}}
-\index{owner@{owner}!Port@{Port}}
-\subsubsection[{owner}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Filter}$\ast$ Port\-::owner\hspace{0.3cm}{\ttfamily [protected]}}}\label{classPort_a09f3613b92c0d46d0aa8c3239102a3ca}
-The filter which owns this port \hypertarget{classPort_af6073dc317b75da3997f7214e4bcc936}{\index{Port@{Port}!type@{type}}
+A list of the next ports. A subclass filter must add its filters to this list \hypertarget{classPort_af6073dc317b75da3997f7214e4bcc936}{\index{Port@{Port}!type@{type}}
 \index{type@{type}!Port@{Port}}
 \subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}string Port\-::type\hspace{0.3cm}{\ttfamily [protected]}}}\label{classPort_af6073dc317b75da3997f7214e4bcc936}
 The type of the buffer of the port (note\-: the typeid is used to retrieve the type of the buffer and the type name is not complete. This is used when a filter wants to connect ports and needs to know the type of the ports) 

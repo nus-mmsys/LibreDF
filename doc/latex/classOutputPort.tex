@@ -14,13 +14,16 @@ Inheritance diagram for Output\-Port$<$ Type $>$\-:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classOutputPort_a4126611ec1f6190719f6647e64f9a668}{Output\-Port} (string name, \hyperlink{classFilter}{Filter} $\ast$\hyperlink{classPort_a09f3613b92c0d46d0aa8c3239102a3ca}{owner})
+\hyperlink{classOutputPort_a98259a5fe42207262746c804152ce711}{Output\-Port} (string name)
 \item 
 void \hyperlink{classOutputPort_a18fe6d7d5be0a04f23b9048124553fa3}{produce} (Type $\ast$bn)
 \item 
 \hyperlink{classBuffer}{Buffer}$<$ Type $>$ $\ast$ \hyperlink{classOutputPort_a0bd9c526a6d3848fd5ecdcc4935c3f43}{get\-Buffer} ()
 \item 
-void \hyperlink{classOutputPort_a2d205a671f55bb81e8bf4abe68210e27}{process} ()
+void \hyperlink{classOutputPort_ab6ef20f12eab6ac3188fff5f9bf34074}{process\-Thread} (\hyperlink{classFilter}{Filter} $\ast$f)
+\item 
+\hypertarget{classOutputPort_a42af5c7e99f82f595386e2c0d21da5ce}{void {\bfseries process} (\hyperlink{classFilter}{Filter} $\ast$f)}\label{classOutputPort_a42af5c7e99f82f595386e2c0d21da5ce}
+
 \item 
 \hyperlink{classOutputPort_ac77e96c8a7b605b011043efdc5a905df}{$\sim$\-Output\-Port} ()
 \end{DoxyCompactItemize}
@@ -33,14 +36,13 @@ void \hyperlink{classOutputPort_a2d205a671f55bb81e8bf4abe68210e27}{process} ()
 \hyperlink{classOutputPort}{Output\-Port} class is a subclass of the \hyperlink{classPort}{Port} class. It is a class template and the type of the buffer of the port is a template. 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classOutputPort_a4126611ec1f6190719f6647e64f9a668}{\index{Output\-Port@{Output\-Port}!Output\-Port@{Output\-Port}}
+\hypertarget{classOutputPort_a98259a5fe42207262746c804152ce711}{\index{Output\-Port@{Output\-Port}!Output\-Port@{Output\-Port}}
 \index{Output\-Port@{Output\-Port}!OutputPort@{Output\-Port}}
 \subsubsection[{Output\-Port}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Type $>$ {\bf Output\-Port}$<$ Type $>$\-::{\bf Output\-Port} (
 \begin{DoxyParamCaption}
-\item[{string}]{name, }
-\item[{{\bf Filter} $\ast$}]{owner}
+\item[{string}]{name}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classOutputPort_a4126611ec1f6190719f6647e64f9a668}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classOutputPort_a98259a5fe42207262746c804152ce711}
 \hyperlink{classOutputPort}{Output\-Port} constructor
 
 
@@ -72,13 +74,13 @@ Get buffer
 \begin{DoxyReturn}{Returns}
 the output port buffer 
 \end{DoxyReturn}
-\hypertarget{classOutputPort_a2d205a671f55bb81e8bf4abe68210e27}{\index{Output\-Port@{Output\-Port}!process@{process}}
-\index{process@{process}!OutputPort@{Output\-Port}}
-\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Type $>$ void {\bf Output\-Port}$<$ Type $>$\-::process (
+\hypertarget{classOutputPort_ab6ef20f12eab6ac3188fff5f9bf34074}{\index{Output\-Port@{Output\-Port}!process\-Thread@{process\-Thread}}
+\index{process\-Thread@{process\-Thread}!OutputPort@{Output\-Port}}
+\subsubsection[{process\-Thread}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Type $>$ void {\bf Output\-Port}$<$ Type $>$\-::process\-Thread (
 \begin{DoxyParamCaption}
-{}
+\item[{{\bf Filter} $\ast$}]{f}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classOutputPort_a2d205a671f55bb81e8bf4abe68210e27}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classOutputPort_ab6ef20f12eab6ac3188fff5f9bf34074}
 Process the port It calls consume function of the next ports and therefore executes the next filters \hypertarget{classOutputPort_a18fe6d7d5be0a04f23b9048124553fa3}{\index{Output\-Port@{Output\-Port}!produce@{produce}}
 \index{produce@{produce}!OutputPort@{Output\-Port}}
 \subsubsection[{produce}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Type $>$ void {\bf Output\-Port}$<$ Type $>$\-::produce (

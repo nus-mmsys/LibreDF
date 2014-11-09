@@ -105,8 +105,8 @@ Inheritance diagram for Port:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a664b8cba25b5e7201a80e96827acaa60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#a664b8cba25b5e7201a80e96827acaa60">Port</a> (string name, <a class="el" href="classFilter.html">Filter</a> *<a class="el" href="classPort.html#a09f3613b92c0d46d0aa8c3239102a3ca">owner</a>)</td></tr>
-<tr class="separator:a664b8cba25b5e7201a80e96827acaa60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb87277bc422b768ccdabd53b23fb83"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#abfb87277bc422b768ccdabd53b23fb83">Port</a> (string name)</td></tr>
+<tr class="separator:abfb87277bc422b768ccdabd53b23fb83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16e393f7d744d91a7d7f8eb6bd675860"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#a16e393f7d744d91a7d7f8eb6bd675860">getName</a> ()</td></tr>
 <tr class="separator:a16e393f7d744d91a7d7f8eb6bd675860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8bcebf2e996d12b8bc57cbf17a44ceed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#a8bcebf2e996d12b8bc57cbf17a44ceed">getLinked</a> ()</td></tr>
@@ -115,8 +115,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab3f05bf2221eff2c073e43c215b9507d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a42f2968f394a57b146e8909349c65e"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#a9a42f2968f394a57b146e8909349c65e">getType</a> ()</td></tr>
 <tr class="separator:a9a42f2968f394a57b146e8909349c65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac579bc6a77317e121b3922757449018c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFilter.html">Filter</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#ac579bc6a77317e121b3922757449018c">getOwner</a> ()</td></tr>
-<tr class="separator:ac579bc6a77317e121b3922757449018c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9004fcb7c9568ca55857ca37fc3c5c61"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classPort.html">Port</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#a9004fcb7c9568ca55857ca37fc3c5c61">getNextPorts</a> ()</td></tr>
 <tr class="separator:a9004fcb7c9568ca55857ca37fc3c5c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa78af70b4c46ed8b7a4ee127d5d46d8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#aa78af70b4c46ed8b7a4ee127d5d46d8d">addNextPort</a> (<a class="el" href="classPort.html">Port</a> *n)</td></tr>
@@ -128,15 +126,13 @@ Public Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:af6073dc317b75da3997f7214e4bcc936"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#af6073dc317b75da3997f7214e4bcc936">type</a></td></tr>
 <tr class="separator:af6073dc317b75da3997f7214e4bcc936"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09f3613b92c0d46d0aa8c3239102a3ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classFilter.html">Filter</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#a09f3613b92c0d46d0aa8c3239102a3ca">owner</a></td></tr>
-<tr class="separator:a09f3613b92c0d46d0aa8c3239102a3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fc5c440becfcd3ea02cac7656097de1"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="classPort.html">Port</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPort.html#a8fc5c440becfcd3ea02cac7656097de1">nextPorts</a></td></tr>
 <tr class="separator:a8fc5c440becfcd3ea02cac7656097de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstraction of a port in a filter. A port can be either input port of output port. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a664b8cba25b5e7201a80e96827acaa60"></a>
+<a class="anchor" id="abfb87277bc422b768ccdabd53b23fb83"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -147,18 +143,8 @@ Protected Attributes</h2></td></tr>
           <td class="memname">Port::Port </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classFilter.html">Filter</a> *&#160;</td>
-          <td class="paramname"><em>owner</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -304,33 +290,10 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the owner of the port</p>
+<dl class="section return"><dt>Returns</dt><dd>the owner of the filter</dd></dl>
 <p>Get next ports</p>
 <dl class="section return"><dt>Returns</dt><dd>the next ports </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac579bc6a77317e121b3922757449018c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFilter.html">Filter</a>* Port::getOwner </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Get the owner of the port</p>
-<dl class="section return"><dt>Returns</dt><dd>the owner of the filter </dd></dl>
 
 </div>
 </div>
@@ -405,27 +368,6 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a09f3613b92c0d46d0aa8c3239102a3ca"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFilter.html">Filter</a>* Port::owner</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The filter which owns this port </p>
-
-</div>
-</div>
 <a class="anchor" id="af6073dc317b75da3997f7214e4bcc936"></a>
 <div class="memitem">
 <div class="memproto">
@@ -453,7 +395,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 31 2014 14:18:32 for Tiny Multimedia Framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Nov 9 2014 22:51:01 for Tiny Multimedia Framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

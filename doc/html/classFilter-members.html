@@ -89,26 +89,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="classFilter.html">Filter</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#aa5dcdeb22491c1888e66005fdec40c67">connectFilter</a>(Filter *f)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classFilter.html#a4a64945919a215c51f4fb91a30c07019">executeFilter</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#a7ae8f58626026a84e7eabde716776ec1">Filter</a>(const string &amp;name)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>addNextFilter</b>(Port *p, Filter *f) (defined in <a class="el" href="classFilter.html">Filter</a>)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFilter.html#aa5dcdeb22491c1888e66005fdec40c67">connectFilter</a>(Filter *f)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#a4a64945919a215c51f4fb91a30c07019">executeFilter</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classFilter.html#a7ae8f58626026a84e7eabde716776ec1">Filter</a>(const string &amp;name)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>getNextFilters</b>(Port *) (defined in <a class="el" href="classFilter.html">Filter</a>)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classFilter.html#a18ef0744ac52a3eacf40f3f51b94ebff">getProp</a>(const string &amp;key)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFilter.html#af03e918aa936ad6db1fe073a4c0f7936">increaseLinked</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classFilter.html#a16bc703e6da3656e8c86304bdda0c87e">init</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFilter.html#aa7227c3c2da4751e5bd2da7a06488a2e">initFilter</a>(Message *msg)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classFilter.html#ac938e02933af2dfb267895d260221d92">inMsg</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#adc71a72a2a0547864ecfb22d5c25a296">inputPortNum</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classFilter.html#ad09f0773f4b96d6f9ac143bb5b046d0b">inputPorts</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#a5c1d2a7a7da437769281029505ef3054">outMsg</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFilter.html#a73560f4a4872c4598f5b6842c278b34b">outputPortNum</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#abf9b24a29561046ca09c65f5dde427ea">outputPorts</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classFilter.html#afc96de71a53a15012de467491cf4e295">process</a>()=0</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>initNextFilters</b>(Port *p, Message *msg) (defined in <a class="el" href="classFilter.html">Filter</a>)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#ac938e02933af2dfb267895d260221d92">inMsg</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFilter.html#adc71a72a2a0547864ecfb22d5c25a296">inputPortNum</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#ad09f0773f4b96d6f9ac143bb5b046d0b">inputPorts</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFilter.html#a5c1d2a7a7da437769281029505ef3054">outMsg</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#a73560f4a4872c4598f5b6842c278b34b">outputPortNum</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classFilter.html#abf9b24a29561046ca09c65f5dde427ea">outputPorts</a></td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classFilter.html#afc96de71a53a15012de467491cf4e295">process</a>()=0</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classFilter.html#a5c37b57c7c53d5712d28161a58ba6bb9">processNextFilters</a>(Port *p)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classFilter.html#ae089d87624ac09bedb2f14c828883059">setProp</a>(const string &amp;key, const string &amp;val)</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classFilter.html#a502ee334d42eac3edbaf32b599f9c35e">~Filter</a>()</td><td class="entry"><a class="el" href="classFilter.html">Filter</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 31 2014 14:18:30 for Tiny Multimedia Framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Nov 9 2014 22:51:01 for Tiny Multimedia Framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

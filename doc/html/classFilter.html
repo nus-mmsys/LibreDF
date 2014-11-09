@@ -114,6 +114,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adc71a72a2a0547864ecfb22d5c25a296"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73560f4a4872c4598f5b6842c278b34b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFilter.html#a73560f4a4872c4598f5b6842c278b34b">outputPortNum</a> ()</td></tr>
 <tr class="separator:a73560f4a4872c4598f5b6842c278b34b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c37b57c7c53d5712d28161a58ba6bb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFilter.html#a5c37b57c7c53d5712d28161a58ba6bb9">processNextFilters</a> (<a class="el" href="classPort.html">Port</a> *p)</td></tr>
+<tr class="separator:a5c37b57c7c53d5712d28161a58ba6bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a502ee334d42eac3edbaf32b599f9c35e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFilter.html#a502ee334d42eac3edbaf32b599f9c35e">~Filter</a> ()</td></tr>
 <tr class="separator:a502ee334d42eac3edbaf32b599f9c35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -123,6 +125,15 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a7ae8f58626026a84e7eabde716776ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc96de71a53a15012de467491cf4e295"><td class="memItemLeft" align="right" valign="top">virtual FilterStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFilter.html#afc96de71a53a15012de467491cf4e295">process</a> ()=0</td></tr>
 <tr class="separator:afc96de71a53a15012de467491cf4e295"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd672f5b5632a7ec832d5e53fb9df7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bd672f5b5632a7ec832d5e53fb9df7b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>initNextFilters</b> (<a class="el" href="classPort.html">Port</a> *p, <a class="el" href="classMessage.html">Message</a> *msg)</td></tr>
+<tr class="separator:a8bd672f5b5632a7ec832d5e53fb9df7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a408bb81b8b89ec1f29406099885bca21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a408bb81b8b89ec1f29406099885bca21"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addNextFilter</b> (<a class="el" href="classPort.html">Port</a> *p, <a class="el" href="classFilter.html">Filter</a> *f)</td></tr>
+<tr class="separator:a408bb81b8b89ec1f29406099885bca21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a754fdff6368404b07e32b802b1a1b80c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a754fdff6368404b07e32b802b1a1b80c"></a>
+vector&lt; <a class="el" href="classFilter.html">Filter</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>getNextFilters</b> (<a class="el" href="classPort.html">Port</a> *)</td></tr>
+<tr class="separator:a754fdff6368404b07e32b802b1a1b80c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -371,6 +382,29 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5c37b57c7c53d5712d28161a58ba6bb9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Filter::processNextFilters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classPort.html">Port</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO Process all filters which are connected to a port</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>The output port </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ae089d87624ac09bedb2f14c828883059"></a>
 <div class="memitem">
 <div class="memproto">
@@ -497,7 +531,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 31 2014 14:18:30 for Tiny Multimedia Framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Nov 9 2014 22:51:01 for Tiny Multimedia Framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
