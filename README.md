@@ -47,6 +47,16 @@ Before compilation make sure that the following libraries are installed:
 	libsdl1.2-dev
 	zlib1g-dev
 
+3) Development envirement
+======================
+Tiny Multimedia Framework is configured to be developed under KDevelop IDE.
+	
+	kdevelop -p tmf.kdev4
+	
+The build directory:
+
+	build-kdevelop
+
 2) User manual
 ===========
 
