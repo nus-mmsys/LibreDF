@@ -47,7 +47,17 @@ Before compilation make sure that the following libraries are installed:
 	libsdl1.2-dev
 	zlib1g-dev
 
-2) User manual
+4) Development envirement
+======================
+Tiny Multimedia Framework is configured to be developed under KDevelop IDE.
+	
+	kdevelop -p tmf.kdev4
+	
+The build directory:
+
+	build-kdevelop
+
+5) User manual
 ===========
 
 To create an application we need to create the pipeline as well as the filters, connect filters to each other and run the pipeline. TMF provides APIs to do it.
@@ -83,7 +93,7 @@ Example:
 	tmf.destroyPipeline(pipe);
 	
 
-3) Plugin developer manual
+6) Plugin developer manual
 =======================
 
 Plug-in developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements init() and process() functions.
