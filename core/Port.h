@@ -146,7 +146,7 @@ template<class Type>
 class InputPort: public Port {
 
 private:
-	Type * inBufNode; /**< Input buffer node */
+	Buffer<Type> * inBuf; /**< Input buffer node */
 
 public:
 
@@ -160,7 +160,7 @@ public:
 	InputPort(string name/*, Filter * owner*/) :
 			Port(name/*, owner*/) {
 		type = string((typeid(Type).name()));
-		inBufNode = 0;
+		inBuf = new Buffer<Type>(TMF_BUFFER_SIZE);
 
 	}
 
@@ -172,7 +172,7 @@ public:
 	 *
 	 */
 	void consume(Type * bn) {
-		inBufNode = bn;
+		inBuf->insert(bn);
 		//owner->executeFilter();
 	}
 
@@ -182,7 +182,7 @@ public:
 	 * \return input buffer of the port
 	 */
 	Type * read() {
-		return inBufNode;
+		return inBuf->getNode();
 	}
 
 	/*!
