@@ -11,7 +11,7 @@ VideoWriterFilter::VideoWriterFilter(string name) :
 		Filter(name) {
 
 	inputPortRawFrame = new InputPort<RawFrame>(
-			"videoMuxer, input 1, EncodedFrame");
+			"videoMuxer, input 1, RawFrame");
 
 	inputPorts.push_back(inputPortRawFrame);
 
@@ -43,11 +43,15 @@ FilterStatus VideoWriterFilter::init() {
 }
 FilterStatus VideoWriterFilter::process() {
 
-	RawFrame * inFrame = inputPortRawFrame->read();
+  inputPortRawFrame->lock();
 
-	videoWriter->write(inFrame);
+  RawFrame * inFrame = inputPortRawFrame->get();
 
-	return FILTER_SUCCESS;
+  videoWriter->write(inFrame);
+  
+  inputPortRawFrame->unlock();
+
+  return FILTER_SUCCESS;
 }
 
 VideoWriterFilter::~VideoWriterFilter() {

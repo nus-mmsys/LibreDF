@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -25,66 +25,68 @@
 #include "tools/VideoFrameWriter.h"
 
 class ImageWriterFilter: public Filter {
-
+  
 private:
-
-	VideoFrameWriter * videoFrameWriter;
-
-
-	InputPort<RawFrame> * inputFrame;
+  
+  VideoFrameWriter * videoFrameWriter;
+  
+  
+  InputPort<RawFrame> * inputFrame;
 public:
-	ImageWriterFilter(string name) :
-			Filter(name) {
-
-		inputFrame = new InputPort<RawFrame>("imageWriter, input 1, AVFrame");
-
-		inputPorts.push_back(inputFrame);
-
-		videoFrameWriter = 0;
-	}
-
-	FilterStatus init() {
-
-		MessageError err;
-		//string videoName = getProp("input_video");
-
-		int srcWidth, srcHeight, srcFormatInt;
-
-
-		err = inMsg->getPropInt("width", srcWidth);
-		if (err == MSG_NOT_FOUND)
-			return FILTER_WAIT_FOR_INPUT;
-
-		err = inMsg->getPropInt("height", srcHeight);
-		if (err == MSG_NOT_FOUND)
-			return FILTER_WAIT_FOR_INPUT;
-
-		err = inMsg->getPropInt("format", srcFormatInt);
-		if (err == MSG_NOT_FOUND)
-			return FILTER_WAIT_FOR_INPUT;
-
-		AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
-
-		videoFrameWriter = new VideoFrameWriter(srcWidth, srcHeight, srcFormat);
-		videoFrameWriter->setPath(getProp("output_path"));
-
-		return FILTER_SUCCESS;
-	}
-
-	FilterStatus process() {
-
-		RawFrame * pFrame = inputFrame->read();
-
-		videoFrameWriter->writeImage(pFrame);
-
-		return FILTER_SUCCESS;
-	}
-
-	~ImageWriterFilter() {
-		delete inputFrame;
-		delete videoFrameWriter;
-	}
-
+  ImageWriterFilter(string name) :
+  Filter(name) {
+    
+    inputFrame = new InputPort<RawFrame>("imageWriter, input 1, AVFrame");
+    
+    inputPorts.push_back(inputFrame);
+    
+    videoFrameWriter = 0;
+  }
+  
+  FilterStatus init() {
+    
+    MessageError err;
+    //string videoName = getProp("input_video");
+    
+    int srcWidth, srcHeight, srcFormatInt;
+    
+    
+    err = inMsg->getPropInt("width", srcWidth);
+    if (err == MSG_NOT_FOUND)
+      return FILTER_WAIT_FOR_INPUT;
+    
+    err = inMsg->getPropInt("height", srcHeight);
+    if (err == MSG_NOT_FOUND)
+      return FILTER_WAIT_FOR_INPUT;
+    
+    err = inMsg->getPropInt("format", srcFormatInt);
+    if (err == MSG_NOT_FOUND)
+      return FILTER_WAIT_FOR_INPUT;
+    
+    AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
+    
+    videoFrameWriter = new VideoFrameWriter(srcWidth, srcHeight, srcFormat);
+    videoFrameWriter->setPath(getProp("output_path"));
+    
+    return FILTER_SUCCESS;
+  }
+  
+  FilterStatus process() {
+    
+    inputFrame->lock();	
+    RawFrame * pFrame = inputFrame->get();
+    
+    videoFrameWriter->writeImage(pFrame);
+    
+    inputFrame->unlock();
+    return FILTER_SUCCESS;
+  }
+  
+  ~ImageWriterFilter() {
+    delete inputFrame;
+    delete videoFrameWriter;
+  }
+  
 };
 
 #endif /* IMAGEWRITER_H_ */

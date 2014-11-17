@@ -1,5 +1,5 @@
 /*
- * 
+ *
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -18,34 +18,36 @@
  *
  */
 
-#ifndef ENCODEDFRAME_H_
-#define ENCODEDFRAME_H_
+#ifndef MEDIASAMPLE_H
+#define MEDIASAMPLE_H
 
-#include "types/Frame.h"
+#include <functional>
+
+#include "core/SampleSynchronizer.h"
+
+#include <string>
 
 #ifdef __cplusplus
 extern "C" {
-  #endif
-  #include <libavutil/avutil.h>
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #ifdef __cplusplus
+#endif
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#ifdef __cplusplus
 }
 #endif
 
-class EncodedFrame: public Frame {
-  
+
+template <typename T>
+class MediaSample : public SampleSynchronizer {
+
 private:
-  AVPacket * data;
-public:
-  EncodedFrame() {
-    data = (AVPacket *) av_malloc(sizeof(AVPacket));
-  }
-  AVPacket * getPacket() {
-    
-    return data;
-  }
+  int number;
+  T * data;
   
+public:
+  MediaSample(): number(0) { data = new T(); } 
+  
+  T * getData() { return data; }
 };
 
-#endif /* ENCODEDFRAME_H_ */
+#endif // MEDIASAMPLE_H

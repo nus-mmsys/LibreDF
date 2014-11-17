@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -22,6 +22,7 @@
 #define NUMBERGENERATORFILTER_H_
 
 #include "core/Filter.h"
+#include "core/Port.h"
 
 #include <string>
 #include <unistd.h>
@@ -29,55 +30,48 @@
 using namespace std;
 
 class NumberGeneratorFilter: public Filter {
-
+  
 private:
-
-	OutputPort<int> * outputInt;
-	OutputPort<string> * outputString;
-
+  
+  OutputPort<int> * outputInt;
+  OutputPort<string> * outputString;
+  
 public:
-
-	NumberGeneratorFilter(const string & name) :
-			Filter(name) {
-		outputInt = new OutputPort<int>("numbergenerator, output 1, int");
-		outputString = new OutputPort<string>(
-				"numbergenerator, output 2, string");
-
-		outputPorts.push_back(outputInt);
-		outputPorts.push_back(outputString);
-	}
-
-
-	FilterStatus process() {
-		static int number = 1;
-
-		//int * n = new int;
-		int num = number;
-		//BufferNode<int> bn(&n);
-
-		//string * numstr = new string;
-		string numstr = std::to_string(number);
-		//BufferNode<string> bns(&numstr);
-
-		outputInt->produce(&num);
-		outputString->produce(&numstr);
-
-		//This function must run on a separate therad.
-		outputInt->process(this);
-		//This function must run on a separate therad.
-		outputString->process(this);
-
-		number++;
-
-		//sleep(1000);
-		return FILTER_SUCCESS;
-	}
-
-	~NumberGeneratorFilter() {
-		delete outputInt;
-		delete outputString;
-	}
-
+  
+  NumberGeneratorFilter(const string & name) :
+  Filter(name) {
+    outputInt = new OutputPort<int>("numbergenerator, output 1, int");
+    outputString = new OutputPort<string>(
+      "numbergenerator, output 2, string");
+    
+    outputPorts.push_back(outputInt);
+    outputPorts.push_back(outputString);
+  }
+  
+  
+  FilterStatus process() {
+    static int number = 1;
+    
+    outputInt->lock();
+    int * outInt = outputInt->get();
+    *outInt = number;
+    outputInt->unlock();
+    
+    outputString->lock();
+    string * outStr = outputString->get(); 
+    *outStr = to_string(number);
+    outputString->unlock();
+    
+    number++;
+    
+    return FILTER_SUCCESS;
+  }
+  
+  ~NumberGeneratorFilter() {
+    delete outputInt;
+    delete outputString;
+  }
+  
 };
 
 #endif /* NUMBERGENERATORFILTER_H_ */

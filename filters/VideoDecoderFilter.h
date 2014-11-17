@@ -69,18 +69,20 @@ public:
 
 	FilterStatus process() {
 
-		RawFrame * pFrame = outputFrame->getBuffer()->getNextNode();
-		//if (pFrame == 0)
-		//	pFrame = avcodec_alloc_frame();
+	  
+		
+		outputFrame->lock();
+		RawFrame * pFrame = outputFrame->get();
+		
 		int ret = videoReader->readFrame(pFrame);
 
-		if (ret == -1)
+		if (ret == -1) {
+			outputFrame->unlock();
 			return FILTER_FINISHED;
-		//BufferNode<AVFrame> bn(pFrame);
-
-		outputFrame->produce(pFrame);
-		outputFrame->process(this);
-
+		}
+	
+		outputFrame->unlock();
+		
 		return FILTER_SUCCESS;
 	}
 

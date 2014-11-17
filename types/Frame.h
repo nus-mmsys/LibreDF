@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -18,31 +18,22 @@
  *
  */
 
-#ifndef DATA_H_
-#define DATA_H_
+#ifndef FRAME_H_
+#define FRAME_H_
 
 
-//template<class Type>
-class Data {
-
+class Frame {
+  
 private:
-	int number;
-	//Type data;
+ int number; 
 public:
-
-	Data() {
-		number = 0;
-	}
-
-	int getNumber() {
-		return number;
-	}
-
-	void setNumber(int n) {
-		this->number = n;
-	}
-
+  Frame(): number(0) {
+  }
+  
+  int getNumber() { return number; }
+  
+  void setNumber(int n) { number = n; }
 };
 
 
-#endif /* DATA_H_ */
+#endif /* RAW_FRAME_H_ */

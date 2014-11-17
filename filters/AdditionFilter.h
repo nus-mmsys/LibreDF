@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -22,63 +22,59 @@
 #define ADDITIONFILTER_H_
 
 #include "core/Filter.h"
+#include <Port.h>
 #include <iostream>
 
 struct AdditionFilter: public Filter {
-
+  
 private:
-	InputPort<int> * input1;
-	InputPort<int> * input2;
-	OutputPort<int> * output;
-
+  InputPort<int> * input1;
+  InputPort<int>* input2;
+  OutputPort<int> * output;
+  
 public:
-
-	AdditionFilter(const string & name) :
-			Filter(name) {
-		input1 = new InputPort<int>("addition, input 1, int");
-		input2 = new InputPort<int>("addition, input 2, int");
-		output = new OutputPort<int>("addition, output 1, int");
-
-		inputPorts.push_back(input1);
-		inputPorts.push_back(input2);
-		outputPorts.push_back(output);
-	}
-
-
-	FilterStatus process() {
-
-		//BufferNode<int> * bn;
-
-		int * inputData1 = input1->read();
-
-		//int * inputData1 = bn->getData();
-
-		int * inputData2 = input2->read();
-
-		//int * inputData2 = bn->getData();
-
-		//int * outputData = new int;
-		int outputData = *inputData1 + *inputData2;
-
-		//bn.setData(&outputData);
-
-		//output->produce(bn);
-
-		//output->process();
-
-		cout << "Addition= " << outputData << endl;
-
-		//usleep(100000);
-		return FILTER_SUCCESS;
-
-	}
-
-	~AdditionFilter() {
-		delete input1;
-		delete input2;
-		delete output;
-	}
-
+  
+  AdditionFilter(const string & name) :
+  Filter(name) {
+    input1 = new InputPort<int>("addition, input 1, int");
+    input2 = new InputPort<int>("addition, input 2, int");
+    output = new OutputPort<int>("addition, output 1, int");
+    
+    inputPorts.push_back(input1);
+    inputPorts.push_back(input2);
+    outputPorts.push_back(output);
+  }
+  
+  
+  FilterStatus process() {
+    
+    
+    int * inputData1 = input1->get();
+    
+    int * inputData2 = input2->get();
+    
+    int outputint = *inputData1 + *inputData2;
+    
+    output->lock();
+    
+    int * outputData = output->get();
+    
+    *outputData = outputint;
+    
+    output->unlock();
+    
+    cout << "Addition= " << outputint << endl;
+    
+    return FILTER_SUCCESS;
+    
+  }
+  
+  ~AdditionFilter() {
+    delete input1;
+    delete input2;
+    delete output;
+  }
+  
 };
 
 #endif /* ADDITIONFILTER_H_ */

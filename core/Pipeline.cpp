@@ -61,7 +61,7 @@ PipelineStatus Pipeline::init() {
 		return PIPELINE_STOPPED;
 	}
 
-	ret = start->initFilter(0);
+	ret = start->init();
 
 	if (ret == FILTER_ERROR) {
 		cerr << "Pipeline cannot initialize a filter.\n";
@@ -86,7 +86,7 @@ PipelineStatus Pipeline::run() {
 	FilterStatus status;
 	while(1) {
 
-		status = start->executeFilter();
+		status = start->run();
 
 		switch(status) {
 		case FILTER_SUCCESS:

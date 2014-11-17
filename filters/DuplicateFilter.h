@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -23,52 +23,48 @@
 
 #include "core/Filter.h"
 #include <unistd.h>
+#include <iostream>
 
 struct DuplicateFilter: public Filter {
-
+  
 private:
-	InputPort<string> * input;
-	OutputPort<string> * output;
-
+  InputPort<std::string> * input;
+  OutputPort<std::string> * output;
 public:
-
-	DuplicateFilter(const string & name) :
-			Filter(name) {
-		input = new InputPort<string>("duplicate, input 1, string");
-		output = new OutputPort<string>("duplicate, output 1, string");
-
-		inputPorts.push_back(input);
-		outputPorts.push_back(output);
-	}
-
-
-	FilterStatus process() {
-
-		//BufferNode<string> * bn;
-
-		string * inputData = input->read();
-
-		//string * inputData = bn->getData();
-
-		//string * outputData = new string;
-		string outputData = *inputData + *inputData;
-
-		//bn.setData(&outputData);
-
-		//output->produce(bn);
-
-		//output->process();
-
-		cout << "Duplicate= " << outputData << endl;
-		//usleep(500);
-		return FILTER_SUCCESS;
-	}
-
-	~DuplicateFilter() {
-		delete input;
-		delete output;
-	}
-
+  
+  DuplicateFilter(const string & name) :
+  Filter(name) {
+    input = new InputPort<std::string>("duplicate, input 1, string");
+    output = new OutputPort<std::string>("duplicate, output 1, string");
+    
+    inputPorts.push_back(input);
+    outputPorts.push_back(output);
+  }
+  
+  
+  FilterStatus process() {
+    
+    
+    input->lock();
+    string * inputData = input->get();
+    string outputstring = *inputData + *inputData;
+    
+    input->unlock();
+    
+    output->lock();
+    string * outputData = output->get();
+    *outputData = outputstring;
+    output->unlock();
+    
+    std::cout << "Duplicate= " << outputstring << std::endl;
+    return FILTER_SUCCESS;
+  }
+  
+  ~DuplicateFilter() {
+    delete input;
+    delete output;
+  }
+  
 };
 
 #endif /* DUPLICATEFILTER_H_ */

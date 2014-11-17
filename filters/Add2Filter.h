@@ -41,21 +41,22 @@ public:
 
 	FilterStatus process() {
 
-		//BufferNode<int>  * bn;
+	  input->lock();
 
-		int * inputData = input->read();
+	  int * inputData = input->get();
 
-		//int * inputData = bn->getData();
-		//int * outputData = new int;
-		int outputData = *inputData + 2;
+	  int outputint = *inputData + 2;
 
-		//bn->setData(&outputData);
-
-		output->produce(&outputData);
-
-		output->process(this);
-
-		return FILTER_SUCCESS;
+	  input->unlock();
+	  
+	  output->lock();
+	  
+	  int * outputData =  output->get();
+	  *outputData = outputint;
+	  
+	  output->unlock();
+	  
+	  return FILTER_SUCCESS;
 	}
 
 	~Add2Filter() {

@@ -67,18 +67,22 @@ FilterStatus VideoEncoderFilter::init() {
 }
 
 FilterStatus VideoEncoderFilter::process() {
+  
+  
+  inputPortRawFrame->lock();
+  
+  RawFrame * inFrame = inputPortRawFrame->get();
 
-	RawFrame * inFrame = inputPortRawFrame->read();
+  outputPortEncodedFrame->lock();
+  
+  EncodedFrame * outFrame = outputPortEncodedFrame->get();
+  videoEncoder->encode(inFrame, outFrame);
 
-	EncodedFrame * outFrame =
-			outputPortEncodedFrame->getBuffer()->getNextNode();
+  outputPortEncodedFrame->unlock();
 
-	videoEncoder->encode(inFrame, outFrame);
+  inputPortRawFrame->unlock();
 
-	outputPortEncodedFrame->produce(outFrame);
-	outputPortEncodedFrame->process(this);
-
-	return FILTER_SUCCESS;
+  return FILTER_SUCCESS;
 }
 
 VideoEncoderFilter::~VideoEncoderFilter() {

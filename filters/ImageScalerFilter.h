@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -28,96 +28,97 @@
 
 
 class ImageScalerFilter : public Filter {
-
+  
 private:
-
-	VideoScaler * videoScaler;
-
-	InputPort<RawFrame> * inputPortFrame;
-	OutputPort<RawFrame> * outputPortFrame;
-
+  
+  VideoScaler * videoScaler;
+  
+  InputPort<RawFrame> * inputPortFrame;
+  OutputPort<RawFrame> * outputPortFrame;
+  
 public:
-
-	ImageScalerFilter(string name) : Filter(name) {
-
-		inputPortFrame = new InputPort<RawFrame>("imageScaler, input, Frame");
-
-		outputPortFrame = new OutputPort<RawFrame>("imageScaler, output, Frame");
-
-		inputPorts.push_back(inputPortFrame);
-		outputPorts.push_back(outputPortFrame);
-
-		videoScaler = 0;
-	}
-
-	FilterStatus init() {
-
-		MessageError err;
-		FilterStatus status = FILTER_SUCCESS;
-
-		string width = getProp("width");
-		string height = getProp("height");
-
-		int dstWidth = std::stoi(width);
-		int dstHeight = std::stoi(height);
-
-		int srcWidth, srcHeight, srcFormatInt;
-
-		err = inMsg->getPropInt("width", srcWidth);
-		if (err == MSG_NOT_FOUND)
-			return FILTER_WAIT_FOR_INPUT;
-
-		err = inMsg->getPropInt("height", srcHeight);
-		if (err == MSG_NOT_FOUND)
-			return FILTER_WAIT_FOR_INPUT;
-
-		err = inMsg->getPropInt("format", srcFormatInt);
-		if (err == MSG_NOT_FOUND)
-			return FILTER_WAIT_FOR_INPUT;
-
-		AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
-
-
-
-		videoScaler = new VideoScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
-
-		for (int i=0; i<outputPortFrame->getBuffer()->getSize(); i++) {
-			RawFrame * frame = outputPortFrame->getBuffer()->getNode(i);
-			frame->fill(dstWidth, dstHeight, srcFormat);
-		}
-
-		outMsg->setProp("width", width);
-		outMsg->setProp("height", height);
-		outMsg->setPropInt("format", srcFormatInt);
-
-		return status;
-
-	}
-
-	FilterStatus process() {
-		FilterStatus status = FILTER_SUCCESS;
-
-		RawFrame * inFrame = inputPortFrame->read();
-
-		RawFrame * outFrame = outputPortFrame->getBuffer()->getNextNode();
-
-		videoScaler->scale(inFrame, outFrame);
-
-		outputPortFrame->produce(outFrame);
-		outputPortFrame->process(this);
-
-
-		return status;
-	}
-
-
-
-
-	~ImageScalerFilter() {
-		delete inputPortFrame;
-		delete outputPortFrame;
-	}
-
+  
+  ImageScalerFilter(string name) : Filter(name) {
+    
+    inputPortFrame = new InputPort<RawFrame>("imageScaler, input, Frame");
+    
+    outputPortFrame = new OutputPort<RawFrame>("imageScaler, output, Frame");
+    
+    inputPorts.push_back(inputPortFrame);
+    outputPorts.push_back(outputPortFrame);
+    
+    videoScaler = 0;
+  }
+  
+  FilterStatus init() {
+    
+    MessageError err;
+    FilterStatus status = FILTER_SUCCESS;
+    
+    string width = getProp("width");
+    string height = getProp("height");
+    
+    int dstWidth = std::stoi(width);
+    int dstHeight = std::stoi(height);
+    
+    int srcWidth, srcHeight, srcFormatInt;
+    
+    err = inMsg->getPropInt("width", srcWidth);
+    if (err == MSG_NOT_FOUND)
+      return FILTER_WAIT_FOR_INPUT;
+    
+    err = inMsg->getPropInt("height", srcHeight);
+    if (err == MSG_NOT_FOUND)
+      return FILTER_WAIT_FOR_INPUT;
+    
+    err = inMsg->getPropInt("format", srcFormatInt);
+    if (err == MSG_NOT_FOUND)
+      return FILTER_WAIT_FOR_INPUT;
+    
+    AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
+    
+    
+    
+    videoScaler = new VideoScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
+    
+    //TODO FIXME
+    //for (int i=0; i<outputPortFrame->getBuffer()->getSize(); i++) {
+    //	RawFrame * frame = outputPortFrame->getBuffer()->getNode(i);
+    //	frame->fill(dstWidth, dstHeight, srcFormat);
+    //}
+    
+    outMsg->setProp("width", width);
+    outMsg->setProp("height", height);
+    outMsg->setPropInt("format", srcFormatInt);
+    
+    return status;
+    
+  }
+  
+  FilterStatus process() {
+    FilterStatus status = FILTER_SUCCESS;
+    
+    inputPortFrame->lock();
+    RawFrame * inFrame = inputPortFrame->get();
+    
+    outputPortFrame->lock();
+    RawFrame * outFrame = outputPortFrame->get();
+    
+    videoScaler->scale(inFrame, outFrame);
+    
+    inputPortFrame->unlock();
+    
+    outputPortFrame->unlock();
+    
+    return status;
+  }
+  
+  
+  ~ImageScalerFilter() {
+    delete inputPortFrame;
+    delete outputPortFrame;
+  }
+  
 };
 
 

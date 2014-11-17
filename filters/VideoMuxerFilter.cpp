@@ -23,8 +23,7 @@
 VideoMuxerFilter::VideoMuxerFilter(string name) :
 		Filter(name) {
 
-	inputPortEncodedFrame = new InputPort<EncodedFrame>(
-			"videoMuxer, input 1, EncodedFrame");
+	inputPortEncodedFrame = new InputPort<EncodedFrame>("videoMuxer, input 1, EncodedFrame");
 
 	inputPorts.push_back(inputPortEncodedFrame);
 
@@ -65,11 +64,14 @@ FilterStatus VideoMuxerFilter::init() {
 
 FilterStatus VideoMuxerFilter::process() {
 
-	EncodedFrame * inFrame = inputPortEncodedFrame->read();
-
-	videoMuxer->mux(inFrame);
-
-	return FILTER_SUCCESS;
+  inputPortEncodedFrame->lock();
+  
+  EncodedFrame * inFrame = (EncodedFrame*) inputPortEncodedFrame->get();
+  videoMuxer->mux(inFrame);
+  
+  inputPortEncodedFrame->unlock();
+  
+  return FILTER_SUCCESS;
 }
 
 VideoMuxerFilter::~VideoMuxerFilter() {

@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -25,46 +25,44 @@
 
 class Multiply2Filter: public Filter {
 private:
-	InputPort<int> * input;
-	OutputPort<int> * output;
-
+  InputPort<int> * input;
+  OutputPort<int> * output;
+  
 public:
-
-	Multiply2Filter(const string & name) :
-			Filter(name) {
-		input = new InputPort<int>("multiply2, input 1, int");
-		output = new OutputPort<int>("multiply2, output 1, int");
-
-		inputPorts.push_back(input);
-		outputPorts.push_back(output);
-	}
-
-
-	FilterStatus process() {
-
-		//BufferNode<int> * bn;
-
-		int * inputData = input->read();
-
-		//int * inputData = bn->getData();
-
-		//int * outputData = new int;
-		int outputData = *inputData * 2;
-
-		//bn->setData(&outputData);
-
-		output->produce(&outputData);
-
-		output->process(this);
-
-		return FILTER_SUCCESS;
-	}
-
-	~Multiply2Filter() {
-		delete input;
-		delete output;
-	}
-
+  
+  Multiply2Filter(const string & name) :
+  Filter(name) {
+    input = new InputPort<int>("multiply2, input 1, int");
+    output = new OutputPort<int>("multiply2, output 1, int");
+    
+    inputPorts.push_back(input);
+    outputPorts.push_back(output);
+  }
+  
+  
+  FilterStatus process() {
+    
+    input->lock();
+    
+    int * inputData = input->get();
+    
+    int outputint = *inputData * 2;
+    
+    input->unlock();
+    
+    output->lock();
+    int * outputData = output->get();
+    *outputData = outputint;
+    output->unlock();
+    
+    return FILTER_SUCCESS;
+  }
+  
+  ~Multiply2Filter() {
+    delete input;
+    delete output;
+  }
+  
 };
 
 #endif /* MULTIPLY2FILTER_H_ */

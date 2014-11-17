@@ -18,34 +18,36 @@
  *
  */
 
-#ifndef ENCODEDFRAME_H_
-#define ENCODEDFRAME_H_
+#ifndef PORTCAPS_H_
+#define PORTCAPS_H_
 
-#include "types/Frame.h"
+#include <map>
+#include <string>
 
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavutil/avutil.h>
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #ifdef __cplusplus
-}
-#endif
+using namespace std;
 
-class EncodedFrame: public Frame {
+class PortCaps {
   
 private:
-  AVPacket * data;
+  
+  map<string, string> caps;
+
 public:
-  EncodedFrame() {
-    data = (AVPacket *) av_malloc(sizeof(AVPacket));
-  }
-  AVPacket * getPacket() {
-    
-    return data;
+
+  void addCaps(const string& key, const string& val) {
+  
+    caps.insert(make_pair(key,val));
   }
   
+  const map<string, string> & getCaps() const { return caps; }
+
+  bool isEqual(const PortCaps& pc) const {
+    return caps.size() == pc.getCaps().size()
+        && std::equal(caps.begin(), caps.end(),
+                      pc.getCaps().begin());
+  }
+
 };
 
-#endif /* ENCODEDFRAME_H_ */
+
+#endif /* PORTCAPS_H_ */

@@ -44,7 +44,7 @@ FilterStatus VideoDisplayFilter::init() {
 }
 FilterStatus VideoDisplayFilter::process() {
 
-	RawFrame * inFrame = inputPortRawFrame->read();
+	RawFrame * inFrame = (RawFrame *) inputPortRawFrame->get();
 
 	videoDisplay->display(inFrame);
 
