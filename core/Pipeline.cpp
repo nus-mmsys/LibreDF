@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -20,31 +20,30 @@
 
 #include "Pipeline.h"
 
-Pipeline::Pipeline(const string& name) {
-	this->name = name;
-	this->start = 0;
-	this->status = PIPELINE_STOPPED;
+Pipeline::Pipeline(const string& name): name(name), start(0), status(PIPELINE_STOPPED), realtime(false) {
 }
 
 Pipeline::~Pipeline() {
-
-	for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it)
-		 delete *it;
-
+  
+  for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it)
+    delete *it;
+  
 }
 
+void Pipeline::setRealTime(bool rt) { realtime = rt; }
+
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
-
-	filters.insert(inf);
-	filters.insert(outf);
-
-	if (this->start == 0 && inf->inputPortNum() == 0)
-		this->start = inf;
-
-	if (this->start == 0 && outf->inputPortNum() == 0)
-		this->start = outf;
-
-	inf->connectFilter(outf);
+  
+  filters.insert(inf);
+  filters.insert(outf);
+  
+  if (this->start == 0 && inf->inputPortNum() == 0)
+    this->start = inf;
+  
+  if (this->start == 0 && outf->inputPortNum() == 0)
+    this->start = outf;
+  
+  inf->connectFilter(outf);
 }
 
 //void Pipeline::setStarter(Filter *starter) {
@@ -54,54 +53,68 @@ void Pipeline::connectFilters(Filter * inf, Filter * outf) {
 
 
 PipelineStatus Pipeline::init() {
-
-	FilterStatus ret;
-	if (start == NULL) {
-		cerr << "Pipeline does not have enough filters to run.\n";
-		return PIPELINE_STOPPED;
-	}
-
-	ret = start->init();
-
-	if (ret == FILTER_ERROR) {
-		cerr << "Pipeline cannot initialize a filter.\n";
-		return PIPELINE_STOPPED;
-	}
-	/*for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
-
-		ret = (*it)->initFilter(0);
-
-		if (ret == FILTER_ERROR) {
-			cerr << "Pipeline cannot initialize a filter.\n";
-			return PIPELINE_STOPPED;
-		}
-	}
-	*/
-	return PIPELINE_RUNNING;
-
+  
+  FilterStatus ret;
+  if (start == NULL) {
+    cerr << "Pipeline does not have enough filters to run.\n";
+    return PIPELINE_STOPPED;
+  }
+  
+  ret = start->init();
+  
+  if (ret == FILTER_ERROR) {
+    cerr << "Pipeline cannot initialize a filter.\n";
+    return PIPELINE_STOPPED;
+  }
+  /*for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
+   * 
+   *		ret = (*it)->initFilter(0);
+   * 
+   *		if (ret == FILTER_ERROR) {
+   *			cerr << "Pipeline cannot initialize a filter.\n";
+   *			return PIPELINE_STOPPED;
+}
+}
+*/
+  return PIPELINE_RUNNING;
+  
 }
 
 PipelineStatus Pipeline::run() {
+  for (auto f : filters) {
+    
+    realtime? f->startRT() : f->start();
+  }
 
-	FilterStatus status;
-	while(1) {
-
-		status = start->run();
-
-		switch(status) {
-		case FILTER_SUCCESS:
-		case FILTER_WAIT_FOR_INPUT:
-			continue;
-		case FILTER_ERROR:
-			return PIPELINE_STOPPED;
-		case FILTER_FINISHED:
-			return PIPELINE_FINISHED;
-
-		}
-
-	}
-
-	return PIPELINE_STATE_UNKNOWN;
-
+  /*
+   *	FilterStatus status;
+   *	while(1) {
+   * 
+   *		status = start->run();
+   * 
+   *		switch(status) {
+   *		case FILTER_SUCCESS:
+   *		case FILTER_WAIT_FOR_INPUT:
+   *			continue;
+   *		case FILTER_ERROR:
+   *			return PIPELINE_STOPPED;
+   *		case FILTER_FINISHED:
+   *			return PIPELINE_FINISHED;
+   * 
 }
 
+}
+*/
+  return PIPELINE_STATE_UNKNOWN;
+  
+}
+
+void Pipeline::wait() {
+
+  for (auto f : filters) {
+  
+    f->wait();
+  }
+  
+  
+}

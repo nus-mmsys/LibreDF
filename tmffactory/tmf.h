@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -29,6 +29,7 @@
 #include "filters/DuplicateFilter.h"
 #include "filters/Multiply2Filter.h"
 #include "filters/NumberGeneratorFilter.h"
+#include "filters/StringDisplayFilter.h"
 #include "filters/VideoDecoderFilter.h"
 #include "filters/VideoEncoderFilter.h"
 #include "filters/VideoWriterFilter.h"
@@ -46,19 +47,20 @@ using namespace std;
  * The type of a filter.
  */
 enum FiltersType {
-	ADD2_FILTER,
-	ADDITION_FILTER,
-	DUPLICATE_FILTER,
-	MULTIPLY2_FILTER,
-	NUMBERGENERATOR_FILTER,
-	VIDEO_DECODER_FILTER,
-	VIDEO_WRITER_FILTER,
-	VIDEO_ENCODER_FILTER,
-	VIDEO_MUXER_FILTER,
-	VIDEO_DISPLAY_FILTER,
-	IMAGE_SCALER_FILTER,
-	IMAGE_WRITER_FILTER
-
+  ADD2_FILTER,
+  ADDITION_FILTER,
+  DUPLICATE_FILTER,
+  MULTIPLY2_FILTER,
+  NUMBERGENERATOR_FILTER,
+  STRINGDISPLAY_FILTER,
+  VIDEO_DECODER_FILTER,
+  VIDEO_WRITER_FILTER,
+  VIDEO_ENCODER_FILTER,
+  VIDEO_MUXER_FILTER,
+  VIDEO_DISPLAY_FILTER,
+  IMAGE_SCALER_FILTER,
+  IMAGE_WRITER_FILTER
+  
 };
 
 /*!
@@ -67,93 +69,96 @@ enum FiltersType {
  */
 class TMF {
 private:
-	set<string> elements;
+  set<string> elements;
 public:
-	/*!
-	 * Create a filter of a specific type.
-	 *
-	 * \param type
-	 *   The type of filter to create.
-	 * \param name
-	 *   The name of the new filter.
-	 *
-	 * \return the created filter.
-	 */
-	Filter * createFilter(const FiltersType type, const string& name) const {
-		if (name.empty()) {
-			std::cerr << "Filter name cannot be empty." << endl;
-			return 0;
-		}
+  /*!
+   * Create a filter of a specific type.
+   *
+   * \param type
+   *   The type of filter to create.
+   * \param name
+   *   The name of the new filter.
+   *
+   * \return the created filter.
+   */
+  Filter * createFilter(const FiltersType type, const string& name) const {
+    if (name.empty()) {
+      std::cerr << "Filter name cannot be empty." << endl;
+      return 0;
+    }
+    
+    const bool is_in = elements.find(name) != elements.end();
+    if (is_in) {
+      std::cerr << "Filter name cannot be repeated." << endl;
+      return 0;
+    }
+    
+    switch (type) {
+      case NUMBERGENERATOR_FILTER:
+	return new NumberGeneratorFilter(name);
+	
+      case STRINGDISPLAY_FILTER:
+	return new StringDisplayFilter(name);
 
-		const bool is_in = elements.find(name) != elements.end();
-		if (is_in) {
-			std::cerr << "Filter name cannot be repeated." << endl;
-			return 0;
-		}
-
-		switch (type) {
-		case NUMBERGENERATOR_FILTER:
-			return new NumberGeneratorFilter(name);
-
-		case MULTIPLY2_FILTER:
-			return new Multiply2Filter(name);
-
-		case DUPLICATE_FILTER:
-			return new DuplicateFilter(name);
-
-		case ADD2_FILTER:
-			return new Add2Filter(name);
-
-		case ADDITION_FILTER:
-			return new AdditionFilter(name);
-
-		case VIDEO_DECODER_FILTER:
-			return new VideoDecoderFilter(name);
-
-		case VIDEO_ENCODER_FILTER:
-			return new VideoEncoderFilter(name);
-
-		case VIDEO_WRITER_FILTER:
-			return new VideoWriterFilter(name);
-
-		case VIDEO_MUXER_FILTER:
-			return new VideoMuxerFilter(name);
-
-		case VIDEO_DISPLAY_FILTER:
-			return new VideoDisplayFilter(name);
-
-		case IMAGE_WRITER_FILTER:
-			return new ImageWriterFilter(name);
-
-		case IMAGE_SCALER_FILTER:
-			return new ImageScalerFilter(name);
-		}
-
-		return NULL;
-	}
-
-	/*!
-	 * Create a pipeline.
-	 *
-	 * \param name
-	 *   The name of the pipeline.
-	 *
-	 * \return the created pipelines.
-	 */
-	Pipeline * createPipeline(const string & name) {
-		return new Pipeline(name);
-	}
-
-	/*!
-	 * Destroy the pipeline.
-	 *
-	 * \param pipe
-	 *   The reference to the pipeline.
-	 *
-	 */
-	void destroyPipeline(Pipeline * pipe) {
-		delete pipe;
-	}
+      case MULTIPLY2_FILTER:
+	return new Multiply2Filter(name);
+	
+      case DUPLICATE_FILTER:
+	return new DuplicateFilter(name);
+	
+      case ADD2_FILTER:
+	return new Add2Filter(name);
+	
+      case ADDITION_FILTER:
+	return new AdditionFilter(name);
+	
+      case VIDEO_DECODER_FILTER:
+	return new VideoDecoderFilter(name);
+	
+      case VIDEO_ENCODER_FILTER:
+	return new VideoEncoderFilter(name);
+	
+      case VIDEO_WRITER_FILTER:
+	return new VideoWriterFilter(name);
+	
+      case VIDEO_MUXER_FILTER:
+	return new VideoMuxerFilter(name);
+	
+      case VIDEO_DISPLAY_FILTER:
+	return new VideoDisplayFilter(name);
+	
+      case IMAGE_WRITER_FILTER:
+	return new ImageWriterFilter(name);
+	
+      case IMAGE_SCALER_FILTER:
+	return new ImageScalerFilter(name);
+    }
+    
+    return NULL;
+  }
+  
+  /*!
+   * Create a pipeline.
+   *
+   * \param name
+   *   The name of the pipeline.
+   *
+   * \return the created pipelines.
+   */
+  Pipeline * createPipeline(const string & name) {
+    return new Pipeline(name);
+  }
+  
+  /*!
+   * Destroy the pipeline.
+   *
+   * \param pipe
+   *   The reference to the pipeline.
+   *
+   */
+  void destroyPipeline(Pipeline * pipe) {
+    delete pipe;
+  }
 };
 
 #endif /* FILTERFACTORY_H_ */

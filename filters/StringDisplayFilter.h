@@ -18,39 +18,41 @@
  *
  */
 
-#include "tmf.h"
+#ifndef STRINGDISPLAYFILTER_H_
+#define STRINGDISPLAYFILTER_H_
 
+#include "core/Filter.h"
+#include <unistd.h>
+#include <iostream>
 
-int main(int argc, char** argv) {
+struct StringDisplayFilter: public Filter {
   
-  TMF tmf;
+private:
+  InputPort<std::string> * input;
+public:
   
-  if (argc < 2) {
-    cerr << "Usage: " << argv[0]
-    << " <input video> " << endl;
-    return -1;
+  StringDisplayFilter(const string & name) : Filter(name) {
+    input = new InputPort<std::string>("input 1, string");
+    
+    inputPorts.push_back(input);
   }
   
-  Pipeline* pipe = tmf.createPipeline("Media Player");
+  FilterStatus process() {
+    
+    input->lock();
+    string * inputData = input->get();
+    
+    cout << "Display: " << *inputData << endl;
+    
+    input->unlock();
+    
+    return FILTER_SUCCESS;
+  }
   
-  string inputVideo = argv[1];
+  ~StringDisplayFilter() {
+    delete input;
+  }
   
-  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-					  "videoDecoder");
-  
-  Filter* videoDisplay = tmf.createFilter(VIDEO_DISPLAY_FILTER, "videoDisplay");
-  
-  pipe->connectFilters(videoDecoder, videoDisplay);
-  
-  videoDecoder->setProp("input_video", inputVideo);
-  
-  pipe->init();
-  
-  pipe->run();
-  
-  pipe->wait();
+};
 
-  tmf.destroyPipeline(pipe);
-  
-  return 0;
-}
+#endif /* STRINGDISPLAYFILTER_H_ */

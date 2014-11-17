@@ -25,31 +25,20 @@ int main(int argc, char** argv) {
   
   TMF tmf;
   
-  if (argc < 2) {
-    cerr << "Usage: " << argv[0]
-    << " <input video> " << endl;
-    return -1;
-  }
+  Pipeline* pipe = tmf.createPipeline("Test App");
   
-  Pipeline* pipe = tmf.createPipeline("Media Player");
+  Filter* numberGeneratorFilter = tmf.createFilter(NUMBERGENERATOR_FILTER,
+						   "numberGeneratorFilter");
+  Filter* displayStrFilter = tmf.createFilter(STRINGDISPLAY_FILTER, "stringDisplayFilter");
   
-  string inputVideo = argv[1];
-  
-  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-					  "videoDecoder");
-  
-  Filter* videoDisplay = tmf.createFilter(VIDEO_DISPLAY_FILTER, "videoDisplay");
-  
-  pipe->connectFilters(videoDecoder, videoDisplay);
-  
-  videoDecoder->setProp("input_video", inputVideo);
+  pipe->connectFilters(numberGeneratorFilter, displayStrFilter);
   
   pipe->init();
   
   pipe->run();
   
   pipe->wait();
-
+  
   tmf.destroyPipeline(pipe);
   
   return 0;

@@ -48,6 +48,7 @@ class Pipeline {
 	PipelineStatus status; /**< The current status of the pipeline. */
 	set<Filter *> filters; /**< The set of all filters in the pipeline. */
 	Filter* start; /**< The initial element of the pipeline. Must be a data source (0 inputs). */
+	bool realtime;
 public:
 	/*!
 	 * Pipeline constructor
@@ -55,6 +56,8 @@ public:
 	 * \param name The name of the pipeline.
 	 */
 	Pipeline(const string& name);
+	
+	void setRealTime(bool);
 
 	/*!
 	 * Create a pipe between two filters in the pipeline.
@@ -78,6 +81,8 @@ public:
 	 * \return the current pipeline status.
 	 */
 	PipelineStatus run();
+	
+	void wait();
 
 	/*!
 	 * Pipeline destructor

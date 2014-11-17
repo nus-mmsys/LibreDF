@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -22,33 +22,35 @@
 
 
 int main(int argc, char** argv) {
-
-	TMF tmf;
-
-	Pipeline* pipe = tmf.createPipeline("Test App");
-
-	Filter* numberGeneratorFilter = tmf.createFilter(NUMBERGENERATOR_FILTER,
-			"numberGeneratorFilter");
-	Filter* add2Filter = tmf.createFilter(ADD2_FILTER, "add2Filter");
-	Filter* multiply2Filter = tmf.createFilter(MULTIPLY2_FILTER,
-			"multiply2Filter");
-	Filter* duplicateFilter = tmf.createFilter(DUPLICATE_FILTER,
-			"duplicateFilter");
-	Filter* additionFilter = tmf.createFilter(ADDITION_FILTER,
-			"additionFilter");
-
-	pipe->connectFilters(numberGeneratorFilter, multiply2Filter);
-	pipe->connectFilters(numberGeneratorFilter, add2Filter);
-	pipe->connectFilters(numberGeneratorFilter, duplicateFilter);
-	pipe->connectFilters(multiply2Filter, additionFilter);
-	pipe->connectFilters(add2Filter, additionFilter);
-
-
-	pipe->init();
-
-	pipe->run();
-
-	tmf.destroyPipeline(pipe);
-
-	return 0;
+  
+  TMF tmf;
+  
+  Pipeline* pipe = tmf.createPipeline("Test App");
+  
+  Filter* numberGeneratorFilter = tmf.createFilter(NUMBERGENERATOR_FILTER,
+						   "numberGeneratorFilter");
+  Filter* add2Filter = tmf.createFilter(ADD2_FILTER, "add2Filter");
+  Filter* multiply2Filter = tmf.createFilter(MULTIPLY2_FILTER,
+					     "multiply2Filter");
+  Filter* duplicateFilter = tmf.createFilter(DUPLICATE_FILTER,
+					     "duplicateFilter");
+  Filter* additionFilter = tmf.createFilter(ADDITION_FILTER,
+					    "additionFilter");
+  
+  pipe->connectFilters(numberGeneratorFilter, multiply2Filter);
+  pipe->connectFilters(numberGeneratorFilter, add2Filter);
+  pipe->connectFilters(numberGeneratorFilter, duplicateFilter);
+  pipe->connectFilters(multiply2Filter, additionFilter);
+  pipe->connectFilters(add2Filter, additionFilter);
+  
+  
+  pipe->init();
+  
+  pipe->run();
+  
+  pipe->wait();
+  
+  tmf.destroyPipeline(pipe);
+  
+  return 0;
 }

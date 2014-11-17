@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,42 +21,43 @@
 #include "tmf.h"
 
 int main(int argc, char** argv) {
-
-	TMF tmf;
-
-	if (argc < 5) {
-		cerr << "Usage: " << argv[0] << " <input video> <output path> <width> <height>" << endl;
-		return -1;
-	}
-
-	Pipeline* pipe = tmf.createPipeline("Decoder/Scaler");
-
-	string inputVideo = argv[1];
-	string outputPath = argv[2];
-	int width = std::stoi(argv[3]);
-	int height = std::stoi(argv[4]);
-
-	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-			"videoDecoder");
-	Filter* imageScaler1 = tmf.createFilter(IMAGE_SCALER_FILTER,
-			"imageScaler1");
-	Filter* imageWriter = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
-
-	pipe->connectFilters(videoDecoder, imageScaler1);
-	pipe->connectFilters(imageScaler1,imageWriter);
-
-	videoDecoder->setProp("input_video", inputVideo);
-
-	imageScaler1->setProp("width", to_string(width));
-	imageScaler1->setProp("height", to_string(height));
-
-	imageWriter->setProp("output_path", outputPath);
-
-	pipe->init();
-
-	pipe->run();
-
-	tmf.destroyPipeline(pipe);
-
-	return 0;
+  
+  TMF tmf;
+  
+  if (argc < 5) {
+    cerr << "Usage: " << argv[0] << " <input video> <output path> <width> <height>" << endl;
+    return -1;
+  }
+  
+  Pipeline* pipe = tmf.createPipeline("Decoder/Scaler");
+  
+  string inputVideo = argv[1];
+  string outputPath = argv[2];
+  int width = std::stoi(argv[3]);
+  int height = std::stoi(argv[4]);
+  
+  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
+					  "videoDecoder");
+  Filter* imageScaler1 = tmf.createFilter(IMAGE_SCALER_FILTER,
+					  "imageScaler1");
+  Filter* imageWriter = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
+  
+  pipe->connectFilters(videoDecoder, imageScaler1);
+  pipe->connectFilters(imageScaler1,imageWriter);
+  
+  videoDecoder->setProp("input_video", inputVideo);
+  
+  imageScaler1->setProp("width", to_string(width));
+  imageScaler1->setProp("height", to_string(height));
+  
+  imageWriter->setProp("output_path", outputPath);
+  
+  pipe->init();
+  
+  pipe->run();
+  
+  pipe->wait();
+  tmf.destroyPipeline(pipe);
+  
+  return 0;
 }

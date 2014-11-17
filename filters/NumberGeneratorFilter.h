@@ -24,6 +24,7 @@
 #include "core/Filter.h"
 #include "core/Port.h"
 
+#include <iostream>
 #include <string>
 #include <unistd.h>
 
@@ -55,6 +56,7 @@ public:
     outputInt->lock();
     int * outInt = outputInt->get();
     *outInt = number;
+    cout << "Number generated: " << *outInt << endl;
     outputInt->unlock();
     
     outputString->lock();
