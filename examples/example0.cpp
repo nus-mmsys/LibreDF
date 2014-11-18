@@ -27,11 +27,11 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = tmf.createPipeline("Test App");
   
-  Filter* numberGeneratorFilter = tmf.createFilter(NUMBERGENERATOR_FILTER,
-						   "numberGeneratorFilter");
-  Filter* displayStrFilter = tmf.createFilter(STRINGDISPLAY_FILTER, "stringDisplayFilter");
+  Filter* producerFilter = tmf.createFilter(PRODUCER_FILTER,
+						   "producerFilter");
+  Filter* strConsumerFilter = tmf.createFilter(STRINGCONSUMER_FILTER, "stringConsumerFilter");
   
-  pipe->connectFilters(numberGeneratorFilter, displayStrFilter);
+  pipe->connectFilters(producerFilter, strConsumerFilter);
   
   pipe->init();
   

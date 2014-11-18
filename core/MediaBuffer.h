@@ -23,7 +23,7 @@
 
 #include "MediaSample.h"
 
-const int TMF_BUFFER_SIZE = 10;
+const int TMF_BUFFER_SIZE = 2;
 
 /*!
  * \class Buffer

@@ -53,7 +53,7 @@ enum FilterStatus {
 
 class Filter {
 private:
-  
+  mutex * io_lock;
   string name; /**< The name f the filter */
   int linked; /**< The number of filters which are connected to this filter */
   int inputFed; /**< The number of data which are already fed to the filter */
@@ -74,6 +74,8 @@ protected:
    *   The name of the filter.
    */
   Filter(const string & name);
+  
+  void log(std::string msg);
   
   /*!
    * Virtual function, to be implemented in the subclass filters.
@@ -162,7 +164,8 @@ public:
   void startRT();
   
   void wait();
-  
+ 
+  void setIOLock(mutex * mux);
   /*!
    * 
    * TODO

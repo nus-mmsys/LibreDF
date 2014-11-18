@@ -18,21 +18,21 @@
  *
  */
 
-#ifndef STRINGDISPLAYFILTER_H_
-#define STRINGDISPLAYFILTER_H_
+#ifndef STRINGCONSUMERFILTER_H_
+#define STRINGCONSUMERFILTER_H_
 
 #include "core/Filter.h"
 #include <unistd.h>
 #include <iostream>
 
-struct StringDisplayFilter: public Filter {
+struct StringConsumerFilter: public Filter {
   
 private:
   InputPort<std::string> * input;
 public:
   
-  StringDisplayFilter(const string & name) : Filter(name) {
-    input = new InputPort<std::string>("input 1, string");
+  StringConsumerFilter(const string & name) : Filter(name) {
+    input = new InputPort<std::string>("input string");
     
     inputPorts.push_back(input);
   }
@@ -40,19 +40,20 @@ public:
   FilterStatus process() {
     
     input->lock();
+    
     string * inputData = input->get();
     
-    cout << "Display: " << *inputData << endl;
+    log("consuming "+*inputData);
     
     input->unlock();
     
     return FILTER_SUCCESS;
   }
   
-  ~StringDisplayFilter() {
+  ~StringConsumerFilter() {
     delete input;
   }
   
 };
 
-#endif /* STRINGDISPLAYFILTER_H_ */
+#endif /* STRINGCONSUMERFILTER_H_ */

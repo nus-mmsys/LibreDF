@@ -21,6 +21,8 @@
 #include "Filter.h"
 #include "Port.h"
 
+#include <iostream>
+
 Filter::Filter(const string &name) {
   
   this->name = name;
@@ -29,6 +31,14 @@ Filter::Filter(const string &name) {
   inMsg = 0;
   outMsg = new Message();
   
+}
+
+void Filter::log(std::string msg) {
+  io_lock->lock(); 
+  
+  //this_thread::sleep_for(chrono::milliseconds{rand()%10});
+  std::cout << name << ": " << msg << std::endl;
+  io_lock->unlock();
 }
 
 void Filter::connectFilter(Filter * f) {
@@ -68,13 +78,15 @@ string Filter::getProp(const string & key) {
 FilterStatus Filter::run() {
   FilterStatus status = FILTER_SUCCESS;
   
-  if (linked > 0 && inputFed + 1 != linked) {
-    inputFed++;
-    return FILTER_WAIT_FOR_INPUT;
+  while(status != FILTER_FINISHED) {
+    if (linked > 0 && inputFed + 1 != linked) {
+      inputFed++;
+      return FILTER_WAIT_FOR_INPUT;
+    }
+    
+    inputFed = 0;
+    status = process();
   }
-  
-  inputFed = 0;
-  status = process();
   return status;
 }
 
@@ -172,6 +184,11 @@ void Filter::startRT() {
 
 void Filter::wait() {
   t->join();
+}
+
+void Filter::setIOLock(mutex * mux) {
+
+  io_lock = mux;
 }
 
 Filter::~Filter() {

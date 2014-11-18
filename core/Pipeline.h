@@ -44,6 +44,7 @@ enum PipelineStatus {
  * Filters have a many-to-many relation, with directed pipes. Cycles are not allowed.
  */
 class Pipeline {
+        mutex io_lock;
 	string name; /**< The name of the pipeline. */
 	PipelineStatus status; /**< The current status of the pipeline. */
 	set<Filter *> filters; /**< The set of all filters in the pipeline. */

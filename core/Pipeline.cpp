@@ -34,6 +34,9 @@ void Pipeline::setRealTime(bool rt) { realtime = rt; }
 
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
   
+  inf->setIOLock(&io_lock);
+  outf->setIOLock(&io_lock);
+  
   filters.insert(inf);
   filters.insert(outf);
   

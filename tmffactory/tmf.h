@@ -28,8 +28,8 @@
 #include "filters/AdditionFilter.h"
 #include "filters/DuplicateFilter.h"
 #include "filters/Multiply2Filter.h"
-#include "filters/NumberGeneratorFilter.h"
-#include "filters/StringDisplayFilter.h"
+#include "filters/ProducerFilter.h"
+#include "filters/StringConsumerFilter.h"
 #include "filters/VideoDecoderFilter.h"
 #include "filters/VideoEncoderFilter.h"
 #include "filters/VideoWriterFilter.h"
@@ -51,8 +51,8 @@ enum FiltersType {
   ADDITION_FILTER,
   DUPLICATE_FILTER,
   MULTIPLY2_FILTER,
-  NUMBERGENERATOR_FILTER,
-  STRINGDISPLAY_FILTER,
+  PRODUCER_FILTER,
+  STRINGCONSUMER_FILTER,
   VIDEO_DECODER_FILTER,
   VIDEO_WRITER_FILTER,
   VIDEO_ENCODER_FILTER,
@@ -94,11 +94,11 @@ public:
     }
     
     switch (type) {
-      case NUMBERGENERATOR_FILTER:
-	return new NumberGeneratorFilter(name);
+      case PRODUCER_FILTER:
+	return new ProducerFilter(name);
 	
-      case STRINGDISPLAY_FILTER:
-	return new StringDisplayFilter(name);
+      case STRINGCONSUMER_FILTER:
+	return new StringConsumerFilter(name);
 
       case MULTIPLY2_FILTER:
 	return new Multiply2Filter(name);

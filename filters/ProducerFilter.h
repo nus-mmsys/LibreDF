@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef NUMBERGENERATORFILTER_H_
-#define NUMBERGENERATORFILTER_H_
+#ifndef PRODUCERFILTER_H_
+#define PRODUCERFILTER_H_ 
 
 #include "core/Filter.h"
 #include "core/Port.h"
@@ -30,7 +30,7 @@
 
 using namespace std;
 
-class NumberGeneratorFilter: public Filter {
+class ProducerFilter: public Filter {
   
 private:
   
@@ -39,7 +39,7 @@ private:
   
 public:
   
-  NumberGeneratorFilter(const string & name) :
+  ProducerFilter(const string& name) :
   Filter(name) {
     outputInt = new OutputPort<int>("numbergenerator, output 1, int");
     outputString = new OutputPort<string>(
@@ -56,12 +56,12 @@ public:
     outputInt->lock();
     int * outInt = outputInt->get();
     *outInt = number;
-    cout << "Number generated: " << *outInt << endl;
     outputInt->unlock();
     
     outputString->lock();
     string * outStr = outputString->get(); 
     *outStr = to_string(number);
+    log("producing "+*outStr);
     outputString->unlock();
     
     number++;
@@ -69,11 +69,11 @@ public:
     return FILTER_SUCCESS;
   }
   
-  ~NumberGeneratorFilter() {
+  ~ProducerFilter() {
     delete outputInt;
     delete outputString;
   }
   
 };
 
-#endif /* NUMBERGENERATORFILTER_H_ */
+#endif /* PRODUCERFILTER_H_ */

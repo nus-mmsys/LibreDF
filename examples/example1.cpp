@@ -27,8 +27,8 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = tmf.createPipeline("Test App");
   
-  Filter* numberGeneratorFilter = tmf.createFilter(NUMBERGENERATOR_FILTER,
-						   "numberGeneratorFilter");
+  Filter* producerFilter = tmf.createFilter(PRODUCER_FILTER,
+						   "producerFilter");
   Filter* add2Filter = tmf.createFilter(ADD2_FILTER, "add2Filter");
   Filter* multiply2Filter = tmf.createFilter(MULTIPLY2_FILTER,
 					     "multiply2Filter");
@@ -37,9 +37,9 @@ int main(int argc, char** argv) {
   Filter* additionFilter = tmf.createFilter(ADDITION_FILTER,
 					    "additionFilter");
   
-  pipe->connectFilters(numberGeneratorFilter, multiply2Filter);
-  pipe->connectFilters(numberGeneratorFilter, add2Filter);
-  pipe->connectFilters(numberGeneratorFilter, duplicateFilter);
+  pipe->connectFilters(producerFilter, multiply2Filter);
+  pipe->connectFilters(producerFilter, add2Filter);
+  pipe->connectFilters(producerFilter, duplicateFilter);
   pipe->connectFilters(multiply2Filter, additionFilter);
   pipe->connectFilters(add2Filter, additionFilter);
   
