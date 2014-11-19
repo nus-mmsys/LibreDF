@@ -43,8 +43,12 @@ public:
     
     input->lock();
     string * inputData = input->get();
-    string outputstring = *inputData + *inputData;
-    log("duplicate: "+outputstring); 
+    string outputstring = *inputData + "-" + *inputData;
+    log("duplicating "+outputstring); 
+    
+    if (input->getStatus() == SampleStatus::EOS)
+      status = FilterStatus::EOS; 
+    
     input->unlock();
   }
   

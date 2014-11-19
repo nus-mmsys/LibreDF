@@ -28,9 +28,10 @@
 #include "filters/AdditionFilter.h"
 #include "filters/DuplicateFilter.h"
 #include "filters/Multiply2Filter.h"
-#include "filters/ProducerFilter.h"
-#include "filters/StringConsumerFilter.h"
+#include "filters/DoubleProducerFilter.h"
+#include "filters/ConsumerFilter.h"
 #include "filters/StringProducerFilter.h"
+#include "filters/IntProducerFilter.h"
 #include "filters/VideoDecoderFilter.h"
 #include "filters/VideoEncoderFilter.h"
 #include "filters/VideoWriterFilter.h"
@@ -52,9 +53,10 @@ enum FiltersType {
   ADDITION_FILTER,
   DUPLICATE_FILTER,
   MULTIPLY2_FILTER,
-  PRODUCER_FILTER,
+  DOUBLEPRODUCER_FILTER,
+  INTPRODUCER_FILTER,
   STRINGPRODUCER_FILTER,
-  STRINGCONSUMER_FILTER,
+  CONSUMER_FILTER,
   VIDEO_DECODER_FILTER,
   VIDEO_WRITER_FILTER,
   VIDEO_ENCODER_FILTER,
@@ -96,14 +98,14 @@ public:
     }
     
     switch (type) {
-      case PRODUCER_FILTER:
-	return new ProducerFilter(name);
+      case DOUBLEPRODUCER_FILTER:
+	return new DoubleProducerFilter(name);
 	
-      case STRINGCONSUMER_FILTER:
-	return new StringConsumerFilter(name);
-
       case STRINGPRODUCER_FILTER:
 	return new StringProducerFilter(name);
+
+      case INTPRODUCER_FILTER:
+	return new IntProducerFilter(name);
 
       case MULTIPLY2_FILTER:
 	return new Multiply2Filter(name);
@@ -137,9 +139,38 @@ public:
 	
       case IMAGE_SCALER_FILTER:
 	return new ImageScalerFilter(name);
+      default:
+	cout << "Filter not found.\n";
+	return nullptr;
     }
     
     return NULL;
+  }
+  
+  
+  template <typename T>
+  Filter * createFilter(const FiltersType type, const string& name) const {
+    if (name.empty()) {
+      std::cerr << "Filter name cannot be empty." << endl;
+      return 0;
+    }
+    
+    const bool is_in = elements.find(name) != elements.end();
+    if (is_in) {
+      std::cerr << "Filter name cannot be repeated." << endl;
+      return 0;
+    }
+    
+    switch (type) {
+      
+      case CONSUMER_FILTER:
+	return new ConsumerFilter<T>(name);
+	
+      default:
+	cout << "Filter not found.\n";
+	return nullptr;
+    }
+    return nullptr;
   }
   
   /*!

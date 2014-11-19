@@ -25,21 +25,21 @@ int main(int argc, char** argv) {
   
   TMF tmf;
   
-  Pipeline* pipe = tmf.createPipeline("Real-Time Three onsumer/One producer");
+  Pipeline* pipe = tmf.createPipeline("A math pipeline");
   
-  Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER, "producer");
-
-  Filter* consumer1 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer1");
-  Filter* consumer2 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer2");
-  Filter* consumer3 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer3");
+  Filter* producer = tmf.createFilter(DOUBLEPRODUCER_FILTER, "producer");
+  Filter* add2 = tmf.createFilter(ADD2_FILTER, "add2");
+  Filter* multiply2 = tmf.createFilter(MULTIPLY2_FILTER, "multiply2");
+  Filter* duplicate = tmf.createFilter(DUPLICATE_FILTER, "duplicate");
+  Filter* addition = tmf.createFilter(ADDITION_FILTER, "addition");
   
- 
-  pipe->connectFilters(producer, consumer1);
-  pipe->connectFilters(producer, consumer2);
-  pipe->connectFilters(producer, consumer3);
-
+  pipe->connectFilters(producer, multiply2);
+  pipe->connectFilters(producer, add2);
+  pipe->connectFilters(producer, duplicate);
+  pipe->connectFilters(multiply2, addition);
+  pipe->connectFilters(add2, addition);
+  
   producer->setProp("limit", 10);
-  pipe->setRealTime(true);
   
   pipe->init();
   

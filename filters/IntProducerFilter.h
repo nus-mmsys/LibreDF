@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef PRODUCERFILTER_H_
-#define PRODUCERFILTER_H_ 
+#ifndef INTPRODUCERFILTER_H_
+#define INTPRODUCERFILTER_H_ 
 
 #include "core/Filter.h"
 #include "core/Port.h"
@@ -30,48 +30,84 @@
 
 using namespace std;
 
-class ProducerFilter: public Filter {
+class IntProducerFilter: public Filter {
   
 private:
   
+  int number;
+  int limit;
+  
   OutputPort<int> * outputInt;
-  OutputPort<string> * outputString;
   
 public:
   
-  ProducerFilter(const string& name) :
-  Filter(name) {
-    outputInt = new OutputPort<int>("int output");
-    outputString = new OutputPort<string>(
+  IntProducerFilter(const string& name) : Filter(name), number(0) {
+    
+    outputInt = new OutputPort<int>(
       "string output");
     
     outputPorts.push_back(outputInt);
-    outputPorts.push_back(outputString);
   }
   
+  void init() {
+    
+    limit = stoi(getProp("limit"));
+    
+  }
   
   void run() {
-    static int number = 1;
     
     outputInt->lock();
-    int * outInt = outputInt->get();
-    *outInt = number;
-    outputInt->unlock();
     
-    outputString->lock();
-    string * outStr = outputString->get(); 
-    *outStr = to_string(number);
-    log("producing "+*outStr);
-    outputString->unlock();
+    int * out = outputInt->get(); 
+    *out = number;
+    
+    log("producing "+to_string(number));
+    sleep(500);
+    
+    if(number == limit) {
+      outputInt->setStatus(SampleStatus::EOS);
+      status = FilterStatus::EOS;
+    }
+    
+    outputInt->unlock();
     
     number++;
   }
   
-  ~ProducerFilter() {
+  void runRT() {
+    
+    string data = to_string(number);
+    
+    bool canlock = outputInt->lockRT();
+    
+    if (!canlock) {
+      log("droping "+data);
+      sleep(500);
+      number++;
+      return;
+    }
+    
+    int * out = outputInt->get(); 
+    *out = number;
+    
+    log("producing "+to_string(number));
+    sleep(500);
+    
+    if(number == limit) {
+      outputInt->setStatus(SampleStatus::EOS);
+      status = FilterStatus::EOS;
+    }
+    
+    outputInt->unlock();
+    
+    number++;
+  }
+  
+  ~IntProducerFilter() {
     delete outputInt;
-    delete outputString;
   }
   
 };
 
-#endif /* PRODUCERFILTER_H_ */
+#endif /* INTPRODUCERFILTER_H_ */

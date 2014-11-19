@@ -47,12 +47,18 @@ public:
     
     int outputint = *inputData + 2;
     
+    if (input->getStatus() == SampleStatus::EOS)
+      status = FilterStatus::EOS; 
+    
     input->unlock();
     
     output->lock();
     
     int * outputData =  output->get();
     *outputData = outputint;
+    
+    if (status == FilterStatus::EOS)
+      output->setStatus(SampleStatus::EOS);
     
     output->unlock();
     

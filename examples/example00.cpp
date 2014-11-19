@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
   
   Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER,
 						   "producer");
-  Filter* consumer = tmf.createFilter(STRINGCONSUMER_FILTER, "consumer");
+  Filter* consumer = tmf.createFilter<string>(CONSUMER_FILTER, "consumer");
  
   producer->setProp("limit", 10);
   

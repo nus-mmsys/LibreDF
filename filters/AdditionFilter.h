@@ -55,7 +55,12 @@ public:
     int outputint = *inputData1 + *inputData2;
     
     log("addition "+to_string(outputint));
-
+    
+    if (input1->getStatus() == SampleStatus::EOS ||
+      input2->getStatus() == SampleStatus::EOS)
+      status = FilterStatus::EOS;
+    
+    input1->unlock();
     input2->unlock();
   }
   

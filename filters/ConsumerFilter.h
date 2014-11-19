@@ -18,22 +18,24 @@
  *
  */
 
-#ifndef STRINGCONSUMERFILTER_H_
-#define STRINGCONSUMERFILTER_H_
+#ifndef CONSUMERFILTER_H_
+#define CONSUMERFILTER_H_
 
 #include "core/Port.h"
 #include "core/Filter.h"
 #include <unistd.h>
 #include <iostream>
+#include <sstream>
 
-struct StringConsumerFilter: public Filter {
+template <typename T>
+class ConsumerFilter: public Filter {
   
 private:
-  InputPort<std::string> * input;
+  InputPort<T> * input;
 public:
   
-  StringConsumerFilter(const string & name) : Filter(name) {
-    input = new InputPort<std::string>("input string");
+  ConsumerFilter(const string & name) : Filter(name) {
+    input = new InputPort<T>("input");
     
     inputPorts.push_back(input);
   }
@@ -42,9 +44,12 @@ public:
     
     input->lock();
     
-    string * inputData = input->get();
+    T * inputData = input->get();
     
-    log("consuming "+*inputData);
+    std::stringstream inputstr;
+    inputstr << "consuming " << *inputData;
+    
+    log(inputstr.str());
     sleep(500);
     
     if (input->getStatus() == SampleStatus::EOS)
@@ -54,10 +59,10 @@ public:
     
   }
   
-  ~StringConsumerFilter() {
+  ~ConsumerFilter() {
     delete input;
   }
   
 };
 
-#endif /* STRINGCONSUMERFILTER_H_ */
+#endif /* CONSUMERFILTER_H_ */

@@ -25,21 +25,17 @@ int main(int argc, char** argv) {
   
   TMF tmf;
   
-  Pipeline* pipe = tmf.createPipeline("A math pipeline");
+  Pipeline* pipe = tmf.createPipeline("A addition pipeline");
   
-  Filter* producer = tmf.createFilter(PRODUCER_FILTER, "producer");
-  Filter* add2 = tmf.createFilter(ADD2_FILTER, "add2");
-  Filter* multiply2 = tmf.createFilter(MULTIPLY2_FILTER, "multiply2");
-  Filter* duplicate = tmf.createFilter(DUPLICATE_FILTER, "duplicate");
+  Filter* producer1 = tmf.createFilter(INTPRODUCER_FILTER, "producer1");
+  Filter* producer2 = tmf.createFilter(INTPRODUCER_FILTER, "producer2");
   Filter* addition = tmf.createFilter(ADDITION_FILTER, "addition");
   
-  pipe->connectFilters(producer, multiply2);
-  pipe->connectFilters(producer, add2);
-  pipe->connectFilters(producer, duplicate);
-  pipe->connectFilters(multiply2, addition);
-  pipe->connectFilters(add2, addition);
+  pipe->connectFilters(producer1, addition);
+  pipe->connectFilters(producer2, addition);
   
-  producer->setProp("limit", 10);
+  producer1->setProp("limit", 10);
+  producer2->setProp("limit", 10);
   
   pipe->init();
   

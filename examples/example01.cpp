@@ -29,9 +29,9 @@ int main(int argc, char** argv) {
   
   Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER, "producer");
 
-  Filter* consumer1 = tmf.createFilter(STRINGCONSUMER_FILTER, "consumer1");
-  Filter* consumer2 = tmf.createFilter(STRINGCONSUMER_FILTER, "consumer2");
-  Filter* consumer3 = tmf.createFilter(STRINGCONSUMER_FILTER, "consumer3");
+  Filter* consumer1 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer1");
+  Filter* consumer2 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer2");
+  Filter* consumer3 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer3");
   
   producer->setProp("limit", 10);
   
