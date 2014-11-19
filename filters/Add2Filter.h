@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -26,44 +26,43 @@
 
 struct Add2Filter: public Filter {
 private:
-	InputPort<int> * input;
-	OutputPort<int> * output;
+  InputPort<int> * input;
+  OutputPort<int> * output;
 public:
-
-	Add2Filter(const string & name) :
-			Filter(name) {
-		input = new InputPort<int>("add2, input 1, int");
-		output = new OutputPort<int>("add2, output 1, int");
-
-		inputPorts.push_back(input);
-		outputPorts.push_back(output);
-	}
-
-	FilterStatus run() {
-
-	  input->lock();
-
-	  int * inputData = input->get();
-
-	  int outputint = *inputData + 2;
-
-	  input->unlock();
-	  
-	  output->lock();
-	  
-	  int * outputData =  output->get();
-	  *outputData = outputint;
-	  
-	  output->unlock();
-	  
-	  return FILTER_SUCCESS;
-	}
-
-	~Add2Filter() {
-		delete input;
-		delete output;
-	}
-
+  
+  Add2Filter(const string & name) :
+  Filter(name) {
+    input = new InputPort<int>("add2, input 1, int");
+    output = new OutputPort<int>("add2, output 1, int");
+    
+    inputPorts.push_back(input);
+    outputPorts.push_back(output);
+  }
+  
+  void run() {
+    
+    input->lock();
+    
+    int * inputData = input->get();
+    
+    int outputint = *inputData + 2;
+    
+    input->unlock();
+    
+    output->lock();
+    
+    int * outputData =  output->get();
+    *outputData = outputint;
+    
+    output->unlock();
+    
+  }
+  
+  ~Add2Filter() {
+    delete input;
+    delete output;
+  }
+  
 };
 
 #endif /* ADD2FILTER_H_ */

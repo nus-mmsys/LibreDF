@@ -46,7 +46,7 @@ public:
   }
   
   
-  FilterStatus run() {
+  void run() {
     
     
     int * inputData1 = input1->get();
@@ -64,8 +64,6 @@ public:
     output->unlock();
     
     cout << "Addition= " << outputint << endl;
-    
-    return FILTER_SUCCESS;
     
   }
   

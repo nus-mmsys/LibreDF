@@ -21,8 +21,8 @@ private:
 	InputPort<RawFrame> * inputPortRawFrame;
 public:
 	VideoDisplayFilter(string name);
-	FilterStatus init();
-	FilterStatus run();
+	void init();
+	void run();
 	~VideoDisplayFilter();
 };
 

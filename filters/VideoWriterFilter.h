@@ -20,8 +20,8 @@ private:
 	InputPort<RawFrame> * inputPortRawFrame;
 public:
 	VideoWriterFilter(string name);
-	FilterStatus init();
-	FilterStatus run();
+	void init();
+	void run();
 	~VideoWriterFilter();
 };
 

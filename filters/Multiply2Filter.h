@@ -39,8 +39,7 @@ public:
     outputPorts.push_back(output);
   }
   
-  
-  FilterStatus run() {
+  void run() {
     
     input->lock();
     
@@ -55,7 +54,6 @@ public:
     *outputData = outputint;
     output->unlock();
     
-    return FILTER_SUCCESS;
   }
   
   ~Multiply2Filter() {

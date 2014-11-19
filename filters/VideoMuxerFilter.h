@@ -33,8 +33,8 @@ private:
 	InputPort<EncodedFrame> * inputPortEncodedFrame;
 public:
 	VideoMuxerFilter(string name);
-	FilterStatus init();
-	FilterStatus run();
+	void init();
+	void run();
 	~VideoMuxerFilter();
 };
 

@@ -23,12 +23,9 @@
 
 #include <iostream>
 
-Filter::Filter(const string &name) : realtime(false) {
-  
-  this->name = name;
+Filter::Filter(const string &name) : realtime(false), status(FilterStatus::OK), name(name) {
   inMsg = nullptr;
   outMsg = new Message();
-  
 }
 
 void Filter::setRealTime(bool rt) {
@@ -84,22 +81,16 @@ void Filter::setIOLock(mutex * mux) {
   io_lock = mux;
 }
 
-FilterStatus Filter::initFilter() {
-  
-  FilterStatus status = FILTER_SUCCESS;
-  status = init();
-  return status;
+void Filter::initFilter() {
+  init();
 }
 
-FilterStatus Filter::runFilter() {
+void Filter::runFilter() {
   
-  FilterStatus status = FILTER_SUCCESS;
-  
-  while(status != FILTER_FINISHED) {
-    status = realtime? runRT() : run();
+  while(status != FilterStatus::EOS) {
+    realtime? runRT() : run();
   }
   
-  return status;
 }
 
 Filter::~Filter() { 
@@ -115,8 +106,8 @@ Filter::~Filter() {
 //}
 
 /*
- * FilterStatus Filter::initFilter(Message * msg) {
- *  FilterStatus status = FILTER_SUCCESS;
+ * void Filter::initFilter(Message * msg) {
+ *  void status = FILTER_SUCCESS;
  *  
  *  inMsg = msg;
  *  

@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -27,71 +27,67 @@
 #include "types/RawFrame.h"
 
 class VideoDecoderFilter: public Filter {
-
+  
 private:
-	VideoReader * videoReader;
-
-	OutputPort<RawFrame> * outputFrame;
+  VideoReader * videoReader;
+  
+  OutputPort<RawFrame> * outputFrame;
 public:
-	VideoDecoderFilter(string name) :
-			Filter(name) {
-
-		outputFrame = new OutputPort<RawFrame>("videoDecoder, output 1, AVFrame");
-
-		outputPorts.push_back(outputFrame);
-
-		videoReader = 0;
-	}
-
-	FilterStatus init() {
-
-		//AVFrame * pFrame;
-
-		string videoName = getProp("input_video");
-
-		videoReader = new VideoReader(videoName);
-
-		videoReader->dump();
-
-		//for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
-		//	pFrame = outputFrame->getBuffer()->getNode(i);
-
-		//	videoReader->allocateFrame(pFrame);
-		//}
-
-		outMsg->setPropInt("width", videoReader->getWidth());
-		outMsg->setPropInt("height", videoReader->getHeight());
-		outMsg->setPropInt("format",
-				static_cast<int>(videoReader->getPixFormat()));
-
-		return FILTER_SUCCESS;
-	}
-
-	FilterStatus run() {
-
-	  
-		
-		outputFrame->lock();
-		RawFrame * pFrame = outputFrame->get();
-		
-		int ret = videoReader->readFrame(pFrame);
-
-		if (ret == -1) {
-			outputFrame->unlock();
-			return FILTER_FINISHED;
-		}
-	
-		outputFrame->unlock();
-		
-		return FILTER_SUCCESS;
-	}
-
-	~VideoDecoderFilter() {
-
-		delete outputFrame;
-		delete videoReader;
-	}
-
+  VideoDecoderFilter(string name) :
+  Filter(name) {
+    
+    outputFrame = new OutputPort<RawFrame>("videoDecoder, output 1, AVFrame");
+    
+    outputPorts.push_back(outputFrame);
+    
+    videoReader = 0;
+  }
+  
+  void init() {
+    
+    //AVFrame * pFrame;
+    
+    string videoName = getProp("input_video");
+    
+    videoReader = new VideoReader(videoName);
+    
+    videoReader->dump();
+    
+    //for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
+    //	pFrame = outputFrame->getBuffer()->getNode(i);
+    
+    //	videoReader->allocateFrame(pFrame);
+    //}
+    
+    outMsg->setPropInt("width", videoReader->getWidth());
+    outMsg->setPropInt("height", videoReader->getHeight());
+    outMsg->setPropInt("format",
+		       static_cast<int>(videoReader->getPixFormat()));
+    
+  }
+  
+  void run() {
+    
+    outputFrame->lock();
+    RawFrame * pFrame = outputFrame->get();
+    
+    int ret = videoReader->readFrame(pFrame);
+    
+    if (ret == -1) {
+      outputFrame->unlock();
+      status = FilterStatus::EOS;
+    }
+    
+    outputFrame->unlock();
+    
+  }
+  
+  ~VideoDecoderFilter() {
+    
+    delete outputFrame;
+    delete videoReader;
+  }
+  
 };
 
 #endif /* VIDEODECODER_H_ */

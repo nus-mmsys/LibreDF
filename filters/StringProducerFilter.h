@@ -49,16 +49,13 @@ public:
     outputPorts.push_back(outputString);
   }
   
-  FilterStatus init() {
+  void init() {
     
     limit = stoi(getProp("limit"));
     
-    return FILTER_SUCCESS;
   }
   
-  FilterStatus run() {
-    
-    FilterStatus status = FILTER_SUCCESS;
+  void run() {
     
     outputString->lock();
     
@@ -67,17 +64,15 @@ public:
     
     log("producing "+*outStr);
     sleep(500);
-   
+    
     if(number == limit) {
       outputString->setStatus(SampleStatus::EOS);
-      status = FILTER_FINISHED;
+      status = FilterStatus::EOS;
     }
     
     outputString->unlock();
     
     number++;
-    
-    return status;
   }
   
   ~StringProducerFilter() {

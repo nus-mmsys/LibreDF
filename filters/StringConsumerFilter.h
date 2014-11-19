@@ -38,9 +38,7 @@ public:
     inputPorts.push_back(input);
   }
   
-  FilterStatus run() {
-    
-    FilterStatus status = FILTER_SUCCESS;
+  void run() {
     
     input->lock();
     
@@ -48,13 +46,12 @@ public:
     
     log("consuming "+*inputData);
     sleep(500);
-   
+    
     if (input->getStatus() == SampleStatus::EOS)
-      status = FILTER_FINISHED; 
+      status = FilterStatus::EOS; 
     
     input->unlock();
     
-    return status;
   }
   
   ~StringConsumerFilter() {

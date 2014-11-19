@@ -43,7 +43,7 @@ public:
     videoFrameWriter = 0;
   }
   
-  FilterStatus init() {
+  void init() {
     
     MessageError err;
     //string videoName = getProp("input_video");
@@ -68,10 +68,9 @@ public:
     videoFrameWriter = new VideoFrameWriter(srcWidth, srcHeight, srcFormat);
     videoFrameWriter->setPath(getProp("output_path"));
     
-    return FILTER_SUCCESS;
   }
   
-  FilterStatus run() {
+  void run() {
     
     inputFrame->lock();	
     RawFrame * pFrame = inputFrame->get();
@@ -79,7 +78,6 @@ public:
     videoFrameWriter->writeImage(pFrame);
     
     inputFrame->unlock();
-    return FILTER_SUCCESS;
   }
   
   ~ImageWriterFilter() {

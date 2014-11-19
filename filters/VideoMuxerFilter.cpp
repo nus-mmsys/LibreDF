@@ -31,7 +31,7 @@ VideoMuxerFilter::VideoMuxerFilter(string name) :
 
 }
 
-FilterStatus VideoMuxerFilter::init() {
+void VideoMuxerFilter::init() {
 
 	MessageError err;
 	string output_video;
@@ -59,10 +59,9 @@ FilterStatus VideoMuxerFilter::init() {
 
 	videoMuxer->init(output_video, width, height, bitrate, framerate);
 
-	return FILTER_SUCCESS;
 }
 
-FilterStatus VideoMuxerFilter::run() {
+void VideoMuxerFilter::run() {
 
   inputPortEncodedFrame->lock();
   
@@ -71,7 +70,6 @@ FilterStatus VideoMuxerFilter::run() {
   
   inputPortEncodedFrame->unlock();
   
-  return FILTER_SUCCESS;
 }
 
 VideoMuxerFilter::~VideoMuxerFilter() {

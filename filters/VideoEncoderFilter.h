@@ -36,8 +36,8 @@ private:
 	OutputPort<EncodedFrame> * outputPortEncodedFrame;
 public:
 	VideoEncoderFilter(string name);
-	FilterStatus init();
-	FilterStatus run();
+	void init();
+	void run();
 	~VideoEncoderFilter();
 };
 

@@ -42,8 +42,7 @@ public:
   }
   
   
-  FilterStatus run() {
-    
+  void run() {
     
     input->lock();
     string * inputData = input->get();
@@ -57,7 +56,6 @@ public:
     output->unlock();
     
     std::cout << "Duplicate= " << outputstring << std::endl;
-    return FILTER_SUCCESS;
   }
   
   ~DuplicateFilter() {

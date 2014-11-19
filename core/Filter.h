@@ -35,13 +35,13 @@ using namespace std;
 //template <typename T> class Port<T>;
 
 /*!
- * \enum FilterStatus
+ * \enum void
  * Status of a filter.
  */
-enum FilterStatus {
-  FILTER_SUCCESS, /**< Filter processed successfully. */
-  FILTER_ERROR, /**< An error occurred while processing. */
-  FILTER_FINISHED, /**< Filter is done generating more data. Used in data sources. */
+enum class FilterStatus {
+  OK, /**< Filter processed successfully. */
+  ERROR, /**< An error occurred while processing. */
+  EOS, /**< Filter is done generating more data. Used in data sources. */
 };
 
 /*!
@@ -60,6 +60,7 @@ private:
   string name; /**< The name f the filter */
   Attribute attr; /**< A map containing the message keys and values transfered to filter from a pipeline */
   
+
   bool realtime;
   
 protected:
@@ -69,6 +70,7 @@ protected:
   vector<Port*> inputPorts; /**< List of the input ports  */
   vector<Port*> outputPorts; /**< List of the output ports */
   
+  FilterStatus status; 
   /*!
    * Filter constructor
    * \param name
@@ -83,11 +85,9 @@ protected:
    * Virtual function, to be implemented in the subclass filters.
    * Read data from input filter, process the data, and write the result to the output port.
    */
-  virtual FilterStatus init() {
-    return FILTER_SUCCESS;
-  }
-  virtual FilterStatus run() = 0;
-  virtual FilterStatus runRT() {
+  virtual void init() {}
+  virtual void run() = 0;
+  virtual void runRT() {
     return run();
   }
   
@@ -133,7 +133,7 @@ public:
    *
    * \return The new status of the filter.
    */
-  FilterStatus initFilter(); 
+  void initFilter(); 
   
   /*!
    * Execute the processing of this filter.
@@ -141,7 +141,7 @@ public:
    *
    * \return The new status of the filter.
    */
-  FilterStatus runFilter();
+  void runFilter();
  
   void startInit();
   

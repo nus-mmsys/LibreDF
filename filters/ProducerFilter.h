@@ -50,7 +50,7 @@ public:
   }
   
   
- FilterStatus run() {
+  void run() {
     static int number = 1;
     
     outputInt->lock();
@@ -65,8 +65,6 @@ public:
     outputString->unlock();
     
     number++;
-    
-    return FILTER_SUCCESS;
   }
   
   ~ProducerFilter() {

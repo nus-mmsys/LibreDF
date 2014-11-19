@@ -50,10 +50,9 @@ public:
     videoScaler = 0;
   }
   
-  FilterStatus init() {
+  void init() {
     
     MessageError err;
-    FilterStatus status = FILTER_SUCCESS;
     
     string width = getProp("width");
     string height = getProp("height");
@@ -77,8 +76,6 @@ public:
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
-    
-    
     videoScaler = new VideoScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
     
     //TODO FIXME
@@ -91,12 +88,10 @@ public:
     outMsg->setProp("height", height);
     outMsg->setPropInt("format", srcFormatInt);
     
-    return status;
     
   }
   
-  FilterStatus run() {
-    FilterStatus status = FILTER_SUCCESS;
+  void run() {
     
     inputPortFrame->lock();
     RawFrame * inFrame = inputPortFrame->get();
@@ -109,8 +104,6 @@ public:
     inputPortFrame->unlock();
     
     outputPortFrame->unlock();
-    
-    return status;
   }
   
   

@@ -35,7 +35,7 @@ VideoEncoderFilter::VideoEncoderFilter(string name) :
 
 }
 
-FilterStatus VideoEncoderFilter::init() {
+void VideoEncoderFilter::init() {
 
 	MessageError err;
 
@@ -63,10 +63,9 @@ FilterStatus VideoEncoderFilter::init() {
 	outMsg->setPropInt("framerate", framerate);
 	outMsg->setProp("output_video", output_video);
 
-	return FILTER_SUCCESS;
 }
 
-FilterStatus VideoEncoderFilter::run() {
+void VideoEncoderFilter::run() {
   
   
   inputPortRawFrame->lock();
@@ -82,7 +81,6 @@ FilterStatus VideoEncoderFilter::run() {
 
   inputPortRawFrame->unlock();
 
-  return FILTER_SUCCESS;
 }
 
 VideoEncoderFilter::~VideoEncoderFilter() {

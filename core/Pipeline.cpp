@@ -20,7 +20,7 @@
 
 #include "Pipeline.h"
 
-Pipeline::Pipeline(const string& name): name(name), status(PIPELINE_STOPPED) {
+Pipeline::Pipeline(const string& name): name(name), status(PipelineStatus::STOPPED) {
 }
 
 
@@ -42,7 +42,7 @@ void Pipeline::connectFilters(Filter * inf, Filter * outf) {
 }
 
 
-PipelineStatus Pipeline::init() {
+void Pipeline::init() {
   
   for (auto f: filters) {
     
@@ -53,11 +53,9 @@ PipelineStatus Pipeline::init() {
     f->wait();
   }
   
-  return PIPELINE_RUNNING;
-  
 }
 
-PipelineStatus Pipeline::run() {
+void Pipeline::run() {
   for (auto f : filters) {
     f->startRun();
   }
@@ -65,8 +63,6 @@ PipelineStatus Pipeline::run() {
   for (auto f : filters) {
     f->wait();
   }
-  
-  return PIPELINE_FINISHED;
   
 }
 
