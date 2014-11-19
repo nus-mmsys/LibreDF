@@ -2,8 +2,11 @@ cmake_minimum_required (VERSION 2.6)
 
 project (examples)
 
-add_executable(example0 example0.cpp)
-target_link_libraries(example0 tmf)
+add_executable(example00 example00.cpp)
+target_link_libraries(example00 tmf)
+
+add_executable(example01 example01.cpp)
+target_link_libraries(example01 tmf)
 
 add_executable(example1 example1.cpp)
 target_link_libraries(example1 tmf)
