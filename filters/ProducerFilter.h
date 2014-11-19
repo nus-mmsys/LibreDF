@@ -41,9 +41,9 @@ public:
   
   ProducerFilter(const string& name) :
   Filter(name) {
-    outputInt = new OutputPort<int>("numbergenerator, output 1, int");
+    outputInt = new OutputPort<int>("int output");
     outputString = new OutputPort<string>(
-      "numbergenerator, output 2, string");
+      "string output");
     
     outputPorts.push_back(outputInt);
     outputPorts.push_back(outputString);

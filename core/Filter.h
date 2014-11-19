@@ -150,7 +150,8 @@ public:
   void wait();
   
   void setIOLock(mutex * mux);
-  
+
+  FilterStatus getStatus() { return status; }
   /*!
    * Destructor of the filter.
    */

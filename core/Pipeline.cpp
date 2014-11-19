@@ -48,7 +48,6 @@ void Pipeline::init() {
   }
   
   for (auto f: filters) {
-    
     f->startInit();
   }
   
@@ -56,16 +55,36 @@ void Pipeline::init() {
     f->wait();
   }
   
+  status = PipelineStatus::READY;
+  
+  for (auto f : filters) {
+  
+    if (f->getStatus() != FilterStatus::OK)
+      status = PipelineStatus::STOPPED;
+      return;
+  }
+  
+  
 }
 
 void Pipeline::run() {
+  
+  if (status != PipelineStatus::READY) {
+    cout << "Pipeline is not ready to run." << endl;
+    return;
+  }
+  
   for (auto f : filters) {
     f->startRun();
   }
+ 
+  status = PipelineStatus::RUNNING;
   
   for (auto f : filters) {
     f->wait();
   }
+  
+  status = PipelineStatus::STOPPED;
   
 }
 

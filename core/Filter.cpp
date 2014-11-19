@@ -82,6 +82,20 @@ void Filter::setIOLock(mutex * mux) {
 }
 
 void Filter::initFilter() {
+
+  for (auto p : inputPorts) {
+    if (p->getLinked() == 0) {
+      log(p->getName()+string(" is not connected"));
+      status = FilterStatus::ERROR;
+    }
+  }
+  
+  for (auto p : outputPorts) {
+    if (p->getLinked() == 0) {
+      log(p->getName()+string(" is not connected"));
+      status = FilterStatus::ERROR;
+    }
+  } 
   init();
 }
 
