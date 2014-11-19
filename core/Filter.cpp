@@ -43,20 +43,16 @@ void Filter::sleep(int s) {
 }
 void Filter::connectFilter(Filter * f) {
   
-  vector<Port*>::iterator itOut;
-  vector<Port*>::iterator itIn;
-  
   bool linked = false;
-  for (itOut = outputPorts.begin(); itOut != outputPorts.end();++itOut) {
-    for (itIn = f->inputPorts.begin(); itIn != f->inputPorts.end();++itIn) {
+  for (auto fout : outputPorts) {
+    for (auto fin : f->inputPorts) {
       
-      const PortCaps& typeOut = (*itOut)->getPortCaps();
-      const PortCaps& typeIn = (*itIn)->getPortCaps();
-      if ( (*itIn)->getLinked() == 0 && (typeOut.isEqual(typeIn))) {
+      const PortCaps& typeOut = fout->getPortCaps();
+      const PortCaps& typeIn = fin->getPortCaps();
+
+      if ( fin->getLinked() == 0 && (typeOut.isEqual(typeIn))) {
 	
-	(*itOut)->connectPort(*itIn);
-	
-	//addNextFilter((*itOut), f);
+	fout->connectPort(fin);
 	
 	linked = true;
 	break;

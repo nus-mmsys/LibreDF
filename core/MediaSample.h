@@ -47,7 +47,11 @@ private:
 public:
   MediaSample(): number(0) { data = new T(); } 
   
-  T * getData() { return data; }
+  T * get() { return data; }
+
+  ~MediaSample() {
+    delete data;
+  }
 };
 
 #endif // MEDIASAMPLE_H

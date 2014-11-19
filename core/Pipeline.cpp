@@ -25,8 +25,8 @@ Pipeline::Pipeline(const string& name): name(name), start(0), status(PIPELINE_ST
 
 Pipeline::~Pipeline() {
   
-  for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it)
-    delete *it;
+  for (auto f : filters)
+    delete f;
   
 }
 

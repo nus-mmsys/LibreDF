@@ -183,7 +183,7 @@ public:
   }
   
   T * get() {
-    return buf->at(index).getData();
+    return buf->at(index).get();
   }
   
   /*!
@@ -242,7 +242,7 @@ public:
   }
   
   T * get() {
-    return buf->at(index).getData();
+    return buf->at(index).get();
   }
   
   /*!
@@ -252,8 +252,7 @@ public:
    */
   virtual void connectPort(Port* n) {
     
-    //TODO Replace by dynamic cast?
-    InputPort<T> * in = (InputPort<T>*) n;
+    InputPort<T> * in = dynamic_cast<InputPort<T>*>(n);
     nextPorts.push_back(in);
     this->increaseLinked();
     in->increaseLinked();	
