@@ -93,8 +93,6 @@ protected:
   
 public:
   
-  
-  
   void setRealTime(bool rt);
   
   /*!
@@ -144,17 +142,7 @@ public:
    * \return The new status of the filter.
    */
   FilterStatus runFilter();
-  
-  /*!
-   * Get the number of input ports.
-   */
-  //int inputPortNum();
-  
-  /*!
-   * Get the number of output port.
-   */
-  int outputPortNum();
-  
+ 
   void startInit();
   
   void startRun();

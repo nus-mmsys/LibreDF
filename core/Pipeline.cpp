@@ -47,10 +47,6 @@ PipelineStatus Pipeline::init() {
   for (auto f: filters) {
     
     f->startInit();
-    /*if (ret == FILTER_ERROR) {
-      cerr << "Pipeline cannot initialize a filter.\n";
-      return PIPELINE_STOPPED;
-    }*/
   }
   
   for (auto f : filters) {
@@ -69,26 +65,7 @@ PipelineStatus Pipeline::run() {
   for (auto f : filters) {
     f->wait();
   }
- 
-  /*
-   *	FilterStatus status;
-   *	while(1) {
-   * 
-   *		status = start->run();
-   * 
-   *		switch(status) {
-   *		case FILTER_SUCCESS:
-   *		case FILTER_WAIT_FOR_INPUT:
-   *			continue;
-   *		case FILTER_ERROR:
-   *			return PIPELINE_STOPPED;
-   *		case FILTER_FINISHED:
-   *			return PIPELINE_FINISHED;
-   * 
-}
-
-}
-*/
+  
   return PIPELINE_FINISHED;
   
 }

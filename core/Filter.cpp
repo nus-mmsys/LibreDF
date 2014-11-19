@@ -65,6 +65,47 @@ void Filter::connectFilter(Filter * f) {
   }
 }
 
+void Filter::startInit() {
+  t = new thread(&Filter::initFilter, this);
+}
+
+void Filter::startRun() {
+  t = new thread(&Filter::runFilter, this);
+}
+
+void Filter::wait() {
+  t->join();
+  
+  delete t;
+}
+
+void Filter::setIOLock(mutex * mux) {
+
+  io_lock = mux;
+}
+
+FilterStatus Filter::initFilter() {
+  
+  FilterStatus status = FILTER_SUCCESS;
+  status = init();
+  return status;
+}
+
+FilterStatus Filter::runFilter() {
+  
+  FilterStatus status = FILTER_SUCCESS;
+  
+  while(status != FILTER_FINISHED) {
+    status = realtime? runRT() : run();
+  }
+  
+  return status;
+}
+
+Filter::~Filter() { 
+  delete outMsg;
+}
+
 //void Filter::setProp(const string & key, const string & val) {
 //  props.emplace(this->name + "::" + key, val);
 //}
@@ -72,27 +113,6 @@ void Filter::connectFilter(Filter * f) {
 //string Filter::getProp(const string & key) {
 //  return props[this->name + "::" + key];
 //}
-
-FilterStatus Filter::initFilter() {
-  FilterStatus status = FILTER_SUCCESS;
-  status = init();
-  return status;
-}
-
-FilterStatus Filter::runFilter() {
-  FilterStatus status = FILTER_SUCCESS;
-  
-  while(status != FILTER_FINISHED) {
-    //if (linked > 0 && inputFed + 1 != linked) {
-    //  inputFed++;
-    //  return FILTER_WAIT_FOR_INPUT;
-    //}
-    
-    //inputFed = 0;
-    status = realtime? runRT() : run();
-  }
-  return status;
-}
 
 /*
  * FilterStatus Filter::initFilter(Message * msg) {
@@ -174,27 +194,3 @@ FilterStatus Filter::runFilter() {
  * 
  * }
  */
-void Filter::startInit() {
-  t = new thread(&Filter::initFilter, this);
-}
-
-void Filter::startRun() {
-  t = new thread(&Filter::runFilter, this);
-}
-
-void Filter::wait() {
-  t->join();
-  
-  delete t;
-}
-
-void Filter::setIOLock(mutex * mux) {
-
-  io_lock = mux;
-}
-
-Filter::~Filter() {
-  
-  delete outMsg;
-  
-}

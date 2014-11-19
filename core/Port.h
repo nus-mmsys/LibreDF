@@ -44,19 +44,9 @@ private:
   string name; /**< The name of the port */
   int linked; /**< The number of port connected to this port */
   
-  
 protected:
   
   PortCaps portCaps;
-  //MediaBuffer<T> * buf;
-  //DataType type;
-  /**< The type of the buffer of the port (note: the typeid is used to
-   *	 retrieve the type of the buffer and the type name is not complete.
-   *	 This is used when a filter wants to connect ports and needs to know
-   *	 the type of the ports) */
-  
-  //int index; /**< The index with which the port accesses the buffer */
-  
   
 public:
   
@@ -103,30 +93,6 @@ public:
   }
   
   virtual void connectPort(Port* n) {}
-  
-  /*!
-   * Get the type of the port
-   *
-   * \return the type of the port
-   */
-  //DataType getType() { 
-  //  return type;
-  //}
-  
-  
-  /*!
-   * Get next ports
-   *
-   * \return the next ports
-   */
-  //vector<Port*> & getNextPorts() {
-  //	return nextPorts;
-  //}
-  
-  //MediaSample<T> * get() {
-  //  return buf->at(index).get();
-  //}
-  
   
   /*!
    * Port descructor
