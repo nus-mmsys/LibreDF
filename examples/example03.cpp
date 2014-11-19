@@ -25,24 +25,21 @@ int main(int argc, char** argv) {
   
   TMF tmf;
   
-  Pipeline* pipe = tmf.createPipeline("Test App");
+  Pipeline* pipe = tmf.createPipeline("A math pipeline");
   
-  Filter* producerFilter = tmf.createFilter(PRODUCER_FILTER,
-						   "producerFilter");
-  Filter* add2Filter = tmf.createFilter(ADD2_FILTER, "add2Filter");
-  Filter* multiply2Filter = tmf.createFilter(MULTIPLY2_FILTER,
-					     "multiply2Filter");
-  Filter* duplicateFilter = tmf.createFilter(DUPLICATE_FILTER,
-					     "duplicateFilter");
-  Filter* additionFilter = tmf.createFilter(ADDITION_FILTER,
-					    "additionFilter");
+  Filter* producer = tmf.createFilter(PRODUCER_FILTER, "producer");
+  Filter* add2 = tmf.createFilter(ADD2_FILTER, "add2");
+  Filter* multiply2 = tmf.createFilter(MULTIPLY2_FILTER, "multiply2");
+  Filter* duplicate = tmf.createFilter(DUPLICATE_FILTER, "duplicate");
+  Filter* addition = tmf.createFilter(ADDITION_FILTER, "addition");
   
-  pipe->connectFilters(producerFilter, multiply2Filter);
-  pipe->connectFilters(producerFilter, add2Filter);
-  pipe->connectFilters(producerFilter, duplicateFilter);
-  pipe->connectFilters(multiply2Filter, additionFilter);
-  pipe->connectFilters(add2Filter, additionFilter);
+  pipe->connectFilters(producer, multiply2);
+  pipe->connectFilters(producer, add2);
+  pipe->connectFilters(producer, duplicate);
+  pipe->connectFilters(multiply2, addition);
+  pipe->connectFilters(add2, addition);
   
+  producer->setProp("limit", 10);
   
   pipe->init();
   

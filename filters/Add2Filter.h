@@ -32,8 +32,8 @@ public:
   
   Add2Filter(const string & name) :
   Filter(name) {
-    input = new InputPort<int>("add2, input 1, int");
-    output = new OutputPort<int>("add2, output 1, int");
+    input = new InputPort<int>("int input");
+    output = new OutputPort<int>("int output");
     
     inputPorts.push_back(input);
     outputPorts.push_back(output);

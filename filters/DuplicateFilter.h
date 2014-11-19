@@ -29,16 +29,13 @@ struct DuplicateFilter: public Filter {
   
 private:
   InputPort<std::string> * input;
-  OutputPort<std::string> * output;
 public:
   
   DuplicateFilter(const string & name) :
   Filter(name) {
     input = new InputPort<std::string>("duplicate, input 1, string");
-    output = new OutputPort<std::string>("duplicate, output 1, string");
     
     inputPorts.push_back(input);
-    outputPorts.push_back(output);
   }
   
   
@@ -47,20 +44,12 @@ public:
     input->lock();
     string * inputData = input->get();
     string outputstring = *inputData + *inputData;
-    
+    log("duplicate: "+outputstring); 
     input->unlock();
-    
-    output->lock();
-    string * outputData = output->get();
-    *outputData = outputstring;
-    output->unlock();
-    
-    std::cout << "Duplicate= " << outputstring << std::endl;
   }
   
   ~DuplicateFilter() {
     delete input;
-    delete output;
   }
   
 };

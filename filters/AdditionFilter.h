@@ -30,24 +30,23 @@ struct AdditionFilter: public Filter {
 private:
   InputPort<int> * input1;
   InputPort<int>* input2;
-  OutputPort<int> * output;
   
 public:
   
   AdditionFilter(const string & name) :
   Filter(name) {
-    input1 = new InputPort<int>("addition, input 1, int");
-    input2 = new InputPort<int>("addition, input 2, int");
-    output = new OutputPort<int>("addition, output 1, int");
+    input1 = new InputPort<int>("int input 1");
+    input2 = new InputPort<int>("int input 2");
     
     inputPorts.push_back(input1);
     inputPorts.push_back(input2);
-    outputPorts.push_back(output);
   }
   
   
   void run() {
     
+    input1->lock();
+    input2->lock();
     
     int * inputData1 = input1->get();
     
@@ -55,22 +54,14 @@ public:
     
     int outputint = *inputData1 + *inputData2;
     
-    output->lock();
-    
-    int * outputData = output->get();
-    
-    *outputData = outputint;
-    
-    output->unlock();
-    
-    cout << "Addition= " << outputint << endl;
-    
+    log("addition "+to_string(outputint));
+
+    input2->unlock();
   }
   
   ~AdditionFilter() {
     delete input1;
     delete input2;
-    delete output;
   }
   
 };
