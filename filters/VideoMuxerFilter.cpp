@@ -38,31 +38,31 @@ FilterStatus VideoMuxerFilter::init() {
 	int width, height, bitrate, framerate;
 
 	err = inMsg->getPropString("output_video", output_video);
-	if (err == MSG_NOT_FOUND)
-		return FILTER_WAIT_FOR_INPUT;
+	//if (err == MSG_NOT_FOUND)
+	//	return FILTER_WAIT_FOR_INPUT;
 
 	err = inMsg->getPropInt("width", width);
-	if (err == MSG_NOT_FOUND)
-		return FILTER_WAIT_FOR_INPUT;
+	//if (err == MSG_NOT_FOUND)
+	//	return FILTER_WAIT_FOR_INPUT;
 
 	err = inMsg->getPropInt("height", height);
-	if (err == MSG_NOT_FOUND)
-		return FILTER_WAIT_FOR_INPUT;
+	//if (err == MSG_NOT_FOUND)
+	//	return FILTER_WAIT_FOR_INPUT;
 
 	err = inMsg->getPropInt("bitrate", bitrate);
-	if (err == MSG_NOT_FOUND)
-		return FILTER_WAIT_FOR_INPUT;
+	//if (err == MSG_NOT_FOUND)
+	//	return FILTER_WAIT_FOR_INPUT;
 
 	err = inMsg->getPropInt("framerate", framerate);
-	if (err == MSG_NOT_FOUND)
-		return FILTER_WAIT_FOR_INPUT;
+	//if (err == MSG_NOT_FOUND)
+	//	return FILTER_WAIT_FOR_INPUT;
 
 	videoMuxer->init(output_video, width, height, bitrate, framerate);
 
 	return FILTER_SUCCESS;
 }
 
-FilterStatus VideoMuxerFilter::process() {
+FilterStatus VideoMuxerFilter::run() {
 
   inputPortEncodedFrame->lock();
   

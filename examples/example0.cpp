@@ -30,14 +30,14 @@ int main(int argc, char** argv) {
   Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER,
 						   "producer");
   Filter* consumer = tmf.createFilter(STRINGCONSUMER_FILTER, "consumer");
+ 
+  producer->setProp("limit", 10);
   
   pipe->connectFilters(producer, consumer);
   
   pipe->init();
   
   pipe->run();
-  
-  pipe->wait();
   
   tmf.destroyPipeline(pipe);
   

@@ -21,7 +21,7 @@ private:
 public:
 	VideoWriterFilter(string name);
 	FilterStatus init();
-	FilterStatus process();
+	FilterStatus run();
 	~VideoWriterFilter();
 };
 

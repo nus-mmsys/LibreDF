@@ -48,8 +48,6 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  pipe->wait();
-
   tmf.destroyPipeline(pipe);
   
   return 0;

@@ -50,7 +50,7 @@ public:
   }
   
   
-  FilterStatus process() {
+ FilterStatus run() {
     static int number = 1;
     
     outputInt->lock();

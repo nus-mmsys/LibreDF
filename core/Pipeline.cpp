@@ -20,17 +20,15 @@
 
 #include "Pipeline.h"
 
-Pipeline::Pipeline(const string& name): name(name), start(0), status(PIPELINE_STOPPED), realtime(false) {
+Pipeline::Pipeline(const string& name): name(name), status(PIPELINE_STOPPED) {
 }
 
-Pipeline::~Pipeline() {
-  
-  for (auto f : filters)
-    delete f;
-  
-}
 
-void Pipeline::setRealTime(bool rt) { realtime = rt; }
+void Pipeline::setRealTime(bool rt) { 
+  for (auto f : filters) {
+    f->setRealTime(rt);
+  }
+}
 
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
   
@@ -40,55 +38,38 @@ void Pipeline::connectFilters(Filter * inf, Filter * outf) {
   filters.insert(inf);
   filters.insert(outf);
   
-  if (this->start == 0 && inf->inputPortNum() == 0)
-    this->start = inf;
-  
-  if (this->start == 0 && outf->inputPortNum() == 0)
-    this->start = outf;
-  
   inf->connectFilter(outf);
 }
-
-//void Pipeline::setStarter(Filter *starter) {
-//	this->start = starter;
-//}
-
 
 
 PipelineStatus Pipeline::init() {
   
-  FilterStatus ret;
-  if (start == NULL) {
-    cerr << "Pipeline does not have enough filters to run.\n";
-    return PIPELINE_STOPPED;
+  for (auto f: filters) {
+    
+    f->startInit();
+    /*if (ret == FILTER_ERROR) {
+      cerr << "Pipeline cannot initialize a filter.\n";
+      return PIPELINE_STOPPED;
+    }*/
   }
   
-  ret = start->init();
-  
-  if (ret == FILTER_ERROR) {
-    cerr << "Pipeline cannot initialize a filter.\n";
-    return PIPELINE_STOPPED;
+  for (auto f : filters) {
+    f->wait();
   }
-  /*for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
-   * 
-   *		ret = (*it)->initFilter(0);
-   * 
-   *		if (ret == FILTER_ERROR) {
-   *			cerr << "Pipeline cannot initialize a filter.\n";
-   *			return PIPELINE_STOPPED;
-}
-}
-*/
+  
   return PIPELINE_RUNNING;
   
 }
 
 PipelineStatus Pipeline::run() {
   for (auto f : filters) {
-    
-    realtime? f->startRT() : f->start();
+    f->startRun();
   }
-
+  
+  for (auto f : filters) {
+    f->wait();
+  }
+ 
   /*
    *	FilterStatus status;
    *	while(1) {
@@ -108,16 +89,13 @@ PipelineStatus Pipeline::run() {
 
 }
 */
-  return PIPELINE_STATE_UNKNOWN;
+  return PIPELINE_FINISHED;
   
 }
 
-void Pipeline::wait() {
-
-  for (auto f : filters) {
+Pipeline::~Pipeline() {
   
-    f->wait();
-  }
-  
+  for (auto f : filters)
+    delete f;
   
 }

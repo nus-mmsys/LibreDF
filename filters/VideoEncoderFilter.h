@@ -37,7 +37,7 @@ private:
 public:
 	VideoEncoderFilter(string name);
 	FilterStatus init();
-	FilterStatus process();
+	FilterStatus run();
 	~VideoEncoderFilter();
 };
 

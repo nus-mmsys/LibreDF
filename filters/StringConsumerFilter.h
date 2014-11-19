@@ -21,6 +21,7 @@
 #ifndef STRINGCONSUMERFILTER_H_
 #define STRINGCONSUMERFILTER_H_
 
+#include "core/Port.h"
 #include "core/Filter.h"
 #include <unistd.h>
 #include <iostream>
@@ -37,7 +38,9 @@ public:
     inputPorts.push_back(input);
   }
   
-  FilterStatus process() {
+  FilterStatus run() {
+    
+    FilterStatus status = FILTER_SUCCESS;
     
     input->lock();
     
@@ -45,10 +48,13 @@ public:
     
     log("consuming "+*inputData);
     sleep(500);
+   
+    if (input->getStatus() == SampleStatus::EOS)
+      status = FILTER_FINISHED; 
     
     input->unlock();
     
-    return FILTER_SUCCESS;
+    return status;
   }
   
   ~StringConsumerFilter() {

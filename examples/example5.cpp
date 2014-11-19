@@ -54,14 +54,13 @@ int main(int argc, char** argv) {
   imageScaler->setProp("width", width);
   imageScaler->setProp("height", height);
   
-  videoEncoder->setProp("bitrate", "1000000");
-  videoEncoder->setProp("framerate", "25");
+  videoEncoder->setProp("bitrate", 1000000);
+  videoEncoder->setProp("framerate", 25);
   videoEncoder->setProp("output_video", outputVideo);
   
   pipe->init();
   
   pipe->run();
-  pipe->wait();
   tmf.destroyPipeline(pipe);
   
   return 0;

@@ -46,7 +46,7 @@ public:
   }
   
   
-  FilterStatus process() {
+  FilterStatus run() {
     
     
     int * inputData1 = input1->get();

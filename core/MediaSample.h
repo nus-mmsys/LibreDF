@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,34 +21,31 @@
 #ifndef MEDIASAMPLE_H
 #define MEDIASAMPLE_H
 
-#include <functional>
-
 #include "core/SampleSynchronizer.h"
-
 #include <string>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#ifdef __cplusplus
-}
-#endif
-
+enum class SampleStatus {
+  OK,
+  ERROR,
+  EOS
+};
 
 template <typename T>
 class MediaSample : public SampleSynchronizer {
-
+  
 private:
   int number;
   T * data;
+  SampleStatus status;
   
 public:
-  MediaSample(): number(0) { data = new T(); } 
+  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
   
   T * get() { return data; }
-
+  
+  void setStatus(SampleStatus st) {status = st;}
+  SampleStatus getStatus() {return status;}
+  
   ~MediaSample() {
     delete data;
   }

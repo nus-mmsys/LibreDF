@@ -39,7 +39,7 @@ public:
 		outputPorts.push_back(output);
 	}
 
-	FilterStatus process() {
+	FilterStatus run() {
 
 	  input->lock();
 

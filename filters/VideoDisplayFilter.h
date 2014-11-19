@@ -22,7 +22,7 @@ private:
 public:
 	VideoDisplayFilter(string name);
 	FilterStatus init();
-	FilterStatus process();
+	FilterStatus run();
 	~VideoDisplayFilter();
 };
 

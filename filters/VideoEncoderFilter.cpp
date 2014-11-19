@@ -48,12 +48,12 @@ FilterStatus VideoEncoderFilter::init() {
 	framerate = std::stoi(getProp("framerate"));
 
 	err = inMsg->getPropInt("width", width);
-	if (err == MSG_NOT_FOUND)
-		return FILTER_WAIT_FOR_INPUT;
+	//if (err == MSG_NOT_FOUND)
+	//	return FILTER_WAIT_FOR_INPUT;
 
 	err = inMsg->getPropInt("height", height);
-	if (err == MSG_NOT_FOUND)
-		return FILTER_WAIT_FOR_INPUT;
+	//if (err == MSG_NOT_FOUND)
+	//	return FILTER_WAIT_FOR_INPUT;
 
 	videoEncoder->init(output_video, width, height, bitrate, framerate);
 
@@ -66,7 +66,7 @@ FilterStatus VideoEncoderFilter::init() {
 	return FILTER_SUCCESS;
 }
 
-FilterStatus VideoEncoderFilter::process() {
+FilterStatus VideoEncoderFilter::run() {
   
   
   inputPortRawFrame->lock();

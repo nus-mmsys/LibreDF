@@ -42,7 +42,7 @@ public:
   }
   
   
-  FilterStatus process() {
+  FilterStatus run() {
     
     
     input->lock();

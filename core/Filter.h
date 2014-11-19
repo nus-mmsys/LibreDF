@@ -21,6 +21,7 @@
 #ifndef FITLER_H_
 #define FITLER_H_
 
+#include "core/Attribute.h"
 #include "core/Message.h"
 #include "core/Port.h"
 #include <string>
@@ -41,7 +42,6 @@ enum FilterStatus {
   FILTER_SUCCESS, /**< Filter processed successfully. */
   FILTER_ERROR, /**< An error occurred while processing. */
   FILTER_FINISHED, /**< Filter is done generating more data. Used in data sources. */
-  FILTER_WAIT_FOR_INPUT /**< Filter is waiting for input. */
 };
 
 /*!
@@ -53,13 +53,14 @@ enum FilterStatus {
 
 class Filter {
 private:
-  mutex * io_lock;
-  string name; /**< The name f the filter */
-  int linked; /**< The number of filters which are connected to this filter */
-  int inputFed; /**< The number of data which are already fed to the filter */
-  map<string, string> props; /**< A map containing the message keys and values transfered to filter from a pipeline */
+  
   thread * t;
-  //map<Port*, vector<Filter*>*> nextFilters; /**< A map containing the next filters based on one port. */
+  mutex * io_lock;
+  
+  string name; /**< The name f the filter */
+  Attribute attr; /**< A map containing the message keys and values transfered to filter from a pipeline */
+  
+  bool realtime;
   
 protected:
   Message * inMsg; /**< Input message of the filter */
@@ -82,25 +83,19 @@ protected:
    * Virtual function, to be implemented in the subclass filters.
    * Read data from input filter, process the data, and write the result to the output port.
    */
-  virtual FilterStatus process() = 0;
-  virtual FilterStatus processRT() {
-    return process();
-  }
-  
-  //void initNextFilters(Port *p, Message * msg);
-  //void addNextFilter(Port * p, Filter *f);
-  
-  //vector<Filter*> * getNextFilters(Port *);
-  
-public:
-  
-  /*!
-   * Perform initialization of the filter.
-   * To be overridden in subclasses to allow initialization of specific filter values.
-   */
   virtual FilterStatus init() {
     return FILTER_SUCCESS;
   }
+  virtual FilterStatus run() = 0;
+  virtual FilterStatus runRT() {
+    return run();
+  }
+  
+public:
+  
+  
+  
+  void setRealTime(bool rt);
   
   /*!
    * Set a property of the filter.
@@ -110,15 +105,20 @@ public:
    * \param val
    *   The property value.
    */
-  void setProp(const string & key, const string & val);
-  
+  template<typename T>
+  void setProp(const string & key, const T& val) {
+    attr.setProp(key, val);
+  }
   /*!
    * Get the value of a filter property.
    *
    * \param key
    *   The property name.
    */
-  string getProp(const string & key);
+  
+  string&& getProp(const string & key) {
+    return move(attr.getProp(key));
+  } 
   
   /*!
    * Connect this filter to another filter in the pipeline.
@@ -130,51 +130,38 @@ public:
   void connectFilter(Filter * f);
   
   /*!
-   * Execute the processing of this filter.
-   * The filters are connected by a link list and each filter calls executeFilter of the next filter.
-   *
-   * \return The new status of the filter.
-   */
-  FilterStatus run();
-  
-  /*!
    * Execute the init of this filter.
    * The filters are connected by a link list and each filter calls initFilter of the next filter.
    *
    * \return The new status of the filter.
    */
-  //FilterStatus initFilter(Message * msg);
+  FilterStatus initFilter(); 
   
   /*!
-   * Increase the number of the linked filters.
+   * Execute the processing of this filter.
+   * The filters are connected by a link list and each filter calls executeFilter of the next filter.
+   *
+   * \return The new status of the filter.
    */
-  void increaseLinked();
+  FilterStatus runFilter();
   
   /*!
    * Get the number of input ports.
    */
-  int inputPortNum();
+  //int inputPortNum();
   
   /*!
    * Get the number of output port.
    */
   int outputPortNum();
   
-  void start();
+  void startInit();
   
-  void startRT();
+  void startRun();
   
   void wait();
- 
+  
   void setIOLock(mutex * mux);
-  /*!
-   * 
-   * TODO
-   * Process all filters which are connected to a port
-   *
-   * \param p The output port
-   */
-  //void processNextFilters(Port * p);
   
   /*!
    * Destructor of the filter.

@@ -35,7 +35,7 @@ const int TMF_BUFFER_SIZE = 4;
 template <typename T>
 class MediaBuffer {
 protected:
-  MediaSample<T> * samples;  /**< The array containing the samples */
+  MediaSample<T> * samples[TMF_BUFFER_SIZE];  /**< The array containing the samples */
   int size;  /**< The size of the buffer */
   
 public:
@@ -47,13 +47,14 @@ public:
    */
   MediaBuffer<T>(int s): size(s) {
     
-    samples = new MediaSample<T>[TMF_BUFFER_SIZE]();
-    
+    for (int i=0; i<size; i++) {
+      samples[i] = new MediaSample<T>();
+    }
   }
  
   void addConsumer() {
     for (int i=0; i<size; i++) {
-      samples[i].addConsumer();
+      samples[i]->addConsumer();
     }
   }
  
@@ -70,14 +71,16 @@ public:
    * \param idx the number of the element
    * \return the element number idx
    */
-  MediaSample<T>& at(int idx) const  { return samples[idx]; }
+  MediaSample<T>* at(int idx) const  { return samples[idx]; }
 
   /*!
    * Buffer destructor
    *
    */
   ~MediaBuffer<T>() {
-    delete samples;
+    for (int i=0; i<size; i++) {
+      delete samples[i];
+    }
   }
   
 };

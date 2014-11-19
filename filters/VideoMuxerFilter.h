@@ -34,7 +34,7 @@ private:
 public:
 	VideoMuxerFilter(string name);
 	FilterStatus init();
-	FilterStatus process();
+	FilterStatus run();
 	~VideoMuxerFilter();
 };
 

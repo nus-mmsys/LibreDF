@@ -52,16 +52,16 @@ public:
     
     
     err = inMsg->getPropInt("width", srcWidth);
-    if (err == MSG_NOT_FOUND)
-      return FILTER_WAIT_FOR_INPUT;
+    //if (err == MSG_NOT_FOUND)
+    //  return FILTER_WAIT_FOR_INPUT;
     
     err = inMsg->getPropInt("height", srcHeight);
-    if (err == MSG_NOT_FOUND)
-      return FILTER_WAIT_FOR_INPUT;
+    //if (err == MSG_NOT_FOUND)
+    //  return FILTER_WAIT_FOR_INPUT;
     
     err = inMsg->getPropInt("format", srcFormatInt);
-    if (err == MSG_NOT_FOUND)
-      return FILTER_WAIT_FOR_INPUT;
+    //if (err == MSG_NOT_FOUND)
+    //  return FILTER_WAIT_FOR_INPUT;
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
@@ -71,7 +71,7 @@ public:
     return FILTER_SUCCESS;
   }
   
-  FilterStatus process() {
+  FilterStatus run() {
     
     inputFrame->lock();	
     RawFrame * pFrame = inputFrame->get();

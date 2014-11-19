@@ -23,14 +23,16 @@
 
 #include <iostream>
 
-Filter::Filter(const string &name) {
+Filter::Filter(const string &name) : realtime(false) {
   
   this->name = name;
-  linked = 0;
-  inputFed = 0;
-  inMsg = 0;
+  inMsg = nullptr;
   outMsg = new Message();
   
+}
+
+void Filter::setRealTime(bool rt) {
+  realtime = rt;
 }
 
 void Filter::log(std::string msg) {
@@ -63,15 +65,21 @@ void Filter::connectFilter(Filter * f) {
   }
 }
 
-void Filter::setProp(const string & key, const string & val) {
-  props.emplace(this->name + "::" + key, val);
+//void Filter::setProp(const string & key, const string & val) {
+//  props.emplace(this->name + "::" + key, val);
+//}
+
+//string Filter::getProp(const string & key) {
+//  return props[this->name + "::" + key];
+//}
+
+FilterStatus Filter::initFilter() {
+  FilterStatus status = FILTER_SUCCESS;
+  status = init();
+  return status;
 }
 
-string Filter::getProp(const string & key) {
-  return props[this->name + "::" + key];
-}
-
-FilterStatus Filter::run() {
+FilterStatus Filter::runFilter() {
   FilterStatus status = FILTER_SUCCESS;
   
   while(status != FILTER_FINISHED) {
@@ -81,7 +89,7 @@ FilterStatus Filter::run() {
     //}
     
     //inputFed = 0;
-    status = process();
+    status = realtime? runRT() : run();
   }
   return status;
 }
@@ -109,17 +117,14 @@ FilterStatus Filter::run() {
  * }
  */
 
-void Filter::increaseLinked() {
-  linked++;
-}
 
-int Filter::inputPortNum() {
-  return inputPorts.size();
-}
+//int Filter::inputPortNum() {
+//  return inputPorts.size();
+//}
 
-int Filter::outputPortNum() {
-  return outputPorts.size();
-}
+//int Filter::outputPortNum() {
+//  return outputPorts.size();
+//}
 
 /* void Filter::processNextFilters(Port * p) {
  *	vector<Filter*> * nextFilters = getNextFilters(p);
@@ -169,17 +174,18 @@ int Filter::outputPortNum() {
  * 
  * }
  */
-
-void Filter::start() {
-  t = new thread(&Filter::run, this);
+void Filter::startInit() {
+  t = new thread(&Filter::initFilter, this);
 }
 
-void Filter::startRT() {
-  t = new thread(&Filter::run, this);
+void Filter::startRun() {
+  t = new thread(&Filter::runFilter, this);
 }
 
 void Filter::wait() {
   t->join();
+  
+  delete t;
 }
 
 void Filter::setIOLock(mutex * mux) {

@@ -33,8 +33,10 @@ using namespace std;
 class StringProducerFilter: public Filter {
   
 private:
- 
+  
   int number;
+  int limit;
+  
   OutputPort<string> * outputString;
   
 public:
@@ -47,7 +49,16 @@ public:
     outputPorts.push_back(outputString);
   }
   
-  FilterStatus process() {
+  FilterStatus init() {
+    
+    limit = stoi(getProp("limit"));
+    
+    return FILTER_SUCCESS;
+  }
+  
+  FilterStatus run() {
+    
+    FilterStatus status = FILTER_SUCCESS;
     
     outputString->lock();
     
@@ -56,12 +67,17 @@ public:
     
     log("producing "+*outStr);
     sleep(500);
+   
+    if(number == limit) {
+      outputString->setStatus(SampleStatus::EOS);
+      status = FILTER_FINISHED;
+    }
     
     outputString->unlock();
     
     number++;
     
-    return FILTER_SUCCESS;
+    return status;
   }
   
   ~StringProducerFilter() {

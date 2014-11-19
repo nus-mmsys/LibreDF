@@ -46,7 +46,7 @@ private:
   
   
 protected:
- 
+  
   PortCaps portCaps;
   //MediaBuffer<T> * buf;
   //DataType type;
@@ -67,7 +67,7 @@ public:
    * \param owner The owner of the filter
    */
   Port(string name) :
-  name(name), linked(0)  {
+  name(name), linked(0) {
     
   }
   
@@ -101,7 +101,6 @@ public:
   void increaseLinked() {
     linked++;
   }
-  
   
   virtual void connectPort(Port* n) {}
   
@@ -147,11 +146,11 @@ public:
 
 template <typename T>
 class InputPort: public Port {
-  
+
 private:
+  
   MediaBuffer<T> * buf;
   int index;
-  
   
 public:
   
@@ -173,19 +172,25 @@ public:
   }
   
   void lock() {
-    buf->at(index).consumerLock();
+    buf->at(index)->consumerLock();
   }
   
-  
+
   void unlock() {
-    buf->at(index).consumerUnlock();
+    buf->at(index)->consumerUnlock();
     index = (index+1) % TMF_BUFFER_SIZE;
   }
   
   T * get() {
-    return buf->at(index).get();
+    return buf->at(index)->get();
   }
   
+  void setStatus(SampleStatus st) {
+    buf->at(index)->setStatus(st);
+  }
+  SampleStatus getStatus() {
+    return buf->at(index)->getStatus();
+  }  
   /*!
    * InputPort destructor
    *
@@ -228,22 +233,29 @@ public:
   }
   
   void lock() {
-    buf->at(index).producerLock();
+    buf->at(index)->producerLock();
   }
   
   bool lockRT() {
-    return buf->at(index).producerRTLock();
+    return buf->at(index)->producerRTLock();
   }
   
   void unlock() {
     
-    buf->at(index).producerUnlock();
+    buf->at(index)->producerUnlock();
     index = (index+1) % TMF_BUFFER_SIZE;
   }
   
   T * get() {
-    return buf->at(index).get();
+    return buf->at(index)->get();
   }
+  
+  void setStatus(SampleStatus st) {
+    buf->at(index)->setStatus(st);
+  }
+  SampleStatus getStatus() {
+    return buf->at(index)->getStatus();
+  } 
   
   /*!
    * Add next port to this port

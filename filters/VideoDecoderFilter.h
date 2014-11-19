@@ -67,7 +67,7 @@ public:
 		return FILTER_SUCCESS;
 	}
 
-	FilterStatus process() {
+	FilterStatus run() {
 
 	  
 		
