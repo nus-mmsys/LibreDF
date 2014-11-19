@@ -20,14 +20,13 @@
 
 #include "Pipeline.h"
 
-Pipeline::Pipeline(const string& name): name(name), status(PipelineStatus::STOPPED) {
+Pipeline::Pipeline(const string& name): name(name), realtime(false), status(PipelineStatus::STOPPED) {
 }
 
 
 void Pipeline::setRealTime(bool rt) { 
-  for (auto f : filters) {
-    f->setRealTime(rt);
-  }
+  realtime = rt;
+
 }
 
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
@@ -43,6 +42,10 @@ void Pipeline::connectFilters(Filter * inf, Filter * outf) {
 
 
 void Pipeline::init() {
+
+  for (auto f : filters) {
+    f->setRealTime(realtime);
+  }
   
   for (auto f: filters) {
     

@@ -47,6 +47,7 @@ class Pipeline {
   string name; /**< The name of the pipeline. */
   PipelineStatus status; /**< The current status of the pipeline. */
   set<Filter *> filters; /**< The set of all filters in the pipeline. */
+  bool realtime;
 public:
   /*!
    * Pipeline constructor

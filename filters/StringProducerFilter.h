@@ -75,6 +75,35 @@ public:
     number++;
   }
   
+  void runRT() {
+    
+    string data = to_string(number);
+    
+    bool canlock = outputString->lockRT();
+    
+    if (!canlock) {
+      log("droping "+data);
+      sleep(500);
+      number++;
+      return;
+    }
+    
+    string * outStr = outputString->get(); 
+    *outStr = data;
+    
+    log("producing "+*outStr);
+    sleep(500);
+    
+    if(number == limit) {
+      outputString->setStatus(SampleStatus::EOS);
+      status = FilterStatus::EOS;
+    }
+    
+    outputString->unlock();
+    
+    number++;
+  }
+  
   ~StringProducerFilter() {
     delete outputString;
   }

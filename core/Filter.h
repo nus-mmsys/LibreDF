@@ -88,7 +88,7 @@ protected:
   virtual void init() {}
   virtual void run() = 0;
   virtual void runRT() {
-    return run();
+    run();
   }
   
 public:
