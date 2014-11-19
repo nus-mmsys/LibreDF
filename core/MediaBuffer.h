@@ -23,7 +23,7 @@
 
 #include "MediaSample.h"
 
-const int TMF_BUFFER_SIZE = 2;
+const int TMF_BUFFER_SIZE = 4;
 
 /*!
  * \class Buffer
@@ -50,7 +50,13 @@ public:
     samples = new MediaSample<T>[TMF_BUFFER_SIZE]();
     
   }
-  
+ 
+  void addConsumer() {
+    for (int i=0; i<size; i++) {
+      samples[i].addConsumer();
+    }
+  }
+ 
   /*!
    * Get the size of the buffer
    *

@@ -36,17 +36,31 @@ class SampleSynchronizer {
   condition_variable pro_cond;
   bool prod;
   
+  unsigned int consumed;
+  bool produced;
+  unsigned int total_consumer;
+ 
 public:
  
-  SampleSynchronizer(): con_num(0), prod(false) {
+  SampleSynchronizer(): con_num(0), prod(false), consumed(0), produced(false), total_consumer(0) {
   } 
 
+  void addConsumer() {
+    total_consumer++;
+  }
+  
   void consumerLock() {
     unique_lock<mutex> locker(mux);
-    while(prod)
+    while(prod || !produced)
       pro_cond.wait(locker);
     
     con_num++;
+    consumed++;
+    
+    if(consumed == total_consumer) {
+      consumed = 0;
+      produced = false;
+    }
   }
     
   void consumerUnlock() {
@@ -57,9 +71,10 @@ public:
   
   void producerLock() {
     unique_lock<mutex> locker(mux);
-    while(con_num > 0)
+    while(con_num > 0 || produced)
       con_cond.wait(locker);
     
+    produced = true;
     prod = true;
   }
   
@@ -68,6 +83,7 @@ public:
     if(con_num > 0)
       return false;
     
+    produced = true;
     prod = true;
     return true;
   }

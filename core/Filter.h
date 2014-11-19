@@ -21,8 +21,8 @@
 #ifndef FITLER_H_
 #define FITLER_H_
 
-#include "Message.h"
-#include "Port.h"
+#include "core/Message.h"
+#include "core/Port.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -76,6 +76,7 @@ protected:
   Filter(const string & name);
   
   void log(std::string msg);
+  void sleep(int s); 
   
   /*!
    * Virtual function, to be implemented in the subclass filters.

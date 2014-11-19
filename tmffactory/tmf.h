@@ -30,6 +30,7 @@
 #include "filters/Multiply2Filter.h"
 #include "filters/ProducerFilter.h"
 #include "filters/StringConsumerFilter.h"
+#include "filters/StringProducerFilter.h"
 #include "filters/VideoDecoderFilter.h"
 #include "filters/VideoEncoderFilter.h"
 #include "filters/VideoWriterFilter.h"
@@ -52,6 +53,7 @@ enum FiltersType {
   DUPLICATE_FILTER,
   MULTIPLY2_FILTER,
   PRODUCER_FILTER,
+  STRINGPRODUCER_FILTER,
   STRINGCONSUMER_FILTER,
   VIDEO_DECODER_FILTER,
   VIDEO_WRITER_FILTER,
@@ -99,6 +101,9 @@ public:
 	
       case STRINGCONSUMER_FILTER:
 	return new StringConsumerFilter(name);
+
+      case STRINGPRODUCER_FILTER:
+	return new StringProducerFilter(name);
 
       case MULTIPLY2_FILTER:
 	return new Multiply2Filter(name);

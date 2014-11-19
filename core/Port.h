@@ -169,6 +169,7 @@ public:
   void setBuffer(MediaBuffer<T> * b) {
     
     buf = b;
+    buf->addConsumer();
   }
   
   void lock() {

@@ -35,12 +35,12 @@ Filter::Filter(const string &name) {
 
 void Filter::log(std::string msg) {
   io_lock->lock(); 
-  
-  //this_thread::sleep_for(chrono::milliseconds{rand()%10});
   std::cout << name << ": " << msg << std::endl;
   io_lock->unlock();
 }
-
+void Filter::sleep(int s) {
+  this_thread::sleep_for(chrono::milliseconds{rand()%s});
+}
 void Filter::connectFilter(Filter * f) {
   
   vector<Port*>::iterator itOut;
@@ -79,12 +79,12 @@ FilterStatus Filter::run() {
   FilterStatus status = FILTER_SUCCESS;
   
   while(status != FILTER_FINISHED) {
-    if (linked > 0 && inputFed + 1 != linked) {
-      inputFed++;
-      return FILTER_WAIT_FOR_INPUT;
-    }
+    //if (linked > 0 && inputFed + 1 != linked) {
+    //  inputFed++;
+    //  return FILTER_WAIT_FOR_INPUT;
+    //}
     
-    inputFed = 0;
+    //inputFed = 0;
     status = process();
   }
   return status;

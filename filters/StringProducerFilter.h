@@ -18,43 +18,56 @@
  *
  */
 
-#ifndef STRINGCONSUMERFILTER_H_
-#define STRINGCONSUMERFILTER_H_
+#ifndef STRINGPRODUCERFILTER_H_
+#define STRINGPRODUCERFILTER_H_ 
 
 #include "core/Filter.h"
-#include <unistd.h>
-#include <iostream>
+#include "core/Port.h"
 
-struct StringConsumerFilter: public Filter {
+#include <iostream>
+#include <string>
+#include <unistd.h>
+
+using namespace std;
+
+class StringProducerFilter: public Filter {
   
 private:
-  InputPort<std::string> * input;
+ 
+  int number;
+  OutputPort<string> * outputString;
+  
 public:
   
-  StringConsumerFilter(const string & name) : Filter(name) {
-    input = new InputPort<std::string>("input string");
+  StringProducerFilter(const string& name) : Filter(name), number(0) {
     
-    inputPorts.push_back(input);
+    outputString = new OutputPort<string>(
+      "string output");
+    
+    outputPorts.push_back(outputString);
   }
   
   FilterStatus process() {
     
-    input->lock();
+    outputString->lock();
     
-    string * inputData = input->get();
+    string * outStr = outputString->get(); 
+    *outStr = to_string(number);
     
-    log("consuming "+*inputData);
+    log("producing "+*outStr);
     sleep(500);
     
-    input->unlock();
+    outputString->unlock();
+    
+    number++;
     
     return FILTER_SUCCESS;
   }
   
-  ~StringConsumerFilter() {
-    delete input;
+  ~StringProducerFilter() {
+    delete outputString;
   }
   
 };
 
-#endif /* STRINGCONSUMERFILTER_H_ */
+#endif /* STRINGPRODUCERFILTER_H_ */

@@ -25,13 +25,13 @@ int main(int argc, char** argv) {
   
   TMF tmf;
   
-  Pipeline* pipe = tmf.createPipeline("Test App");
+  Pipeline* pipe = tmf.createPipeline("One consumer/One producer");
   
-  Filter* producerFilter = tmf.createFilter(PRODUCER_FILTER,
-						   "producerFilter");
-  Filter* strConsumerFilter = tmf.createFilter(STRINGCONSUMER_FILTER, "stringConsumerFilter");
+  Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER,
+						   "producer");
+  Filter* consumer = tmf.createFilter(STRINGCONSUMER_FILTER, "consumer");
   
-  pipe->connectFilters(producerFilter, strConsumerFilter);
+  pipe->connectFilters(producer, consumer);
   
   pipe->init();
   
