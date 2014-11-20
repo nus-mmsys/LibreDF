@@ -41,28 +41,25 @@ int main(int argc, char** argv) {
   string width2 = argv[6];
   string height2 = argv[7];
   
-  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-					  "videoDecoder");
-  Filter* imageScaler1 = tmf.createFilter(IMAGE_SCALER_FILTER,
-					  "imageScaler1");
-  Filter* imageScaler2 = tmf.createFilter(IMAGE_SCALER_FILTER,
-					  "imageScaler2");
-  Filter* imageWriter1 = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter1");
-  Filter* imageWriter2 = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter2");
+  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER, "decoder");
+  Filter* scaler1 = tmf.createFilter(IMAGE_SCALER_FILTER, "scaler1");
+  Filter* scaler2 = tmf.createFilter(IMAGE_SCALER_FILTER, "scaler2");
+  Filter* writer1 = tmf.createFilter(IMAGE_WRITER_FILTER, "writer1");
+  Filter* writer2 = tmf.createFilter(IMAGE_WRITER_FILTER, "writer2");
   
-  pipe->connectFilters(videoDecoder, imageScaler1);
-  pipe->connectFilters(videoDecoder, imageScaler2);
-  pipe->connectFilters(imageScaler1,imageWriter1);
-  pipe->connectFilters(imageScaler2,imageWriter2);
+  pipe->connectFilters(decoder, scaler1);
+  pipe->connectFilters(decoder, scaler2);
+  pipe->connectFilters(scaler1,writer1);
+  pipe->connectFilters(scaler2,writer2);
   
-  videoDecoder->setProp("input_video", inputVideo);
-  imageScaler1->setProp("width", width1);
-  imageScaler1->setProp("height", height1);
-  imageScaler2->setProp("width", width2);
-  imageScaler2->setProp("height", height2);
+  decoder->setProp("input_video", inputVideo);
+  scaler1->setProp("width", width1);
+  scaler1->setProp("height", height1);
+  scaler2->setProp("width", width2);
+  scaler2->setProp("height", height2);
   
-  imageWriter1->setProp("output_path", outputPath1);
-  imageWriter2->setProp("output_path", outputPath2);
+  writer1->setProp("output_path", outputPath1);
+  writer2->setProp("output_path", outputPath2);
   
   pipe->init();
   
