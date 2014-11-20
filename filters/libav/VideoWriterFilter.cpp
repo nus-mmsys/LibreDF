@@ -26,7 +26,8 @@ void VideoWriterFilter::init() {
   //int bitrate;
   
   string output_video = getProp("output_video");
-  
+ 
+  /*
   err = inMsg->getPropInt("width", width);
   //if (err == MSG_NOT_FOUND)
   //	return FILTER_WAIT_FOR_INPUT;
@@ -34,6 +35,7 @@ void VideoWriterFilter::init() {
   err = inMsg->getPropInt("height", height);
   //if (err == MSG_NOT_FOUND)
   //	return FILTER_WAIT_FOR_INPUT;
+  */
   
   //bitrate = 400000;
   

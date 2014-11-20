@@ -24,17 +24,19 @@ void VideoDisplayFilter::init() {
   MessageError err;
   int width, height, pixFmtInt;
   
-  err = inMsg->getPropInt("width", width);
-  //if (err == MSG_NOT_FOUND)
-  //	return FILTER_WAIT_FOR_INPUT;
-  
-  err = inMsg->getPropInt("height", height);
-  //if (err == MSG_NOT_FOUND)
-  //	return FILTER_WAIT_FOR_INPUT;
-  
-  err = inMsg->getPropInt("format", pixFmtInt);
-  //if (err == MSG_NOT_FOUND)
-  //	return FILTER_WAIT_FOR_INPUT;
+  /*
+   *  err = inMsg->getPropInt("width", width);
+   *  //if (err == MSG_NOT_FOUND)
+   *  //	return FILTER_WAIT_FOR_INPUT;
+   *  
+   *  err = inMsg->getPropInt("height", height);
+   *  //if (err == MSG_NOT_FOUND)
+   *  //	return FILTER_WAIT_FOR_INPUT;
+   *  
+   *  err = inMsg->getPropInt("format", pixFmtInt);
+   *  //if (err == MSG_NOT_FOUND)
+   *  //	return FILTER_WAIT_FOR_INPUT;
+   */
   
   AVPixelFormat pixFmt = static_cast<AVPixelFormat>(pixFmtInt);
   

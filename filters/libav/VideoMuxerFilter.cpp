@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,48 +21,49 @@
 #include <filters/libav/VideoMuxerFilter.h>
 
 VideoMuxerFilter::VideoMuxerFilter(string name) :
-		Filter(name) {
-
-	inputPortEncodedFrame = new InputPort<EncodedFrame>("videoMuxer, input 1, EncodedFrame");
-
-	inputPorts.push_back(inputPortEncodedFrame);
-
-	videoMuxer = new VideoMuxer();
-
+Filter(name) {
+  
+  inputPortEncodedFrame = new InputPort<EncodedFrame>("videoMuxer, input 1, EncodedFrame");
+  
+  inputPorts.push_back(inputPortEncodedFrame);
+  
+  videoMuxer = new VideoMuxer();
+  
 }
 
 void VideoMuxerFilter::init() {
-
-	MessageError err;
-	string output_video;
-	int width, height, bitrate, framerate;
-
-	err = inMsg->getPropString("output_video", output_video);
-	//if (err == MSG_NOT_FOUND)
-	//	return FILTER_WAIT_FOR_INPUT;
-
-	err = inMsg->getPropInt("width", width);
-	//if (err == MSG_NOT_FOUND)
-	//	return FILTER_WAIT_FOR_INPUT;
-
-	err = inMsg->getPropInt("height", height);
-	//if (err == MSG_NOT_FOUND)
-	//	return FILTER_WAIT_FOR_INPUT;
-
-	err = inMsg->getPropInt("bitrate", bitrate);
-	//if (err == MSG_NOT_FOUND)
-	//	return FILTER_WAIT_FOR_INPUT;
-
-	err = inMsg->getPropInt("framerate", framerate);
-	//if (err == MSG_NOT_FOUND)
-	//	return FILTER_WAIT_FOR_INPUT;
-
-	videoMuxer->init(output_video, width, height, bitrate, framerate);
-
+  
+  MessageError err;
+  string output_video;
+  int width, height, bitrate, framerate;
+  /*
+   *	err = inMsg->getPropString("output_video", output_video);
+   *	//if (err == MSG_NOT_FOUND)
+   *	//	return FILTER_WAIT_FOR_INPUT;
+   * 
+   *	err = inMsg->getPropInt("width", width);
+   *	//if (err == MSG_NOT_FOUND)
+   *	//	return FILTER_WAIT_FOR_INPUT;
+   * 
+   *	err = inMsg->getPropInt("height", height);
+   *	//if (err == MSG_NOT_FOUND)
+   *	//	return FILTER_WAIT_FOR_INPUT;
+   * 
+   *	err = inMsg->getPropInt("bitrate", bitrate);
+   *	//if (err == MSG_NOT_FOUND)
+   *	//	return FILTER_WAIT_FOR_INPUT;
+   * 
+   *	err = inMsg->getPropInt("framerate", framerate);
+   *	//if (err == MSG_NOT_FOUND)
+   *	//	return FILTER_WAIT_FOR_INPUT;
+   */
+  
+  videoMuxer->init(output_video, width, height, bitrate, framerate);
+  
 }
 
 void VideoMuxerFilter::run() {
-
+  
   inputPortEncodedFrame->lock();
   
   EncodedFrame * inFrame = (EncodedFrame*) inputPortEncodedFrame->get();
@@ -73,8 +74,8 @@ void VideoMuxerFilter::run() {
 }
 
 VideoMuxerFilter::~VideoMuxerFilter() {
-	delete inputPortEncodedFrame;
-
-	delete videoMuxer;
+  delete inputPortEncodedFrame;
+  
+  delete videoMuxer;
 }
 

@@ -44,7 +44,12 @@ private:
   string name; /**< The name of the port */
   int linked; /**< The number of port connected to this port */
   
+
+  
 protected:
+  
+  MediaBuffer<Attribute> * attrbuf;
+  int attrindex;
   
   PortCaps portCaps;
   
@@ -57,7 +62,7 @@ public:
    * \param owner The owner of the filter
    */
   Port(string name) :
-  name(name), linked(0) {
+  name(name), linked(0), attrbuf(nullptr), attrindex(0) {
     
   }
   
@@ -90,6 +95,10 @@ public:
    */
   void increaseLinked() {
     linked++;
+  }
+  
+  Attribute * getAttr() {
+    return attrbuf->at(attrindex)->get();
   }
   
   virtual void connectPort(Port* n) {}
@@ -132,15 +141,27 @@ public:
   }
   
   void setBuffer(MediaBuffer<T> * b) {
-    
     buf = b;
     buf->addConsumer();
+  }
+  
+  void setAttrBuffer(MediaBuffer<Attribute> * attrb) {
+    attrbuf = attrb;
+    attrbuf->addConsumer();
+  }
+
+  void lockAttr() {
+    attrbuf->at(attrindex)->consumerLock();
+  }
+
+  void unlockAttr() {
+    attrbuf->at(attrindex)->consumerUnlock();
+    attrindex = (attrindex+1) % TMF_BUFFER_SIZE;
   }
   
   void lock() {
     buf->at(index)->consumerLock();
   }
-  
 
   void unlock() {
     buf->at(index)->consumerUnlock();
@@ -195,7 +216,17 @@ public:
    */
   OutputPort<T>(string name) : Port(name), index(0) {
     buf = new MediaBuffer<T>(TMF_BUFFER_SIZE);
+    attrbuf = new MediaBuffer<Attribute>(TMF_BUFFER_SIZE);
     portCaps.addCaps("template", string(typeid(T).name()));
+  }
+  
+  void lockAttr() {
+    attrbuf->at(attrindex)->producerLock();
+  }
+
+  void unlockAttr() {
+    attrbuf->at(attrindex)->producerUnlock();
+    attrindex = (attrindex+1) % TMF_BUFFER_SIZE;
   }
   
   void lock() {
@@ -235,6 +266,7 @@ public:
     this->increaseLinked();
     in->increaseLinked();	
     in->setBuffer(buf);
+    in->setAttrBuffer(attrbuf);
   } 
   
   /*!
@@ -243,6 +275,7 @@ public:
    */
   ~OutputPort<T>() {
     delete buf;
+    delete attrbuf;
   }
 };
 

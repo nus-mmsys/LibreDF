@@ -62,17 +62,19 @@ public:
     
     int srcWidth, srcHeight, srcFormatInt;
     
-    err = inMsg->getPropInt("width", srcWidth);
-    //if (err == MSG_NOT_FOUND)
-    //  return FILTER_WAIT_FOR_INPUT;
-    
-    err = inMsg->getPropInt("height", srcHeight);
-    //if (err == MSG_NOT_FOUND)
-    //  return FILTER_WAIT_FOR_INPUT;
-    
-    err = inMsg->getPropInt("format", srcFormatInt);
-    //if (err == MSG_NOT_FOUND)
-    //  return FILTER_WAIT_FOR_INPUT;
+    /*
+     *    err = inMsg->getPropInt("width", srcWidth);
+     *    //if (err == MSG_NOT_FOUND)
+     *    //  return FILTER_WAIT_FOR_INPUT;
+     *    
+     *    err = inMsg->getPropInt("height", srcHeight);
+     *    //if (err == MSG_NOT_FOUND)
+     *    //  return FILTER_WAIT_FOR_INPUT;
+     *    
+     *    err = inMsg->getPropInt("format", srcFormatInt);
+     *    //if (err == MSG_NOT_FOUND)
+     *    //  return FILTER_WAIT_FOR_INPUT;
+     */
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
@@ -84,9 +86,11 @@ public:
     //	frame->fill(dstWidth, dstHeight, srcFormat);
     //}
     
+    /*
     outMsg->setProp("width", width);
     outMsg->setProp("height", height);
     outMsg->setPropInt("format", srcFormatInt);
+    */
     
     
   }

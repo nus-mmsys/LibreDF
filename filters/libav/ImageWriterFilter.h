@@ -21,6 +21,7 @@
 #ifndef IMAGEWRITER_H_
 #define IMAGEWRITER_H_
 
+#include "core/Port.h"
 #include "core/Filter.h"
 #include "tools/VideoFrameWriter.h"
 
@@ -39,27 +40,24 @@ public:
     
     inputPorts.push_back(inputFrame);
     
-    videoFrameWriter = nullptr;
+    videoFrameWriter = 0;
   }
   
   void init() {
     
-    MessageError err;
-    //string videoName = getProp("input_video");
-    
     int srcWidth, srcHeight, srcFormatInt;
     
-    err = inMsg->getPropInt("width", srcWidth);
-    //if (err == MSG_NOT_FOUND)
-    //  return FILTER_WAIT_FOR_INPUT;
+    inputFrame->lockAttr();
     
-    err = inMsg->getPropInt("height", srcHeight);
-    //if (err == MSG_NOT_FOUND)
-    //  return FILTER_WAIT_FOR_INPUT;
+    Attribute * attr = inputFrame->getAttr();
     
-    err = inMsg->getPropInt("format", srcFormatInt);
-    //if (err == MSG_NOT_FOUND)
-    //  return FILTER_WAIT_FOR_INPUT;
+    srcWidth = stoi(attr->getProp("width"));
+    
+    srcHeight = stoi(attr->getProp("height"));
+    
+    srcFormatInt = stoi(attr->getProp("format"));
+    
+    inputFrame->unlockAttr();
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
@@ -71,15 +69,26 @@ public:
   void run() {
     
     inputFrame->lock();	
+    
+    if (inputFrame->getStatus() == SampleStatus::EOS) {
+      status = FilterStatus::EOS; 
+      inputFrame->unlock();
+      return;
+    }
+    
     RawFrame * data = inputFrame->get();
     videoFrameWriter->writeImage(data);
+    
     inputFrame->unlock();
   }
   
   ~ImageWriterFilter() {
     delete inputFrame;
-    delete videoFrameWriter;
+    //TODO I don't know why it craches here!
+   // if(videoFrameWriter)
+   //   delete videoFrameWriter;
   }
+  
   
 };
 

@@ -51,10 +51,17 @@ public:
     
     videoReader->dump();
     
-    outMsg->setPropInt("width", videoReader->getWidth());
-    outMsg->setPropInt("height", videoReader->getHeight());
-    outMsg->setPropInt("format",
-		       static_cast<int>(videoReader->getPixFormat()));
+    outputFrame->lockAttr();
+    
+    Attribute * attr = outputFrame->getAttr();
+    
+    attr->setProp("width", videoReader->getWidth());
+    attr->setProp("height", videoReader->getHeight());
+    attr->setProp("format",
+		  static_cast<int>(videoReader->getPixFormat()));
+    
+    outputFrame->unlockAttr();
+    
   }
   
   void run() {
@@ -65,12 +72,10 @@ public:
     int ret = videoReader->readFrame(data);
     
     if (ret == -1) {
+      outputFrame->setStatus(SampleStatus::EOS);
       status = FilterStatus::EOS;
-      outputFrame->unlock();
     }
-    
     outputFrame->unlock();
-    
   }
   
   ~VideoDecoderFilter() {

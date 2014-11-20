@@ -18,14 +18,14 @@
  *
  */
 
-#include "Filter.h"
-#include "Port.h"
+#include "core/Filter.h"
+#include "core/Port.h"
 
 #include <iostream>
 
 Filter::Filter(const string &name) : realtime(false), status(FilterStatus::OK), name(name) {
-  inMsg = nullptr;
-  outMsg = new Message();
+  //inMsg = nullptr;
+  //outMsg = new Message();
 }
 
 void Filter::setRealTime(bool rt) {
@@ -108,7 +108,7 @@ void Filter::runFilter() {
 }
 
 Filter::~Filter() { 
-  delete outMsg;
+  //delete outMsg;
 }
 
 //void Filter::setProp(const string & key, const string & val) {

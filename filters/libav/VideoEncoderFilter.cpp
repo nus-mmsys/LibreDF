@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,48 +21,51 @@
 #include <filters/libav/VideoEncoderFilter.h>
 
 VideoEncoderFilter::VideoEncoderFilter(string name) :
-		Filter(name) {
-
-	inputPortRawFrame = new InputPort<RawFrame>(
-			"videoEncoder, input 1, RawFrame");
-	outputPortEncodedFrame = new OutputPort<EncodedFrame>(
-			"videoEncoder, output 1, EncodedFrame");
-
-	inputPorts.push_back(inputPortRawFrame);
-	outputPorts.push_back(outputPortEncodedFrame);
-
-	videoEncoder = new VideoEncoder();
-
+Filter(name) {
+  
+  inputPortRawFrame = new InputPort<RawFrame>(
+    "videoEncoder, input 1, RawFrame");
+  outputPortEncodedFrame = new OutputPort<EncodedFrame>(
+    "videoEncoder, output 1, EncodedFrame");
+  
+  inputPorts.push_back(inputPortRawFrame);
+  outputPorts.push_back(outputPortEncodedFrame);
+  
+  videoEncoder = new VideoEncoder();
+  
 }
 
 void VideoEncoderFilter::init() {
-
-	MessageError err;
-
-	int width, height, bitrate, framerate;
-
-	string output_video = getProp("output_video");
-
-	bitrate = std::stoi(getProp("bitrate"));
-
-	framerate = std::stoi(getProp("framerate"));
-
-	err = inMsg->getPropInt("width", width);
-	//if (err == MSG_NOT_FOUND)
-	//	return FILTER_WAIT_FOR_INPUT;
-
-	err = inMsg->getPropInt("height", height);
-	//if (err == MSG_NOT_FOUND)
-	//	return FILTER_WAIT_FOR_INPUT;
-
-	videoEncoder->init(output_video, width, height, bitrate, framerate);
-
-	outMsg->setPropInt("width", width);
-	outMsg->setPropInt("height", height);
-	outMsg->setPropInt("bitrate", bitrate);
-	outMsg->setPropInt("framerate", framerate);
-	outMsg->setProp("output_video", output_video);
-
+  
+  MessageError err;
+  
+  int width, height, bitrate, framerate;
+  
+  string output_video = getProp("output_video");
+  
+  bitrate = std::stoi(getProp("bitrate"));
+  
+  framerate = std::stoi(getProp("framerate"));
+  
+  /*
+   *	err = inMsg->getPropInt("width", width);
+   *	//if (err == MSG_NOT_FOUND)
+   *	//	return FILTER_WAIT_FOR_INPUT;
+   * 
+   *	err = inMsg->getPropInt("height", height);
+   *	//if (err == MSG_NOT_FOUND)
+   *	//	return FILTER_WAIT_FOR_INPUT;
+   */
+  
+  videoEncoder->init(output_video, width, height, bitrate, framerate);
+  /*
+  outMsg->setPropInt("width", width);
+  outMsg->setPropInt("height", height);
+  outMsg->setPropInt("bitrate", bitrate);
+  outMsg->setPropInt("framerate", framerate);
+  outMsg->setProp("output_video", output_video);
+  */
+  
 }
 
 void VideoEncoderFilter::run() {
@@ -71,23 +74,23 @@ void VideoEncoderFilter::run() {
   inputPortRawFrame->lock();
   
   RawFrame * inFrame = inputPortRawFrame->get();
-
+  
   outputPortEncodedFrame->lock();
   
   EncodedFrame * outFrame = outputPortEncodedFrame->get();
   videoEncoder->encode(inFrame, outFrame);
-
+  
   outputPortEncodedFrame->unlock();
-
+  
   inputPortRawFrame->unlock();
-
+  
 }
 
 VideoEncoderFilter::~VideoEncoderFilter() {
-
-	delete inputPortRawFrame;
-	delete outputPortEncodedFrame;
-
-	delete videoEncoder;
+  
+  delete inputPortRawFrame;
+  delete outputPortEncodedFrame;
+  
+  delete videoEncoder;
 }
 

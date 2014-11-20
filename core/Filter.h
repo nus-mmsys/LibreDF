@@ -64,8 +64,8 @@ private:
   bool realtime;
   
 protected:
-  Message * inMsg; /**< Input message of the filter */
-  Message * outMsg; /**< Output message of the filter */
+  //Message * inMsg; /**< Input message of the filter */
+  //Message * outMsg; /**< Output message of the filter */
   
   vector<Port*> inputPorts; /**< List of the input ports  */
   vector<Port*> outputPorts; /**< List of the output ports */
