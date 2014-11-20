@@ -35,14 +35,13 @@ int main(int argc, char** argv) {
   
   string inputVideo = argv[1];
   
-  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-					  "videoDecoder");
+  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER, "decoder");
   
-  Filter* videoDisplay = tmf.createFilter(VIDEO_DISPLAY_FILTER, "videoDisplay");
+  Filter* display = tmf.createFilter(VIDEO_DISPLAY_FILTER, "display");
   
-  pipe->connectFilters(videoDecoder, videoDisplay);
+  pipe->connectFilters(decoder, display);
   
-  videoDecoder->setProp("input_video", inputVideo);
+  decoder->setProp("input_video", inputVideo);
   
   pipe->init();
   

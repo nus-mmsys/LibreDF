@@ -11,8 +11,6 @@ set(EXTERNAL_LIBRARIES m z avformat avcodec avutil avdevice swscale SDL)
 include_directories(. core filters filters/basic filters/libav tools types tmffactory)
 
 aux_source_directory(core core_src)
-aux_source_directory(filters/basic filters_src)
-aux_source_directory(filters/libav filters_src)
 aux_source_directory(tools tools_src)
 aux_source_directory(types types_src)
 aux_source_directory(tmffactory tmffactory_src)

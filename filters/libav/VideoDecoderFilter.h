@@ -43,7 +43,7 @@ public:
     videoReader = nullptr;
   }
   
-  void init() {
+  virtual void init() {
     
     string videoName = getProp("input_video");
     
@@ -58,13 +58,13 @@ public:
     attr->setProp<int>("width", videoReader->getWidth());
     attr->setProp<int>("height", videoReader->getHeight());
     attr->setProp<int>("format",
-		  static_cast<int>(videoReader->getPixFormat()));
+		       static_cast<int>(videoReader->getPixFormat()));
     
     outputFrame->unlockAttr();
     
   }
   
-  void run() {
+  virtual void run() {
     
     outputFrame->lock();
     RawFrame * data = outputFrame->get();
@@ -78,10 +78,12 @@ public:
     outputFrame->unlock();
   }
   
-  ~VideoDecoderFilter() {
+  virtual ~VideoDecoderFilter() {
     
-    delete outputFrame;
-    delete videoReader;
+    if (outputFrame)
+      delete outputFrame;
+    if (videoReader)
+      delete videoReader;
   }
   
 };

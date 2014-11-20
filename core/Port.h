@@ -182,7 +182,7 @@ public:
    * InputPort destructor
    *
    */
-  ~InputPort() {
+  virtual ~InputPort() {
   }
   
 };
@@ -276,7 +276,7 @@ public:
    * OutputPort desctructor
    *
    */
-  ~OutputPort<T>() {
+  virtual ~OutputPort<T>() {
     delete buf;
     delete attrbuf;
   }

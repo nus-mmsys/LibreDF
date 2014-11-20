@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -28,14 +28,68 @@
 
 class VideoMuxerFilter: public Filter {
 private:
-	VideoMuxer * videoMuxer;
-
-	InputPort<EncodedFrame> * inputPortEncodedFrame;
+  VideoMuxer * videoMuxer;
+  
+  InputPort<EncodedFrame> * inputPortEncodedFrame;
 public:
-	VideoMuxerFilter(string name);
-	void init();
-	void run();
-	~VideoMuxerFilter();
+  
+  VideoMuxerFilter(string name) :
+  Filter(name) {
+    
+    inputPortEncodedFrame = new InputPort<EncodedFrame>("EncodedFrame input");
+    
+    inputPorts.push_back(inputPortEncodedFrame);
+    
+    videoMuxer = new VideoMuxer();
+    
+  }
+  
+  virtual void init() {
+    
+    Attribute * attr;
+    
+    string output_video;
+    int width, height, bitrate, framerate;
+    
+    
+    inputPortEncodedFrame->lockAttr();
+    attr = inputPortEncodedFrame->getAttr();
+    output_video = attr->getProp("output_video");
+    width =  stoi(attr->getProp("width"));
+    height = stoi(attr->getProp("height"));
+    bitrate = stoi(attr->getProp("bitrate"));
+    framerate = stoi(attr->getProp("framerate"));
+    inputPortEncodedFrame->unlockAttr();
+    
+    videoMuxer->init(output_video, width, height, bitrate, framerate);
+    
+  }
+  
+  virtual void run() {
+    
+    inputPortEncodedFrame->lock();
+    
+    if (inputPortEncodedFrame->getStatus() == SampleStatus::EOS) {
+      status = FilterStatus::EOS; 
+      inputPortEncodedFrame->unlock();
+      return;
+    }
+    
+    EncodedFrame * inFrame = (EncodedFrame*) inputPortEncodedFrame->get();
+    videoMuxer->mux(inFrame);
+    
+    inputPortEncodedFrame->unlock();
+    
+  }
+  
+  virtual ~VideoMuxerFilter() {
+    if (inputPortEncodedFrame)
+      delete inputPortEncodedFrame;
+    if (videoMuxer)
+      delete videoMuxer;
+  }
+  
+  
 };
 
 #endif /* VIDEOMUXERFILTER_H_ */

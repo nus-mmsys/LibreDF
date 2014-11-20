@@ -52,7 +52,7 @@ public:
     videoScaler = nullptr;
   }
   
-  void init() {
+  virtual void init() {
     
     Attribute * attr;    
     
@@ -91,7 +91,7 @@ public:
     
   }
   
-  void run() {
+  virtual void run() {
     
     inputPortFrame->lock();
     
@@ -119,10 +119,13 @@ public:
   }
   
   
-  ~ImageScalerFilter() {
-    delete inputPortFrame;
-    delete outputPortFrame;
-    delete videoScaler;
+  virtual ~ImageScalerFilter() {
+    if (inputPortFrame)
+      delete inputPortFrame;
+    if (outputPortFrame)
+      delete outputPortFrame;
+    if (videoScaler)
+      delete videoScaler;
   }
   
 };

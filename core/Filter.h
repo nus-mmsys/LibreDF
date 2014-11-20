@@ -22,7 +22,6 @@
 #define FITLER_H_
 
 #include "core/Attribute.h"
-#include "core/Message.h"
 #include "core/Port.h"
 #include <string>
 #include <vector>
@@ -54,7 +53,8 @@ enum class FilterStatus {
 class Filter {
 private:
   
-  thread * t;
+  thread * tinit;
+  thread * trun;
   mutex * io_lock;
   
   string name; /**< The name f the filter */
@@ -147,7 +147,9 @@ public:
   
   void startRun();
   
-  void wait();
+  void waitInit();
+  
+  void waitRun();
   
   void setIOLock(mutex * mux);
 

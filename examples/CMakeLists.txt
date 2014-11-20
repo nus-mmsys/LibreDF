@@ -26,8 +26,8 @@ target_link_libraries(example06 tmf)
 add_executable(example07 example07.cpp)
 target_link_libraries(example07 tmf)
 
-add_executable(example5 example5.cpp)
-target_link_libraries(example5 tmf)
+add_executable(example08 example08.cpp)
+target_link_libraries(example08 tmf)
 
-add_executable(example6 example6.cpp)
-target_link_libraries(example6 tmf)
+add_executable(example09 example09.cpp)
+target_link_libraries(example09 tmf)

@@ -52,7 +52,7 @@ void Pipeline::init() {
   }
   
   for (auto f : filters) {
-    f->wait();
+    f->waitInit();
   }
   
   status = PipelineStatus::READY;
@@ -81,7 +81,7 @@ void Pipeline::run() {
   status = PipelineStatus::RUNNING;
   
   for (auto f : filters) {
-    f->wait();
+    f->waitRun();
   }
   
   status = PipelineStatus::STOPPED;
@@ -91,6 +91,7 @@ void Pipeline::run() {
 Pipeline::~Pipeline() {
   
   for (auto f : filters)
-    delete f;
+    if(f)
+      delete f;
   
 }

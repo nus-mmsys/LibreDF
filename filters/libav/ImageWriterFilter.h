@@ -43,7 +43,7 @@ public:
     videoFrameWriter = 0;
   }
   
-  void init() {
+  virtual void init() {
     
     int srcWidth, srcHeight, srcFormatInt;
     
@@ -66,7 +66,7 @@ public:
     
   }
   
-  void run() {
+  virtual void run() {
     
     inputFrame->lock();	
     
@@ -82,11 +82,12 @@ public:
     inputFrame->unlock();
   }
   
-  ~ImageWriterFilter() {
-    delete inputFrame;
+  virtual ~ImageWriterFilter() {
+    if (inputFrame)
+      delete inputFrame;
     //TODO FIXME I don't know why it craches here!
-    //if(videoFrameWriter)
-    //  delete videoFrameWriter;
+    if(videoFrameWriter)
+      delete videoFrameWriter;
   }
   
   

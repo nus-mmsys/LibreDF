@@ -195,7 +195,8 @@ public:
    *
    */
   void destroyPipeline(Pipeline * pipe) {
-    delete pipe;
+    if (pipe)
+      delete pipe;
   }
 };
 

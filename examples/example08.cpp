@@ -38,29 +38,28 @@ int main(int argc, char** argv) {
   string height = argv[3];
   string outputVideo = argv[4];
   
-  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-					  "videoDecoder");
-  Filter* imageScaler = tmf.createFilter(IMAGE_SCALER_FILTER, "imageScaler");
-  Filter* videoEncoder = tmf.createFilter(VIDEO_ENCODER_FILTER,
-					  "videoEncoder");
-  Filter* videoMuxer = tmf.createFilter(VIDEO_MUXER_FILTER, "videoMuxer");
+  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER, "decoder");
+  Filter* scaler = tmf.createFilter(IMAGE_SCALER_FILTER, "scaler");
+  Filter* encoder = tmf.createFilter(VIDEO_ENCODER_FILTER, "encoder");
+  Filter* muxer = tmf.createFilter(VIDEO_MUXER_FILTER, "muxer");
   
-  pipe->connectFilters(videoDecoder, imageScaler);
-  pipe->connectFilters(imageScaler, videoEncoder);
-  pipe->connectFilters(videoEncoder, videoMuxer);
+  pipe->connectFilters(decoder, scaler);
+  pipe->connectFilters(scaler, encoder);
+  pipe->connectFilters(encoder, muxer);
   
-  videoDecoder->setProp("input_video", inputVideo);
+  decoder->setProp("input_video", inputVideo);
   
-  imageScaler->setProp("width", width);
-  imageScaler->setProp("height", height);
+  scaler->setProp("width", width);
+  scaler->setProp("height", height);
   
-  videoEncoder->setProp("bitrate", 1000000);
-  videoEncoder->setProp("framerate", 25);
-  videoEncoder->setProp("output_video", outputVideo);
+  encoder->setProp("bitrate", 1000000);
+  encoder->setProp("framerate", 25);
+  encoder->setProp("output_video", outputVideo);
   
   pipe->init();
   
   pipe->run();
+  
   tmf.destroyPipeline(pipe);
   
   return 0;

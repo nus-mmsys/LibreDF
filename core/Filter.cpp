@@ -63,17 +63,23 @@ void Filter::connectFilter(Filter * f) {
 }
 
 void Filter::startInit() {
-  t = new thread(&Filter::initFilter, this);
+  tinit = new thread(&Filter::initFilter, this);
 }
 
 void Filter::startRun() {
-  t = new thread(&Filter::runFilter, this);
+  trun = new thread(&Filter::runFilter, this);
 }
 
-void Filter::wait() {
-  t->join();
+void Filter::waitInit() {
+  tinit->join();
   
-  delete t;
+  //delete t;
+}
+
+void Filter::waitRun() {
+  trun->join();
+  
+  //delete t;
 }
 
 void Filter::setIOLock(mutex * mux) {
