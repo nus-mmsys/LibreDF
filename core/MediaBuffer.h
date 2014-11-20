@@ -45,8 +45,8 @@ public:
    *
    * \param size the size of the buffer
    */
-  MediaBuffer<T>(int s): size(s) {
-    
+  MediaBuffer<T>(): size(TMF_BUFFER_SIZE) {
+   
     for (int i=0; i<size; i++) {
       samples[i] = new MediaSample<T>();
     }
@@ -64,6 +64,8 @@ public:
    * \return the size of the buffer
    */ 
   int getSize() const {return size;}
+  
+  MediaSample<T> ** getSamples() { return samples; }
 
   /*!
    * Get an element of the buffer by index

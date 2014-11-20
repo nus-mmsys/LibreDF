@@ -55,9 +55,9 @@ public:
     
     Attribute * attr = outputFrame->getAttr();
     
-    attr->setProp("width", videoReader->getWidth());
-    attr->setProp("height", videoReader->getHeight());
-    attr->setProp("format",
+    attr->setProp<int>("width", videoReader->getWidth());
+    attr->setProp<int>("height", videoReader->getHeight());
+    attr->setProp<int>("format",
 		  static_cast<int>(videoReader->getPixFormat()));
     
     outputFrame->unlockAttr();

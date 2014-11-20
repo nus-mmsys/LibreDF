@@ -23,9 +23,11 @@
 
 #include "tools/VideoScaler.h"
 #include "core/Filter.h"
+#include "core/Port.h"
 
 #include <string>
 
+using namespace std;
 
 class ImageScalerFilter : public Filter {
   
@@ -40,64 +42,70 @@ public:
   
   ImageScalerFilter(string name) : Filter(name) {
     
-    inputPortFrame = new InputPort<RawFrame>("imageScaler, input, Frame");
+    inputPortFrame = new InputPort<RawFrame>("RawFrame input");
     
-    outputPortFrame = new OutputPort<RawFrame>("imageScaler, output, Frame");
+    outputPortFrame = new OutputPort<RawFrame>("RawFrame output");
     
     inputPorts.push_back(inputPortFrame);
     outputPorts.push_back(outputPortFrame);
     
-    videoScaler = 0;
+    videoScaler = nullptr;
   }
   
   void init() {
     
-    MessageError err;
+    Attribute * attr;    
     
-    string width = getProp("width");
-    string height = getProp("height");
+    //string width = getProp("width");
     
-    int dstWidth = std::stoi(width);
-    int dstHeight = std::stoi(height);
+    int dstWidth = stoi(getProp("width"));
+    int dstHeight = stoi(getProp("height"));
     
     int srcWidth, srcHeight, srcFormatInt;
     
-    /*
-     *    err = inMsg->getPropInt("width", srcWidth);
-     *    //if (err == MSG_NOT_FOUND)
-     *    //  return FILTER_WAIT_FOR_INPUT;
-     *    
-     *    err = inMsg->getPropInt("height", srcHeight);
-     *    //if (err == MSG_NOT_FOUND)
-     *    //  return FILTER_WAIT_FOR_INPUT;
-     *    
-     *    err = inMsg->getPropInt("format", srcFormatInt);
-     *    //if (err == MSG_NOT_FOUND)
-     *    //  return FILTER_WAIT_FOR_INPUT;
-     */
+    inputPortFrame->lockAttr();
+    attr = inputPortFrame->getAttr();
+    srcWidth = stoi(attr->getProp("width"));
+    srcHeight = stoi(attr->getProp("height"));
+    srcFormatInt = stoi(attr->getProp("format"));
+    inputPortFrame->unlockAttr();
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
     videoScaler = new VideoScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
     
     //TODO FIXME
-    //for (int i=0; i<outputPortFrame->getBuffer()->getSize(); i++) {
-    //	RawFrame * frame = outputPortFrame->getBuffer()->getNode(i);
-    //	frame->fill(dstWidth, dstHeight, srcFormat);
-    //}
+    // It is not good to get the buffer at this level.
+    MediaSample<RawFrame> ** buf =  outputPortFrame->getSamples();
+    for (int i=0; i<outputPortFrame->getBufferSize(); i++) {
+      RawFrame * frame = buf[i]->get();
+      frame->fill(dstWidth, dstHeight, srcFormat);
+    }
     
-    /*
-    outMsg->setProp("width", width);
-    outMsg->setProp("height", height);
-    outMsg->setPropInt("format", srcFormatInt);
-    */
-    
+    outputPortFrame->lockAttr();
+    attr = outputPortFrame->getAttr();
+    attr->setProp<int>("width", dstWidth);
+    attr->setProp<int>("height", dstHeight);
+    attr->setProp<int>("format", srcFormatInt);
+    outputPortFrame->unlockAttr();
     
   }
   
   void run() {
     
     inputPortFrame->lock();
+    
+    if (inputPortFrame->getStatus() == SampleStatus::EOS) {
+      status = FilterStatus::EOS; 
+      inputPortFrame->unlock();
+      
+      outputPortFrame->lock();
+      outputPortFrame->setStatus(SampleStatus::EOS);
+      outputPortFrame->unlock();
+      
+      return;
+    }
+    
     RawFrame * inFrame = inputPortFrame->get();
     
     outputPortFrame->lock();
@@ -114,9 +122,9 @@ public:
   ~ImageScalerFilter() {
     delete inputPortFrame;
     delete outputPortFrame;
+    delete videoScaler;
   }
   
 };
-
 
 #endif /* IMAGESCALERFILTER_H_ */

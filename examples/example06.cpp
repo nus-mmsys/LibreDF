@@ -36,21 +36,19 @@ int main(int argc, char** argv) {
   int width = std::stoi(argv[3]);
   int height = std::stoi(argv[4]);
   
-  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-					  "videoDecoder");
-  Filter* imageScaler1 = tmf.createFilter(IMAGE_SCALER_FILTER,
-					  "imageScaler1");
-  Filter* imageWriter = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
+  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER, "decoder");
+  Filter* scaler = tmf.createFilter(IMAGE_SCALER_FILTER, "scaler");
+  Filter* writer = tmf.createFilter(IMAGE_WRITER_FILTER, "writer");
   
-  pipe->connectFilters(videoDecoder, imageScaler1);
-  pipe->connectFilters(imageScaler1,imageWriter);
+  pipe->connectFilters(decoder, scaler);
+  pipe->connectFilters(scaler,writer);
   
-  videoDecoder->setProp("input_video", inputVideo);
+  decoder->setProp("input_video", inputVideo);
   
-  imageScaler1->setProp("width", to_string(width));
-  imageScaler1->setProp("height", to_string(height));
+  scaler->setProp<int>("width", width);
+  scaler->setProp<int>("height", height);
   
-  imageWriter->setProp("output_path", outputPath);
+  writer->setProp("output_path", outputPath);
   
   pipe->init();
   

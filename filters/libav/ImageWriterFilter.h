@@ -84,9 +84,9 @@ public:
   
   ~ImageWriterFilter() {
     delete inputFrame;
-    //TODO I don't know why it craches here!
-   // if(videoFrameWriter)
-   //   delete videoFrameWriter;
+    //TODO FIXME I don't know why it craches here!
+    //if(videoFrameWriter)
+    //  delete videoFrameWriter;
   }
   
   

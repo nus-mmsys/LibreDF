@@ -156,7 +156,7 @@ public:
 
   void unlockAttr() {
     attrbuf->at(attrindex)->consumerUnlock();
-    attrindex = (attrindex+1) % TMF_BUFFER_SIZE;
+    attrindex = (attrindex+1) % attrbuf->getSize();
   }
   
   void lock() {
@@ -165,7 +165,7 @@ public:
 
   void unlock() {
     buf->at(index)->consumerUnlock();
-    index = (index+1) % TMF_BUFFER_SIZE;
+    index = (index+1) % buf->getSize();
   }
   
   T * get() {
@@ -215,8 +215,8 @@ public:
    *
    */
   OutputPort<T>(string name) : Port(name), index(0) {
-    buf = new MediaBuffer<T>(TMF_BUFFER_SIZE);
-    attrbuf = new MediaBuffer<Attribute>(TMF_BUFFER_SIZE);
+    buf = new MediaBuffer<T>();
+    attrbuf = new MediaBuffer<Attribute>();
     portCaps.addCaps("template", string(typeid(T).name()));
   }
   
@@ -226,7 +226,7 @@ public:
 
   void unlockAttr() {
     attrbuf->at(attrindex)->producerUnlock();
-    attrindex = (attrindex+1) % TMF_BUFFER_SIZE;
+    attrindex = (attrindex+1) % attrbuf->getSize();
   }
   
   void lock() {
@@ -240,12 +240,15 @@ public:
   void unlock() {
     
     buf->at(index)->producerUnlock();
-    index = (index+1) % TMF_BUFFER_SIZE;
+    index = (index+1) % buf->getSize();
   }
   
   T * get() {
     return buf->at(index)->get();
   }
+  
+  MediaSample<T> ** getSamples() {return buf->getSamples();}
+  int getBufferSize() {return buf->getSize(); }
   
   void setStatus(SampleStatus st) {
     buf->at(index)->setStatus(st);
