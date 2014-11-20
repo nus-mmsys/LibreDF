@@ -30,19 +30,19 @@ int main(int argc, char** argv) {
     return -1;
   }
   
-  Pipeline* pipe = tmf.createPipeline("Decoder");
+  Pipeline* pipe = tmf.createPipeline("Decoder/Writer Pipeline");
   
   string inputVideo = argv[1];
   string outputPath = argv[2];
   
-  Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER,
-					  "videoDecoder");
-  Filter* imageWriter = tmf.createFilter(IMAGE_WRITER_FILTER, "imageWriter");
+  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER,
+					  "decoder");
+  Filter* writer = tmf.createFilter(IMAGE_WRITER_FILTER, "writer");
   
-  pipe->connectFilters(videoDecoder, imageWriter);
+  pipe->connectFilters(decoder, writer);
   
-  videoDecoder->setProp("input_video", inputVideo);
-  imageWriter->setProp("output_path", outputPath);
+  decoder->setProp("input_video", inputVideo);
+  writer->setProp("output_path", outputPath);
   
   pipe->init();
   

@@ -36,16 +36,14 @@ public:
   VideoDecoderFilter(string name) :
   Filter(name) {
     
-    outputFrame = new OutputPort<RawFrame>("videoDecoder, output 1, AVFrame");
+    outputFrame = new OutputPort<RawFrame>("RawFrame output");
     
     outputPorts.push_back(outputFrame);
     
-    videoReader = 0;
+    videoReader = nullptr;
   }
   
   void init() {
-    
-    //AVFrame * pFrame;
     
     string videoName = getProp("input_video");
     
@@ -53,29 +51,22 @@ public:
     
     videoReader->dump();
     
-    //for (int i = 0; i < outputFrame->getBuffer()->getSize(); i++) {
-    //	pFrame = outputFrame->getBuffer()->getNode(i);
-    
-    //	videoReader->allocateFrame(pFrame);
-    //}
-    
     outMsg->setPropInt("width", videoReader->getWidth());
     outMsg->setPropInt("height", videoReader->getHeight());
     outMsg->setPropInt("format",
 		       static_cast<int>(videoReader->getPixFormat()));
-    
   }
   
   void run() {
     
     outputFrame->lock();
-    RawFrame * pFrame = outputFrame->get();
+    RawFrame * data = outputFrame->get();
     
-    int ret = videoReader->readFrame(pFrame);
+    int ret = videoReader->readFrame(data);
     
     if (ret == -1) {
-      outputFrame->unlock();
       status = FilterStatus::EOS;
+      outputFrame->unlock();
     }
     
     outputFrame->unlock();

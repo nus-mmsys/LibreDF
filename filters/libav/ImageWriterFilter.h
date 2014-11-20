@@ -29,18 +29,17 @@ class ImageWriterFilter: public Filter {
 private:
   
   VideoFrameWriter * videoFrameWriter;
-  
-  
   InputPort<RawFrame> * inputFrame;
+  
 public:
   ImageWriterFilter(string name) :
   Filter(name) {
     
-    inputFrame = new InputPort<RawFrame>("imageWriter, input 1, AVFrame");
+    inputFrame = new InputPort<RawFrame>("RawFrame input");
     
     inputPorts.push_back(inputFrame);
     
-    videoFrameWriter = 0;
+    videoFrameWriter = nullptr;
   }
   
   void init() {
@@ -49,7 +48,6 @@ public:
     //string videoName = getProp("input_video");
     
     int srcWidth, srcHeight, srcFormatInt;
-    
     
     err = inMsg->getPropInt("width", srcWidth);
     //if (err == MSG_NOT_FOUND)
@@ -73,10 +71,8 @@ public:
   void run() {
     
     inputFrame->lock();	
-    RawFrame * pFrame = inputFrame->get();
-    
-    videoFrameWriter->writeImage(pFrame);
-    
+    RawFrame * data = inputFrame->get();
+    videoFrameWriter->writeImage(data);
     inputFrame->unlock();
   }
   
