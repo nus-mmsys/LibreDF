@@ -18,7 +18,7 @@
  *
  */
 
-#include <filters/VideoMuxerFilter.h>
+#include <filters/libav/VideoMuxerFilter.h>
 
 VideoMuxerFilter::VideoMuxerFilter(string name) :
 		Filter(name) {

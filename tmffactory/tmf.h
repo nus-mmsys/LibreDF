@@ -24,21 +24,23 @@
 #include <string>
 #include <set>
 
-#include "filters/Add2Filter.h"
-#include "filters/AdditionFilter.h"
-#include "filters/DuplicateFilter.h"
-#include "filters/Multiply2Filter.h"
-#include "filters/DoubleProducerFilter.h"
-#include "filters/ConsumerFilter.h"
-#include "filters/StringProducerFilter.h"
-#include "filters/IntProducerFilter.h"
-#include "filters/VideoDecoderFilter.h"
-#include "filters/VideoEncoderFilter.h"
-#include "filters/VideoWriterFilter.h"
-#include "filters/VideoMuxerFilter.h"
-#include "filters/ImageWriterFilter.h"
-#include "filters/ImageScalerFilter.h"
-#include "filters/VideoDisplayFilter.h"
+#include "filters/basic/Add2Filter.h"
+#include "filters/basic/AdditionFilter.h"
+#include "filters/basic/DuplicateFilter.h"
+#include "filters/basic/Multiply2Filter.h"
+#include "filters/basic/DoubleProducerFilter.h"
+#include "filters/basic/ConsumerFilter.h"
+#include "filters/basic/StringProducerFilter.h"
+#include "filters/basic/IntProducerFilter.h"
+
+#include "filters/libav/VideoDecoderFilter.h"
+#include "filters/libav/VideoEncoderFilter.h"
+#include "filters/libav/VideoWriterFilter.h"
+#include "filters/libav/VideoMuxerFilter.h"
+#include "filters/libav/ImageWriterFilter.h"
+#include "filters/libav/ImageScalerFilter.h"
+#include "filters/libav/VideoDisplayFilter.h"
+
 #include "core/Pipeline.h"
 
 using namespace std;

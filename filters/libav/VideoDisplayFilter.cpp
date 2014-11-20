@@ -5,7 +5,7 @@
  *      Author: arash
  */
 
-#include <filters/VideoDisplayFilter.h>
+#include <filters/libav/VideoDisplayFilter.h>
 
 VideoDisplayFilter::VideoDisplayFilter(string name) :
 Filter(name) {

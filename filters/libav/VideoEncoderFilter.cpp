@@ -18,7 +18,7 @@
  *
  */
 
-#include <filters/VideoEncoderFilter.h>
+#include <filters/libav/VideoEncoderFilter.h>
 
 VideoEncoderFilter::VideoEncoderFilter(string name) :
 		Filter(name) {

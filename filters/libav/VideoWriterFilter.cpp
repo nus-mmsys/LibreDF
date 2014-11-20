@@ -5,7 +5,7 @@
  *      Author: arash
  */
 
-#include <filters/VideoWriterFilter.h>
+#include <filters/libav/VideoWriterFilter.h>
 
 VideoWriterFilter::VideoWriterFilter(string name) :
 Filter(name) {
