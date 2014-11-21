@@ -27,11 +27,11 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = tmf.createPipeline("A math pipeline");
   
-  Filter* producer = tmf.createFilter(DOUBLEPRODUCER_FILTER, "producer");
-  Filter* add2 = tmf.createFilter(ADD2_FILTER, "add2");
-  Filter* multiply2 = tmf.createFilter(MULTIPLY2_FILTER, "multiply2");
-  Filter* duplicate = tmf.createFilter(DUPLICATE_FILTER, "duplicate");
-  Filter* addition = tmf.createFilter(ADDITION_FILTER, "addition");
+  Filter* producer = tmf.createFilter(FilterType::DOUBLEPRODUCER, "producer");
+  Filter* add2 = tmf.createFilter(FilterType::ADD2, "add2");
+  Filter* multiply2 = tmf.createFilter(FilterType::MULTIPLY2, "multiply2");
+  Filter* duplicate = tmf.createFilter(FilterType::DUPLICATE, "duplicate");
+  Filter* addition = tmf.createFilter(FilterType::ADDITION, "addition");
   
   pipe->connectFilters(producer, multiply2);
   pipe->connectFilters(producer, add2);

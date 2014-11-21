@@ -27,11 +27,11 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = tmf.createPipeline("Three consumer/One producer");
   
-  Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER, "producer");
+  Filter* producer = tmf.createFilter(FilterType::STRINGPRODUCER, "producer");
 
-  Filter* consumer1 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer1");
-  Filter* consumer2 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer2");
-  Filter* consumer3 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer3");
+  Filter* consumer1 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer1");
+  Filter* consumer2 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer2");
+  Filter* consumer3 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer3");
   
   producer->setProp("limit", 10);
   

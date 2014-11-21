@@ -50,22 +50,22 @@ using namespace std;
  *
  * The type of a filter.
  */
-enum FiltersType {
-  ADD2_FILTER,
-  ADDITION_FILTER,
-  DUPLICATE_FILTER,
-  MULTIPLY2_FILTER,
-  DOUBLEPRODUCER_FILTER,
-  INTPRODUCER_FILTER,
-  STRINGPRODUCER_FILTER,
-  CONSUMER_FILTER,
-  VIDEO_DECODER_FILTER,
-  VIDEO_WRITER_FILTER,
-  VIDEO_ENCODER_FILTER,
-  VIDEO_MUXER_FILTER,
-  VIDEO_DISPLAY_FILTER,
-  IMAGE_SCALER_FILTER,
-  IMAGE_WRITER_FILTER
+enum class FilterType {
+  ADD2,
+  ADDITION,
+  DUPLICATE,
+  MULTIPLY2,
+  DOUBLEPRODUCER,
+  INTPRODUCER,
+  STRINGPRODUCER,
+  CONSUMER,
+  VIDEO_DECODER,
+  VIDEO_WRITER,
+  VIDEO_ENCODER,
+  VIDEO_MUXER,
+  VIDEO_DISPLAY,
+  IMAGE_SCALER,
+  IMAGE_WRITER
   
 };
 
@@ -87,7 +87,7 @@ public:
    *
    * \return the created filter.
    */
-  Filter * createFilter(const FiltersType type, const string& name) const {
+  Filter * createFilter(const FilterType type, const string& name) const {
     if (name.empty()) {
       std::cerr << "Filter name cannot be empty." << endl;
       return 0;
@@ -100,46 +100,46 @@ public:
     }
     
     switch (type) {
-      case DOUBLEPRODUCER_FILTER:
+      case FilterType::DOUBLEPRODUCER:
 	return new DoubleProducerFilter(name);
 	
-      case STRINGPRODUCER_FILTER:
+      case FilterType::STRINGPRODUCER:
 	return new StringProducerFilter(name);
 
-      case INTPRODUCER_FILTER:
+      case FilterType::INTPRODUCER:
 	return new IntProducerFilter(name);
 
-      case MULTIPLY2_FILTER:
+      case FilterType::MULTIPLY2:
 	return new Multiply2Filter(name);
 	
-      case DUPLICATE_FILTER:
+      case FilterType::DUPLICATE:
 	return new DuplicateFilter(name);
 	
-      case ADD2_FILTER:
+      case FilterType::ADD2:
 	return new Add2Filter(name);
 	
-      case ADDITION_FILTER:
+      case FilterType::ADDITION:
 	return new AdditionFilter(name);
 	
-      case VIDEO_DECODER_FILTER:
+      case FilterType::VIDEO_DECODER:
 	return new VideoDecoderFilter(name);
 	
-      case VIDEO_ENCODER_FILTER:
+      case FilterType::VIDEO_ENCODER:
 	return new VideoEncoderFilter(name);
 	
-      case VIDEO_WRITER_FILTER:
+      case FilterType::VIDEO_WRITER:
 	return new VideoWriterFilter(name);
 	
-      case VIDEO_MUXER_FILTER:
+      case FilterType::VIDEO_MUXER:
 	return new VideoMuxerFilter(name);
 	
-      case VIDEO_DISPLAY_FILTER:
+      case FilterType::VIDEO_DISPLAY:
 	return new VideoDisplayFilter(name);
 	
-      case IMAGE_WRITER_FILTER:
+      case FilterType::IMAGE_WRITER:
 	return new ImageWriterFilter(name);
 	
-      case IMAGE_SCALER_FILTER:
+      case FilterType::IMAGE_SCALER:
 	return new ImageScalerFilter(name);
       default:
 	cout << "Filter not found.\n";
@@ -151,7 +151,7 @@ public:
   
   
   template <typename T>
-  Filter * createFilter(const FiltersType type, const string& name) const {
+  Filter * createFilter(const FilterType type, const string& name) const {
     if (name.empty()) {
       std::cerr << "Filter name cannot be empty." << endl;
       return 0;
@@ -165,7 +165,7 @@ public:
     
     switch (type) {
       
-      case CONSUMER_FILTER:
+      case FilterType::CONSUMER:
 	return new ConsumerFilter<T>(name);
 	
       default:

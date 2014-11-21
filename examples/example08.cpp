@@ -38,10 +38,10 @@ int main(int argc, char** argv) {
   string height = argv[3];
   string outputVideo = argv[4];
   
-  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER, "decoder");
-  Filter* scaler = tmf.createFilter(IMAGE_SCALER_FILTER, "scaler");
-  Filter* encoder = tmf.createFilter(VIDEO_ENCODER_FILTER, "encoder");
-  Filter* muxer = tmf.createFilter(VIDEO_MUXER_FILTER, "muxer");
+  Filter* decoder = tmf.createFilter(FilterType::VIDEO_DECODER, "decoder");
+  Filter* scaler = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler");
+  Filter* encoder = tmf.createFilter(FilterType::VIDEO_ENCODER, "encoder");
+  Filter* muxer = tmf.createFilter(FilterType::VIDEO_MUXER, "muxer");
   
   pipe->connectFilters(decoder, scaler);
   pipe->connectFilters(scaler, encoder);

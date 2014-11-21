@@ -31,7 +31,6 @@
 
 using namespace std;
 
-//template <typename T> class Port<T>;
 
 /*!
  * \enum void

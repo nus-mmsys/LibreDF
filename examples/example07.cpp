@@ -41,11 +41,11 @@ int main(int argc, char** argv) {
   string width2 = argv[6];
   string height2 = argv[7];
   
-  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER, "decoder");
-  Filter* scaler1 = tmf.createFilter(IMAGE_SCALER_FILTER, "scaler1");
-  Filter* scaler2 = tmf.createFilter(IMAGE_SCALER_FILTER, "scaler2");
-  Filter* writer1 = tmf.createFilter(IMAGE_WRITER_FILTER, "writer1");
-  Filter* writer2 = tmf.createFilter(IMAGE_WRITER_FILTER, "writer2");
+  Filter* decoder = tmf.createFilter(FilterType::VIDEO_DECODER, "decoder");
+  Filter* scaler1 = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler1");
+  Filter* scaler2 = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler2");
+  Filter* writer1 = tmf.createFilter(FilterType::IMAGE_WRITER, "writer1");
+  Filter* writer2 = tmf.createFilter(FilterType::IMAGE_WRITER, "writer2");
   
   pipe->connectFilters(decoder, scaler1);
   pipe->connectFilters(decoder, scaler2);

@@ -35,9 +35,9 @@ int main(int argc, char** argv) {
   
   string inputVideo = argv[1];
   
-  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER, "decoder");
+  Filter* decoder = tmf.createFilter(FilterType::VIDEO_DECODER, "decoder");
   
-  Filter* display = tmf.createFilter(VIDEO_DISPLAY_FILTER, "display");
+  Filter* display = tmf.createFilter(FilterType::VIDEO_DISPLAY, "display");
   
   pipe->connectFilters(decoder, display);
   

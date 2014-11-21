@@ -27,9 +27,9 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = tmf.createPipeline("A addition pipeline");
   
-  Filter* producer1 = tmf.createFilter(INTPRODUCER_FILTER, "producer1");
-  Filter* producer2 = tmf.createFilter(INTPRODUCER_FILTER, "producer2");
-  Filter* addition = tmf.createFilter(ADDITION_FILTER, "addition");
+  Filter* producer1 = tmf.createFilter(FilterType::INTPRODUCER, "producer1");
+  Filter* producer2 = tmf.createFilter(FilterType::INTPRODUCER, "producer2");
+  Filter* addition = tmf.createFilter(FilterType::ADDITION, "addition");
   
   pipe->connectFilters(producer1, addition);
   pipe->connectFilters(producer2, addition);

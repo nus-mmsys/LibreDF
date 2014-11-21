@@ -26,7 +26,7 @@
 const int TMF_BUFFER_SIZE = 3;
 
 /*!
- * \class Buffer
+ * \class MediaBuffer
  *
  * Buffer is a circular list of data.
  * Buffer is used in output ports.

@@ -27,9 +27,9 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = tmf.createPipeline("One consumer/One producer");
   
-  Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER,
+  Filter* producer = tmf.createFilter(FilterType::STRINGPRODUCER,
 						   "producer");
-  Filter* consumer = tmf.createFilter<string>(CONSUMER_FILTER, "consumer");
+  Filter* consumer = tmf.createFilter<string>(FilterType::CONSUMER, "consumer");
  
   producer->setProp("limit", 10);
   

@@ -70,7 +70,7 @@ void Pipeline::init() {
 void Pipeline::run() {
   
   if (status != PipelineStatus::READY) {
-    cout << "Pipeline is not ready to run." << endl;
+    std::cout << "Pipeline is not ready to run." << endl;
     return;
   }
   

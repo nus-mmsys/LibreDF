@@ -35,9 +35,9 @@ int main(int argc, char** argv) {
   string inputVideo = string(argv[1]);
   string outputPath = string(argv[2]);
   
-  Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER,
+  Filter* decoder = tmf.createFilter(FilterType::VIDEO_DECODER,
 					  "decoder");
-  Filter* writer = tmf.createFilter(IMAGE_WRITER_FILTER, "writer");
+  Filter* writer = tmf.createFilter(FilterType::IMAGE_WRITER, "writer");
   
   pipe->connectFilters(decoder, writer);
   

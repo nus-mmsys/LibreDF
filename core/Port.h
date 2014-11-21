@@ -59,7 +59,6 @@ public:
    * Port constructor
    *
    * \param name The name of the filter.
-   * \param owner The owner of the filter
    */
   Port(string name) :
   name(name), linked(0), attrbuf(nullptr), attrindex(0) {
@@ -133,7 +132,6 @@ public:
    * InputPort constructor
    *
    * \param name The name of the port
-   * \param owner The owner of the port
    *
    */
   InputPort<T>(string name) : Port(name), buf(nullptr), index(0) {
@@ -211,7 +209,6 @@ public:
    * OutputPort constructor
    *
    * \param name The name of the output port
-   * \param owner The owner of the port
    *
    */
   OutputPort<T>(string name) : Port(name), index(0) {
