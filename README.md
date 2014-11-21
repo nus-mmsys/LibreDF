@@ -1,11 +1,11 @@
 1) Tiny Multimedia Framework (tmf)
 ===============================
 
-Tiny Multimedia Framework is a simple multimedia framework to implement multimedia application. A multimedia application consists of a pipeline and a series of filters connected to each other. An application developer need to know about filter types, and how to connect them to each other.
+Tiny Multimedia Framework is a simple multimedia framework to implement multimedia applications. A multimedia application consists of a pipeline and a series of filters connected to each other. An application developer need to know about filter types, and how to connect them to each other.
 
-Each filter has a number of input and output ports. Each port has a buffer type and can be connected to other ports with the same type of data. Filters with same type of ports can be connected to each other. A port push the data to its accessors.
+Each filter has a number of input and output ports. Each port has a buffer type and can be connected to other ports with the same type of data. Filters with same type of ports can be connected to each other. A port put the data on its buffer and all consumers are notified.
 
-In section 2 we explain how a multimedia application developers create an application using the APIs of the framework. In section 3 we explain how plug-in developers create a new filter using APIs of the framework.
+In section 5 we explain how a multimedia application developers create an application using the APIs of the framework. In section 6 we explain how plug-in developers create a new filter using APIs of the framework.
 
 2) Folder structure
 ===================
@@ -62,35 +62,29 @@ The build directory:
 
 To create an application we need to create the pipeline as well as the filters, connect filters to each other and run the pipeline. TMF provides APIs to do it.
 
-Example:
+Here is a producer/consumer example with one producer and three consumer:
 ```c++
-	TMF tmf;
-	// create pipeline
-	tmf.createPipeline("Player");
-	// create decoder filter
-	Filter* videoDecoder = tmf.createFilter(VIDEO_DECODER_FILTER, "videoDecoder");
-	// create encoder filter
-	Filter* videoEncoder = tmf.createFilter(VIDEO_ENCODER_FILTER, "videoEncoder"); 
-	// create muxer filter
-	Filter* videoMuxer = tmf.createFilter(VIDEO_MUXER_FILTER, "videoMuxer");
+  TMF tmf;
+  
+  Pipeline* pipe = tmf.createPipeline("Three consumer/One producer");
+  
+  Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER, "producer");
 
-	// set properties of the filters
-	videoDecoder->setProp("input_video", "video.mp4");
-	videoEncoder->setProp("bitrate", "1000000");
-	videoEncoder->setProp("framerate", "25");
-	videoEncoder->setProp("output_video", "video.avi");
+  Filter* consumer1 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer1");
+  Filter* consumer2 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer2");
+  Filter* consumer3 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer3");
+  
+  producer->setProp("limit", 10);
+  
+  pipe->connectFilters(producer, consumer1);
+  pipe->connectFilters(producer, consumer2);
+  pipe->connectFilters(producer, consumer3);
 
-	// connect filters to each other
-	pipe->connectFilters(videoDecoder, imageScaler);
-	pipe->connectFilters(imageScaler, videoEncoder);
-	pipe->connectFilters(videoEncoder, videoMuxer);
-	
-	// initialize and run the pipeline
-	pipe->init();
-	pipe->run();
-
-	// destroy the pipeline
-	tmf.destroyPipeline(pipe);
+  pipe->init();
+  
+  pipe->run();
+  
+  tmf.destroyPipeline(pipe);
 ```	
 
 6) Plugin developer manual
