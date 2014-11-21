@@ -33,19 +33,19 @@ Here is how the project is organized.
 3) Installation
 ===============
 ```bash
-	cd build
-	./build.sh
-	# or
-	./build-debug.sh # for debuging
+  cd build
+  ./build.sh
+  # or
+  ./build-debug.sh # for debuging
 ```
 Before compilation make sure that the following libraries are installed:
 
-	libavformat-dev
-	libavcodec-dev
-	libavutil-dev
-	libswscale-dev
-	libsdl1.2-dev
-	zlib1g-dev
+  libavformat-dev
+  libavcodec-dev
+  libavutil-dev
+  libswscale-dev
+  libsdl1.2-dev
+  zlib1g-dev
 
 4) Development envirement
 ======================
