@@ -90,7 +90,7 @@ Here is a producer/consumer example with one producer and three consumer:
 6) Plugin developer manual
 =======================
 
-Plug-in developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements ```c++ init()``` and ```c++ run()``` functions.
+Plug-in developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements ```init()``` and ```run()``` functions.
 
 Here is an example of a filter implementation:
 ```c++
@@ -132,3 +132,5 @@ public:
   
 };
 ```
+
+For more information, examples, and documentation please see ```doc``` and ```examples``` folder.
