@@ -32,12 +32,12 @@ Here is how the project is organized.
 
 3) Installation
 ===============
-
+```bash
 	cd build
 	./build.sh
 	# or
 	./build-debug.sh # for debuging
-
+```
 Before compilation make sure that the following libraries are installed:
 
 	libavformat-dev
@@ -99,7 +99,7 @@ Example:
 Plug-in developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements init() and process() functions.
 
 Here is an example of a filter implementation:
-	
+```c++
 	class ImageScalerFilter : public Filter {
 
 	private:
@@ -201,3 +201,4 @@ Here is an example of a filter implementation:
 			delete outputPortFrame;
 		}
 	};
+```
