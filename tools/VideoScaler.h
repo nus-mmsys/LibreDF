@@ -42,8 +42,7 @@ private:
   int dstWidth;
   int dstHeight;
 public:
-  VideoScaler(int srcWidth, int srcHeight, AVPixelFormat srcFmt, int dstWidth,
-	      int dstHeight, AVPixelFormat dstFmt) {
+  VideoScaler(int srcWidth, int srcHeight, AVPixelFormat srcFmt, int dstWidth, int dstHeight, AVPixelFormat dstFmt) {
     
     this->srcWidth = srcWidth;
     this->srcHeight = srcHeight;
@@ -51,27 +50,23 @@ public:
     this->dstWidth = dstWidth;
     this->dstHeight = dstHeight;
     
-    sws_ctx = sws_getContext(srcWidth, srcHeight, srcFmt, dstWidth,
-			     dstHeight, dstFmt,
-			     SWS_BILINEAR,
-			     NULL,
-			     NULL,
-			     NULL);
-	      }
-	      
-	      int scale(RawFrame * inFrame, RawFrame * outFrame) {
-		
-		AVFrame * inAvFrame = inFrame->getFrame();
-		AVFrame * outAvFrame = outFrame->getFrame();
-		
-		outFrame->setNumber(inFrame->getNumber());
-		
-		//avcodec_get_frame_defaults(outAvFrame);
-		return sws_scale(sws_ctx, (uint8_t const * const *) inAvFrame->data,
-				 inAvFrame->linesize, 0, srcHeight, outAvFrame->data,
-		   outAvFrame->linesize);
-		
-	      }
+    sws_ctx = sws_getContext(srcWidth, srcHeight, srcFmt, dstWidth, dstHeight, dstFmt, SWS_BILINEAR, NULL, NULL, NULL);
+    
+  }
+  
+  int scale(RawFrame * inFrame, RawFrame * outFrame) {
+    
+    AVFrame * inAvFrame = inFrame->getFrame();
+    AVFrame * outAvFrame = outFrame->getFrame();
+    
+    outFrame->setNumber(inFrame->getNumber());
+    
+    //avcodec_get_frame_defaults(outAvFrame);
+    return sws_scale(sws_ctx, (uint8_t const * const *) inAvFrame->data,
+		     inAvFrame->linesize, 0, srcHeight, outAvFrame->data,
+		     outAvFrame->linesize);
+    
+  }
 };
 
 #endif /* VIDEOSCALER_H_ */

@@ -24,8 +24,7 @@
 #include <iostream>
 
 Filter::Filter(const string &name) : realtime(false), status(FilterStatus::OK), name(name) {
-  //inMsg = nullptr;
-  //outMsg = new Message();
+
 }
 
 void Filter::setRealTime(bool rt) {
@@ -63,27 +62,22 @@ void Filter::connectFilter(Filter * f) {
 }
 
 void Filter::startInit() {
-  tinit = new thread(&Filter::initFilter, this);
+  tinit = thread(&Filter::initFilter, this);
 }
 
 void Filter::startRun() {
-  trun = new thread(&Filter::runFilter, this);
+  trun = thread(&Filter::runFilter, this);
 }
 
 void Filter::waitInit() {
-  tinit->join();
-  
-  //delete t;
+  tinit.join();
 }
 
 void Filter::waitRun() {
-  trun->join();
-  
-  //delete t;
+  trun.join();
 }
 
 void Filter::setIOLock(mutex * mux) {
-
   io_lock = mux;
 }
 
@@ -114,94 +108,4 @@ void Filter::runFilter() {
 }
 
 Filter::~Filter() { 
-  //delete outMsg;
 }
-
-//void Filter::setProp(const string & key, const string & val) {
-//  props.emplace(this->name + "::" + key, val);
-//}
-
-//string Filter::getProp(const string & key) {
-//  return props[this->name + "::" + key];
-//}
-
-/*
- * void Filter::initFilter(Message * msg) {
- *  void status = FILTER_SUCCESS;
- *  
- *  inMsg = msg;
- *  
- *  status = init();
- *  
- *  if (status == FILTER_WAIT_FOR_INPUT)
- *    return FILTER_WAIT_FOR_INPUT;
- *  
- *  vector<OutputPort*>::iterator itIn;
- *  for (itIn = outputPorts.begin(); itIn != outputPorts.end(); ++itIn) {
- *    
- *    Port * curPort = (*itIn);
- *    initNextFilters(curPort, outMsg);
- *    
- *  }
- *  
- *  return status;
- * }
- */
-
-
-//int Filter::inputPortNum() {
-//  return inputPorts.size();
-//}
-
-//int Filter::outputPortNum() {
-//  return outputPorts.size();
-//}
-
-/* void Filter::processNextFilters(Port * p) {
- *	vector<Filter*> * nextFilters = getNextFilters(p);
- *	vector<Filter*>::iterator itNxt;
- *	for (itNxt = nextFilters->begin(); itNxt != nextFilters->end(); ++itNxt) {
- *		(*itNxt)->executeFilter();
- *	}
- * }
- */
-
-/* void Filter::initNextFilters(Port *p, Message * msg) {
- *	vector<Filter*> * nextFilters = getNextFilters(p);
- *	if (nextFilters) {
- * 
- *		for (auto i : *nextFilters) {
- *			i->initFilter(msg);
- *		}
- *		//for (vector<Filter*>::iterator itNxt = nextFilters->begin(); itNxt != nextFilters->end();
- *		//		++itNxt) {
- *		//	(*itNxt)->initFilter(msg);
- *		//}
- *	}
- * }
- */
-
-/* vector<Filter*> * Filter::getNextFilters(Port *p) {
- *	return this->nextFilters[p];
- * }
- */
-
-/*void Filter::addNextFilter(Port * p, Filter *f) {
- *	std::map<Port*, vector<Filter*>*>::iterator it;
- * 
- *	it = this->nextFilters.find(p);
- * 
- *	vector<Filter*> * nf;
- *	if (it == this->nextFilters.end()) {
- *		nf = new vector<Filter*>();
- *		this->nextFilters.emplace(p, nf);
- *	} else {
- *		nf = getNextFilters(p);
- *	}
- * 
- *	nf->push_back(f);
- * 
- *	f->increaseLinked();
- * 
- * }
- */

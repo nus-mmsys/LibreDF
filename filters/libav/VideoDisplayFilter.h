@@ -84,10 +84,8 @@ public:
   
   virtual ~VideoDisplayFilter() {
     
-    if (inputPortRawFrame)
-      delete inputPortRawFrame;
-    if (videoDisplay)
-      delete videoDisplay;
+    delete inputPortRawFrame;
+    delete videoDisplay;
   }
   
   

@@ -48,6 +48,7 @@ public:
   
   ~MediaSample() {
     delete data;
+    data = nullptr;
   }
 };
 

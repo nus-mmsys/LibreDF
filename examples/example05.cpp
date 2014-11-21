@@ -32,8 +32,8 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = tmf.createPipeline("Decoder/Writer Pipeline");
   
-  string inputVideo = argv[1];
-  string outputPath = argv[2];
+  string inputVideo = string(argv[1]);
+  string outputPath = string(argv[2]);
   
   Filter* decoder = tmf.createFilter(VIDEO_DECODER_FILTER,
 					  "decoder");

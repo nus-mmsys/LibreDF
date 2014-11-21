@@ -53,8 +53,8 @@ enum class FilterStatus {
 class Filter {
 private:
   
-  thread * tinit;
-  thread * trun;
+  thread tinit;
+  thread trun;
   mutex * io_lock;
   
   string name; /**< The name f the filter */
@@ -64,8 +64,6 @@ private:
   bool realtime;
   
 protected:
-  //Message * inMsg; /**< Input message of the filter */
-  //Message * outMsg; /**< Output message of the filter */
   
   vector<Port*> inputPorts; /**< List of the input ports  */
   vector<Port*> outputPorts; /**< List of the output ports */
@@ -114,8 +112,8 @@ public:
    *   The property name.
    */
   
-  string&& getProp(const string & key) {
-    return move(attr.getProp(key));
+  string getProp(const string & key) {
+    return attr.getProp(key);
   } 
   
   /*!

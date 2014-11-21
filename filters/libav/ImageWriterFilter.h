@@ -40,7 +40,7 @@ public:
     
     inputPorts.push_back(inputFrame);
     
-    videoFrameWriter = 0;
+    videoFrameWriter = nullptr;
   }
   
   virtual void init() {
@@ -61,7 +61,7 @@ public:
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
-    videoFrameWriter = new VideoFrameWriter(srcWidth, srcHeight, srcFormat);
+    videoFrameWriter = new VideoFrameWriter{srcWidth, srcHeight, srcFormat};
     videoFrameWriter->setPath(getProp("output_path"));
     
   }
@@ -83,10 +83,7 @@ public:
   }
   
   virtual ~ImageWriterFilter() {
-    if (inputFrame)
       delete inputFrame;
-    //TODO FIXME I don't know why it craches here!
-    if(videoFrameWriter)
       delete videoFrameWriter;
   }
   

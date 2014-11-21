@@ -80,10 +80,8 @@ public:
   
   virtual ~VideoDecoderFilter() {
     
-    if (outputFrame)
-      delete outputFrame;
-    if (videoReader)
-      delete videoReader;
+    delete outputFrame;
+    delete videoReader;
   }
   
 };

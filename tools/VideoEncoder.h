@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -28,11 +28,11 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libavutil/opt.h>
-#ifdef __cplusplus
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #include <libavutil/opt.h>
+  #ifdef __cplusplus
 }
 #endif
 
@@ -40,14 +40,14 @@ using namespace std;
 
 class VideoEncoder {
 private:
-	AVCodecContext * codec_ctx;
-    uint8_t *video_outbuf;
-    int video_outbuf_size;
+  AVCodecContext * codec_ctx;
+  uint8_t *video_outbuf;
+  int video_outbuf_size;
 public:
-	VideoEncoder();
-	int init(string codec_name, int width, int height, int bitrate, int framerate);
-	int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-	virtual ~VideoEncoder();
+  VideoEncoder();
+  int init(string codec_name, int width, int height, int bitrate, int framerate);
+  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
+  virtual ~VideoEncoder();
 };
 
 #endif /* VIDEOENCODER_H_ */

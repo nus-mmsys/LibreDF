@@ -56,8 +56,6 @@ public:
     
     Attribute * attr;    
     
-    //string width = getProp("width");
-    
     int dstWidth = stoi(getProp("width"));
     int dstHeight = stoi(getProp("height"));
     
@@ -120,12 +118,9 @@ public:
   
   
   virtual ~ImageScalerFilter() {
-    if (inputPortFrame)
-      delete inputPortFrame;
-    if (outputPortFrame)
-      delete outputPortFrame;
-    if (videoScaler)
-      delete videoScaler;
+    delete inputPortFrame;
+    delete outputPortFrame;
+    delete videoScaler;
   }
   
 };

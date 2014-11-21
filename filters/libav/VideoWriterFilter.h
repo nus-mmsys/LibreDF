@@ -80,10 +80,8 @@ public:
   }
   
   virtual ~VideoWriterFilter() {
-    if (videoWriter)
-      delete videoWriter;
-    if (inputPortRawFrame)
-      delete inputPortRawFrame;
+    delete videoWriter;
+    delete inputPortRawFrame;
   }
   
   

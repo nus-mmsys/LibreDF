@@ -23,11 +23,9 @@
 
 #include <map>
 
-using namespace std;
-
 class Attribute {
 private:
-  map<string, string> props; /**< The map containing the message (key, value). */
+  std::map<std::string, std::string>  props; /**< The map containing the message (key, value). */
   
 public:
   /*!
@@ -35,7 +33,7 @@ public:
    *
    * \param key the key to retrieve the message value
    */
-  string getProp(const string & key) {
+  std::string getProp(const std::string & key) {
     auto k = props.find(key);
     
     if (k == props.end())
@@ -52,12 +50,12 @@ public:
    *
    */
   template <typename T>
-  void setProp(const string & key, const T& val) {
-    string valstr = to_string(val);
+  void setProp(const std::string & key, const T& val) {
+    std::string valstr = std::to_string(val);
     props.insert(std::make_pair(key, valstr));
   }
   
-  void setProp(const string & key, const string& val) {
+  void setProp(const std::string & key, const std::string& val) {
     props.insert(std::make_pair(key, val));
   }
   

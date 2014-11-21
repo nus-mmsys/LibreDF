@@ -123,10 +123,12 @@ public:
   
   ~VideoFrameWriter() {
     // Free the RGB image
-    //if(buffer)	
-    //  av_free(buffer);
-    //if(pFrameRGB)
-    //  av_free(pFrameRGB);
+    if(buffer) {	
+      av_free(buffer);
+    }
+    if(pFrameRGB) {
+      av_free(pFrameRGB);
+    }
   }
   
 };

@@ -110,12 +110,9 @@ public:
   
   virtual ~VideoEncoderFilter() {
     
-    if (inputPortRawFrame)
-      delete inputPortRawFrame;
-    if (outputPortEncodedFrame)
-      delete outputPortEncodedFrame;
-    if (videoEncoder)
-      delete videoEncoder;
+    delete inputPortRawFrame;
+    delete outputPortEncodedFrame;
+    delete videoEncoder;
   }
   
   

@@ -194,7 +194,6 @@ public:
   
   
   ~VideoReader() {
-    
     // Close the codec
     avcodec_close(pCodecCtx);
     

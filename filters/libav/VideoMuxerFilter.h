@@ -83,10 +83,8 @@ public:
   }
   
   virtual ~VideoMuxerFilter() {
-    if (inputPortEncodedFrame)
-      delete inputPortEncodedFrame;
-    if (videoMuxer)
-      delete videoMuxer;
+    delete inputPortEncodedFrame;
+    delete videoMuxer;
   }
   
   

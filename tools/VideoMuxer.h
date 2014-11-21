@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -27,12 +27,12 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libavutil/opt.h>
-#include <libavutil/mathematics.h>
-#ifdef __cplusplus
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #include <libavutil/opt.h>
+  #include <libavutil/mathematics.h>
+  #ifdef __cplusplus
 }
 #endif
 
@@ -40,13 +40,13 @@ using namespace std;
 
 class VideoMuxer {
 private:
-	AVFormatContext * av_fmt_ctx;
-	int vstream_idx;
+  AVFormatContext * av_fmt_ctx;
+  int vstream_idx;
 public:
-	VideoMuxer();
-	int init(string filename, int width, int height, int bitrate, int framerate);
-	int mux(EncodedFrame * encodedFrame);
-	~VideoMuxer();
+  VideoMuxer();
+  int init(string filename, int width, int height, int bitrate, int framerate);
+  int mux(EncodedFrame * encodedFrame);
+  ~VideoMuxer();
 };
 
 #endif /* VIDEOMUXER_H_ */
