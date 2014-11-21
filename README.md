@@ -40,12 +40,12 @@ Here is how the project is organized.
 ```
 Before compilation make sure that the following libraries are installed:
 
-  libavformat-dev
-  libavcodec-dev
-  libavutil-dev
-  libswscale-dev
-  libsdl1.2-dev
-  zlib1g-dev
+ - libavformat-dev
+ - libavcodec-dev
+ - libavutil-dev
+ - libswscale-dev
+ - libsdl1.2-dev
+ - zlib1g-dev
 
 4) Development envirement
 ======================
