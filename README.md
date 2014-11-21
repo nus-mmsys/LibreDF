@@ -63,7 +63,7 @@ The build directory:
 To create an application we need to create the pipeline as well as the filters, connect filters to each other and run the pipeline. TMF provides APIs to do it.
 
 Example:
-
+```c++
 	TMF tmf;
 	// create pipeline
 	tmf.createPipeline("Player");
@@ -91,7 +91,7 @@ Example:
 
 	// destroy the pipeline
 	tmf.destroyPipeline(pipe);
-	
+```	
 
 6) Plugin developer manual
 =======================
