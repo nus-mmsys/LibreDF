@@ -72,21 +72,12 @@ public:
     
     videoScaler = new VideoScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
     
-    //TODO FIXME
-    // It is not good to get the buffer at this level.
-    MediaSample<RawFrame> ** buf =  outputPortFrame->getSamples();
-    for (int i=0; i<outputPortFrame->getBufferSize(); i++) {
-      RawFrame * frame = buf[i]->get();
-      frame->fill(dstWidth, dstHeight, srcFormat);
-    }
-    
     outputPortFrame->lockAttr();
     attr = outputPortFrame->getAttr();
     attr->setProp<int>("width", dstWidth);
     attr->setProp<int>("height", dstHeight);
     attr->setProp<int>("format", srcFormatInt);
     outputPortFrame->unlockAttr();
-    
   }
   
   virtual void run() {

@@ -65,8 +65,6 @@ public:
    */ 
   int getSize() const {return size;}
   
-  MediaSample<T> ** getSamples() { return samples; }
-
   /*!
    * Get an element of the buffer by index
    *

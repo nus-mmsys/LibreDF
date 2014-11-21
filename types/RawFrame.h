@@ -44,22 +44,14 @@ public:
     buffer=0;
   }
   
-  void fill(int width, int height, AVPixelFormat format) {
-    
-    if(buffer != 0)
-      return;
-    // Determine required buffer size and allocate buffer
-    int numBytes = avpicture_get_size(AV_PIX_FMT_RGB24, width, height);
-    buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
-    // Assign appropriate parts of buffer to image planes in pFrameRGB
-    // Note that pFrameRGB is an AVFrame, but AVFrame is a superset
-    // of AVPicture
-    avpicture_fill((AVPicture *) data, buffer, format, width,
-		   height);
+  uint8_t* getBuffer() {
+    return buffer;
   }
+  
   AVFrame * getFrame() {
     return data;
   }
+  
   ~RawFrame() {
     av_free(data);
   }

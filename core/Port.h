@@ -247,9 +247,6 @@ public:
     return buf->at(index)->get();
   }
   
-  MediaSample<T> ** getSamples() {return buf->getSamples();}
-  int getBufferSize() {return buf->getSize(); }
-  
   void setStatus(SampleStatus st) {
     buf->at(index)->setStatus(st);
   }
