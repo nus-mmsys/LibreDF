@@ -37,9 +37,7 @@ public:
   VideoDisplayFilter(string name) :
   Filter(name) {
     
-    inputPortRawFrame = new InputPort<RawFrame>("RawFrame input");
-    
-    inputPorts.push_back(inputPortRawFrame);
+    inputPortRawFrame = createInputPort<RawFrame>("RawFrame input");
     
     videoDisplay = new VideoDisplay();
   }

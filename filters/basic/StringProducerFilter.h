@@ -42,17 +42,11 @@ private:
 public:
   
   StringProducerFilter(const string& name) : Filter(name), number(0) {
-    
-    outputString = new OutputPort<string>(
-      "string output");
-    
-    outputPorts.push_back(outputString);
+    outputString = createOutputPort<string>("string output");
   }
   
   void init() {
-    
     limit = stoi(getProp("limit"));
-    
   }
   
   void run() {

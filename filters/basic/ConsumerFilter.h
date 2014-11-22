@@ -35,9 +35,7 @@ private:
 public:
   
   ConsumerFilter(const string & name) : Filter(name) {
-    input = new InputPort<T>("input");
-    
-    inputPorts.push_back(input);
+    input = createInputPort<T>("input");
   }
   
   void run() {

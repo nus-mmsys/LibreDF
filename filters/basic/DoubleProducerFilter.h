@@ -43,12 +43,8 @@ public:
   
   DoubleProducerFilter(const string& name) :
   Filter(name) {
-    outputInt = new OutputPort<int>("int output");
-    outputString = new OutputPort<string>(
-      "string output");
-    
-    outputPorts.push_back(outputInt);
-    outputPorts.push_back(outputString);
+    outputInt = createOutputPort<int>("int output");
+    outputString = createOutputPort<string>("string output");
   }
   
   void init() {

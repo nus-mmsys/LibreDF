@@ -33,9 +33,7 @@ public:
   
   DuplicateFilter(const string & name) :
   Filter(name) {
-    input = new InputPort<std::string>("duplicate, input 1, string");
-    
-    inputPorts.push_back(input);
+    input = createInputPort<std::string>("string input");
   }
   
   

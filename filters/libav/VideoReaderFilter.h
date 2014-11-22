@@ -36,9 +36,7 @@ public:
   VideoReaderFilter(string name) :
   Filter(name) {
     
-    outputFrame = new OutputPort<RawFrame>("RawFrame output");
-    
-    outputPorts.push_back(outputFrame);
+    outputFrame = createOutputPort<RawFrame>("RawFrame output");
     
     videoReader = nullptr;
   }

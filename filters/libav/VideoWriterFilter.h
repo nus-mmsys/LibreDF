@@ -36,10 +36,7 @@ public:
   VideoWriterFilter(string name) :
   Filter(name) {
     
-    inputPortRawFrame = new InputPort<RawFrame>(
-      "videoMuxer, input 1, RawFrame");
-    
-    inputPorts.push_back(inputPortRawFrame);
+    inputPortRawFrame = createInputPort<RawFrame>("RawFrame input");
     
     videoWriter = new VideoWriter();
     

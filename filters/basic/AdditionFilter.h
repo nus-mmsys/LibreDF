@@ -35,11 +35,8 @@ public:
   
   AdditionFilter(const string & name) :
   Filter(name) {
-    input1 = new InputPort<int>("int input 1");
-    input2 = new InputPort<int>("int input 2");
-    
-    inputPorts.push_back(input1);
-    inputPorts.push_back(input2);
+    input1 = createInputPort<int>("int input 1");
+    input2 = createInputPort<int>("int input 2");
   }
   
   

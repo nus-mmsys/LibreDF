@@ -150,6 +150,20 @@ public:
   
   void setIOLock(mutex * mux);
 
+  template <typename T>
+  InputPort<T> * createInputPort(std::string name) {
+    InputPort<T> * res = new InputPort<T>(name);
+    this->inputPorts.push_back(res);
+    return res;
+  }
+  
+  template <typename T>
+  OutputPort<T> * createOutputPort(std::string name) {
+    OutputPort<T> * res = new OutputPort<T>(name);
+    this->outputPorts.push_back(res);
+    return res;
+  }
+  
   FilterStatus getStatus() { return status; }
   /*!
    * Destructor of the filter.

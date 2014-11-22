@@ -36,9 +36,7 @@ public:
   VideoMuxerFilter(string name) :
   Filter(name) {
     
-    inputPortEncodedFrame = new InputPort<EncodedFrame>("EncodedFrame input");
-    
-    inputPorts.push_back(inputPortEncodedFrame);
+    inputPortEncodedFrame = createInputPort<EncodedFrame>("EncodedFrame input");
     
     videoMuxer = new VideoMuxer();
     

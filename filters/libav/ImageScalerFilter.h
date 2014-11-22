@@ -42,12 +42,9 @@ public:
   
   ImageScalerFilter(string name) : Filter(name) {
     
-    inputPortFrame = new InputPort<RawFrame>("RawFrame input");
+    inputPortFrame = createInputPort<RawFrame>("RawFrame input");
     
-    outputPortFrame = new OutputPort<RawFrame>("RawFrame output");
-    
-    inputPorts.push_back(inputPortFrame);
-    outputPorts.push_back(outputPortFrame);
+    outputPortFrame = createOutputPort<RawFrame>("RawFrame output");
     
     imageScaler = nullptr;
   }

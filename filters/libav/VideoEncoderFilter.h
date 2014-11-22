@@ -38,11 +38,8 @@ public:
   VideoEncoderFilter(string name) :
   Filter(name) {
     
-    inputPortRawFrame = new InputPort<RawFrame>("RawFrame input");
-    outputPortEncodedFrame = new OutputPort<EncodedFrame>("EncodedFrame output");
-    
-    inputPorts.push_back(inputPortRawFrame);
-    outputPorts.push_back(outputPortEncodedFrame);
+    inputPortRawFrame = createInputPort<RawFrame>("RawFrame input");
+    outputPortEncodedFrame = createOutputPort<EncodedFrame>("EncodedFrame output");
     
     videoEncoder = new VideoEncoder();
     

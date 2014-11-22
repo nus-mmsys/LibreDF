@@ -32,11 +32,8 @@ public:
   
   Multiply2Filter(const string & name) :
   Filter(name) {
-    input = new InputPort<int>("int input");
-    output = new OutputPort<int>("int output");
-    
-    inputPorts.push_back(input);
-    outputPorts.push_back(output);
+    input = createInputPort<int>("int input");
+    output = createOutputPort<int>("int output");
   }
   
   void run() {

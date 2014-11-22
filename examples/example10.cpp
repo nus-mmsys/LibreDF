@@ -28,13 +28,18 @@ int main(int argc, char** argv) {
   Pipeline* pipe = tmf.createPipeline("Webcam viewer");
   
   Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
-  
+  Filter* scaler = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler");
   Filter* display = tmf.createFilter(FilterType::VIDEO_DISPLAY, "display");
   
-  pipe->connectFilters(reader, display);
+  pipe->connectFilters(reader, scaler);
+  pipe->connectFilters(scaler, display);
   
   reader->setProp("input_video", "/dev/video0");
   reader->setProp("video_format", "video4linux2");
+  
+  scaler->setProp<int>("width", 640);
+  scaler->setProp<int>("height", 480);
+  
   
   pipe->init();
   

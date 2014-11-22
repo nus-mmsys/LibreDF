@@ -42,11 +42,7 @@ private:
 public:
   
   IntProducerFilter(const string& name) : Filter(name), number(0) {
-    
-    outputInt = new OutputPort<int>(
-      "string output");
-    
-    outputPorts.push_back(outputInt);
+    outputInt = createOutputPort<int>("string output");
   }
   
   void init() {
