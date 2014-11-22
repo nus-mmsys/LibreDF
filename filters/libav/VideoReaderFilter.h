@@ -45,13 +45,13 @@ public:
   
   virtual void init() {
     
-    string videoName = getProp("input_video");
+    string inputVideo = getProp("input_video");
     string videoFromat = getProp("video_format");
-    string input_video = getProp("input_video");
+    string inputFormat = getProp("input_format");
     
-    videoReader = new VideoReader(videoName);
+    videoReader = new VideoReader(inputVideo);
     videoReader->setVideoFromat(videoFromat);
-    videoReader->setInputFormat(input_video);
+    videoReader->setInputFormat(inputFormat);
     videoReader->init();
     
     videoReader->dump();
