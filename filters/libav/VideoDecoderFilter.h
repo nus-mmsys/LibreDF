@@ -46,8 +46,9 @@ public:
   virtual void init() {
     
     string videoName = getProp("input_video");
+    string videoFromat = getProp("video_format");
     
-    videoReader = new VideoReader(videoName);
+    videoReader = new VideoReader(videoName, videoFromat);
     
     videoReader->dump();
     

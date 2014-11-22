@@ -58,7 +58,11 @@ public:
   void setProp(const std::string & key, const std::string& val) {
     props.insert(std::make_pair(key, val));
   }
-  
+
+  void setProp(const std::string & key, const char* val) {
+    std::string valstr = std::string(val);
+    props.insert(std::make_pair(key, valstr));
+  }
 };
 
 #endif /* ATTRIBUTE_H_ */

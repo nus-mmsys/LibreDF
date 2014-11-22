@@ -37,13 +37,11 @@ public:
   VideoDisplayFilter(string name) :
   Filter(name) {
     
-    inputPortRawFrame = new InputPort<RawFrame>(
-      "videoEncoder, input 1, RawFrame");
+    inputPortRawFrame = new InputPort<RawFrame>("RawFrame input");
     
     inputPorts.push_back(inputPortRawFrame);
     
     videoDisplay = new VideoDisplay();
-    
   }
   
   virtual void init() {

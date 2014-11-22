@@ -31,6 +31,7 @@ extern "C" {
   #include <libavcodec/avcodec.h>
   #include <libavformat/avformat.h>
   #include <libswscale/swscale.h>
+  #include <libavdevice/avdevice.h>
   #ifdef __cplusplus
 }
 #endif
@@ -45,32 +46,51 @@ private:
   AVCodecContext * pCodecCtx;
   int vstream_idx;
   int frameNumber;
+  string input_format;
   
 public:
   
   VideoReader(string name) {
     this->name = name;
-    pFormatCtx = 0;
-    pCodecCtx = 0;
-    vstream_idx = -1;
-    init(name);
+    input_format = "";
+    init();
   }
-  int init(string name) {
-    
+  
+  VideoReader(string name, string format) {
     this->name = name;
+    this->input_format = format;
+    init();
+  }
+  
+  int init() {
+    
     AVCodec *pCodec = 0;
     pFormatCtx = 0;
     pCodecCtx = 0;
     vstream_idx = -1;
     frameNumber = 0;
+    int ret;
     
     unsigned int i;
     
-    AVDictionary *optionsDict = 0;
     // Register all formats and codecs
     av_register_all();
+    avcodec_register_all();
+    avdevice_register_all();
+    avformat_network_init();
+
+    AVDictionary *optionsDict = 0;
     
-    if (avformat_open_input(&pFormatCtx, name.c_str(), NULL, NULL) != 0) {
+    if (input_format != "") {
+      ret = av_dict_set(&optionsDict, "input_format", input_format.c_str(), 0);
+      if (ret < 0) {
+	std::cerr << "Could not set input format: " << input_format << endl;;
+	return -1;
+      }
+    }
+    
+    ret = avformat_open_input(&pFormatCtx, name.c_str(), NULL, optionsDict? &optionsDict : NULL);
+    if (ret < 0) {
       std::cerr << "Cannot open the input file: " << name << endl;
       return -1; // Couldn't open file
     }
