@@ -47,8 +47,12 @@ public:
     
     string videoName = getProp("input_video");
     string videoFromat = getProp("video_format");
+    string input_video = getProp("input_video");
     
-    videoReader = new VideoReader(videoName, videoFromat);
+    videoReader = new VideoReader(videoName);
+    videoReader->setVideoFromat(videoFromat);
+    videoReader->setInputFormat(input_video);
+    videoReader->init();
     
     videoReader->dump();
     

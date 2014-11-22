@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
   pipe->connectFilters(reader, display);
   
   reader->setProp("input_video", "/dev/video0");
-  reader->setProp("video_format", "video4linux");
+  reader->setProp("video_format", "video4linux2");
   
   pipe->init();
   

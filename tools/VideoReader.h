@@ -44,52 +44,65 @@ private:
   string name;
   AVFormatContext *pFormatCtx;
   AVCodecContext * pCodecCtx;
+  AVInputFormat *video_fmt;
+  AVDictionary *optionsDict;
   int vstream_idx;
   int frameNumber;
+  string video_format;
   string input_format;
   
 public:
   
   VideoReader(string name) {
+
     this->name = name;
-    input_format = "";
-    init();
-  }
-  
-  VideoReader(string name, string format) {
-    this->name = name;
-    this->input_format = format;
-    init();
-  }
-  
-  int init() {
-    
-    AVCodec *pCodec = 0;
     pFormatCtx = 0;
     pCodecCtx = 0;
+    optionsDict = 0;
     vstream_idx = -1;
-    frameNumber = 0;
-    int ret;
-    
-    unsigned int i;
-    
+    input_format = "";
+    video_format = "";
+
     // Register all formats and codecs
     av_register_all();
     avcodec_register_all();
     avdevice_register_all();
     avformat_network_init();
-
-    AVDictionary *optionsDict = 0;
+  }
+  
+  void setVideoFromat(string vformat) {
+    this->video_format = vformat;
+    
+    if (vformat != "") {
+      video_fmt = av_find_input_format(vformat.c_str());
+      if (video_fmt == NULL) {
+	std::cerr << "Could not set video format: " << vformat << endl;;
+      }
+    }
+  }
+  
+  void setInputFormat(string iformat) {
+    int ret;
+    this->input_format = iformat;
     
     if (input_format != "") {
       ret = av_dict_set(&optionsDict, "input_format", input_format.c_str(), 0);
       if (ret < 0) {
 	std::cerr << "Could not set input format: " << input_format << endl;;
-	return -1;
       }
     }
+  }
+  
+  int init() {
     
-    ret = avformat_open_input(&pFormatCtx, name.c_str(), NULL, optionsDict? &optionsDict : NULL);
+    AVCodec *pCodec = 0;
+
+    frameNumber = 0;
+    int ret;
+    
+    unsigned int i;
+    
+    ret = avformat_open_input(&pFormatCtx, name.c_str(), video_fmt, optionsDict? &optionsDict : NULL);
     if (ret < 0) {
       std::cerr << "Cannot open the input file: " << name << endl;
       return -1; // Couldn't open file
