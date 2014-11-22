@@ -18,36 +18,32 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#include "tmf.h"
 
-#include <string>
-#include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
 
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
+int main(int argc, char** argv) {
+  
+  TMF tmf;
+  
+  Pipeline* pipe = tmf.createPipeline("Three consumer/One producer");
+  
+  Filter* producer = tmf.createFilter(FilterType::STRINGPRODUCER, "producer");
+
+  Filter* consumer1 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer1");
+  Filter* consumer2 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer2");
+  Filter* consumer3 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer3");
+  
+  producer->setProp("limit", 10);
+  
+  pipe->connectFilters(producer, consumer1);
+  pipe->connectFilters(producer, consumer2);
+  pipe->connectFilters(producer, consumer3);
+
+  pipe->init();
+  
+  pipe->run();
+  
+  tmf.destroyPipeline(pipe);
+  
+  return 0;
 }
-#endif
-
-using namespace std;
-
-class VideoEncoder {
-private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
-public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
-};
-
-#endif /* VIDEOENCODER_H_ */

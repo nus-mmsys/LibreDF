@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,48 +21,40 @@
 #ifndef RAW_FRAME_H_
 #define RAW_FRAME_H_
 
-#include "types/Data.h"
+#include "types/Frame.h"
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#ifdef __cplusplus
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #ifdef __cplusplus
 }
 #endif
 
-class RawFrame : public Data {
-
+class RawFrame: public Frame {
+  
 private:
-	AVFrame * pFrame;
-	uint8_t *buffer;
-
+  AVFrame * data;
+  uint8_t *buffer;
+  
 public:
-	RawFrame() {
-		pFrame = avcodec_alloc_frame();
-		buffer=0;
-	}
-
-	AVFrame * getFrame() {
-		return pFrame;
-	}
-	void fill(int width, int height, AVPixelFormat format) {
-
-		if(buffer != 0)
-			return;
-		// Determine required buffer size and allocate buffer
-		int numBytes = avpicture_get_size(AV_PIX_FMT_RGB24, width, height);
-		buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
-		// Assign appropriate parts of buffer to image planes in pFrameRGB
-		// Note that pFrameRGB is an AVFrame, but AVFrame is a superset
-		// of AVPicture
-		avpicture_fill((AVPicture *) pFrame, buffer, format, width,
-				height);
-	}
-	~RawFrame() {
-		av_free(pFrame);
-	}
+  RawFrame() {
+    data = avcodec_alloc_frame();
+    buffer=0;
+  }
+  
+  uint8_t* getBuffer() {
+    return buffer;
+  }
+  
+  AVFrame * getFrame() {
+    return data;
+  }
+  
+  ~RawFrame() {
+    av_free(data);
+  }
 };
 
 

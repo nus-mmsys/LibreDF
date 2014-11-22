@@ -2,20 +2,35 @@ cmake_minimum_required (VERSION 2.6)
 
 project (examples)
 
-add_executable(example1 example1.cpp)
-target_link_libraries(example1 tmf)
+add_executable(example00 example00.cpp)
+target_link_libraries(example00 tmf)
 
-add_executable(example2 example2.cpp)
-target_link_libraries(example2 tmf)
+add_executable(example01 example01.cpp)
+target_link_libraries(example01 tmf)
 
-add_executable(example3 example3.cpp)
-target_link_libraries(example3 tmf)
+add_executable(example02 example02.cpp)
+target_link_libraries(example02 tmf)
+    
+add_executable(example03 example03.cpp)
+target_link_libraries(example03 tmf)
 
-add_executable(example4 example4.cpp)
-target_link_libraries(example4 tmf)
+add_executable(example04 example04.cpp)
+target_link_libraries(example04 tmf)
+    
+add_executable(example05 example05.cpp)
+target_link_libraries(example05 tmf)
 
-add_executable(example5 example5.cpp)
-target_link_libraries(example5 tmf)
+add_executable(example06 example06.cpp)
+target_link_libraries(example06 tmf)
 
-add_executable(example6 example6.cpp)
-target_link_libraries(example6 tmf)
+add_executable(example07 example07.cpp)
+target_link_libraries(example07 tmf)
+
+add_executable(example08 example08.cpp)
+target_link_libraries(example08 tmf)
+
+add_executable(example09 example09.cpp)
+target_link_libraries(example09 tmf)
+
+add_executable(example10 example10.cpp)
+target_link_libraries(example10 tmf)

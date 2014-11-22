@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,33 +21,31 @@
 #ifndef ENCODEDFRAME_H_
 #define ENCODEDFRAME_H_
 
-#include "types/Data.h"
+#include "types/Frame.h"
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#ifdef __cplusplus
+  #endif
+  #include <libavutil/avutil.h>
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #ifdef __cplusplus
 }
 #endif
 
-class EncodedFrame : public Data {
-
+class EncodedFrame: public Frame {
+  
 private:
-	AVPacket * pkt;
-
+  AVPacket * data;
 public:
-
-	EncodedFrame() {
-		pkt = (AVPacket *) av_malloc(sizeof(AVPacket));
-		//av_new_packet(pkt,20000000);
-	}
-
-	AVPacket * getPacket() {
-		return pkt;
-	}
-
+  EncodedFrame() {
+    data = (AVPacket *) av_malloc(sizeof(AVPacket));
+  }
+  AVPacket * getPacket() {
+    
+    return data;
+  }
+  
 };
 
 #endif /* ENCODEDFRAME_H_ */

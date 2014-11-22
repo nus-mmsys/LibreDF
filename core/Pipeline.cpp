@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -20,88 +20,78 @@
 
 #include "Pipeline.h"
 
-Pipeline::Pipeline(const string& name) {
-	this->name = name;
-	this->start = 0;
-	this->status = PIPELINE_STOPPED;
+Pipeline::Pipeline(const string& name): name(name), realtime(false), status(PipelineStatus::STOPPED) {
 }
 
-Pipeline::~Pipeline() {
 
-	for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it)
-		 delete *it;
+void Pipeline::setRealTime(bool rt) { 
+  realtime = rt;
 
 }
 
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
-
-	filters.insert(inf);
-	filters.insert(outf);
-
-	if (this->start == 0 && inf->inputPortNum() == 0)
-		this->start = inf;
-
-	if (this->start == 0 && outf->inputPortNum() == 0)
-		this->start = outf;
-
-	inf->connectFilter(outf);
+  
+  inf->setIOLock(&io_lock);
+  outf->setIOLock(&io_lock);
+  
+  filters.insert(inf);
+  filters.insert(outf);
+  
+  inf->connectFilter(outf);
 }
 
-//void Pipeline::setStarter(Filter *starter) {
-//	this->start = starter;
-//}
 
+void Pipeline::init() {
 
-
-PipelineStatus Pipeline::init() {
-
-	FilterStatus ret;
-	if (start == NULL) {
-		cerr << "Pipeline does not have enough filters to run.\n";
-		return PIPELINE_STOPPED;
-	}
-
-	ret = start->initFilter(0);
-
-	if (ret == FILTER_ERROR) {
-		cerr << "Pipeline cannot initialize a filter.\n";
-		return PIPELINE_STOPPED;
-	}
-	/*for (set<Filter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
-
-		ret = (*it)->initFilter(0);
-
-		if (ret == FILTER_ERROR) {
-			cerr << "Pipeline cannot initialize a filter.\n";
-			return PIPELINE_STOPPED;
-		}
-	}
-	*/
-	return PIPELINE_RUNNING;
-
+  for (auto f : filters) {
+    f->setRealTime(realtime);
+  }
+  
+  for (auto f: filters) {
+    f->startInit();
+  }
+  
+  for (auto f : filters) {
+    f->waitInit();
+  }
+  
+  status = PipelineStatus::READY;
+  
+  for (auto f : filters) {
+  
+    if (f->getStatus() != FilterStatus::OK)
+      status = PipelineStatus::STOPPED;
+      return;
+  }
+  
+  
 }
 
-PipelineStatus Pipeline::run() {
-
-	FilterStatus status;
-	while(1) {
-
-		status = start->executeFilter();
-
-		switch(status) {
-		case FILTER_SUCCESS:
-		case FILTER_WAIT_FOR_INPUT:
-			continue;
-		case FILTER_ERROR:
-			return PIPELINE_STOPPED;
-		case FILTER_FINISHED:
-			return PIPELINE_FINISHED;
-
-		}
-
-	}
-
-	return PIPELINE_STATE_UNKNOWN;
-
+void Pipeline::run() {
+  
+  if (status != PipelineStatus::READY) {
+    std::cout << "Pipeline is not ready to run." << endl;
+    return;
+  }
+  
+  for (auto f : filters) {
+    f->startRun();
+  }
+ 
+  status = PipelineStatus::RUNNING;
+  
+  for (auto f : filters) {
+    f->waitRun();
+  }
+  
+  status = PipelineStatus::STOPPED;
+  
 }
 
+Pipeline::~Pipeline() {
+  
+  for (auto f : filters)
+    if(f)
+      delete f;
+  
+}

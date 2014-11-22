@@ -18,36 +18,37 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#include "tmf.h"
 
-#include <string>
-#include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
-
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
+int main(int argc, char** argv) {
+  
+  TMF tmf;
+  
+  
+  if (argc < 3) {
+    cerr << "Usage: " << argv[0] << " <input video> <output path>" << endl;
+    return -1;
+  }
+  
+  Pipeline* pipe = tmf.createPipeline("Decoder/Writer Pipeline");
+  
+  string inputVideo = string(argv[1]);
+  string outputPath = string(argv[2]);
+  
+  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER,
+					  "reader");
+  Filter* writer = tmf.createFilter(FilterType::IMAGE_WRITER, "writer");
+  
+  pipe->connectFilters(reader, writer);
+  
+  reader->setProp("input_video", inputVideo);
+  writer->setProp("output_path", outputPath);
+  
+  pipe->init();
+  
+  pipe->run();
+  
+  tmf.destroyPipeline(pipe);
+  
+  return 0;
 }
-#endif
-
-using namespace std;
-
-class VideoEncoder {
-private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
-public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
-};
-
-#endif /* VIDEOENCODER_H_ */

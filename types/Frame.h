@@ -18,36 +18,22 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#ifndef FRAME_H_
+#define FRAME_H_
 
-#include <string>
-#include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
 
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
-}
-#endif
-
-using namespace std;
-
-class VideoEncoder {
+class Frame {
+  
 private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
+ int number; 
 public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
+  Frame(): number(0) {
+  }
+  
+  int getNumber() { return number; }
+  
+  void setNumber(int n) { number = n; }
 };
 
-#endif /* VIDEOENCODER_H_ */
+
+#endif /* RAW_FRAME_H_ */

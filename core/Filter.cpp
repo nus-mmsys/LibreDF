@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -18,157 +18,94 @@
  *
  */
 
-#include "Filter.h"
-#include "Port.h"
+#include "core/Filter.h"
+#include "core/Port.h"
 
-Filter::Filter(const string &name) {
+#include <iostream>
 
-	this->name = name;
-	linked = 0;
-	inputFed = 0;
-	inMsg = 0;
-	outMsg = new Message();
+Filter::Filter(const string &name) : realtime(false), status(FilterStatus::OK), name(name) {
 
 }
 
+void Filter::setRealTime(bool rt) {
+  realtime = rt;
+}
+
+void Filter::log(std::string msg) {
+  io_lock->lock(); 
+  std::cout << name << ": " << msg << std::endl;
+  io_lock->unlock();
+}
+void Filter::sleep(int s) {
+  this_thread::sleep_for(chrono::milliseconds{rand()%s});
+}
 void Filter::connectFilter(Filter * f) {
+  
+  bool linked = false;
+  for (auto fout : outputPorts) {
+    for (auto fin : f->inputPorts) {
+      
+      const PortCaps& typeOut = fout->getPortCaps();
+      const PortCaps& typeIn = fin->getPortCaps();
 
-	vector<Port*>::iterator itOut;
-	vector<Port*>::iterator itIn;
-
-	bool linked = false;
-	for (itOut = this->outputPorts.begin(); itOut != this->outputPorts.end();
-			++itOut) {
-		for (itIn = f->inputPorts.begin(); itIn != f->inputPorts.end();
-				++itIn) {
-
-			string typeOut = ((Port*) (*itOut))->getType();
-			string typeIn = ((Port*) (*itIn))->getType();
-			if (((Port*) (*itIn))->getLinked() == 0 && (typeOut == typeIn)) {
-
-				((Port*) (*itOut))->addNextPort(((Port*) (*itIn)));
-
-				addNextFilter(((Port*) (*itOut)), f);
-
-				linked = true;
-				break;
-			}
-		}
-		if (linked)
-			break;
-	}
+      if ( fin->getLinked() == 0 && (typeOut.isEqual(typeIn))) {
+	
+	fout->connectPort(fin);
+	
+	linked = true;
+	break;
+      }
+    }
+    if (linked)
+      break;
+  }
 }
 
-void Filter::setProp(const string & key, const string & val) {
-	props.emplace(this->name + "::" + key, val);
+void Filter::startInit() {
+  tinit = thread(&Filter::initFilter, this);
 }
 
-string Filter::getProp(const string & key) {
-	return props[this->name + "::" + key];
+void Filter::startRun() {
+  trun = thread(&Filter::runFilter, this);
 }
 
-FilterStatus Filter::executeFilter() {
-	FilterStatus status = FILTER_SUCCESS;
-
-	if (linked > 0 && inputFed + 1 != linked) {
-		inputFed++;
-		return FILTER_WAIT_FOR_INPUT;
-	}
-
-	inputFed = 0;
-	status = process();
-	return status;
+void Filter::waitInit() {
+  tinit.join();
 }
 
-FilterStatus Filter::initFilter(Message * msg) {
-	FilterStatus status = FILTER_SUCCESS;
-
-	inMsg = msg;
-
-	status = init();
-
-	if (status == FILTER_WAIT_FOR_INPUT)
-		return FILTER_WAIT_FOR_INPUT;
-
-	vector<Port*>::iterator itIn;
-	for (itIn = outputPorts.begin(); itIn != outputPorts.end(); ++itIn) {
-
-		Port * curPort = (*itIn);
-		initNextFilters(curPort, outMsg);
-
-		/*
-		 vector<Filter*>::iterator itNxt;
-		 vector<Filter*> nextFilter = getNextFilters(curPort);
-
-		 for (itNxt = nextFilter.begin(); itNxt != nextFilter.end(); ++itNxt) {
-		 //this->nextFilters[(*itNxt)]
-		 (*itNxt)->initFilter(outMsg);
-		 }
-		 */
-	}
-
-	return status;
+void Filter::waitRun() {
+  trun.join();
 }
 
-void Filter::increaseLinked() {
-	linked++;
+void Filter::setIOLock(mutex * mux) {
+  io_lock = mux;
 }
 
-int Filter::inputPortNum() {
-	return inputPorts.size();
+void Filter::initFilter() {
+
+  for (auto p : inputPorts) {
+    if (p->getLinked() == 0) {
+      log(p->getName()+string(" is not connected"));
+      status = FilterStatus::ERROR;
+    }
+  }
+  
+  for (auto p : outputPorts) {
+    if (p->getLinked() == 0) {
+      log(p->getName()+string(" is not connected"));
+      status = FilterStatus::ERROR;
+    }
+  } 
+  init();
 }
 
-int Filter::outputPortNum() {
-	return outputPorts.size();
+void Filter::runFilter() {
+  
+  while(status != FilterStatus::EOS) {
+    realtime? runRT() : run();
+  }
+  
 }
 
-void Filter::processNextFilters(Port * p) {
-	vector<Filter*> * nextFilters = getNextFilters(p);
-	vector<Filter*>::iterator itNxt;
-	for (itNxt = nextFilters->begin(); itNxt != nextFilters->end(); ++itNxt) {
-		(*itNxt)->executeFilter();
-	}
-}
-
-void Filter::initNextFilters(Port *p, Message * msg) {
-	vector<Filter*> * nextFilters = getNextFilters(p);
-	if (nextFilters) {
-
-		for (auto i : *nextFilters) {
-			i->initFilter(msg);
-		}
-		//for (vector<Filter*>::iterator itNxt = nextFilters->begin(); itNxt != nextFilters->end();
-		//		++itNxt) {
-		//	(*itNxt)->initFilter(msg);
-		//}
-	}
-}
-
-vector<Filter*> * Filter::getNextFilters(Port *p) {
-	return this->nextFilters[p];
-}
-
-void Filter::addNextFilter(Port * p, Filter *f) {
-	std::map<Port*, vector<Filter*>*>::iterator it;
-
-	it = this->nextFilters.find(p);
-
-	vector<Filter*> * nf;
-	if (it == this->nextFilters.end()) {
-		nf = new vector<Filter*>();
-		this->nextFilters.emplace(p, nf);
-	} else {
-		nf = getNextFilters(p);
-	}
-
-	nf->push_back(f);
-
-	f->increaseLinked();
-
-}
-
-Filter::~Filter() {
-
-	delete outMsg;
-
+Filter::~Filter() { 
 }

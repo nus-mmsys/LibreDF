@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,25 +21,25 @@
 #ifndef FITLER_H_
 #define FITLER_H_
 
-#include "Message.h"
+#include "core/Attribute.h"
+#include "core/Port.h"
 #include <string>
 #include <vector>
 #include <map>
 #include <memory>
+#include <thread>
 
 using namespace std;
 
-class Port;
 
 /*!
- * \enum FilterStatus
+ * \enum void
  * Status of a filter.
  */
-enum FilterStatus {
-	FILTER_SUCCESS, /**< Filter processed successfully. */
-	FILTER_ERROR, /**< An error occurred while processing. */
-	FILTER_FINISHED, /**< Filter is done generating more data. Used in data sources. */
-	FILTER_WAIT_FOR_INPUT /**< Filter is waiting for input. */
+enum class FilterStatus {
+  OK, /**< Filter processed successfully. */
+  ERROR, /**< An error occurred while processing. */
+  EOS, /**< Filter is done generating more data. Used in data sources. */
 };
 
 /*!
@@ -48,123 +48,113 @@ enum FilterStatus {
  * Every concrete filter inherits from filter and can be connected to multiple filters,
  * and receive various data from predecessor filters and send data to accessor filter.
  */
+
 class Filter {
 private:
+  
+  thread tinit;
+  thread trun;
+  mutex * io_lock;
+  
+  string name; /**< The name f the filter */
+  Attribute attr; /**< A map containing the message keys and values transfered to filter from a pipeline */
+  
 
-	string name; /**< The name f the filter */
-	int linked; /**< The number of filters which are connected to this filter */
-	int inputFed; /**< The number of data which are already fed to the filter */
-	map<string, string> props; /**< A map containing the message keys and values transfered to filter from a pipeline */
-
-	map<Port*, vector<Filter*>*> nextFilters; /**< A map containing the next filters based on one port. */
-
+  bool realtime;
+  
 protected:
-	Message * inMsg; /**< Input message of the filter */
-	Message * outMsg; /**< Output message of the filter */
-
-	vector<Port*> inputPorts; /**< List of the input ports  */
-	vector<Port*> outputPorts; /**< List of the output ports */
-
-	/*!
-	 * Filter constructor
-	 * \param name
-	 *   The name of the filter.
-	 */
-	Filter(const string & name);
-
-	/*!
-	 * Virtual function, to be implemented in the subclass filters.
-	 * Read data from input filter, process the data, and write the result to the output port.
-	 */
-	virtual FilterStatus process() = 0;
-
-	void initNextFilters(Port *p, Message * msg);
-	void addNextFilter(Port * p, Filter *f);
-
-	vector<Filter*> * getNextFilters(Port *);
-
+  
+  vector<Port*> inputPorts; /**< List of the input ports  */
+  vector<Port*> outputPorts; /**< List of the output ports */
+  
+  FilterStatus status; 
+  /*!
+   * Filter constructor
+   * \param name
+   *   The name of the filter.
+   */
+  Filter(const string & name);
+  
+  void log(std::string msg);
+  void sleep(int s); 
+  
+  /*!
+   * Virtual function, to be implemented in the subclass filters.
+   * Read data from input filter, process the data, and write the result to the output port.
+   */
+  virtual void init() {}
+  virtual void run() = 0;
+  virtual void runRT() {
+    run();
+  }
+  
 public:
+  
+  void setRealTime(bool rt);
+  
+  /*!
+   * Set a property of the filter.
+   *
+   * \param key
+   *   The property name.
+   * \param val
+   *   The property value.
+   */
+  template<typename T>
+  void setProp(const string & key, const T& val) {
+    attr.setProp(key, val);
+  }
+  /*!
+   * Get the value of a filter property.
+   *
+   * \param key
+   *   The property name.
+   */
+  
+  string getProp(const string & key) {
+    return attr.getProp(key);
+  } 
+  
+  /*!
+   * Connect this filter to another filter in the pipeline.
+   * It is used by pipeline. User must use Pipeline::connectFilters
+   *
+   * \param f
+   *   The filter to connect to.
+   */
+  void connectFilter(Filter * f);
+  
+  /*!
+   * Execute the init of this filter.
+   * The filters are connected by a link list and each filter calls initFilter of the next filter.
+   *
+   * \return The new status of the filter.
+   */
+  void initFilter(); 
+  
+  /*!
+   * Execute the processing of this filter.
+   * The filters are connected by a link list and each filter calls executeFilter of the next filter.
+   *
+   * \return The new status of the filter.
+   */
+  void runFilter();
+ 
+  void startInit();
+  
+  void startRun();
+  
+  void waitInit();
+  
+  void waitRun();
+  
+  void setIOLock(mutex * mux);
 
-	/*!
-	 * Perform initialization of the filter.
-	 * To be overridden in subclasses to allow initialization of specific filter values.
-	 */
-	virtual FilterStatus init() {
-		return FILTER_SUCCESS;
-	}
-
-	/*!
-	 * Set a property of the filter.
-	 *
-	 * \param key
-	 *   The property name.
-	 * \param val
-	 *   The property value.
-	 */
-	void setProp(const string & key, const string & val);
-
-	/*!
-	 * Get the value of a filter property.
-	 *
-	 * \param key
-	 *   The property name.
-	 */
-	string getProp(const string & key);
-
-	/*!
-	 * Connect this filter to another filter in the pipeline.
-	 * It is used by pipeline. User must use Pipeline::connectFilters
-	 *
-	 * \param f
-	 *   The filter to connect to.
-	 */
-	void connectFilter(Filter * f);
-
-	/*!
-	 * Execute the processing of this filter.
-	 * The filters are connected by a link list and each filter calls executeFilter of the next filter.
-	 *
-	 * \return The new status of the filter.
-	 */
-	FilterStatus executeFilter();
-
-	/*!
-	 * Execute the init of this filter.
-	 * The filters are connected by a link list and each filter calls initFilter of the next filter.
-	 *
-	 * \return The new status of the filter.
-	 */
-	FilterStatus initFilter(Message * msg);
-
-	/*!
-	 * Increase the number of the linked filters.
-	 */
-	void increaseLinked();
-
-	/*!
-	 * Get the number of input ports.
-	 */
-	int inputPortNum();
-
-	/*!
-	 * Get the number of output port.
-	 */
-	int outputPortNum();
-
-
-	/*!
-	 *
-	 * TODO
-	 * Process all filters which are connected to a port
-	 *
-	 * \param p The output port
-	 */
-	void processNextFilters(Port * p);
-
-	/*!
-	 * Destructor of the filter.
-	 */
-	virtual ~Filter();
+  FilterStatus getStatus() { return status; }
+  /*!
+   * Destructor of the filter.
+   */
+  virtual ~Filter();
 };
 
 #endif /* FITLER_H_ */

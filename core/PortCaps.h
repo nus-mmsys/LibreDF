@@ -18,36 +18,36 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#ifndef PORTCAPS_H_
+#define PORTCAPS_H_
 
+#include <map>
 #include <string>
-#include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
-
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
-}
-#endif
 
 using namespace std;
 
-class VideoEncoder {
+class PortCaps {
+  
 private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
+  
+  map<string, string> caps;
+
 public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
+
+  void addCaps(const string& key, const string& val) {
+  
+    caps.insert(make_pair(key,val));
+  }
+  
+  const map<string, string> & getCaps() const { return caps; }
+
+  bool isEqual(const PortCaps& pc) const {
+    return caps.size() == pc.getCaps().size()
+        && std::equal(caps.begin(), caps.end(),
+                      pc.getCaps().begin());
+  }
+
 };
 
-#endif /* VIDEOENCODER_H_ */
+
+#endif /* PORTCAPS_H_ */

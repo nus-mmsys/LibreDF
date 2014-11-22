@@ -18,36 +18,51 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#ifndef CONSUMERFILTER_H_
+#define CONSUMERFILTER_H_
 
-#include <string>
+#include "core/Port.h"
+#include "core/Filter.h"
+#include <unistd.h>
 #include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
+#include <sstream>
 
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
-}
-#endif
-
-using namespace std;
-
-class VideoEncoder {
+template <typename T>
+class ConsumerFilter: public Filter {
+  
 private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
+  InputPort<T> * input;
 public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
+  
+  ConsumerFilter(const string & name) : Filter(name) {
+    input = new InputPort<T>("input");
+    
+    inputPorts.push_back(input);
+  }
+  
+  void run() {
+    
+    input->lock();
+    
+    T * inputData = input->get();
+    
+    std::stringstream inputstr;
+    inputstr << "consuming " << *inputData;
+    
+    log(inputstr.str());
+    sleep(500);
+    
+    if (input->getStatus() == SampleStatus::EOS)
+      status = FilterStatus::EOS; 
+    
+    input->unlock();
+    
+  }
+  
+  ~ConsumerFilter() {
+    delete input;
+  }
+  
 };
 
-#endif /* VIDEOENCODER_H_ */
+#endif /* CONSUMERFILTER_H_ */

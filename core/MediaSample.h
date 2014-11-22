@@ -18,36 +18,38 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#ifndef MEDIASAMPLE_H
+#define MEDIASAMPLE_H
 
+#include "core/SampleSynchronizer.h"
 #include <string>
-#include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
 
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
-}
-#endif
-
-using namespace std;
-
-class VideoEncoder {
-private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
-public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
+enum class SampleStatus {
+  OK,
+  ERROR,
+  EOS
 };
 
-#endif /* VIDEOENCODER_H_ */
+template <typename T>
+class MediaSample : public SampleSynchronizer {
+  
+private:
+  int number;
+  T * data;
+  SampleStatus status;
+  
+public:
+  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
+  
+  T * get() { return data; }
+  
+  void setStatus(SampleStatus st) {status = st;}
+  SampleStatus getStatus() {return status;}
+  
+  ~MediaSample() {
+    delete data;
+    data = nullptr;
+  }
+};
+
+#endif // MEDIASAMPLE_H

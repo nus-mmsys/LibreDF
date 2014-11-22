@@ -18,36 +18,29 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#include "tmf.h"
 
-#include <string>
-#include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
 
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
+int main(int argc, char** argv) {
+  
+  TMF tmf;
+  
+  Pipeline* pipe = tmf.createPipeline("Webcam viewer");
+  
+  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
+  
+  Filter* display = tmf.createFilter(FilterType::VIDEO_DISPLAY, "display");
+  
+  pipe->connectFilters(reader, display);
+  
+  reader->setProp("input_video", "/dev/video0");
+  reader->setProp("video_format", "video4linux2");
+  
+  pipe->init();
+  
+  pipe->run();
+  
+  tmf.destroyPipeline(pipe);
+  
+  return 0;
 }
-#endif
-
-using namespace std;
-
-class VideoEncoder {
-private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
-public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
-};
-
-#endif /* VIDEOENCODER_H_ */

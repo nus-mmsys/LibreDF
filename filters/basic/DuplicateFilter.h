@@ -18,36 +18,44 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#ifndef DUPLICATEFILTER_H_
+#define DUPLICATEFILTER_H_
 
-#include <string>
+#include "core/Filter.h"
+#include <unistd.h>
 #include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
 
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
-}
-#endif
-
-using namespace std;
-
-class VideoEncoder {
+struct DuplicateFilter: public Filter {
+  
 private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
+  InputPort<std::string> * input;
 public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
+  
+  DuplicateFilter(const string & name) :
+  Filter(name) {
+    input = new InputPort<std::string>("duplicate, input 1, string");
+    
+    inputPorts.push_back(input);
+  }
+  
+  
+  void run() {
+    
+    input->lock();
+    string * inputData = input->get();
+    string outputstring = *inputData + "-" + *inputData;
+    log("duplicating "+outputstring); 
+    
+    if (input->getStatus() == SampleStatus::EOS)
+      status = FilterStatus::EOS; 
+    
+    input->unlock();
+  }
+  
+  ~DuplicateFilter() {
+    delete input;
+  }
+  
 };
 
-#endif /* VIDEOENCODER_H_ */
+#endif /* DUPLICATEFILTER_H_ */

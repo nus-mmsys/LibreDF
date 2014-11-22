@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -28,31 +28,31 @@ using namespace std;
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libavutil/opt.h>
-#include <libavutil/mathematics.h>
-#ifdef __cplusplus
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #include <libavutil/opt.h>
+  #include <libavutil/mathematics.h>
+  #ifdef __cplusplus
 }
 #endif
 
 class VideoWriter {
 private:
-	AVCodec *codec;
-    AVFormatContext *oc;
-    AVStream *video_st;
-    uint8_t *video_outbuf;
-    int video_outbuf_size;
-	AVOutputFormat *fmt;
-
-    int open_video();
-    AVStream *add_video_stream(int width, int height);
+  AVCodec *codec;
+  AVFormatContext *oc;
+  AVStream *video_st;
+  uint8_t *video_outbuf;
+  int video_outbuf_size;
+  AVOutputFormat *fmt;
+  
+  int open_video();
+  AVStream *add_video_stream(int width, int height);
 public:
-	VideoWriter();
-	int init(std::string filename, int width, int height);
-	int write(RawFrame * rawFrame);
-	~VideoWriter();
+  VideoWriter();
+  int init(std::string filename, int width, int height);
+  int write(RawFrame * rawFrame);
+  ~VideoWriter();
 };
 
 #endif /* VIDEOWRITER_H_ */

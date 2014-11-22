@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -31,12 +31,11 @@ using namespace std;
  * \enum PipelineStatus
  * Status of a filter.
  */
-enum PipelineStatus {
-	PIPELINE_STATE_UNKNOWN,
-	PIPELINE_RUNNING, /**< The pipeline is currently running. */
-	PIPELINE_STOPPED, /**< The pipeline has stopped. */
-	PIPELINE_PAUSED, /**< The pipeline is currently paused. */
-	PIPELINE_FINISHED /**< The pipeline has finished processing its last item. */
+enum class PipelineStatus {
+  STOPPED, /**< The pipeline has stopped. */
+  READY,  /**< The pipeline is ready. */
+  RUNNING, /**< The pipeline is currently running. */
+  PAUSED, /**< The pipeline is currently paused. */
 };
 /*!
  * \class Pipeline
@@ -44,45 +43,46 @@ enum PipelineStatus {
  * Filters have a many-to-many relation, with directed pipes. Cycles are not allowed.
  */
 class Pipeline {
-	string name; /**< The name of the pipeline. */
-	PipelineStatus status; /**< The current status of the pipeline. */
-	set<Filter *> filters; /**< The set of all filters in the pipeline. */
-	Filter* start; /**< The initial element of the pipeline. Must be a data source (0 inputs). */
+  mutex io_lock;
+  string name; /**< The name of the pipeline. */
+  PipelineStatus status; /**< The current status of the pipeline. */
+  set<Filter *> filters; /**< The set of all filters in the pipeline. */
+  bool realtime;
 public:
-	/*!
-	 * Pipeline constructor
-	 *
-	 * \param name The name of the pipeline.
-	 */
-	Pipeline(const string& name);
-
-	/*!
-	 * Create a pipe between two filters in the pipeline.
-	 * These filters should be in the pipeline.
-	 *
-	 * \param fi The source filter for the pipe.
-	 * \param fo The target filter for the pipe.
-	 */
-	void connectFilters(Filter * fi, Filter * fo);
-
-	/*!
-	 * Initialize the pipeline.
-	 *
-	 * \return the current pipeline status.
-	 */
-	PipelineStatus init();
-
-	/*!
-	 * Run one iteration of the pipeline.
-	 *
-	 * \return the current pipeline status.
-	 */
-	PipelineStatus run();
-
-	/*!
-	 * Pipeline destructor
-	 */
-	~Pipeline();
+  /*!
+   * Pipeline constructor
+   *
+   * \param name The name of the pipeline.
+   */
+  Pipeline(const string& name);
+  
+  void setRealTime(bool);
+  
+  /*!
+   * Create a pipe between two filters in the pipeline.
+   * These filters should be in the pipeline.
+   *
+   * \param fi The source filter for the pipe.
+   * \param fo The target filter for the pipe.
+   */
+  void connectFilters(Filter * fi, Filter * fo);
+  
+  /*!
+   * Initialize the pipeline.
+   *
+   */
+  void init();
+  
+  /*!
+   * Run one iteration of the pipeline.
+   *
+   */
+  void run();
+  
+  /*!
+   * Pipeline destructor
+   */
+  ~Pipeline();
 };
 
 #endif /* PIPELINE_H_ */
