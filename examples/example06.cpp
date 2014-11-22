@@ -36,14 +36,14 @@ int main(int argc, char** argv) {
   int width = std::stoi(argv[3]);
   int height = std::stoi(argv[4]);
   
-  Filter* decoder = tmf.createFilter(FilterType::VIDEO_DECODER, "decoder");
+  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
   Filter* scaler = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler");
   Filter* writer = tmf.createFilter(FilterType::IMAGE_WRITER, "writer");
   
-  pipe->connectFilters(decoder, scaler);
+  pipe->connectFilters(reader, scaler);
   pipe->connectFilters(scaler,writer);
   
-  decoder->setProp("input_video", inputVideo);
+  reader->setProp("input_video", inputVideo);
   
   scaler->setProp<int>("width", width);
   scaler->setProp<int>("height", height);

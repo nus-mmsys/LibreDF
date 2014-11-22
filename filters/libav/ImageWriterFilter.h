@@ -18,18 +18,18 @@
  *
  */
 
-#ifndef IMAGEWRITER_H_
-#define IMAGEWRITER_H_
+#ifndef IMAGEWRITERFILTER_H_
+#define IMAGEWRITERFILTER_H_
 
 #include "core/Port.h"
 #include "core/Filter.h"
-#include "tools/VideoFrameWriter.h"
+#include "tools/ImageWriter.h"
 
 class ImageWriterFilter: public Filter {
   
 private:
   
-  VideoFrameWriter * videoFrameWriter;
+  ImageWriter * imageWriter;
   InputPort<RawFrame> * inputFrame;
   
 public:
@@ -40,7 +40,7 @@ public:
     
     inputPorts.push_back(inputFrame);
     
-    videoFrameWriter = nullptr;
+    imageWriter = nullptr;
   }
   
   virtual void init() {
@@ -61,8 +61,8 @@ public:
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
-    videoFrameWriter = new VideoFrameWriter{srcWidth, srcHeight, srcFormat};
-    videoFrameWriter->setPath(getProp("output_path"));
+    imageWriter = new ImageWriter{srcWidth, srcHeight, srcFormat};
+    imageWriter->setPath(getProp("output_path"));
     
   }
   
@@ -77,17 +77,17 @@ public:
     }
     
     RawFrame * data = inputFrame->get();
-    videoFrameWriter->writeImage(data);
+    imageWriter->writeImage(data);
     
     inputFrame->unlock();
   }
   
   virtual ~ImageWriterFilter() {
       delete inputFrame;
-      delete videoFrameWriter;
+      delete imageWriter;
   }
   
   
 };
 
-#endif /* IMAGEWRITER_H_ */
+#endif /* IMAGEWRITERFILTER_H_ */

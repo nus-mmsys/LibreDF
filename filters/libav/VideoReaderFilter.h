@@ -18,22 +18,22 @@
  *
  */
 
-#ifndef VIDEODECODER_H_
-#define VIDEODECODER_H_
+#ifndef VIDEOREADERFILTER_H_
+#define VIDEOREADERFILTER_H_
 
 #include "core/Filter.h"
 #include "core/Port.h"
 #include "tools/VideoReader.h"
 #include "types/RawFrame.h"
 
-class VideoDecoderFilter: public Filter {
+class VideoReaderFilter: public Filter {
   
 private:
   VideoReader * videoReader;
   
   OutputPort<RawFrame> * outputFrame;
 public:
-  VideoDecoderFilter(string name) :
+  VideoReaderFilter(string name) :
   Filter(name) {
     
     outputFrame = new OutputPort<RawFrame>("RawFrame output");
@@ -79,7 +79,7 @@ public:
     outputFrame->unlock();
   }
   
-  virtual ~VideoDecoderFilter() {
+  virtual ~VideoReaderFilter() {
     
     delete outputFrame;
     delete videoReader;
@@ -87,4 +87,4 @@ public:
   
 };
 
-#endif /* VIDEODECODER_H_ */
+#endif /* VIDEOREADERFILTER_H_ */

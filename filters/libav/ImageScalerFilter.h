@@ -21,7 +21,7 @@
 #ifndef IMAGESCALERFILTER_H_
 #define IMAGESCALERFILTER_H_
 
-#include "tools/VideoScaler.h"
+#include "tools/ImageScaler.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 
@@ -33,7 +33,7 @@ class ImageScalerFilter : public Filter {
   
 private:
   
-  VideoScaler * videoScaler;
+  ImageScaler * imageScaler;
   
   InputPort<RawFrame> * inputPortFrame;
   OutputPort<RawFrame> * outputPortFrame;
@@ -49,7 +49,7 @@ public:
     inputPorts.push_back(inputPortFrame);
     outputPorts.push_back(outputPortFrame);
     
-    videoScaler = nullptr;
+    imageScaler = nullptr;
   }
   
   virtual void init() {
@@ -70,7 +70,7 @@ public:
     
     AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
     
-    videoScaler = new VideoScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
+    imageScaler = new ImageScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
     
     outputPortFrame->lockAttr();
     attr = outputPortFrame->getAttr();
@@ -100,7 +100,7 @@ public:
     outputPortFrame->lock();
     RawFrame * outFrame = outputPortFrame->get();
     
-    videoScaler->scale(inFrame, outFrame);
+    imageScaler->scale(inFrame, outFrame);
     
     inputPortFrame->unlock();
     
@@ -111,7 +111,7 @@ public:
   virtual ~ImageScalerFilter() {
     delete inputPortFrame;
     delete outputPortFrame;
-    delete videoScaler;
+    delete imageScaler;
   }
   
 };

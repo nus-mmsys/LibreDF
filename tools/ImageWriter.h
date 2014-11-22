@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef VIDEOFRAMEWRITER_H_
-#define VIDEOFRAMEWRITER_H_
+#ifndef IMAGEWRITER_H_
+#define IMAGEWRITER_H_
 
 #include <iostream>
 
@@ -35,7 +35,7 @@ extern "C" {
 
 using namespace std;
 
-class VideoFrameWriter {
+class ImageWriter {
   
 private:
   string path;
@@ -49,7 +49,7 @@ private:
   
 public:
   
-  VideoFrameWriter(int width, int height, AVPixelFormat format) {
+  ImageWriter(int width, int height, AVPixelFormat format) {
     
     int numBytes;
     buffer = 0;
@@ -121,7 +121,7 @@ public:
     this->path = path;
   }
   
-  ~VideoFrameWriter() {
+  ~ImageWriter() {
     // Free the RGB image
     if(buffer) {	
       av_free(buffer);
@@ -133,4 +133,4 @@ public:
   
 };
 
-#endif /* VIDEOFRAMEWRITER_H_ */
+#endif /* IMAGEWRITER_H_ */

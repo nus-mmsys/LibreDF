@@ -41,18 +41,18 @@ int main(int argc, char** argv) {
   string width2 = argv[6];
   string height2 = argv[7];
   
-  Filter* decoder = tmf.createFilter(FilterType::VIDEO_DECODER, "decoder");
+  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
   Filter* scaler1 = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler1");
   Filter* scaler2 = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler2");
   Filter* writer1 = tmf.createFilter(FilterType::IMAGE_WRITER, "writer1");
   Filter* writer2 = tmf.createFilter(FilterType::IMAGE_WRITER, "writer2");
   
-  pipe->connectFilters(decoder, scaler1);
-  pipe->connectFilters(decoder, scaler2);
+  pipe->connectFilters(reader, scaler1);
+  pipe->connectFilters(reader, scaler2);
   pipe->connectFilters(scaler1,writer1);
   pipe->connectFilters(scaler2,writer2);
   
-  decoder->setProp("input_video", inputVideo);
+  reader->setProp("input_video", inputVideo);
   scaler1->setProp("width", width1);
   scaler1->setProp("height", height1);
   scaler2->setProp("width", width2);

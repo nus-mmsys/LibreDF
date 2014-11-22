@@ -33,7 +33,7 @@
 #include "filters/basic/StringProducerFilter.h"
 #include "filters/basic/IntProducerFilter.h"
 
-#include "filters/libav/VideoDecoderFilter.h"
+#include "filters/libav/VideoReaderFilter.h"
 #include "filters/libav/VideoEncoderFilter.h"
 #include "filters/libav/VideoWriterFilter.h"
 #include "filters/libav/VideoMuxerFilter.h"
@@ -59,7 +59,7 @@ enum class FilterType {
   INTPRODUCER,
   STRINGPRODUCER,
   CONSUMER,
-  VIDEO_DECODER,
+  VIDEO_READER,
   VIDEO_WRITER,
   VIDEO_ENCODER,
   VIDEO_MUXER,
@@ -121,8 +121,8 @@ public:
       case FilterType::ADDITION:
 	return new AdditionFilter(name);
 	
-      case FilterType::VIDEO_DECODER:
-	return new VideoDecoderFilter(name);
+      case FilterType::VIDEO_READER:
+	return new VideoReaderFilter(name);
 	
       case FilterType::VIDEO_ENCODER:
 	return new VideoEncoderFilter(name);

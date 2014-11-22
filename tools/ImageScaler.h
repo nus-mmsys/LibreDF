@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef VIDEOSCALER_H_
-#define VIDEOSCALER_H_
+#ifndef IMAGESCALER_H_
+#define IMAGESCALER_H_
 
 #include "types/RawFrame.h"
 
@@ -33,7 +33,7 @@ extern "C" {
 }
 #endif
 
-class VideoScaler {
+class ImageScaler {
   
 private:
   
@@ -46,7 +46,7 @@ private:
   AVPixelFormat dstFmt;
   
 public:
-  VideoScaler(int srcWidth, int srcHeight, AVPixelFormat srcFmt, int dstWidth, int dstHeight, AVPixelFormat dstFmt) {
+  ImageScaler(int srcWidth, int srcHeight, AVPixelFormat srcFmt, int dstWidth, int dstHeight, AVPixelFormat dstFmt) {
     
     this->srcWidth = srcWidth;
     this->srcHeight = srcHeight;
@@ -95,4 +95,4 @@ public:
   }
 };
 
-#endif /* VIDEOSCALER_H_ */
+#endif /* IMAGESCALER_H_ */
