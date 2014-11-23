@@ -18,39 +18,36 @@
  *
  */
 
-#ifndef MEDIASAMPLE_H
-#define MEDIASAMPLE_H
+#ifndef VIDEODISPLAY_H_
+#define VIDEODISPLAY_H_
 
-#include "core/SampleSynchronizer.h"
+#ifdef __cplusplus
+extern "C" {
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #include <libswscale/swscale.h>
+  #ifdef __cplusplus
+}
+#endif
 
-#include <string>
+#include <SDL/SDL.h>
+#include <SDL/SDL_thread.h>
 
-enum class SampleStatus {
-  OK,
-  ERROR,
-  EOS
-};
+#include "filters/libav/types/RawFrame.h"
 
-template <typename T>
-class MediaSample : public SampleSynchronizer {
-  
+class VideoDisplay {
 private:
-  int number;
-  T * data;
-  SampleStatus status;
-  
+  int width, height;
+  SDL_Overlay *bmp;
+  SDL_Surface *screen;
+  SDL_Rect rect;
+  struct SwsContext * pSwsCtx;
 public:
-  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
-  
-  T * get() { return data; }
-  
-  void setStatus(SampleStatus st) {status = st;}
-  SampleStatus getStatus() {return status;}
-  
-  ~MediaSample() {
-    delete data;
-    data = nullptr;
-  }
+  VideoDisplay();
+  void init(int width, int height, AVPixelFormat pixFmt);
+  void display(RawFrame * rawFrame);
+  virtual ~VideoDisplay();
 };
 
-#endif // MEDIASAMPLE_H
+#endif /* VIDEODISPLAY_H_ */

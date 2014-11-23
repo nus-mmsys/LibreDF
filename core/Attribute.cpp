@@ -18,39 +18,22 @@
  *
  */
 
-#ifndef MEDIASAMPLE_H
-#define MEDIASAMPLE_H
+#include "core/Attribute.h"
 
-#include "core/SampleSynchronizer.h"
+std::string Attribute::getProp(const std::string & key) {
+  auto k = props.find(key);
+  
+  if (k == props.end())
+    return "";
+  
+  return props[key];
+}
 
-#include <string>
+void Attribute::setProp(const std::string & key, const std::string& val) {
+  props.insert(std::make_pair(key, val));
+}
 
-enum class SampleStatus {
-  OK,
-  ERROR,
-  EOS
-};
-
-template <typename T>
-class MediaSample : public SampleSynchronizer {
-  
-private:
-  int number;
-  T * data;
-  SampleStatus status;
-  
-public:
-  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
-  
-  T * get() { return data; }
-  
-  void setStatus(SampleStatus st) {status = st;}
-  SampleStatus getStatus() {return status;}
-  
-  ~MediaSample() {
-    delete data;
-    data = nullptr;
-  }
-};
-
-#endif // MEDIASAMPLE_H
+void Attribute::setProp(const std::string & key, const char* val) {
+  std::string valstr = std::string(val);
+  props.insert(std::make_pair(key, valstr));
+}

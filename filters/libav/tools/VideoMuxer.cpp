@@ -18,7 +18,7 @@
  *
  */
 
-#include <tools/VideoMuxer.h>
+#include "filters/libav/tools/VideoMuxer.h"
 
 VideoMuxer::VideoMuxer() {
   av_fmt_ctx = 0;

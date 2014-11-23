@@ -33,54 +33,13 @@ private:
   InputPort<RawFrame> * inputPortRawFrame;
 public:
   
-  VideoWriterFilter(string name) :
-  Filter(name) {
-    
-    inputPortRawFrame = createInputPort<RawFrame>("RawFrame input");
-    
-    videoWriter = new VideoWriter();
-    
-  }
+  VideoWriterFilter(string name);
   
-  virtual void init() {
-    
-    Attribute * attr;
-    
-    int width, height;
-    
-    string output_video = getProp("output_video");
-    
-    inputPortRawFrame->lockAttr();
-    attr = inputPortRawFrame->getAttr();
-    width = stoi(attr->getProp("width"));
-    height = stoi(attr->getProp("height"));
-    inputPortRawFrame->unlockAttr();
-    
-    videoWriter->init(output_video, width, height);
-  }
-  virtual void run() {
-    
-    inputPortRawFrame->lock();
-    
-    if (inputPortRawFrame->getStatus() == SampleStatus::EOS) {
-      status = FilterStatus::EOS; 
-      inputPortRawFrame->unlock();
-      return;
-    }
-    
-    RawFrame * inFrame = inputPortRawFrame->get();
-    
-    videoWriter->write(inFrame);
-    
-    inputPortRawFrame->unlock();
-    
-  }
+  virtual void init();
   
-  virtual ~VideoWriterFilter() {
-    delete videoWriter;
-    delete inputPortRawFrame;
-  }
+  virtual void run();
   
+  virtual ~VideoWriterFilter();
   
 };
 

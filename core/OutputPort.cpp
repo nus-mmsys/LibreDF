@@ -18,39 +18,6 @@
  *
  */
 
-#ifndef MEDIASAMPLE_H
-#define MEDIASAMPLE_H
+#include "OutputPort.h"
 
-#include "core/SampleSynchronizer.h"
-
-#include <string>
-
-enum class SampleStatus {
-  OK,
-  ERROR,
-  EOS
-};
-
-template <typename T>
-class MediaSample : public SampleSynchronizer {
-  
-private:
-  int number;
-  T * data;
-  SampleStatus status;
-  
-public:
-  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
-  
-  T * get() { return data; }
-  
-  void setStatus(SampleStatus st) {status = st;}
-  SampleStatus getStatus() {return status;}
-  
-  ~MediaSample() {
-    delete data;
-    data = nullptr;
-  }
-};
-
-#endif // MEDIASAMPLE_H
+/* All declaration of the template class are in the header file */

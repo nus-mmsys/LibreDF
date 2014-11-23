@@ -18,7 +18,7 @@
  *
  */
 
-#include <tools/VideoWriter.h>
+#include "filters/libav/tools/VideoWriter.h"
 
 #define STREAM_FRAME_RATE 25
 #define STREAM_PIX_FMT PIX_FMT_YUV420P /* default pix_fmt */

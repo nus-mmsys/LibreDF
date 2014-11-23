@@ -33,14 +33,7 @@ public:
    *
    * \param key the key to retrieve the message value
    */
-  std::string getProp(const std::string & key) {
-    auto k = props.find(key);
-    
-    if (k == props.end())
-      return "";
-    
-    return props[key];
-  }
+  std::string getProp(const std::string & key);
   
   /*!
    * Set the string message by key and value
@@ -55,14 +48,9 @@ public:
     props.insert(std::make_pair(key, valstr));
   }
   
-  void setProp(const std::string & key, const std::string& val) {
-    props.insert(std::make_pair(key, val));
-  }
+  void setProp(const std::string & key, const std::string& val);
 
-  void setProp(const std::string & key, const char* val) {
-    std::string valstr = std::string(val);
-    props.insert(std::make_pair(key, valstr));
-  }
+  void setProp(const std::string & key, const char* val);
 };
 
 #endif /* ATTRIBUTE_H_ */

@@ -31,22 +31,15 @@ class PortCaps {
 private:
   
   map<string, string> caps;
-
+  
 public:
-
-  void addCaps(const string& key, const string& val) {
   
-    caps.insert(make_pair(key,val));
-  }
+  void addCaps(const string& key, const string& val); 
   
-  const map<string, string> & getCaps() const { return caps; }
-
-  bool isEqual(const PortCaps& pc) const {
-    return caps.size() == pc.getCaps().size()
-        && std::equal(caps.begin(), caps.end(),
-                      pc.getCaps().begin());
-  }
-
+  const map<string, string> & getCaps() const;
+  
+  bool isEqual(const PortCaps& pc) const;
+  
 };
 
 

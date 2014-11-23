@@ -18,39 +18,41 @@
  *
  */
 
-#ifndef MEDIASAMPLE_H
-#define MEDIASAMPLE_H
-
-#include "core/SampleSynchronizer.h"
+#ifndef VIDEOWRITER_H_
+#define VIDEOWRITER_H_
 
 #include <string>
+#include "filters/libav/types/RawFrame.h"
 
-enum class SampleStatus {
-  OK,
-  ERROR,
-  EOS
-};
+using namespace std;
 
-template <typename T>
-class MediaSample : public SampleSynchronizer {
-  
+#ifdef __cplusplus
+extern "C" {
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #include <libavutil/opt.h>
+  #include <libavutil/mathematics.h>
+  #ifdef __cplusplus
+}
+#endif
+
+class VideoWriter {
 private:
-  int number;
-  T * data;
-  SampleStatus status;
+  AVCodec *codec;
+  AVFormatContext *oc;
+  AVStream *video_st;
+  uint8_t *video_outbuf;
+  int video_outbuf_size;
+  AVOutputFormat *fmt;
   
+  int open_video();
+  AVStream *add_video_stream(int width, int height);
 public:
-  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
-  
-  T * get() { return data; }
-  
-  void setStatus(SampleStatus st) {status = st;}
-  SampleStatus getStatus() {return status;}
-  
-  ~MediaSample() {
-    delete data;
-    data = nullptr;
-  }
+  VideoWriter();
+  int init(std::string filename, int width, int height);
+  int write(RawFrame * rawFrame);
+  ~VideoWriter();
 };
 
-#endif // MEDIASAMPLE_H
+#endif /* VIDEOWRITER_H_ */

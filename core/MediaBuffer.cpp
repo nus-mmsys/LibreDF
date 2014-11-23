@@ -18,44 +18,6 @@
  *
  */
 
-#ifndef RAW_FRAME_H_
-#define RAW_FRAME_H_
+#include "core/MediaBuffer.h"
 
-#include "types/Frame.h"
-
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #ifdef __cplusplus
-}
-#endif
-
-class RawFrame: public Frame {
-  
-private:
-  AVFrame * data;
-  uint8_t *buffer;
-  
-public:
-  RawFrame() {
-    data = avcodec_alloc_frame();
-    buffer=0;
-  }
-  
-  uint8_t* getBuffer() {
-    return buffer;
-  }
-  
-  AVFrame * getFrame() {
-    return data;
-  }
-  
-  ~RawFrame() {
-    av_free(data);
-  }
-};
-
-
-#endif /* RAW_FRAME_H_ */
+/* All declaration of the template class are in the header file */

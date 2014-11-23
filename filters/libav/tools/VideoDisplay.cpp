@@ -18,7 +18,7 @@
  *
  */
 
-#include <tools/VideoDisplay.h>
+#include "filters/libav/tools/VideoDisplay.h"
 
 VideoDisplay::VideoDisplay() {
   

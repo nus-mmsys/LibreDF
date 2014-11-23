@@ -33,58 +33,13 @@ private:
   InputPort<RawFrame> * inputFrame;
   
 public:
-  ImageWriterFilter(string name) :
-  Filter(name) {
-    
-    inputFrame = createInputPort<RawFrame>("RawFrame input");
-    
-    imageWriter = nullptr;
-  }
+  ImageWriterFilter(string name);
   
-  virtual void init() {
-    
-    int srcWidth, srcHeight, srcFormatInt;
-    
-    inputFrame->lockAttr();
-    
-    Attribute * attr = inputFrame->getAttr();
-    
-    srcWidth = stoi(attr->getProp("width"));
-    
-    srcHeight = stoi(attr->getProp("height"));
-    
-    srcFormatInt = stoi(attr->getProp("format"));
-    
-    inputFrame->unlockAttr();
-    
-    AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
-    
-    imageWriter = new ImageWriter{srcWidth, srcHeight, srcFormat};
-    imageWriter->setPath(getProp("output_path"));
-    
-  }
+  virtual void init();
   
-  virtual void run() {
-    
-    inputFrame->lock();	
-    
-    if (inputFrame->getStatus() == SampleStatus::EOS) {
-      status = FilterStatus::EOS; 
-      inputFrame->unlock();
-      return;
-    }
-    
-    RawFrame * data = inputFrame->get();
-    imageWriter->writeImage(data);
-    
-    inputFrame->unlock();
-  }
+  virtual void run();
   
-  virtual ~ImageWriterFilter() {
-      delete inputFrame;
-      delete imageWriter;
-  }
-  
+  virtual ~ImageWriterFilter();
   
 };
 

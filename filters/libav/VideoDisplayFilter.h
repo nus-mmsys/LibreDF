@@ -34,56 +34,13 @@ private:
   InputPort<RawFrame> * inputPortRawFrame;
 public:
   
-  VideoDisplayFilter(string name) :
-  Filter(name) {
-    
-    inputPortRawFrame = createInputPort<RawFrame>("RawFrame input");
-    
-    videoDisplay = new VideoDisplay();
-  }
+  VideoDisplayFilter(string name);
   
-  virtual void init() {
-    
-    Attribute * attr;
-    
-    int width, height, pixFmtInt;
-    
-    inputPortRawFrame->lockAttr();
-    attr = inputPortRawFrame->getAttr();
-    width = stoi(attr->getProp("width"));
-    height = stoi(attr->getProp("height"));
-    pixFmtInt = stoi(attr->getProp("format"));
-    inputPortRawFrame->unlockAttr();
-    
-    AVPixelFormat pixFmt = static_cast<AVPixelFormat>(pixFmtInt);
-    
-    videoDisplay->init(width, height, pixFmt);
-    
-  }
-  virtual void run() {
-    
-    inputPortRawFrame->lock();
-    
-    if (inputPortRawFrame->getStatus() == SampleStatus::EOS) {
-      status = FilterStatus::EOS; 
-      inputPortRawFrame->unlock();
-      return;
-    }
-    
-    RawFrame * inFrame = inputPortRawFrame->get();
-    
-    videoDisplay->display(inFrame);
-    
-    inputPortRawFrame->unlock();
-    
-  }
+  virtual void init();
   
-  virtual ~VideoDisplayFilter() {
-    
-    delete inputPortRawFrame;
-    delete videoDisplay;
-  }
+  virtual void run();
   
+  virtual ~VideoDisplayFilter();
   
 };
 

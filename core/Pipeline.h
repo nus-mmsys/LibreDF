@@ -23,7 +23,8 @@
 
 #include <iostream>
 #include <set>
-#include "Filter.h"
+
+#include "core/Filter.h"
 
 using namespace std;
 

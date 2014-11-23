@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -21,7 +21,7 @@
 #ifndef MEDIABUFFER_H_
 #define MEDIABUFFER_H_
 
-#include "MediaSample.h"
+#include "core/MediaSample.h"
 
 const int TMF_BUFFER_SIZE = 3;
 
@@ -46,18 +46,18 @@ public:
    * \param size the size of the buffer
    */
   MediaBuffer<T>(): size(TMF_BUFFER_SIZE) {
-   
+    
     for (int i=0; i<size; i++) {
       samples[i] = new MediaSample<T>();
     }
   }
- 
-  void addConsumer() {
+  
+  void addConsumer()  {
     for (int i=0; i<size; i++) {
       samples[i]->addConsumer();
     }
   }
- 
+  
   /*!
    * Get the size of the buffer
    *
@@ -72,7 +72,7 @@ public:
    * \return the element number idx
    */
   MediaSample<T>* at(int idx) const  { return samples[idx]; }
-
+  
   /*!
    * Buffer destructor
    *

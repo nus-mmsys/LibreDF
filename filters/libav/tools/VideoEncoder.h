@@ -18,13 +18,13 @@
  *
  */
 
-#ifndef VIDEOWRITER_H_
-#define VIDEOWRITER_H_
+#ifndef VIDEOENCODER_H_
+#define VIDEOENCODER_H_
 
 #include <string>
-#include "types/RawFrame.h"
-
-using namespace std;
+#include <iostream>
+#include "filters/libav/types/RawFrame.h"
+#include "filters/libav/types/EncodedFrame.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,27 +32,22 @@ extern "C" {
   #include <libavcodec/avcodec.h>
   #include <libavformat/avformat.h>
   #include <libavutil/opt.h>
-  #include <libavutil/mathematics.h>
   #ifdef __cplusplus
 }
 #endif
 
-class VideoWriter {
+using namespace std;
+
+class VideoEncoder {
 private:
-  AVCodec *codec;
-  AVFormatContext *oc;
-  AVStream *video_st;
+  AVCodecContext * codec_ctx;
   uint8_t *video_outbuf;
   int video_outbuf_size;
-  AVOutputFormat *fmt;
-  
-  int open_video();
-  AVStream *add_video_stream(int width, int height);
 public:
-  VideoWriter();
-  int init(std::string filename, int width, int height);
-  int write(RawFrame * rawFrame);
-  ~VideoWriter();
+  VideoEncoder();
+  int init(string codec_name, int width, int height, int bitrate, int framerate);
+  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
+  virtual ~VideoEncoder();
 };
 
-#endif /* VIDEOWRITER_H_ */
+#endif /* VIDEOENCODER_H_ */

@@ -23,6 +23,9 @@
 
 #include "core/Attribute.h"
 #include "core/Port.h"
+#include "core/InputPort.h"
+#include "core/OutputPort.h"
+
 #include <string>
 #include <vector>
 #include <map>

@@ -33,6 +33,8 @@ extern "C" {
 }
 #endif
 
+#include "filters/libav/types/RawFrame.h"
+
 using namespace std;
 
 class ImageWriter {

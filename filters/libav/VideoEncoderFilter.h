@@ -23,9 +23,9 @@
 
 #include "core/Filter.h"
 #include "core/Port.h"
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
-#include "tools/VideoEncoder.h"
+#include "filters/libav/types/RawFrame.h"
+#include "filters/libav/types/EncodedFrame.h"
+#include "filters/libav/tools/VideoEncoder.h"
 
 class VideoEncoderFilter : public Filter {
   
@@ -35,84 +35,13 @@ private:
   InputPort<RawFrame> * inputPortRawFrame;
   OutputPort<EncodedFrame> * outputPortEncodedFrame;
 public:
-  VideoEncoderFilter(string name) :
-  Filter(name) {
-    
-    inputPortRawFrame = createInputPort<RawFrame>("RawFrame input");
-    outputPortEncodedFrame = createOutputPort<EncodedFrame>("EncodedFrame output");
-    
-    videoEncoder = new VideoEncoder();
-    
-  }
+  VideoEncoderFilter(string name);
   
-  virtual void init() {
-    
-    Attribute * attr;
-    
-    int width, height, bitrate, framerate;
-    
-    string output_video = getProp("output_video");
-    
-    bitrate = std::stoi(getProp("bitrate"));
-    
-    framerate = std::stoi(getProp("framerate"));
-    
-    inputPortRawFrame->lockAttr();
-    attr = inputPortRawFrame->getAttr();
-    width = stoi(attr->getProp("width"));
-    height = stoi(attr->getProp("height"));
-    inputPortRawFrame->unlockAttr();
-    
-    videoEncoder->init(output_video, width, height, bitrate, framerate);
-    
-    outputPortEncodedFrame->lockAttr();
-    attr = outputPortEncodedFrame->getAttr();
-    attr->setProp("width", width);
-    attr->setProp("height", height);
-    attr->setProp("bitrate", bitrate);
-    attr->setProp("framerate", framerate);
-    attr->setProp("output_video", output_video);
-    outputPortEncodedFrame->unlockAttr();
-    
-  }
+  virtual void init();
   
-  virtual void run() {
-    
-    
-    inputPortRawFrame->lock();
-    
-    if (inputPortRawFrame->getStatus() == SampleStatus::EOS) {
-      status = FilterStatus::EOS; 
-      inputPortRawFrame->unlock();
-      
-      outputPortEncodedFrame->lock();
-      outputPortEncodedFrame->setStatus(SampleStatus::EOS);
-      outputPortEncodedFrame->unlock();
-      
-      return;
-    }
-    
-    RawFrame * inFrame = inputPortRawFrame->get();
-    
-    outputPortEncodedFrame->lock();
-    
-    EncodedFrame * outFrame = outputPortEncodedFrame->get();
-    videoEncoder->encode(inFrame, outFrame);
-    
-    outputPortEncodedFrame->unlock();
-    
-    inputPortRawFrame->unlock();
-    
-  }
+  virtual void run();
   
-  virtual ~VideoEncoderFilter() {
-    
-    delete inputPortRawFrame;
-    delete outputPortEncodedFrame;
-    delete videoEncoder;
-  }
-  
-  
+  virtual ~VideoEncoderFilter();
 };
 
 #endif /* VIDEOENCODERFILTER_H_ */

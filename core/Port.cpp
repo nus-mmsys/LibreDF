@@ -18,35 +18,30 @@
  *
  */
 
-#ifndef VIDEOMUXER_H_
-#define VIDEOMUXER_H_
+#include "core/Port.h"
 
-#include <string>
-#include <iostream>
-#include "types/EncodedFrame.h"
-
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #include <libavutil/mathematics.h>
-  #ifdef __cplusplus
+Port::Port(string name) :
+name(name), linked(0), attrbuf(nullptr), attrindex(0) {
+  
 }
-#endif
 
-using namespace std;
+string Port::getName() {
+  return name;
+}
 
-class VideoMuxer {
-private:
-  AVFormatContext * av_fmt_ctx;
-  int vstream_idx;
-public:
-  VideoMuxer();
-  int init(string filename, int width, int height, int bitrate, int framerate);
-  int mux(EncodedFrame * encodedFrame);
-  ~VideoMuxer();
-};
+const PortCaps & Port::getPortCaps() const {
+  
+  return portCaps;
+}
 
-#endif /* VIDEOMUXER_H_ */
+int Port::getLinked() {
+  return linked;
+}
+
+void Port::increaseLinked() {
+  linked++;
+}
+
+Attribute * Port::getAttr() {
+  return attrbuf->at(attrindex)->get();
+}

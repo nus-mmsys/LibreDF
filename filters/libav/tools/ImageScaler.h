@@ -18,39 +18,37 @@
  *
  */
 
-#ifndef MEDIASAMPLE_H
-#define MEDIASAMPLE_H
+#ifndef IMAGESCALER_H_
+#define IMAGESCALER_H_
 
-#include "core/SampleSynchronizer.h"
+#include "filters/libav/types/RawFrame.h"
 
-#include <string>
+#ifdef __cplusplus
+extern "C" {
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #include <libswscale/swscale.h>
+  #ifdef __cplusplus
+}
+#endif
 
-enum class SampleStatus {
-  OK,
-  ERROR,
-  EOS
-};
-
-template <typename T>
-class MediaSample : public SampleSynchronizer {
+class ImageScaler {
   
 private:
-  int number;
-  T * data;
-  SampleStatus status;
+  
+  struct SwsContext *sws_ctx;
+  int srcWidth;
+  int srcHeight;
+  AVPixelFormat srcFmt;
+  int dstWidth;
+  int dstHeight;
+  AVPixelFormat dstFmt;
   
 public:
-  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
-  
-  T * get() { return data; }
-  
-  void setStatus(SampleStatus st) {status = st;}
-  SampleStatus getStatus() {return status;}
-  
-  ~MediaSample() {
-    delete data;
-    data = nullptr;
-  }
+  ImageScaler(int srcWidth, int srcHeight, AVPixelFormat srcFmt, int dstWidth, int dstHeight, AVPixelFormat dstFmt); 
+  void fill(RawFrame * frame);
+  int scale(RawFrame * inFrame, RawFrame * outFrame);
 };
 
-#endif // MEDIASAMPLE_H
+#endif /* IMAGESCALER_H_ */

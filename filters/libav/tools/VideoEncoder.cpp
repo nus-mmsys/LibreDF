@@ -18,7 +18,7 @@
  *
  */
 
-#include <tools/VideoEncoder.h>
+#include "filters/libav/tools/VideoEncoder.h"
 
 VideoEncoder::VideoEncoder() {
   codec_ctx = 0;
@@ -27,8 +27,8 @@ VideoEncoder::VideoEncoder() {
   
 }
 
-int VideoEncoder::init(string filename, int width, int height, int bitrate,
-		       int framerate) {
+int VideoEncoder::init(string filename, int width, int height, int bitrate, int framerate)
+{
   
   AVOutputFormat *output_fmt;
   
@@ -93,64 +93,60 @@ int VideoEncoder::init(string filename, int width, int height, int bitrate,
   
   //rep_id = filename;
   return 0;
-		       }
-		       
-		       int VideoEncoder::encode(RawFrame * rawFrame, EncodedFrame * encodedFrame) {
-			 
-			 int ret;
-			 int out_size;
-			 
-			 AVFrame * vframe = rawFrame->getFrame();
-			 AVPacket * pkt = encodedFrame->getPacket();
-			 
-			 vframe->pts = rawFrame->getNumber();
-			 //encodedFrame->number = rawFrame->number;
-			 
-			 /* Encoding video */
-			 
-			 //int got_packet = 0;
-			 av_init_packet(pkt);
-			 
-			 //encodedFrame->pkt->pts = encodedFrame->pkt->dts = vframe->pkt_dts =
-			 //		vframe->pkt_pts = vframe->pts;
-			 
-			 //ret = avcodec_encode_video2(codec_ctx, encodedFrame->pkt, vframe,
-			 //		&got_packet);
-			 
-			 out_size = avcodec_encode_video(codec_ctx, video_outbuf, video_outbuf_size,
-							 vframe);
-			 
-			 if (out_size > 0) {
-			   av_init_packet(pkt);
-			   
-			   pkt->data = video_outbuf;
-			   pkt->size = out_size;
-			   ret = out_size;
-			 } else {
-			   ret = 0;
-			 }
-			 
-			 /*
-			  *	 if (ret < 0) {
-			  *	 cout << "Error occurred while encoding video frame.\n";
-			  *	 return -1;
-		       }
-		       
-		       if (got_packet) {
-			 codec_ctx->coded_frame->pts = codec_ctx->coded_frame->pkt_pts =
-			 encodedFrame->pkt->pts;
-			 codec_ctx->coded_frame->pkt_dts = encodedFrame->pkt->dts;
-			 codec_ctx->coded_frame->key_frame =
-			 (encodedFrame->pkt->flags & AV_PKT_FLAG_KEY) ? 1 : 0;
-		       }
-		       */
-			 
-			 return ret;
-		       }
-		       
-		       VideoEncoder::~VideoEncoder() {
-			 avcodec_close(codec_ctx);
-			 av_free(codec_ctx);
-		       }
-		       
-		       
+  
+}
+
+VideoEncoder::~VideoEncoder() {
+  avcodec_close(codec_ctx);
+  av_free(codec_ctx);
+}
+int VideoEncoder::encode(RawFrame * rawFrame, EncodedFrame * encodedFrame) {
+  int ret;
+  int out_size;
+  AVFrame * vframe = rawFrame->getFrame();
+  AVPacket * pkt = encodedFrame->getPacket();
+  vframe->pts = rawFrame->getNumber();
+  //encodedFrame->number = rawFrame->number;
+  
+  /* Encoding video */
+  
+  //int got_packet = 0;
+  av_init_packet(pkt);
+  
+  //encodedFrame->pkt->pts = encodedFrame->pkt->dts = vframe->pkt_dts =
+  //vframe->pkt_pts = vframe->pts;
+  
+  //ret = avcodec_encode_video2(codec_ctx, encodedFrame->pkt, vframe,
+  //&got_packet);
+  
+  out_size = avcodec_encode_video(codec_ctx, video_outbuf, video_outbuf_size,vframe);
+  if (out_size > 0) {
+    av_init_packet(pkt);
+    
+    pkt->data = video_outbuf;
+    pkt->size = out_size;
+    ret = out_size;
+  } else {
+    ret = 0;
+  }
+  
+  /*
+   *    if (ret < 0) {
+   *    cout << "Error occurred while encoding video frame.\n";
+   *    return -1;
+   *    }
+   */
+  
+  /*
+   * if (got_packet) {
+   *  codec_ctx->coded_frame->pts = codec_ctx->coded_frame->pkt_pts =
+   *  encodedFrame->pkt->pts;
+   *  codec_ctx->coded_frame->pkt_dts = encodedFrame->pkt->dts;
+   *  codec_ctx->coded_frame->key_frame =
+   *  (encodedFrame->pkt->flags & AV_PKT_FLAG_KEY) ? 1 : 0;
+   *  }
+   */
+  
+  return ret;
+}
+

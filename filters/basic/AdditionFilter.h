@@ -22,7 +22,8 @@
 #define ADDITIONFILTER_H_
 
 #include "core/Filter.h"
-#include <Port.h>
+#include "core/Port.h"
+
 #include <iostream>
 
 struct AdditionFilter: public Filter {

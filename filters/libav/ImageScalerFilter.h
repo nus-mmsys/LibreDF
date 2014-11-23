@@ -40,76 +40,13 @@ private:
   
 public:
   
-  ImageScalerFilter(string name) : Filter(name) {
-    
-    inputPortFrame = createInputPort<RawFrame>("RawFrame input");
-    
-    outputPortFrame = createOutputPort<RawFrame>("RawFrame output");
-    
-    imageScaler = nullptr;
-  }
+  ImageScalerFilter(string name);
   
-  virtual void init() {
-    
-    Attribute * attr;    
-    
-    int dstWidth = stoi(getProp("width"));
-    int dstHeight = stoi(getProp("height"));
-    
-    int srcWidth, srcHeight, srcFormatInt;
-    
-    inputPortFrame->lockAttr();
-    attr = inputPortFrame->getAttr();
-    srcWidth = stoi(attr->getProp("width"));
-    srcHeight = stoi(attr->getProp("height"));
-    srcFormatInt = stoi(attr->getProp("format"));
-    inputPortFrame->unlockAttr();
-    
-    AVPixelFormat srcFormat = static_cast<AVPixelFormat>(srcFormatInt);
-    
-    imageScaler = new ImageScaler(srcWidth, srcHeight, srcFormat, dstWidth, dstHeight, srcFormat);
-    
-    outputPortFrame->lockAttr();
-    attr = outputPortFrame->getAttr();
-    attr->setProp<int>("width", dstWidth);
-    attr->setProp<int>("height", dstHeight);
-    attr->setProp<int>("format", srcFormatInt);
-    outputPortFrame->unlockAttr();
-  }
+  virtual void init();
   
-  virtual void run() {
-    
-    inputPortFrame->lock();
-    
-    if (inputPortFrame->getStatus() == SampleStatus::EOS) {
-      status = FilterStatus::EOS; 
-      inputPortFrame->unlock();
-      
-      outputPortFrame->lock();
-      outputPortFrame->setStatus(SampleStatus::EOS);
-      outputPortFrame->unlock();
-      
-      return;
-    }
-    
-    RawFrame * inFrame = inputPortFrame->get();
-    
-    outputPortFrame->lock();
-    RawFrame * outFrame = outputPortFrame->get();
-    
-    imageScaler->scale(inFrame, outFrame);
-    
-    inputPortFrame->unlock();
-    
-    outputPortFrame->unlock();
-  }
+  virtual void run();
   
-  
-  virtual ~ImageScalerFilter() {
-    delete inputPortFrame;
-    delete outputPortFrame;
-    delete imageScaler;
-  }
+  virtual ~ImageScalerFilter();
   
 };
 

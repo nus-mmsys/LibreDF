@@ -23,8 +23,8 @@
 
 #include "core/Filter.h"
 #include "core/Port.h"
-#include "types/EncodedFrame.h"
-#include "tools/VideoMuxer.h"
+#include "filters/libav/types/EncodedFrame.h"
+#include "filters/libav/tools/VideoMuxer.h"
 
 class VideoMuxerFilter: public Filter {
 private:
@@ -33,58 +33,13 @@ private:
   InputPort<EncodedFrame> * inputPortEncodedFrame;
 public:
   
-  VideoMuxerFilter(string name) :
-  Filter(name) {
-    
-    inputPortEncodedFrame = createInputPort<EncodedFrame>("EncodedFrame input");
-    
-    videoMuxer = new VideoMuxer();
-    
-  }
+  VideoMuxerFilter(string name);
   
-  virtual void init() {
-    
-    Attribute * attr;
-    
-    string output_video;
-    int width, height, bitrate, framerate;
-    
-    
-    inputPortEncodedFrame->lockAttr();
-    attr = inputPortEncodedFrame->getAttr();
-    output_video = attr->getProp("output_video");
-    width =  stoi(attr->getProp("width"));
-    height = stoi(attr->getProp("height"));
-    bitrate = stoi(attr->getProp("bitrate"));
-    framerate = stoi(attr->getProp("framerate"));
-    inputPortEncodedFrame->unlockAttr();
-    
-    videoMuxer->init(output_video, width, height, bitrate, framerate);
-    
-  }
+  virtual void init();
   
-  virtual void run() {
-    
-    inputPortEncodedFrame->lock();
-    
-    if (inputPortEncodedFrame->getStatus() == SampleStatus::EOS) {
-      status = FilterStatus::EOS; 
-      inputPortEncodedFrame->unlock();
-      return;
-    }
-    
-    EncodedFrame * inFrame = (EncodedFrame*) inputPortEncodedFrame->get();
-    videoMuxer->mux(inFrame);
-    
-    inputPortEncodedFrame->unlock();
-    
-  }
+  virtual void run();
   
-  virtual ~VideoMuxerFilter() {
-    delete inputPortEncodedFrame;
-    delete videoMuxer;
-  }
-  
+  virtual ~VideoMuxerFilter();
   
 };
 

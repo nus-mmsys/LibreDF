@@ -18,39 +18,35 @@
  *
  */
 
-#ifndef MEDIASAMPLE_H
-#define MEDIASAMPLE_H
-
-#include "core/SampleSynchronizer.h"
+#ifndef VIDEOMUXER_H_
+#define VIDEOMUXER_H_
 
 #include <string>
+#include <iostream>
+#include "filters/libav/types/EncodedFrame.h"
 
-enum class SampleStatus {
-  OK,
-  ERROR,
-  EOS
-};
+#ifdef __cplusplus
+extern "C" {
+  #endif
+  #include <libavcodec/avcodec.h>
+  #include <libavformat/avformat.h>
+  #include <libavutil/opt.h>
+  #include <libavutil/mathematics.h>
+  #ifdef __cplusplus
+}
+#endif
 
-template <typename T>
-class MediaSample : public SampleSynchronizer {
-  
+using namespace std;
+
+class VideoMuxer {
 private:
-  int number;
-  T * data;
-  SampleStatus status;
-  
+  AVFormatContext * av_fmt_ctx;
+  int vstream_idx;
 public:
-  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
-  
-  T * get() { return data; }
-  
-  void setStatus(SampleStatus st) {status = st;}
-  SampleStatus getStatus() {return status;}
-  
-  ~MediaSample() {
-    delete data;
-    data = nullptr;
-  }
+  VideoMuxer();
+  int init(string filename, int width, int height, int bitrate, int framerate);
+  int mux(EncodedFrame * encodedFrame);
+  ~VideoMuxer();
 };
 
-#endif // MEDIASAMPLE_H
+#endif /* VIDEOMUXER_H_ */

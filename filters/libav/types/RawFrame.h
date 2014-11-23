@@ -18,34 +18,44 @@
  *
  */
 
-#ifndef ENCODEDFRAME_H_
-#define ENCODEDFRAME_H_
+#ifndef RAW_FRAME_H_
+#define RAW_FRAME_H_
 
-#include "types/Frame.h"
+#include "filters/libav/types/Frame.h"
 
 #ifdef __cplusplus
 extern "C" {
   #endif
-  #include <libavutil/avutil.h>
   #include <libavcodec/avcodec.h>
   #include <libavformat/avformat.h>
   #ifdef __cplusplus
 }
 #endif
 
-class EncodedFrame: public Frame {
+class RawFrame: public Frame {
   
 private:
-  AVPacket * data;
+  AVFrame * data;
+  uint8_t *buffer;
+  
 public:
-  EncodedFrame() {
-    data = (AVPacket *) av_malloc(sizeof(AVPacket));
+  RawFrame() {
+    data = avcodec_alloc_frame();
+    buffer=0;
   }
-  AVPacket * getPacket() {
-    
+  
+  uint8_t* getBuffer() {
+    return buffer;
+  }
+  
+  AVFrame * getFrame() {
     return data;
   }
   
+  ~RawFrame() {
+    av_free(data);
+  }
 };
 
-#endif /* ENCODEDFRAME_H_ */
+
+#endif /* RAW_FRAME_H_ */

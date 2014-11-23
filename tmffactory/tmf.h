@@ -87,67 +87,7 @@ public:
    *
    * \return the created filter.
    */
-  Filter * createFilter(const FilterType type, const string& name) const {
-    if (name.empty()) {
-      std::cerr << "Filter name cannot be empty." << endl;
-      return 0;
-    }
-    
-    const bool is_in = elements.find(name) != elements.end();
-    if (is_in) {
-      std::cerr << "Filter name cannot be repeated." << endl;
-      return 0;
-    }
-    
-    switch (type) {
-      case FilterType::DOUBLEPRODUCER:
-	return new DoubleProducerFilter(name);
-	
-      case FilterType::STRINGPRODUCER:
-	return new StringProducerFilter(name);
-
-      case FilterType::INTPRODUCER:
-	return new IntProducerFilter(name);
-
-      case FilterType::MULTIPLY2:
-	return new Multiply2Filter(name);
-	
-      case FilterType::DUPLICATE:
-	return new DuplicateFilter(name);
-	
-      case FilterType::ADD2:
-	return new Add2Filter(name);
-	
-      case FilterType::ADDITION:
-	return new AdditionFilter(name);
-	
-      case FilterType::VIDEO_READER:
-	return new VideoReaderFilter(name);
-	
-      case FilterType::VIDEO_ENCODER:
-	return new VideoEncoderFilter(name);
-	
-      case FilterType::VIDEO_WRITER:
-	return new VideoWriterFilter(name);
-	
-      case FilterType::VIDEO_MUXER:
-	return new VideoMuxerFilter(name);
-	
-      case FilterType::VIDEO_DISPLAY:
-	return new VideoDisplayFilter(name);
-	
-      case FilterType::IMAGE_WRITER:
-	return new ImageWriterFilter(name);
-	
-      case FilterType::IMAGE_SCALER:
-	return new ImageScalerFilter(name);
-      default:
-	cout << "Filter not found.\n";
-	return nullptr;
-    }
-    
-    return NULL;
-  }
+  Filter * createFilter(const FilterType type, const string& name) const;
   
   
   template <typename T>
@@ -183,9 +123,7 @@ public:
    *
    * \return the created pipelines.
    */
-  Pipeline * createPipeline(const string & name) {
-    return new Pipeline(name);
-  }
+  Pipeline * createPipeline(const string & name);
   
   /*!
    * Destroy the pipeline.
@@ -194,10 +132,7 @@ public:
    *   The reference to the pipeline.
    *
    */
-  void destroyPipeline(Pipeline * pipe) {
-    if (pipe)
-      delete pipe;
-  }
+  void destroyPipeline(Pipeline * pipe);
 };
 
 #endif /* FILTERFACTORY_H_ */

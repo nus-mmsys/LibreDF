@@ -18,36 +18,6 @@
  *
  */
 
-#ifndef VIDEOENCODER_H_
-#define VIDEOENCODER_H_
+#include "core/InputPort.h"
 
-#include <string>
-#include <iostream>
-#include "types/RawFrame.h"
-#include "types/EncodedFrame.h"
-
-#ifdef __cplusplus
-extern "C" {
-  #endif
-  #include <libavcodec/avcodec.h>
-  #include <libavformat/avformat.h>
-  #include <libavutil/opt.h>
-  #ifdef __cplusplus
-}
-#endif
-
-using namespace std;
-
-class VideoEncoder {
-private:
-  AVCodecContext * codec_ctx;
-  uint8_t *video_outbuf;
-  int video_outbuf_size;
-public:
-  VideoEncoder();
-  int init(string codec_name, int width, int height, int bitrate, int framerate);
-  int encode(RawFrame * rawFrame, EncodedFrame * encodedFrame);
-  virtual ~VideoEncoder();
-};
-
-#endif /* VIDEOENCODER_H_ */
+/* All declaration of the template class are in the header file */

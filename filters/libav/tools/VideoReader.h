@@ -23,7 +23,8 @@
 
 #include <iostream>
 #include <string>
-#include <types/RawFrame.h>
+
+#include "filters/libav/types/RawFrame.h"
 
 #ifdef __cplusplus
 extern "C" {

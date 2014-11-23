@@ -33,59 +33,13 @@ private:
   
   OutputPort<RawFrame> * outputFrame;
 public:
-  VideoReaderFilter(string name) :
-  Filter(name) {
-    
-    outputFrame = createOutputPort<RawFrame>("RawFrame output");
-    
-    videoReader = nullptr;
-  }
+  VideoReaderFilter(string name);
   
-  virtual void init() {
-    
-    string inputVideo = getProp("input_video");
-    string videoFromat = getProp("video_format");
-    string inputFormat = getProp("input_format");
-    
-    videoReader = new VideoReader(inputVideo);
-    videoReader->setVideoFromat(videoFromat);
-    videoReader->setInputFormat(inputFormat);
-    videoReader->init();
-    
-    videoReader->dump();
-    
-    outputFrame->lockAttr();
-    
-    Attribute * attr = outputFrame->getAttr();
-    
-    attr->setProp<int>("width", videoReader->getWidth());
-    attr->setProp<int>("height", videoReader->getHeight());
-    attr->setProp<int>("format",
-		       static_cast<int>(videoReader->getPixFormat()));
-    
-    outputFrame->unlockAttr();
-    
-  }
+  virtual void init();
   
-  virtual void run() {
-    
-    outputFrame->lock();
-    RawFrame * data = outputFrame->get();
-    
-    int ret = videoReader->readFrame(data);
-    
-    if (ret == -1) {
-      outputFrame->setStatus(SampleStatus::EOS);
-      status = FilterStatus::EOS;
-    }
-    outputFrame->unlock();
-  }
+  virtual void run();
   
-  virtual ~VideoReaderFilter() {
-    
-    delete outputFrame;
-    delete videoReader;
-  }
+  virtual ~VideoReaderFilter();
   
 };
 
