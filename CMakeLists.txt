@@ -13,7 +13,7 @@ include_directories(.)
 aux_source_directory(core core_src)
 aux_source_directory(filters/basic basicfilters_src)
 aux_source_directory(filters/libav/types libavtypes_src)
-aux_source_directory(filtes/libav/tools libavtools_src)
+aux_source_directory(filters/libav/tools libavtools_src)
 aux_source_directory(filters/libav libavfilters_src)
 aux_source_directory(tmffactory tmffactory_src)
 
