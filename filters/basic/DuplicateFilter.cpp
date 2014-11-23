@@ -18,33 +18,29 @@
  *
  */
 
-#ifndef VIDEODISPLAYFILTER_H_
-#define VIDEODISPLAYFILTER_H_
+#include "filters/basic/DuplicateFilter.h"
 
-#include "core/tmf.h"
-#include "core/Filter.h"
-#include "core/Port.h"
-#include "types/RawFrame.h"
-#include "tools/VideoDisplay.h"
+FilterRegister<DuplicateFilter> DuplicateFilter::reg("duplicate");
 
-class VideoDisplayFilter : public Filter {
-  
-private:
-  VideoDisplay * videoDisplay;
-  
-  InputPort<RawFrame> * inputPortRawFrame;
-  
-  static  FilterRegister<VideoDisplayFilter> reg;
-public:
-  
-  VideoDisplayFilter(string name);
-  
-  virtual void init();
-  
-  virtual void run();
-  
-  virtual ~VideoDisplayFilter();
-  
-};
+DuplicateFilter::DuplicateFilter(const string & name) :
+Filter(name) {
+  input = createInputPort<std::string>("string input");
+}
 
-#endif /* VIDEODISPLAYFILTER_H_ */
+
+void DuplicateFilter::run() {
+  
+  input->lock();
+  string * inputData = input->get();
+  string outputstring = *inputData + "-" + *inputData;
+  log("duplicating "+outputstring); 
+  
+  if (input->getStatus() == SampleStatus::EOS)
+    status = FilterStatus::EOS; 
+  
+  input->unlock();
+}
+
+DuplicateFilter::~DuplicateFilter() {
+  delete input;
+}

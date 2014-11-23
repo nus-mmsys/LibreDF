@@ -21,51 +21,26 @@
 #ifndef ADDITIONFILTER_H_
 #define ADDITIONFILTER_H_
 
+#include "core/tmf.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 
 #include <iostream>
 
 struct AdditionFilter: public Filter {
-  
+ 
 private:
   InputPort<int> * input1;
   InputPort<int>* input2;
   
+  static  FilterRegister<AdditionFilter> reg;
 public:
   
-  AdditionFilter(const string & name) :
-  Filter(name) {
-    input1 = createInputPort<int>("int input 1");
-    input2 = createInputPort<int>("int input 2");
-  }
+  AdditionFilter(const string & name);
   
+  virtual void run();
   
-  void run() {
-    
-    input1->lock();
-    input2->lock();
-    
-    int * inputData1 = input1->get();
-    
-    int * inputData2 = input2->get();
-    
-    int outputint = *inputData1 + *inputData2;
-    
-    log("addition "+to_string(outputint));
-    
-    if (input1->getStatus() == SampleStatus::EOS ||
-      input2->getStatus() == SampleStatus::EOS)
-      status = FilterStatus::EOS;
-    
-    input1->unlock();
-    input2->unlock();
-  }
-  
-  ~AdditionFilter() {
-    delete input1;
-    delete input2;
-  }
+  virtual ~AdditionFilter();
   
 };
 

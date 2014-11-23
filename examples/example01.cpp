@@ -18,20 +18,18 @@
  *
  */
 
-#include "tmffactory/tmf.h"
+#include "core/tmf.h"
 
 
 int main(int argc, char** argv) {
   
-  TMF tmf;
+  Pipeline* pipe = Factory::createPipeline("Three consumer/One producer");
   
-  Pipeline* pipe = tmf.createPipeline("Three consumer/One producer");
-  
-  Filter* producer = tmf.createFilter(FilterType::STRINGPRODUCER, "producer");
+  Filter* producer = Factory::createFilter("int_producer", "producer");
 
-  Filter* consumer1 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer1");
-  Filter* consumer2 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer2");
-  Filter* consumer3 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer3");
+  Filter* consumer1 = Factory::createFilter("int_consumer", "consumer1");
+  Filter* consumer2 = Factory::createFilter("int_consumer", "consumer2");
+  Filter* consumer3 = Factory::createFilter("int_consumer", "consumer3");
   
   producer->setProp("limit", 10);
   
@@ -43,7 +41,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

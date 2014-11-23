@@ -21,6 +21,7 @@
 #ifndef VIDEOREADERFILTER_H_
 #define VIDEOREADERFILTER_H_
 
+#include "core/tmf.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 #include "tools/VideoReader.h"
@@ -32,6 +33,8 @@ private:
   VideoReader * videoReader;
   
   OutputPort<RawFrame> * outputFrame;
+
+  static  FilterRegister<VideoReaderFilter> reg;
 public:
   VideoReaderFilter(string name);
   

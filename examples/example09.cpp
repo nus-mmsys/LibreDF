@@ -18,12 +18,9 @@
  *
  */
 
-#include "tmffactory/tmf.h"
-
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
-  
-  TMF tmf;
   
   if (argc < 2) {
     cerr << "Usage: " << argv[0]
@@ -31,13 +28,13 @@ int main(int argc, char** argv) {
     return -1;
   }
   
-  Pipeline* pipe = tmf.createPipeline("Media Player");
+  Pipeline* pipe = Factory::createPipeline("Media Player");
   
   string inputVideo = argv[1];
   
-  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
+  Filter* reader = Factory::createFilter("video_reader", "reader");
   
-  Filter* display = tmf.createFilter(FilterType::VIDEO_DISPLAY, "display");
+  Filter* display = Factory::createFilter("video_display", "display");
   
   pipe->connectFilters(reader, display);
   
@@ -47,7 +44,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

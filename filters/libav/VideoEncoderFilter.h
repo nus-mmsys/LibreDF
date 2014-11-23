@@ -21,6 +21,7 @@
 #ifndef VIDEOENCODERFILTER_H_
 #define VIDEOENCODERFILTER_H_
 
+#include "core/tmf.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 #include "filters/libav/types/RawFrame.h"
@@ -34,6 +35,8 @@ private:
   
   InputPort<RawFrame> * inputPortRawFrame;
   OutputPort<EncodedFrame> * outputPortEncodedFrame;
+  
+  static  FilterRegister<VideoEncoderFilter> reg;
 public:
   VideoEncoderFilter(string name);
   

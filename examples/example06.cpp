@@ -18,27 +18,25 @@
  *
  */
 
-#include "tmffactory/tmf.h"
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
-  
-  TMF tmf;
   
   if (argc < 5) {
     cerr << "Usage: " << argv[0] << " <input video> <output path> <width> <height>" << endl;
     return -1;
   }
   
-  Pipeline* pipe = tmf.createPipeline("Decoder/Scaler");
+  Pipeline* pipe = Factory::createPipeline("Decoder/Scaler");
   
   string inputVideo = argv[1];
   string outputPath = argv[2];
   int width = std::stoi(argv[3]);
   int height = std::stoi(argv[4]);
   
-  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
-  Filter* scaler = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler");
-  Filter* writer = tmf.createFilter(FilterType::IMAGE_WRITER, "writer");
+  Filter* reader = Factory::createFilter("video_reader", "reader");
+  Filter* scaler = Factory::createFilter("image_scaler", "scaler");
+  Filter* writer = Factory::createFilter("image_writer", "writer");
   
   pipe->connectFilters(reader, scaler);
   pipe->connectFilters(scaler,writer);
@@ -54,7 +52,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

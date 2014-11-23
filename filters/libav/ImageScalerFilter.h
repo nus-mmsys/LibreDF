@@ -21,6 +21,7 @@
 #ifndef IMAGESCALERFILTER_H_
 #define IMAGESCALERFILTER_H_
 
+#include "core/tmf.h"
 #include "tools/ImageScaler.h"
 #include "core/Filter.h"
 #include "core/Port.h"
@@ -38,6 +39,7 @@ private:
   InputPort<RawFrame> * inputPortFrame;
   OutputPort<RawFrame> * outputPortFrame;
   
+  static  FilterRegister<ImageScalerFilter> reg;
 public:
   
   ImageScalerFilter(string name);

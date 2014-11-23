@@ -20,6 +20,8 @@
 
 #include "filters/libav/VideoWriterFilter.h"
 
+FilterRegister<VideoWriterFilter> VideoWriterFilter::reg("video_writer");
+
 VideoWriterFilter::VideoWriterFilter(string name) :
 Filter(name) {
   

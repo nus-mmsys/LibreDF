@@ -21,6 +21,7 @@
 #ifndef VIDEOWRITERFILTER_H_
 #define VIDEOWRITERFILTER_H_
 
+#include "core/tmf.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 #include "types/RawFrame.h"
@@ -31,6 +32,8 @@ private:
   VideoWriter * videoWriter;
   
   InputPort<RawFrame> * inputPortRawFrame;
+  
+  static  FilterRegister<VideoWriterFilter> reg;
 public:
   
   VideoWriterFilter(string name);

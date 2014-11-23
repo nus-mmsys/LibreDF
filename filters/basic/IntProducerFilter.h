@@ -21,6 +21,7 @@
 #ifndef INTPRODUCERFILTER_H_
 #define INTPRODUCERFILTER_H_ 
 
+#include "core/tmf.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 
@@ -38,71 +39,19 @@ private:
   int limit;
   
   OutputPort<int> * outputInt;
-  
+ 
+  static  FilterRegister<IntProducerFilter> reg;
 public:
   
-  IntProducerFilter(const string& name) : Filter(name), number(0) {
-    outputInt = createOutputPort<int>("string output");
-  }
+  IntProducerFilter(const string& name);
   
-  void init() {
-    
-    limit = stoi(getProp("limit"));
-    
-  }
+  virtual void init();
   
-  void run() {
-    
-    outputInt->lock();
-    
-    int * out = outputInt->get(); 
-    *out = number;
-    
-    log("producing "+to_string(number));
-    sleep(500);
-    
-    if(number == limit) {
-      outputInt->setStatus(SampleStatus::EOS);
-      status = FilterStatus::EOS;
-    }
-    
-    outputInt->unlock();
-    
-    number++;
-  }
+  virtual void run();
   
-  void runRT() {
-    
-    string data = to_string(number);
-    
-    bool canlock = outputInt->lockRT();
-    
-    if (!canlock) {
-      log("droping "+data);
-      sleep(500);
-      number++;
-      return;
-    }
-    
-    int * out = outputInt->get(); 
-    *out = number;
-    
-    log("producing "+to_string(number));
-    sleep(500);
-    
-    if(number == limit) {
-      outputInt->setStatus(SampleStatus::EOS);
-      status = FilterStatus::EOS;
-    }
-    
-    outputInt->unlock();
-    
-    number++;
-  }
+  virtual void runRT();
   
-  ~IntProducerFilter() {
-    delete outputInt;
-  }
+  virtual ~IntProducerFilter();
   
 };
 

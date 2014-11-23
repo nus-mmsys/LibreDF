@@ -21,6 +21,7 @@
 #ifndef IMAGEWRITERFILTER_H_
 #define IMAGEWRITERFILTER_H_
 
+#include "core/tmf.h"
 #include "core/Port.h"
 #include "core/Filter.h"
 #include "tools/ImageWriter.h"
@@ -31,7 +32,8 @@ private:
   
   ImageWriter * imageWriter;
   InputPort<RawFrame> * inputFrame;
-  
+   
+  static  FilterRegister<ImageWriterFilter> reg;
 public:
   ImageWriterFilter(string name);
   

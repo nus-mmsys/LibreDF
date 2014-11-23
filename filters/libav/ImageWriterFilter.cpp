@@ -20,6 +20,8 @@
 
 #include "filters/libav/ImageWriterFilter.h"
 
+FilterRegister<ImageWriterFilter> ImageWriterFilter::reg("image_writer");
+
 ImageWriterFilter::ImageWriterFilter(string name) : Filter(name) {
   
   inputFrame = createInputPort<RawFrame>("RawFrame input");

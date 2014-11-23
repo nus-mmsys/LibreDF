@@ -20,6 +20,8 @@
 
 #include "filters/libav/ImageScalerFilter.h"
 
+FilterRegister<ImageScalerFilter> ImageScalerFilter::reg("image_scaler");
+
 ImageScalerFilter::ImageScalerFilter(string name) : Filter(name) {
   
   inputPortFrame = createInputPort<RawFrame>("RawFrame input");

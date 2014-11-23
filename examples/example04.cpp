@@ -18,20 +18,17 @@
  *
  */
 
-#include "tmffactory/tmf.h"
-
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
   
-  TMF tmf;
+  Pipeline* pipe = Factory::createPipeline("A math pipeline");
   
-  Pipeline* pipe = tmf.createPipeline("A math pipeline");
-  
-  Filter* producer = tmf.createFilter(FilterType::DOUBLEPRODUCER, "producer");
-  Filter* add2 = tmf.createFilter(FilterType::ADD2, "add2");
-  Filter* multiply2 = tmf.createFilter(FilterType::MULTIPLY2, "multiply2");
-  Filter* duplicate = tmf.createFilter(FilterType::DUPLICATE, "duplicate");
-  Filter* addition = tmf.createFilter(FilterType::ADDITION, "addition");
+  Filter* producer = Factory::createFilter("duo_producer", "producer");
+  Filter* add2 = Factory::createFilter("add2", "add2");
+  Filter* multiply2 = Factory::createFilter("multiply2", "multiply2");
+  Filter* duplicate = Factory::createFilter("duplicate", "duplicate");
+  Filter* addition = Factory::createFilter("addition", "addition");
   
   pipe->connectFilters(producer, multiply2);
   pipe->connectFilters(producer, add2);
@@ -45,7 +42,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

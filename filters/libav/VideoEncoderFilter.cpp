@@ -20,6 +20,8 @@
 
 #include "filters/libav/VideoEncoderFilter.h"
 
+FilterRegister<VideoEncoderFilter> VideoEncoderFilter::reg("video_encoder");
+
 VideoEncoderFilter::VideoEncoderFilter(string name) :
 Filter(name) {
   

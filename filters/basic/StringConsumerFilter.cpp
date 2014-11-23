@@ -18,33 +18,31 @@
  *
  */
 
-#ifndef VIDEODISPLAYFILTER_H_
-#define VIDEODISPLAYFILTER_H_
+#include "filters/basic/StringConsumerFilter.h"
 
-#include "core/tmf.h"
-#include "core/Filter.h"
-#include "core/Port.h"
-#include "types/RawFrame.h"
-#include "tools/VideoDisplay.h"
 
-class VideoDisplayFilter : public Filter {
-  
-private:
-  VideoDisplay * videoDisplay;
-  
-  InputPort<RawFrame> * inputPortRawFrame;
-  
-  static  FilterRegister<VideoDisplayFilter> reg;
-public:
-  
-  VideoDisplayFilter(string name);
-  
-  virtual void init();
-  
-  virtual void run();
-  
-  virtual ~VideoDisplayFilter();
-  
-};
+FilterRegister<StringConsumerFilter> StringConsumerFilter::reg("string_consumer");
 
-#endif /* VIDEODISPLAYFILTER_H_ */
+StringConsumerFilter::StringConsumerFilter(const string & name) : Filter(name) {
+  input = createInputPort<string>("input");
+}
+
+void StringConsumerFilter::run() {
+  
+  input->lock();
+  
+  string * inputData = input->get();
+  
+  log("consuming "+*inputData);
+  sleep(500);
+  
+  if (input->getStatus() == SampleStatus::EOS)
+    status = FilterStatus::EOS; 
+  
+  input->unlock();
+  
+}
+
+StringConsumerFilter::~StringConsumerFilter() {
+  delete input;
+}

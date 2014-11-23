@@ -20,6 +20,8 @@
 
 #include "filters/libav/VideoReaderFilter.h"
 
+FilterRegister<VideoReaderFilter> VideoReaderFilter::reg("video_reader");
+
 VideoReaderFilter::VideoReaderFilter(string name) :
 Filter(name) {
   

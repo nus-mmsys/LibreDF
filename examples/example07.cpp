@@ -18,18 +18,16 @@
  *
  */
 
-#include "tmffactory/tmf.h"
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
-  
-  TMF tmf;
   
   if (argc < 8) {
     cerr << "Usage: " << argv[0] << " <input video> <output path1> <width1> <height1> <output path2> <width2> <height2> " << endl;
     return -1;
   }
   
-  Pipeline* pipe = tmf.createPipeline("Decoder/2xScaler");
+  Pipeline* pipe = Factory::createPipeline("Decoder/2xScaler");
   
   string inputVideo = argv[1];
   string outputPath1 = argv[2];
@@ -40,11 +38,11 @@ int main(int argc, char** argv) {
   string width2 = argv[6];
   string height2 = argv[7];
   
-  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
-  Filter* scaler1 = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler1");
-  Filter* scaler2 = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler2");
-  Filter* writer1 = tmf.createFilter(FilterType::IMAGE_WRITER, "writer1");
-  Filter* writer2 = tmf.createFilter(FilterType::IMAGE_WRITER, "writer2");
+  Filter* reader = Factory::createFilter("video_reader", "reader");
+  Filter* scaler1 = Factory::createFilter("image_scaler", "scaler1");
+  Filter* scaler2 = Factory::createFilter("image_scaler", "scaler2");
+  Filter* writer1 = Factory::createFilter("image_writer", "writer1");
+  Filter* writer2 = Factory::createFilter("image_writer", "writer2");
   
   pipe->connectFilters(reader, scaler1);
   pipe->connectFilters(reader, scaler2);
@@ -64,7 +62,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

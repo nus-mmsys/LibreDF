@@ -18,18 +18,15 @@
  *
  */
 
-#include "tmffactory/tmf.h"
-
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
   
-  TMF tmf;
+  Pipeline* pipe = Factory::createPipeline("Webcam viewer");
   
-  Pipeline* pipe = tmf.createPipeline("Webcam viewer");
-  
-  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
-  Filter* scaler = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler");
-  Filter* display = tmf.createFilter(FilterType::VIDEO_DISPLAY, "display");
+  Filter* reader = Factory::createFilter("video_reader", "reader");
+  Filter* scaler = Factory::createFilter("image_scaler", "scaler");
+  Filter* display = Factory::createFilter("video_display", "display");
   
   pipe->connectFilters(reader, scaler);
   pipe->connectFilters(scaler, display);
@@ -45,7 +42,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

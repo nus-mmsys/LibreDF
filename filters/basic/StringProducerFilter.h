@@ -21,6 +21,7 @@
 #ifndef STRINGPRODUCERFILTER_H_
 #define STRINGPRODUCERFILTER_H_ 
 
+#include "core/tmf.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 
@@ -39,68 +40,18 @@ private:
   
   OutputPort<string> * outputString;
   
+  static  FilterRegister<StringProducerFilter> reg;
 public:
   
-  StringProducerFilter(const string& name) : Filter(name), number(0) {
-    outputString = createOutputPort<string>("string output");
-  }
+  StringProducerFilter(const string& name);
   
-  void init() {
-    limit = stoi(getProp("limit"));
-  }
+  virtual void init();
   
-  void run() {
-    
-    outputString->lock();
-    
-    string * outStr = outputString->get(); 
-    *outStr = to_string(number);
-    
-    log("producing "+*outStr);
-    sleep(500);
-    
-    if(number == limit) {
-      outputString->setStatus(SampleStatus::EOS);
-      status = FilterStatus::EOS;
-    }
-    
-    outputString->unlock();
-    
-    number++;
-  }
+  virtual void run();
   
-  void runRT() {
-    
-    string data = to_string(number);
-    
-    bool canlock = outputString->lockRT();
-    
-    if (!canlock) {
-      log("droping "+data);
-      sleep(500);
-      number++;
-      return;
-    }
-    
-    string * outStr = outputString->get(); 
-    *outStr = data;
-    
-    log("producing "+*outStr);
-    sleep(500);
-    
-    if(number == limit) {
-      outputString->setStatus(SampleStatus::EOS);
-      status = FilterStatus::EOS;
-    }
-    
-    outputString->unlock();
-    
-    number++;
-  }
+  virtual void runRT();
   
-  ~StringProducerFilter() {
-    delete outputString;
-  }
+  virtual ~StringProducerFilter();
   
 };
 

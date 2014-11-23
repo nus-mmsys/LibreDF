@@ -18,49 +18,39 @@
  *
  */
 
-#ifndef CONSUMERFILTER_H_
-#define CONSUMERFILTER_H_
+#ifndef DUOPRODUCERFILTER_H_
+#define DUOPRODUCERFILTER_H_
 
-#include "core/Port.h"
 #include "core/Filter.h"
-#include <unistd.h>
-#include <iostream>
-#include <sstream>
+#include "core/Port.h"
+#include "core/tmf.h"
 
-template <typename T>
-class ConsumerFilter: public Filter {
+#include <iostream>
+#include <string>
+#include <unistd.h>
+
+using namespace std;
+
+class DuoProducerFilter: public Filter {
   
 private:
-  InputPort<T> * input;
+  
+  int limit;
+  
+  OutputPort<int> * outputInt;
+  OutputPort<string> * outputString;
+  
+  static  FilterRegister<DuoProducerFilter> reg;
 public:
   
-  ConsumerFilter(const string & name) : Filter(name) {
-    input = createInputPort<T>("input");
-  }
+  DuoProducerFilter(const string& name);
   
-  void run() {
-    
-    input->lock();
-    
-    T * inputData = input->get();
-    
-    std::stringstream inputstr;
-    inputstr << "consuming " << *inputData;
-    
-    log(inputstr.str());
-    sleep(500);
-    
-    if (input->getStatus() == SampleStatus::EOS)
-      status = FilterStatus::EOS; 
-    
-    input->unlock();
-    
-  }
+  virtual void init();
   
-  ~ConsumerFilter() {
-    delete input;
-  }
+  virtual void run();
+  
+  virtual ~DuoProducerFilter();
   
 };
 
-#endif /* CONSUMERFILTER_H_ */
+#endif /* DUOPRODUCERFILTER_H_ */

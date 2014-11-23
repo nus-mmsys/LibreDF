@@ -21,6 +21,7 @@
 #ifndef ADD2FILTER_H_
 #define ADD2FILTER_H_
 
+#include "core/tmf.h"
 #include "core/Filter.h"
 #include "core/Port.h"
 
@@ -28,43 +29,16 @@ struct Add2Filter: public Filter {
 private:
   InputPort<int> * input;
   OutputPort<int> * output;
+
+  static  FilterRegister<Add2Filter> reg;
+
 public:
   
-  Add2Filter(const string & name) :
-  Filter(name) {
-    input = createInputPort<int>("int input");
-    output = createOutputPort<int>("int output");
-  }
+  Add2Filter(const string & name);
   
-  void run() {
-    
-    input->lock();
-    
-    int * inputData = input->get();
-    
-    int outputint = *inputData + 2;
-    
-    if (input->getStatus() == SampleStatus::EOS)
-      status = FilterStatus::EOS; 
-    
-    input->unlock();
-    
-    output->lock();
-    
-    int * outputData =  output->get();
-    *outputData = outputint;
-    
-    if (status == FilterStatus::EOS)
-      output->setStatus(SampleStatus::EOS);
-    
-    output->unlock();
-    
-  }
+  virtual void run();
   
-  ~Add2Filter() {
-    delete input;
-    delete output;
-  }
+  virtual ~Add2Filter();
   
 };
 

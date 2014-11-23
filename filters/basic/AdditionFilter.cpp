@@ -18,33 +18,40 @@
  *
  */
 
-#ifndef VIDEODISPLAYFILTER_H_
-#define VIDEODISPLAYFILTER_H_
+#include "filters/basic/AdditionFilter.h"
 
-#include "core/tmf.h"
-#include "core/Filter.h"
-#include "core/Port.h"
-#include "types/RawFrame.h"
-#include "tools/VideoDisplay.h"
+FilterRegister<AdditionFilter> AdditionFilter::reg("addition");
 
-class VideoDisplayFilter : public Filter {
-  
-private:
-  VideoDisplay * videoDisplay;
-  
-  InputPort<RawFrame> * inputPortRawFrame;
-  
-  static  FilterRegister<VideoDisplayFilter> reg;
-public:
-  
-  VideoDisplayFilter(string name);
-  
-  virtual void init();
-  
-  virtual void run();
-  
-  virtual ~VideoDisplayFilter();
-  
-};
+AdditionFilter::AdditionFilter(const string & name) :
+Filter(name) {
+  input1 = createInputPort<int>("int input 1");
+  input2 = createInputPort<int>("int input 2");
+}
 
-#endif /* VIDEODISPLAYFILTER_H_ */
+
+void  AdditionFilter::run() {
+  
+  input1->lock();
+  input2->lock();
+  
+  int * inputData1 = input1->get();
+  
+  int * inputData2 = input2->get();
+  
+  int outputint = *inputData1 + *inputData2;
+  
+  log("addition "+to_string(outputint));
+  
+  if (input1->getStatus() == SampleStatus::EOS ||
+    input2->getStatus() == SampleStatus::EOS)
+    status = FilterStatus::EOS;
+  
+  input1->unlock();
+  input2->unlock();
+}
+
+AdditionFilter::~AdditionFilter() {
+  delete input1;
+  delete input2;
+}
+

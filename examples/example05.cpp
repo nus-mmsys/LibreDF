@@ -18,11 +18,9 @@
  *
  */
 
-#include "tmffactory/tmf.h"
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
-  
-  TMF tmf;
   
   
   if (argc < 3) {
@@ -30,14 +28,13 @@ int main(int argc, char** argv) {
     return -1;
   }
   
-  Pipeline* pipe = tmf.createPipeline("Decoder/Writer Pipeline");
+  Pipeline* pipe = Factory::createPipeline("Decoder/Writer Pipeline");
   
   string inputVideo = string(argv[1]);
   string outputPath = string(argv[2]);
   
-  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER,
-					  "reader");
-  Filter* writer = tmf.createFilter(FilterType::IMAGE_WRITER, "writer");
+  Filter* reader = Factory::createFilter("video_reader", "reader");
+  Filter* writer = Factory::createFilter("image_writer", "writer");
   
   pipe->connectFilters(reader, writer);
   
@@ -48,7 +45,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

@@ -18,18 +18,15 @@
  *
  */
 
-#include "tmffactory/tmf.h"
-
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
   
-  TMF tmf;
+  Pipeline* pipe = Factory::createPipeline("A addition pipeline");
   
-  Pipeline* pipe = tmf.createPipeline("A addition pipeline");
-  
-  Filter* producer1 = tmf.createFilter(FilterType::INTPRODUCER, "producer1");
-  Filter* producer2 = tmf.createFilter(FilterType::INTPRODUCER, "producer2");
-  Filter* addition = tmf.createFilter(FilterType::ADDITION, "addition");
+  Filter* producer1 = Factory::createFilter("int_producer", "producer1");
+  Filter* producer2 = Factory::createFilter("int_producer", "producer2");
+  Filter* addition = Factory::createFilter("addition", "addition");
   
   pipe->connectFilters(producer1, addition);
   pipe->connectFilters(producer2, addition);
@@ -41,7 +38,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

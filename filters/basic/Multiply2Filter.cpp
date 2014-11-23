@@ -18,32 +18,35 @@
  *
  */
 
-#ifndef VIDEOMUXERFILTER_H_
-#define VIDEOMUXERFILTER_H_
+#include "filters/basic/Multiply2Filter.h"
 
-#include "core/tmf.h"
-#include "core/Filter.h"
-#include "core/Port.h"
-#include "filters/libav/types/EncodedFrame.h"
-#include "filters/libav/tools/VideoMuxer.h"
+FilterRegister<Multiply2Filter> Multiply2Filter::reg("multiply2");
 
-class VideoMuxerFilter: public Filter {
-private:
-  VideoMuxer * videoMuxer;
-  
-  InputPort<EncodedFrame> * inputPortEncodedFrame;
+Multiply2Filter::Multiply2Filter(const string & name) :
+Filter(name) {
+  input = createInputPort<int>("int input");
+  output = createOutputPort<int>("int output");
+}
 
-  static  FilterRegister<VideoMuxerFilter> reg;
-public:
+void Multiply2Filter::run() {
   
-  VideoMuxerFilter(string name);
+  input->lock();
+  int * inputData = input->get();
+  int outputint = *inputData * 2;
+  if (input->getStatus() == SampleStatus::EOS)
+    status = FilterStatus::EOS; 
+  input->unlock();
   
-  virtual void init();
+  output->lock();
+  int * outputData = output->get();
+  *outputData = outputint;
+  if (status == FilterStatus::EOS)
+    output->setStatus(SampleStatus::EOS);
+  output->unlock();
   
-  virtual void run();
-  
-  virtual ~VideoMuxerFilter();
-  
-};
+}
 
-#endif /* VIDEOMUXERFILTER_H_ */
+Multiply2Filter::~Multiply2Filter() {
+  delete input;
+  delete output;
+}

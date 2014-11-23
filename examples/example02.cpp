@@ -18,20 +18,17 @@
  *
  */
 
-#include "tmffactory/tmf.h"
-
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
   
-  TMF tmf;
+  Pipeline* pipe = Factory::createPipeline("Real-Time Three onsumer/One producer");
   
-  Pipeline* pipe = tmf.createPipeline("Real-Time Three onsumer/One producer");
-  
-  Filter* producer = tmf.createFilter(FilterType::STRINGPRODUCER, "producer");
+  Filter* producer = Factory::createFilter("string_producer", "producer");
 
-  Filter* consumer1 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer1");
-  Filter* consumer2 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer2");
-  Filter* consumer3 = tmf.createFilter<string>(FilterType::CONSUMER, "consumer3");
+  Filter* consumer1 = Factory::createFilter("string_consumer", "consumer1");
+  Filter* consumer2 = Factory::createFilter("string_consumer", "consumer2");
+  Filter* consumer3 = Factory::createFilter("string_consumer", "consumer3");
   
  
   pipe->connectFilters(producer, consumer1);
@@ -45,7 +42,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

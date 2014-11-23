@@ -20,6 +20,8 @@
 
 #include "filters/libav/VideoDisplayFilter.h"
 
+FilterRegister<VideoDisplayFilter> VideoDisplayFilter::reg("video_display");
+
 VideoDisplayFilter::VideoDisplayFilter(string name) :
 Filter(name) {
   

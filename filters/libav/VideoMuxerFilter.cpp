@@ -20,6 +20,8 @@
 
 #include "filters/libav/VideoMuxerFilter.h"
 
+FilterRegister<VideoMuxerFilter> VideoMuxerFilter::reg("video_muxer");
+
 VideoMuxerFilter::VideoMuxerFilter(string name) :
 Filter(name) {
   

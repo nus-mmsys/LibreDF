@@ -18,12 +18,9 @@
  *
  */
 
-#include "tmffactory/tmf.h"
-
+#include "core/tmf.h"
 
 int main(int argc, char** argv) {
-  
-  TMF tmf;
   
   if (argc < 3) {
     cerr << "Usage: " << argv[0]
@@ -31,17 +28,17 @@ int main(int argc, char** argv) {
     return -1;
   }
   
-  Pipeline* pipe = tmf.createPipeline("Reader/Scaler/Encoder/Muxer");
+  Pipeline* pipe = Factory::createPipeline("Reader/Scaler/Encoder/Muxer");
   
   string inputVideo = argv[1];
   string width = argv[2];
   string height = argv[3];
   string outputVideo = argv[4];
   
-  Filter* reader = tmf.createFilter(FilterType::VIDEO_READER, "reader");
-  Filter* scaler = tmf.createFilter(FilterType::IMAGE_SCALER, "scaler");
-  Filter* encoder = tmf.createFilter(FilterType::VIDEO_ENCODER, "encoder");
-  Filter* muxer = tmf.createFilter(FilterType::VIDEO_MUXER, "muxer");
+  Filter* reader = Factory::createFilter("video_reader", "reader");
+  Filter* scaler = Factory::createFilter("image_scaler", "scaler");
+  Filter* encoder = Factory::createFilter("video_encoder", "encoder");
+  Filter* muxer = Factory::createFilter("video_muxer", "muxer");
   
   pipe->connectFilters(reader, scaler);
   pipe->connectFilters(scaler, encoder);
@@ -60,7 +57,7 @@ int main(int argc, char** argv) {
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
   
   return 0;
 }

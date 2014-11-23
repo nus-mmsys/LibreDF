@@ -18,33 +18,29 @@
  *
  */
 
-#ifndef VIDEODISPLAYFILTER_H_
-#define VIDEODISPLAYFILTER_H_
+#ifndef INTCONSUMERFILTER_H_
+#define INTCONSUMERFILTER_H_
 
 #include "core/tmf.h"
-#include "core/Filter.h"
 #include "core/Port.h"
-#include "types/RawFrame.h"
-#include "tools/VideoDisplay.h"
+#include "core/Filter.h"
 
-class VideoDisplayFilter : public Filter {
+#include <iostream>
+
+class IntConsumerFilter: public Filter {
   
 private:
-  VideoDisplay * videoDisplay;
-  
-  InputPort<RawFrame> * inputPortRawFrame;
-  
-  static  FilterRegister<VideoDisplayFilter> reg;
+  InputPort<int> * input;
+
+  static  FilterRegister<IntConsumerFilter> reg;
 public:
   
-  VideoDisplayFilter(string name);
-  
-  virtual void init();
+  IntConsumerFilter(const string & name);
   
   virtual void run();
   
-  virtual ~VideoDisplayFilter();
+  virtual ~IntConsumerFilter();
   
 };
 
-#endif /* VIDEODISPLAYFILTER_H_ */
+#endif /* INTCONSUMERFILTER_H_ */

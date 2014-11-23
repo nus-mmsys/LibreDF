@@ -22,6 +22,8 @@
 #define DUPLICATEFILTER_H_
 
 #include "core/Filter.h"
+#include "core/tmf.h"
+
 #include <unistd.h>
 #include <iostream>
 
@@ -29,30 +31,15 @@ struct DuplicateFilter: public Filter {
   
 private:
   InputPort<std::string> * input;
+
+  static  FilterRegister<DuplicateFilter> reg;
 public:
   
-  DuplicateFilter(const string & name) :
-  Filter(name) {
-    input = createInputPort<std::string>("string input");
-  }
+  DuplicateFilter(const string & name);
   
+  virtual void run();
   
-  void run() {
-    
-    input->lock();
-    string * inputData = input->get();
-    string outputstring = *inputData + "-" + *inputData;
-    log("duplicating "+outputstring); 
-    
-    if (input->getStatus() == SampleStatus::EOS)
-      status = FilterStatus::EOS; 
-    
-    input->unlock();
-  }
-  
-  ~DuplicateFilter() {
-    delete input;
-  }
+  virtual ~DuplicateFilter();
   
 };
 
