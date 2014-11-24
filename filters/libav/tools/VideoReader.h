@@ -51,11 +51,12 @@ private:
   int frameNumber;
   string video_format;
   string input_format;
+  string framerate;
   
 public:
   
   VideoReader(string name) {
-
+    
     this->name = name;
     pFormatCtx = 0;
     pCodecCtx = 0;
@@ -63,7 +64,8 @@ public:
     vstream_idx = -1;
     input_format = "";
     video_format = "";
-
+    framerate = "";
+    
     // Register all formats and codecs
     av_register_all();
     avcodec_register_all();
@@ -77,7 +79,7 @@ public:
     if (vformat != "") {
       video_fmt = av_find_input_format(vformat.c_str());
       if (video_fmt == NULL) {
-	std::cerr << "Could not set video format: " << vformat << endl;;
+	std::cerr << "Could not set video format: " << vformat << endl;
       }
     }
   }
@@ -89,7 +91,18 @@ public:
     if (input_format != "") {
       ret = av_dict_set(&optionsDict, "input_format", input_format.c_str(), 0);
       if (ret < 0) {
-	std::cerr << "Could not set input format: " << input_format << endl;;
+	std::cerr << "Could not set input format: " << input_format << endl;
+      }
+    }
+  }
+  
+  void setFramerate(string framerate) {
+    int ret;
+    this->framerate = framerate;
+    if (framerate != "") {
+      ret = av_dict_set(&optionsDict, "framerate", framerate.c_str(), 0);
+      if (ret < 0) {
+	std::cerr << "Could not set framerate: " << framerate << endl;
       }
     }
   }
@@ -97,7 +110,7 @@ public:
   int init() {
     
     AVCodec *pCodec = 0;
-
+    
     frameNumber = 0;
     int ret;
     

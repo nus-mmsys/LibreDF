@@ -35,10 +35,12 @@ void  VideoReaderFilter::init() {
   string inputVideo = getProp("input_video");
   string videoFromat = getProp("video_format");
   string inputFormat = getProp("input_format");
+  string framerate = getProp("framerate");
   
   videoReader = new VideoReader(inputVideo);
   videoReader->setVideoFromat(videoFromat);
   videoReader->setInputFormat(inputFormat);
+  videoReader->setFramerate(framerate);
   videoReader->init();
   
   videoReader->dump();
