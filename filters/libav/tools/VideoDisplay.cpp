@@ -51,7 +51,10 @@ void VideoDisplay::init(int width, int height, AVPixelFormat pixFmt) {
   
 }
 
-void VideoDisplay::display(RawFrame * rawFrame) {
+int VideoDisplay::display(RawFrame * rawFrame) {
+  
+  if( SDL_PollEvent(&event) && event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) 
+    return -1; 
   
   AVFrame * pFrame = rawFrame->getFrame();
   
@@ -75,6 +78,7 @@ void VideoDisplay::display(RawFrame * rawFrame) {
   
   SDL_DisplayYUVOverlay(bmp, &rect);
   
+  return 0;
 }
 
 VideoDisplay::~VideoDisplay() {

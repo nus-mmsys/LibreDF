@@ -50,6 +50,8 @@ void VideoDisplayFilter::init() {
 }
 void VideoDisplayFilter::run() {
   
+  int ret;
+  
   inputPortRawFrame->lock();
   
   if (inputPortRawFrame->getStatus() == SampleStatus::EOS) {
@@ -60,7 +62,13 @@ void VideoDisplayFilter::run() {
   
   RawFrame * inFrame = inputPortRawFrame->get();
   
-  videoDisplay->display(inFrame);
+  ret = videoDisplay->display(inFrame);
+  
+  if (ret < 0) {
+    status = FilterStatus::EOS; 
+    inputPortRawFrame->unlock();
+    return;
+  }
   
   inputPortRawFrame->unlock();
   

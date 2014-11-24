@@ -43,10 +43,12 @@ private:
   SDL_Surface *screen;
   SDL_Rect rect;
   struct SwsContext * pSwsCtx;
+  SDL_Event event;
+  
 public:
   VideoDisplay();
   void init(int width, int height, AVPixelFormat pixFmt);
-  void display(RawFrame * rawFrame);
+  int display(RawFrame * rawFrame);
   virtual ~VideoDisplay();
 };
 
