@@ -27,9 +27,11 @@ Here is how the project is organized.
 	  libav
 	    tools (tools to be used by libav filters)
 	    types (data types to be used by libav filters)
+	CMakeLists.txt
 	LICENCE
 	README.md
 	tmf.doxyfile
+	tmf.kdev4
 
 3) Installation
 ===============
