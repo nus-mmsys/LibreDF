@@ -68,11 +68,11 @@ Here is a producer/consumer example with one producer and three consumer:
   
   Pipeline* pipe = tmf.createPipeline("Three consumer/One producer");
   
-  Filter* producer = tmf.createFilter(STRINGPRODUCER_FILTER, "producer");
+  Filter* producer = tmf.createFilter("string_producer", "producer");
 
-  Filter* consumer1 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer1");
-  Filter* consumer2 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer2");
-  Filter* consumer3 = tmf.createFilter<string>(CONSUMER_FILTER, "consumer3");
+  Filter* consumer1 = tmf.createFilter("string_consumer", "consumer1");
+  Filter* consumer2 = tmf.createFilter("string_consumer", "consumer2");
+  Filter* consumer3 = tmf.createFilter("string_consumer", "consumer3");
   
   producer->setProp("limit", 10);
   
@@ -94,40 +94,37 @@ Plug-in developers must implement new filters in filter folder. A filter inherit
 
 Here is an example of a filter implementation:
 ```c++
-template <typename T>
-class ConsumerFilter: public Filter {
+class StringConsumerFilter: public Filter {
   
 private:
-  InputPort<T> * input;
+  // The input port with a string buffer
+  InputPort<string> * input;
+  // In order to register the filter all filters need this member
+  static  FilterRegister<StringConsumerFilter> reg;
 public:
   
   ConsumerFilter(const string & name) : Filter(name) {
-    input = new InputPort<T>("input");
     
-    inputPorts.push_back(input);
+    input = createInputPort<string>("input");
   }
   
   void run() {
     
     input->lock();
     
-    T * inputData = input->get();
+    string * inputData = input->get();
     
-    std::stringstream inputstr;
-    inputstr << "consuming " << *inputData;
-    
-    log(inputstr.str());
+    log("consuming "+*inputData);
     sleep(500);
     
     if (input->getStatus() == SampleStatus::EOS)
       status = FilterStatus::EOS; 
     
     input->unlock();
-    
   }
   
   ~ConsumerFilter() {
-    delete input;
+    destroyPort(input);
   }
   
 };
