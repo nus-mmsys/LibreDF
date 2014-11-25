@@ -128,6 +128,8 @@ public:
   }
   
 };
+
+FilterRegister<StringConsumerFilter> StringProducerFilter::reg("string_consumer");
 ```
 
 For more information, examples, and documentation please see ```doc``` and ```examples``` folder.
