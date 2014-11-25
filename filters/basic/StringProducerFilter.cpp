@@ -80,5 +80,5 @@ void StringProducerFilter::runRT() {
 }
 
 StringProducerFilter::~StringProducerFilter() {
-  delete outputString;
+  destroyPort(outputString);
 }

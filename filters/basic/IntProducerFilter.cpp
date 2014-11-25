@@ -82,5 +82,5 @@ void IntProducerFilter::runRT() {
 }
 
 IntProducerFilter::~IntProducerFilter() {
-  delete outputInt;
+  destroyPort(outputInt);
 }

@@ -159,12 +159,16 @@ public:
     this->inputPorts.push_back(res);
     return res;
   }
-  
+ 
   template <typename T>
   OutputPort<T> * createOutputPort(std::string name) {
     OutputPort<T> * res = new OutputPort<T>(name);
     this->outputPorts.push_back(res);
     return res;
+  }
+  
+  void destroyPort(Port * port) {
+    delete port;
   }
   
   FilterStatus getStatus() { return status; }

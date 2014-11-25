@@ -54,6 +54,7 @@ void  Add2Filter::run() {
 }
 
 Add2Filter::~Add2Filter() {
-  delete input;
-  delete output;
+  
+  destroyPort(input);
+  destroyPort(output);
 }

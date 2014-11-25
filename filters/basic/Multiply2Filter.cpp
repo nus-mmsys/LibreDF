@@ -47,6 +47,6 @@ void Multiply2Filter::run() {
 }
 
 Multiply2Filter::~Multiply2Filter() {
-  delete input;
-  delete output;
+  destroyPort(input);
+  destroyPort(output);
 }

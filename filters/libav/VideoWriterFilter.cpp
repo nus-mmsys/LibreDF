@@ -67,6 +67,6 @@ void VideoWriterFilter::run() {
 
 VideoWriterFilter::~VideoWriterFilter() {
   delete videoWriter;
-  delete inputPortRawFrame;
+  destroyPort(inputPortRawFrame);
 }
 

@@ -70,6 +70,6 @@ void  VideoMuxerFilter::run() {
 }
 
 VideoMuxerFilter::~VideoMuxerFilter() {
-  delete inputPortEncodedFrame;
+  destroyPort(inputPortEncodedFrame);
   delete videoMuxer;
 }

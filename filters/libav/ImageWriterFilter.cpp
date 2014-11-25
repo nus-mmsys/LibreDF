@@ -69,7 +69,7 @@ void ImageWriterFilter::run() {
 }
 
 ImageWriterFilter::~ImageWriterFilter() {
-  delete inputFrame;
+  destroyPort(inputFrame);
   delete imageWriter;
 }
 

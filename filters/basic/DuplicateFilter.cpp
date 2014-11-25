@@ -42,5 +42,5 @@ void DuplicateFilter::run() {
 }
 
 DuplicateFilter::~DuplicateFilter() {
-  delete input;
+  destroyPort(input);
 }

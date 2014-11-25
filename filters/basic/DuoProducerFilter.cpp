@@ -60,6 +60,6 @@ void DuoProducerFilter::run() {
 }
 
 DuoProducerFilter::~DuoProducerFilter() {
-  delete outputInt;
-  delete outputString;
+  destroyPort(outputInt);
+  destroyPort(outputString);
 }

@@ -88,7 +88,7 @@ void ImageScalerFilter::run() {
 
 
 ImageScalerFilter::~ImageScalerFilter() {
-  delete inputPortFrame;
-  delete outputPortFrame;
+  destroyPort(inputPortFrame);
+  destroyPort(outputPortFrame);
   delete imageScaler;
 }

@@ -94,7 +94,7 @@ void VideoEncoderFilter::run() {
 
 VideoEncoderFilter::~VideoEncoderFilter() {
   
-  delete inputPortRawFrame;
-  delete outputPortEncodedFrame;
+  destroyPort(inputPortRawFrame);
+  destroyPort(outputPortEncodedFrame);
   delete videoEncoder;
 }

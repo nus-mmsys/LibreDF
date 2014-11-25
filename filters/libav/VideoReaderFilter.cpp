@@ -74,6 +74,6 @@ void  VideoReaderFilter::run() {
 
 VideoReaderFilter::~VideoReaderFilter() {
   
-  delete outputFrame;
+  destroyPort(outputFrame);
   delete videoReader;
 }

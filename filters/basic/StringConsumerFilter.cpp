@@ -44,5 +44,5 @@ void StringConsumerFilter::run() {
 }
 
 StringConsumerFilter::~StringConsumerFilter() {
-  delete input;
+  destroyPort(input);
 }

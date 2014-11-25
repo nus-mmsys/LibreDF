@@ -76,6 +76,6 @@ void VideoDisplayFilter::run() {
 
 VideoDisplayFilter::~VideoDisplayFilter() {
   
-  delete inputPortRawFrame;
+  destroyPort(inputPortRawFrame);
   delete videoDisplay;
 }

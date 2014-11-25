@@ -44,5 +44,5 @@ void IntConsumerFilter::run() {
 }
 
 IntConsumerFilter::~IntConsumerFilter() {
-  delete input;
+  destroyPort(input);
 }

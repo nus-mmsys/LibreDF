@@ -51,7 +51,7 @@ void  AdditionFilter::run() {
 }
 
 AdditionFilter::~AdditionFilter() {
-  delete input1;
-  delete input2;
+  destroyPort(input1);
+  destroyPort(input2);
 }
 
