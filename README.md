@@ -103,7 +103,7 @@ private:
   static  FilterRegister<StringConsumerFilter> reg;
 public:
   
-  ConsumerFilter(const string & name) : Filter(name) {
+  StringConsumerFilter(const string & name) : Filter(name) {
     
     input = createInputPort<string>("input");
   }
@@ -123,13 +123,13 @@ public:
     input->unlock();
   }
   
-  ~ConsumerFilter() {
+  ~StringConsumerFilter() {
     destroyPort(input);
   }
   
 };
 
-FilterRegister<StringConsumerFilter> StringProducerFilter::reg("string_consumer");
+FilterRegister<StringConsumerFilter> StringConsumerFilter::reg("string_consumer");
 ```
 
 For more information, examples, and documentation please see ```doc``` and ```examples``` folder.
