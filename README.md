@@ -64,15 +64,13 @@ To create an application we need to create the pipeline as well as the filters, 
 
 Here is a producer/consumer example with one producer and three consumer:
 ```c++
-  TMF tmf;
+  Pipeline* pipe = Factory::createPipeline("Three consumer/One producer");
   
-  Pipeline* pipe = tmf.createPipeline("Three consumer/One producer");
-  
-  Filter* producer = tmf.createFilter("string_producer", "producer");
+  Filter* producer = Factory::createFilter("string_producer", "producer");
 
-  Filter* consumer1 = tmf.createFilter("string_consumer", "consumer1");
-  Filter* consumer2 = tmf.createFilter("string_consumer", "consumer2");
-  Filter* consumer3 = tmf.createFilter("string_consumer", "consumer3");
+  Filter* consumer1 = Factory::createFilter("string_consumer", "consumer1");
+  Filter* consumer2 = Factory::createFilter("string_consumer", "consumer2");
+  Filter* consumer3 = Factory::createFilter("string_consumer", "consumer3");
   
   producer->setProp("limit", 10);
   
@@ -84,7 +82,7 @@ Here is a producer/consumer example with one producer and three consumer:
   
   pipe->run();
   
-  tmf.destroyPipeline(pipe);
+  Factory::destroyPipeline(pipe);
 ```	
 
 6) Plugin developer manual
