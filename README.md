@@ -23,9 +23,10 @@ Here is how the project is organized.
 	  html (reference manuals in html)
 	examples (contains examples using tmf library)
 	filters (implementation of the filters)
-	tmffactory (implementations of factories used by application developers)
-	tools (tools to be used by filter implementors)
-	types (implementation of new buffer types)
+	  basic
+	  libav
+	    tools (tools to be used by libav filters)
+	    types (data types to be used by libav filters)
 	LICENCE
 	README.md
 	tmf.doxyfile
