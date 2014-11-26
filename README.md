@@ -77,6 +77,8 @@ Here is a producer/consumer example with one producer and three consumer:
   
   producer->setProp("limit", 10);
   
+  pipe->addFilters(producer, consumer1, consumer2, consumer3, nullptr);
+    
   pipe->connectFilters(producer, consumer1);
   pipe->connectFilters(producer, consumer2);
   pipe->connectFilters(producer, consumer3);
