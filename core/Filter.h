@@ -25,15 +25,15 @@
 #include "core/Port.h"
 #include "core/InputPort.h"
 #include "core/OutputPort.h"
+#include "core/Event.h"
+#include "core/Bus.h"
 
-#include <string>
 #include <vector>
 #include <map>
-#include <memory>
 #include <thread>
+#include <iostream>
 
 using namespace std;
-
 
 /*!
  * \enum void
@@ -52,16 +52,16 @@ enum class FilterStatus {
  * and receive various data from predecessor filters and send data to accessor filter.
  */
 
-class Filter {
+class Filter : public EventObserver {
 private:
   
   thread tinit;
   thread trun;
-  mutex * io_lock;
+  mutex * pipelock;
   
   string name; /**< The name f the filter */
   Attribute attr; /**< A map containing the message keys and values transfered to filter from a pipeline */
-  
+  Bus * busref;
 
   bool realtime;
   
@@ -151,7 +151,7 @@ public:
   
   void waitRun();
   
-  void setIOLock(mutex * mux);
+  void setPipeLock(mutex * mux);
 
   template <typename T>
   InputPort<T> * createInputPort(std::string name) {
@@ -167,10 +167,14 @@ public:
     return res;
   }
   
+  void handleEvent(Event event);
+  
+  void sendEvent(Event event);
+  
   void destroyPort(Port * port) {
     delete port;
   }
-  
+  void setBusRef(Bus * b) { busref = b; } 
   FilterStatus getStatus() { return status; }
   /*!
    * Destructor of the filter.

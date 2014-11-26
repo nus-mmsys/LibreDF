@@ -38,6 +38,8 @@ int main(int argc, char** argv) {
   Filter* scaler = Factory::createFilter("image_scaler", "scaler");
   Filter* writer = Factory::createFilter("image_writer", "writer");
   
+  pipe->addFilters(reader, scaler, writer, nullptr);
+  
   pipe->connectFilters(reader, scaler);
   pipe->connectFilters(scaler,writer);
   

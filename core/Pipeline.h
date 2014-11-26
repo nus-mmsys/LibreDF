@@ -23,8 +23,10 @@
 
 #include <iostream>
 #include <set>
+#include <cstdarg>
 
 #include "core/Filter.h"
+#include "core/Bus.h"
 
 using namespace std;
 
@@ -47,6 +49,7 @@ class Pipeline {
   mutex io_lock;
   string name; /**< The name of the pipeline. */
   PipelineStatus status; /**< The current status of the pipeline. */
+  Bus bus;
   set<Filter *> filters; /**< The set of all filters in the pipeline. */
   bool realtime;
 public:
@@ -58,6 +61,10 @@ public:
   Pipeline(const string& name);
   
   void setRealTime(bool);
+  
+  void addFilter(Filter * f);
+ 
+  void addFilters(Filter * f, ...);
   
   /*!
    * Create a pipe between two filters in the pipeline.

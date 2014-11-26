@@ -23,6 +23,11 @@
 
 #include <map>
 
+/*!
+ * \class Attribute
+ * Attribute is a map containing the attribute name and the attribute value
+ */
+
 class Attribute {
 private:
   std::map<std::string, std::string>  props; /**< The map containing the message (key, value). */
@@ -36,10 +41,10 @@ public:
   std::string getProp(const std::string & key);
   
   /*!
-   * Set the string message by key and value
+   * Set the message of any type by key and value
    *
    * \param key the key of the message
-   * \param val the string value of the message
+   * \param val the value of the message
    *
    */
   template <typename T>
@@ -47,9 +52,23 @@ public:
     std::string valstr = std::to_string(val);
     props.insert(std::make_pair(key, valstr));
   }
-  
+
+  /*!
+   * Set the message of string type by key and value
+   *
+   * \param key the key of the message
+   * \param val the string value of the message
+   *
+   */ 
   void setProp(const std::string & key, const std::string& val);
 
+  /*!
+   * Set the message of char sequence type by key and value
+   *
+   * \param key the key of the message
+   * \param val the char sequence value of the message
+   *
+   */ 
   void setProp(const std::string & key, const char* val);
 };
 

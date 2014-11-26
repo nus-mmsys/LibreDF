@@ -44,6 +44,8 @@ int main(int argc, char** argv) {
   Filter* writer1 = Factory::createFilter("image_writer", "writer1");
   Filter* writer2 = Factory::createFilter("image_writer", "writer2");
   
+  pipe->addFilters(reader, scaler1, scaler2, writer1, writer2, nullptr);
+  
   pipe->connectFilters(reader, scaler1);
   pipe->connectFilters(reader, scaler2);
   pipe->connectFilters(scaler1,writer1);

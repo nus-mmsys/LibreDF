@@ -25,16 +25,17 @@ int main(int argc, char** argv) {
   Pipeline* pipe = Factory::createPipeline("Real-Time Three onsumer/One producer");
   
   Filter* producer = Factory::createFilter("string_producer", "producer");
-
+  
   Filter* consumer1 = Factory::createFilter("string_consumer", "consumer1");
   Filter* consumer2 = Factory::createFilter("string_consumer", "consumer2");
   Filter* consumer3 = Factory::createFilter("string_consumer", "consumer3");
   
- 
+  pipe->addFilters(producer, consumer1, consumer2, consumer3, nullptr);
+  
   pipe->connectFilters(producer, consumer1);
   pipe->connectFilters(producer, consumer2);
   pipe->connectFilters(producer, consumer3);
-
+  
   producer->setProp("limit", 10);
   pipe->setRealTime(true);
   

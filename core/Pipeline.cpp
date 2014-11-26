@@ -26,23 +26,41 @@ Pipeline::Pipeline(const string& name): name(name), realtime(false), status(Pipe
 
 void Pipeline::setRealTime(bool rt) { 
   realtime = rt;
+  
+}
 
+void Pipeline::addFilter(Filter * f) {
+  bus.registerObserver(f);
+  f->setBusRef(&bus);
+  f->setPipeLock(&io_lock);
+  filters.insert(f);
+}
+
+void Pipeline::addFilters(Filter * f, ...) {
+  
+  va_list arguments;                     
+  
+  Filter * cur;
+  va_start ( arguments, f);
+  
+  cur = f;
+  while(cur != nullptr) {
+    
+    addFilter(cur);
+    cur = va_arg(arguments, Filter*);
+  }
+  va_end ( arguments ); 
+  
 }
 
 void Pipeline::connectFilters(Filter * inf, Filter * outf) {
-  
-  inf->setIOLock(&io_lock);
-  outf->setIOLock(&io_lock);
-  
-  filters.insert(inf);
-  filters.insert(outf);
   
   inf->connectFilter(outf);
 }
 
 
 void Pipeline::init() {
-
+  
   for (auto f : filters) {
     f->setRealTime(realtime);
   }
@@ -58,10 +76,10 @@ void Pipeline::init() {
   status = PipelineStatus::READY;
   
   for (auto f : filters) {
-  
+    
     if (f->getStatus() != FilterStatus::OK)
       status = PipelineStatus::STOPPED;
-      return;
+    return;
   }
   
   
@@ -77,7 +95,7 @@ void Pipeline::run() {
   for (auto f : filters) {
     f->startRun();
   }
- 
+  
   status = PipelineStatus::RUNNING;
   
   for (auto f : filters) {
@@ -93,5 +111,5 @@ Pipeline::~Pipeline() {
   for (auto f : filters)
     if(f)
       delete f;
-  
+    
 }

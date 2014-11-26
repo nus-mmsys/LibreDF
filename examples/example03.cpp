@@ -28,6 +28,8 @@ int main(int argc, char** argv) {
   Filter* producer2 = Factory::createFilter("int_producer", "producer2");
   Filter* addition = Factory::createFilter("addition", "addition");
   
+  pipe->addFilters(producer1, producer2, addition, nullptr);
+  
   pipe->connectFilters(producer1, addition);
   pipe->connectFilters(producer2, addition);
   

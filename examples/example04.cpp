@@ -30,6 +30,8 @@ int main(int argc, char** argv) {
   Filter* duplicate = Factory::createFilter("duplicate", "duplicate");
   Filter* addition = Factory::createFilter("addition", "addition");
   
+  pipe->addFilters(producer, add2, multiply2, duplicate, addition, nullptr);
+  
   pipe->connectFilters(producer, multiply2);
   pipe->connectFilters(producer, add2);
   pipe->connectFilters(producer, duplicate);

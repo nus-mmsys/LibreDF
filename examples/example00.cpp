@@ -30,6 +30,8 @@ int main(int argc, char** argv) {
  
   producer->setProp("limit", 10);
   
+  pipe->addFilters(producer, consumer, nullptr);
+  
   pipe->connectFilters(producer, consumer);
   
   pipe->init();

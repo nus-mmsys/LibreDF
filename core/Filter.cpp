@@ -19,12 +19,9 @@
  */
 
 #include "core/Filter.h"
-#include "core/Port.h"
-
-#include <iostream>
 
 Filter::Filter(const string &name) : realtime(false), status(FilterStatus::OK), name(name) {
-
+  
 }
 
 void Filter::setRealTime(bool rt) {
@@ -32,9 +29,9 @@ void Filter::setRealTime(bool rt) {
 }
 
 void Filter::log(std::string msg) {
-  io_lock->lock(); 
+  pipelock->lock(); 
   std::cout << name << ": " << msg << std::endl;
-  io_lock->unlock();
+  pipelock->unlock();
 }
 void Filter::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
@@ -47,7 +44,7 @@ void Filter::connectFilter(Filter * f) {
       
       const PortCaps& typeOut = fout->getPortCaps();
       const PortCaps& typeIn = fin->getPortCaps();
-
+      
       if ( fin->getLinked() == 0 && (typeOut.isEqual(typeIn))) {
 	
 	fout->connectPort(fin);
@@ -77,12 +74,12 @@ void Filter::waitRun() {
   trun.join();
 }
 
-void Filter::setIOLock(mutex * mux) {
-  io_lock = mux;
+void Filter::setPipeLock(mutex * mux) {
+  pipelock = mux;
 }
 
 void Filter::initFilter() {
-
+  
   for (auto p : inputPorts) {
     if (p->getLinked() == 0) {
       log(p->getName()+string(" is not connected"));
@@ -105,6 +102,21 @@ void Filter::runFilter() {
     realtime? runRT() : run();
   }
   
+}
+
+void Filter::handleEvent(Event event) {
+  
+  if (event.type == EventType::EOS) {
+    
+    status = FilterStatus::EOS;
+  }
+}
+
+void Filter::sendEvent(Event event) {
+  
+  pipelock->lock();
+  busref->notify(event);
+  pipelock->unlock();
 }
 
 Filter::~Filter() { 

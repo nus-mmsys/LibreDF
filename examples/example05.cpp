@@ -36,6 +36,8 @@ int main(int argc, char** argv) {
   Filter* reader = Factory::createFilter("video_reader", "reader");
   Filter* writer = Factory::createFilter("image_writer", "writer");
   
+  pipe->addFilters(reader, writer, nullptr);
+  
   pipe->connectFilters(reader, writer);
   
   reader->setProp("input_video", inputVideo);

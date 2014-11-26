@@ -28,6 +28,8 @@ int main(int argc, char** argv) {
   Filter* scaler = Factory::createFilter("image_scaler", "scaler");
   Filter* display = Factory::createFilter("video_display", "display");
   
+  pipe->addFilters(reader, scaler, display, nullptr);
+  
   pipe->connectFilters(reader, scaler);
   pipe->connectFilters(scaler, display);
   

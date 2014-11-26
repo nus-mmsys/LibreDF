@@ -40,6 +40,8 @@ int main(int argc, char** argv) {
   Filter* encoder = Factory::createFilter("video_encoder", "encoder");
   Filter* muxer = Factory::createFilter("video_muxer", "muxer");
   
+  pipe->addFilters(reader, scaler, encoder, muxer, nullptr);
+  
   pipe->connectFilters(reader, scaler);
   pipe->connectFilters(scaler, encoder);
   pipe->connectFilters(encoder, muxer);

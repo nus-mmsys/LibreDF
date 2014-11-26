@@ -65,9 +65,7 @@ void VideoDisplayFilter::run() {
   ret = videoDisplay->display(inFrame);
   
   if (ret < 0) {
-    status = FilterStatus::EOS; 
-    inputPortRawFrame->unlock();
-    return;
+    sendEvent(Event(EventType::EOS, std::string("")));
   }
   
   inputPortRawFrame->unlock();
