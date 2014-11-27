@@ -20,6 +20,9 @@
 
 #include "filters/basic/StringProducerFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<StringProducerFilter> StringProducerFilter::reg("string_producer");
 
 StringProducerFilter::StringProducerFilter(const string& name) : Filter(name), number(0) {

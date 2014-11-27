@@ -20,6 +20,9 @@
 
 #include "filters/basic/DuplicateFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<DuplicateFilter> DuplicateFilter::reg("duplicate");
 
 DuplicateFilter::DuplicateFilter(const string & name) :

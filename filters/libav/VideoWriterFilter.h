@@ -27,13 +27,13 @@
 #include "types/RawFrame.h"
 #include "tools/VideoWriter.h"
 
-class VideoWriterFilter : public Filter {
+class VideoWriterFilter : public tmf::Filter {
 private:
   VideoWriter * videoWriter;
   
-  InputPort<RawFrame> * inputPortRawFrame;
+  tmf::InputPort<RawFrame> * inputPortRawFrame;
   
-  static  FilterRegister<VideoWriterFilter> reg;
+  static tmf::FilterRegister<VideoWriterFilter> reg;
 public:
   
   VideoWriterFilter(string name);

@@ -20,6 +20,8 @@
 
 #include "filters/basic/StringConsumerFilter.h"
 
+using namespace tmf;
+using namespace std;
 
 FilterRegister<StringConsumerFilter> StringConsumerFilter::reg("string_consumer");
 

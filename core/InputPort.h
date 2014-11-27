@@ -23,79 +23,82 @@
 
 #include "core/Port.h"
 
-/*!
- * \class InputPort
- *
- * InputPort class is a subclass of the Port class.
- * It is a class template and the type of the buffer of the port is a template.
- *
- */
-
-template <typename T>
-class InputPort: public Port {
-
-private:
-  
-  MediaBuffer<T> * buf;
-  int index;
-  
-public:
+namespace tmf {
   
   /*!
-   * InputPort constructor
+   * \class InputPort
    *
-   * \param name The name of the port
-   *
-   */
-  InputPort<T>(string name) : Port(name), buf(nullptr), index(0) {
-    portCaps.addCaps("template", string(typeid(T).name()));
-  }
-  
-  void setBuffer(MediaBuffer<T> * b) {
-    buf = b;
-    buf->addConsumer();
-  }
-  
-  void setAttrBuffer(MediaBuffer<Attribute> * attrb) {
-    attrbuf = attrb;
-    attrbuf->addConsumer();
-  }
-
-  void lockAttr() {
-    attrbuf->at(attrindex)->consumerLock();
-  }
-
-  void unlockAttr() {
-    attrbuf->at(attrindex)->consumerUnlock();
-    attrindex = (attrindex+1) % attrbuf->getSize();
-  }
-  
-  void lock() {
-    buf->at(index)->consumerLock();
-  }
-
-  void unlock() {
-    buf->at(index)->consumerUnlock();
-    index = (index+1) % buf->getSize();
-  }
-  
-  T * get() {
-    return buf->at(index)->get();
-  }
-  
-  void setStatus(SampleStatus st) {
-    buf->at(index)->setStatus(st);
-  }
-  SampleStatus getStatus() {
-    return buf->at(index)->getStatus();
-  }  
-  /*!
-   * InputPort destructor
+   * InputPort class is a subclass of the Port class.
+   * It is a class template and the type of the buffer of the port is a template.
    *
    */
-  virtual ~InputPort() {
-  }
   
-};
-
+  template <typename T>
+  class InputPort: public Port {
+    
+  private:
+    
+    MediaBuffer<T> * buf;
+    int index;
+    
+  public:
+    
+    /*!
+     * InputPort constructor
+     *
+     * \param name The name of the port
+     *
+     */
+    InputPort<T>(std::string name) : Port(name), buf(nullptr), index(0) {
+      portCaps.addCaps("template", std::string(typeid(T).name()));
+    }
+    
+    void setBuffer(MediaBuffer<T> * b) {
+      buf = b;
+      buf->addConsumer();
+    }
+    
+    void setAttrBuffer(MediaBuffer<Attribute> * attrb) {
+      attrbuf = attrb;
+      attrbuf->addConsumer();
+    }
+    
+    void lockAttr() {
+      attrbuf->at(attrindex)->consumerLock();
+    }
+    
+    void unlockAttr() {
+      attrbuf->at(attrindex)->consumerUnlock();
+      attrindex = (attrindex+1) % attrbuf->getSize();
+    }
+    
+    void lock() {
+      buf->at(index)->consumerLock();
+    }
+    
+    void unlock() {
+      buf->at(index)->consumerUnlock();
+      index = (index+1) % buf->getSize();
+    }
+    
+    T * get() {
+      return buf->at(index)->get();
+    }
+    
+    void setStatus(SampleStatus st) {
+      buf->at(index)->setStatus(st);
+    }
+    SampleStatus getStatus() {
+      return buf->at(index)->getStatus();
+    }  
+    /*!
+     * InputPort destructor
+     *
+     */
+    virtual ~InputPort() {
+    }
+    
+  };
+  
+}
 #endif // INPUTPORT_H

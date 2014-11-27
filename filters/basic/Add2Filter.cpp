@@ -20,6 +20,9 @@
 
 #include "filters/basic/Add2Filter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<Add2Filter> Add2Filter::reg("add2");
 
 Add2Filter::Add2Filter(const string & name) :

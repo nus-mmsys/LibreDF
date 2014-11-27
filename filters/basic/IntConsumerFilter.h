@@ -27,15 +27,15 @@
 
 #include <iostream>
 
-class IntConsumerFilter: public Filter {
+class IntConsumerFilter: public tmf::Filter {
   
 private:
-  InputPort<int> * input;
+  tmf::InputPort<int> * input;
 
-  static  FilterRegister<IntConsumerFilter> reg;
+  static tmf::FilterRegister<IntConsumerFilter> reg;
 public:
   
-  IntConsumerFilter(const string & name);
+  IntConsumerFilter(const std::string & name);
   
   virtual void run();
   

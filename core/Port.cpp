@@ -20,6 +20,9 @@
 
 #include "core/Port.h"
 
+using namespace tmf;
+using namespace std;
+
 Port::Port(string name) :
 name(name), linked(0), attrbuf(nullptr), attrindex(0) {
   

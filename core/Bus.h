@@ -27,23 +27,26 @@
 #include "core/Event.h"
 #include "core/EventObserver.h"
 
-
-class Bus
-{
-
-private:
-  std::vector<EventObserver *> observers;
-
-public:
-  void registerObserver(EventObserver * obs){
-    observers.push_back(obs);
-  }
+namespace tmf {
   
-  void notify(Event event) {
-    for (auto obs : observers) {
-      obs->handleEvent(event);
+  class Bus
+  {
+    
+  private:
+    std::vector<EventObserver *> observers;
+    
+  public:
+    void registerObserver(EventObserver * obs){
+      observers.push_back(obs);
     }
-  }
-};
+    
+    void notify(Event event) {
+      for (auto obs : observers) {
+	obs->handleEvent(event);
+      }
+    }
+  };
+  
+}
 
 #endif // BUS_H

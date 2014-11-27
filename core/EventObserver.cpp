@@ -19,3 +19,5 @@
  */
 
 #include "EventObserver.h"
+
+using namespace tmf;

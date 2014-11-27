@@ -20,6 +20,9 @@
 
 #include "Pipeline.h"
 
+using namespace tmf;
+using namespace std;
+
 Pipeline::Pipeline(const string& name): name(name), realtime(false), status(PipelineStatus::STOPPED) {
 }
 

@@ -20,6 +20,9 @@
 
 #include "filters/libav/VideoMuxerFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<VideoMuxerFilter> VideoMuxerFilter::reg("video_muxer");
 
 VideoMuxerFilter::VideoMuxerFilter(string name) :

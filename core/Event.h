@@ -24,16 +24,19 @@
 #include <string>
 #include <queue>
 
-enum class EventType {
-  EOS
-};
-
-struct Event {
-  EventType type;
-  std::string message;
-
-  Event(EventType type, std::string message): type(type), message(message) {}
-};
-
+namespace tmf {
+  
+  enum class EventType {
+    EOS
+  };
+  
+  struct Event {
+    EventType type;
+    std::string message;
+    
+    Event(EventType type, std::string message): type(type), message(message) {}
+  };
+  
+}
 
 #endif // EVENT_H

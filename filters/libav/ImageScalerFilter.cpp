@@ -20,6 +20,9 @@
 
 #include "filters/libav/ImageScalerFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<ImageScalerFilter> ImageScalerFilter::reg("image_scaler");
 
 ImageScalerFilter::ImageScalerFilter(string name) : Filter(name) {

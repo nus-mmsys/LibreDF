@@ -20,6 +20,9 @@
 
 #include "filters/basic/AdditionFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<AdditionFilter> AdditionFilter::reg("addition");
 
 AdditionFilter::AdditionFilter(const string & name) :

@@ -27,17 +27,17 @@
 #include "types/RawFrame.h"
 #include "tools/VideoDisplay.h"
 
-class VideoDisplayFilter : public Filter {
+class VideoDisplayFilter : public tmf::Filter {
   
 private:
   VideoDisplay * videoDisplay;
   
-  InputPort<RawFrame> * inputPortRawFrame;
+  tmf::InputPort<RawFrame> * inputPortRawFrame;
   
-  static  FilterRegister<VideoDisplayFilter> reg;
+  static tmf::FilterRegister<VideoDisplayFilter> reg;
 public:
   
-  VideoDisplayFilter(string name);
+  VideoDisplayFilter(std::string name);
   
   virtual void init();
   

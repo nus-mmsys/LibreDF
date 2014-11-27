@@ -20,6 +20,8 @@
 
 #include "filters/basic/IntConsumerFilter.h"
 
+using namespace tmf;
+using namespace std;
 
 FilterRegister<IntConsumerFilter> IntConsumerFilter::reg("int_consumer");
 

@@ -20,6 +20,9 @@
 
 #include "core/tmf.h"
 
+using namespace tmf;
+using namespace std;
+
 int main(int argc, char** argv) {
   
   if (argc < 5) {

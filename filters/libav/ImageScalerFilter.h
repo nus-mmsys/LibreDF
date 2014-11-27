@@ -30,16 +30,16 @@
 
 using namespace std;
 
-class ImageScalerFilter : public Filter {
+class ImageScalerFilter : public tmf::Filter {
   
 private:
   
   ImageScaler * imageScaler;
   
-  InputPort<RawFrame> * inputPortFrame;
-  OutputPort<RawFrame> * outputPortFrame;
+  tmf::InputPort<RawFrame> * inputPortFrame;
+  tmf::OutputPort<RawFrame> * outputPortFrame;
   
-  static  FilterRegister<ImageScalerFilter> reg;
+  static tmf::FilterRegister<ImageScalerFilter> reg;
 public:
   
   ImageScalerFilter(string name);

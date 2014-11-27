@@ -20,6 +20,9 @@
 
 #include "filters/basic/Multiply2Filter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<Multiply2Filter> Multiply2Filter::reg("multiply2");
 
 Multiply2Filter::Multiply2Filter(const string & name) :

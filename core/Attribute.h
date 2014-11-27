@@ -23,53 +23,57 @@
 
 #include <map>
 
-/*!
- * \class Attribute
- * Attribute is a map containing the attribute name and the attribute value
- */
-
-class Attribute {
-private:
-  std::map<std::string, std::string>  props; /**< The map containing the message (key, value). */
-  
-public:
-  /*!
-   * Get the message value by passing the key
-   *
-   * \param key the key to retrieve the message value
-   */
-  std::string getProp(const std::string & key);
+namespace tmf {
   
   /*!
-   * Set the message of any type by key and value
-   *
-   * \param key the key of the message
-   * \param val the value of the message
-   *
+   * \class Attribute
+   * Attribute is a map containing the attribute name and the attribute value
    */
-  template <typename T>
-  void setProp(const std::string & key, const T& val) {
-    std::string valstr = std::to_string(val);
-    props.insert(std::make_pair(key, valstr));
-  }
-
-  /*!
-   * Set the message of string type by key and value
-   *
-   * \param key the key of the message
-   * \param val the string value of the message
-   *
-   */ 
-  void setProp(const std::string & key, const std::string& val);
-
-  /*!
-   * Set the message of char sequence type by key and value
-   *
-   * \param key the key of the message
-   * \param val the char sequence value of the message
-   *
-   */ 
-  void setProp(const std::string & key, const char* val);
-};
+  
+  class Attribute {
+  private:
+    std::map<std::string, std::string>  props; /**< The map containing the message (key, value). */
+    
+  public:
+    /*!
+     * Get the message value by passing the key
+     *
+     * \param key the key to retrieve the message value
+     */
+    std::string getProp(const std::string & key);
+    
+    /*!
+     * Set the message of any type by key and value
+     *
+     * \param key the key of the message
+     * \param val the value of the message
+     *
+     */
+    template <typename T>
+    void setProp(const std::string & key, const T& val) {
+      std::string valstr = std::to_string(val);
+      props.insert(std::make_pair(key, valstr));
+    }
+    
+    /*!
+     * Set the message of string type by key and value
+     *
+     * \param key the key of the message
+     * \param val the string value of the message
+     *
+     */ 
+    void setProp(const std::string & key, const std::string& val);
+    
+    /*!
+     * Set the message of char sequence type by key and value
+     *
+     * \param key the key of the message
+     * \param val the char sequence value of the message
+     *
+     */ 
+    void setProp(const std::string & key, const char* val);
+  };
+  
+}
 
 #endif /* ATTRIBUTE_H_ */

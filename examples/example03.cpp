@@ -20,6 +20,8 @@
 
 #include "core/tmf.h"
 
+using namespace tmf;
+
 int main(int argc, char** argv) {
   
   Pipeline* pipe = Factory::createPipeline("A addition pipeline");

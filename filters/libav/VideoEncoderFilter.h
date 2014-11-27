@@ -28,15 +28,15 @@
 #include "filters/libav/types/EncodedFrame.h"
 #include "filters/libav/tools/VideoEncoder.h"
 
-class VideoEncoderFilter : public Filter {
+class VideoEncoderFilter : public tmf::Filter {
   
 private:
   VideoEncoder * videoEncoder;
   
-  InputPort<RawFrame> * inputPortRawFrame;
-  OutputPort<EncodedFrame> * outputPortEncodedFrame;
+  tmf::InputPort<RawFrame> * inputPortRawFrame;
+  tmf::OutputPort<EncodedFrame> * outputPortEncodedFrame;
   
-  static  FilterRegister<VideoEncoderFilter> reg;
+  static tmf::FilterRegister<VideoEncoderFilter> reg;
 public:
   VideoEncoderFilter(string name);
   

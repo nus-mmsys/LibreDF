@@ -23,11 +23,14 @@
 
 #include "core/Event.h"
 
-class EventObserver
-{
-
-public:
-  virtual void handleEvent(Event event) = 0;
-};
-
+namespace tmf {
+  
+  class EventObserver
+  {
+    
+  public:
+    virtual void handleEvent(Event event) = 0;
+  };
+  
+}
 #endif // EVENTOBSERVER_H

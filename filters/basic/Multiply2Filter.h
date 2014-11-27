@@ -24,15 +24,16 @@
 #include "core/tmf.h"
 #include "core/Filter.h"
 
-class Multiply2Filter: public Filter {
+
+class Multiply2Filter: public tmf::Filter {
 private:
-  InputPort<int> * input;
-  OutputPort<int> * output;
+  tmf::InputPort<int> * input;
+  tmf::OutputPort<int> * output;
   
-  static  FilterRegister<Multiply2Filter> reg;
+  static tmf::FilterRegister<Multiply2Filter> reg;
 public:
   
-  Multiply2Filter(const string & name);
+  Multiply2Filter(const std::string & name);
   
   virtual void run();
   

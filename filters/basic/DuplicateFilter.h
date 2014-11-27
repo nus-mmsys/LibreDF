@@ -27,15 +27,15 @@
 #include <unistd.h>
 #include <iostream>
 
-struct DuplicateFilter: public Filter {
+struct DuplicateFilter: public tmf::Filter {
   
 private:
-  InputPort<std::string> * input;
+  tmf::InputPort<std::string> * input;
 
-  static  FilterRegister<DuplicateFilter> reg;
+  static tmf::FilterRegister<DuplicateFilter> reg;
 public:
   
-  DuplicateFilter(const string & name);
+  DuplicateFilter(const std::string & name);
   
   virtual void run();
   

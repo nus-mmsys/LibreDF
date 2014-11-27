@@ -19,3 +19,5 @@
  */
 
 #include "Event.h"
+
+using namespace tmf;

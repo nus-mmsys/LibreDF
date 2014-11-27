@@ -20,6 +20,9 @@
 
 #include "filters/basic/IntProducerFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<IntProducerFilter> IntProducerFilter::reg("int_producer");
 
 IntProducerFilter::IntProducerFilter(const string& name) : Filter(name), number(0) {

@@ -20,6 +20,8 @@
 
 #include "core/Attribute.h"
 
+using namespace tmf;
+
 std::string Attribute::getProp(const std::string & key) {
   auto k = props.find(key);
   

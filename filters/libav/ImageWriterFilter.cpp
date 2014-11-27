@@ -20,6 +20,9 @@
 
 #include "filters/libav/ImageWriterFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<ImageWriterFilter> ImageWriterFilter::reg("image_writer");
 
 ImageWriterFilter::ImageWriterFilter(string name) : Filter(name) {

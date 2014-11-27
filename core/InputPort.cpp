@@ -20,4 +20,5 @@
 
 #include "core/InputPort.h"
 
+using namespace tmf;
 /* All declaration of the template class are in the header file */

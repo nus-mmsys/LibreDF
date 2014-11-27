@@ -27,16 +27,18 @@
 
 #include <iostream>
 
-struct AdditionFilter: public Filter {
+using namespace tmf;
+
+struct AdditionFilter: public tmf::Filter {
  
 private:
-  InputPort<int> * input1;
-  InputPort<int>* input2;
+  tmf::InputPort<int> * input1;
+  tmf::InputPort<int>* input2;
   
   static  FilterRegister<AdditionFilter> reg;
 public:
   
-  AdditionFilter(const string & name);
+  AdditionFilter(const std::string & name);
   
   virtual void run();
   

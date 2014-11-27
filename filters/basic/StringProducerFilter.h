@@ -29,21 +29,19 @@
 #include <string>
 #include <unistd.h>
 
-using namespace std;
-
-class StringProducerFilter: public Filter {
+class StringProducerFilter: public tmf::Filter {
   
 private:
   
   int number;
   int limit;
   
-  OutputPort<string> * outputString;
+  tmf::OutputPort<std::string> * outputString;
   
-  static  FilterRegister<StringProducerFilter> reg;
+  static tmf::FilterRegister<StringProducerFilter> reg;
 public:
   
-  StringProducerFilter(const string& name);
+  StringProducerFilter(const std::string& name);
   
   virtual void init();
   

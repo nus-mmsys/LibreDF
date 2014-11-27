@@ -25,32 +25,35 @@
 
 #include <string>
 
-enum class SampleStatus {
-  OK,
-  ERROR,
-  EOS
-};
-
-template <typename T>
-class MediaSample : public SampleSynchronizer {
+namespace tmf {
   
-private:
-  int number;
-  T * data;
-  SampleStatus status;
+  enum class SampleStatus {
+    OK,
+    ERROR,
+    EOS
+  };
   
-public:
-  MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
+  template <typename T>
+  class MediaSample : public SampleSynchronizer {
+    
+  private:
+    int number;
+    T * data;
+    SampleStatus status;
+    
+  public:
+    MediaSample(): number(0), status(SampleStatus::OK) { data = new T(); } 
+    
+    T * get() { return data; }
+    
+    void setStatus(SampleStatus st) {status = st;}
+    SampleStatus getStatus() {return status;}
+    
+    ~MediaSample() {
+      delete data;
+      data = nullptr;
+    }
+  };
   
-  T * get() { return data; }
-  
-  void setStatus(SampleStatus st) {status = st;}
-  SampleStatus getStatus() {return status;}
-  
-  ~MediaSample() {
-    delete data;
-    data = nullptr;
-  }
-};
-
+}
 #endif // MEDIASAMPLE_H

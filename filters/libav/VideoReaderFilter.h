@@ -27,14 +27,14 @@
 #include "tools/VideoReader.h"
 #include "types/RawFrame.h"
 
-class VideoReaderFilter: public Filter {
+class VideoReaderFilter: public tmf::Filter {
   
 private:
   VideoReader * videoReader;
   
-  OutputPort<RawFrame> * outputFrame;
+  tmf::OutputPort<RawFrame> * outputFrame;
 
-  static  FilterRegister<VideoReaderFilter> reg;
+  static tmf::FilterRegister<VideoReaderFilter> reg;
 public:
   VideoReaderFilter(string name);
   

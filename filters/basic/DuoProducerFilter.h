@@ -31,16 +31,16 @@
 
 using namespace std;
 
-class DuoProducerFilter: public Filter {
+class DuoProducerFilter: public tmf::Filter {
   
 private:
   
   int limit;
   
-  OutputPort<int> * outputInt;
-  OutputPort<string> * outputString;
+  tmf::OutputPort<int> * outputInt;
+  tmf::OutputPort<string> * outputString;
   
-  static  FilterRegister<DuoProducerFilter> reg;
+  static tmf::FilterRegister<DuoProducerFilter> reg;
 public:
   
   DuoProducerFilter(const string& name);

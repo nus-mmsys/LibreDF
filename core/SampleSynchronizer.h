@@ -1,5 +1,5 @@
 /*
- *
+ * 
  *  Tiny Multimedia Framework
  *  Copyright (C) 2014 Arash Shafiei
  *
@@ -24,38 +24,39 @@
 #include <mutex>
 #include <condition_variable>
 
-using namespace std;
-
-class SampleSynchronizer {
- 
-  mutex mux;
+namespace tmf {
   
-  condition_variable con_cond;
-  unsigned int con_num;
-  
-  condition_variable pro_cond;
-  bool prod;
-  
-  unsigned int consumed;
-  bool produced;
-  unsigned int total_consumer;
- 
-public:
- 
-  SampleSynchronizer();
-
-  void addConsumer();
-  
-  void consumerLock();
+  class SampleSynchronizer {
     
-  void consumerUnlock();
+    std::mutex mux;
+    
+    std::condition_variable con_cond;
+    unsigned int con_num;
+    
+    std::condition_variable pro_cond;
+    bool prod;
+    
+    unsigned int consumed;
+    bool produced;
+    unsigned int total_consumer;
+    
+  public:
+    
+    SampleSynchronizer();
+    
+    void addConsumer();
+    
+    void consumerLock();
+    
+    void consumerUnlock();
+    
+    void producerLock();
+    
+    bool producerRTLock();
+    
+    void producerUnlock();
+    
+  };
   
-  void producerLock();
-  
-  bool producerRTLock();
-  
-  void producerUnlock();
-
-};
-
+}
 #endif /* SAMPLESYNCHRONIZER_H_ */

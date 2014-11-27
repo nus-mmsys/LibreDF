@@ -25,16 +25,16 @@
 #include "core/Filter.h"
 #include "core/Port.h"
 
-struct Add2Filter: public Filter {
+struct Add2Filter: public tmf::Filter {
 private:
-  InputPort<int> * input;
-  OutputPort<int> * output;
+  tmf::InputPort<int> * input;
+  tmf::OutputPort<int> * output;
 
-  static  FilterRegister<Add2Filter> reg;
+  static tmf::FilterRegister<Add2Filter> reg;
 
 public:
   
-  Add2Filter(const string & name);
+  Add2Filter(const std::string & name);
   
   virtual void run();
   

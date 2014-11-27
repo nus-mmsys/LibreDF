@@ -24,23 +24,23 @@
 #include <map>
 #include <string>
 
-using namespace std;
-
-class PortCaps {
+namespace tmf {
   
-private:
+  class PortCaps {
+    
+  private:
+    
+    std::map<std::string, std::string> caps;
+    
+  public:
+    
+    void addCaps(const std::string& key, const std::string& val); 
+    
+    const std::map<std::string, std::string> & getCaps() const;
+    
+    bool isEqual(const PortCaps& pc) const;
+    
+  };
   
-  map<string, string> caps;
-  
-public:
-  
-  void addCaps(const string& key, const string& val); 
-  
-  const map<string, string> & getCaps() const;
-  
-  bool isEqual(const PortCaps& pc) const;
-  
-};
-
-
+}
 #endif /* PORTCAPS_H_ */

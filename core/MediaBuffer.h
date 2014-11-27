@@ -23,66 +23,70 @@
 
 #include "core/MediaSample.h"
 
-const int TMF_BUFFER_SIZE = 3;
-
-/*!
- * \class MediaBuffer
- *
- * Buffer is a circular list of data.
- * Buffer is used in output ports.
- */
-
-template <typename T>
-class MediaBuffer {
-protected:
-  MediaSample<T> * samples[TMF_BUFFER_SIZE];  /**< The array containing the samples */
-  int size;  /**< The size of the buffer */
+namespace tmf {
   
-public:
+  const int TMF_BUFFER_SIZE = 3;
   
   /*!
-   * Buffer constructor
+   * \class MediaBuffer
    *
-   * \param size the size of the buffer
+   * Buffer is a circular list of data.
+   * Buffer is used in output ports.
    */
-  MediaBuffer<T>(): size(TMF_BUFFER_SIZE) {
+  
+  template <typename T>
+  class MediaBuffer {
+  protected:
+    MediaSample<T> * samples[TMF_BUFFER_SIZE];  /**< The array containing the samples */
+    int size;  /**< The size of the buffer */
     
-    for (int i=0; i<size; i++) {
-      samples[i] = new MediaSample<T>();
+  public:
+    
+    /*!
+     * Buffer constructor
+     *
+     * \param size the size of the buffer
+     */
+    MediaBuffer<T>(): size(TMF_BUFFER_SIZE) {
+      
+      for (int i=0; i<size; i++) {
+	samples[i] = new MediaSample<T>();
+      }
     }
-  }
-  
-  void addConsumer()  {
-    for (int i=0; i<size; i++) {
-      samples[i]->addConsumer();
+    
+    void addConsumer()  {
+      for (int i=0; i<size; i++) {
+	samples[i]->addConsumer();
+      }
     }
-  }
-  
-  /*!
-   * Get the size of the buffer
-   *
-   * \return the size of the buffer
-   */ 
-  int getSize() const {return size;}
-  
-  /*!
-   * Get an element of the buffer by index
-   *
-   * \param idx the number of the element
-   * \return the element number idx
-   */
-  MediaSample<T>* at(int idx) const  { return samples[idx]; }
-  
-  /*!
-   * Buffer destructor
-   *
-   */
-  ~MediaBuffer<T>() {
-    for (int i=0; i<size; i++) {
-      delete samples[i];
+    
+    /*!
+     * Get the size of the buffer
+     *
+     * \return the size of the buffer
+     */ 
+    int getSize() const {return size;}
+    
+    /*!
+     * Get an element of the buffer by index
+     *
+     * \param idx the number of the element
+     * \return the element number idx
+     */
+    MediaSample<T>* at(int idx) const  { return samples[idx]; }
+    
+    /*!
+     * Buffer destructor
+     *
+     */
+    ~MediaBuffer<T>() {
+      for (int i=0; i<size; i++) {
+	delete samples[i];
+      }
     }
-  }
+    
+  };
   
-};
+}
 
 #endif /* MEDIABUFFER_H_ */

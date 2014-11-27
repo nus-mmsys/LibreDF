@@ -20,6 +20,9 @@
 
 #include "core/PortCaps.h"
 
+using namespace tmf;
+using namespace std;
+
 void PortCaps::addCaps(const string& key, const string& val) {
   
   caps.insert(make_pair(key,val));

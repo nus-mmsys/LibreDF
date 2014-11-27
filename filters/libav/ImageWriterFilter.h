@@ -26,14 +26,14 @@
 #include "core/Filter.h"
 #include "tools/ImageWriter.h"
 
-class ImageWriterFilter: public Filter {
+class ImageWriterFilter: public tmf::Filter {
   
 private:
   
   ImageWriter * imageWriter;
-  InputPort<RawFrame> * inputFrame;
+  tmf::InputPort<RawFrame> * inputFrame;
    
-  static  FilterRegister<ImageWriterFilter> reg;
+  static  tmf::FilterRegister<ImageWriterFilter> reg;
 public:
   ImageWriterFilter(string name);
   

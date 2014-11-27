@@ -27,13 +27,13 @@
 #include "filters/libav/types/EncodedFrame.h"
 #include "filters/libav/tools/VideoMuxer.h"
 
-class VideoMuxerFilter: public Filter {
+class VideoMuxerFilter: public tmf::Filter {
 private:
   VideoMuxer * videoMuxer;
   
-  InputPort<EncodedFrame> * inputPortEncodedFrame;
+  tmf::InputPort<EncodedFrame> * inputPortEncodedFrame;
 
-  static  FilterRegister<VideoMuxerFilter> reg;
+  static tmf::FilterRegister<VideoMuxerFilter> reg;
 public:
   
   VideoMuxerFilter(string name);

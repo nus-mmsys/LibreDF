@@ -20,6 +20,8 @@
 
 #include "filters/basic/DuoProducerFilter.h"
 
+using namespace tmf;
+using namespace std;
 
 FilterRegister<DuoProducerFilter> DuoProducerFilter::reg("duo_producer");
 

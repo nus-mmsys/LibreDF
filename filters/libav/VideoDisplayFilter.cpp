@@ -20,6 +20,9 @@
 
 #include "filters/libav/VideoDisplayFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<VideoDisplayFilter> VideoDisplayFilter::reg("video_display");
 
 VideoDisplayFilter::VideoDisplayFilter(string name) :

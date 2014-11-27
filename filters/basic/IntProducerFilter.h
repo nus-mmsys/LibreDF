@@ -31,16 +31,16 @@
 
 using namespace std;
 
-class IntProducerFilter: public Filter {
+class IntProducerFilter: public tmf::Filter {
   
 private:
   
   int number;
   int limit;
   
-  OutputPort<int> * outputInt;
+  tmf::OutputPort<int> * outputInt;
  
-  static  FilterRegister<IntProducerFilter> reg;
+  static  tmf::FilterRegister<IntProducerFilter> reg;
 public:
   
   IntProducerFilter(const string& name);

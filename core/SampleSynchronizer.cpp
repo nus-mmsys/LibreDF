@@ -20,6 +20,9 @@
 
 #include "core/SampleSynchronizer.h"
 
+using namespace std;
+using namespace tmf;
+
 SampleSynchronizer::SampleSynchronizer(): con_num(0), prod(false), consumed(0), produced(false), total_consumer(0) {
 } 
 

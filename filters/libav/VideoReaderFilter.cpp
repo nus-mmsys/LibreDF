@@ -20,6 +20,9 @@
 
 #include "filters/libav/VideoReaderFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<VideoReaderFilter> VideoReaderFilter::reg("video_reader");
 
 VideoReaderFilter::VideoReaderFilter(string name) :

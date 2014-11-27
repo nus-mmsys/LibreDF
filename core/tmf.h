@@ -26,45 +26,48 @@
 #include "core/Pipeline.h"
 #include "core/Filter.h"
 
-template<typename T>
-Filter * createFilterT(std::string name) { return new T(name); }
-
-struct Factory {
+namespace tmf {
   
-  typedef map<string, function<Filter * (std::string)>> map_type;
-  static Filter * createFilter(string const& s, const string& name) {
-    map_type::iterator it = mymap->find(s);
-    if(it == mymap->end())
-      return 0;
-    return it->second(name);
-  }
+  template<typename T>
+  Filter * createFilterT(std::string name) { return new T(name); }
   
-  static Pipeline * createPipeline(const string& name) {
-    return new Pipeline(name);
-  }
+  struct Factory {
+    
+    typedef std::map<std::string, std::function<Filter * (std::string)>> map_type;
+    static Filter * createFilter(std::string const& s, const std::string& name) {
+      map_type::iterator it = mymap->find(s);
+      if(it == mymap->end())
+	return 0;
+      return it->second(name);
+    }
+    
+    static Pipeline * createPipeline(const std::string& name) {
+      return new Pipeline(name);
+    }
+    
+    static void destroyPipeline(Pipeline * pipe) {
+      delete pipe; 
+    }
+    
+  protected:
+    static map_type * getMap() {
+      // never delete'ed. (exist until program termination)
+      // because we can't guarantee correct destruction order 
+      if(!mymap) { mymap = new map_type(); } 
+      return mymap; 
+    }
+    
+  private:
+    static map_type * mymap;
+    
+  };
   
-  static void destroyPipeline(Pipeline * pipe) {
-    delete pipe; 
-  }
+  template<typename T>
+  struct FilterRegister : Factory { 
+    FilterRegister(std::string const& s) { 
+      getMap()->insert(make_pair(s, &createFilterT<T>));
+    }
+  };
   
-protected:
-  static map_type * getMap() {
-    // never delete'ed. (exist until program termination)
-    // because we can't guarantee correct destruction order 
-    if(!mymap) { mymap = new map_type(); } 
-    return mymap; 
-  }
-  
-private:
-  static map_type * mymap;
-  
-};
-
-template<typename T>
-struct FilterRegister : Factory { 
-  FilterRegister(string const& s) { 
-    getMap()->insert(make_pair(s, &createFilterT<T>));
-  }
-};
-
+}
 #endif /* FILTERFACTORY_H_ */

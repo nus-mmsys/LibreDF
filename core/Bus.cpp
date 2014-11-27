@@ -19,3 +19,5 @@
  */
 
 #include "Bus.h"
+
+using namespace tmf;

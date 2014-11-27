@@ -20,6 +20,9 @@
 
 #include "filters/libav/VideoEncoderFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<VideoEncoderFilter> VideoEncoderFilter::reg("video_encoder");
 
 VideoEncoderFilter::VideoEncoderFilter(string name) :

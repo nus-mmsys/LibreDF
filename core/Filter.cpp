@@ -20,6 +20,9 @@
 
 #include "core/Filter.h"
 
+using namespace tmf;
+using namespace std;
+
 Filter::Filter(const string &name) : realtime(false), status(FilterStatus::OK), name(name) {
   
 }

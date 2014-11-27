@@ -20,4 +20,6 @@
 
 #include "core/tmf.h"
 
+using namespace tmf;
+
 Factory::map_type * Factory::mymap = new Factory::map_type();

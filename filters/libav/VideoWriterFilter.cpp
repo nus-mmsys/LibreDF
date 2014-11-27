@@ -20,6 +20,9 @@
 
 #include "filters/libav/VideoWriterFilter.h"
 
+using namespace tmf;
+using namespace std;
+
 FilterRegister<VideoWriterFilter> VideoWriterFilter::reg("video_writer");
 
 VideoWriterFilter::VideoWriterFilter(string name) :
