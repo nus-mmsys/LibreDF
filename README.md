@@ -12,15 +12,9 @@ In section 5 we explain how a multimedia application developers create an applic
 
 Here is how the project is organized.
 
-	build (cmake build directory)
+	build
 	core (core package)
-	doc (documentations)
-	  design
-	    tmf.docx (desing document in docx)
-	    tmf.pdf (design document in pdf)
-	    tmf.eap (UML diagrams in Enterprise Architect)
-	  latex (reference manuals in latex)
-	  html (reference manuals in html)
+	doc
 	examples (contains examples using tmf library)
 	filters (implementation of the filters)
 	  basic
