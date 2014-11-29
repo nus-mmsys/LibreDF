@@ -74,10 +74,9 @@ int VideoEncoder::init(string filename, int width, int height, int bitrate, int 
   
   codec_ctx->pix_fmt = PIX_FMT_YUV420P;
   codec_ctx->gop_size = framerate;
-  codec_ctx->max_b_frames = 3;
   
-  //av_opt_set(codec_ctx->priv_data, "preset", "ultrafast", 0);
-  //av_opt_set(codec_ctx->priv_data, "tune", "zerolatency", 0);
+  av_opt_set(codec_ctx->priv_data, "preset", "ultrafast", 0);
+  av_opt_set(codec_ctx->priv_data, "tune", "zerolatency", 0);
   //codec_ctx->max_b_frames = 0;
   
   //the global header gives access to the extradata (SPS/PPS)
@@ -108,45 +107,27 @@ int VideoEncoder::encode(RawFrame * rawFrame, EncodedFrame * encodedFrame) {
   vframe->pts = rawFrame->getNumber();
   //encodedFrame->number = rawFrame->number;
   
-  /* Encoding video */
-  
-  //int got_packet = 0;
+  int got_packet = 0;
   av_init_packet(pkt);
   
   //encodedFrame->pkt->pts = encodedFrame->pkt->dts = vframe->pkt_dts =
   //vframe->pkt_pts = vframe->pts;
   
-  //ret = avcodec_encode_video2(codec_ctx, encodedFrame->pkt, vframe,
-  //&got_packet);
+  pkt->data = encodedFrame->vbuf;
+  pkt->size = encodedFrame->vbuf_size;
   
-  out_size = avcodec_encode_video(codec_ctx, video_outbuf, video_outbuf_size,vframe);
-  if (out_size > 0) {
-    av_init_packet(pkt);
-    
-    pkt->data = video_outbuf;
-    pkt->size = out_size;
-    ret = out_size;
-  } else {
-    ret = 0;
+  ret = avcodec_encode_video2(codec_ctx, pkt, vframe, &got_packet);
+  
+  if (got_packet) {
+    vframe->pts = codec_ctx->coded_frame->pkt_pts = pkt->pts;
+    codec_ctx->coded_frame->pkt_dts = pkt->dts;
+    codec_ctx->coded_frame->key_frame = (pkt->flags & AV_PKT_FLAG_KEY) ? 1 : 0;
+  } 
+
+  if (ret < 0) {
+    cout << "Error occurred while encoding video frame.\n";
+    return -1;
   }
-  
-  /*
-   *    if (ret < 0) {
-   *    cout << "Error occurred while encoding video frame.\n";
-   *    return -1;
-   *    }
-   */
-  
-  /*
-   * if (got_packet) {
-   *  codec_ctx->coded_frame->pts = codec_ctx->coded_frame->pkt_pts =
-   *  encodedFrame->pkt->pts;
-   *  codec_ctx->coded_frame->pkt_dts = encodedFrame->pkt->dts;
-   *  codec_ctx->coded_frame->key_frame =
-   *  (encodedFrame->pkt->flags & AV_PKT_FLAG_KEY) ? 1 : 0;
-   *  }
-   */
-  
+ 
   return ret;
 }
-

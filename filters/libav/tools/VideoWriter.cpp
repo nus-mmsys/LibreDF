@@ -18,7 +18,10 @@
  *
  */
 
+#include <iostream>
+
 #include "filters/libav/tools/VideoWriter.h"
+#include <filters/libav/types/EncodedFrame.h>
 
 #define STREAM_FRAME_RATE 25
 #define STREAM_PIX_FMT PIX_FMT_YUV420P /* default pix_fmt */
@@ -31,6 +34,7 @@ VideoWriter::VideoWriter() {
   video_st = 0;
   video_outbuf = 0;
   video_outbuf_size = 0;
+  encodedFrame = new EncodedFrame();
   
 }
 
@@ -182,39 +186,37 @@ int VideoWriter::write(RawFrame * rawFrame) {
   
   int out_size, ret;
   AVCodecContext *c;
+  int got_packet = 0;
   
   AVFrame * picture = rawFrame->getFrame();
+
+  AVPacket * pkt = encodedFrame->getPacket();
   
   c = video_st->codec;
   
   picture->pts = rawFrame->getNumber();
-  
+  av_init_packet(pkt);
+  pkt->data = encodedFrame->vbuf;
+  pkt->size = encodedFrame->vbuf_size;
   
   /* encode the image */
-  out_size = avcodec_encode_video(c, video_outbuf, video_outbuf_size,
-				  picture);
+  ret = avcodec_encode_video2(c, pkt, picture, &got_packet);
   /* if zero size, it means the image was buffered */
-  if (out_size > 0) {
-    AVPacket pkt;
-    av_init_packet(&pkt);
+  if (got_packet) {
     
     if (c->coded_frame->pts != AV_NOPTS_VALUE)
-      pkt.pts = av_rescale_q(c->coded_frame->pts, c->time_base,
+      pkt->pts = av_rescale_q(c->coded_frame->pts, c->time_base,
 			     video_st->time_base);
       if (c->coded_frame->key_frame)
-	pkt.flags |= AV_PKT_FLAG_KEY;
-      pkt.stream_index = video_st->index;
-    pkt.data = video_outbuf;
-    pkt.size = out_size;
+	pkt->flags |= AV_PKT_FLAG_KEY;
+      pkt->stream_index = video_st->index;
     
     /* write the compressed frame in the media file */
-    ret = av_interleaved_write_frame(oc, &pkt);
-  } else {
-    ret = 0;
+    av_interleaved_write_frame(oc, pkt);
   }
   
-  if (ret != 0) {
-    fprintf(stderr, "Error while writing video frame\n");
+  if (ret < 0) {
+    std::cerr << "Error while writing video frame\n";
     return -1;
   }
   

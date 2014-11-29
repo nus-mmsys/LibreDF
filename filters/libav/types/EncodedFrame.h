@@ -35,15 +35,26 @@ extern "C" {
 
 class EncodedFrame: public Frame {
   
-private:
+public:
   AVPacket * data;
+  int vbuf_size;
+  uint8_t * vbuf;
 public:
   EncodedFrame() {
     data = (AVPacket *) av_malloc(sizeof(AVPacket));
+    vbuf_size = 9 * 1920 * 1080 + 10000;
+    vbuf = (uint8_t *) av_malloc(vbuf_size);
+  
+    data->size = vbuf_size;
+    data->data = vbuf;
   }
   AVPacket * getPacket() {
-    
     return data;
+  }
+  
+  ~EncodedFrame() {
+    av_free(vbuf);
+    av_free_packet(data);
   }
   
 };

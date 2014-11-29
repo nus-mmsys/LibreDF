@@ -23,6 +23,7 @@
 
 #include <string>
 #include "filters/libav/types/RawFrame.h"
+#include "filters/libav/types/EncodedFrame.h"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ private:
   uint8_t *video_outbuf;
   int video_outbuf_size;
   AVOutputFormat *fmt;
+  EncodedFrame * encodedFrame;
   
   int open_video();
   AVStream *add_video_stream(int width, int height);
