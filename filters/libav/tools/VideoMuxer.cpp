@@ -31,6 +31,7 @@ int VideoMuxer::init(string filename, int width, int height, int bitrate, int fr
   AVCodec *codec;
   AVStream *video_stream;
   AVOutputFormat *output_fmt;
+  AVDictionary* opts = 0;
   
   av_fmt_ctx = 0;
   
@@ -96,8 +97,9 @@ int VideoMuxer::init(string filename, int width, int height, int bitrate, int fr
     cout << "Cannot open output video codec\n";
     return -1;
   }
-  
-  avformat_write_header(av_fmt_ctx, NULL);
+  av_dict_set(&opts, "frag_duration", "1000000", 0);
+  av_dict_set(&opts, "movflags", "empty_moov", 0);
+  avformat_write_header(av_fmt_ctx, &opts);
   
   return 0;
 }
