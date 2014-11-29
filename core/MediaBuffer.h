@@ -25,7 +25,7 @@
 
 namespace tmf {
   
-  const int TMF_BUFFER_SIZE = 3;
+  const int TMF_BUFFER_SIZE = 8;
   
   /*!
    * \class MediaBuffer
