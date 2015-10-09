@@ -19,6 +19,7 @@
  */
 
 #include "filters/ehealth/TemperatureSensor.h"
+#include "filters/ehealth/tools/eHealth.h"
 
 using namespace tmf;
 using namespace std;
@@ -37,7 +38,7 @@ void TemperatureSensor::init() {
 void TemperatureSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
-  int temperature = 30;
+  int temperature = eHealth.getTemperature();
   
   outputTemperature->lock();
   
