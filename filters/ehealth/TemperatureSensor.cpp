@@ -38,7 +38,7 @@ void TemperatureSensor::init() {
 void TemperatureSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
-  int temperature = eHealth.getTemperature();
+  float temperature = eHealth.getTemperature();
   
   outputTemperature->lock();
   

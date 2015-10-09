@@ -21,7 +21,7 @@
 #define EHEALTHDATA_H
 
 struct TemperatureData {
-  int temp;
+  float temp;
 };
 struct PulseData {
   int pulse;
