@@ -26,18 +26,17 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = Factory::createPipeline("E-Health Monitor");
   
-  Filter* producerT = Factory::createFilter("temperature", "temperature");
-  Filter* producerP = Factory::createFilter("pulsioximeter", "pulsioximeter");
-  Filter* consumer = Factory::createFilter("ehealthdisplay", "ehealthdisplay");
+  Filter* temperature = Factory::createFilter("temperature", "temperature");
+  Filter* pulsioximeter = Factory::createFilter("pulsioximeter", "pulsioximeter");
+  Filter* display = Factory::createFilter("ehealthdisplay", "ehealthdisplay");
  
-  producerP->setProp("period", 5);
-  producerT->setProp("period", 2);
+  pulsioximeter->setProp("period", 5);
+  temperature->setProp("period", 2);
   
-  pipe->addFilters(producerT, producerP, consumer, nullptr);
+  pipe->addFilters(temperature, pulsioximeter, display, nullptr);
   
-  pipe->connectFilters(producerP, consumer);
-  pipe->connectFilters(producerP, consumer);
-  pipe->connectFilters(producerT, consumer);
+  pipe->connectFilters(pulsioximeter, display);
+  pipe->connectFilters(temperature, display);
   
   pipe->init();
   
