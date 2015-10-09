@@ -43,7 +43,7 @@ void TemperatureSensor::run() {
   outputTemperature->lock();
   
   TemperatureData * outputTemperatureData =  outputTemperature->get();
-  (*outputTemperatureData).temp = temperature;
+  (*outputTemperatureData).temperature = temperature;
   
   outputTemperature->unlock();
   

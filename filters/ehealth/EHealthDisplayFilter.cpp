@@ -30,15 +30,14 @@ FilterRegister<EHealthDisplayFilter> EHealthDisplayFilter::reg("ehealthdisplay")
 EHealthDisplayFilter::EHealthDisplayFilter(const string & name) :
 Filter(name) {
   inputTemperature = createInputPort<TemperatureData>("temperature input");
-  inputPulse = createInputPort<PulseData>("pulse input");
-  inputOxi = createInputPort<OxiData>("oxi input");
+  inputPulsioximeter = createInputPort<PulsioximeterData>("pulsioximeter input");
   
 }
 
 void EHealthDisplayFilter::init() {
   temperature = 0;
-  pulse = 0;
-  oxi = 0;
+  bpm = 0;
+  oxygen = 0;
 }
 
 void EHealthDisplayFilter::run() {
@@ -87,6 +86,5 @@ void EHealthDisplayFilter::display()
 
 EHealthDisplayFilter::~EHealthDisplayFilter() {
   destroyPort(inputTemperature);
-  destroyPort(inputPulse);
-  destroyPort(inputOxi);
+  destroyPort(inputPulsioximeter);
 }
