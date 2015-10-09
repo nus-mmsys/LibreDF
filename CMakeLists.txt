@@ -8,9 +8,9 @@ set (VERSION_MINOR 0)
 set(CMAKE_CXX_FLAGS "-std=c++11 -pthread")
 set(LIBAV_LIBRARIES m z avformat avcodec avutil avdevice swscale SDL)
 
-set(basicfilters "0")
-set(libavfilters "0")
-set(ehealthfilters "1")
+set(basicfilters "1")
+set(libavfilters "1")
+set(ehealthfilters "0")
 
 include_directories(.)
 
