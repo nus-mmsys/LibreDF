@@ -35,7 +35,8 @@ private:
   
   static tmf::FilterRegister<EHealthDisplayFilter> reg;
   
-  int temperature, pulse, oxi;
+  float temperature;
+  int pulse, oxi;
   
   std::mutex mux;
   

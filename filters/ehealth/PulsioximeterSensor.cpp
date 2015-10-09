@@ -24,6 +24,16 @@
 using namespace tmf;
 using namespace std;
 
+int cont=0;
+
+void readPulsioximeter() {
+  cont++;
+  if (cont==500) {
+    eHealth.readPulsioximeter();
+    cont = 0;
+  }
+}
+
 FilterRegister<PulsioximeterSensor> PulsioximeterSensor::reg("pulsioximeter");
 
 PulsioximeterSensor::PulsioximeterSensor(const string & name) :
@@ -36,19 +46,11 @@ void PulsioximeterSensor::init() {
   
   this->period = stoi(getProp("period"));
   
-  cont=0;
   eHealth.initPulsioximeter();
-  attachInterrupt(6, PulsioximeterSensor::readPulsioximeter, RISING);
+  attachInterrupt(6, readPulsioximeter, RISING);
 
 }
 
-void PulsioximeterSensor::readPulsioximeter() {
-  cont++;
-  if (cont==500) {
-    eHealth.readPulsioximeter();
-    cont = 0;
-  }
-}
 
 void PulsioximeterSensor::run() {
   
