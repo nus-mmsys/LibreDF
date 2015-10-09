@@ -38,8 +38,7 @@ FilterRegister<PulsioximeterSensor> PulsioximeterSensor::reg("pulsioximeter");
 
 PulsioximeterSensor::PulsioximeterSensor(const string & name) :
 Filter(name) {
-  outputPulse = createOutputPort<PulseData>("pulse output");
-  outputOxi = createOutputPort<OxiData>("oxi output");
+  output = createOutputPort<PulsioximeterData>("output");
 }
 
 void PulsioximeterSensor::init() {
@@ -51,26 +50,19 @@ void PulsioximeterSensor::init() {
 
 }
 
-
 void PulsioximeterSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
-  int pulse = eHealth.getBPM();
-  int oxi = eHealth.getOxygenSaturation();
+  int bpm = eHealth.getBPM();
+  int oxygen = eHealth.getOxygenSaturation();
   
-  outputPulse->lock();
-  PulseData * outputPulseData =  outputPulse->get();
-  (*outputPulseData).pulse = pulse;
-  outputPulse->unlock();
-  
-  outputOxi->lock();
-  OxiData * outputOxiData =  outputOxi->get();
-  (*outputOxiData).oxi = oxi;
-  outputOxi->unlock();
-  
+  output->lock();
+  PulsioximeterData * outputPulseData =  output->get();
+  (*outputPulseData).bpm = bpm;
+  (*outputPulseData).oxygen = oxygen;
+  output->unlock();
 }
 
 PulsioximeterSensor::~PulsioximeterSensor() {
-  destroyPort(outputPulse);
-  destroyPort(outputOxi);
+  destroyPort(output);
 }

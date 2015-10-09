@@ -56,7 +56,7 @@ void EHealthDisplayFilter::readTemperatureThread()
   while(true) {
     inputTemperature->lock();
     TemperatureData * inputTemperatureData = inputTemperature->get();
-    temperature = (*inputTemperatureData).temp;
+    temperature = (*inputTemperatureData).temperature;
     inputTemperature->unlock();
     display();
   }
@@ -65,15 +65,11 @@ void EHealthDisplayFilter::readTemperatureThread()
 void EHealthDisplayFilter::readPulsioxiThread()
 {
   while(true) {
-    inputPulse->lock();
-    PulseData * inputPulseData = inputPulse->get();
-    pulse = (*inputPulseData).pulse;
-    inputPulse->unlock();
-    
-    inputOxi->lock();
-    OxiData * inputOxiData = inputOxi->get();
-    oxi = (*inputOxiData).oxi;
-    inputOxi->unlock();
+    inputPulsioximeter->lock();
+    PulsioximeterData * inputPulsioxiData = inputPulsioximeter->get();
+    bpm = (*inputPulsioxiData).bpm;
+    oxygen = (*inputPulsioxiData).oxygen;
+    inputPulsioximeter->unlock();
     
     display();
   }
@@ -83,15 +79,10 @@ void EHealthDisplayFilter::display()
 {
     unique_lock<mutex> locker(mux);
     cout << "Temperature: "  << temperature << "\n"
-       << "Pulse: "  << pulse << "\n"
-       << "Oxi: " << oxi << "\n"
+       << "BPM: "  << bpm << "\n"
+       << "Oxygen: " << oxygen << "\n"
        << "===============\n";
 }
-
-
-
-
-
 
 
 EHealthDisplayFilter::~EHealthDisplayFilter() {

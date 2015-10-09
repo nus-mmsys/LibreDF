@@ -29,8 +29,7 @@
 
 struct PulsioximeterSensor: public tmf::Filter {
 private:
-  tmf::OutputPort<PulseData> * outputPulse;
-  tmf::OutputPort<OxiData> * outputOxi;
+  tmf::OutputPort<PulsioximeterData> * output;
 
   static tmf::FilterRegister<PulsioximeterSensor> reg;
   

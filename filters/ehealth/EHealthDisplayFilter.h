@@ -30,13 +30,12 @@
 struct EHealthDisplayFilter: public tmf::Filter {
 private:
   tmf::InputPort<TemperatureData> * inputTemperature;
-  tmf::InputPort<PulseData> * inputPulse;
-  tmf::InputPort<OxiData> * inputOxi;
+  tmf::InputPort<PulsioximeterData> * inputPulsioximeter;
   
   static tmf::FilterRegister<EHealthDisplayFilter> reg;
   
   float temperature;
-  int pulse, oxi;
+  int bpm, oxygen;
   
   std::mutex mux;
   

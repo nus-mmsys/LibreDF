@@ -21,13 +21,11 @@
 #define EHEALTHDATA_H
 
 struct TemperatureData {
-  float temp;
+  float temperature;
 };
-struct PulseData {
-  int pulse;
-};
-struct OxiData {
-  int oxi;
+struct PulsioximeterData {
+  int bpm;
+  int oxygen;
 };
 
 class EHealthData
