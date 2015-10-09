@@ -1,0 +1,6 @@
+cmake_minimum_required (VERSION 2.6)
+
+project (ehealth_examples)
+
+add_executable(ehealth-monitor ehealth-monitor.cpp)
+target_link_libraries(ehealth-monitor tmf)

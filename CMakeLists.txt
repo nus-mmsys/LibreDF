@@ -14,11 +14,15 @@ aux_source_directory(core core_src)
 aux_source_directory(filters/basic basicfilters_src)
 aux_source_directory(filters/libav/tools libavtools_src)
 aux_source_directory(filters/libav libavfilters_src)
+aux_source_directory(filters/ehealth/tools ehealthtools_src)
+aux_source_directory(filters/ehealth ehealthfilters_src)
 
 add_library(${PROJECT_NAME} SHARED ${core_src}
                        ${basicfilters_src}
                        ${libavtools_src}
-                       ${libavfilters_src})
+                       ${libavfilters_src}
+                       ${ehealthtools_src}
+                       ${ehealthfilters_src})
 
 
 target_link_libraries(${PROJECT_NAME} ${EXTERNAL_LIBRARIES})
