@@ -35,6 +35,9 @@ private:
   static tmf::FilterRegister<PulsioximeterSensor> reg;
   
   int period;
+  
+  int cont;
+  void readPulsioximeter();
 
 public:
   

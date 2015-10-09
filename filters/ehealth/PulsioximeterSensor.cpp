@@ -19,6 +19,7 @@
  */
 
 #include "filters/ehealth/PulsioximeterSensor.h"
+#include "filters/ehealth/tools/eHealth.h"
 
 using namespace tmf;
 using namespace std;
@@ -34,14 +35,26 @@ Filter(name) {
 void PulsioximeterSensor::init() {
   
   this->period = stoi(getProp("period"));
+  
+  cont=0;
+  eHealth.initPulsioximeter();
+  attachInterrupt(6, PulsioximeterSensor::readPulsioximeter, RISING);
 
+}
+
+void PulsioximeterSensor::readPulsioximeter() {
+  cont++;
+  if (cont==500) {
+    eHealth.readPulsioximeter();
+    cont = 0;
+  }
 }
 
 void PulsioximeterSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
-  int pulse = 80;
-  int oxi = 90;
+  int pulse = eHealth.getBPM();
+  int oxi = eHealth.getOxygenSaturation();
   
   outputPulse->lock();
   PulseData * outputPulseData =  outputPulse->get();
