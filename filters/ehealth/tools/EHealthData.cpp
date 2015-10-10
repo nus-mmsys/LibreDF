@@ -29,7 +29,7 @@ EHealthData::EHealthData(const EHealthData& other)
 
 }
 
-static std::string EHealthData::positionToString( uint8_t position ) {
+std::string EHealthData::positionToString( uint8_t position ) {
   
   switch(position) {
     case 1:

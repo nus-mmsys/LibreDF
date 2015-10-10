@@ -52,8 +52,9 @@ void PulsioximeterSensor::init() {
 
 void PulsioximeterSensor::run() {
   
-  std::this_thread::sleep_for(std::chrono::seconds(period));
-  
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+  //delay(2000);
+
   output->lock();
   PulsioximeterData * outputPulseData =  output->get();
   (*outputPulseData).bpm = eHealth.getBPM();

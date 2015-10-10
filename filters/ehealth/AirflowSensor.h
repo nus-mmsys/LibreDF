@@ -27,7 +27,6 @@
 
 #include "filters/ehealth/tools/EHealthData.h"
 
-extern SerialPi Serial;
 
 struct AirflowSensor: public tmf::Filter {
 private:
