@@ -54,11 +54,17 @@ void PulsioximeterSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(2));
   //delay(2000);
+  int bpm = eHealth.getBPM();
+  int oxygen = eHealth.getOxygenSaturation();
+
+  if (bpm < 0 | bpm > 200 | oxygen < 0 | oxygen > 200) {
+      return;
+  }  
 
   output->lock();
   PulsioximeterData * outputPulseData =  output->get();
-  (*outputPulseData).bpm = eHealth.getBPM();
-  (*outputPulseData).oxygen = eHealth.getOxygenSaturation();
+  (*outputPulseData).bpm = bpm;
+  (*outputPulseData).oxygen = oxygen;
   output->unlock();
 }
 
