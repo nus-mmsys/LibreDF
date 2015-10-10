@@ -28,6 +28,7 @@ struct Time {
   int day;
   int hour;
   int minute;
+  int meridian;
 };
 struct TemperatureData {
   float temperature;
@@ -53,10 +54,15 @@ struct GalvanicData {
   float resistance;
   float voltage;
 };
-struct BloodPressureData : Time {
+struct BloodPressureData {
   int systolic;
   int diastolic;
   int pulse;
+  Time t;
+};
+struct GlucometerData {
+  int glucose;
+  Time t;
 };
 
 

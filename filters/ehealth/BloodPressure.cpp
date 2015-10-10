@@ -50,11 +50,11 @@ void BloodPressureSensor::run() {
     
     outputBloodPressure->lock();    
     BloodPressureData * outputBloodPressureData =  outputBloodPressure->get();
-    (*outputBloodPressureData).day = eHealth.bloodPressureDataVector[i].day;
-    (*outputBloodPressureData).month = eHealth.bloodPressureDataVector[i].month;
-    (*outputBloodPressureData).year = eHealth.bloodPressureDataVector[i].year;
-    (*outputBloodPressureData).hour = eHealth.bloodPressureDataVector[i].hour;
-    (*outputBloodPressureData).minute = eHealth.bloodPressureDataVector[i].minutes;
+    (*outputBloodPressureData).t.day = eHealth.bloodPressureDataVector[i].day;
+    (*outputBloodPressureData).t.month = eHealth.bloodPressureDataVector[i].month;
+    (*outputBloodPressureData).t.year = eHealth.bloodPressureDataVector[i].year;
+    (*outputBloodPressureData).t.hour = eHealth.bloodPressureDataVector[i].hour;
+    (*outputBloodPressureData).t.minute = eHealth.bloodPressureDataVector[i].minutes;
     (*outputBloodPressureData).diastolic = eHealth.bloodPressureDataVector[i].diastolic;
     (*outputBloodPressureData).systolic = eHealth.bloodPressureDataVector[i].systolic;
     (*outputBloodPressureData).pulse = eHealth.bloodPressureDataVector[i].pulse;
