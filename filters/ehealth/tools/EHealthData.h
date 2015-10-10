@@ -22,6 +22,13 @@
 
 #include <string>
 
+struct Time {
+  int year;
+  int month;
+  int day;
+  int hour;
+  int minute;
+};
 struct TemperatureData {
   float temperature;
 };
@@ -45,6 +52,11 @@ struct GalvanicData {
   float conductance;
   float resistance;
   float voltage;
+};
+struct BloodPressureData : Time {
+  int systolic;
+  int diastolic;
+  int pulse;
 };
 
 
