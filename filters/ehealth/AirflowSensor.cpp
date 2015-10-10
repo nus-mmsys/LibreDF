@@ -18,49 +18,36 @@
  *
  */
 
-#include "filters/ehealth/PulsioximeterSensor.h"
+#include "filters/ehealth/AirflowSensor.h"
 #include "filters/ehealth/tools/eHealth.h"
 
 using namespace tmf;
 using namespace std;
 
-int cont=0;
+FilterRegister<AirflowSensor> AirflowSensor::reg("airflow");
 
-void readPulsioximeter() {
-  cont++;
-  if (cont==50) {
-    eHealth.readPulsioximeter();
-    cont = 0;
-  }
-}
-
-FilterRegister<PulsioximeterSensor> PulsioximeterSensor::reg("pulsioximeter");
-
-PulsioximeterSensor::PulsioximeterSensor(const string & name) :
+AirflowSensor::AirflowSensor(const string & name) :
 Filter(name) {
-  output = createOutputPort<PulsioximeterData>("output");
+  outputAirflow = createOutputPort<AirflowData>("Airflow output");
 }
 
-void PulsioximeterSensor::init() {
-  
+void AirflowSensor::init() {
   this->period = stoi(getProp("period"));
-  
-  eHealth.initPulsioximeter();
-  attachInterrupt(6, readPulsioximeter, RISING);
-
 }
 
-void PulsioximeterSensor::run() {
+void AirflowSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
   
-  output->lock();
-  PulsioximeterData * outputPulseData =  output->get();
-  (*outputPulseData).bpm = eHealth.getBPM();
-  (*outputPulseData).oxygen = eHealth.getOxygenSaturation();
-  output->unlock();
+  outputAirflow->lock();
+  
+  AirflowData * outputAirflowData =  outputAirflow->get();
+  (*outputAirflowData).airflow = eHealth.getAirFlow();
+  
+  outputAirflow->unlock();
+  
 }
 
-PulsioximeterSensor::~PulsioximeterSensor() {
-  destroyPort(output);
+AirflowSensor::~AirflowSensor() {
+  destroyPort(outputAirflow);
 }

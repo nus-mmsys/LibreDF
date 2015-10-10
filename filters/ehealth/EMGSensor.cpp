@@ -18,49 +18,37 @@
  *
  */
 
-#include "filters/ehealth/PulsioximeterSensor.h"
+#include "filters/ehealth/EMGSensor.h"
 #include "filters/ehealth/tools/eHealth.h"
 
 using namespace tmf;
 using namespace std;
 
-int cont=0;
+FilterRegister<EMGSensor> EMGSensor::reg("ecg");
 
-void readPulsioximeter() {
-  cont++;
-  if (cont==50) {
-    eHealth.readPulsioximeter();
-    cont = 0;
-  }
-}
-
-FilterRegister<PulsioximeterSensor> PulsioximeterSensor::reg("pulsioximeter");
-
-PulsioximeterSensor::PulsioximeterSensor(const string & name) :
+EMGSensor::EMGSensor(const string & name) :
 Filter(name) {
-  output = createOutputPort<PulsioximeterData>("output");
+  outputEMG = createOutputPort<EMGData>("EMG output");
 }
 
-void PulsioximeterSensor::init() {
-  
+void EMGSensor::init() {
+  Serial.begin(115200);
   this->period = stoi(getProp("period"));
-  
-  eHealth.initPulsioximeter();
-  attachInterrupt(6, readPulsioximeter, RISING);
-
 }
 
-void PulsioximeterSensor::run() {
+void EMGSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
   
-  output->lock();
-  PulsioximeterData * outputPulseData =  output->get();
-  (*outputPulseData).bpm = eHealth.getBPM();
-  (*outputPulseData).oxygen = eHealth.getOxygenSaturation();
-  output->unlock();
+  outputEMG->lock();
+  
+  EMGData * outputEMGData =  outputEMG->get();
+  (*outputEMGData).emg = eHealth.getEMG();
+  
+  outputEMG->unlock();
+  
 }
 
-PulsioximeterSensor::~PulsioximeterSensor() {
-  destroyPort(output);
+EMGSensor::~EMGSensor() {
+  destroyPort(outputEMG);
 }

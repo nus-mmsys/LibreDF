@@ -24,12 +24,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  Version 0.1
- *  Author: Ahmad Saad & Luis Martín & Anartz Nuin
+ *  Version 2.0
+ *  Author: Luis Martín & Ahmad Saad & Anartz Nuin
  */
 
-#ifndef eHealth_h
-#define eHealth_h
+
+// Ensure this library description is only included once
+#ifndef eHealthClass_h
+#define eHealthClass_h
 
 #include "arduPi.h"
 #include <math.h>
@@ -49,7 +51,7 @@ class eHealthClass {
 	//***************************************************************
 	// Public Methods												*
 	//***************************************************************
-		
+
 		//! Initializes the position sensor and configure some values.
 		/*!
 		\param void
@@ -58,9 +60,9 @@ class eHealthClass {
 		 		
 		//! Initializes the BloodPressureSensor sensor and configure some values
 		/*!
-		\param float parameter with correction value
+		\param void
 		\return void
-		*/	void initBloodPressureSensor(float parameter);
+		*/	void readBloodPressureSensor(void);
 		
 		//! Initializes the pulsioximeter sensor and configure some values.
 		/*!
@@ -110,6 +112,12 @@ class eHealthClass {
 		\return float : The analogic value (0-5V).  
 		*/	float getECG(void);
 
+		//! Returns an analogic value to represent the Electromyography.
+		/*!
+		\param void
+		\return float : The analogic value (0-5V).  
+		*/	int getEMG(void);
+
 		//! Returns the body position.
 		/*!
 		\param void   
@@ -125,13 +133,13 @@ class eHealthClass {
 		/*!
 		\param void   
 		\return int : The systolic pressure.
-		*/	int getSystolicPressure(void);
+		*/	int getSystolicPressure(int i);
 
 		//! Returns the  value of the diastolic pressure.
 		/*!
 		\param void   
 		\return int : The diastolic pressure.
-		*/	int getDiastolicPressure(void);
+		*/	int getDiastolicPressure(int i);
 
 		//! Returns an analogic value to represent the air flow.
 		/*!
@@ -169,6 +177,12 @@ class eHealthClass {
 		\return int : length of data 
 		*/	int getGlucometerLength(void);
 
+		//!Returns the number of data stored in the blood pressure sensor.
+		/*!
+		\param void
+		\return int : length of data 
+		*/	int getBloodPressureLength(void);
+
 		//!  Returns the library version 
 		/*!
 		\param void
@@ -179,7 +193,7 @@ class eHealthClass {
 		/*!
 		 \param int month in numerical format.
 		 \return String with the month characters (January, February...).
-		 */ const char* numberToMonth(int month);
+		 */	const char* numberToMonth(int month);
 
 		//!Struct to store data of the glucometer.
 		struct glucoseData {
@@ -194,6 +208,21 @@ class eHealthClass {
 
 		//!Vector to store the glucometer measures and dates.
 		glucoseData glucoseDataVector[8];
+
+		//!Struct to store data of the blood pressure sensor.
+		struct bloodPressureData {
+			uint8_t year; 
+			uint8_t month;
+			uint8_t day;
+			uint8_t hour;
+			uint8_t minutes;
+			uint8_t systolic;
+			uint8_t diastolic;
+			uint8_t pulse;
+		};
+
+		//!Vector to store the blood pressure measures and dates.
+		bloodPressureData bloodPressureDataVector[8];
 
 	private:
 
@@ -235,6 +264,8 @@ class eHealthClass {
 							uint8_t F,
 							uint8_t G );
 
+		//! Assigns a value depending on body position.
+		char swap(char _data);
 
 	//***************************************************************
 	// Private Variables											*
@@ -269,7 +300,6 @@ class eHealthClass {
 
 		//!It stores the number of data of the glucometer.
 		uint8_t length;
-		
 };
 
 extern eHealthClass eHealth;

@@ -18,49 +18,38 @@
  *
  */
 
-#include "filters/ehealth/PulsioximeterSensor.h"
+#include "filters/ehealth/GalvanicSensor.h"
 #include "filters/ehealth/tools/eHealth.h"
 
 using namespace tmf;
 using namespace std;
 
-int cont=0;
+FilterRegister<GalvanicSensor> GalvanicSensor::reg("galvanic");
 
-void readPulsioximeter() {
-  cont++;
-  if (cont==50) {
-    eHealth.readPulsioximeter();
-    cont = 0;
-  }
-}
-
-FilterRegister<PulsioximeterSensor> PulsioximeterSensor::reg("pulsioximeter");
-
-PulsioximeterSensor::PulsioximeterSensor(const string & name) :
+GalvanicSensor::GalvanicSensor(const string & name) :
 Filter(name) {
-  output = createOutputPort<PulsioximeterData>("output");
+  outputGalvanic = createOutputPort<GalvanicData>("galvanic output");
 }
 
-void PulsioximeterSensor::init() {
-  
+void GalvanicSensor::init() {
   this->period = stoi(getProp("period"));
-  
-  eHealth.initPulsioximeter();
-  attachInterrupt(6, readPulsioximeter, RISING);
-
 }
 
-void PulsioximeterSensor::run() {
+void GalvanicSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
   
-  output->lock();
-  PulsioximeterData * outputPulseData =  output->get();
-  (*outputPulseData).bpm = eHealth.getBPM();
-  (*outputPulseData).oxygen = eHealth.getOxygenSaturation();
-  output->unlock();
+  outputGalvanic->lock();
+  
+  GalvanicData * outputGalvanicData =  outputGalvanic->get();
+  (*outputGalvanicData).conductance = eHealth.getSkinConductance();
+  (*outputGalvanicData).resistance = eHealth.getSkinResistance();
+  (*outputGalvanicData).voltage = eHealth.getSkinConductanceVoltage();
+  
+  outputGalvanic->unlock();
+  
 }
 
-PulsioximeterSensor::~PulsioximeterSensor() {
-  destroyPort(output);
+GalvanicSensor::~GalvanicSensor() {
+  destroyPort(outputGalvanic);
 }

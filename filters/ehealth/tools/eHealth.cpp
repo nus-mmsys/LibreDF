@@ -24,20 +24,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  Version 0.1
- *  Author: Ahmad Saad & Luis Martín & Anartz Nuin
+ *  Version 2.4
+ *  Author: Luis Martín & Ahmad Saad & Anartz Nuin
  */
 
 
 // include this library's description file
 #include "eHealth.h"
 
+
 //***************************************************************
 // Accelerometer Variables and definitions						*
 //***************************************************************
 
-	//! not the wire library, can't use pull-ups
-	//#include "utils/i2c.h"
 	
 	//! Breakout board defaults to 1, set to 0 if SA0 jumper is set
 	#define SA0 1  
@@ -57,19 +56,6 @@
 	//! 0=800Hz, 1=400, 2=200, 3=100, 4=50, 5=12.5, 6=6.25, 7=1.56
 	const byte dataRate = 0;
 
-//***************************************************************
-// BloodPressureSensor tables											*
-//***************************************************************
-
-	const int pressures[] = {85, 87, 88, 90, 91, 92, 94, 96, 98, 100, 101, 102, 103, 105, 106, 107, 108, 110, 112, 114, 122, 123, 124, 131, 137, 147, 153, 156 };                   
-	//!                 	 |   |   |	 |   |   |   |   |   |    |    |    |    |    |     |    |    |    |    |    |   |    |    |    |    |    |    |    |                                    
-	//!                   	 0   1   2   3   4   5   6   7   8    9   10   11   12   13    14   15    16   17   18  19  20   21   22   23   24   25   26   27 
-
-
-	const double voltages[] = {1.120, 1.16, 1.1685, 1.180, 1.1860 , 1.21, 1.2227, 1.24, 1.254, 1.265, 1.27, 1.275, 1.2825, 1.290, 1.296, 1.316, 1.33 , 1.34 ,1.37, 1.39, 1.4535, 1.46, 1.465, 1.51, 1.557, 1.64, 1.68, 1.71}; 
-	//!							|      |      |      |       |      |      |       |      |     |      |       |     |      |     |      |      |     |      |       |     |     |      |     |       |     |     |     |            
-	//!							0      1      2      3       4      5      6       7      8     9     10      11     12     13    14     15     16    17    18      19      20    21    22     23    24     25    26    27
-
 
 //***************************************************************
 // Constructor of the class										*
@@ -82,7 +68,6 @@
 //***************************************************************
 // Public Methods												*
 //***************************************************************
-
 
 	//!******************************************************************************
 	//!	Name:	initPositionSensor()												*
@@ -114,97 +99,61 @@
 
 
 	//!******************************************************************************
-	//!	Name:	initBloodPressureSensor()											*
+	//!	Name:	readBloodPressureSensor()											*
 	//!	Description: Initializes the BloodPressureSensor sensor.					*
-	//!	Param : floar parameter with correction value 								*
+	//!	Param : void																*
 	//!	Returns: void																*
 	//!	Example: eHealth.initBloodPressureSensor();									*
 	//!******************************************************************************
 
-	void eHealthClass::initBloodPressureSensor(float parameter)
+	void eHealthClass::readBloodPressureSensor(void)
 	{	
+		unsigned char _data;
+		int ia=0;
+		length=0;
 
-		float pressureMAPactual = 0;
-		float pressureMAP = 0;
-		float pressure = 0; //Pressure sensor lecture
-		float pulse = 0; //Voltage pulses
-		float voltage = 0;
-		unsigned char state = 0;
-		int  initial = 0;
-		float pressuremmHG = 10;
-		unsigned int i_range = 0; 
-		boolean rank = 0; 
+		Serial.begin(19200);
+	 	Serial.write(0xAA);
+		delayMicroseconds(1);
+	 	Serial.write(0x55);
+		delayMicroseconds(1);
+		Serial.write(0x88);
+	 	delay(2500);
+		Serial.print("\n");
 
-		double pastVoltages[30];
-		double furtherVoltages[30];
-		double aux[50];
-		
-		//initial = digitalRead(5);    
+		if (Serial.available() > 0) { // The protocol sends the measures 
 
-		if (initial == 0) {
-			char cont = 0;
-			printf("Measurement started ...............");
-			printf("Wait please................");    
-			state = 1;    
-			delay(3000);  // Wait for 5 seconds to eliminate noise measurement 
-			pressureMAPactual=0;
-			pressure = 0;
-    
-			while (initial == 0) {
-				pressure = analogRead(4);// ----> Reading pressure sensor
-				//pulse = analogRead(5); // ----> Reading voltage pulses       
-				//initial = digitalRead(5); // ----> Start measure
-			
-				if ( cont == 30 ) {
-					cont = 0;
-				}
-			
-				aux[cont] = ( pressure * 5 ) / 1023; 
-				cont ++;
-				
-				if (pressureMAPactual < pulse) { // Save max value
-					pressureMAPactual = pulse;
-					pressureMAP = pressure;
-
-					for (int i = 0; i<30; i++) { 
-						pressure = analogRead(4);// Reading pressure sensor
-						furtherVoltages[i] = (pressure * 5) / 1023;
-						pastVoltages[i] = aux[i];
-					}
-				}
+			for (int i = 0; i<4; i++){ // Read four dummy data	
+				Serial.read();
 			}
-		
+			
+ 			while(_data != 0xD1){
+  				if (ia==0){
+   				_data = Serial.read();
+  				}
 
-			voltage = 0; // Clear variable
-	  
-			for (int i = 0; i <30; i++) {
-				voltage = voltage + furtherVoltages[i] + pastVoltages[i]; 
-			} // Average value
-	  
-			voltage = voltage / 60 + parameter ; // Correction value
-
-			if (state == 1) { 
-				i_range = 0; 
-				rank = 0;
-
-				while ((rank == 0) & (i_range <27)) { // Searching for range int table of voltages
-					if (voltages[i_range] >= voltage ) { 
-						rank = 1;
-					}
-					i_range++; 
-				}
-				i_range--;
-				pressuremmHG = pressures[i_range-1] + (voltage - voltages[i_range-1]) * 100; // Asign pressure LUP.
-
-				systolic = (int(pressuremmHG));
-				diastolic = (int((pressuremmHG * 0.54) / 0.85 ) );
-				state = 0; 
-				pressureMAP = 0;
-				pressureMAPactual=0;
-				pressuremmHG = 0;
-				voltage = 0;
-				initial = 1;
+			bloodPressureDataVector[length].year = swap(_data);
+			bloodPressureDataVector[length].month = swap(Serial.read());
+			bloodPressureDataVector[length].day = swap(Serial.read());
+			bloodPressureDataVector[length].hour = swap(Serial.read());
+			bloodPressureDataVector[length].minutes = swap(Serial.read());
+			bloodPressureDataVector[length].systolic = swap(Serial.read());
+			bloodPressureDataVector[length].diastolic = swap(Serial.read());
+			bloodPressureDataVector[length].pulse = swap(Serial.read());
+			length++;
+			ia=1;
+			for (int i = 0; i<4; i++){ // CheckSum 1
+				Serial.read();
 			}
+			
+			_data = Serial.read();
+			}
+
+
+ 			for (int i = 0; i<3; i++){ // CheckSum 2
+  				Serial.read();
+ 			}	
+			
 		}
 	}
 
@@ -227,7 +176,6 @@
 		pinMode( 7, INPUT);		pinMode( 6, INPUT);
 		// attach a PinChange Interrupt to our pin on the rising edge
 	}
-
 	
 	//!******************************************************************************
 	//!		Name:	getTemperature()												*
@@ -249,7 +197,6 @@
 		float Rc=4700.0; //Wheatstone bridge resistance.
 		float Rb=821.0; //Wheatstone bridge resistance.
 		int sensorValue = analogRead(3);
-		//printf("Valor del sensor %d", sensorValue);
 		
 		float voltage2=((float)sensorValue*Vcc)/1023; // binary to voltage conversion  
 
@@ -409,11 +356,29 @@
 
 	float eHealthClass::getECG(void)
 	{
-	float analog0;
+		float analog0;
 		// Read from analogic in. 
 		analog0=analogRead(0);
 		// binary to voltage conversion
-		return analog0 = (float)analog0 * 5 / 1023.0;
+		return analog0 = (float)analog0 * 5 / 1023.0;   
+	}
+	
+
+	//!******************************************************************************
+	//!		Name:	getEMG()														*
+	//!		Description: Returns an analogic value to represent the EMG.			*
+	//!		Param : void															*
+	//!		Returns: float with the EMG value in voltage			 				*
+	//!		Example: float volt = eHealth.getEMG();									*
+	//!******************************************************************************
+
+	int eHealthClass::getEMG(void)
+	{
+		int analog0;
+		// Read from analogic in. 
+		analog0=analogRead(0);
+		// binary to voltage conversion
+		return analog0;   
 	}
 	
 
@@ -430,13 +395,11 @@
 		static byte source;
 
 		/* If int1 goes high, all data registers have new data */
-		if (digitalRead(int1Pin)) {// Interrupt pin, should probably attach to interrupt function
-		
-			readRegisters(0x01, 6, data);  // Read the six data registers into data array.
+		if (digitalRead(int1Pin)) {// Interrupt pin, should probably attach to interrupt function	
+			readRegisters(0x01, 6, &data[0]);  // Read the six data registers into data array.
 			
-			
-		/* For loop to calculate 12-bit ADC and g value for each axis */
-		for (int i=0; i<6; i+=2) {
+			/* For loop to calculate 12-bit ADC and g value for each axis */
+			for (int i=0; i<6; i+=2) {
 				accelCount[i/2] = ((data[i] << 8) | data[i+1]) >> 4;  // Turn the MSB and LSB into a 12-bit value
 				
 					if (data[i] > 0x7F) {
@@ -460,7 +423,7 @@
 
 		delay(100);
   
-		return bodyPos;
+		return bodyPos; 
 	}
 
 
@@ -472,9 +435,9 @@
 	//!		Example: int systolic = eHealth.getSystolicPressure();					*
 	//!******************************************************************************
 
-	int eHealthClass::getSystolicPressure(void)
+	int eHealthClass::getSystolicPressure(int i)
 	{
-		return systolic;
+		return bloodPressureDataVector[i].systolic;
 	}
 
 
@@ -486,9 +449,9 @@
 	//!		Example: int diastolic = eHealth.getDiastolicPressure();				*
 	//!******************************************************************************
 
-	int eHealthClass::getDiastolicPressure(void)
+	int eHealthClass::getDiastolicPressure(int i)
 	{
-		return diastolic;
+		return bloodPressureDataVector[i].diastolic;
 	}
 
 
@@ -517,16 +480,16 @@
 
 	void eHealthClass::printPosition( uint8_t position )
 	{
-		if (position == 1) {
-			printf("Supine position\n");    
+	if (position == 1) {
+			printf("Prone position\n");    
 		} else if (position == 2) {
-			printf("Left lateral decubitus\n");
-		} else if (position == 3) {
-			printf("Rigth lateral decubitus\n");
-		} else if (position == 4) {
-			printf("Prone position\n");
-		} else if (position == 5) {
 			printf("Stand or sit position\n");
+		} else if (position == 3) {
+			printf("Left lateral decubitus\n");
+		} else if (position == 4) {
+			printf("Supine position\n");
+		} else if (position == 5) {
+			printf("Rigth lateral decubitus\n");
 		} else  {
 			printf("non-defined position\n");
 		}
@@ -543,7 +506,7 @@
  
 	void eHealthClass::readPulsioximeter(void)
 	{
-		uint8_t digito[] = {0,0,0,0,0,0};
+		uint8_t digito[200];
 
 		uint8_t A = 0;
 		uint8_t B = 0;
@@ -553,7 +516,7 @@
 		uint8_t F = 0;
 		uint8_t G = 0;
 
-		for (int i = 0; i<6 ; i++) { // read all the led's of the module
+		for (int i = 0; i<199 ; i++) { // read all the led's of the module
 			A = !digitalRead(13);
 			B = !digitalRead(12);
 			C = !digitalRead(11);
@@ -563,13 +526,66 @@
 			G = !digitalRead(7);
 			
 			digito[i] = segToNumber(A, B, C ,D ,E, F,G);    
-			delayMicroseconds(2800); //2800 microseconds
+			delayMicroseconds(43); //300 microseconds			
+			
 		}
-
-			SPO2 = 10 * digito[5] + digito[4];
-			BPM  = 100 * digito[2] + 10 * digito[1] + digito[0];
+		/*
+		for(int i = 0; i<199; i++){
+			 printf("%d", digito[i]);
+			 //delay(1);
+			
+		}
+		printf("\n");
+		
+		delay(500);
+		*/
+		
+		if((digito[142] != 0) &&(digito[181] == 0)){ // case 2
+		
+			SPO2 = 10 * digito[142] + digito[59];
+			
+			BPM  = 100 * digito[137] + 10 * digito[10] + digito[2];
+		}
+		
+		else if((digito[136] != 0) &&(digito[62] == 0)){ // case 3
+		
+			SPO2 = 10 * digito[179] + digito[136];
+			
+			BPM  = 100 * digito[127] + 10 * digito[10] + digito[2];
+		}
+		
+		
+		else if((digito[145] != 0) &&(digito[62] == 0)){ // case 4
+			SPO2 = 10 * digito[181] + digito[142];
+			
+			BPM  = 100 * digito[50] + 10 * digito[10] + digito[2]; 
+		}
+		
+		
+		else if((digito[53] != 0) &&(digito[62] == 0)){ // case 5
+		
+			SPO2 = 10 * digito[179] + digito[53];
+			
+			BPM  = 100 * digito[41] + 10 * digito[10] + digito[2];
+		}
+		
+		
+		else if((digito[174] != 0) &&(digito[181] == 0)){ // case 6
+		
+			SPO2 = 10 * digito[179] + digito[59];
+			
+			BPM  = 100 * digito[50] + 10 * digito[10] + digito[2];
+		}
+		
+		
+		else{   //default case
+		
+			SPO2 = 10 * digito[179] + digito[59];
+			
+			BPM  = 100 * digito[50] + 10 * digito[10] + digito[2];
+		}
 	}
-	
+
 
 	//!******************************************************************************
 	//!		Name: airflowWave()														*
@@ -601,6 +617,10 @@
 	
 	void eHealthClass::readGlucometer(void)
 	{
+		
+		// Configuring digital pins like INPUTS
+		pinMode(5, OUTPUT);
+		digitalWrite(5, HIGH);
 		delay(100);
 		Serial.begin(1200);
 		delay(100);
@@ -608,27 +628,29 @@
 		Serial.print("U"); // Start communication command. 
 		delay(1000); // Wait while receiving data.
 
-		Serial.print("\n"); 
+		Serial.print("\n");
 		if (Serial.available() > 0) {
-			length = Serial.read();// The protocol sends the number of measures 
-			Serial.read(); // Read one dummy data
+			length = Serial.read();// The protocol sends the number of measures
+			
+			if (Serial.available() > 0) Serial.read(); // Read one dummy data
 
-			for (int i = 0; i<length; i++) { // The protocol sends data in this order 
-				glucoseDataVector[i].year = Serial.read(); 
-				glucoseDataVector[i].month = Serial.read();
-				glucoseDataVector[i].day = Serial.read();
-				glucoseDataVector[i].hour = Serial.read();
-				glucoseDataVector[i].minutes = Serial.read();
+			for (int i = 0; i<length; i++) { // The protocol sends data in this order
+				if (Serial.available() > 0) glucoseDataVector[i].year = Serial.read();
+				if (Serial.available() > 0) glucoseDataVector[i].month = Serial.read();
+				if (Serial.available() > 0) glucoseDataVector[i].day = Serial.read();
+				if (Serial.available() > 0) glucoseDataVector[i].hour = Serial.read();
+				if (Serial.available() > 0) glucoseDataVector[i].minutes = Serial.read();
 
-				Serial.read(); // Byte of separation must be 0x00.
+				if (Serial.available() > 0)Serial.read(); // Byte of separation must be 0x00.
 
-				glucoseDataVector[i].glucose = Serial.read();
-				glucoseDataVector[i].meridian = Serial.read();
+				if (Serial.available() > 0) glucoseDataVector[i].glucose = Serial.read();
+				if (Serial.available() > 0) glucoseDataVector[i].meridian = Serial.read();
 
-				Serial.read(); // CheckSum 1
-				Serial.read(); // CheckSum 2			
+				if (Serial.available() > 0) Serial.read(); // CheckSum 1
+				if (Serial.available() > 0) Serial.read(); // CheckSum 2			
 			}
 		}
+		digitalWrite(5, LOW);
 	}
 
 	//!******************************************************************************
@@ -643,6 +665,21 @@
 	{
 		return length;
 	}
+
+	//!******************************************************************************
+	//!		Name: getBloodPressureLength()											*
+	//!		Description: it returns the number of data stored in					*
+	//!		the blood pressure sensor												*
+	//!		Param : void															*
+	//!		Returns: uint8_t with length											*
+	//!		Example: int length = eHealth.getBloodPressureLength();					*
+	//!******************************************************************************
+
+	int eHealthClass::getBloodPressureLength(void)
+	{
+		return length;
+	}
+
 
 	//!******************************************************************************
 	//!		Name: numberToMonth()													*
@@ -679,7 +716,7 @@
 
 	int eHealthClass::version(void)
 	{
-		return 1;
+		return 2.0;
 	}
 
 
@@ -722,7 +759,7 @@
 		else 
 			position[2] = 1;
  
-		bodyPosition();
+		bodyPosition();  
 	}
 
 /*******************************************************************************************************/
@@ -833,9 +870,9 @@
 		} else if (( position[0] == 3 ) && (position[1] == 1) && (position [2] == 0)) {
 			bodyPos = 1;
 		} else if (( position[0] == 2 ) && (position[1] == 0) && (position [2] == 0)) {
-			bodyPos = 1;
+			bodyPos = 5;
 		} else if (( position[0] == 2 ) && (position[1] == 1) && (position [2] == 1)) {
-			bodyPos = 1;
+			bodyPos = 5;
 		} else if (( position[0] == 2 ) && (position[1] == 1) && (position [2] == 0)) {
 			bodyPos = 1; 
 			
@@ -848,16 +885,21 @@
 			bodyPos = 3;
 		} else if (( position[0] == 1 ) && (position[1] == 0) && (position [2] == 1)) {
 			bodyPos = 3;
+		} else if (( position[0] == 3 ) && (position[1] == 0) && (position [2] == 1)) {
+			bodyPos = 3;
+		} else if (( position[0] == 3 ) && (position[1] == 1) && (position [2] == 1)) {
+			bodyPos = 3;
 		  
 		} else if (( position[0] == 1 ) && (position[1] == 0) && (position [2] == 0)) {
 			bodyPos = 4;
 		} else if (( position[0] == 3 ) && (position[1] == 0) && (position [2] == 0)) {
 			bodyPos = 4;
-			
+		/*
 		} else if (( position[0] == 3 ) && (position[1] == 0) && (position [2] == 1)) {
 			bodyPos = 5;
 		} else if (( position[0] == 3 ) && (position[1] == 1) && (position [2] == 1)) {
 			bodyPos = 5;
+		*/
 		} else if (( position[0] == 2 ) && (position[1] == 0) && (position [2] == 1)) {
 			bodyPos = 5;
 		} else  { 
@@ -904,6 +946,17 @@
 		} else  {
 			return 0;
 		}
+	}
+
+/*******************************************************************************************************/
+
+	//! Swap data for blood pressure mesure
+	
+	char eHealthClass::swap(char _data)
+	{
+		char highBits = (_data & 0xF0) / 16; 
+ 		char lowBits =  (_data & 0x0F) * 16; 
+  		return ~(highBits + lowBits);
 	}
 
 /*******************************************************************************************************/

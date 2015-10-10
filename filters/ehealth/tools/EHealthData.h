@@ -20,6 +20,8 @@
 #ifndef EHEALTHDATA_H
 #define EHEALTHDATA_H
 
+#include <string>
+
 struct TemperatureData {
   float temperature;
 };
@@ -27,6 +29,24 @@ struct PulsioximeterData {
   int bpm;
   int oxygen;
 };
+struct ECGData {
+  float ecg;
+};
+struct EMGData {
+  int emg;
+};
+struct AirflowData {
+  int airflow;
+};
+struct PositionData {
+  uint8_t position;
+};
+struct GalvanicData {
+  float conductance;
+  float resistance;
+  float voltage;
+};
+
 
 class EHealthData
 {
@@ -34,6 +54,7 @@ public:
 EHealthData();
 EHealthData(const EHealthData& other);
 ~EHealthData();
+static std::string positionToString( uint8_t position);
 };
 
 #endif // EHEALTHDATA_H

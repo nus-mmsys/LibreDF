@@ -18,49 +18,38 @@
  *
  */
 
-#include "filters/ehealth/PulsioximeterSensor.h"
+#include "filters/ehealth/PositionSensor.h"
 #include "filters/ehealth/tools/eHealth.h"
 
 using namespace tmf;
 using namespace std;
 
-int cont=0;
+FilterRegister<PositionSensor> PositionSensor::reg("position");
 
-void readPulsioximeter() {
-  cont++;
-  if (cont==50) {
-    eHealth.readPulsioximeter();
-    cont = 0;
-  }
-}
-
-FilterRegister<PulsioximeterSensor> PulsioximeterSensor::reg("pulsioximeter");
-
-PulsioximeterSensor::PulsioximeterSensor(const string & name) :
+PositionSensor::PositionSensor(const string & name) :
 Filter(name) {
-  output = createOutputPort<PulsioximeterData>("output");
+  outputPosition = createOutputPort<PositionData>("position output");
 }
 
-void PulsioximeterSensor::init() {
+void PositionSensor::init() {
+  eHealth.initPositionSensor();
   
   this->period = stoi(getProp("period"));
-  
-  eHealth.initPulsioximeter();
-  attachInterrupt(6, readPulsioximeter, RISING);
-
 }
 
-void PulsioximeterSensor::run() {
+void PositionSensor::run() {
   
   std::this_thread::sleep_for(std::chrono::seconds(period));
   
-  output->lock();
-  PulsioximeterData * outputPulseData =  output->get();
-  (*outputPulseData).bpm = eHealth.getBPM();
-  (*outputPulseData).oxygen = eHealth.getOxygenSaturation();
-  output->unlock();
+  outputPosition->lock();
+  
+  PositionData * outputPositionData =  outputPosition->get();
+  (*outputPositionData).position = eHealth.getBodyPosition();
+  
+  outputPosition->unlock();
+  
 }
 
-PulsioximeterSensor::~PulsioximeterSensor() {
-  destroyPort(output);
+PositionSensor::~PositionSensor() {
+  destroyPort(outputPosition);
 }
