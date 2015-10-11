@@ -58,25 +58,62 @@ void SensorReader::init() {
 
 void SensorReader::run() {
   
-  std::thread airflowThread = thread(&SensorReader::readAirflowThread, this);
-  std::thread bloodPressureThread = thread(&SensorReader::readBloodPressureThread, this);
-  std::thread ecgThread = thread(&SensorReader::readECGThread, this);
-  std::thread emgThread = thread(&SensorReader::readEMGThread, this);
-  std::thread galvanicThread = thread(&SensorReader::readGalvanicThread, this);
-  std::thread glucometerThread = thread(&SensorReader::readGlucometerThread, this);
-  std::thread positionThread = thread(&SensorReader::readPositionThread, this);
-  std::thread pulsioximeterThread = thread(&SensorReader::readPulsioximeterThread, this);
-  std::thread temperatureThread = thread(&SensorReader::readTemperatureThread, this);
+  std::thread airflowThread;
+  std::thread bloodPressureThread;
+  std::thread ecgThread;
+  std::thread emgThread;
+  std::thread galvanicThread;
+  std::thread glucometerThread;
+  std::thread positionThread;
+  std::thread pulsioximeterThread;
+  std::thread temperatureThread;
+  
+  if (inputAirflow->isConnected())
+    airflowThread = thread(&SensorReader::readAirflowThread, this);
+  
+  if (inputBloodPressure->isConnected())
+    bloodPressureThread = thread(&SensorReader::readBloodPressureThread, this);
+  
+  if (inputECG->isConnected())
+    ecgThread = thread(&SensorReader::readECGThread, this);
+  
+  if (inputEMG->isConnected())
+    emgThread = thread(&SensorReader::readEMGThread, this);
+  
+  if (inputGalvanic->isConnected())
+    galvanicThread = thread(&SensorReader::readGalvanicThread, this);
+  
+  if (inputGlucometer->isConnected())
+    glucometerThread = thread(&SensorReader::readGlucometerThread, this);
+  
+  if (inputPosition->isConnected())
+    positionThread = thread(&SensorReader::readPositionThread, this);
+  
+  if (inputPulsioximeter->isConnected())
+    pulsioximeterThread = thread(&SensorReader::readPulsioximeterThread, this);
+  
+  if (inputTemperature->isConnected())
+    temperatureThread = thread(&SensorReader::readTemperatureThread, this);
 
-  airflowThread.join();
-  bloodPressureThread.join();
-  ecgThread.join();
-  emgThread.join();
-  galvanicThread.join();
-  glucometerThread.join();
-  positionThread.join();
-  pulsioximeterThread.join();
-  temperatureThread.join(); 
+  
+  if (inputAirflow->isConnected())
+    airflowThread.join();
+  if (inputBloodPressure->isConnected())
+    bloodPressureThread.join();
+  if (inputECG->isConnected())
+    ecgThread.join();
+  if (inputEMG->isConnected())
+    emgThread.join();
+  if (inputGalvanic->isConnected())
+    galvanicThread.join();
+  if (inputGalvanic->isConnected())
+    glucometerThread.join();
+  if (inputPosition->isConnected())
+    positionThread.join();
+  if (inputPulsioximeter->isConnected())
+    pulsioximeterThread.join();
+  if (inputTemperature->isConnected())
+    temperatureThread.join(); 
 }
 
 void SensorReader::readAirflowThread()

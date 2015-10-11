@@ -75,6 +75,13 @@ namespace tmf {
      */
     int getLinked();
     
+     /*!
+     * Determine if the port is connected
+     *
+     * \return true if the port is connected, false otherwise
+     */
+    bool isConnected();
+    
     /*!
      * Increase the number of the ports linked to the port.
      * (The filter uses this function when it connects two filters)

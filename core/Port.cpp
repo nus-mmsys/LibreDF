@@ -41,6 +41,10 @@ int Port::getLinked() {
   return linked;
 }
 
+bool Port::isConnected() {
+  return linked > 0;
+}
+
 void Port::increaseLinked() {
   linked++;
 }
