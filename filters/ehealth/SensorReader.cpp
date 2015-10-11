@@ -40,9 +40,20 @@ Filter(name) {
 }
 
 void SensorReader::init() {
-  temperature = 0;
-  bpm = 0;
-  oxygen = 0;
+  airflow.airflow = 0;
+  bloodpressure.systolic = 0;
+  bloodpressure.diastolic = 0;
+  bloodpressure.pulse = 0;
+  ecg.ecg = 0;
+  emg.emg = 0;
+  galvanic.conductance = 0;
+  galvanic.resistance = 0;
+  galvanic.voltage = 0;
+  glucometer.glucose = 0;
+  position.position = -1;
+  pulsioximeter.bpm = 0;
+  pulsioximeter.oxygen = 0;  
+  temperature.temperature = 0;
 }
 
 void SensorReader::run() {
@@ -84,7 +95,7 @@ void SensorReader::readBloodPressureThread()
   while(true) {
     inputBloodPressure->lock();
     BloodPressureData * bloodPressureData = inputBloodPressure->get();
-    bloodpressure = *inputBloodPressure;
+    bloodpressure = *bloodPressureData;
     inputBloodPressure->unlock();
     process();
   }
@@ -93,7 +104,7 @@ void SensorReader::readBloodPressureThread()
 void SensorReader::readECGThread()
 {
   while(true) {
-    inputECG>lock();
+    inputECG->lock();
     ECGData * ecgData = inputECG->get();
     ecg = *ecgData;
     inputECG->unlock();
@@ -138,7 +149,7 @@ void SensorReader::readPositionThread()
 {
   while(true) {
     inputPosition->lock();
-    PulsioximeterData * positionData = inputPosition->get();
+    PositionData * positionData = inputPosition->get();
     position = *positionData;
     inputPosition->unlock();
     process();

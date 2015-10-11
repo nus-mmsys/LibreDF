@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef BLOODPRESSURESENSOR_H_
-#define BLOODPRESSURESENSOR_H_
+#ifndef GLUCOMETERSENSOR_H_
+#define GLUCOMETERSENSOR_H_
 
 #include "core/tmf.h"
 #include "core/Filter.h"
@@ -31,7 +31,7 @@
 struct GlucometerSensor: public tmf::Filter {
 private:
 
-  tmf::OutputPort<BloodPressureData> * outputGlucometer;
+  tmf::OutputPort<GlucometerData> * outputGlucometer;
 
   static tmf::FilterRegister<GlucometerSensor> reg;
   
@@ -49,4 +49,4 @@ public:
   
 };
 
-#endif /* BLOODPRESSURESENSOR_H_ */
+#endif /* GLUCOMETERSENSOR_H_ */
