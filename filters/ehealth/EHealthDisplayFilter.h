@@ -39,8 +39,6 @@ public:
   
   virtual void process();
   
-  virtual ~EHealthDisplayFilter();
-  
 };
 
 #endif /* EHEALTHDISPLAYFILTER_H_ */

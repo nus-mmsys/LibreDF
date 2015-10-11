@@ -48,11 +48,18 @@ int main(int argc, char** argv) {
   pulsioximeter->setProp("period", 2);
   temperature->setProp("period", 2);
   
-  pipe->addFilters(temperature, pulsioximeter, display, nullptr);
-  
-  pipe->connectFilters(pulsioximeter, display);
+  pipe->addFilters(airflow, bloodpressure, ecg, emg, galvanic, glucometer, position, temperature, pulsioximeter, display, nullptr);
+
+  pipe->connectFilters(airflow, display);
+  pipe->connectFilters(bloodpressure, display);
+  pipe->connectFilters(ecg, display);
+  pipe->connectFilters(emg, display);
+  pipe->connectFilters(galvanic, display);
+  pipe->connectFilters(glucometer, display);
+  pipe->connectFilters(position, display);
   pipe->connectFilters(temperature, display);
-  
+  pipe->connectFilters(pulsioximeter, display);
+
   pipe->init();
   
   pipe->run();
