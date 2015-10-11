@@ -26,11 +26,26 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = Factory::createPipeline("E-Health Monitor");
   
-  Filter* temperature = Factory::createFilter("temperature", "temperature");
+  Filter* airflow = Factory::createFilter("airflow", "airflow");
+  Filter* bloodpressure = Factory::createFilter("bloodpressure", "bloodpressure");
+  Filter* ecg = Factory::createFilter("ecg", "ecg");
+  Filter* emg = Factory::createFilter("emg", "emg");
+  Filter* galvanic = Factory::createFilter("galvanic", "galvanic");
+  Filter* glucometer = Factory::createFilter("glucometer", "glucometer");
+  Filter* position = Factory::createFilter("position", "position");
   Filter* pulsioximeter = Factory::createFilter("pulsioximeter", "pulsioximeter");
+  Filter* temperature = Factory::createFilter("temperature", "temperature");
   Filter* display = Factory::createFilter("ehealthdisplay", "ehealthdisplay");
- 
-  pulsioximeter->setProp("period", 5);
+
+  airflow->setProp("period", 2);
+  bloodpressure->setProp("period", 2);
+  ecg->setProp("period", 2);
+  emg->setProp("period", 2);
+  galvanic->setProp("period", 2);
+  glucometer->setProp("period", 2);
+  pulsioximeter->setProp("period", 2);
+  position->setProp("period", 2);
+  pulsioximeter->setProp("period", 2);
   temperature->setProp("period", 2);
   
   pipe->addFilters(temperature, pulsioximeter, display, nullptr);

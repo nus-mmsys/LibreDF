@@ -24,7 +24,7 @@
 using namespace tmf;
 using namespace std;
 
-FilterRegister<EMGSensor> EMGSensor::reg("ecg");
+FilterRegister<EMGSensor> EMGSensor::reg("emg");
 
 EMGSensor::EMGSensor(const string & name) :
 Filter(name) {

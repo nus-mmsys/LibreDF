@@ -24,67 +24,25 @@ using namespace tmf;
 using namespace std;
 
 
-
 FilterRegister<EHealthDisplayFilter> EHealthDisplayFilter::reg("ehealthdisplay");
 
-EHealthDisplayFilter::EHealthDisplayFilter(const string & name) :
-Filter(name) {
-  inputTemperature = createInputPort<TemperatureData>("temperature input");
-  inputPulsioximeter = createInputPort<PulsioximeterData>("pulsioximeter input");
-  
-}
 
-void EHealthDisplayFilter::init() {
-  temperature = 0;
-  bpm = 0;
-  oxygen = 0;
-}
-
-void EHealthDisplayFilter::run() {
-  
-  std::thread temp = thread(&EHealthDisplayFilter::readTemperatureThread, this);
-  std::thread pulsioxi = thread(&EHealthDisplayFilter::readPulsioxiThread, this);
-   
-  temp.join();
-  pulsioxi.join();
-  
-}
-
-void EHealthDisplayFilter::readTemperatureThread()
-{
-  while(true) {
-    inputTemperature->lock();
-    TemperatureData * inputTemperatureData = inputTemperature->get();
-    temperature = (*inputTemperatureData).temperature;
-    inputTemperature->unlock();
-    display();
-  }
-}
-
-void EHealthDisplayFilter::readPulsioxiThread()
-{
-  while(true) {
-    inputPulsioximeter->lock();
-    PulsioximeterData * inputPulsioxiData = inputPulsioximeter->get();
-    bpm = (*inputPulsioxiData).bpm;
-    oxygen = (*inputPulsioxiData).oxygen;
-    inputPulsioximeter->unlock();
-    
-    display();
-  }
-}
-
-void EHealthDisplayFilter::display()
+void EHealthDisplayFilter::process()
 {
     unique_lock<mutex> locker(mux);
-    cout << "Temperature: "  << temperature << "\n"
-       << "BPM: "  << bpm << "\n"
-       << "Oxygen: " << oxygen << "\n"
+    std::cout << "Airflow: "  << airflow.airflow << "\n"
+       << "Bloodpressure, Systolic: "  << bloodpressure.systolic << " mmHg\n"
+       << "Bloodpressure, Diastolic: " << bloodpressure.diastolic << " mmHg\n"
+       << "Bloodpressure, Pulse: "  << bloodpressure.pulse << " bpm\n"
+       << "ECG: " << ecg.ecg << "\n"
+       << "EMG: "  << emg.emg << "\n"
+       << "Galvanic, Conductance: " << galvanic.conductance << "\n"
+       << "Galvanic, Resistance: "  << galvanic.resistance << "\n"
+       << "Galvanic, Conductance Voltage: " << galvanic.voltage << "\n"
+       << "Glucometer, Glucose: "  << glucometer.glucose << "\n"
+       << "Position: " << EHealthData::positionToString(position.position) << "\n"
+       << "PRBpm: "  << pulsioximeter.bpm << "\n"
+       << "SPo2: "  << pulsioximeter.oxygen << "\n"
+       << "Temperature: "  << temperature.temperature << "\n"
        << "===============\n";
-}
-
-
-EHealthDisplayFilter::~EHealthDisplayFilter() {
-  destroyPort(inputTemperature);
-  destroyPort(inputPulsioximeter);
 }

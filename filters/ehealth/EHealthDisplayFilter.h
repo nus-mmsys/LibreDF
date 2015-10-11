@@ -21,37 +21,21 @@
 #ifndef EHEALTHDISPLAYFILTER_H_
 #define EHEALTHDISPLAYFILTER_H_
 
-#include "core/tmf.h"
-#include "core/Filter.h"
-#include "core/Port.h"
 
+#include "filters/ehealth/SensorReader.h"
 #include "filters/ehealth/tools/EHealthData.h"
 
-struct EHealthDisplayFilter: public tmf::Filter {
+
+struct EHealthDisplayFilter: public SensorReader {
 private:
-  tmf::InputPort<TemperatureData> * inputTemperature;
-  tmf::InputPort<PulsioximeterData> * inputPulsioximeter;
   
   static tmf::FilterRegister<EHealthDisplayFilter> reg;
-  
-  float temperature;
-  int bpm, oxygen;
   
   std::mutex mux;
   
 public:
   
-  EHealthDisplayFilter(const std::string& name);
-  
-  virtual void init();
-  
-  virtual void run();
-  
-  void readTemperatureThread();
-  void readPulsioxiThread();
-  void display();
-  
-  virtual ~EHealthDisplayFilter();
+  virtual void process();
   
 };
 
