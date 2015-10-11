@@ -35,7 +35,11 @@ private:
   
 public:
   
+  EHealthDisplayFilter(const std::string& name);
+  
   virtual void process();
+  
+  virtual ~EHealthDisplayFilter();
   
 };
 

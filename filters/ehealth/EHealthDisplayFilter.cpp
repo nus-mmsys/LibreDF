@@ -26,6 +26,10 @@ using namespace std;
 
 FilterRegister<EHealthDisplayFilter> EHealthDisplayFilter::reg("ehealthdisplay");
 
+EHealthDisplayFilter::EHealthDisplayFilter(const string& name): SensorReader(name)
+{
+
+}
 
 void EHealthDisplayFilter::process()
 {
