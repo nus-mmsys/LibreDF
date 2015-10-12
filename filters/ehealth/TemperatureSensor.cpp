@@ -43,7 +43,7 @@ void TemperatureSensor::run() {
   
   TemperatureData * outputTemperatureData =  outputTemperature->get();
   (*outputTemperatureData).temperature = eHealth.getTemperature();
-  
+  (*outputTemperatureData).t.setCurrentTime();
   outputTemperature->unlock();
   
 }

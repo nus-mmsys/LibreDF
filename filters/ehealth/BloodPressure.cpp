@@ -55,6 +55,7 @@ void BloodPressureSensor::run() {
     (*outputBloodPressureData).t.year = eHealth.bloodPressureDataVector[i].year;
     (*outputBloodPressureData).t.hour = eHealth.bloodPressureDataVector[i].hour;
     (*outputBloodPressureData).t.minute = eHealth.bloodPressureDataVector[i].minutes;
+    (*outputBloodPressureData).t.second = 0;   
     (*outputBloodPressureData).diastolic = eHealth.bloodPressureDataVector[i].diastolic;
     (*outputBloodPressureData).systolic = eHealth.bloodPressureDataVector[i].systolic;
     (*outputBloodPressureData).pulse = eHealth.bloodPressureDataVector[i].pulse;

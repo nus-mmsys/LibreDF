@@ -44,7 +44,7 @@ void EMGSensor::run() {
   
   EMGData * outputEMGData =  outputEMG->get();
   (*outputEMGData).emg = eHealth.getEMG();
-  
+  (*outputEMGData).t.setCurrentTime();
   outputEMG->unlock();
   
 }

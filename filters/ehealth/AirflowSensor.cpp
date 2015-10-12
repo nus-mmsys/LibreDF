@@ -43,7 +43,7 @@ void AirflowSensor::run() {
   
   AirflowData * outputAirflowData =  outputAirflow->get();
   (*outputAirflowData).airflow = eHealth.getAirFlow();
-  
+  (*outputAirflowData).t.setCurrentTime();
   outputAirflow->unlock();
   
 }

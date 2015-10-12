@@ -22,6 +22,7 @@
 
 #include <map>
 #include <string>
+#include <chrono>
 
 class Time {
 public:
@@ -30,8 +31,22 @@ public:
   int day;
   int hour;
   int minute;
+  int second;
   std::string toString() {
-    return std::to_string(year) + "-" + std::to_string(month) + "-" + std::to_string(day) + "-" + std::to_string(hour) + "-" + std::to_string(minute);
+    return std::to_string(year) + "-" + std::to_string(month) + "-" + std::to_string(day) + "-" + 
+    std::to_string(hour) + "-" + std::to_string(minute) + "-" + std::to_string(second);
+  }
+  void setCurrentTime() {
+    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+    time_t tt = std::chrono::system_clock::to_time_t(now);
+    tm ntm = *gmtime(&tt);
+    //tm ntm = *localtime(&tt);
+    year = ntm.tm_year + 1900;
+    month = ntm.tm_mon + 1;
+    day = ntm.tm_mday;
+    hour = ntm.tm_hour;
+    minute = ntm.tm_min;
+    second = ntm.tm_sec;
   }
 };
 

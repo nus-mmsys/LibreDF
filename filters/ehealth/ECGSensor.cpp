@@ -43,7 +43,7 @@ void ECGSensor::run() {
   
   ECGData * outputECGData =  outputECG->get();
   (*outputECGData).ecg = eHealth.getECG();
-  
+  (*outputECGData).t.setCurrentTime();
   outputECG->unlock();
   
 }

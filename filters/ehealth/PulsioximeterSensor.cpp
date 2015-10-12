@@ -65,6 +65,7 @@ void PulsioximeterSensor::run() {
   PulsioximeterData * outputPulseData =  output->get();
   (*outputPulseData).bpm = bpm;
   (*outputPulseData).oxygen = oxygen;
+  (*outputPulseData).t.setCurrentTime();
   output->unlock();
 }
 

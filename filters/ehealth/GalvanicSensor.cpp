@@ -45,7 +45,7 @@ void GalvanicSensor::run() {
   (*outputGalvanicData).conductance = eHealth.getSkinConductance();
   (*outputGalvanicData).resistance = eHealth.getSkinResistance();
   (*outputGalvanicData).voltage = eHealth.getSkinConductanceVoltage();
-  
+  (*outputGalvanicData).t.setCurrentTime();
   outputGalvanic->unlock();
   
 }

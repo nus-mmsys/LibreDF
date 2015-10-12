@@ -45,7 +45,7 @@ void PositionSensor::run() {
   
   PositionData * outputPositionData =  outputPosition->get();
   (*outputPositionData).position = eHealth.getBodyPosition();
-  
+  (*outputPositionData).t.setCurrentTime();
   outputPosition->unlock();
   
 }
