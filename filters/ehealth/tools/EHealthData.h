@@ -31,62 +31,61 @@ public:
   int hour;
   int minute;
   std::string toString() {
-    return year + "-" + month + "-" + day + "-" + hour + "-" + minute;
+    return std::to_string(year) + "-" + std::to_string(month) + "-" + std::to_string(day) + "-" + std::to_string(hour) + "-" + std::to_string(minute);
   }
 };
 
-std::string mapToJSON(map<std::string, std::string> data) {
-  std::string res = "{ ";
-  for (auto& x: data) {
-            res += x.first + ":" + x.second + ",";
-  }
-  res.pop_back();
-  res += "}";
-  return res;
-}
 
 class EHealthData
 {
 protected:
   std::string dataType;
-  Time t;
 public:
+  Time t;
   EHealthData() {}
-  virtual std::string toJSON()=0;
+  virtual std::string toJSON() { return "{}"; };
+  std::string mapToJSON(std::map<std::string, std::string> data) {
+    std::string res = "{ ";
+    for (auto& x: data) {
+      res += x.first + ":" + x.second + ",";
+    }
+    res.pop_back();
+    res += "}";
+    return res;
+}
   ~EHealthData() {}
 }; 
 
 class TemperatureData: public EHealthData {
 private:
-  float temperature;
 public:
+  float temperature;
   TemperatureData() {
     dataType = "temperature";
     temperature = 0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["temperature"] = std::to_string(temperature);
     data["time"] = t.toString();
     return mapToJSON(data);
   }
-  ~TemperatureData();
 };
 
 class PulsioximeterData: public EHealthData {
 private:
+public:
   int bpm;
   int oxygen;
-public:
   PulsioximeterData() {
     dataType = "pulsioximeter";
     bpm=0;
     oxygen=0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["bpm"] = std::to_string(bpm);
@@ -98,14 +97,14 @@ public:
 
 class ECGData: public EHealthData {
 private:
-  float ecg;
 public:
+  float ecg;
   ECGData() {
     dataType = "ecg";
     ecg = 0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["ecg"] = std::to_string(ecg);
@@ -116,14 +115,14 @@ public:
 
 class EMGData : public EHealthData {
 private:
-  int emg;
 public:
+  int emg;
   EMGData() {
     dataType = "emg";
     emg = 0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["emg"] = std::to_string(emg);
@@ -134,14 +133,14 @@ public:
 
 class AirflowData : public EHealthData {
 private:
-  int airflow;
 public:
+  int airflow;
   AirflowData() {
     dataType = "airflow";
     airflow = 0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["airflow"] = std::to_string(airflow);
@@ -152,14 +151,14 @@ public:
 
 class PositionData: public EHealthData {
 private:
-  uint8_t position;
 public:
+  uint8_t position;
   PositionData() {
     dataType = "position";
     position = -1;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["position"] = positionToString(position);
@@ -186,10 +185,10 @@ public:
 
 class GalvanicData : public EHealthData {
 private:
+public:
   float conductance;
   float resistance;
   float voltage;
-public:
   GalvanicData() {
     dataType = "galvanic";
     conductance = 0;
@@ -197,7 +196,7 @@ public:
     voltage = 0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["conductance"] = std::to_string(conductance);
@@ -210,10 +209,10 @@ public:
 
 class BloodPressureData : public EHealthData {
 private:
+public:
   int systolic;
   int diastolic;
   int pulse;
-public:
   BloodPressureData() {
     dataType = "bloodpressure";
     systolic = 0;
@@ -221,7 +220,7 @@ public:
     pulse = 0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["systolic"] = std::to_string(systolic);
@@ -235,14 +234,14 @@ public:
 
 class GlucometerData: public EHealthData {
 private:
-  int glucose;
 public:
+  int glucose;
   GlucometerData() {
     dataType = "glucometer";
     glucose = 0;
   }
   std::string toJSON() {
-    map<std::string, std::string> data;
+    std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["glucose"] = std::to_string(glucose);

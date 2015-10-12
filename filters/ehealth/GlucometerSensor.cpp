@@ -55,7 +55,7 @@ void GlucometerSensor::run() {
     (*outputGlucometerData).t.year = eHealth.glucoseDataVector[i].year;
     (*outputGlucometerData).t.hour = eHealth.glucoseDataVector[i].hour;
     (*outputGlucometerData).t.minute = eHealth.glucoseDataVector[i].minutes;
-    (*outputGlucometerData).t.meridian = eHealth.glucoseDataVector[i].meridian;
+    //(*outputGlucometerData).t.meridian = eHealth.glucoseDataVector[i].meridian;
     (*outputGlucometerData).glucose = eHealth.glucoseDataVector[i].glucose;
     outputGlucometer->unlock(); 
   }
