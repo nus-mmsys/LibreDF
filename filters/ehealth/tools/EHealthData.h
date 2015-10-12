@@ -104,7 +104,7 @@ public:
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["bpm"] = std::to_string(bpm);
-    data["bpm"] = std::to_string(oxygen);
+    data["oxygen"] = std::to_string(oxygen);
     data["time"] = t.toString();
     return mapToJSON(data);
   }
