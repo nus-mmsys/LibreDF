@@ -37,6 +37,7 @@ public:
   
   EHealthSenderFilter(const std::string& name);
   
+  virtual void init();
   virtual void process(EHealthData * data);
   
 };

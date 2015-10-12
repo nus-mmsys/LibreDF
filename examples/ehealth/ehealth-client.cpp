@@ -47,6 +47,7 @@ int main(int argc, char** argv) {
   //position->setProp("period", 2);
   pulsioximeter->setProp("period", 2);
   temperature->setProp("period", 2);
+  sender->setProp("server", "192.168.1.104");
   
   pipe->addFilters(/*airflow, bloodpressure, ecg, emg, galvanic, glucometer, position,*/ temperature, pulsioximeter, sender, nullptr);
 
