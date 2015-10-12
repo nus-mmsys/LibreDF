@@ -55,9 +55,9 @@ int HTTPHandler::sendHTTP(std::string message)
     }
 
     stringstream ss;
-    ss << "POST " + hostName + " HTTP/1.0\r\n"
+    ss << "POST " + hostName + "/index.php HTTP/1.0\r\n"
        << "Content-Type: application/x-www-form-urlencoded\r\n"
-       //<< "Connection: close\r\n"
+       << "Connection: Keep-Alive\r\n"
        << "Content-Length: " + std::to_string(message.length()) +"\r\n"
        << "\r\n"
        << message + "\r\n";
@@ -68,6 +68,7 @@ int HTTPHandler::sendHTTP(std::string message)
         cout << "Error sending request." << endl;
         return -1;
     }
+    //close(sock);
 }
 
 

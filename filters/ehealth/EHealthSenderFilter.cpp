@@ -28,7 +28,7 @@ FilterRegister<EHealthSenderFilter> EHealthSenderFilter::reg("ehealthsender");
 
 EHealthSenderFilter::EHealthSenderFilter(const string& name): SensorReader(name)
 {
-  httphandler = new HTTPHandler("localhost");
+  httphandler = new HTTPHandler("192.168.1.104");
 }
 
 void EHealthSenderFilter::process(EHealthData * data)
