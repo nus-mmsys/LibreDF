@@ -23,7 +23,8 @@
 #define HTTPHANDLER_H
 
 #include <string>
-
+#include <iostream>
+#include <sstream>
 #include <ctype.h>
 #include <cstring>
 #include <stdlib.h>
@@ -43,7 +44,7 @@ private:
   
 public:
   HTTPHandler(std::string hostName);
-  void send(std::string message);
+  int sendHTTP(std::string message);
   ~HTTPHandler();
 };
 

@@ -20,14 +20,16 @@
 
 #include "filters/ehealth/tools/HTTPHandler.h"
 
+using namespace std;
+
 HTTPHandler::HTTPHandler(std::string hostName) : hostName(hostName)
 {
   port = 80;
 }
 
-int HTTPHandler::send(std::string message)
+int HTTPHandler::sendHTTP(std::string message)
 {
-    struct hostent * host = gethostbyname(hostName);
+    struct hostent * host = gethostbyname(hostName.c_str());
 
     if ( (host == NULL) || (host->h_addr == NULL) ) {
         cout << "Error retrieving DNS information." << endl;

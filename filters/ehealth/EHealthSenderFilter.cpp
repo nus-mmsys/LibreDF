@@ -34,7 +34,7 @@ EHealthSenderFilter::EHealthSenderFilter(const string& name): SensorReader(name)
 void EHealthSenderFilter::process(EHealthData * data)
 {
     unique_lock<mutex> locker(mux);
+    httphandler->sendHTTP(data->toHTTPContent());
     std::cout << data->toHTTPContent() << '\n'
        << "===============\n";
-    httphandler->send(data->toHTTPContent());
 }
