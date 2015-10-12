@@ -4,3 +4,6 @@ project (ehealth_examples)
 
 add_executable(ehealth-monitor ehealth-monitor.cpp)
 target_link_libraries(ehealth-monitor tmf)
+
+add_executable(ehealth-client ehealth-client.cpp)
+target_link_libraries(ehealth-client tmf)
