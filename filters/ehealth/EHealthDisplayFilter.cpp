@@ -31,7 +31,7 @@ EHealthDisplayFilter::EHealthDisplayFilter(const string& name): SensorReader(nam
 
 }
 
-void EHealthDisplayFilter::process(EHealthData data)
+void EHealthDisplayFilter::process(EHealthData * data)
 {
     unique_lock<mutex> locker(mux);
     std::cout << "Airflow: "  << airflow.airflow << "\n"

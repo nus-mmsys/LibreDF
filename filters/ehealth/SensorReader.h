@@ -62,7 +62,7 @@ public:
   
   virtual void run();
   
-  virtual void process(EHealthData data) {}
+  virtual void process(EHealthData * data) {}
 
   void readAirflowThread();
   void readBloodPressureThread();

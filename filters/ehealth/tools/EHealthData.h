@@ -64,7 +64,7 @@ public:
     dataType = "temperature";
     temperature = 0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -84,7 +84,7 @@ public:
     bpm=0;
     oxygen=0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -103,7 +103,7 @@ public:
     dataType = "ecg";
     ecg = 0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -121,7 +121,7 @@ public:
     dataType = "emg";
     emg = 0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -139,7 +139,7 @@ public:
     dataType = "airflow";
     airflow = 0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -157,7 +157,7 @@ public:
     dataType = "position";
     position = -1;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -195,7 +195,7 @@ public:
     resistance = 0;
     voltage = 0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -219,7 +219,7 @@ public:
     diastolic = 0;
     pulse = 0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -240,7 +240,7 @@ public:
     dataType = "glucometer";
     glucose = 0;
   }
-  std::string toJSON() {
+  virtual std::string toJSON() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;

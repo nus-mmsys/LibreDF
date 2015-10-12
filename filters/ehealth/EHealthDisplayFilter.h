@@ -37,7 +37,7 @@ public:
   
   EHealthDisplayFilter(const std::string& name);
   
-  virtual void process(EHealthData data);
+  virtual void process(EHealthData * data);
   
 };
 

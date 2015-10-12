@@ -121,9 +121,9 @@ void SensorReader::readAirflowThread()
   while(true) {
     inputAirflow->lock();
     AirflowData * airflowData = inputAirflow->get();
-    airflow = *airflowData;
+    process(airflowData);
     inputAirflow->unlock();
-    process(airflow);
+
   }
 }
 
@@ -132,9 +132,8 @@ void SensorReader::readBloodPressureThread()
   while(true) {
     inputBloodPressure->lock();
     BloodPressureData * bloodPressureData = inputBloodPressure->get();
-    bloodpressure = *bloodPressureData;
+    process(bloodPressureData);
     inputBloodPressure->unlock();
-    process(bloodpressure);
   }
 }
 
@@ -143,9 +142,8 @@ void SensorReader::readECGThread()
   while(true) {
     inputECG->lock();
     ECGData * ecgData = inputECG->get();
-    ecg = *ecgData;
+    process(ecgData);
     inputECG->unlock();
-    process(ecg);
   }
 }
 
@@ -154,9 +152,8 @@ void SensorReader::readEMGThread()
   while(true) {
     inputEMG->lock();
     EMGData * emgData = inputEMG->get();
-    emg = *emgData;
+    process(emgData);
     inputEMG->unlock();
-    process(emg);
   }
 }
 
@@ -165,9 +162,8 @@ void SensorReader::readGalvanicThread()
   while(true) {
     inputGalvanic->lock();
     GalvanicData * galvanicData = inputGalvanic->get();
-    galvanic = *galvanicData;
+    process(galvanicData);
     inputGalvanic->unlock();
-    process(galvanic);
   }
 }
 
@@ -176,9 +172,8 @@ void SensorReader::readGlucometerThread()
   while(true) {
     inputGlucometer->lock();
     GlucometerData * glucometerData = inputGlucometer->get();
-    glucometer = *glucometerData;
+    process(glucometerData);
     inputGlucometer->unlock();
-    process(glucometer);
   }
 }
 
@@ -187,9 +182,8 @@ void SensorReader::readPositionThread()
   while(true) {
     inputPosition->lock();
     PositionData * positionData = inputPosition->get();
-    position = *positionData;
+    process(positionData);
     inputPosition->unlock();
-    process(position);
   }
 }
 
@@ -198,9 +192,8 @@ void SensorReader::readTemperatureThread()
   while(true) {
     inputTemperature->lock();
     TemperatureData * temperatureData = inputTemperature->get();
-    temperature = *temperatureData;
+    process(temperatureData);
     inputTemperature->unlock();
-    process(temperature);
   }
 }
 
@@ -209,9 +202,8 @@ void SensorReader::readPulsioximeterThread()
   while(true) {
     inputPulsioximeter->lock();
     PulsioximeterData * pulsioximeterData = inputPulsioximeter->get();
-    pulsioximeter = *pulsioximeterData;
+    process(pulsioximeterData);
     inputPulsioximeter->unlock();
-    process(pulsioximeter);
   }
 }
 
