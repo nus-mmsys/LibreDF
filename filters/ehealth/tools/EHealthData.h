@@ -58,14 +58,13 @@ protected:
 public:
   Time t;
   EHealthData() {}
-  virtual std::string toJSON() { return "{}"; };
-  std::string mapToJSON(std::map<std::string, std::string> data) {
-    std::string res = "{ ";
+  virtual std::string toHTTPContent() { return ""; };
+  std::string mapToHTTPContent(std::map<std::string, std::string> data) {
+    std::string res = " ";
     for (auto& x: data) {
-      res += x.first + ":" + x.second + ",";
+      res += x.first + "=" + x.second + "&";
     }
     res.pop_back();
-    res += "}";
     return res;
 }
   ~EHealthData() {}
@@ -79,13 +78,13 @@ public:
     dataType = "temperature";
     temperature = 0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["temperature"] = std::to_string(temperature);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
 };
 
@@ -99,14 +98,14 @@ public:
     bpm=0;
     oxygen=0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["bpm"] = std::to_string(bpm);
     data["oxygen"] = std::to_string(oxygen);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
 };
 
@@ -118,13 +117,13 @@ public:
     dataType = "ecg";
     ecg = 0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["ecg"] = std::to_string(ecg);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
 };
 
@@ -136,13 +135,13 @@ public:
     dataType = "emg";
     emg = 0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["emg"] = std::to_string(emg);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
 };
 
@@ -154,13 +153,13 @@ public:
     dataType = "airflow";
     airflow = 0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["airflow"] = std::to_string(airflow);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
 };
 
@@ -172,13 +171,13 @@ public:
     dataType = "position";
     position = -1;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["position"] = positionToString(position);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
   static std::string positionToString( uint8_t position) {
     switch(position) {
@@ -210,7 +209,7 @@ public:
     resistance = 0;
     voltage = 0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -218,7 +217,7 @@ public:
     data["resistance"] = std::to_string(resistance);
     data["voltage"] = std::to_string(voltage);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
 };
 
@@ -234,7 +233,7 @@ public:
     diastolic = 0;
     pulse = 0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
@@ -242,7 +241,7 @@ public:
     data["diastolic"] = std::to_string(diastolic);
     data["pulse"] = std::to_string(pulse);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
   
 };
@@ -255,13 +254,13 @@ public:
     dataType = "glucometer";
     glucose = 0;
   }
-  virtual std::string toJSON() {
+  virtual std::string toHTTPContent() {
     std::map<std::string, std::string> data;
     data["user"] = "ehealth";
     data["type"] = dataType;
     data["glucose"] = std::to_string(glucose);
     data["time"] = t.toString();
-    return mapToJSON(data);
+    return mapToHTTPContent(data);
   }
 };
 
