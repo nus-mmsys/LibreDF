@@ -18,23 +18,33 @@
  *
  */
 
-#include "filters/ehealth/EHealthSenderFilter.h"
 
-using namespace tmf;
-using namespace std;
+#ifndef HTTPHANDLER_H
+#define HTTPHANDLER_H
 
+#include <string>
 
-FilterRegister<EHealthSenderFilter> EHealthSenderFilter::reg("ehealthsender");
+#include <ctype.h>
+#include <cstring>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <unistd.h>
 
-EHealthSenderFilter::EHealthSenderFilter(const string& name): SensorReader(name)
+class HTTPHandler
 {
-  httphandler = new HTTPHandler("localhost");
-}
+private:
+  std::string hostName;
+  int sock;
+  struct sockaddr_in client;
+  int port;
+  
+public:
+  HTTPHandler(std::string hostName);
+  void send(std::string message);
+  ~HTTPHandler();
+};
 
-void EHealthSenderFilter::process(EHealthData * data)
-{
-    unique_lock<mutex> locker(mux);
-    std::cout << data->toHTTPContent() << '\n'
-       << "===============\n";
-    httphandler->send(data->toHTTPContent());
-}
+#endif // HTTPHANDLER_H

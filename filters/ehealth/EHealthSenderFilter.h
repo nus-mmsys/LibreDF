@@ -24,13 +24,13 @@
 
 #include "filters/ehealth/SensorReader.h"
 #include "filters/ehealth/tools/EHealthData.h"
-
+#include "filters/ehealth/tools/HTTPHandler.h"
 
 struct EHealthSenderFilter: public SensorReader {
 private:
   
   static tmf::FilterRegister<EHealthSenderFilter> reg;
-  
+  HTTPHandler * httphandler;
   std::mutex mux;
   
 public:
