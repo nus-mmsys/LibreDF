@@ -18,27 +18,27 @@
  *
  */
 
-#ifndef EHEALTHDISPLAYFILTER_H_
-#define EHEALTHDISPLAYFILTER_H_
+#ifndef EHEALTHSENDERFILTER_H_
+#define EHEALTHSENDERFILTER_H_
 
 
 #include "filters/ehealth/SensorReader.h"
 #include "filters/ehealth/tools/EHealthData.h"
 
 
-struct EHealthDisplayFilter: public SensorReader {
+struct EHealthSenderFilter: public SensorReader {
 private:
   
-  static tmf::FilterRegister<EHealthDisplayFilter> reg;
+  static tmf::FilterRegister<EHealthSenderFilter> reg;
   
   std::mutex mux;
   
 public:
   
-  EHealthDisplayFilter(const std::string& name);
+  EHealthSenderFilter(const std::string& name);
   
   virtual void process(EHealthData data);
   
 };
 
-#endif /* EHEALTHDISPLAYFILTER_H_ */
+#endif /* EHEALTHSENDERFILTER_H_ */

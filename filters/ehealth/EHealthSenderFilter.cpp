@@ -18,27 +18,22 @@
  *
  */
 
-#ifndef EHEALTHDISPLAYFILTER_H_
-#define EHEALTHDISPLAYFILTER_H_
+#include "filters/ehealth/EHealthSenderFilter.h"
+
+using namespace tmf;
+using namespace std;
 
 
-#include "filters/ehealth/SensorReader.h"
-#include "filters/ehealth/tools/EHealthData.h"
+FilterRegister<EHealthSenderFilter> EHealthSenderFilter::reg("ehealthsender");
 
+EHealthSenderFilter::EHealthSenderFilter(const string& name): SensorReader(name)
+{
 
-struct EHealthDisplayFilter: public SensorReader {
-private:
-  
-  static tmf::FilterRegister<EHealthDisplayFilter> reg;
-  
-  std::mutex mux;
-  
-public:
-  
-  EHealthDisplayFilter(const std::string& name);
-  
-  virtual void process(EHealthData data);
-  
-};
+}
 
-#endif /* EHEALTHDISPLAYFILTER_H_ */
+void EHealthSenderFilter::process(EHealthData data)
+{
+    unique_lock<mutex> locker(mux);
+    std::cout << data.toJSON() << '\n'
+       << "===============\n";
+}

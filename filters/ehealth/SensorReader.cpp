@@ -123,7 +123,7 @@ void SensorReader::readAirflowThread()
     AirflowData * airflowData = inputAirflow->get();
     airflow = *airflowData;
     inputAirflow->unlock();
-    process();
+    process(airflow);
   }
 }
 
@@ -134,7 +134,7 @@ void SensorReader::readBloodPressureThread()
     BloodPressureData * bloodPressureData = inputBloodPressure->get();
     bloodpressure = *bloodPressureData;
     inputBloodPressure->unlock();
-    process();
+    process(bloodpressure);
   }
 }
 
@@ -145,7 +145,7 @@ void SensorReader::readECGThread()
     ECGData * ecgData = inputECG->get();
     ecg = *ecgData;
     inputECG->unlock();
-    process();
+    process(ecg);
   }
 }
 
@@ -156,7 +156,7 @@ void SensorReader::readEMGThread()
     EMGData * emgData = inputEMG->get();
     emg = *emgData;
     inputEMG->unlock();
-    process();
+    process(emg);
   }
 }
 
@@ -167,7 +167,7 @@ void SensorReader::readGalvanicThread()
     GalvanicData * galvanicData = inputGalvanic->get();
     galvanic = *galvanicData;
     inputGalvanic->unlock();
-    process();
+    process(galvanic);
   }
 }
 
@@ -178,7 +178,7 @@ void SensorReader::readGlucometerThread()
     GlucometerData * glucometerData = inputGlucometer->get();
     glucometer = *glucometerData;
     inputGlucometer->unlock();
-    process();
+    process(glucometer);
   }
 }
 
@@ -189,7 +189,7 @@ void SensorReader::readPositionThread()
     PositionData * positionData = inputPosition->get();
     position = *positionData;
     inputPosition->unlock();
-    process();
+    process(position);
   }
 }
 
@@ -200,7 +200,7 @@ void SensorReader::readTemperatureThread()
     TemperatureData * temperatureData = inputTemperature->get();
     temperature = *temperatureData;
     inputTemperature->unlock();
-    process();
+    process(temperature);
   }
 }
 
@@ -211,7 +211,7 @@ void SensorReader::readPulsioximeterThread()
     PulsioximeterData * pulsioximeterData = inputPulsioximeter->get();
     pulsioximeter = *pulsioximeterData;
     inputPulsioximeter->unlock();
-    process();
+    process(pulsioximeter);
   }
 }
 

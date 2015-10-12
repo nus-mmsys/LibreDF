@@ -19,35 +19,4 @@
 
 #include "EHealthData.h"
 
-EHealthData::EHealthData()
-{
 
-}
-
-EHealthData::EHealthData(const EHealthData& other)
-{
-
-}
-
-std::string EHealthData::positionToString( uint8_t position ) {
-  
-  switch(position) {
-    case 1:
-      return std::string("Prone position");
-    case 2:
-      return std::string("Stand or sit position");
-    case 3:
-      return std::string("Left lateral decubitus");
-    case 4:
-      return std::string("Supine position");
-    case 5:
-      return std::string("Rigth lateral decubitus");
-    default:
-      return std::string("non-defined position");
-  }
-}
-
-EHealthData::~EHealthData()
-{
-
-}

@@ -31,7 +31,7 @@ EHealthDisplayFilter::EHealthDisplayFilter(const string& name): SensorReader(nam
 
 }
 
-void EHealthDisplayFilter::process()
+void EHealthDisplayFilter::process(EHealthData data)
 {
     unique_lock<mutex> locker(mux);
     std::cout << "Airflow: "  << airflow.airflow << "\n"
@@ -44,7 +44,7 @@ void EHealthDisplayFilter::process()
        << "Galvanic, Resistance: "  << galvanic.resistance << "\n"
        << "Galvanic, Conductance Voltage: " << galvanic.voltage << "\n"
        << "Glucometer, Glucose: "  << glucometer.glucose << "\n"
-       << "Position: " << EHealthData::positionToString(position.position) << "\n"
+       << "Position: " << PositionData::positionToString(position.position) << "\n"
        << "PRBpm: "  << pulsioximeter.bpm << "\n"
        << "SPo2: "  << pulsioximeter.oxygen << "\n"
        << "Temperature: "  << temperature.temperature << "\n"
