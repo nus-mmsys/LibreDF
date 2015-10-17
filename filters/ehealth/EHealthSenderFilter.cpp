@@ -24,7 +24,7 @@ using namespace tmf;
 using namespace std;
 
 
-FilterRegister<EHealthSenderFilter> EHealthSenderFilter::reg("ehealthsender");
+FilterRegister<EHealthSenderFilter> EHealthSenderFilter::reg("ehealthsender_old");
 
 EHealthSenderFilter::EHealthSenderFilter(const string& name): SensorReader(name)
 {

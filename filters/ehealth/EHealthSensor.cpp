@@ -22,20 +22,28 @@
 
 using namespace tmf;
 using namespace std;
+using namespace ehealthsensor;
 
 FilterRegister<EHealthSensor> EHealthSensor::reg("ehealthsensor");
 
 EHealthSensor::EHealthSensor(const string & name) :
 Filter(name) {
-  output = createOutputPort<int>("ehealthdata output");
+  output = createOutputPort<SensorData>("ehealthdata output");
 }
 
 void EHealthSensor::init() {
-  
+
+  temperatureSensor.setup();
+  pulsioximeterSensor.setup();  
 }
 
 void EHealthSensor::run() {
-  
+  temperatureSensor.delay();
+  output->lock();
+  SensorData * outputData = output->get();
+  temperatureSensor.read(outputData);
+  output->unlock();   
+
 }
 
 EHealthSensor::~EHealthSensor() {

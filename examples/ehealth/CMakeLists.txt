@@ -7,3 +7,6 @@ target_link_libraries(ehealth-monitor tmf)
 
 add_executable(ehealth-client ehealth-client.cpp)
 target_link_libraries(ehealth-client tmf)
+
+add_executable(sensorsender sensorsender.cpp)
+target_link_libraries(sensorsender tmf)

@@ -26,15 +26,18 @@
 #include "core/Port.h"
 
 #include "filters/ehealth/tools/EHealthData.h"
-
+#include <ehealthsensor/Sensor.h>
 
 struct EHealthSensor: public tmf::Filter {
 private:
 
-  tmf::OutputPort<int> * output;
+  tmf::OutputPort<ehealthsensor::SensorData> * output;
 
   static tmf::FilterRegister<EHealthSensor> reg;
   
+  
+  ehealthsensor::TemperatureSensor temperatureSensor;
+  ehealthsensor::PulsioximeterSensor pulsioximeterSensor;
 
 public:
   

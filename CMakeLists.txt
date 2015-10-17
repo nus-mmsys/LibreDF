@@ -41,4 +41,9 @@ if(${libavfilters})
   target_link_libraries(${PROJECT_NAME} ${LIBAV_LIBRARIES})
 endif()
 
+if(${ehealthfilters})
+  target_link_libraries(${PROJECT_NAME} ehealthsensor)
+endif()
+
+
 add_subdirectory(examples)
