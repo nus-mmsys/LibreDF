@@ -18,29 +18,10 @@
  *
  */
 
-#include "core/tmf.h"
+#include "filters/ehealth/tools/JSONHandler.h"
 
-using namespace tmf;
+using namespace std;
 
-int main(int argc, char** argv) {
-  
-  Pipeline* pipe = Factory::createPipeline("E-Health Sensor Sender");
-  
-  Filter* sensor = Factory::createFilter("ehealthsensor", "ehealthsensor");
-  Filter* sender = Factory::createFilter("ehealthsender", "ehealthsender");
-  
-  sender->setProp("userid", "1292805552");
-  sender->setProp("sendingPeriod", 1000);
-
-  pipe->addFilters(sensor, sender, nullptr);
-
-  pipe->connectFilters(sensor, sender);
-
-  pipe->init();
-  
-  pipe->run();
-  
-  Factory::destroyPipeline(pipe);
-  
-  return 0;
+string JSONHandler::toJSON() {
+  return "{}";
 }

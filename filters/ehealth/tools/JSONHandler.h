@@ -18,29 +18,27 @@
  *
  */
 
-#include "core/tmf.h"
 
-using namespace tmf;
+#ifndef JSONHANDLER_H
+#define JSONHANDLER_H
 
-int main(int argc, char** argv) {
-  
-  Pipeline* pipe = Factory::createPipeline("E-Health Sensor Sender");
-  
-  Filter* sensor = Factory::createFilter("ehealthsensor", "ehealthsensor");
-  Filter* sender = Factory::createFilter("ehealthsender", "ehealthsender");
-  
-  sender->setProp("userid", "1292805552");
-  sender->setProp("sendingPeriod", 1000);
+#include <vector>
+#include <map>
+#include <string>
 
-  pipe->addFilters(sensor, sender, nullptr);
+class JSONData {
+public:
+  std::string timestamp;
+  std::vector<std::map<std::string, std::string>> data;
+};
 
-  pipe->connectFilters(sensor, sender);
+class JSONHandler
+{
+public:
+  std::string userid;
+  JSONData sensordata[9];
+ 
+  std::string toJSON(); 
+};
 
-  pipe->init();
-  
-  pipe->run();
-  
-  Factory::destroyPipeline(pipe);
-  
-  return 0;
-}
+#endif // JSONHANDLER_H

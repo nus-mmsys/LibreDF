@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
   Pipeline* pipe = Factory::createPipeline("E-Health Client");
   
   Filter* sensor = Factory::createFilter("ehealthsensor", "ehealthsensor");
-  Filter* display = Factory::createFilter("ehealthsender", "ehealthdisplay");
+  Filter* display = Factory::createFilter("ehealthdisplay", "ehealthdisplay");
   
   pipe->addFilters(sensor, display, nullptr);
 

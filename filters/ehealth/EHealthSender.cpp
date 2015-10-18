@@ -29,10 +29,13 @@ FilterRegister<EHealthSender> EHealthSender::reg("ehealthsender");
 EHealthSender::EHealthSender(const string & name) :
 Filter(name) {
   input = createInputPort<SensorData>("sensor input");
+  minPeriod = 50;
+  maxPeriod = 20000;
 }
 
 void EHealthSender::init() {
-
+  jsonHandler.userid = getProp("userid");
+  sendingPeriod = std::stoi(getProp("sendingPeriod"));
 }
 
 void EHealthSender::run() {
@@ -41,6 +44,7 @@ void EHealthSender::run() {
   cout << inputData->timestamp << ": ";
   switch(inputData->sensorID) {
     case 1:
+      //jsonHandler.sensordata[inputData->sensorID]
       cout << "Airflow: " << inputData->airflow << endl;
       break;
     case 2:
