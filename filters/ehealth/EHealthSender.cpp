@@ -41,6 +41,7 @@ void EHealthSender::run() {
 
   switch(inputData->sensorID) {
     case 1:
+      cout << "Airflow: " << inputData->airflow << endl;
       break;
     case 8:
       cout << "BPM: " << inputData->bpm << ", OxygenSaturation: " << inputData->oxygenSaturation << endl;

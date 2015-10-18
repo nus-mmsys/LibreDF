@@ -61,8 +61,9 @@ void EHealthSensor::readSensor(Sensor * sensor) {
 
 void EHealthSensor::run() {
   high_resolution_clock::time_point start = high_resolution_clock::now();
-
-  readSensor(&temperatureSensor);
+  
+//  readSensor(&airflowSensor);
+//  readSensor(&temperatureSensor);
   readSensor(&pulsioximeterSensor);
   
   high_resolution_clock::time_point end = high_resolution_clock::now();

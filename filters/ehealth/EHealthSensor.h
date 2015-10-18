@@ -25,7 +25,6 @@
 #include "core/Filter.h"
 #include "core/Port.h"
 
-#include "filters/ehealth/tools/EHealthData.h"
 #include <ehealthsensor/Sensor.h>
 
 struct EHealthSensor: public tmf::Filter {
