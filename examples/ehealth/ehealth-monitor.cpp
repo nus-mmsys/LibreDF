@@ -26,38 +26,37 @@ int main(int argc, char** argv) {
   
   Pipeline* pipe = Factory::createPipeline("E-Health Monitor");
   
-  Filter* airflow = Factory::createFilter("airflow", "airflow");
-  Filter* bloodpressure = Factory::createFilter("bloodpressure", "bloodpressure");
-  Filter* ecg = Factory::createFilter("ecg", "ecg");
-  Filter* emg = Factory::createFilter("emg", "emg");
-  Filter* galvanic = Factory::createFilter("galvanic", "galvanic");
-  Filter* glucometer = Factory::createFilter("glucometer", "glucometer");
-  Filter* position = Factory::createFilter("position", "position");
+//  Filter* airflow = Factory::createFilter("airflow", "airflow");
+//  Filter* bloodpressure = Factory::createFilter("bloodpressure", "bloodpressure");
+//  Filter* ecg = Factory::createFilter("ecg", "ecg");
+//  Filter* emg = Factory::createFilter("emg", "emg");
+//  Filter* galvanic = Factory::createFilter("galvanic", "galvanic");
+//  Filter* glucometer = Factory::createFilter("glucometer", "glucometer");
+//  Filter* position = Factory::createFilter("position", "position");
   Filter* pulsioximeter = Factory::createFilter("pulsioximeter", "pulsioximeter");
-  Filter* temperature = Factory::createFilter("temperature", "temperature");
+//  Filter* temperature = Factory::createFilter("temperature", "temperature");
   Filter* display = Factory::createFilter("ehealthdisplay", "ehealthdisplay");
 
-  airflow->setProp("period", 2);
-  bloodpressure->setProp("period", 2);
-  ecg->setProp("period", 2);
-  emg->setProp("period", 2);
-  galvanic->setProp("period", 2);
-  glucometer->setProp("period", 2);
-  pulsioximeter->setProp("period", 2);
-  position->setProp("period", 2);
-  pulsioximeter->setProp("period", 2);
-  temperature->setProp("period", 2);
+//  airflow->setProp("period", 2);
+//  bloodpressure->setProp("period", 2);
+//  ecg->setProp("period", 2);
+//  emg->setProp("period", 2);
+//  galvanic->setProp("period", 2);
+//  glucometer->setProp("period", 2);
+//  position->setProp("period", 2);
+    pulsioximeter->setProp("period", 2);
+//  temperature->setProp("period", 2);
   
-  pipe->addFilters(airflow, bloodpressure, ecg, emg, galvanic, glucometer, position, temperature, pulsioximeter, display, nullptr);
+  pipe->addFilters(/*airflow, bloodpressure, ecg, emg, galvanic, glucometer, position, temperature,*/ pulsioximeter, display, nullptr);
 
-  pipe->connectFilters(airflow, display);
-  pipe->connectFilters(bloodpressure, display);
-  pipe->connectFilters(ecg, display);
-  pipe->connectFilters(emg, display);
-  pipe->connectFilters(galvanic, display);
-  pipe->connectFilters(glucometer, display);
-  pipe->connectFilters(position, display);
-  pipe->connectFilters(temperature, display);
+//  pipe->connectFilters(airflow, display);
+//  pipe->connectFilters(bloodpressure, display);
+//  pipe->connectFilters(ecg, display);
+//  pipe->connectFilters(emg, display);
+//  pipe->connectFilters(galvanic, display);
+//  pipe->connectFilters(glucometer, display);
+//  pipe->connectFilters(position, display);
+//  pipe->connectFilters(temperature, display);
   pipe->connectFilters(pulsioximeter, display);
 
   pipe->init();
