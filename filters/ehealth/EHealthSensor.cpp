@@ -20,9 +20,12 @@
 
 #include "filters/ehealth/EHealthSensor.h"
 
+#include <chrono>
+
 using namespace tmf;
 using namespace std;
 using namespace ehealthsensor;
+using namespace std::chrono;
 
 FilterRegister<EHealthSensor> EHealthSensor::reg("ehealthsensor");
 
@@ -37,13 +40,21 @@ void EHealthSensor::init() {
   pulsioximeterSensor.setup();  
 }
 
-void EHealthSensor::run() {
-  temperatureSensor.delay();
+void EHealthSensor::readSensor(Sensor * sensor) {
   output->lock();
   SensorData * outputData = output->get();
-  temperatureSensor.read(outputData);
+  sensor->read(outputData);
   output->unlock();   
+}
+void EHealthSensor::run() {
+  high_resolution_clock::time_point t1 = high_resolution_clock::now();
 
+  readSensor(&temperatureSensor);
+  
+  high_resolution_clock::time_point t2 = high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+  cout << "Duration:" << duration << endl;
+  temperatureSensor.delay();
 }
 
 EHealthSensor::~EHealthSensor() {

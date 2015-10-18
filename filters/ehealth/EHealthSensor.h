@@ -35,10 +35,11 @@ private:
 
   static tmf::FilterRegister<EHealthSensor> reg;
   
-  
+    
   ehealthsensor::TemperatureSensor temperatureSensor;
   ehealthsensor::PulsioximeterSensor pulsioximeterSensor;
 
+  void readSensor(ehealthsensor::Sensor * sensor);
 public:
   
   EHealthSensor(const std::string& name);
