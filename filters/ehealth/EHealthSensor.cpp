@@ -62,20 +62,27 @@ void EHealthSensor::readSensor(Sensor * sensor) {
 void EHealthSensor::run() {
   high_resolution_clock::time_point start = high_resolution_clock::now();
   
-//  readSensor(&airflowSensor);
-//  readSensor(&temperatureSensor);
+  readSensor(&airflowSensor);
+  readSensor(&bloodpressureSensor);
+  readSensor(&ecgSensor);
+  readSensor(&emgSensor);
+  readSensor(&galvanicSensor);
+  readSensor(&glucometerSensor);
+  readSensor(&positionSensor);
   readSensor(&pulsioximeterSensor);
+  readSensor(&temperatureSensor);
   
   high_resolution_clock::time_point end = high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
 
-  //cout << "Duration:" << duration << endl;
-  
-  std::this_thread::sleep_for(std::chrono::milliseconds(minPeriod - duration/1000));
 
   currentTime+=minPeriod;
   if (currentTime >=  maxPeriod)
     currentTime = 0;
+  
+  //cout << "Duration:" << duration << endl;
+  std::this_thread::sleep_for(std::chrono::microseconds(minPeriod*1000 - duration));
+
 }
 
 EHealthSensor::~EHealthSensor() {

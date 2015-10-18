@@ -38,10 +38,28 @@ void EHealthSender::init() {
 void EHealthSender::run() {
   input->lock();
   SensorData * inputData = input->get();
-
+  cout << inputData->timestamp << ": ";
   switch(inputData->sensorID) {
     case 1:
       cout << "Airflow: " << inputData->airflow << endl;
+      break;
+    case 2:
+      cout << "Systolic: " << inputData->systolic << ", Diastolic: " << inputData->diastolic << ", Pulse: " << inputData->pulse << endl;
+      break;
+    case 3:
+      cout << "ECG: " << inputData->ecg << endl;
+      break;
+    case 4:
+      cout << "EMG: " << inputData->emg << endl;
+      break;
+    case 5:
+      cout << "Conductance: " << inputData->conductance << ", Resistance: " << inputData->resistance << ", ConductanceVol: " << inputData->conductanceVol << endl;
+      break;
+    case 6:
+      cout << "Glucose: " << inputData->glucose << endl;
+      break;
+    case 7:
+      cout << "Position: " << inputData->position << endl;
       break;
     case 8:
       cout << "BPM: " << inputData->bpm << ", OxygenSaturation: " << inputData->oxygenSaturation << endl;
