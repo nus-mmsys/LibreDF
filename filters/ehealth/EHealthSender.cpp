@@ -38,7 +38,21 @@ void EHealthSender::init() {
 void EHealthSender::run() {
   input->lock();
   SensorData * inputData = input->get();
-  cout << inputData->temperature << endl;
+
+  switch(inputData->sensorID) {
+    case 1:
+      break;
+    case 8:
+      cout << "BPM: " << inputData->bpm << ", OxygenSaturation: " << inputData->oxygenSaturation << endl;
+      break;
+    case 9:
+      cout << "Temperature: " << inputData->temperature << endl;
+      break;
+    default:
+      cout << "The sensor ID does not exist.\n";
+      break;
+  }
+  
   input->unlock();   
 }
 

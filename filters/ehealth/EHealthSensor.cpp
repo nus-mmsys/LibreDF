@@ -32,29 +32,49 @@ FilterRegister<EHealthSensor> EHealthSensor::reg("ehealthsensor");
 EHealthSensor::EHealthSensor(const string & name) :
 Filter(name) {
   output = createOutputPort<SensorData>("ehealthdata output");
+  currentTime = 0;
+  minPeriod = 50;
+  maxPeriod = 20000;
 }
 
 void EHealthSensor::init() {
-
-  temperatureSensor.setup();
+  airflowSensor.setup();
+  bloodpressureSensor.setup();
+  ecgSensor.setup();
+  emgSensor.setup();
+  galvanicSensor.setup();
+  glucometerSensor.setup();
+  positionSensor.setup();
   pulsioximeterSensor.setup();  
+  temperatureSensor.setup();
 }
 
 void EHealthSensor::readSensor(Sensor * sensor) {
-  output->lock();
-  SensorData * outputData = output->get();
-  sensor->read(outputData);
-  output->unlock();   
+  if (currentTime % sensor->getSamplingPeriod() == 0)
+  {
+    output->lock();
+    SensorData * outputData = output->get();
+    sensor->read(outputData);
+    output->unlock();
+  }   
 }
+
 void EHealthSensor::run() {
-  high_resolution_clock::time_point t1 = high_resolution_clock::now();
+  high_resolution_clock::time_point start = high_resolution_clock::now();
 
   readSensor(&temperatureSensor);
+  readSensor(&pulsioximeterSensor);
   
-  high_resolution_clock::time_point t2 = high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-  cout << "Duration:" << duration << endl;
-  temperatureSensor.delay();
+  high_resolution_clock::time_point end = high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
+
+  //cout << "Duration:" << duration << endl;
+  
+  std::this_thread::sleep_for(std::chrono::milliseconds(minPeriod - duration/1000));
+
+  currentTime+=minPeriod;
+  if (currentTime >=  maxPeriod)
+    currentTime = 0;
 }
 
 EHealthSensor::~EHealthSensor() {

@@ -35,9 +35,18 @@ private:
 
   static tmf::FilterRegister<EHealthSensor> reg;
   
-    
-  ehealthsensor::TemperatureSensor temperatureSensor;
+  int currentTime, minPeriod, maxPeriod;    
+  
+  
+  ehealthsensor::AirFlowSensor airflowSensor;
+  ehealthsensor::BloodPressureSensor bloodpressureSensor;
+  ehealthsensor::ECGSensor ecgSensor;
+  ehealthsensor::EMGSensor emgSensor;
+  ehealthsensor::GalvanicSensor galvanicSensor;
+  ehealthsensor::GlucometerSensor glucometerSensor;
+  ehealthsensor::PositionSensor positionSensor;
   ehealthsensor::PulsioximeterSensor pulsioximeterSensor;
+  ehealthsensor::TemperatureSensor temperatureSensor;
 
   void readSensor(ehealthsensor::Sensor * sensor);
 public:
