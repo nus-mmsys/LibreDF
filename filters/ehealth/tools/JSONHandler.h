@@ -36,8 +36,7 @@ class JSONHandler
 {
 public:
   std::string userid;
-  JSONData sensordata[9];
- 
+  JSONData sensordata[10];
   std::string toJSON(); 
 };
 

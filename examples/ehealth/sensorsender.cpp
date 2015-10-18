@@ -29,8 +29,9 @@ int main(int argc, char** argv) {
   Filter* sensor = Factory::createFilter("ehealthsensor", "ehealthsensor");
   Filter* sender = Factory::createFilter("ehealthsender", "ehealthsender");
   
+  sender->setProp("host", "192.168.1.102");
   sender->setProp("userid", "1292805552");
-  sender->setProp("sendingPeriod", 1000);
+  sender->setProp("sendingPeriod", "4000");
 
   pipe->addFilters(sensor, sender, nullptr);
 

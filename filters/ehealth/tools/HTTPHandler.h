@@ -22,28 +22,20 @@
 #ifndef HTTPHANDLER_H
 #define HTTPHANDLER_H
 
+#include <curl/curl.h>
 #include <string>
 #include <iostream>
-#include <sstream>
-#include <ctype.h>
-#include <cstring>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <unistd.h>
 
 class HTTPHandler
 {
 private:
   std::string hostName;
-  int sock;
-  struct sockaddr_in client;
-  int port;
-  
+  CURL *curl;
+  CURLcode res;
+ 
 public:
-  HTTPHandler(std::string hostName);
+  HTTPHandler();
+  void setHost(std::string hostName);
   int sendHTTP(std::string message);
   ~HTTPHandler();
 };

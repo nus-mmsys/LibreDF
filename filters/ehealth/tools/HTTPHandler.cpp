@@ -22,57 +22,42 @@
 
 using namespace std;
 
-HTTPHandler::HTTPHandler(std::string hostName) : hostName(hostName)
-{
-  port = 80;
+HTTPHandler::HTTPHandler() {
+
+  /* In windows, this will init the winsock stuff */
+  curl_global_init(CURL_GLOBAL_ALL);
+
+}
+void HTTPHandler::setHost(std::string host) {
+  this->hostName = host;
 }
 
 int HTTPHandler::sendHTTP(std::string message)
 {
-    struct hostent * host = gethostbyname(hostName.c_str());
+  /* get a curl handle */
+  curl = curl_easy_init();
 
-    if ( (host == NULL) || (host->h_addr == NULL) ) {
-        cout << "Error retrieving DNS information." << endl;
-        return -1;
-    }
-
-    bzero(&client, sizeof(client));
-    client.sin_family = AF_INET;
-    client.sin_port = htons( port );
-    memcpy(&client.sin_addr, host->h_addr, host->h_length);
-
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (sock < 0) {
-        cout << "Error creating socket." << endl;
-        exit(1);
-    }
-
-    if ( connect(sock, (struct sockaddr *)&client, sizeof(client)) < 0 ) {
-        close(sock);
-        cout << "Could not connect" << endl;
-        return -1;
-    }
-
-    stringstream ss;
-    ss << "POST " + hostName + "/index.php HTTP/1.0\r\n"
-       << "Content-Type: application/x-www-form-urlencoded\r\n"
-       << "Connection: Keep-Alive\r\n"
-       << "Content-Length: " + std::to_string(message.length()) +"\r\n"
-       << "\r\n"
-       << message + "\r\n";
-       
-    string request = ss.str();
-
-    if (send(sock, request.c_str(), request.length(), 0) != (int)request.length()) {
-        cout << "Error sending request." << endl;
-        return -1;
-    }
-    //close(sock);
+  if(curl) {
+    /* First set the URL that is about to receive our POST. This URL can
+       just as well be a https:// URL if that is what should receive the
+       data. */ 
+    string url = hostName + "/tesla.php";
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    /* Now specify the POST data */ 
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message.c_str());
+ 
+    /* Perform the request, res will get the return code */ 
+    res = curl_easy_perform(curl);
+    /* Check for errors */ 
+    if(res != CURLE_OK)
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+ 
+    /* always cleanup */ 
+    curl_easy_cleanup(curl);
+  }
 }
 
-
-HTTPHandler::~HTTPHandler()
-{
-
+HTTPHandler::~HTTPHandler() {
+  curl_global_cleanup();
 }

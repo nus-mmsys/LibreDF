@@ -20,8 +20,30 @@
 
 #include "filters/ehealth/tools/JSONHandler.h"
 
+#include<iostream>
+
 using namespace std;
 
 string JSONHandler::toJSON() {
-  return "{}";
+  string res = "{ \"userid\": \"" + userid + "\", ";
+  for (int i = 1; i <= 9 ; i++) {
+    res += ("\"" + std::to_string(i) + "\" : { \"timestamp\":");
+    res += ("\"" + sensordata[i].timestamp + "\" , \"data\": [ ");
+    while(!sensordata[i].data.empty()) {
+      res += "{ ";
+      map<string, string> curmap = sensordata[i].data.back();
+      sensordata[i].data.pop_back();
+      for (auto& m : curmap)
+        res += ("\"" + m.first + "\" : \"" + m.second + "\" ,");
+      res.pop_back();
+      res += " } ,";
+    }
+    res.pop_back();
+    res += "] } ,";
+    sensordata[i].timestamp = "";    
+  } 
+  res.pop_back();
+  res += "}";
+  return res;
 }
+
