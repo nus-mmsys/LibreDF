@@ -23,16 +23,18 @@
 #include<iostream>
 
 using namespace std;
+using namespace ehealthsensor;
 
 long long JSONHandler::insertData(SensorData* sensor)
 {
-  if (data.timestamp[sensor->sensorID] == 0 )
-    data.timestamp[sensor->sensorID] = sensor->getTimestamp();
+  int sid = sensor->getSensorID();
+  if (data.timestamp[sid] == 0 )
+    data.timestamp[sid] = sensor->getTimestamp();
   
-  long long timediff = sensor->getTimestamp() - data.timestamp[sensor->sensorID];
+  long long timediff = sensor->getTimestamp() - data.timestamp[sid];
   std::map<std::string, std::string> curmap = sensor->getMap();
   curmap["timediff"] = std::to_string(timediff);
-  data.sensorData[sensor->sensorID].push_back(curmap);
+  data.sensorData[sid].push_back(curmap);
   return timediff;
 }
 
@@ -41,7 +43,7 @@ string JSONHandler::toJSON() {
   string res = "{ \"userid\": \"" + data.userid + "\", ";
   for (int i = 1; i <= 9 ; i++) {
     res += ("\"" + std::to_string(i) + "\" : { \"timestamp\":");
-    res += ("\"" + std::to_string(data.timestamp) + "\" , \"data\": [ ");
+    res += ("\"" + std::to_string(data.timestamp[i]) + "\" , \"data\": [ ");
     while(!data.sensorData[i].empty()) {
       res += "{ ";
       std::map<std::string, std::string> curmap = data.sensorData[i].back();

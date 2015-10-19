@@ -22,11 +22,9 @@
 #ifndef JSONHANDLER_H
 #define JSONHANDLER_H
 
-#include "../ehealthsensor/include/Sensor.h"
+#include <ehealthsensor/Sensor.h>
 #include <vector>
 #include <string>
-
-using namespace ehealthsensor;
 
 struct JSONData {
   std::string userid;
@@ -38,7 +36,7 @@ class JSONHandler
 {
 public:
   JSONData data;
-  void insertData(SensorData * sensor);
+  long long insertData(ehealthsensor::SensorData * sensor);
   std::string toJSON(); 
 };
 
