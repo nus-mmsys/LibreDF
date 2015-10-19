@@ -39,6 +39,7 @@ void EHealthSender::init() {
 
 void EHealthSender::run() {
 
+  /*
   input->lock();
   SensorData * inputData = input->get();
 
@@ -103,6 +104,7 @@ void EHealthSender::run() {
     string message = jsonHandler.toJSON();
     httpHandler.sendHTTP(message);
   }
+  */
 }
 
 EHealthSender::~EHealthSender() {

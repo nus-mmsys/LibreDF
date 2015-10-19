@@ -42,7 +42,7 @@ if(${libavfilters})
 endif()
 
 if(${ehealthfilters})
-  target_link_libraries(${PROJECT_NAME} ehealthsensor)
+  target_link_libraries(${PROJECT_NAME} ehealthsensor curl)
 endif()
 
 
