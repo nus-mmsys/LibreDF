@@ -32,9 +32,7 @@ FilterRegister<EHealthSensor> EHealthSensor::reg("ehealthsensor");
 EHealthSensor::EHealthSensor(const string & name) :
 Filter(name) {
   output = createOutputPort<SensorData>("ehealthdata output");
-  currentTime = 0;
-  minPeriod = 50;
-  maxPeriod = 20000;
+  scheduler = new Scheduler(50,20000);
 }
 
 void EHealthSensor::init() {
@@ -50,7 +48,7 @@ void EHealthSensor::init() {
 }
 
 void EHealthSensor::readSensor(Sensor * sensor) {
-  if (currentTime % sensor->getSamplingPeriod() == 0)
+  if (scheduler->timeToExecute(sensor->getSamplingPeriod()))
   {
     output->lock();
     SensorData * outputData = output->get();
@@ -60,7 +58,8 @@ void EHealthSensor::readSensor(Sensor * sensor) {
 }
 
 void EHealthSensor::run() {
-  high_resolution_clock::time_point start = high_resolution_clock::now();
+  
+  scheduler->start();
   
   //readSensor(&airflowSensor);
   //readSensor(&bloodpressureSensor);
@@ -72,16 +71,8 @@ void EHealthSensor::run() {
   readSensor(&pulsioximeterSensor);
   readSensor(&temperatureSensor);
   
-  high_resolution_clock::time_point end = high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>( end - start ).count();
-
-
-  currentTime+=minPeriod;
-  if (currentTime >=  maxPeriod)
-    currentTime = 0;
+  scheduler->end();
   
-  //cout << "Duration:" << duration << endl;
-  std::this_thread::sleep_for(std::chrono::microseconds(minPeriod*1000 - duration));
 
 }
 

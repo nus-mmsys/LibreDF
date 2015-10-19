@@ -25,6 +25,8 @@
 #include "core/Filter.h"
 #include "core/Port.h"
 
+#include "filters/ehealth/tools/Scheduler.h"
+
 #include <ehealthsensor/Sensor.h>
 
 struct EHealthSensor: public tmf::Filter {
@@ -33,9 +35,8 @@ private:
   tmf::OutputPort<ehealthsensor::SensorData> * output;
 
   static tmf::FilterRegister<EHealthSensor> reg;
-  
-  int currentTime, minPeriod, maxPeriod;    
-  
+     
+  Scheduler * scheduler;
   
   ehealthsensor::AirFlowSensor airflowSensor;
   ehealthsensor::BloodPressureSensor bloodpressureSensor;
