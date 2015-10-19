@@ -2,14 +2,14 @@ cmake_minimum_required (VERSION 2.6)
 
 project (examples)
 
-if(${basicfilters})
+if(BUILD_BASIC_FILTERS)
   add_subdirectory(basic)
 endif()
 
-if(${libavfilters})
+if(BUILD_LIBAV_FILTERS)
   add_subdirectory(libav)
 endif()
 
-if(${ehealthfilters})
+if(BUILD_EHEALTH_FILTERS)
   add_subdirectory(ehealth)
 endif()
