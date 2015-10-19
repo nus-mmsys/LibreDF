@@ -24,15 +24,28 @@
 
 using namespace std;
 
+long long JSONHandler::insertData(SensorData* sensor)
+{
+  if (data.timestamp[sensor->sensorID] == 0 )
+    data.timestamp[sensor->sensorID] = sensor->getTimestamp();
+  
+  long long timediff = sensor->getTimestamp() - data.timestamp[sensor->sensorID];
+  std::map<std::string, std::string> curmap = sensor->getMap();
+  curmap["timediff"] = std::to_string(timediff);
+  data.sensorData[sensor->sensorID].push_back(curmap);
+  return timediff;
+}
+
+
 string JSONHandler::toJSON() {
-  string res = "{ \"userid\": \"" + userid + "\", ";
+  string res = "{ \"userid\": \"" + data.userid + "\", ";
   for (int i = 1; i <= 9 ; i++) {
     res += ("\"" + std::to_string(i) + "\" : { \"timestamp\":");
-    res += ("\"" + sensordata[i].timestamp + "\" , \"data\": [ ");
-    while(!sensordata[i].data.empty()) {
+    res += ("\"" + std::to_string(data.timestamp) + "\" , \"data\": [ ");
+    while(!data.sensorData[i].empty()) {
       res += "{ ";
-      map<string, string> curmap = sensordata[i].data.back();
-      sensordata[i].data.pop_back();
+      std::map<std::string, std::string> curmap = data.sensorData[i].back();
+      data.sensorData[i].pop_back();
       for (auto& m : curmap)
         res += ("\"" + m.first + "\" : \"" + m.second + "\" ,");
       res.pop_back();
@@ -40,7 +53,7 @@ string JSONHandler::toJSON() {
     }
     res.pop_back();
     res += "] } ,";
-    sensordata[i].timestamp = "";    
+    data.timestamp[i] = 0;    
   } 
   res.pop_back();
   res += "}";
