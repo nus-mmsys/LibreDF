@@ -15,6 +15,7 @@ option(BUILD_EHEALTH_FILTERS "Build ehealth filters" OFF)
 include_directories(.)
 
 aux_source_directory(core core_src)
+aux_source_directory(tools tools_src)
 
 if (BUILD_BASIC_FILTERS)
   aux_source_directory(filters/basic basicfilters_src)
@@ -31,6 +32,7 @@ if(BUILD_EHEALTH_FILTERS)
 endif()
 
 add_library(${PROJECT_NAME} SHARED ${core_src}
+                       ${tools_src}
                        ${basicfilters_src}
                        ${libavtools_src}
                        ${libavfilters_src}

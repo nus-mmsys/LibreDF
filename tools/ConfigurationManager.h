@@ -18,32 +18,25 @@
  *
  */
 
-#include "core/tmf.h"
+#ifndef CONFIGURATIONMANAGER_H
+#define CONFIGURATIONMANAGER_H
 
-using namespace tmf;
+#include <map>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
-int main(int argc, char** argv) {
-  
-  Pipeline* pipe = Factory::createPipeline("E-Health Sensor Sender");
-  
-  Filter* sensor = Factory::createFilter("ehealthsensor", "ehealthsensor");
-  Filter* sender = Factory::createFilter("ehealthsender", "ehealthsender");
-  
-  ConfigurationManager conf("sensorsender.cfg");
-  
-  sender->setProp("host", conf.getValue("host"));
-  sender->setProp("userid", conf.getValue("userid"));
-  sender->setProp("sendingPeriod", conf.getValue("sendingPeriod"));
+class ConfigurationManager
+{
+private:
+  std::string fileName;
+  std::fstream cfile;
+  std::map<std::string, std::string> data;
+public:
+ConfigurationManager(const std::string& fname);
+std::string getValue(const std::string& key);
+~ConfigurationManager();
+};
 
-  pipe->addFilters(sensor, sender, nullptr);
-
-  pipe->connectFilters(sensor, sender);
-
-  pipe->init();
-  
-  pipe->run();
-  
-  Factory::destroyPipeline(pipe);
-  
-  return 0;
-}
+#endif // CONFIGURATIONMANAGER_H

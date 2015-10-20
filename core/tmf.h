@@ -25,6 +25,7 @@
 
 #include "core/Pipeline.h"
 #include "core/Filter.h"
+#include "tools/ConfigurationManager.h"
 
 namespace tmf {
   
