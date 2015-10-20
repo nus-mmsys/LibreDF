@@ -24,6 +24,12 @@ using namespace std;
 ConfigurationManager::ConfigurationManager(const string& fname) : fileName(fname)
 {
   cfile.open(fname, ios::in);
+  
+  if (!cfile.is_open()) {
+    cerr << "Cannot open file " << fname << endl;
+    return;
+  }
+  
   std::string line;
   while( std::getline(cfile, line) )
   {
