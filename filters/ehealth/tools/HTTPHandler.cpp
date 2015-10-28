@@ -41,6 +41,7 @@ int HTTPHandler::sendHTTP(std::string message)
     /* First set the URL that is about to receive our POST. This URL can
        just as well be a https:// URL if that is what should receive the
        data. */ 
+    curl_easy_setopt(curl, CURLOPT_USERAGENT, "tesla");
     curl_easy_setopt(curl, CURLOPT_URL, this->url.c_str());
     /* Now specify the POST data */ 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message.c_str());
