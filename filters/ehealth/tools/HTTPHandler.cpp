@@ -28,8 +28,8 @@ HTTPHandler::HTTPHandler() {
   curl_global_init(CURL_GLOBAL_ALL);
 
 }
-void HTTPHandler::setHost(std::string host) {
-  this->hostName = host;
+void HTTPHandler::setHost(std::string url) {
+  this->url = url;
 }
 
 int HTTPHandler::sendHTTP(std::string message)
@@ -41,8 +41,7 @@ int HTTPHandler::sendHTTP(std::string message)
     /* First set the URL that is about to receive our POST. This URL can
        just as well be a https:// URL if that is what should receive the
        data. */ 
-    string url = hostName + "/tesla.php";
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, this->url.c_str());
     /* Now specify the POST data */ 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message.c_str());
  

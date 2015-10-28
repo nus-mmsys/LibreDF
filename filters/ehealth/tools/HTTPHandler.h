@@ -29,13 +29,13 @@
 class HTTPHandler
 {
 private:
-  std::string hostName;
+  std::string url;
   CURL *curl;
   CURLcode res;
  
 public:
   HTTPHandler();
-  void setHost(std::string hostName);
+  void setHost(std::string url);
   int sendHTTP(std::string message);
   ~HTTPHandler();
 };
