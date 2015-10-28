@@ -28,7 +28,8 @@
 
 struct JSONData {
   std::string userid;
-  long long timestamp[10];
+  std::string version;
+  long long timestamp;
   std::vector<std::map<std::string, std::string>> sensorData[10];
 };
 

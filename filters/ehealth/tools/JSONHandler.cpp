@@ -28,10 +28,10 @@ using namespace ehealthsensor;
 long long JSONHandler::insertData(SensorData* sensor)
 {
   int sid = sensor->getSensorID();
-  if (data.timestamp[sid] == 0 )
-    data.timestamp[sid] = sensor->getTimestamp();
+  if (data.timestamp == 0 )
+    data.timestamp = sensor->getTimestamp();
   
-  long long timediff = sensor->getTimestamp() - data.timestamp[sid];
+  long long timediff = sensor->getTimestamp() - data.timestamp;
   std::map<std::string, std::string> curmap = sensor->getMap();
   curmap["timediff"] = std::to_string(timediff);
   data.sensorData[sid].push_back(curmap);
@@ -41,9 +41,11 @@ long long JSONHandler::insertData(SensorData* sensor)
 
 string JSONHandler::toJSON() {
   string res = "{ \"userid\": \"" + data.userid + "\", ";
+  res += "\"version\": \"" + data.version + "\",";
+  res += "\"timestamp\": \"" + std::to_string(data.timestamp) + "\",";
+  
   for (int i = 1; i <= 9 ; i++) {
-    res += ("\"" + std::to_string(i) + "\" : { \"timestamp\":");
-    res += ("\"" + std::to_string(data.timestamp[i]) + "\" , \"data\": [ ");
+    res += ("\"" + std::to_string(i) + "\" : [ ");
     while(!data.sensorData[i].empty()) {
       res += "{ ";
       std::map<std::string, std::string> curmap = data.sensorData[i].back();
@@ -54,9 +56,9 @@ string JSONHandler::toJSON() {
       res += " } ,";
     }
     res.pop_back();
-    res += "] } ,";
-    data.timestamp[i] = 0;    
+    res += "]  ,";  
   } 
+  data.timestamp = 0;  
   res.pop_back();
   res += "}";
   return res;

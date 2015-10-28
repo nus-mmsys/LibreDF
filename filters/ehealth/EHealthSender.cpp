@@ -34,6 +34,7 @@ Filter(name) {
 void EHealthSender::init() {
   httpHandler.setHost(getProp("host"));
   jsonHandler.data.userid = getProp("userid");
+  jsonHandler.data.version = "1.0";
   sendingPeriod = std::stoi(getProp("sendingPeriod"));
 }
 
