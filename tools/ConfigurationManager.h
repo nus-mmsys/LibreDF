@@ -26,15 +26,14 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 
 class ConfigurationManager
 {
 private:
-  std::string fileName;
-  std::fstream cfile;
   std::map<std::string, std::string> data;
 public:
-ConfigurationManager(const std::string& fname);
+ConfigurationManager(const std::string& json, const std::string& mode);
 std::string getValue(const std::string& key);
 ~ConfigurationManager();
 };

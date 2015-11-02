@@ -27,8 +27,9 @@
 #include <string>
 
 struct JSONData {
+  int type;
+  std::string macid;
   std::string userid;
-  std::string version;
   long long timestamp;
   std::vector<std::map<std::string, std::string>> sensorData[10];
 };

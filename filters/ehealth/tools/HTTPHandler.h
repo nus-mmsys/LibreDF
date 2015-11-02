@@ -36,7 +36,7 @@ private:
 public:
   HTTPHandler();
   void setHost(std::string url);
-  int sendHTTP(std::string message);
+  std::string sendHTTP(std::string message);
   ~HTTPHandler();
 };
 

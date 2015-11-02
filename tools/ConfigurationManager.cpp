@@ -21,28 +21,38 @@
 
 using namespace std;
 
-ConfigurationManager::ConfigurationManager(const string& fname) : fileName(fname)
+ConfigurationManager::ConfigurationManager(const string& json, const string& mode)
 {
-  cfile.open(fname, ios::in);
-  
-  if (!cfile.is_open()) {
-    cerr << "Cannot open file " << fname << endl;
+  std::string content;
+  if (mode == "file") {
+    std::ifstream ifs(json);
+    content.assign((std::istreambuf_iterator<char>(ifs)),
+                       (std::istreambuf_iterator<char>()));
+  }
+  else if (mode == "json") {
+    content = json;
+  } else {
+    cout << "Mode is not defined." << endl;
     return;
   }
-  
+
+  content.erase(std::remove_if(content.begin(), content.end(),
+    [](char c) { return c == '{' || c == '}' || c == '\n' || c == ' ' || c == '\"'; } ),
+    content.end());
+
   std::string line;
-  while( std::getline(cfile, line) )
+  std::stringstream ss(content);
+  while( std::getline(ss, line, ',') )
   {
     std::istringstream is_line(line);
     std::string key;
-    if( std::getline(is_line, key, '=') )
-    {
+    if( std::getline(is_line, key, ':') )
+    {   
       std::string value;
       if( std::getline(is_line, value) ) 
 	data[key] = value;
     }
   }
-  cfile.close();
 }
 
 string ConfigurationManager::getValue(const string& key)
@@ -51,7 +61,7 @@ string ConfigurationManager::getValue(const string& key)
   if (it!=data.end())
     return data[key];
 
-  cout << key + " is not found in the configuration file " << fileName << endl;
+  cout << key + " is not found in the configuration file " << endl;
   return "";
 }
 

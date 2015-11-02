@@ -40,25 +40,30 @@ long long JSONHandler::insertData(SensorData* sensor)
 
 
 string JSONHandler::toJSON() {
-  string res = "{ \"userid\": \"" + data.userid + "\", ";
-  res += "\"version\": \"" + data.version + "\",";
-  res += "\"timestamp\": \"" + std::to_string(data.timestamp) + "\",";
+  string res =  "{ \"type\": \"" + std::to_string(data.type) + "\", ";
+  res += "\"mac\": \"" + data.macid + "\", ";
+  res += "\"userid\": \"" + data.userid + "\" ,";
+
+  if (data.type == 0) {
+    res += "\"timestamp\": \"" + std::to_string(data.timestamp) + "\",";
   
-  for (int i = 1; i <= 9 ; i++) {
-    res += ("\"" + std::to_string(i) + "\" : [ ");
-    while(!data.sensorData[i].empty()) {
-      res += "{ ";
-      std::map<std::string, std::string> curmap = data.sensorData[i].back();
-      data.sensorData[i].pop_back();
-      for (auto& m : curmap)
-        res += ("\"" + m.first + "\" : \"" + m.second + "\" ,");
+    for (int i = 1; i <= 9 ; i++) {
+      res += ("\"" + std::to_string(i) + "\" : [ ");
+      while(!data.sensorData[i].empty()) {
+        res += "{ ";
+        std::map<std::string, std::string> curmap = data.sensorData[i].back();
+        data.sensorData[i].pop_back();
+        for (auto& m : curmap)
+          res += ("\"" + m.first + "\" : \"" + m.second + "\" ,");
+        res.pop_back();
+        res += " } ,";
+      }
       res.pop_back();
-      res += " } ,";
-    }
-    res.pop_back();
-    res += "]  ,";  
-  } 
-  data.timestamp = 0;  
+      res += "]  ,";  
+    } 
+    data.timestamp = 0;  
+  }    
+
   res.pop_back();
   res += "}";
   return res;

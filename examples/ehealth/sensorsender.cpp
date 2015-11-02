@@ -29,11 +29,10 @@ int main(int argc, char** argv) {
   Filter* sensor = Factory::createFilter("ehealthsensor", "ehealthsensor");
   Filter* sender = Factory::createFilter("ehealthsender", "ehealthsender");
   
-  ConfigurationManager conf("sensorsender.cfg");
+  ConfigurationManager conf("sensorsender.json", "file");
   
   sender->setProp("host", conf.getValue("host"));
   sender->setProp("userid", conf.getValue("userid"));
-  sender->setProp("sendingPeriod", conf.getValue("sendingPeriod"));
 
   pipe->addFilters(sensor, sender, nullptr);
 

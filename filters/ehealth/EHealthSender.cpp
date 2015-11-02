@@ -19,6 +19,7 @@
  */
 
 #include "filters/ehealth/EHealthSender.h"
+#include <fstream>
 
 using namespace tmf;
 using namespace std;
@@ -32,10 +33,24 @@ Filter(name) {
 }
 
 void EHealthSender::init() {
+  
   httpHandler.setHost(getProp("host"));
+  
+  std::ifstream ifs("/sys/class/net/eth0/address");
+  jsonHandler.data.macid.assign((std::istreambuf_iterator<char>(ifs)),
+                                (std::istreambuf_iterator<char>()));
+  jsonHandler.data.macid.erase(jsonHandler.data.macid.find_last_not_of(" \n\r\t")+1);
   jsonHandler.data.userid = getProp("userid");
-  jsonHandler.data.version = "0.0.1";
-  sendingPeriod = std::stoi(getProp("sendingPeriod"));
+
+  jsonHandler.data.type = 1;
+
+  string message = jsonHandler.toJSON();
+  string response = httpHandler.sendHTTP(message);
+  cout << response << endl;
+  ConfigurationManager config(response, "json"); 
+  sendingPeriod = std::stoi(config.getValue("sendingPeriod"));
+
+  jsonHandler.data.type = 0;
 }
 
 void EHealthSender::run() {
@@ -48,7 +63,8 @@ void EHealthSender::run() {
   
   if (timediff >= sendingPeriod) { 
     string message = jsonHandler.toJSON();
-    httpHandler.sendHTTP(message);
+    std::string response = httpHandler.sendHTTP(message);
+    cout << response << endl;
   }
   
 }

@@ -32,8 +32,9 @@ void HTTPHandler::setHost(std::string url) {
   this->url = url;
 }
 
-int HTTPHandler::sendHTTP(std::string message)
+std::string HTTPHandler::sendHTTP(std::string message)
 {
+  std::string response;
   /* get a curl handle */
   curl = curl_easy_init();
 
@@ -45,7 +46,8 @@ int HTTPHandler::sendHTTP(std::string message)
     curl_easy_setopt(curl, CURLOPT_URL, this->url.c_str());
     /* Now specify the POST data */ 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, message.c_str());
- 
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
     /* Perform the request, res will get the return code */ 
     res = curl_easy_perform(curl);
     /* Check for errors */ 
@@ -56,6 +58,7 @@ int HTTPHandler::sendHTTP(std::string message)
     /* always cleanup */ 
     curl_easy_cleanup(curl);
   }
+  return response;
 }
 
 HTTPHandler::~HTTPHandler() {
