@@ -25,6 +25,7 @@
 #include <ehealthsensor/Sensor.h>
 #include <vector>
 #include <string>
+#include <fstream>
 
 struct JSONData {
   int type;
@@ -40,7 +41,7 @@ private:
   JSONData data;
 public:
   void setType(int type);
-  void setMacID(std::string macid);
+  void setMacID();
   void setUserID(std::string userid);
   
   long long insertData(ehealthsensor::SensorData * sensor);
