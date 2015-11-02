@@ -36,8 +36,13 @@ struct JSONData {
 
 class JSONHandler
 {
-public:
+private:
   JSONData data;
+public:
+  void setType(int type);
+  void setMacID(std::string macid);
+  void setUserID(std::string userid);
+  
   long long insertData(ehealthsensor::SensorData * sensor);
   std::string toJSON(); 
 };

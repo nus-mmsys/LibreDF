@@ -36,21 +36,18 @@ void EHealthSender::init() {
   
   httpHandler.setHost(getProp("host"));
   
-  std::ifstream ifs("/sys/class/net/eth0/address");
-  jsonHandler.data.macid.assign((std::istreambuf_iterator<char>(ifs)),
-                                (std::istreambuf_iterator<char>()));
-  jsonHandler.data.macid.erase(jsonHandler.data.macid.find_last_not_of(" \n\r\t")+1);
-  jsonHandler.data.userid = getProp("userid");
-
-  jsonHandler.data.type = 1;
+  jsonHandler.setMacID();
+  jsonHandler.setUserID(getProp("userid"));
+  jsonHandler.setType(1);
 
   string message = jsonHandler.toJSON();
   string response = httpHandler.sendHTTP(message);
   cout << response << endl;
+  
   ConfigurationManager config(response, "json"); 
   sendingPeriod = std::stoi(config.getValue("sendingPeriod"));
 
-  jsonHandler.data.type = 0;
+  jsonHandler.setType(0);
 }
 
 void EHealthSender::run() {

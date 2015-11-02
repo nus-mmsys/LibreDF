@@ -38,6 +38,23 @@ long long JSONHandler::insertData(SensorData* sensor)
   return timediff;
 }
 
+void JSONHandler::setType(int type)
+{
+  data.type = type;
+}
+
+void JSONHandler::setMacID()
+{
+  std::ifstream ifs("/sys/class/net/eth0/address");
+  data.macid.assign((std::istreambuf_iterator<char>(ifs)),
+                                (std::istreambuf_iterator<char>()));
+  data.macid.erase(data.macid.find_last_not_of(" \n\r\t")+1);
+}
+
+void JSONHandler::setUserID(string userid)
+{
+  data.userid = userid;
+}
 
 string JSONHandler::toJSON() {
   string res =  "{ \"type\": \"" + std::to_string(data.type) + "\", ";
