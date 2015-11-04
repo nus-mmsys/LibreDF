@@ -37,6 +37,8 @@ private:
   static tmf::FilterRegister<EHealthSender> reg;
   
   int sendingPeriod;  
+  int sessionDuration;
+  int sessionGap;
 
   JSONHandler jsonHandler;    
   HTTPHandler httpHandler;

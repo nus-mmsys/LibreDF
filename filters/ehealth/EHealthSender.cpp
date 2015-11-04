@@ -45,8 +45,10 @@ void EHealthSender::init() {
   cout << response << endl;
   
   ConfigurationManager config(response, "json"); 
-  sendingPeriod = std::stoi(config.getValue("sendingPeriod"));
-
+  sendingPeriod = std::stoi(config.getValue("sendingperiod"));
+  sessionDuration = std::stoi(config.getValue("sessionduration"));
+  sessionGap = std::stoi(config.getValue("sessiongap"));
+  
   jsonHandler.setType(0);
 }
 
