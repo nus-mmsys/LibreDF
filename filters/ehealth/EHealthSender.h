@@ -35,7 +35,8 @@ private:
   tmf::InputPort<ehealthsensor::SensorData> * input;
 
   static tmf::FilterRegister<EHealthSender> reg;
-  
+
+  std::string mode;  
   int sendingPeriod;  
   int sessionDuration;
   int sessionGap;

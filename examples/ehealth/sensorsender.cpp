@@ -33,6 +33,7 @@ int main(int argc, char** argv) {
   
   sender->setProp("host", conf.getValue("host"));
   sender->setProp("userid", conf.getValue("userid"));
+  sender->setProp("mode", conf.getValue("mode"));
 
   pipe->addFilters(sensor, sender, nullptr);
 

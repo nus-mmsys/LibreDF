@@ -33,7 +33,8 @@ Filter(name) {
 }
 
 void EHealthSender::init() {
-  
+
+    
   httpHandler.setHost(getProp("host"));
   
   jsonHandler.setMacID();
