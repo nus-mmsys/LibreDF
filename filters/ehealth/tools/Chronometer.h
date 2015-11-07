@@ -19,26 +19,22 @@
  */
 
 
-#ifndef HTTPHANDLER_H
-#define HTTPHANDLER_H
+#ifndef CHRONOMETER_H
+#define CHRONOMETER_H
 
-#include <curl/curl.h>
-#include <string>
-#include <iostream>
+#include <thread>
+#include <chrono>
 
-class HTTPHandler
+class Chronometer 
 {
 private:
-  std::string url;
-  CURL *curl;
-  CURLcode res;
-  static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
-
+  std::chrono::high_resolution_clock::time_point startTime, endTime;
+ 
 public:
-  HTTPHandler();
-  void setHost(std::string url);
-  std::string sendHTTP(std::string message);
-  ~HTTPHandler();
+  Chronometer();
+  void start();
+  long long now();
+  ~Chronometer();
 };
 
-#endif // HTTPHANDLER_H
+#endif // SCHEDULER_H

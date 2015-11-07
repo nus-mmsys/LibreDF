@@ -28,6 +28,7 @@
 #include <ehealthsensor/Sensor.h>
 #include <filters/ehealth/tools/JSONHandler.h>
 #include <filters/ehealth/tools/HTTPHandler.h>
+#include <filters/ehealth/tools/Chronometer.h>
 
 struct EHealthSender: public tmf::Filter {
 private:
@@ -36,13 +37,16 @@ private:
 
   static tmf::FilterRegister<EHealthSender> reg;
 
-  std::string mode;  
+  int mode;  
   int sendingPeriod;  
   int sessionDuration;
   int sessionGap;
+  boolean gapPeriod;
 
   JSONHandler jsonHandler;    
   HTTPHandler httpHandler;
+  Chronometer chronometer;
+
 public:
   
   EHealthSender(const std::string& name);

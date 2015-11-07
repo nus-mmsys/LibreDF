@@ -33,12 +33,12 @@ Filter(name) {
 }
 
 void EHealthSender::init() {
-
-    
+  mode = std::stoi(getProp("mode"));
   httpHandler.setHost(getProp("host"));
   
   jsonHandler.setMacID();
   jsonHandler.setUserID(getProp("userid"));
+  
   jsonHandler.setType(1);
 
   string message = jsonHandler.toJSON();
@@ -50,21 +50,44 @@ void EHealthSender::init() {
   sessionDuration = std::stoi(config.getValue("sessionduration"));
   sessionGap = std::stoi(config.getValue("sessiongap"));
   
+  gapPeriod = false;
+
   jsonHandler.setType(0);
+  chronometer.start();
 }
 
 void EHealthSender::run() {
-
+  
   long long timediff;
   input->lock();
   SensorData * inputData = input->get();
-  timediff = jsonHandler.insertData(inputData);
-  input->unlock();   
+
+  if (mode==0 && gapPeriod) {
+    if (chronometer.now() < sessionGap) {
+      cout << "Sleeping..." << endl;
+      input->unlock();
+      return;
+    } else {
+      cout << "Waking up..." << endl;
+      chronometer.start();
+      gapPeriod = false;
+    }
+  }
   
+  timediff = jsonHandler.insertData(inputData);
+  input->unlock();
+    
   if (timediff >= sendingPeriod) { 
+    cout << "Sending..." << endl;
     string message = jsonHandler.toJSON();
     std::string response = httpHandler.sendHTTP(message);
     cout << response << endl;
+  }
+
+  if (mode==0 && chronometer.now() >= sessionDuration) {
+    gapPeriod = true;
+    chronometer.start();
+    cout << "Session duration is up..." << endl;
   }
   
 }

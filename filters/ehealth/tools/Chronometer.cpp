@@ -18,27 +18,24 @@
  *
  */
 
+#include "filters/ehealth/tools/Chronometer.h"
 
-#ifndef HTTPHANDLER_H
-#define HTTPHANDLER_H
 
-#include <curl/curl.h>
-#include <string>
-#include <iostream>
+Chronometer::Chronometer() {
+}
 
-class HTTPHandler
-{
-private:
-  std::string url;
-  CURL *curl;
-  CURLcode res;
-  static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
+void Chronometer::start() {
+  startTime = std::chrono::high_resolution_clock::now();
+}
 
-public:
-  HTTPHandler();
-  void setHost(std::string url);
-  std::string sendHTTP(std::string message);
-  ~HTTPHandler();
-};
+long long Chronometer::now() {
+  endTime = std::chrono::high_resolution_clock::now();
+  
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( endTime - startTime ).count();
 
-#endif // HTTPHANDLER_H
+  return duration;
+
+}
+
+Chronometer::~Chronometer() {
+}
