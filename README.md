@@ -1,5 +1,4 @@
-1) Tiny Multimedia Framework (tmf)
-===============================
+# 1) Tiny Multimedia Framework (tmf)
 
 Tiny Multimedia Framework is a simple multimedia framework to implement multimedia applications. A multimedia application consists of a pipeline and a series of filters connected to each other. An application developer need to know about filter types, and how to connect them to each other.
 
@@ -7,8 +6,8 @@ Each filter has a number of input and output ports. Each port has a buffer type 
 
 In section 5 we explain how a multimedia application developers create an application using the APIs of the framework. In section 6 we explain how plug-in developers create a new filter using APIs of the framework.
 
-2) Folder structure
-===================
+# 2) Folder structure
+
 
 Here is how the project is organized.
 
@@ -27,8 +26,8 @@ Here is how the project is organized.
 	tmf.doxyfile
 	tmf.kdev4
 
-3) Installation
-===============
+# 3) Installation
+
 ```bash
   cd build
   ./build.sh
@@ -44,8 +43,8 @@ Before compilation make sure that the following libraries are installed:
  - libsdl1.2-dev
  - zlib1g-dev
 
-4) Development envirement
-======================
+# 4) Development envirement
+
 Tiny Multimedia Framework is configured to be developed under KDevelop IDE.
 	
 	kdevelop -p tmf.kdev4
@@ -54,8 +53,8 @@ The build directory:
 
 	build-kdevelop
 
-5) User manual
-===========
+# 5) User manual
+
 
 To create an application we need to create the pipeline as well as the filters, connect filters to each other and run the pipeline. TMF provides APIs to do it.
 
@@ -84,8 +83,8 @@ Here is a producer/consumer example with one producer and three consumer:
   Factory::destroyPipeline(pipe);
 ```	
 
-6) Plugin developer manual
-=======================
+# 6) Plugin developer manual
+
 
 Plug-in developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements ```init()``` and ```run()``` functions.
 
