@@ -1,3 +1,6 @@
+# 0) A reconfigurable version of TMF called RDF :
+	https://github.com/inria-spades/rdf
+
 # 1) Tiny Multimedia Framework (tmf)
 
 Tiny Multimedia Framework is a simple multimedia framework to implement multimedia applications. A multimedia application consists of a pipeline and a series of filters connected to each other. An application developer need to know about filter types, and how to connect them to each other.
