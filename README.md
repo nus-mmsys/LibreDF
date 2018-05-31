@@ -1,5 +1,5 @@
-# 0) A reconfigurable version of TMF called RDF :
-	https://github.com/inria-spades/rdf
+# 0) A reconfigurable version of TMF under [RDF](https://github.com/inria-spades/rdf) project
+	git clone git@github.com:inria-spades/rdf.git
 
 # 1) Tiny Multimedia Framework (tmf)
 
