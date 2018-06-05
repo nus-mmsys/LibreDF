@@ -1,5 +1,5 @@
-# 0) A reconfigurable version of TMF under [RDF](https://github.com/inria-spades/rdf) project
-	git clone git@github.com:inria-spades/rdf.git
+# 0) A reconfigurable version of TMF under [RDF](https://gitlab.com/dataflow-programming/rdf) project on GitLab
+	git clone git@gitlab.com:dataflow-programming/rdf.git
 
 # 1) Tiny Multimedia Framework (tmf)
 
