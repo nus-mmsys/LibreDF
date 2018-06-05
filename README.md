@@ -1,4 +1,4 @@
-# 0) A reconfigurable version of TMF under [RDF](https://gitlab.com/dataflow-programming/rdf) project on GitLab
+# 0) A reconfigurable version on GitLab(https://gitlab.com/dataflow-programming/rdf)
 	git clone git@gitlab.com:dataflow-programming/rdf.git
 
 # 1) Tiny Multimedia Framework (tmf)
