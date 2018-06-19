@@ -28,14 +28,6 @@ rdf <name> {
         nodes = <actor 1>, ..., <actor n>; 
 	    edges = <edge 1> (<source actor>, <sink actor>), ...., <edge m>(<source actor>, <sink actor>);
     }
-    production {
-        <edge i> = <rate>;
-        ....
-    }
-    consumption {
-        <edge i> = <rate>;
-        ....
-    }
     actor <actor i> {
         computation = <actor i type>;
         <property x> = <value y>;
@@ -52,12 +44,6 @@ rdf classify {
     topology {
         nodes = A, B;
         edges = e1 (A, B);
-    }
-    production {
-        e1 = 1;
-    }
-    consumption {
-        e1 = 1;
     }
     actor A {
         computation = VideoCapture;
