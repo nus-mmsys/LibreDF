@@ -42,7 +42,7 @@ int TDFUI::load_from_file(const char * filename) {
 	graph = new Graph();
 	string rdfname;
 	ifstream file(filename);
-        read_str(file, "rdf");
+        read_str(file, "df");
         file >> rdfname;
         graph->set_name(rdfname);
 	ret = read_graph(file, graph);

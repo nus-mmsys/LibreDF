@@ -1,4 +1,4 @@
-rdf imread_imwrite {
+df imread_imwrite {
     topology {
         nodes = A,B;
 	edges = e1(A,B);

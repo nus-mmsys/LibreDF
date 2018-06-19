@@ -1,4 +1,4 @@
-rdf add {
+df add {
     topology {
         nodes = A,B,C,D;
 	edges = e1(A,C), e2(B,C), e3(C,D);
