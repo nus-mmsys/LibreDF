@@ -20,15 +20,15 @@
 
 RDFUI::RDFUI(int argc, char * argv[]) {
 
-	cmd["benchmark"] = bind(&RDFUI::display_benchmark, this);
-	cmd["graph"] = bind(&RDFUI::display_rdf_graph, this);
-	cmd["rules"] = bind(&RDFUI::display_rules, this);
+	//cmd["benchmark"] = bind(&RDFUI::display_benchmark, this);
+	//cmd["graph"] = bind(&RDFUI::display_rdf_graph, this);
+	//cmd["rules"] = bind(&RDFUI::display_rules, this);
 	cmd["run"] = bind(&RDFUI::run_graph, this);
 	cmd["h"] = bind(&RDFUI::display_help, this);
 
-	comment["benchmark"] = "display benchmark.";
-	comment["graph"] = "\tdisplay rdf data graph.";
-	comment["rules"] = "\tdisplay list of rules.";
+	//comment["benchmark"] = "display benchmark.";
+	//comment["graph"] = "\tdisplay rdf data graph.";
+	//comment["rules"] = "\tdisplay list of rules.";
 	comment["run"] = "\trun the data graph.";
 	comment["h"] = "\tdisplay help menu.";
 
