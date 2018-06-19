@@ -211,7 +211,7 @@ Add::~Add() {
 	      opencv-highgui
 	      opencv-imgproc
 	      opencv-objdetect
-	  rdf
+	  shell
 	test
 	  basic
 	  opencv
