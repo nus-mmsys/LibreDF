@@ -1,4 +1,4 @@
-# RDF
+# DF
 
 ## Build
 
@@ -17,10 +17,7 @@
 
 ## Commands
 
-	benchmark	display benchmark.
-	graph		display rdf data graph.
 	h		    display help menu.
-	rules		display list of rules.
 	run		    run the data graph.
 
 ## Dataflow Interchange Format (DIF)
@@ -47,43 +44,6 @@ rdf <name> {
 }
 ```
 
-## RDF extension
-
-```
-rule <name> {
-
-left {
-    topology {
-        ...
-    }
-    production {    
-        ...
-    }
-    consumption {    
-        ...
-    }
-    actor ... {
-        ...
-    }
-}
-
-right {
-    topology {
-        ...
-    }
-    production {    
-        ...
-    }
-    consumption {    
-        ...
-    }
-    actor ... {
-        ...
-    }
-}
-
-}
-```
 
 ## Example
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
@@ -112,7 +72,6 @@ rdf classify {
 }
 
 ```
-
 
 ## Actor types
 
