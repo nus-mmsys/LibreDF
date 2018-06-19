@@ -1,4 +1,4 @@
-# RDF
+# TDF
 
 ## Build
 
@@ -12,7 +12,7 @@
 ## Run
 
 ```bash
-  ./rdf ../test/basic/double_int.rdf
+  ./tdf ../test/basic/adder.dif
 ```
 
 ## Commands
