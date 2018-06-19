@@ -1,5 +1,5 @@
 /*
- *   RDF
+ *   DF
  *   Copyright (C) 2018
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RDFUI_H
-#define RDFUI_H
+#ifndef DF_TTDFUI_H
+#define DF_TTDFUI_H
 
 #include <iostream>
 #include <fstream>
@@ -26,21 +26,19 @@
 #include <map>
 #include <functional>
 #include "graph.h"
-#include "rule.h"
 #include "core/df.h"
 
 using namespace std;
 
 /*!
- * \class RDFUI
+ * \class TDFUI
  * The user interface class for RDF.
  *
  */
-class RDFUI {
+class TDFUI {
 
 private:
 	Graph * graph; /**< RDF data graph. */
-	vector<Rule *> rules; /**< RDF transformation rules. */
 
 	map<string, function<int()>> cmd; /**< A map from command name to command funtion. */
 	map<string, string> comment; /**< A map from command name to command description. */
@@ -97,17 +95,6 @@ private:
 	 *
 	 */ 
 	int read_graph(ifstream & file, Graph * g);
-
-	/*!
-	 * Read a set of rules from a file stream.
-	 *
-	 * \param file
-	 * 	Reference of the file stream.
-	 *
-	 * \return
-	 *
-	 */ 
-	int read_rules(ifstream & file);
 
 	/*!
 	 * Read the list of actors of a graph from a file stream.
@@ -321,28 +308,12 @@ private:
 	int display_rdf_graph();
 
 	/*!
-	 * Display the list of rules to the user
-	 *
-	 * \return
-	 *
-	 */ 
-	int display_rules();
-
-	/*!
 	 * Display the help menu to the user
 	 *
 	 * \return
 	 *
 	 */ 
 	int display_help();
-
-	/*!
-	 * Display the benchmark to the user
-	 *
-	 * \return
-	 *
-	 */ 
-	int display_benchmark();
 
 	/*!
 	 * Run the data graph
@@ -370,7 +341,7 @@ private:
 public:
 
 	/*!
-	 * RDFUI constructor
+	 * TDFUI constructor
 	 *
 	 *  \param argc
 	 * 	The number of arguments
@@ -379,10 +350,10 @@ public:
 	 *  	The list of strings containing the arguments
 	 *
 	 */ 
-	RDFUI(int argc, char * argv[]);
+	TDFUI(int argc, char * argv[]);
 	
 	/*!
-	 * Main loop of the RDFUI
+	 * Main loop of the TDFUI
 	 *
 	 * \return
 	 *

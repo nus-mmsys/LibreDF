@@ -1,5 +1,5 @@
 /*
- *   RDF
+ *   DF
  *   Copyright (C) 2018
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -16,24 +16,20 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "rdfui.h"
+#include "tdfui.h"
 
-RDFUI::RDFUI(int argc, char * argv[]) {
+TDFUI::TDFUI(int argc, char * argv[]) {
 
-	//cmd["benchmark"] = bind(&RDFUI::display_benchmark, this);
-	//cmd["graph"] = bind(&RDFUI::display_rdf_graph, this);
-	//cmd["rules"] = bind(&RDFUI::display_rules, this);
-	cmd["run"] = bind(&RDFUI::run_graph, this);
-	cmd["h"] = bind(&RDFUI::display_help, this);
+	//cmd["graph"] = bind(&TDFUI::display_rdf_graph, this);
+	cmd["run"] = bind(&TDFUI::run_graph, this);
+	cmd["h"] = bind(&TDFUI::display_help, this);
 
-	//comment["benchmark"] = "display benchmark.";
 	//comment["graph"] = "\tdisplay rdf data graph.";
-	//comment["rules"] = "\tdisplay list of rules.";
 	comment["run"] = "\trun the data graph.";
 	comment["h"] = "\tdisplay help menu.";
 
 	if (argc != 2) {
-		cout << "usage: rdf <rdf file>\n";
+		cout << "usage: tdf <dif file>\n";
 		exit(0);
 	}
 	else {	
@@ -41,7 +37,7 @@ RDFUI::RDFUI(int argc, char * argv[]) {
 	}
 }
 
-int RDFUI::load_from_file(const char * filename) {
+int TDFUI::load_from_file(const char * filename) {
 	int ret;
 	graph = new Graph();
 	string rdfname;
@@ -52,16 +48,15 @@ int RDFUI::load_from_file(const char * filename) {
 	ret = read_graph(file, graph);
 	if (ret < 0)
 		return ret;
-	ret = read_rules(file);
-	if (ret == -2) {
-		cout << "rdf is loaded successfully.\n";
+	if (ret == 0) {
+		cout << "tdf is loaded successfully.\n";
 		display_help();
 		return 0;
 	} else
 		return ret;
 }
 
-int RDFUI::read_str(ifstream & file, string str) {
+int TDFUI::read_str(ifstream & file, string str) {
 	string tmp;
 	file >> tmp;
 	if (tmp == str)
@@ -75,17 +70,11 @@ int RDFUI::read_str(ifstream & file, string str) {
 	}
 }
 
-int RDFUI::read_graph(ifstream & file, Graph * g) {
+int TDFUI::read_graph(ifstream & file, Graph * g) {
 	int ret;
 	string tmp;
 	read_str(file, "{");
 	read_str(file, "topology");
-	//read_str(file, "actors");
-	//ret = read_actors(file,g);
-	//if (ret < 0)
-	//	return ret;	
-	//read_str(file, "edges");
-	//ret = read_edges(file,g);
 	ret = read_topology(file,g);
 	if (ret < 0)
 		return ret;
@@ -108,46 +97,7 @@ int RDFUI::read_graph(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int RDFUI::read_rules(ifstream & file) {
-	int ret=0;
-	string rulename;
-	string rulestr;
-	Rule * rule;
-	graph->resolve();
-	while (!file.eof() && ret >= 0) {
-		ret = read_str(file, "rule");
-		if (ret < 0)
-			return ret;
-		file >> rulename;
-		rule = new Rule(rulename);
-		ret = read_str(file, "{");
-		if (ret < 0)
-			return ret;
-		ret = read_str(file, "left");
-		if (ret < 0)
-			return ret;
-		ret = read_graph(file, rule->left());
-		if (ret < 0)
-			return ret;
-		ret = read_str(file, "right");
-		if (ret < 0)
-			return ret;
-		ret = read_graph(file, rule->right());
-		if (ret < 0)
-			return ret;
-		ret = read_str(file, "}");
-		if (ret < 0)
-			return ret;
-
-		rule->process(graph);
-	
-		rules.push_back(rule);		
-	}
-	return ret;
-}
-
-
-int RDFUI::load_actor_types(Graph * g) {
+int TDFUI::load_actor_types(Graph * g) {
 
 	string type;
 	auto actors = g->get_actors();
@@ -160,7 +110,7 @@ int RDFUI::load_actor_types(Graph * g) {
 }
 
 
-int RDFUI::read_productions(ifstream & file, Graph * g) {
+int TDFUI::read_productions(ifstream & file, Graph * g) {
 
 	int ret;
 	string ratelist, edgename, rate;
@@ -185,7 +135,7 @@ int RDFUI::read_productions(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int RDFUI::read_consumptions(ifstream & file, Graph * g) {
+int TDFUI::read_consumptions(ifstream & file, Graph * g) {
 
 	int ret;
 	string ratelist, edgename, rate;
@@ -210,7 +160,7 @@ int RDFUI::read_consumptions(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int RDFUI::read_props(ifstream & file, Graph * g) {
+int TDFUI::read_props(ifstream & file, Graph * g) {
 
 	int ret;
 	string actname, props, prop;
@@ -238,7 +188,7 @@ int RDFUI::read_props(ifstream & file, Graph * g) {
 }
 
 
-int RDFUI::read_topology(ifstream & file, Graph * g) {
+int TDFUI::read_topology(ifstream & file, Graph * g) {
         int ret;
 	string actorlist, edgelist, actor, edge;
 	read_str(file, "{");
@@ -289,7 +239,7 @@ int RDFUI::read_topology(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int RDFUI::add_edge(const string& edge, Graph * g) {
+int TDFUI::add_edge(const string& edge, Graph * g) {
         string edge_name, edge_source, edge_sink;
 
 	if (edge=="") {
@@ -309,7 +259,7 @@ int RDFUI::add_edge(const string& edge, Graph * g) {
 	return ret;
 }
 
-int RDFUI::add_actor(const string& actor, Graph * g) {
+int TDFUI::add_actor(const string& actor, Graph * g) {
         if (actor=="") {
 		cout << "error: actor is not well formatted.\n";
 		return -2;
@@ -318,7 +268,7 @@ int RDFUI::add_actor(const string& actor, Graph * g) {
 	return ret;
 }
 
-int RDFUI::read_actors(ifstream & file, Graph * g) {
+int TDFUI::read_actors(ifstream & file, Graph * g) {
         int ret;
 	string actorlist, actor;
 	read_str(file, "{");
@@ -343,7 +293,7 @@ int RDFUI::read_actors(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int RDFUI::read_edges(ifstream & file, Graph * g) {
+int TDFUI::read_edges(ifstream & file, Graph * g) {
 	int ret;	
 	int source, sink;
 	string edgelist, edgeline, source_str, sink_str;
@@ -388,7 +338,7 @@ int RDFUI::read_edges(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int RDFUI::add_production_rate(const string& rate, Graph * g) {
+int TDFUI::add_production_rate(const string& rate, Graph * g) {
 	int edr=1;
 	string edgename="", edgerate="";
 	std::istringstream ss(rate);
@@ -411,7 +361,7 @@ int RDFUI::add_production_rate(const string& rate, Graph * g) {
 	return ret;
 }
 
-int RDFUI::add_consumption_rate(const string& rate, Graph * g) {
+int TDFUI::add_consumption_rate(const string& rate, Graph * g) {
 	int edr=1;
 	string edgename="", edgerate="";
 	std::istringstream ss(rate);
@@ -434,7 +384,7 @@ int RDFUI::add_consumption_rate(const string& rate, Graph * g) {
 	return ret;
 }
 
-int RDFUI::add_prop(const string& actname, const string& prop, Graph * g) {
+int TDFUI::add_prop(const string& actname, const string& prop, Graph * g) {
 	string key="", val="";
 	std::istringstream ss(prop);
   	getline(ss, key, '=');
@@ -447,7 +397,7 @@ int RDFUI::add_prop(const string& actname, const string& prop, Graph * g) {
 	return ret;
 }
 
-int RDFUI::add_actortype(const string& actortype, Graph * g) {
+int TDFUI::add_actortype(const string& actortype, Graph * g) {
 	string name="", type="";
 	std::istringstream ss(actortype);
   	getline(ss, name, ':');
@@ -460,7 +410,7 @@ int RDFUI::add_actortype(const string& actortype, Graph * g) {
 	return ret;
 }
 
-int RDFUI::add_edge(string edge_source, string edge_sink, Graph * g) {
+int TDFUI::add_edge(string edge_source, string edge_sink, Graph * g) {
 	int ret = g->add_edge(edge_source, edge_sink);
 	if (ret == -2)
 		cout << "error: edge already exists.\n";
@@ -472,7 +422,7 @@ int RDFUI::add_edge(string edge_source, string edge_sink, Graph * g) {
 	return ret;
 }
 
-int RDFUI::display_rdf_graph() {
+int TDFUI::display_rdf_graph() {
 	int ret;
 	cout << "=======\n";
 	cout << graph->get_name() << "\n";
@@ -484,7 +434,7 @@ int RDFUI::display_rdf_graph() {
 	return 0;
 }
 
-int RDFUI::display_graph(Graph * g) {
+int TDFUI::display_graph(Graph * g) {
 	int ac_index = 0;
 	int ed_index = 0;
 	vector<string> actorlist = g->get_actors();
@@ -550,59 +500,7 @@ int RDFUI::display_graph(Graph * g) {
 	return 0;
 }
 
-int RDFUI::display_rules() {
-
-	if (rules.size() == 0) {
-		cout << "No rule is found.\n";
-		return 0;
-	}
-	int ret;
-	int rule_number=0;
-	while (rule_number >= 0 && rule_number<rules.size()) {
-	
-		for (int i=0; i<rules.size(); i++) {
-			cout << to_string(i) << ": " << rules[i]->get_name() << "\n";
-		}
-		cout << "rules> press q to exit.\n";
-		cout << "rules> enter rule number:";
-		cin >> rule_number;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(256, '\n');
-			return -1;
-		}
-		if (rule_number <0 || rule_number>=rules.size())
-			break;
-	
-		cout << "=======\n";
-		cout << rules[rule_number]->get_name() << " left \n" ;
-		cout << "=======\n";
-		ret = display_graph(rules[rule_number]->left());
-		if (ret < 0)
-			return ret;
-	
-		cout << "=======\n";
-		cout << rules[rule_number]->get_name() << " right \n" ;
-		cout << "=======\n";
-		ret = display_graph(rules[rule_number]->right());
-		if (ret < 0)
-			return ret;
-		cout << "=======\n";
-		ret = rules[rule_number]->verify();
-		cout << "=======\n";
-		if (ret == 0) {
-			cout << rules[rule_number]->result()->get_name() << "\n";
-			cout << "=======\n";
-			ret = display_graph(rules[rule_number]->result());
-			if (ret < 0)
-				return ret;
-			cout << "=======\n";
-		}
-	}
-	return 0;
-}
-
-int RDFUI::display_help() {
+int TDFUI::display_help() {
 	cout << "press q to exit.\n";
 	cout << "commands:\n";
 	for (auto & command : cmd)
@@ -610,19 +508,7 @@ int RDFUI::display_help() {
 	return 0;
 }
 
-int RDFUI::display_benchmark() {
-	if (rules.size() == 0) {
-		cout << "No rule is found.\n";
-		return 0;
-	}
-	cout << "name, RDF connectivity, connectivity, RDF consistency, consistency, RDF liveness, liveness\n";
-	for (auto r : rules) {
-		cout << r->benchmark() << endl;
-	}
-	return 0;
-}
-
-int RDFUI::run_graph() {
+int TDFUI::run_graph() {
 
 	map<string, df::Actor *> actormap;
 
@@ -660,7 +546,7 @@ int RDFUI::run_graph() {
 	
 	return 0;
 }
-int RDFUI::process_command(string command) {
+int TDFUI::process_command(string command) {
 
 	if (command == "q")
 		return -1;
@@ -673,7 +559,7 @@ int RDFUI::process_command(string command) {
 	return 0;
 }
 
-int RDFUI::loop() {
+int TDFUI::loop() {
 
 	int ret = 0;	
 	string command = "";
@@ -685,80 +571,3 @@ int RDFUI::loop() {
 	return ret;
 }
 
-/*
-int RDFUI::edges() {
-	string edge_source = "", edge_sink = "";
-	cout << "edges> press q to exit.\n";
-	cout << "edges> enter edges (e.g. ab, bc, de).\n";
-	while (edge_source != "quit") {
-		cout << "edges> edge " << to_string(graph->edge_count()) << ": ";
-		cin >> edge_source >> edge_sink;
-		if (edge_source == "q")
-			return -1;
-		add_edge(edge_source, edge_sink, graph);
-	}
-	return 0;
-}
-*/
-
-/*
-int RDFUI::rates() {
-	int val;
-	vector<string> edgelist = graph->get_edges();
-	if (edgelist.size() == 0) {
-		cout << "error: there is no actor in the graph.\n";
-		return -1;
-	}
-	cout << "rates> enter value for source/sink rate of edges.\n";
-	for (auto & ed : edgelist) {
-		cout << "rates> " << ed << " source: ";
-	      	cin >> val;
-		while (cin.fail() || val < 1) {
-			cout << "error: enter a valid positive integer.\n";
-			cin.clear();
-			cin.ignore(256, '\n');
-			cout << "rates> " << ed << " source: ";
-			cin >> val;
-		}
-		graph->set_source_rate(ed, val);
-		cout << "rates> " << ed << " sink: ";
-	      	cin >> val;
-		while (cin.fail() || val < 1) {
-			cout << "error: enter a valid positive integer.\n";
-			cin.clear();
-			cin.ignore(256, '\n');
-			cout << "rates> " << ed << " sink: ";
-			cin >> val;
-		}
-		graph->set_sink_rate(ed, val);
-	}
-
-	return 0;
-}
-*/
-
-/*
-int RDFUI::solution() {
-	int val;
-	vector<string> actorlist = graph->get_actors();
-	if (actorlist.size() == 0) {
-		cout << "error: there is no actor in the graph.\n";
-		return -1;
-	}
-	cout << "solutions> enter value for solutions of actors.\n";
-	for (auto & ac : actorlist) {
-		cout << "solutions> " << ac << ": ";
-	      	cin >> val;
-		while (cin.fail() || val < 1) {
-			cout << "error: enter a valid positive integer.\n";
-			cin.clear();
-			cin.ignore(256, '\n');
-			cout << "solution> " << ac << ": ";
-			cin >> val;
-		}
-		graph->set_firing(ac, val);
-	}
-	return 0;
-	
-}
-*/

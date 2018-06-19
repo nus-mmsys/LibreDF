@@ -1,5 +1,5 @@
 /*
- *   RDF
+ *   DF
  *   Copyright (C) 2018
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -16,11 +16,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "rdfui.h"
+#include "tdfui.h"
 
 int main(int argc, char * argv[]) {
 
-	RDFUI rdfui(argc, argv);
+	TDFUI rdfui(argc, argv);
 
 	rdfui.loop();
 
