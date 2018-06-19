@@ -61,12 +61,10 @@ rdf classify {
     }
     actor A {
         computation = VideoCapture;
-        output = e1;
         file_name = pedestrian.mp4;
     }
     actor B {
        computation = CascadeClassifier;
-       input = e1;
        classifier = haarcascade_fullbody.xml;
     }
 }
