@@ -23,7 +23,7 @@
 ## Dataflow Interchange Format (DIF)
 
 ```
-rdf <name> {
+df <name> {
     topology {
         nodes = <actor 1>, ..., <actor n>; 
 	    edges = <edge 1> (<source actor>, <sink actor>), ...., <edge m>(<source actor>, <sink actor>);
@@ -40,7 +40,7 @@ rdf <name> {
 ## Example
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
 ```
-rdf classify {
+df classify {
     topology {
         nodes = A, B;
         edges = e1 (A, B);
