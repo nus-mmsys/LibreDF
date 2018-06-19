@@ -1,0 +1,19 @@
+rdf add {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,C), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = Randu;
+    }
+    actor B {
+    	computation = Randu;
+    }
+    actor C {
+    	computation = Add;
+    }
+    actor D {
+    	computation = ImageWrite;
+    }
+}
+

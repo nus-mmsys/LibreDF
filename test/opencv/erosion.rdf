@@ -1,0 +1,18 @@
+rdf erosion {
+    topology {
+        nodes = A,B,C;
+	edges = e1(A,B), e2(B,C);
+    }
+    actor A {
+    	computation = VideoCapture;
+        file_name = pedestrian.mp4;
+    }
+    actor B {
+    	computation = Erode;
+        erosion_size = 7;
+    }
+    actor C {
+    	computation = ImageWrite;
+    }
+}
+

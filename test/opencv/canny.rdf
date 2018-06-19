@@ -1,0 +1,22 @@
+rdf canny {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = VideoCapture;
+        file_name = pedestrian.mp4;
+    }
+    actor B {
+    	computation = CvtColor;
+    }
+    actor C {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor D {
+    	computation = ImageWrite;
+    }
+}
+

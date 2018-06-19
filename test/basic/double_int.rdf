@@ -1,0 +1,327 @@
+rdf double_int {
+    topology {
+        nodes = A,B,C;
+        edges = e1(A,B), e2(B,C);
+    }
+    production {
+        e1 = 2;
+        e2 = 2;
+    }
+    consumption {
+        e1 = 3;
+        e2 = 4;
+    }
+    actor A {
+        computation = IntProducer;
+        last = 64;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+rule r1 {
+
+left {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 2;
+    }
+    consumption {
+        e2 = 4;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+right {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 1;
+    }
+    consumption {
+        e2 = 2;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+}
+
+rule r2 {
+
+left {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 2;
+    }
+    consumption {
+        e2 = 4;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = Duplicate;
+    }
+}
+
+right {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 1;
+    }
+    consumption {
+        e2 = 2;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+}
+
+rule r3 {
+
+left {
+    topology {
+        nodes = A,B;
+        edges = e1(A,B);
+    }
+    production {
+        e1 = 2;
+    }
+    consumption {
+        e1 = 3;
+    }
+    actor A {
+        computation = IntProducer;
+    }
+    actor B {
+        computation = Doubling;
+    }
+}
+
+right {
+    topology {
+        nodes = A,D;
+        edges = e3(A,D);
+    }
+    production {
+        e3 = 3;
+    }
+    consumption {
+        e3 = 3;
+    }
+    actor A {
+        computation = IntProducer;
+    }
+    actor D {
+        computation = Increment;
+    }
+}
+
+}
+
+
+rule r4 {
+
+left {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 2;
+    }
+    consumption {
+        e2 = 4;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+right {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 2;
+    }
+    consumption {
+        e2 = 5;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+}
+
+rule r5 {
+
+left {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 2;
+    }
+    consumption {
+        e2 = 4;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+right {
+    topology {
+        nodes = B,C,D;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 1;
+    }
+    consumption {
+        e2 = 2;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+    actor D {
+        computation = Increment;
+    }
+}
+
+}
+
+rule r6 {
+
+left {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 2;
+    }
+    consumption {
+        e2 = 4;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = Addition;
+    }
+}
+
+right {
+    topology {
+        nodes = B,C;
+        edges = e2(C,B);
+    }
+    production {
+        e2 = 4;
+    }
+    consumption {
+        e2 = 2;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+}
+
+rule r7 {
+
+left {
+    topology {
+        nodes = B,C;
+        edges = e2(B,C);
+    }
+    production {
+        e2 = 2;
+    }
+    consumption {
+        e2 = 4;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
+
+right {
+    topology {
+        nodes = B,C,D;
+        edges = e2(B,C), e3(C,D);
+    }
+    production {
+        e2 = 1;
+        e3 = 1;
+    }
+    consumption {
+        e2 = 2;
+        e3 = 1;
+    }
+    actor B {
+        computation = Doubling;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+    actor D {
+        computation = Increment;
+    }
+}
+
+}

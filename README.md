@@ -1,134 +1,290 @@
-# 0) A reconfigurable version on [GitLab](https://gitlab.com/dataflow-programming/rdf)
-	git clone git@gitlab.com:dataflow-programming/rdf.git
+# RDF
 
-# 1) Tiny Multimedia Framework (tmf)
-
-Tiny Multimedia Framework is a simple multimedia framework to implement multimedia applications. A multimedia application consists of a pipeline and a series of filters connected to each other. An application developer need to know about filter types, and how to connect them to each other.
-
-Each filter has a number of input and output ports. Each port has a buffer type and can be connected to other ports with the same type of data. Filters with same type of ports can be connected to each other. A port put the data on its buffer and all consumers are notified.
-
-In section 5 we explain how a multimedia application developers create an application using the APIs of the framework. In section 6 we explain how plug-in developers create a new filter using APIs of the framework.
-
-# 2) Folder structure
-
-
-Here is how the project is organized.
-
-	build
-	core (core package)
-	doc
-	examples (contains examples using tmf library)
-	filters (implementation of the filters)
-	  basic
-	  libav
-	    tools (tools to be used by libav filters)
-	    types (data types to be used by libav filters)
-	CMakeLists.txt
-	LICENCE
-	README.md
-	tmf.doxyfile
-	tmf.kdev4
-
-# 3) Installation
+## Build
 
 ```bash
   cd build
   ./build.sh
   # or
-  ./build-debug.sh # for debuging
+  ./build.sh debug # for debuging
 ```
-Before compilation make sure that the following libraries are installed:
 
- - libavformat-dev
- - libavcodec-dev
- - libavutil-dev
- - libswscale-dev
- - libsdl1.2-dev
- - zlib1g-dev
+## Run
 
-# 4) Development envirement
+```bash
+  ./rdf ../test/basic/double_int.rdf
+```
 
-Tiny Multimedia Framework is configured to be developed under KDevelop IDE.
+## Commands
+
+	benchmark	display benchmark.
+	graph		display rdf data graph.
+	h		    display help menu.
+	rules		display list of rules.
+	run		    run the data graph.
+
+## Dataflow Interchange Format (DIF)
+
+```
+rdf <name> {
+    topology {
+        nodes = <actor 1>, ..., <actor n>; 
+	    edges = <edge 1> (<source actor>, <sink actor>), ...., <edge m>(<source actor>, <sink actor>);
+    }
+    production {
+        <edge i> = <rate>;
+        ....
+    }
+    consumption {
+        <edge i> = <rate>;
+        ....
+    }
+    actor <actor i> {
+        computation = <actor i type>;
+        <property x> = <value y>;
+        ...
+    }
+}
+```
+
+## RDF extension
+
+```
+rule <name> {
+
+left {
+    topology {
+        ...
+    }
+    production {    
+        ...
+    }
+    consumption {    
+        ...
+    }
+    actor ... {
+        ...
+    }
+}
+
+right {
+    topology {
+        ...
+    }
+    production {    
+        ...
+    }
+    consumption {    
+        ...
+    }
+    actor ... {
+        ...
+    }
+}
+
+}
+```
+
+## Example
+This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
+```
+rdf classify {
+    topology {
+        nodes = A, B;
+        edges = e1 (A, B);
+    }
+    production {
+        e1 = 1;
+    }
+    consumption {
+        e1 = 1;
+    }
+    actor A {
+        computation = VideoCapture;
+        output = e1;
+        file_name = pedestrian.mp4;
+    }
+    actor B {
+       computation = CascadeClassifier;
+       input = e1;
+       classifier = haarcascade_fullbody.xml;
+    }
+}
+
+```
+
+
+## Actor types
+
+	basic
+        Addition            % reads two integers x and y and sends x+y.
+        Doubling            % reads an integer x and sends 2*x.
+        Duplicate           % reads a string s and sends ss.
+        Increment           % reads an integer x and sends x+1.
+        IntConsumer         % reads an integer.
+        IntProducer         % sends an integer [1..100].
+        Multiplication      % reads two integers x and y and sends x*y.
+        StringConsumer      % reads a string.
+        StringProducer      % sends a string ["1".."100"].
+
+	opencv-core
+        Add                 % output:Mat = input1:Mat + input2:Mat ;
+                              adds two frames and sends the result.
+        Compare             % output:Mat = compare(input1:Mat, input2:Mat, operation) ;
+                              compares two frames and sends the result.
+                              opertions are "eq, gt, ge, lt, le, ne".
+        Dct                 % output:Mat = dct(input1:Mat) ;
+                              sends the dct of the input.
+        Dft                 % output:Mat = dft(input1:Mat) ;
+                              sends the dft of the input.
+        Gemm                % output:Mat = gemm(input1:Mat, input2:Mat) ;
+                              sends the general matrix multiplication between
+                              intput1 and input2.
+        Idct                 % output:Mat = idct(input1:Mat) ;
+                              sends the idct of the input.
+        Idft                 % output:Mat = idft(input1:Mat) ;
+                              sends the idft of the input.
+        Multiply            % output:Mat = multiply(input1:Mat, input2:Mat, scale) ;
+                              sends the per-element scaled multiplication between
+                              intput1 and input2.
+        Randn               % output:Mat = randn() ;
+                              sends a normally-distributed random frame. 	
+        Randu               % output:Mat = randu() ;
+                              sends a uniformly-distributed random frame. 
+
+
+    opencv-imgproc
+        BoxFilter           % output:Mat = boxFilter(input:Mat) ;
+                              reads a frame, applies a dilate (mean) filter on it,
+                              and sends the filtered frame.
+        Convolution         % output:Mat = filter2D(input:Mat) ;
+                              // with modified kernel and anchor
+                              reads a frame, applies a convolution filter on it,
+                              and sends the filtered frame.
+        Dilate              % output:Mat = dilate(input:Mat) ;
+                              reads a frame, applies a dilate (max) filter on it,
+                              and sends the filtered frame.
+        Erode               % output:Mat = erode(input:Mat) ;
+                              reads a frame, applies an erode (min) filter on it,
+                              and sends the filtered frame.
+        Filter2D            % output:Mat = filter2D(input:Mat) ;
+                              reads a frame, applies a filter2d on it,
+                              and sends the filtered frame.
+        Sobel               % output:Mat = Sobel(input:Mat) ;
+                              reads a frame, applies a Sobel filter on it,
+                              and sends the filtered frame.
+
+    opencv-highgui
+        ImageRead           % output:Mat = imread() ; 
+                              reads an image from a dataset and writes it to its output port.
+        ImageWrite          % imwrite(input:Mat) ;
+                              reads a frame from its input port and writes it to a png file.
+        VideoCapture        % output:Mat = VideoCapture() ;
+                              reads a frame from a video stream and sends it.
+        VideoWriter         % VideoWriter.write(input:Mat) ;
+                              reads a frame and writes it to a video stream.
+
+    opencv-video
+
+    opencv-objdetect
+        CascadeClassifier   % reads a frame, draws rectangles containing 
+                              body's parts (e.g. face, eye, full body, etc.) and 
+                              writes the result to a png file.
+                              
+    opencv-ml
+
 	
-	kdevelop -p tmf.kdev4
-	
-The build directory:
+## Actor developement
 
-	build-kdevelop
+New actors must be placed in the ```src/dataflow/actors``` folder. An actor inherits from the Actor class and defines a set of ports and their data type. The actor then implements ```init()``` and ```run()``` functions.
 
-# 5) User manual
-
-
-To create an application we need to create the pipeline as well as the filters, connect filters to each other and run the pipeline. TMF provides APIs to do it.
-
-Here is a producer/consumer example with one producer and three consumer:
 ```c++
-  Pipeline* pipe = Factory::createPipeline("Three consumer/One producer");
-  
-  Filter* producer = Factory::createFilter("string_producer", "producer");
+// add.h
 
-  Filter* consumer1 = Factory::createFilter("string_consumer", "consumer1");
-  Filter* consumer2 = Factory::createFilter("string_consumer", "consumer2");
-  Filter* consumer3 = Factory::createFilter("string_consumer", "consumer3");
-  
-  producer->setProp("limit", 10);
-  
-  pipe->addFilters(producer, consumer1, consumer2, consumer3, nullptr);
-    
-  pipe->connectFilters(producer, consumer1);
-  pipe->connectFilters(producer, consumer2);
-  pipe->connectFilters(producer, consumer3);
+#include "core/df.h"
+#include <opencv2/core/core.hpp>
 
-  pipe->init();
-  
-  pipe->run();
-  
-  Factory::destroyPipeline(pipe);
-```	
-
-# 6) Plugin developer manual
-
-
-Plug-in developers must implement new filters in filter folder. A filter inherits from the Filter class. Each filter must define a set of ports and their data type. The filter then implements ```init()``` and ```run()``` functions.
-
-Here is an example of a filter implementation:
-```c++
-class StringConsumerFilter: public Filter {
-  
+class Add: public df::Actor {
 private:
-  // The input port with a string buffer
-  InputPort<string> * input;
-  // In order to register the filter all filters need this member
-  static  FilterRegister<StringConsumerFilter> reg;
+  cv::Mat frame;
+  df::InputPort<cv::Mat> * input1;
+  df::InputPort<cv::Mat> * input2;
+  df::OutputPort<cv::Mat> * output;
+  static  df::ActorRegister<Add> reg;
 public:
-  
-  StringConsumerFilter(const string & name) : Filter(name) {
-    
-    input = createInputPort<string>("input");
-  }
-  
-  void run() {
-    
-    input->lock();
-    
-    string * inputData = input->get();
-    
-    log("consuming "+*inputData);
-    sleep(500);
-    
-    if (input->getStatus() == SampleStatus::EOS)
-      status = FilterStatus::EOS; 
-    
-    input->unlock();
-  }
-  
-  ~StringConsumerFilter() {
-    destroyPort(input);
-  }
-  
+  Add(const string& name);
+  virtual void init();
+  virtual void run();
+  virtual ~Add();
 };
-
-FilterRegister<StringConsumerFilter> StringConsumerFilter::reg("string_consumer");
 ```
 
-For more information, examples, and documentation please see ```doc``` and ```examples``` folder.
+```c++
+// add.cpp
+
+#include "add.h"
+
+using namespace df;
+
+ActorRegister<Add> Add::reg("Add");
+
+Add::Add(const string& name) : Actor(name) {
+  input1 = createInputPort<cv::Mat>("input1");
+  input2 = createInputPort<cv::Mat>("input2");
+  output = createOutputPort<cv::Mat>("output");
+}
+
+void Add::init() {
+  // Initializations
+}
+
+void Add::run() {
+  cv::Mat * in1 = consume(input1);	
+  cv::Mat * in2 = consume(input2);	
+  cv::Mat * out = produce(output);
+  *out = (*in1) + (*in2);
+  log("sending "+to_string(stepno));
+  release(input1);
+  release(input2);
+  release(output);
+}
+
+Add::~Add() {
+  destroyPort(input1);
+  destroyPort(input2);
+  destroyPort(output);
+}
+```
+
+## Controller
+
+A controller decides when and how to apply a transformation rule. It is not implemented yet. Controller can be implemented as follows.
+
+```
+main {
+   <condition_1> ? <rule_x>;
+   <condition_i> ? <rule_y> ; <rule_z>;
+   ...
+   <condition_n> ? <rule_t>*;
+}
+```
+
+## Folder structure
+
+	build
+	src
+	  dataflow
+	    core
+	    actors
+	      basic
+	      opencv-core
+	      opencv-highgui
+	      opencv-imgproc
+	      opencv-objdetect
+	  rdf
+	test
+	  basic
+	  opencv
+	CMakeLists.txt
+	LICENCE
+	README.md

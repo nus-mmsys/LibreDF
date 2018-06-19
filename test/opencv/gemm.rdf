@@ -1,0 +1,23 @@
+rdf gemm {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,C), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = Randu;
+        width = 120;
+        height = 100;
+    }
+    actor B {
+    	computation = Randu;
+        width = 160;
+        height = 120;
+    }
+    actor C {
+    	computation = Gemm;
+    }
+    actor D {
+    	computation = ImageWrite;
+    }
+}
+

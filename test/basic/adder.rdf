@@ -1,0 +1,25 @@
+rdf adder {
+    topology {
+        nodes = A,B,C;
+        edges = e1(A,C), e2(B,C);
+    }
+    production {
+        e1 = 1;
+        e2 = 1;
+    }
+    consumption {
+        e1 = 1;
+        e2 = 1;
+    }
+    actor A {
+        computation = IntProducer;
+        last = 64;
+    }
+    actor B {
+        computation = IntProducer;
+        last = 64;
+    }
+    actor C {
+        computation = Addition;
+    }
+}
