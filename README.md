@@ -145,9 +145,11 @@ df pedestrian_detection {
     opencv-video
 
     opencv-objdetect
-        CascadeClassifier   % reads a frame, draws rectangles containing 
-                              body's parts (e.g. face, eye, full body, etc.) and 
-                              writes the result to a png file.
+    CascadeClassifier   % reads a gray frame from one port, detects the objects, 
+                          reads a color frame from another port, 
+                          draws rectangles containing chosen objects 
+                          (e.g. face, eye, full body, etc.) and 
+                          writes the result to a png file.
                               
     opencv-ml
 
