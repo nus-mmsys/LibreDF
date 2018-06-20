@@ -24,7 +24,8 @@ using namespace std;
 ActorRegister<CascadeClassifier> CascadeClassifier::reg("CascadeClassifier");
 
 CascadeClassifier::CascadeClassifier(const string& name) : Actor(name) {
-  inputMat = createInputPort<cv::Mat>("opencv input");
+  inputGray = createInputPort<cv::Mat>("input_gray");
+  inputImage = createInputPort<cv::Mat>("input_image");
 }
 
 void CascadeClassifier::init() {
@@ -43,23 +44,23 @@ void CascadeClassifier::init() {
 
 void CascadeClassifier::run() {
 
-  cv::Mat * in = consume(inputMat);	
-  frame = in->clone();
-  release(inputMat);
-
-  cv::cvtColor(frame, gray, CV_BGR2GRAY);
-  cv::equalizeHist(gray, gray);
-
-  classifier.detectMultiScale(gray, objects, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
-  for (cv::Rect r : objects) {
+  cv::Mat * ingray = consume(inputGray);	
+  cv::Mat * inimg = consume(inputImage);	
+  frame = inimg->clone(); 
+  classifier.detectMultiScale(*ingray, objects, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
+    for (cv::Rect r : objects) {
     log("detecting rect in "+to_string(stepno)+" ("+to_string(r.x)+", "+to_string(r.y)+", "+to_string(r.width)+", "+to_string(r.height)+")");
     cv::rectangle(frame, r, cv::Scalar(0, 255, 0));
   }
   file_name = dfout_path + std::to_string(stepno) + ".png";
   cv::imwrite(file_name, frame); 
 
+  release(inputGray);
+  release(inputImage);
+
 }
 
 CascadeClassifier::~CascadeClassifier() {
-  destroyPort(inputMat);
+  destroyPort(inputGray);
+  destroyPort(inputImage);
 }

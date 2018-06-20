@@ -16,45 +16,36 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_CASCADE_CLASSIFIER_H_
-#define DF_CASCADE_CLASSIFIER_H_
+#ifndef DF_EQUALIZEHIST_H_
+#define DF_EQUALIZEHIST_H_
 
 #include "core/df.h"
 #include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <iostream>
 #include <string>
-#include <unistd.h>
 
 using namespace std;
 
-class CascadeClassifier: public df::Actor {
+class EqualizeHist: public df::Actor {
   
 private:
 
-  cv::Mat frame;
-  cv::Mat gray;
-  cv::CascadeClassifier classifier;
-  std::vector<cv::Rect> objects;  
-  std::string file_name;
-
-  df::InputPort<cv::Mat> * inputGray;
-  df::InputPort<cv::Mat> * inputImage;
+  df::InputPort<cv::Mat> * input;
+  df::OutputPort<cv::Mat> * output;
  
-  static  df::ActorRegister<CascadeClassifier> reg;
+  static  df::ActorRegister<EqualizeHist> reg;
 public:
   
-  CascadeClassifier(const string& name);
+  EqualizeHist(const string& name);
   
   virtual void init();
   
   virtual void run();
   
-  virtual ~CascadeClassifier();
+  virtual ~EqualizeHist();
   
 };
 
-#endif /* DF_CASCADE_CLASSIFIER_H_ */
+#endif /* DF_CVTCOLOR_H_ */
