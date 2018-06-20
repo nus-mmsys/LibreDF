@@ -39,22 +39,28 @@ df <name> {
 
 ## Example
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
+
 ```
-df classify {
+df pedestrian_detection {
     topology {
-        nodes = A, B;
-        edges = e1 (A, B);
+        nodes = A,B,C,D;
+        edges = e1(A,B), e2(B,C), e3(C,D), e4(A,D);
     }
     actor A {
         computation = VideoCapture;
         file_name = pedestrian.mp4;
     }
     actor B {
-       computation = CascadeClassifier;
-       classifier = haarcascade_fullbody.xml;
+        computation = CvtColor;
+    }
+    actor C {
+        computation = EqualizeHist;
+    }
+    actor D {
+        computation = CascadeClassifier;
+        classifier = haarcascade_fullbody.xml;
     }
 }
-
 ```
 
 ## Actor types
@@ -100,12 +106,21 @@ df classify {
         BoxFilter           % output:Mat = boxFilter(input:Mat) ;
                               reads a frame, applies a dilate (mean) filter on it,
                               and sends the filtered frame.
+        Canny               % output:Mat = Canny(input:Mat) ;
+                              reads a frame, applies a Canny filter on it,
+                              and sends the filtered frame.
         Convolution         % output:Mat = filter2D(input:Mat) ;
                               // with modified kernel and anchor
                               reads a frame, applies a convolution filter on it,
                               and sends the filtered frame.
+        CvtColor            % output:Mat = cvtColor(input:Mat, BGR2GRAY) ;
+                              reads a frame, applies converts its colors to gray,
+                              and sends the filtered frame.
         Dilate              % output:Mat = dilate(input:Mat) ;
                               reads a frame, applies a dilate (max) filter on it,
+                              and sends the filtered frame.
+        EqualizeHist        % output:Mat = equalizeHist(input:Mat) ;
+                              reads a frame, applies equalize histogram filter,
                               and sends the filtered frame.
         Erode               % output:Mat = erode(input:Mat) ;
                               reads a frame, applies an erode (min) filter on it,
