@@ -20,7 +20,8 @@
 
 int main(int argc, char * argv[]) {
 
-	TDFUI tdfui(argc, argv);
+	Parser * parser = new Parser();
+	TDFUI tdfui(argc, argv, parser);
 
 	tdfui.loop();
 
