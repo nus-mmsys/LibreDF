@@ -65,7 +65,7 @@ df pedestrian_detection {
 
 ## Actor types
 
-	machine-learning
+    machine-learning
         Convolution         % output:Mat = filter2D(input:Mat) ;
                               /* with modified kernel and anchor */
                               reads a frame, applies a convolution filter on it,
