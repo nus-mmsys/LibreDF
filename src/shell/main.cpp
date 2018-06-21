@@ -16,14 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tdfui.h"
+#include "ui.h"
 
 int main(int argc, char * argv[]) {
 
 	Parser * parser = new Parser();
-	TDFUI tdfui(argc, argv, parser);
+	UI ui(argc, argv, parser);
 
-	tdfui.loop();
+	ui.loop();
 
 	return 0;
 }

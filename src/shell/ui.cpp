@@ -16,13 +16,13 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tdfui.h"
+#include "ui.h"
 
-TDFUI::TDFUI(int argc, char * argv[], Parser * p) {
+UI::UI(int argc, char * argv[], Parser * p) {
 
-	//cmd["graph"] = bind(&TDFUI::display_rdf_graph, this);
-	cmd["run"] = bind(&TDFUI::run_graph, this);
-	cmd["h"] = bind(&TDFUI::display_help, this);
+	//cmd["graph"] = bind(&UI::display_rdf_graph, this);
+	cmd["run"] = bind(&UI::run_graph, this);
+	cmd["h"] = bind(&UI::display_help, this);
 
 	//comment["graph"] = "\tdisplay rdf data graph.";
 	comment["run"] = "\trun the data graph.";
@@ -40,7 +40,7 @@ TDFUI::TDFUI(int argc, char * argv[], Parser * p) {
 	}
 }
 
-int TDFUI::display_df_graph() {
+int UI::display_df_graph() {
 	int ret;
 	Graph * g = parser->get_graph();
 	cout << "=======\n";
@@ -53,7 +53,7 @@ int TDFUI::display_df_graph() {
 	return 0;
 }
 
-int TDFUI::display_graph(Graph * g) {
+int UI::display_graph(Graph * g) {
 	int ac_index = 0;
 	int ed_index = 0;
 	vector<string> actorlist = g->get_actors();
@@ -107,7 +107,7 @@ int TDFUI::display_graph(Graph * g) {
 	return 0;
 }
 
-int TDFUI::display_help() {
+int UI::display_help() {
 	cout << "press q to exit.\n";
 	cout << "commands:\n";
 	for (auto & command : cmd)
@@ -115,7 +115,7 @@ int TDFUI::display_help() {
 	return 0;
 }
 
-int TDFUI::run_graph() {
+int UI::run_graph() {
 
 	Graph * g = parser->get_graph();
 	map<string, df::Actor *> actormap;
@@ -154,7 +154,7 @@ int TDFUI::run_graph() {
 	
 	return 0;
 }
-int TDFUI::process_command(string command) {
+int UI::process_command(string command) {
 
 	if (command == "q")
 		return -1;
@@ -167,7 +167,7 @@ int TDFUI::process_command(string command) {
 	return 0;
 }
 
-int TDFUI::loop() {
+int UI::loop() {
 
 	int ret = 0;	
 	string command = "";

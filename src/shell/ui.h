@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TDFUI_H
-#define TDFUI_H
+#ifndef TDF_UI_H
+#define TDF_UI_H
 
 #include <iostream>
 #include <fstream>
@@ -31,13 +31,13 @@
 using namespace std;
 
 /*!
- * \class TDFUI
+ * \class UI
  * The user interface class for RDF.
  *
  */
-class TDFUI {
+class UI {
 
-private:
+protected:
 	Parser * parser; /**< Parser. */
 
 	map<string, function<int()>> cmd; /**< A map from command name to command funtion. */
@@ -92,7 +92,7 @@ private:
 public:
 
 	/*!
-	 * TDFUI constructor
+	 * UI constructor
 	 *
 	 *  \param argc
 	 * 	The number of arguments
@@ -101,10 +101,10 @@ public:
 	 *  	The list of strings containing the arguments
 	 *
 	 */ 
-	TDFUI(int argc, char * argv[], Parser * parser);
+	UI(int argc, char * argv[], Parser * parser);
 	
 	/*!
-	 * Main loop of the TDFUI
+	 * Main loop of the UI
 	 *
 	 * \return
 	 *
