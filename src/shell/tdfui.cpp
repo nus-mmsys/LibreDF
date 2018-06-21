@@ -29,7 +29,7 @@ TDFUI::TDFUI(int argc, char * argv[]) {
 	comment["h"] = "\tdisplay help menu.";
 
 	if (argc != 2) {
-		cout << "usage: tdf <dif file>\n";
+		cout << "usage: tdf <file.df>\n";
 		exit(0);
 	}
 	else {	
