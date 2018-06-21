@@ -65,18 +65,13 @@ df pedestrian_detection {
 
 ## Actor types
 
-	basic
-        Addition            % reads two integers x and y and sends x+y.
-        Doubling            % reads an integer x and sends 2*x.
-        Duplicate           % reads a string s and sends ss.
-        Increment           % reads an integer x and sends x+1.
-        IntConsumer         % reads an integer.
-        IntProducer         % sends an integer [1..100].
-        Multiplication      % reads two integers x and y and sends x*y.
-        StringConsumer      % reads a string.
-        StringProducer      % sends a string ["1".."100"].
+	machine-learning
+        Convolution         % output:Mat = filter2D(input:Mat) ;
+                              /* with modified kernel and anchor */
+                              reads a frame, applies a convolution filter on it,
+                              and sends the filtered frame.
 
-	opencv-core
+    opencv-core
         Add                 % output:Mat = input1:Mat + input2:Mat ;
                               adds two frames and sends the result.
         Compare             % output:Mat = compare(input1:Mat, input2:Mat, operation) ;
@@ -108,10 +103,6 @@ df pedestrian_detection {
                               and sends the filtered frame.
         Canny               % output:Mat = Canny(input:Mat) ;
                               reads a frame, applies a Canny filter on it,
-                              and sends the filtered frame.
-        Convolution         % output:Mat = filter2D(input:Mat) ;
-                              // with modified kernel and anchor
-                              reads a frame, applies a convolution filter on it,
                               and sends the filtered frame.
         CvtColor            % output:Mat = cvtColor(input:Mat, BGR2GRAY) ;
                               reads a frame, applies converts its colors to gray,
@@ -145,14 +136,24 @@ df pedestrian_detection {
     opencv-video
 
     opencv-objdetect
-    CascadeClassifier   % reads a gray frame from one port, detects the objects, 
-                          reads a color frame from another port, 
-                          draws rectangles containing chosen objects 
-                          (e.g. face, eye, full body, etc.) and 
-                          writes the result to a png file.
+        CascadeClassifier   % reads a gray frame from one port, detects the objects, 
+                              reads a color frame from another port, 
+                              draws rectangles containing chosen objects 
+                              (e.g. face, eye, full body, etc.) and 
+                              writes the result to a png file.
                               
     opencv-ml
-
+    
+    basic
+        Addition            % reads two integers x and y and sends x+y.
+        Doubling            % reads an integer x and sends 2*x.
+        Duplicate           % reads a string s and sends ss.
+        Increment           % reads an integer x and sends x+1.
+        IntConsumer         % reads an integer.
+        IntProducer         % sends an integer [1..100].
+        Multiplication      % reads two integers x and y and sends x*y.
+        StringConsumer      % reads a string.
+        StringProducer      % sends a string ["1".."100"].
 	
 ## Actor developement
 
