@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef TDF_GRAPH_H
+#define TDF_GRAPH_H
 
 #include <algorithm>
 #include <iostream>
