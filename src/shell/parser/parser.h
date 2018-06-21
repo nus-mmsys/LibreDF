@@ -290,7 +290,7 @@ public:
 	 * \return 
 	 *
 	 */
-	int load_from_file(const char * filename);
+	virtual int load_from_file(const char * filename);
 	
 	Graph * get_graph();	
 };

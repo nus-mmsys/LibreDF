@@ -20,6 +20,11 @@
 
 UI::UI(int argc, char * argv[], Parser * p) {
 
+	if (argc != 2) {
+		cout << "usage: df <file.df>\n";
+		exit(0);
+	}
+
 	cmd["graph"] = bind(&UI::display_df_graph, this);
 	cmd["run"] = bind(&UI::run_graph, this);
 	cmd["h"] = bind(&UI::display_help, this);
@@ -27,26 +32,17 @@ UI::UI(int argc, char * argv[], Parser * p) {
 	comment["graph"] = "\tdisplay df graph.";
 	comment["run"] = "\trun the data graph.";
 	comment["h"] = "\tdisplay help menu.";
-
-	parser = p;
-        
-	if (argc != 2) {
-		cout << "usage: df <file.df>\n";
-		exit(0);
-	}
-	else {	
-		parser->load_from_file(argv[1]);
-		display_help();
-	}
+		
+	p->load_from_file(argv[1]);
+	graph = p->get_graph();
 }
 
 int UI::display_df_graph() {
 	int ret;
-	Graph * g = parser->get_graph();
 	cout << "=======\n";
-	cout << g->get_name() << "\n";
+	cout << graph->get_name() << "\n";
 	cout << "=======\n";
-	ret = display_graph(g);
+	ret = display_graph(graph);
 	if (ret < 0)
 		return ret;
 	cout << "=======\n";
@@ -92,14 +88,13 @@ int UI::display_help() {
 
 int UI::run_graph() {
 
-	Graph * g = parser->get_graph();
 	map<string, df::Actor *> actormap;
 
-	df::Dataflow* dataflow = df::Factory::createDataflow(g->get_name());
+	df::Dataflow* dataflow = df::Factory::createDataflow(graph->get_name());
 	
-	vector<string> actorlist = g->get_actors();
+	vector<string> actorlist = graph->get_actors();
 	for (auto & acname : actorlist) {
-		string actype = g->get_actor_type(acname);
+		string actype = graph->get_actor_type(acname);
 		if (actype == "") {
 			cout << "error: actor type cannot be unknown.\n";
 			cout << "set the property computation of actor " << acname << "\n";
@@ -107,18 +102,18 @@ int UI::run_graph() {
 		}
 		df::Actor * actor = df::Factory::createActor(actype, acname);
 		dataflow->addActors(actor, nullptr);
-		map<string, string> props = g->get_actor_props(acname);
+		map<string, string> props = graph->get_actor_props(acname);
 		for (auto p : props) {
 			actor->setProp(p.first, p.second);
 		}
 		actormap[acname] = actor;
 	}
 
-	vector<string> edgelist = g->get_edges();
+	vector<string> edgelist = graph->get_edges();
 	for (auto & ed : edgelist) {
-		df::Actor * src = actormap[g->get_source_name(ed)];
-		df::Actor * snk = actormap[g->get_sink_name(ed)];
-  		dataflow->connectActors(src, snk, g->get_source_rate(ed), g->get_sink_rate(ed));
+		df::Actor * src = actormap[graph->get_source_name(ed)];
+		df::Actor * snk = actormap[graph->get_sink_name(ed)];
+  		dataflow->connectActors(src, snk, graph->get_source_rate(ed), graph->get_sink_rate(ed));
 	}
  
 	dataflow->init();

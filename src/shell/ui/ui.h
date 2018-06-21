@@ -38,7 +38,8 @@ using namespace std;
 class UI {
 
 protected:
-	Parser * parser; /**< Parser. */
+	
+	Graph * graph;
 
 	map<string, function<int()>> cmd; /**< A map from command name to command funtion. */
 	map<string, string> comment; /**< A map from command name to command description. */
@@ -52,7 +53,7 @@ protected:
 	 * \return
 	 *
 	 */ 
-	int display_graph(Graph * g);
+	virtual int display_graph(Graph * g);
 
 	/*!
 	 * Display the RDF graph to the user
