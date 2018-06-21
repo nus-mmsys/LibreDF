@@ -2,7 +2,7 @@ project(df)
 
 include_directories(.)
 
-option(BUILD_RDF_MODULE "Build RDF module" ON)
+option(BUILD_RDF_MODULE "Build RDF module" OFF)
 
 if (BUILD_RDF_MODULE)
   aux_source_directory(rdf rdf)

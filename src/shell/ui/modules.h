@@ -19,6 +19,6 @@
 #ifndef DF_MODULES_H
 #define DF_MODULES_H
 
-#define RDF_MODULE
+//#define RDF_MODULE
 
 #endif
