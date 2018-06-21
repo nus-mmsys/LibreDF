@@ -16,7 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui.h"
+#include "ui/ui.h"
 
 int main(int argc, char * argv[]) {
 

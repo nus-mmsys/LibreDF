@@ -1,8 +1,11 @@
 project(df)
 
-aux_source_directory(. df_src)
+include_directories(.)
 
-add_executable(${PROJECT_NAME} ${df_src})
+aux_source_directory(parser parser)
+aux_source_directory(ui ui)
+
+add_executable(${PROJECT_NAME} main.cpp ${parser} ${ui})
 
 target_link_libraries(${PROJECT_NAME} dataflow)
 
