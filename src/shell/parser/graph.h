@@ -1,5 +1,5 @@
 /*
- *   TDF
+ *   DF
  *   Copyright (C) 2018
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TDF_GRAPH_H
-#define TDF_GRAPH_H
+#ifndef DF_PARSER_GRAPH_H
+#define DF_PARSER_GRAPH_H
 
 #include <algorithm>
 #include <iostream>
