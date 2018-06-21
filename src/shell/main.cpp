@@ -21,9 +21,9 @@
 int main(int argc, char * argv[]) {
 
 	Parser * parser = new Parser();
-	UI ui(argc, argv, parser);
+	UI * ui = new UI (argc, argv, parser);
 
-	ui.loop();
+	ui->loop();
 
 	return 0;
 }
