@@ -12,7 +12,7 @@
 ## Run
 
 ```bash
-  ./tdf ../test/basic/adder.dif
+  ./tdf ../test/basic/adder.df
 ```
 
 ## Commands
@@ -223,15 +223,17 @@ Add::~Add() {
 	  dataflow
 	    core
 	    actors
-	      basic
+	      machine-learning
 	      opencv-core
 	      opencv-highgui
 	      opencv-imgproc
 	      opencv-objdetect
+	      basic
 	  shell
 	test
-	  basic
+	  machine-learning
 	  opencv
+	  basic
 	CMakeLists.txt
 	LICENCE
 	README.md
