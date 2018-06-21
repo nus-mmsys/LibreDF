@@ -94,8 +94,7 @@ df pedestrian_detection {
         Randn               % output:Mat = randn() ;
                               sends a normally-distributed random frame. 	
         Randu               % output:Mat = randu() ;
-                              sends a uniformly-distributed random frame. 
-
+                              sends a uniformly-distributed random frame.
 
     opencv-imgproc
         BoxFilter           % output:Mat = boxFilter(input:Mat) ;
@@ -141,9 +140,9 @@ df pedestrian_detection {
                               draws rectangles containing chosen objects 
                               (e.g. face, eye, full body, etc.) and 
                               writes the result to a png file.
-                              
+
     opencv-ml
-    
+
     basic
         Addition            % reads two integers x and y and sends x+y.
         Doubling            % reads an integer x and sends 2*x.
@@ -154,7 +153,7 @@ df pedestrian_detection {
         Multiplication      % reads two integers x and y and sends x*y.
         StringConsumer      % reads a string.
         StringProducer      % sends a string ["1".."100"].
-	
+
 ## Actor developement
 
 New actors must be placed in the ```src/dataflow/actors``` folder. An actor inherits from the Actor class and defines a set of ports and their data type. The actor then implements ```init()``` and ```run()``` functions.
