@@ -20,18 +20,18 @@
 
 UI::UI(int argc, char * argv[], Parser * p) {
 
-	//cmd["graph"] = bind(&UI::display_rdf_graph, this);
+	cmd["graph"] = bind(&UI::display_df_graph, this);
 	cmd["run"] = bind(&UI::run_graph, this);
 	cmd["h"] = bind(&UI::display_help, this);
 
-	//comment["graph"] = "\tdisplay rdf data graph.";
+	comment["graph"] = "\tdisplay df graph.";
 	comment["run"] = "\trun the data graph.";
 	comment["h"] = "\tdisplay help menu.";
 
 	parser = p;
         
 	if (argc != 2) {
-		cout << "usage: tdf <file.df>\n";
+		cout << "usage: df <file.df>\n";
 		exit(0);
 	}
 	else {	
@@ -78,31 +78,6 @@ int UI::display_graph(Graph * g) {
 		       	<< g->get_sink_name(ed) << "\n";
 			ed_index++;
 	}
-	cout << "-------\n";
-	cout << "topological orders \n\n";
-	for (auto & order : orderlist) {
-		for (int j=0; j<order.size(); j++) {
-			cout << order[j] << " "; 
-		}
-		cout << "\n";
-	}
-	cout << "-------\n";
-	cout << "single appearance schedules \n\n";
-	for (auto & sas : saslist) {
-		cout << sas << "\n"; 
-	}
-	cout << "-------\n";
-
-	cout << "solutions \n\n";
-	int ret = g->solve();
-	if (ret == -1)
-		cout << "error: graph is not consistent.\n";
-	else {
-		for (auto & ac : actorlist) {
-			cout << ac << " : " << g->get_firing(ac) << "\n";
-		}
-	}
-	
 	cout << "-------\n";
 	return 0;
 }

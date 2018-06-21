@@ -1,4 +1,4 @@
-project(df)
+project(dataflow)
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV 3.0 REQUIRED)
