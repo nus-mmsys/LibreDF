@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ACTOR_H
-#define ACTOR_H
+#ifndef TDF_ACTOR_H
+#define TDF_ACTOR_H
 
 #include <string>
 #include <vector>
