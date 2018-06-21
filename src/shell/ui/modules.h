@@ -16,27 +16,9 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui/modules.h"
+#ifndef DF_MODULES_H
+#define DF_MODULES_H
 
-#ifdef RDF_MODULE
-    #include "rdf/rdfui.h"
-#else
-    #include "ui/ui.h"
+#define RDF_MODULE
+
 #endif
-
-int main(int argc, char * argv[]) {
-
-    UI * ui;
-    
-#ifdef RDF_MODULE
-	RDFParser * parser = new RDFParser();
-	ui = new RDFUI(argc, argv, parser);
-#else
-	Parser * parser = new Parser();
-	ui = new UI(argc, argv, parser);
-#endif
-
-	ui->loop();
-
-	return 0;
-}
