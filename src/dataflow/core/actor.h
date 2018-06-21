@@ -76,7 +76,17 @@ namespace df {
    
     std::vector<Port*> inputPorts; /**< List of the input ports  */
     std::vector<Port*> outputPorts; /**< List of the output ports */
-    
+
+    clock_t tstart;
+    clock_t tend;
+    void start() { 
+	    tstart = clock(); 
+    }
+    void end(std::string msg) { 
+	    tend = clock();
+	    log(msg+" exect = "+std::to_string(double(tend - tstart)/CLOCKS_PER_SEC)); 
+    }
+
     ActorStatus status; 
     /*!
      * Actor constructor

@@ -1,5 +1,5 @@
 /*
- *   DF
+ *   TDF
  *   Copyright (C) 2018
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,9 @@
 
 int main(int argc, char * argv[]) {
 
-	TDFUI rdfui(argc, argv);
+	TDFUI tdfui(argc, argv);
 
-	rdfui.loop();
+	tdfui.loop();
 
 	return 0;
 }
