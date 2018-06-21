@@ -1,4 +1,4 @@
-# TDF
+# DF
 
 ## Build
 
@@ -12,11 +12,12 @@
 ## Run
 
 ```bash
-  ./tdf ../test/basic/adder.df
+  ./df ../test/basic/adder.df
 ```
 
 ## Commands
 
+	graph		    display df graph.
 	h		    display help menu.
 	run		    run the data graph.
 
