@@ -35,16 +35,22 @@ void Convolution::init() {
   else
     kernel_size = 3;
 
+  if (!propEmpty("kernel")) {
+    std::string kernel_str = getProp("kernel");
+    //Read the kernel from user.
+  } else {
+    kernel = cv::Mat::ones( kernel_size, kernel_size, CV_32F )/ (float)(kernel_size*kernel_size);
+  }
+
   anchor = cv::Point(0,0);
   delta = 0;
   ddepth = -1;
 
-  kernel = cv::Mat::ones( kernel_size, kernel_size, CV_32F )/ (float)(kernel_size*kernel_size);
-
-  // Filter2D computes correlation.
-  // To get a convolution, the kernel 
-  // needs to be flipped and the anchor
-  // needs to be set.
+  /* Filter2D computes correlation.
+   * To get a convolution, the kernel 
+   * needs to be flipped and the anchor
+   * needs to be set.
+   */
   cv::flip(kernel, kernel, 1);
 }
 
