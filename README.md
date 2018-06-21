@@ -231,10 +231,11 @@ Add::~Add() {
 	      opencv-objdetect
 	      basic
 	  shell
+	      parser
+	      ui
 	test
 	  machine-learning
 	  opencv
 	  basic
-	CMakeLists.txt
 	LICENCE
 	README.md
