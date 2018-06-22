@@ -33,6 +33,8 @@ else
 	then
 		echo "Debug Build"
 		cmake -DCMAKE_BUILD_TYPE=DEBUG ..
+	else
+		cmake $1 ..
 	fi
 fi
 make
