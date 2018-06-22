@@ -71,6 +71,9 @@ df pedestrian_detection {
                               /* with modified kernel and anchor */
                               reads a frame, applies a convolution filter on it,
                               and sends the filtered frame.
+        Pool                % output:Mat = resize(input:Mat) ;
+                              reads a frame, resizes it,
+                              and sends the re-scaled frame.
 
     opencv-core
         Add                 % output:Mat = input1:Mat + input2:Mat ;
