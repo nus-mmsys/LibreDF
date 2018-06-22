@@ -1,4 +1,4 @@
-project(df)
+project(tmf)
 
 include_directories(dataflow)
 
