@@ -35,11 +35,15 @@ void Convolution::init() {
   else
     kernel_size = 3;
 
-  if (!propEmpty("kernel")) {
-    std::string kernel_str = getProp("kernel");
-    //Read the kernel from user.
-  } else {
-    kernel = cv::Mat::ones( kernel_size, kernel_size, CV_32F )/ (float)(kernel_size*kernel_size);
+  kernel = cv::Mat::ones( kernel_size, kernel_size, CV_32F ) /
+	   (float)(kernel_size*kernel_size);
+ 
+  if (!propEmpty("kernel_val")) {
+    int kernel_val = getPropInt("kernel_val");
+    for (int i=0; i<kernel_size; i++)
+    	for (int j=0; j<kernel_size; j++)
+		kernel.at<cv::Vec2f>(j,i)[0] = kernel_val /
+			(float)(kernel_size*kernel_size);
   }
 
   anchor = cv::Point(0,0);

@@ -10,6 +10,7 @@ df convolution {
     actor B {
     	computation = Convolution;
         kernel_size = 7;
+	kernel_val = 1;
     }
     actor C {
     	computation = ImageWrite;
