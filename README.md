@@ -18,8 +18,8 @@
 ## Commands
 
 	graph		    display df graph.
-	h		    display help menu.
-	run		    run the data graph.
+	h		        display help menu.
+	run		        run the data graph.
 
 ## Dataflow Interchange Format (DIF)
 
