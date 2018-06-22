@@ -21,7 +21,7 @@
 UI::UI(int argc, char * argv[], Parser * p) {
 
 	if (argc != 2) {
-		cout << "usage: df <file.df>\n";
+		cout << "usage: tmf <file.df>\n";
 		exit(0);
 	}
 
