@@ -12,7 +12,7 @@
 ## Run
 
 ```bash
-  ./df ../test/basic/adder.df
+  ./tmf ../test/basic/adder.df
 ```
 
 ## Commands
