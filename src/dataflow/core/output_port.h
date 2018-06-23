@@ -52,7 +52,7 @@ namespace df {
      */
     OutputPort<T>(std::string name) : Port(name), index(0) {
       buf = new Buffer<T>();
-      portCaps.addCaps("template", std::string(typeid(T).name()));
+      port_cap = std::string(typeid(T).name());
     }
        
     void lock() {

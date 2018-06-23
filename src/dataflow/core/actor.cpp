@@ -50,10 +50,10 @@ void Actor::connectActor(Actor * f, int p, int c) {
   for (auto fout : outputPorts) {
     for (auto fin : f->inputPorts) {
       
-      const PortCaps& typeOut = fout->getPortCaps();
-      const PortCaps& typeIn = fin->getPortCaps();
+      string typeOut = fout->getPortCap();
+      string typeIn = fin->getPortCap();
       
-      if ( fin->getLinked() == 0 && (typeOut.isEqual(typeIn))) {
+      if ( fin->getLinked() == 0 && (typeOut == typeIn)) {
 	
 	fout->connectPort(fin, p, c);
 	

@@ -48,7 +48,7 @@ namespace df {
      *
      */
     InputPort<T>(std::string name) : Port(name), buf(nullptr), index(0) {
-      portCaps.addCaps("template", std::string(typeid(T).name()));
+	port_cap = std::string(typeid(T).name());
     }
     
     void setBuffer(Buffer<T> * b) {

@@ -38,9 +38,9 @@ int Port::getRate() {
   return rate;
 }
 
-const PortCaps & Port::getPortCaps() const {
+const std::string & Port::getPortCap() const {
   
-  return portCaps;
+  return port_cap;
 }
 
 int Port::getLinked() {

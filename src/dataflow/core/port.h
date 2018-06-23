@@ -21,7 +21,6 @@
 
 #include "property.h"
 #include "buffer.h"
-#include "port_caps.h"
 
 #include <typeinfo>
 #include <thread>
@@ -46,7 +45,7 @@ namespace df {
   protected:
     
     int rate; /**< The port rate */
-    PortCaps portCaps;
+    std::string port_cap;
     
   public:
     
@@ -67,7 +66,7 @@ namespace df {
     void setRate(int r);
     int getRate();
 
-    const PortCaps & getPortCaps() const;
+    const std::string & getPortCap() const;
     /*!
      * Get the number of the ports connected to this port
      *
