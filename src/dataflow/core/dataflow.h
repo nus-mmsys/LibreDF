@@ -24,7 +24,6 @@
 #include <cstdarg>
 
 #include "actor.h"
-#include "bus.h"
 
 namespace df {
   
@@ -47,7 +46,6 @@ namespace df {
     std::mutex io_lock;
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
-    Bus bus;
     std::set<Actor *> actors; /**< The set of all actors in the dataflow. */
     bool realtime;
   public:

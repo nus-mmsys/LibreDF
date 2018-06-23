@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_ATTRIBUTE_H_
-#define DF_ATTRIBUTE_H_
+#ifndef DF_PROPERTY_H_
+#define DF_PROPERTY_H_
 
 #include <iostream>
 #include <string>
@@ -26,11 +26,11 @@
 namespace df {
   
   /*!
-   * \class Attribute
-   * Attribute is a map containing the attribute name and the attribute value
+   * \class Property
+   * Property is a map containing the attribute name and the attribute value
    */
   
-  class Attribute {
+  class Property {
 
   private:
     std::map<std::string, std::string>  props; /**< The map containing the message (key, value). */
@@ -101,4 +101,4 @@ namespace df {
   
 }
 
-#endif /* DF_ATTRIBUTE_H_ */
+#endif /* DF_PROPERTY_H_ */

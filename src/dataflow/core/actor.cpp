@@ -113,20 +113,5 @@ void Actor::runActor() {
   
 }
 
-void Actor::handleEvent(Event event) {
-  
-  if (event.type == EventType::EOS) {
-    
-    status = ActorStatus::EOS;
-  }
-}
-
-void Actor::sendEvent(Event event) {
-  
-  dataflowlock->lock();
-  busref->notify(event);
-  dataflowlock->unlock();
-}
-
 Actor::~Actor() { 
 }

@@ -56,20 +56,6 @@ namespace df {
       buf->addConsumer();
     }
     
-    void setAttrBuffer(Buffer<Attribute> * attrb) {
-      attrbuf = attrb;
-      attrbuf->addConsumer();
-    }
-    
-    void lockAttr() {
-      attrbuf->at(attrindex)->consumerLock();
-    }
-    
-    void unlockAttr() {
-      attrbuf->at(attrindex)->consumerUnlock();
-      attrindex = (attrindex+1) % attrbuf->getSize();
-    }
-    
     void lock() {
       buf->at(index)->consumerLock();
     }

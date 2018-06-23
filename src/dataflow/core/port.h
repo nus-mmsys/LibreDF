@@ -19,7 +19,7 @@
 #ifndef DF_PORT_H_
 #define DF_PORT_H_
 
-#include "attribute.h"
+#include "property.h"
 #include "buffer.h"
 #include "port_caps.h"
 
@@ -46,8 +46,6 @@ namespace df {
   protected:
     
     int rate; /**< The port rate */
-    Buffer<Attribute> * attrbuf;
-    int attrindex;
     PortCaps portCaps;
     
   public:
@@ -90,8 +88,6 @@ namespace df {
      *
      */
     void increaseLinked();
-    
-    Attribute * getAttr();
     
     virtual void connectPort(Port* n) {}
     

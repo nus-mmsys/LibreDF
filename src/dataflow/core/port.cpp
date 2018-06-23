@@ -22,7 +22,7 @@ using namespace df;
 using namespace std;
 
 Port::Port(string name) :
-name(name), rate(1), linked(0), attrbuf(nullptr), attrindex(0) {
+name(name), rate(1), linked(0) {
   
 }
 
@@ -53,8 +53,4 @@ bool Port::isConnected() {
 
 void Port::increaseLinked() {
   linked++;
-}
-
-Attribute * Port::getAttr() {
-  return attrbuf->at(attrindex)->get();
 }

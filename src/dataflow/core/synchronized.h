@@ -16,6 +16,45 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "event.h"
+#ifndef DF_SYNCHRONIZED_H_
+#define DF_SYNCHRONIZED_H_
 
-using namespace df;
+#include <mutex>
+#include <condition_variable>
+
+namespace df {
+  
+  class Synchronized {
+    
+    std::mutex mux;
+    
+    std::condition_variable con_cond;
+    unsigned int con_num;
+    
+    std::condition_variable pro_cond;
+    bool prod;
+    
+    unsigned int consumed;
+    bool produced;
+    unsigned int total_consumer;
+    
+  public:
+    
+    Synchronized();
+    
+    void addConsumer();
+    
+    void consumerLock();
+    
+    void consumerUnlock();
+    
+    void producerLock();
+    
+    bool producerRTLock();
+    
+    void producerUnlock();
+    
+  };
+  
+}
+#endif /* DF_SYNCHRONIZED_H_ */

@@ -19,7 +19,7 @@
 #ifndef DF_TOKEN_H
 #define DF_TOKEN_H
 
-#include "token_synchronizer.h"
+#include "synchronized.h"
 
 #include <string>
 
@@ -32,7 +32,7 @@ namespace df {
   };
   
   template <typename T>
-  class Token : public TokenSynchronizer {
+  class Token : public Synchronized {
     
   private:
     int number;

@@ -19,12 +19,10 @@
 #ifndef DF_ACTOR_H_
 #define DF_ACTOR_H_
 
-#include "attribute.h"
+#include "property.h"
 #include "port.h"
 #include "input_port.h"
 #include "output_port.h"
-#include "event.h"
-#include "bus.h"
 
 #include <vector>
 #include <map>
@@ -52,7 +50,7 @@ namespace df {
    * and receive various data from predecessor actors and send data to accessor actor.
    */
   
-  class Actor : public EventObserver {
+  class Actor  {
   private:
 
     	  
@@ -60,8 +58,7 @@ namespace df {
     std::thread trun;
     std::mutex * dataflowlock;
 
-    Attribute attr; /**< A map containing the message keys and values transfered to actor from a dataflow */
-    Bus * busref;
+    Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
     
     bool realtime;
     struct stat stat_info; /**< It is to ckeck if the rdf_path exists */
@@ -122,7 +119,7 @@ namespace df {
      */
     template<typename T>
     void setProp(const std::string & key, const T& val) {
-      attr.setProp(key, val);
+      prop.setProp(key, val);
     }
     /*!
      * Get the value of a actor property.
@@ -132,7 +129,7 @@ namespace df {
      */
     
     std::string getProp(const std::string & key) {
-      return attr.getProp(key);
+      return prop.getProp(key);
     } 
     
     /*!
@@ -143,7 +140,7 @@ namespace df {
      */
     
     int getPropInt(const std::string & key) {
-      return attr.getPropInt(key);
+      return prop.getPropInt(key);
     } 
 
     /*!
@@ -153,7 +150,7 @@ namespace df {
      *   The property name.
      */
     float getPropFloat(const std::string & key) {
-      return attr.getPropFloat(key);
+      return prop.getPropFloat(key);
     }
 
     /*!
@@ -163,7 +160,7 @@ namespace df {
      *   The property name.
      */
     bool propEmpty(const std::string & key) {
-      return attr.propEmpty(key);
+      return prop.propEmpty(key);
     }
 
     /*!
@@ -264,14 +261,9 @@ namespace df {
       port->unlock();
     }
 
-    void handleEvent(Event event);
-    
-    void sendEvent(Event event);
-    
     void destroyPort(Port * port) {
       delete port;
     }
-    void setBusRef(Bus * b) { busref = b; } 
     ActorStatus getStatus() { return status; }
     /*!
      * Destructor of the actor.

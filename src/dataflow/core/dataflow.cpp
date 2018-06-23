@@ -31,8 +31,6 @@ void Dataflow::setRealTime(bool rt) {
 }
 
 void Dataflow::addActor(Actor * f) {
-  bus.registerObserver(f);
-  f->setBusRef(&bus);
   f->setPipeLock(&io_lock);
   actors.insert(f);
 }

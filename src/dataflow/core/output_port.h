@@ -52,19 +52,9 @@ namespace df {
      */
     OutputPort<T>(std::string name) : Port(name), index(0) {
       buf = new Buffer<T>();
-      attrbuf = new Buffer<Attribute>();
       portCaps.addCaps("template", std::string(typeid(T).name()));
     }
-    
-    void lockAttr() {
-      attrbuf->at(attrindex)->producerLock();
-    }
-    
-    void unlockAttr() {
-      attrbuf->at(attrindex)->producerUnlock();
-      attrindex = (attrindex+1) % attrbuf->getSize();
-    }
-    
+       
     void lock() {
       buf->at(index)->producerLock();
     }
@@ -102,7 +92,6 @@ namespace df {
       this->increaseLinked();
       in->increaseLinked();	
       in->setBuffer(buf);
-      in->setAttrBuffer(attrbuf);
     } 
 
     /*!
@@ -124,7 +113,6 @@ namespace df {
      */
     virtual ~OutputPort<T>() {
       delete buf;
-      delete attrbuf;
     }
   };
   

@@ -16,19 +16,19 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "token_synchronizer.h"
+#include "synchronized.h"
 
 using namespace std;
 using namespace df;
 
-TokenSynchronizer::TokenSynchronizer(): con_num(0), prod(false), consumed(0), produced(false), total_consumer(0) {
+Synchronized::Synchronized(): con_num(0), prod(false), consumed(0), produced(false), total_consumer(0) {
 } 
 
-void TokenSynchronizer::addConsumer() {
+void Synchronized::addConsumer() {
   total_consumer++;
 }
 
-void TokenSynchronizer::consumerLock() {
+void Synchronized::consumerLock() {
   unique_lock<mutex> locker(mux);
   while(prod || !produced)
     pro_cond.wait(locker);
@@ -42,13 +42,13 @@ void TokenSynchronizer::consumerLock() {
   }
 }
 
-void TokenSynchronizer::consumerUnlock() {
+void Synchronized::consumerUnlock() {
   lock_guard<mutex> locker(mux);
   con_num--;
   con_cond.notify_one();
 }
 
-void TokenSynchronizer::producerLock() {
+void Synchronized::producerLock() {
   unique_lock<mutex> locker(mux);
   while(con_num > 0 || produced)
     con_cond.wait(locker);
@@ -57,7 +57,7 @@ void TokenSynchronizer::producerLock() {
   prod = true;
 }
 
-bool TokenSynchronizer::producerRTLock() {
+bool Synchronized::producerRTLock() {
   lock_guard<mutex> locker(mux);
   if(con_num > 0)
     return false;
@@ -67,7 +67,7 @@ bool TokenSynchronizer::producerRTLock() {
   return true;
 }
 
-void TokenSynchronizer::producerUnlock() {
+void Synchronized::producerUnlock() {
   lock_guard<mutex> locker(mux);
   prod = false;
   pro_cond.notify_all();

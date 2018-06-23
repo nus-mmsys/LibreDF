@@ -16,11 +16,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "attribute.h"
+#include "property.h"
 
 using namespace df;
 
-std::string Attribute::getProp(const std::string & key) {
+std::string Property::getProp(const std::string & key) {
   auto k = props.find(key);
   
   if (k == props.end())
@@ -29,7 +29,7 @@ std::string Attribute::getProp(const std::string & key) {
   return props[key];
 }
 
-bool Attribute::propEmpty(const std::string & key) {
+bool Property::propEmpty(const std::string & key) {
   auto k = props.find(key);
   
   if (k == props.end())
@@ -38,7 +38,7 @@ bool Attribute::propEmpty(const std::string & key) {
   return false;
 }
 
-int Attribute::getPropInt(const std::string & key) {
+int Property::getPropInt(const std::string & key) {
   std::string strval = getProp(key);
   int val = -1;
   try {
@@ -49,7 +49,7 @@ int Attribute::getPropInt(const std::string & key) {
   return val;
 }
 
-float Attribute::getPropFloat(const std::string & key) {
+float Property::getPropFloat(const std::string & key) {
   std::string strval = getProp(key);
   float val = -1;
   try {
@@ -60,11 +60,11 @@ float Attribute::getPropFloat(const std::string & key) {
   return val;
 }
 
-void Attribute::setProp(const std::string & key, const std::string& val) {
+void Property::setProp(const std::string & key, const std::string& val) {
   props.insert(std::make_pair(key, val));
 }
 
-void Attribute::setProp(const std::string & key, const char* val) {
+void Property::setProp(const std::string & key, const char* val) {
   std::string valstr = std::string(val);
   props.insert(std::make_pair(key, valstr));
 }
