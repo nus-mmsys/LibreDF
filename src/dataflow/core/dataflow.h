@@ -47,7 +47,9 @@ namespace df {
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
     std::set<Actor *> actors; /**< The set of all actors in the dataflow. */
-    bool realtime;
+    bool realtime, distributed;
+    Property prop;
+
   public:
     /*!
      * Dataflow constructor
@@ -56,8 +58,11 @@ namespace df {
      */
     Dataflow(const std::string& name);
     
-    void setRealTime(bool);
-    
+    template<typename T>
+    void setProp(const std::string& key, const T& val) {
+	    prop.setProp(key,val);
+    }
+
     void addActor(Actor * f);
     
     void addActors(Actor * f, ...);

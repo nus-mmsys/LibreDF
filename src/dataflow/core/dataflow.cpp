@@ -21,13 +21,9 @@
 using namespace df;
 using namespace std;
 
-Dataflow::Dataflow(const string& name): name(name), realtime(false), status(DataflowStatus::STOPPED) {
-}
-
-
-void Dataflow::setRealTime(bool rt) { 
-  realtime = rt;
-  
+Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::STOPPED) {
+	realtime = false;
+	distributed = false;
 }
 
 void Dataflow::addActor(Actor * f) {
@@ -64,6 +60,12 @@ void Dataflow::connectActors(Actor * in, Actor * out, int p, int c) {
 
 void Dataflow::init() {
   
+  if (!prop.propEmpty("deployment"))
+	  distributed = (prop.getProp("deployment") == "distributed");
+
+  if (!prop.propEmpty("execution"))
+	  realtime = (prop.getProp("execution") == "realtime");
+	
   for (auto f : actors) {
     f->setRealTime(realtime);
   }
