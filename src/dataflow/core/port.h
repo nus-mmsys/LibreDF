@@ -23,7 +23,8 @@
 #include "buffer.h"
 
 #include <sys/socket.h>
-#include <netinet/in.h>
+#include <arpa/inet.h>
+
 #include <typeinfo>
 #include <thread>
 #include <vector>
@@ -95,6 +96,8 @@ namespace df {
      */
     void increaseLinked();
     
+    virtual void connectPort(std::string host, int portnb) {}
+
     virtual void connectPort(Port* n) {}
     
     virtual void connectPort(Port* n, int p, int c) {}

@@ -44,6 +44,16 @@ void Actor::connectActor(Actor * f) {
   connectActor(f,1,1);  
 }
 
+void Actor::connectActor(std::string portname, std::string host, int portnb) {
+  
+  for (auto fout : outputPorts) {
+    	  if ( fout->getName() == portname) {
+		fout->connectPort(host, portnb);
+		break;
+	  }
+  }
+}
+
 void Actor::connectActor(Actor * f, int p, int c) {
   
   bool linked = false;

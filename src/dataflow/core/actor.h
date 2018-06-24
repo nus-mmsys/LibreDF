@@ -164,6 +164,21 @@ namespace df {
     }
 
     /*!
+     * Connect the port with a specified port name of this actor 
+     * to another actor listening on a port number on a host
+     * It is used by dataflow. User must use Dataflow::connectActors
+     *
+     * \param portname
+     *   The port name of this to connect.
+     * \param host
+     *   The host of another actor to connect to.
+     * \param portnb
+     *   The port number of another actor to connect to.
+     *
+     */
+    void connectActor(std::string portname, std::string host, int portnb);
+
+    /*!
      * Connect this actor to another actor in the dataflow.
      * It is used by dataflow. User must use Dataflow::connectActors
      *
@@ -234,7 +249,7 @@ namespace df {
 
     template <typename T>
     OutputPort<T> * createOutputPort(std::string name) {
-      OutputPort<T> * res = new OutputPort<T>(name, "127.0.0.1", 8080);
+      OutputPort<T> * res = new OutputPort<T>(name);
       this->outputPorts.push_back(res);
       return res;
     }

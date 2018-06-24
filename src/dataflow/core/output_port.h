@@ -51,20 +51,14 @@ namespace df {
      * \param name The name of the output port
      *
      */
-    OutputPort<T>(std::string name, std::string host, int port_nb) : Port(name, port_nb), index(0) {
+    OutputPort<T>(std::string name) : Port(name, 0), index(0) {
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
-      host_addr = host;
-      //TODO
-      //startPort();
-
     }
     
-    void startPort() {
-	connectPort();
-    }   
-   
-    void connectPort() {
+    virtual void connectPort(std::string host, int portnb) {
+ 	host_addr = host;
+	port_nb = portnb;	
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
         	std::cerr << "port " << name << " socket creation failed.\n";
