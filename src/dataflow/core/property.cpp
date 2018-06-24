@@ -49,6 +49,16 @@ int Property::getPropInt(const std::string & key) {
   return val;
 }
 
+bool Property::getPropBool(const std::string & key) {
+  std::string strval = getProp(key);
+  bool val = false;
+  if (strval == "true")
+	  val = true;
+  if (strval == "false")
+	  val = false;
+  return val;
+}
+
 float Property::getPropFloat(const std::string & key) {
   std::string strval = getProp(key);
   float val = -1;

@@ -60,11 +60,11 @@ void Dataflow::connectActors(Actor * in, Actor * out, int p, int c) {
 
 void Dataflow::init() {
   
-  if (!prop.propEmpty("deployment"))
-	  distributed = (prop.getProp("deployment") == "distributed");
+  if (!prop.propEmpty("distributed"))
+	  distributed = prop.getPropBool("distributed");
 
-  if (!prop.propEmpty("execution"))
-	  realtime = (prop.getProp("execution") == "realtime");
+  if (!prop.propEmpty("realtime"))
+	  realtime = prop.getPropBool("realtime");
 	
   for (auto f : actors) {
     f->setRealTime(realtime);

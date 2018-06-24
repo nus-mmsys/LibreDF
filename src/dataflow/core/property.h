@@ -49,6 +49,13 @@ namespace df {
      * \param key the key to retrieve the message value
      */
     int getPropInt(const std::string & key);
+ 
+    /*!
+     * Get the message value (bool) by passing the key
+     *
+     * \param key the key to retrieve the message value
+     */
+    bool getPropBool(const std::string & key);
 
     /*!
      * Get the message value (float) by passing the key
