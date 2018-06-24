@@ -39,11 +39,11 @@ namespace df {
   class Port {
     
   private:
-    std::string name; /**< The name of the port */
     int linked; /**< The number of port connected to this port */
     
   protected:
     
+    std::string name; /**< The name of the port */
     int rate; /**< The port rate */
     std::string port_cap;
     

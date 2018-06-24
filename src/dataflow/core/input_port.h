@@ -20,6 +20,9 @@
 #define DF_INPUTPORT_H
 
 #include "port.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <thread>
 
 namespace df {
   
@@ -35,10 +38,16 @@ namespace df {
   class InputPort: public Port {
     
   private:
-    
+
+    char sock_buf[1024];	  
     Buffer<T> * buf;
     int index;
-    
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+    int port_nb;
+    std::thread th;
+
   public:
     
     /*!
@@ -47,10 +56,70 @@ namespace df {
      * \param name The name of the port
      *
      */
-    InputPort<T>(std::string name) : Port(name), buf(nullptr), index(0) {
+    InputPort<T>(std::string name, int port_number) : Port(name), buf(nullptr), index(0) {
 	port_cap = std::string(typeid(T).name());
+   	port_nb = port_number; 
+	//TODO
+	//th = std::thread(&InputPort<T>::startPort, this);
     }
-    
+   
+    void startPort() {
+	initPort();
+	runPort();
+    } 
+
+    void initPort() {
+
+    	int opt = 1;
+
+    	// Creating socket file descriptor
+	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+	{
+		std::cerr << "port " << name << " socket failed.\n" ;
+		exit(EXIT_FAILURE);
+	}
+
+	// Attaching socket to the port
+        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
+                                                  &opt, sizeof(opt)))
+        {
+        	std::cerr << "port " << name << "setsockopt failed.\n";
+       		exit(EXIT_FAILURE);
+        }
+    	address.sin_family = AF_INET;
+    	address.sin_addr.s_addr = INADDR_ANY;
+    	address.sin_port = htons( port_nb );
+
+    	// Forcefully attaching socket to the port
+    	if (bind(server_fd, (struct sockaddr *)&address,
+                                 sizeof(address))<0)
+    	{
+		std::cerr << "port " << name << "bind failed.\n";
+        	exit(EXIT_FAILURE);
+    	}
+    	if (listen(server_fd, 3) < 0)
+    	{
+		std::cerr << "port " << name << "listen failed.\n";
+        	exit(EXIT_FAILURE);
+    	}
+
+    } 
+
+    void runPort() {
+	if ((new_socket = accept(server_fd, (struct sockaddr *)&address, 
+                       (socklen_t*)&addrlen))<0)
+    	{
+		std::cerr << "port " << name << "accept failed.\n";
+        	exit(EXIT_FAILURE);
+    	}
+    }
+
+    char * readPort() {
+	int valread = read( new_socket , sock_buf, 1024);
+	char * res = sock_buf;
+	return res;	
+    }
+
     void setBuffer(Buffer<T> * b) {
       buf = b;
       buf->addConsumer();
@@ -66,15 +135,17 @@ namespace df {
     }
     
     T * get() {
-      return buf->at(index)->get();
+    	return buf->at(index)->get();
     }
     
     void setStatus(TokenStatus st) {
       buf->at(index)->setStatus(st);
     }
+
     TokenStatus getStatus() {
       return buf->at(index)->getStatus();
     }  
+    
     /*!
      * InputPort destructor
      *
