@@ -3,11 +3,11 @@
 ## Commands 
 
 ```
-	benchmark		display benchmark.
-	graph			display df graph.
-	h			display help menu.
-	rules			display list of rules.
-	run			run the data graph.
+benchmark		display benchmark.
+graph			display df graph.
+h			display help menu.
+rules			display list of rules.
+run			run the data graph.
 ```
 
 ## RDF extension
