@@ -1,4 +1,4 @@
-# TMF (Tiny Matrix Flow)
+# TMF
 
 ## Build
 
