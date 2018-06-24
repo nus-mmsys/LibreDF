@@ -17,7 +17,7 @@
 
 ## Commands
 
-	graph		    display df graph.
+	graph		        display df graph.
 	h		        display help menu.
 	run		        run the data graph.
 
