@@ -46,7 +46,6 @@ namespace df {
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     int port_nb;
-    std::thread th;
 
   public:
     
@@ -60,15 +59,15 @@ namespace df {
 	port_cap = std::string(typeid(T).name());
    	port_nb = port_number; 
 	//TODO
-	//th = std::thread(&InputPort<T>::startPort, this);
+	//startPort();
     }
    
     void startPort() {
-	initPort();
-	runPort();
+	listenPort();
+	acceptPort();
     } 
 
-    void initPort() {
+    void listenPort() {
 
     	int opt = 1;
 
@@ -105,7 +104,7 @@ namespace df {
 
     } 
 
-    void runPort() {
+    void acceptPort() {
 	if ((new_socket = accept(server_fd, (struct sockaddr *)&address, 
                        (socklen_t*)&addrlen))<0)
     	{
