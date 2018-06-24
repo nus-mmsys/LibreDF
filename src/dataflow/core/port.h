@@ -22,6 +22,8 @@
 #include "property.h"
 #include "buffer.h"
 
+#include <sys/socket.h>
+#include <netinet/in.h>
 #include <typeinfo>
 #include <thread>
 #include <vector>
@@ -46,7 +48,12 @@ namespace df {
     std::string name; /**< The name of the port */
     int rate; /**< The port rate */
     std::string port_cap;
-    
+
+    int port_nb;
+    int sock;
+    struct sockaddr_in address;
+    char sock_buf[1024];	
+
   public:
     
     /*!
@@ -54,7 +61,7 @@ namespace df {
      *
      * \param name The name of the actor.
      */
-    Port(std::string name);
+    Port(std::string name, int port_nb);
     
     /*!
      * Get the name of the port

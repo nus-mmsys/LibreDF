@@ -234,7 +234,7 @@ namespace df {
 
     template <typename T>
     OutputPort<T> * createOutputPort(std::string name) {
-      OutputPort<T> * res = new OutputPort<T>(name);
+      OutputPort<T> * res = new OutputPort<T>(name, "127.0.0.1", 8080);
       this->outputPorts.push_back(res);
       return res;
     }

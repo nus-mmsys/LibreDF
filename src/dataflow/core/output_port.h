@@ -41,7 +41,8 @@ namespace df {
     int index;
     std::vector<InputPort<T>*> nextPorts; /**< A list of the next ports. A subclass actor must add its actors to this list */
     
-    
+    std::string host_addr;
+
   public:
     
     /*!
@@ -50,11 +51,49 @@ namespace df {
      * \param name The name of the output port
      *
      */
-    OutputPort<T>(std::string name) : Port(name), index(0) {
+    OutputPort<T>(std::string name, std::string host, int port_nb) : Port(name, port_nb), index(0) {
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
+      host_addr = host;
+      //TODO
+      //startPort();
+
     }
-       
+    
+    void startPort() {
+	connectPort();
+    }   
+   
+    void connectPort() {
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	{
+        	std::cerr << "port " << name << " socket creation failed.\n";
+		exit(EXIT_FAILURE);
+	}
+  
+    	memset(&address, '0', sizeof(address));
+  
+	address.sin_family = AF_INET;
+	address.sin_port = htons(port_nb);
+      
+	// Convert IPv4 and IPv6 addresses from text to binary form
+	if(inet_pton(AF_INET, host_addr.c_str(), &address.sin_addr)<=0) 
+	{
+		std::cerr << "port " << name << " invalid address.\n";
+		exit(EXIT_FAILURE);
+	}
+  
+	if (connect(sock, (struct sockaddr *)&address, sizeof(address)) < 0)
+	{
+		std::cerr << "port " << name << " connection failed.\n";
+		exit(EXIT_FAILURE);
+	}
+    }
+
+    void sendPort(char * buf) {
+	send(sock , buf , strlen(buf) , 0 );
+    }
+
     void lock() {
       buf->at(index)->producerLock();
     }
