@@ -84,7 +84,7 @@ namespace df {
 	}
     }
 
-    void sendPort(char * buf) {
+    void send(char * buf) {
 	send(sock , buf , strlen(buf) , 0 );
     }
 

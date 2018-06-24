@@ -260,6 +260,21 @@ namespace df {
     }
 
     template<typename T>
+    T * receive(InputPort<T> * port) {
+      T * data = port->receive();
+      if (port->getStatus() == TokenStatus::EOS)
+        status = ActorStatus::EOS;
+      return data; 
+    }
+
+    template<typename T>
+    void send(OutputPort<T> * port, char * buf) {
+      port->send(buf);
+      if (status == ActorStatus::EOS)
+        port->setStatus(TokenStatus::EOS);
+    }
+
+    template<typename T>
     void setEOS(OutputPort<T> * port) {
       port->lock();
       port->setStatus(TokenStatus::EOS);

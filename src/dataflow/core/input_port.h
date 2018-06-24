@@ -99,7 +99,7 @@ namespace df {
     	}
     }
 
-    char * readPort() {
+    char * receive() {
 	int valread = read( new_socket , sock_buf, 1024);
 	char * res = sock_buf;
 	return res;	
