@@ -48,18 +48,12 @@ namespace df {
      * \param name The name of the port
      *
      */
-    InputPort<T>(std::string name, int port_nb) : Port(name, port_nb), buf(nullptr), index(0) {
+    InputPort<T>(std::string name) : Port(name), buf(nullptr), index(0) {
 	port_cap = std::string(typeid(T).name());
-	//TODO
-	//startPort();
     }
    
-    void startPort() {
-	listenPort();
-	acceptPort();
-    } 
-
-    void listenPort() {
+    void listenPort(int portnb) {
+	port_nb = portnb;
 
     	int opt = 1;
 

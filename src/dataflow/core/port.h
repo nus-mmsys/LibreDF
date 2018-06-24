@@ -62,7 +62,7 @@ namespace df {
      *
      * \param name The name of the actor.
      */
-    Port(std::string name, int port_nb);
+    Port(std::string name);
     
     /*!
      * Get the name of the port

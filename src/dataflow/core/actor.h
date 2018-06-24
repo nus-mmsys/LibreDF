@@ -228,24 +228,11 @@ namespace df {
     
     template <typename T>
     InputPort<T> * createInputPort(std::string name) {
-      InputPort<T> * res = new InputPort<T>(name,8080);
+      InputPort<T> * res = new InputPort<T>(name);
       this->inputPorts.push_back(res);
       return res;
     }
 
-    template <typename T>
-    InputPort<T> * createInputPort2(std::string name) {
-      InputPort<T> * res = nullptr;      
-      if (propEmpty(name+"_port")) {
-	      log(name+"_port is not specified.\n");
-      } 
-      else {
-	      int port = getPropInt(name+"_port");
-	      res = new InputPort<T>(name, port);
-      	      this->inputPorts.push_back(res);
-      }
-      return res;
-    }
 
     template <typename T>
     OutputPort<T> * createOutputPort(std::string name) {
@@ -289,6 +276,20 @@ namespace df {
     void release(OutputPort<T> * port) {
       port->unlock();
     }
+
+    template <typename T>
+    void listen(InputPort<T> * port) {
+      std::string name = port->getName();
+      if (propEmpty(name+"_port")) {
+	      log(name+"_port is not specified.\n");
+      } 
+      else {
+	      int portnb = getPropInt(name+"_port");
+      	      port->listenPort(portnb);
+	      port->acceptPort();
+      }
+    }
+
 
     void destroyPort(Port * port) {
       delete port;

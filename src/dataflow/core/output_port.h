@@ -51,7 +51,7 @@ namespace df {
      * \param name The name of the output port
      *
      */
-    OutputPort<T>(std::string name) : Port(name, 0), index(0) {
+    OutputPort<T>(std::string name) : Port(name), index(0) {
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
     }

@@ -21,8 +21,8 @@
 using namespace df;
 using namespace std;
 
-Port::Port(string name, int port_nb) :
-name(name), rate(1), linked(0), port_nb(port_nb) {
+Port::Port(string name) :
+name(name), rate(1), linked(0) {
 }
 
 string Port::getName() {
