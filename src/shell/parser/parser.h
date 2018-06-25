@@ -41,6 +41,19 @@ protected:
 	Graph * graph; /**< RDF data graph. */
 
 	/*!
+	 * Trims a string and removes all 
+	 * ' ', '\t', and '\n'.
+	 *
+	 * \param str
+	 * 	String to trim.
+	 *
+	 * \return
+	 *
+	 */ 
+	int trim_str(string & str);
+
+
+	/*!
 	 * Read a string from a file stream.
 	 *
 	 * \param file

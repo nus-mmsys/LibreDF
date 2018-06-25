@@ -53,6 +53,19 @@ int Parser::read_str(ifstream & file, string str) {
 	}
 }
 
+int Parser::trim_str(string & str) {
+
+	auto end_pos = std::remove(str.begin(), str.end(), ' ');
+	str.erase(end_pos, str.end());
+
+	end_pos = std::remove(str.begin(), str.end(), '\n');
+	str.erase(end_pos, str.end());
+
+	end_pos = std::remove(str.begin(), str.end(), '\t');
+	str.erase(end_pos, str.end());
+
+	return 0;
+}
 int Parser::read_graph(ifstream & file, Graph * g) {
 	int ret;
 	string tmp;
@@ -185,7 +198,6 @@ int Parser::read_props(ifstream & file, Graph * g) {
 
 }
 
-
 int Parser::read_topology(ifstream & file, Graph * g) {
         int ret;
 	string actorlist, edgelist, actor, edge;
@@ -199,24 +211,9 @@ int Parser::read_topology(ifstream & file, Graph * g) {
 	getline(file, edgelist, ';');
 
 	read_str(file, "}");
-	
-	auto end_pos = std::remove(actorlist.begin(), actorlist.end(), ' ');
-	actorlist.erase(end_pos, actorlist.end());
 
-	end_pos = std::remove(actorlist.begin(), actorlist.end(), '\n');
-	actorlist.erase(end_pos, actorlist.end());
-
-	end_pos = std::remove(actorlist.begin(), actorlist.end(), '\t');
-	actorlist.erase(end_pos, actorlist.end());
-
-	end_pos = std::remove(edgelist.begin(), edgelist.end(), ' ');
-	edgelist.erase(end_pos, edgelist.end());
-
-	end_pos = std::remove(edgelist.begin(), edgelist.end(), '\n');
-	edgelist.erase(end_pos, edgelist.end());
-
-	end_pos = std::remove(edgelist.begin(), edgelist.end(), '\t');
-	edgelist.erase(end_pos, edgelist.end());
+	trim_str(actorlist);
+	trim_str(edgelist);
 
 	istringstream ssa(actorlist);
 	while (getline(ssa, actor, ',')) {
