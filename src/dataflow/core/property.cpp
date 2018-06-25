@@ -52,9 +52,9 @@ int Property::getPropInt(const std::string & key) {
 bool Property::getPropBool(const std::string & key) {
   std::string strval = getProp(key);
   bool val = false;
-  if (strval == "true")
+  if (strval == "true" || strval == "1")
 	  val = true;
-  if (strval == "false")
+  if (strval == "false" || strval == "0")
 	  val = false;
   return val;
 }

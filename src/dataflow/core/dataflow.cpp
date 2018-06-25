@@ -67,7 +67,8 @@ void Dataflow::init() {
 	  realtime = prop.getPropBool("realtime");
 	
   for (auto f : actors) {
-    f->setRealTime(realtime);
+    f->setProp<bool>("realtime", realtime);
+    f->setProp<bool>("distributed", distributed);
   }
   
   for (auto f: actors) {

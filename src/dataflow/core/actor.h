@@ -60,7 +60,6 @@ namespace df {
 
     Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
     
-    bool realtime;
     struct stat stat_info; /**< It is to ckeck if the rdf_path exists */
 
   protected:
@@ -74,6 +73,8 @@ namespace df {
     std::vector<Port*> inputPorts; /**< List of the input ports  */
     std::vector<Port*> outputPorts; /**< List of the output ports */
 
+    bool distributed, realtime;
+    
     clock_t tstart;
     clock_t tend;
     void start() { 
@@ -107,8 +108,6 @@ namespace df {
     
   public:
     
-    void setRealTime(bool rt);
-    
     /*!
      * Set a property of the actor.
      *
@@ -131,7 +130,17 @@ namespace df {
     std::string getProp(const std::string & key) {
       return prop.getProp(key);
     } 
-    
+
+    /*!
+     * Get the value (bool) of a actor property.
+     *
+     * \param key
+     *   The property name.
+     */
+    int getPropBool(const std::string & key) {
+      return prop.getPropBool(key);
+    } 
+ 
     /*!
      * Get the value (int) of a actor property.
      *

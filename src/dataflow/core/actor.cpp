@@ -21,14 +21,12 @@
 using namespace df;
 using namespace std;
 
-Actor::Actor(const string &name) : realtime(false), status(ActorStatus::OK), stepno(0), name(name) {
+Actor::Actor(const string &name) : status(ActorStatus::OK), stepno(0), name(name) {
+  realtime = false;
+  distributed = false;
   home_path = std::getenv("HOME");
   df_path = home_path + "/Documents/df/";  
   dfout_path = df_path + "outputs/";
-}
-
-void Actor::setRealTime(bool rt) {
-  realtime = rt;
 }
 
 void Actor::log(std::string msg) {
@@ -97,6 +95,12 @@ void Actor::setPipeLock(mutex * mux) {
 }
 
 void Actor::initActor() {
+
+  if (!propEmpty("realtime"))
+	  realtime = getPropBool("realtime");
+
+  if (!propEmpty("distributed"))
+	  distributed = getPropBool("distributed");
 
   for (auto p : inputPorts) {
     if (p->getLinked() == 0) {
