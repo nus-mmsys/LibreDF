@@ -58,17 +58,17 @@ namespace df {
     	int opt = 1;
 
     	// Creating socket file descriptor
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		std::cerr << "port " << name << " socket failed.\n" ;
 		exit(EXIT_FAILURE);
 	}
 
 	// Attaching socket to the port
-        if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
-                                                  &opt, sizeof(opt)))
+        if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR,
+                                                  &opt, sizeof(opt)) < 0 )
         {
-        	std::cerr << "port " << name << "setsockopt failed.\n";
+        	std::cerr << "port " << name << " setsockopt failed.\n";
        		exit(EXIT_FAILURE);
         }
     	address.sin_family = AF_INET;
