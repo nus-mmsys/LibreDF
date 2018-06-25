@@ -92,6 +92,11 @@ int UI::run_graph() {
 
 	df::Dataflow* dataflow = df::Factory::createDataflow(graph->get_name());
 	
+	map<string, string> params = graph->get_graph_params();
+	for (auto p : params) {
+		dataflow->setProp(p.first, p.second);
+	}
+
 	vector<string> actorlist = graph->get_actors();
 	for (auto & acname : actorlist) {
 		string actype = graph->get_actor_type(acname);

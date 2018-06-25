@@ -515,6 +515,15 @@ public:
 	string get_actor_prop(string actname, string prop);
 
 	/*!
+	 * Get the properties of the graph.
+	 *
+	 * \return
+	 *	The map of parameters of the graph.
+	 *
+	 */
+	std::map<std::string, std::string> get_graph_params();
+
+	/*!
 	 * Get the properties of a given actor.
 	 *
 	 * \param name

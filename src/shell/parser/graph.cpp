@@ -484,6 +484,10 @@ string Graph::get_actor_prop(string actname, string prop) {
 	return actors[actname]->get_prop(prop);
 }
 
+map<string, string> Graph::get_graph_params() {
+	return params;
+}
+
 map<string, string> Graph::get_actor_props(string actname) {
 	map<string, string> res;
 	if (actors.find(actname) == actors.end())
