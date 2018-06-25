@@ -239,9 +239,12 @@ namespace df {
     InputPort<T> * createInputPort(std::string name) {
       InputPort<T> * res = new InputPort<T>(name);
       this->inputPorts.push_back(res);
+
+      if (distributed)
+	      listen(res);
+
       return res;
     }
-
 
     template <typename T>
     OutputPort<T> * createOutputPort(std::string name) {

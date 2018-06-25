@@ -91,8 +91,8 @@ namespace df {
     } 
 
     void acceptPort() {
-	if ((new_socket = accept(sock, (struct sockaddr *)&address, 
-                       sizeof(address)))<0)
+	int addrlen = sizeof(address);
+	if ((new_socket = accept(sock, (struct sockaddr*) &address, (socklen_t*)&addrlen))<0)
     	{
 		std::cerr << "port " << name << "accept failed.\n";
         	exit(EXIT_FAILURE);
