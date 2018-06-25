@@ -57,13 +57,15 @@ int Parser::read_graph(ifstream & file, Graph * g) {
 	int ret;
 	string tmp;
 	read_str(file, "{");
-        while (true) {
+        read_str(file, "topology");
+	ret = read_topology(file,g);
+	if (ret < 0)
+		return ret;
+	while (true) {
 		ret = 0;
 		file >> tmp;
 		if (tmp == "}")
 			break;
-		else if (tmp == "topology")
-			ret = read_topology(file,g);
 		else if (tmp == "actor")
 			ret = read_props(file, g);
 		else if (tmp == "production")
