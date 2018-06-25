@@ -66,6 +66,8 @@ int Parser::read_graph(ifstream & file, Graph * g) {
 		file >> tmp;
 		if (tmp == "}")
 			break;
+		else if (tmp == "parameter")
+			ret = read_parameters(file, g);
 		else if (tmp == "actor")
 			ret = read_props(file, g);
 		else if (tmp == "production")
@@ -143,6 +145,16 @@ int Parser::read_consumptions(ifstream & file, Graph * g) {
 		if (ret < 0)
 			return ret;		
 	}
+	return 0;
+}
+
+int Parser::read_parameters(ifstream & file, Graph * g) {
+
+	int ret;
+	string params;
+	read_str(file, "{");	
+	getline(file, params, '}');
+
 	return 0;
 }
 

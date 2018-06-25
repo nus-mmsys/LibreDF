@@ -123,7 +123,21 @@ protected:
 	 *
 	 */ 
         int read_consumptions(ifstream & file, Graph * g);
-
+	
+	/*!
+	 * Read the list of parameters of the dataflow
+	 * from a file stream.
+	 *
+	 * \param file
+	 * 	Reference of the file stream.
+	 * 
+	 * \param g
+	 * 	Reference of graph containing the actor
+	 *
+	 * \return
+	 *
+	 */ 
+        int read_parameters(ifstream & file, Graph * g);
 
 	/*!
 	 * Read the list of properties of an actor from 
