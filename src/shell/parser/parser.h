@@ -251,7 +251,21 @@ protected:
 	 *
 	 */ 
 	int add_actortype(const string& actortype, Graph * g);
-	
+
+	/*!
+	 * Add a property to the graph.
+	 *
+	 * \param param
+	 *      The parameter to set.
+	 *
+	 * \param g
+	 * 	Reference of graph containing the actor.
+	 *
+	 * \return
+	 *
+	 */ 
+	int add_graph_param(const string& param, Graph * g);
+
 	/*!
 	 * Add a property of an actor to a graph.
 	 *

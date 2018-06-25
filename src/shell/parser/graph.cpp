@@ -74,6 +74,14 @@ int Graph::add_actor(string name, string type) {
 	return 0;
 }
 
+int Graph::add_graph_param(string key, string val) {
+	if (params.find(key) != params.end()) {
+		return -1;
+	}
+	params[key] = val;
+	return 0;
+}
+
 int Graph::add_actor_prop(string actname, string key, string val) {
 	Actor * ac;
 	if (actors.find(actname) == actors.end()) {

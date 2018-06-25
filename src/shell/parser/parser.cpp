@@ -154,6 +154,15 @@ int Parser::read_parameters(ifstream & file, Graph * g) {
 	read_str(file, "{");	
 	getline(file, params, '}');
 
+	trim_str(params);
+	
+	istringstream ss(params);
+	while (getline(ss, params, ';')) {
+		ret = add_graph_param(params,g);
+		if (ret < 0)
+			return ret;		
+	}
+
 	return 0;
 }
 
@@ -340,6 +349,19 @@ int Parser::add_consumption_rate(const string& rate, Graph * g) {
 	int ret = g->set_sink_rate(edgename,edr);
 	if (ret == -1)
 		cout << "error: edge " << edgename << " is not found.\n";
+	return ret;
+}
+
+int Parser::add_graph_param(const string& prop, Graph * g) {
+	string key="", val="";
+	std::istringstream ss(prop);
+  	getline(ss, key, '=');
+	getline(ss, val);
+        if (key=="" || val=="") {
+		cout << "error: parameter is not well formatted.\n";
+		return -2;
+	}
+	int ret = g->add_graph_param(key, val);
 	return ret;
 }
 
