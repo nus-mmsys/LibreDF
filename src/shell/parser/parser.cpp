@@ -57,24 +57,25 @@ int Parser::read_graph(ifstream & file, Graph * g) {
 	int ret;
 	string tmp;
 	read_str(file, "{");
-	read_str(file, "topology");
-	ret = read_topology(file,g);
-	if (ret < 0)
-		return ret;
         while (true) {
+		ret = 0;
 		file >> tmp;
 		if (tmp == "}")
 			break;
+		else if (tmp == "topology")
+			ret = read_topology(file,g);
 		else if (tmp == "actor")
-			read_props(file, g);
+			ret = read_props(file, g);
 		else if (tmp == "production")
-			read_productions(file, g);
+			ret = read_productions(file, g);
 		else if (tmp == "consumption")
-			read_consumptions(file, g);
+			ret = read_consumptions(file, g);
 		else {
 			cout << "cannot parse the graph.\n";
 			return -1;
 		}
+		if (ret < 0)
+			return ret;
 	}
 	load_actor_types(g);
 	return 0;
