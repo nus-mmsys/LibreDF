@@ -118,14 +118,7 @@ int Parser::read_productions(ifstream & file, Graph * g) {
 	read_str(file, "{");	
 	getline(file, ratelist, '}');
 
-	auto end_pos = std::remove(ratelist.begin(), ratelist.end(), ' ');
-	ratelist.erase(end_pos, ratelist.end());
-
-	end_pos = std::remove(ratelist.begin(), ratelist.end(), '\n');
-	ratelist.erase(end_pos, ratelist.end());
-
-	end_pos = std::remove(ratelist.begin(), ratelist.end(), '\t');
-	ratelist.erase(end_pos, ratelist.end());
+	trim_str(ratelist);
 
 	istringstream ss(ratelist);
 	while (getline(ss, rate, ';')) {
@@ -143,14 +136,7 @@ int Parser::read_consumptions(ifstream & file, Graph * g) {
 	read_str(file, "{");	
 	getline(file, ratelist, '}');
 
-	auto end_pos = std::remove(ratelist.begin(), ratelist.end(), ' ');
-	ratelist.erase(end_pos, ratelist.end());
-
-	end_pos = std::remove(ratelist.begin(), ratelist.end(), '\n');
-	ratelist.erase(end_pos, ratelist.end());
-
-	end_pos = std::remove(ratelist.begin(), ratelist.end(), '\t');
-	ratelist.erase(end_pos, ratelist.end());
+	trim_str(ratelist);
 
 	istringstream ss(ratelist);
 	while (getline(ss, rate, ';')) {
@@ -178,16 +164,9 @@ int Parser::read_props(ifstream & file, Graph * g) {
 	file >> actname;
 	read_str(file, "{");	
 	getline(file, props, '}');
-
-	auto end_pos = std::remove(props.begin(), props.end(), ' ');
-	props.erase(end_pos, props.end());
-
-	end_pos = std::remove(props.begin(), props.end(), '\n');
-	props.erase(end_pos, props.end());
-
-	end_pos = std::remove(props.begin(), props.end(), '\t');
-	props.erase(end_pos, props.end());
-
+	
+	trim_str(props);
+	
 	istringstream ss(props);
 	while (getline(ss, prop, ';')) {
 		ret = add_prop(actname, prop,g);
@@ -269,15 +248,7 @@ int Parser::read_actors(ifstream & file, Graph * g) {
 	read_str(file, "{");
 	getline(file, actorlist, '}');
 
-	auto end_pos = std::remove(actorlist.begin(), actorlist.end(), ' ');
-	actorlist.erase(end_pos, actorlist.end());
-
-	end_pos = std::remove(actorlist.begin(), actorlist.end(), '\n');
-	actorlist.erase(end_pos, actorlist.end());
-
-	end_pos = std::remove(actorlist.begin(), actorlist.end(), '\t');
-	actorlist.erase(end_pos, actorlist.end());
-
+	trim_str(actorlist);
 
 	istringstream ss(actorlist);
 	while (getline(ss, actor, ';')) {
@@ -297,15 +268,8 @@ int Parser::read_edges(ifstream & file, Graph * g) {
 
 	getline(file, edgelist, '}');
 
-	auto end_pos = std::remove(edgelist.begin(), edgelist.end(), ' ');
-	edgelist.erase(end_pos, edgelist.end());
-
-	end_pos = std::remove(edgelist.begin(), edgelist.end(), '\n');
-	edgelist.erase(end_pos, edgelist.end());
-
-	end_pos = std::remove(edgelist.begin(), edgelist.end(), '\t');
-	edgelist.erase(end_pos, edgelist.end());
-
+	trim_str(edgelist);
+	
 	istringstream ss(edgelist);
 
 	while (getline(ss, edgeline, ';')) {
@@ -411,9 +375,6 @@ int Parser::add_edge(string edge_source, string edge_sink, Graph * g) {
 		cout << "error: edge already exists.\n";
 	else if (ret == -1)
 		cout << "error: edge source/sink actor does not exist.\n";
-	//else if (ret == 0) {
-	//	cout << edge_source << " -> " << edge_sink << "\n";
-	//}
 	return ret;
 }
 
