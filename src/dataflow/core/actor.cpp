@@ -103,7 +103,9 @@ void Actor::initActor() {
 	  distributed = getPropBool("distributed");
 
   for (auto p : inputPorts) {
-    if (p->getLinked() == 0) {
+    if (distributed)
+	    listen(p);
+    else if (p->getLinked() == 0) {
       log(p->getName()+string(" is not connected"));
       status = ActorStatus::ERROR;
     }

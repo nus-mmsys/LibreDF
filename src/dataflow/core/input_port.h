@@ -52,7 +52,7 @@ namespace df {
 	port_cap = std::string(typeid(T).name());
     }
    
-    void listenPort(int portnb) {
+    virtual void listenPort(int portnb) {
 	port_nb = portnb;
 
     	int opt = 1;
@@ -90,7 +90,7 @@ namespace df {
 
     } 
 
-    void acceptPort() {
+    virtual void acceptPort() {
 	int addrlen = sizeof(address);
 	if ((new_socket = accept(sock, (struct sockaddr*) &address, (socklen_t*)&addrlen))<0)
     	{

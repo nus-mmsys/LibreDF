@@ -239,10 +239,6 @@ namespace df {
     InputPort<T> * createInputPort(std::string name) {
       InputPort<T> * res = new InputPort<T>(name);
       this->inputPorts.push_back(res);
-
-      if (distributed)
-	      listen(res);
-
       return res;
     }
 
@@ -304,11 +300,10 @@ namespace df {
       port->unlock();
     }
 
-    template <typename T>
-    void listen(InputPort<T> * port) {
+    void listen(Port * port) {
       std::string name = port->getName();
       if (propEmpty(name+"_port")) {
-	      log(name+"_port is not specified.\n");
+	      log(name+"_port is not specified.");
       } 
       else {
 	      int portnb = getPropInt(name+"_port");
