@@ -169,7 +169,7 @@ int Parser::read_props(ifstream & file, Graph * g) {
 	
 	istringstream ss(props);
 	while (getline(ss, prop, ';')) {
-		ret = add_prop(actname, prop,g);
+		ret = add_actor_prop(actname, prop,g);
 		if (ret < 0)
 			return ret;		
 	}
@@ -343,7 +343,7 @@ int Parser::add_consumption_rate(const string& rate, Graph * g) {
 	return ret;
 }
 
-int Parser::add_prop(const string& actname, const string& prop, Graph * g) {
+int Parser::add_actor_prop(const string& actname, const string& prop, Graph * g) {
 	string key="", val="";
 	std::istringstream ss(prop);
   	getline(ss, key, '=');
@@ -352,7 +352,7 @@ int Parser::add_prop(const string& actname, const string& prop, Graph * g) {
 		cout << "error: actor property is not well formatted.\n";
 		return -2;
 	}
-	int ret = g->add_prop(actname, key, val);
+	int ret = g->add_actor_prop(actname, key, val);
 	return ret;
 }
 

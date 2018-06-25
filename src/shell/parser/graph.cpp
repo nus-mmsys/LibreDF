@@ -74,7 +74,7 @@ int Graph::add_actor(string name, string type) {
 	return 0;
 }
 
-int Graph::add_prop(string actname, string key, string val) {
+int Graph::add_actor_prop(string actname, string key, string val) {
 	Actor * ac;
 	if (actors.find(actname) == actors.end()) {
 		return -1;

@@ -267,7 +267,7 @@ protected:
 	 * \return
 	 *
 	 */ 
-        int add_prop(const string& actname, const string& prop, Graph * g);
+        int add_actor_prop(const string& actname, const string& prop, Graph * g);
 	
 	/*!
 	 * Add an edge specified with its source and sink actors to a graph.

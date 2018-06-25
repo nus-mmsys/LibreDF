@@ -38,7 +38,7 @@ private:
         string name; /**< Graph name */
 	map<string, Actor *> actors; /**< A map from names of actors to the reference of the actors. */
 	map<string, Edge *> edges; /**< A map from names of edges to the reference of the edges. */
-
+	map<string, string> props;
 	/*!
 	 * Create an actor with specified name and type in the graph.
 	 *
@@ -241,7 +241,7 @@ public:
 	 * \return
 	 *
 	 */
-	int add_prop(string actname, string key, string val);
+	int add_actor_prop(string actname, string key, string val);
 
 	/*!
 	 * Add an edge to the graph.
