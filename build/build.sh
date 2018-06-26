@@ -1,13 +1,15 @@
 #! /usr/bin/env bash
-OCV=`pkg-config --libs opencv`
+
+OCV=`pkg-config --cflags opencv`
 if [ "$OCV" == "" ]
 then
 	echo "opencv is not installed."
 	exit 1
 fi
 OCV=`echo "$OCV" | cut -d " " -f 1`
-OCV=${OCV#-L}
-OCV=${OCV%lib}
+OCV=${OCV#-I}
+OCV=${OCV%include/opencv}
+
 DF_HOME="${HOME}/Documents/df"
 if [ ! -d $DF_HOME ]
 then
@@ -23,7 +25,7 @@ if [ ! -d ${OUTPUTS} ]
 then
 	mkdir ${OUTPUTS}
 fi
-cp -n ${OCV}/share/OpenCV/haarcascades/*.xml ${CASCADE}/
+cp -n ${OCV}/share/opencv/haarcascades/*.xml ${CASCADE}/
 if [ $# == 0 ]
 then
 	echo "Release Build"
