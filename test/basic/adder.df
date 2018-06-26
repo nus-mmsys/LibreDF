@@ -13,8 +13,8 @@ df adder {
     }
     actor C {
         computation = Addition;
-	input_1_port = 9000;
-	input_2_port = 9001;
+	input_1_port = 7000;
+	input_2_port = 7001;
     }
     parameter {
 	realtime = false;
