@@ -1,7 +1,7 @@
 project(dataflow)
 
 find_package(PkgConfig REQUIRED)
-find_package(OpenCV 3.0 REQUIRED)
+find_package(OpenCV REQUIRED)
 
 option(BUILD_ML_ACTORS "Build machine-learning actors" ON)
 option(BUILD_OPENCV_ACTORS "Build opencv actors" ON)
