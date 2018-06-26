@@ -6,6 +6,7 @@ then
 	echo "opencv is not installed."
 	exit 1
 fi
+
 OCV=`echo "$OCV" | cut -d " " -f 1`
 OCV=${OCV#-I}
 OCV=${OCV%include/opencv}
