@@ -56,13 +56,13 @@ namespace df {
       port_cap = std::string(typeid(T).name());
     }
     
-    virtual void connectPort(std::string host, int portnb) {
+    virtual int connectPort(std::string host, int portnb) {
  	host_addr = host;
 	port_nb = portnb;	
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
         	std::cerr << "port " << name << " socket creation failed.\n";
-		exit(EXIT_FAILURE);
+		return -1;
 	}
   
     	memset(&address, '0', sizeof(address));
@@ -74,14 +74,15 @@ namespace df {
 	if(inet_pton(AF_INET, host_addr.c_str(), &address.sin_addr)<=0) 
 	{
 		std::cerr << "port " << name << " invalid address.\n";
-		exit(EXIT_FAILURE);
+		return -1;
 	}
   
 	if (connect(sock, (struct sockaddr *)&address, sizeof(address)) < 0)
 	{
 		std::cerr << "port " << name << " connection failed.\n";
-		exit(EXIT_FAILURE);
+		return -1;
 	}
+	return 0;
     }
 
     void send(char * buf) {

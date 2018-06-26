@@ -42,14 +42,13 @@ void Actor::connectActor(Actor * f) {
   connectActor(f,1,1);  
 }
 
-void Actor::connectActor(std::string portname, std::string host, int portnb) {
+int Actor::connectActor(std::string portname, std::string host, int portnb) {
   
-  for (auto fout : outputPorts) {
-    	  if ( fout->getName() == portname) {
-		fout->connectPort(host, portnb);
-		break;
-	  }
-  }
+  if (outputPorts.find(portname) == outputPorts.end())
+    return -1;
+
+  return outputPorts[portname]->connectPort(host, portnb);
+
 }
 
 void Actor::connectActor(Actor * f, int p, int c) {
@@ -58,12 +57,12 @@ void Actor::connectActor(Actor * f, int p, int c) {
   for (auto fout : outputPorts) {
     for (auto fin : f->inputPorts) {
       
-      string typeOut = fout->getPortCap();
-      string typeIn = fin->getPortCap();
+      string typeOut = fout.second->getPortCap();
+      string typeIn = fin.second->getPortCap();
       
-      if ( fin->getLinked() == 0 && (typeOut == typeIn)) {
+      if ( fin.second->getLinked() == 0 && (typeOut == typeIn)) {
 	
-	fout->connectPort(fin, p, c);
+	fout.second->connectPort(fin.second, p, c);
 	
 	linked = true;
 	break;
@@ -104,16 +103,16 @@ void Actor::initActor() {
 
   for (auto p : inputPorts) {
     if (distributed)
-	    listen(p);
-    else if (p->getLinked() == 0) {
-      log(p->getName()+string(" is not connected"));
+	    listen(p.second);
+    else if (p.second->getLinked() == 0) {
+      log(p.second->getName()+string(" is not connected"));
       status = ActorStatus::ERROR;
     }
   }
   
   for (auto p : outputPorts) {
-    if (p->getLinked() == 0) {
-      log(p->getName()+string(" is not connected"));
+    if (p.second->getLinked() == 0) {
+      log(p.second->getName()+string(" is not connected"));
       status = ActorStatus::ERROR;
     }
   } 

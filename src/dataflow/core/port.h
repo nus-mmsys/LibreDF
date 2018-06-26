@@ -100,7 +100,7 @@ namespace df {
 
     virtual void acceptPort() {}
 
-    virtual void connectPort(std::string host, int portnb) {}
+    virtual int connectPort(std::string host, int portnb) { return 0; }
 
     virtual void connectPort(Port* n) {}
     

@@ -69,9 +69,9 @@ namespace df {
     std::string home_path; /**< The path for home folder */    
     std::string df_path; /**< The path for actors to use */
     std::string dfout_path; /**< The path for actors to use as output */
-   
-    std::vector<Port*> inputPorts; /**< List of the input ports  */
-    std::vector<Port*> outputPorts; /**< List of the output ports */
+    
+    std::map<std::string, Port*>inputPorts; /**< Map of input ports referenced by their name  */
+    std::map<std::string, Port*> outputPorts; /**< Map of output ports referenced by their name */
 
     bool distributed, realtime;
     
@@ -185,7 +185,7 @@ namespace df {
      *   The port number of another actor to connect to.
      *
      */
-    void connectActor(std::string portname, std::string host, int portnb);
+    int connectActor(std::string portname, std::string host, int portnb);
 
     /*!
      * Connect this actor to another actor in the dataflow.
@@ -238,14 +238,14 @@ namespace df {
     template <typename T>
     InputPort<T> * createInputPort(std::string name) {
       InputPort<T> * res = new InputPort<T>(name);
-      this->inputPorts.push_back(res);
+      this->inputPorts.insert(std::make_pair(name, res));
       return res;
     }
 
     template <typename T>
     OutputPort<T> * createOutputPort(std::string name) {
       OutputPort<T> * res = new OutputPort<T>(name);
-      this->outputPorts.push_back(res);
+      this->outputPorts.insert(std::make_pair(name, res));
       return res;
     }
 
