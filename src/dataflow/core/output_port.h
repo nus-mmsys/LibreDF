@@ -65,7 +65,7 @@ namespace df {
 		return -1;
 	}
   
-    	memset(&address, '0', sizeof(address));
+	std::memset(&address, '0', sizeof(address));
   
 	address.sin_family = AF_INET;
 	address.sin_port = htons(port_nb);
@@ -86,7 +86,7 @@ namespace df {
     }
 
     void send(char * buf) {
-	send(sock , buf , strlen(buf) , 0 );
+	send(sock , buf , std::strlen(buf) , 0 );
     }
 
     void lock() {

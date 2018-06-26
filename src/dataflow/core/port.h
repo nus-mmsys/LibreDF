@@ -24,7 +24,9 @@
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
+#include <cstring>
 #include <typeinfo>
 #include <thread>
 #include <vector>
