@@ -5,16 +5,20 @@ df adder {
     }
     actor A {
         computation = IntProducer;
+	output = e1;
         last = 64;
     }
     actor B {
         computation = IntProducer;
+	output = e2;
         last = 64;
     }
     actor C {
         computation = Addition;
-	input_1_port = 7000;
-	input_2_port = 7001;
+	input1 = e1;
+	input2 = e2;
+	input1_port = 7000;
+	input2_port = 7001;
     }
     parameter {
 	realtime = false;

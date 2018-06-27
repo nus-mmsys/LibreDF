@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<IntProducer> IntProducer::reg("IntProducer");
 
 IntProducer::IntProducer(const string& name) : Actor(name) {
-  outputInt = createOutputPort<int>("output_int");
+  outputInt = createOutputPort<int>("output");
 }
 
 void IntProducer::init() {

@@ -95,12 +95,11 @@ namespace df {
      *
      * \param src The source actor for the edge.
      * \param snk The sink actor for the edge.
-     * \param outp The output port of the source actor.
-     * \param inp The input port of the sink actor.
+     * \param edge The edge on which two actors will be connected.
      * \param p The production rate of the source actor.
      * \param c The consumption rate of the sink actor.
      */
-    void connectActors(Actor * src, Actor * snk, std::string outp, std::string inp, int p, int c);
+    void connectActors(Actor * src, Actor * snk, std::string edge, int p, int c);
 
     /*!
      * Initialize the dataflow.

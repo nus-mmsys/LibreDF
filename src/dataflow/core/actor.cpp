@@ -41,8 +41,12 @@ void Actor::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
 }
 
-void Actor::connectActor(Actor * snk) {
-  connectActor(snk,1,1);  
+std::string Actor::getEdgePort(std::string edgename) {
+  return prop.getKey(edgename);
+}
+
+int Actor::connectActor(Actor * snk) {
+  return connectActor(snk,1,1);  
 }
 
 int Actor::connectActor(std::string portname, std::string host, int portnb) {
@@ -54,7 +58,7 @@ int Actor::connectActor(std::string portname, std::string host, int portnb) {
 
 }
 
-void Actor::connectActor(Actor * snk, int p, int c) {
+int Actor::connectActor(Actor * snk, int p, int c) {
   
   bool linked = false;
   for (auto fout : outputPorts) {
@@ -74,11 +78,19 @@ void Actor::connectActor(Actor * snk, int p, int c) {
     if (linked)
       break;
   }
+  return 0;
 }
 
-int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, int c) {
+int Actor::connectActor(Actor * snk, std::string edge, int p, int c) {
 	
   Port *in, *out;
+
+  string outp = getEdgePort(edge);
+  string inp = snk->getEdgePort(edge);
+  
+  if (outp == "" && inp == "")
+	  return connectActor(snk, p, c);
+
   if (outputPorts.find(outp) == outputPorts.end()) {
 	  log("port "+outp+" is not found.");
  	  return -1; 
@@ -91,7 +103,7 @@ int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, i
   } else
 	in = snk->inputPorts[inp];
  
-  if ( in->getLinked() == 0 ) {
+  if ( in->getLinked() > 0 ) {
 	 log("port "+inp+" is already linked.");
 	 return -1;
   }
@@ -145,16 +157,12 @@ void Actor::initActor() {
     }
   }
  
-  //TODO 
-  //Here actor should contact tmf-discovery
-  //to ask which port to connect to. 
   for (auto p : outputPorts) {
     if (p.second->getLinked() == 0) {
       log(p.second->getName()+string(" is not connected"));
       status = ActorStatus::ERROR;
     }
   }
-  //////
    
   init();
 }

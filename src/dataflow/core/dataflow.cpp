@@ -56,8 +56,8 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
   src->connectActor(snk, p, c);
 }
 
-void Dataflow::connectActors(Actor * src, Actor * snk, std::string outp, std::string inp, int p, int c) {
-  src->connectActor(snk, outp, inp, p, c);
+void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
+  src->connectActor(snk, edge, p, c);
 }
 
 void Dataflow::init() {

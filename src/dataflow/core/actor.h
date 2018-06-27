@@ -175,6 +175,17 @@ namespace df {
     }
 
     /*!
+     * Get the port associated to an edge
+     *
+     * \param edgename
+     *   The name of the edge.
+     *
+     * \return 
+     * 	 The name of the associated port.
+     */
+    std::string getEdgePort(std::string edgename);
+
+    /*!
      * Connect the port with a specified port name of this actor 
      * to another actor listening on a port number on a host
      * It is used by dataflow. User must use Dataflow::connectActors
@@ -196,7 +207,7 @@ namespace df {
      * \param snk
      *   The actor to connect to.
      */
-    void connectActor(Actor * snk);
+    int connectActor(Actor * snk);
 
     /*!
      * Connect this actor to another actor in the dataflow.
@@ -209,7 +220,7 @@ namespace df {
      * \param c
      *   The consumption rate of snk actor.
      */
-    void connectActor(Actor * snk, int p, int c);
+    int connectActor(Actor * snk, int p, int c);
 
     /*!
      * Connect this actor to another actor in the dataflow.
@@ -217,16 +228,14 @@ namespace df {
      *
      * \param snk
      *   The actor to connect to.
-     * \param outp
-     * 	 The output port of this actor.
-     * \param inp
-     * 	 The input port of snk actor.
+     * \param edge
+     * 	 The edge on which acotr will be connected.
      * \param p
      *   The production rate of the actor.
      * \param c
      *   The consumption rate of snk actor.
      */
-    int connectActor(Actor * snk, std::string outp, std::string inp, int p, int c);
+    int connectActor(Actor * snk, std::string edge, int p, int c);
     
     /*!
      * Execute the init of this actor.

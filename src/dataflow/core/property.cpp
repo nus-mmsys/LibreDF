@@ -29,6 +29,13 @@ std::string Property::getProp(const std::string & key) {
   return props[key];
 }
 
+std::string Property::getKey(const std::string & val) {
+  for (auto p : props)
+	  if (p.second == val)
+		  return p.first;
+  return "";
+}
+
 bool Property::propEmpty(const std::string & key) {
   auto k = props.find(key);
   

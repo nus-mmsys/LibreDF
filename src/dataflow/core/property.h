@@ -42,6 +42,14 @@ namespace df {
      * \param key the key to retrieve the message value
      */
     std::string getProp(const std::string & key);
+
+    /*!
+     * Get the message key by passing the value
+     *
+     * \param val the value
+     *
+     */
+    std::string getKey(const std::string & val);
  
     /*!
      * Get the message value (int) by passing the key
