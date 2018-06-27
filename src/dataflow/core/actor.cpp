@@ -89,7 +89,9 @@ int Actor::connectActor(Actor * snk, int p, int c) {
       
       if ( fin.second->getLinked() == 0 && (typeOut == typeIn)) {
 	
-	fout.second->connectPort(fin.second, p, c);
+	fout.second->connectPort(fin.second);
+	fout.second->setRate(p);
+	fin.second->setRate(c);
 	
 	linked = true;
 	break;
@@ -136,7 +138,10 @@ int Actor::connectActor(Actor * snk, std::string edge, int p, int c) {
 	return -1;
   }	
 
-  return out->connectPort(in, p, c);
+  int ret = out->connectPort(in);
+  out->setRate(p);
+  in->setRate(c);
+  return ret;
 
 }
 	

@@ -140,19 +140,6 @@ namespace df {
     } 
 
     /*!
-     * Add next port to this port
-     *
-     * \param n next port to connect to
-     * \param p production rate of the port
-     * \param c consumption rate of the next port
-     */
-    virtual int connectPort(Port* n, int p, int c) {
-      rate = p;
-      n->setRate(c);
-      return connectPort(n);     
-    } 
-   
-    /*!
      * OutputPort desctructor
      *
      */
