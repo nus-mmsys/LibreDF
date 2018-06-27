@@ -11,6 +11,8 @@ df add {
     }
     actor C {
     	computation = Add;
+	input1 = e1;
+	input2 = e2
     }
     actor D {
     	computation = ImageWrite;

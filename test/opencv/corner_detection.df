@@ -14,9 +14,13 @@ df corner_detection {
     actor C {
     	computation = Compare;
         operation = eq;
+	input1 = e2;
+	input2 = e5;
     }
     actor D {
     	computation = Multiply;
+	input1 = e3;
+	input2 = e6;
     }
     actor E {
     	computation = ImageWrite;
