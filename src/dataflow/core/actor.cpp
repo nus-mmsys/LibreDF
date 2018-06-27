@@ -29,6 +29,9 @@ Actor::Actor(const string &name) : status(ActorStatus::OK), stepno(0), name(name
   dfout_path = df_path + "outputs/";
 }
 
+std::string Actor::getName() {
+	return name;
+}
 void Actor::log(std::string msg) {
   dataflowlock->lock(); 
   std::cout << name << ": " << msg << std::endl;
@@ -73,7 +76,35 @@ void Actor::connectActor(Actor * snk, int p, int c) {
   }
 }
 
-void Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, int c) {
+int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, int c) {
+	
+  Port *in, *out;
+  if (outputPorts.find(outp) == outputPorts.end()) {
+	  log("port "+outp+" is not found.");
+ 	  return -1; 
+  } else
+	out = outputPorts[outp];
+
+  if (snk->inputPorts.find(inp) == snk->inputPorts.end()) {
+	  log("port "+inp+" of actor "+snk->getName()+" is not found.");
+	  return -1;
+  } else
+	in = snk->inputPorts[inp];
+ 
+  if ( in->getLinked() == 0 ) {
+	 log("port "+inp+" is already linked.");
+	 return -1;
+  }
+
+  string type_out = out->getPortCap();
+  string type_in = in->getPortCap();
+ 
+  if (type_out != type_in) {
+	log("types of ports "+inp+" and "+outp+" do not match.");
+	return -1;
+  }	
+
+  return out->connectPort(in, p, c);
 
 }
 	

@@ -107,7 +107,9 @@ namespace df {
     }
     
   public:
-    
+
+    std::string getName();
+
     /*!
      * Set a property of the actor.
      *
@@ -224,7 +226,7 @@ namespace df {
      * \param c
      *   The consumption rate of snk actor.
      */
-    void connectActor(Actor * snk, std::string outp, std::string inp, int p, int c);
+    int connectActor(Actor * snk, std::string outp, std::string inp, int p, int c);
     
     /*!
      * Execute the init of this actor.

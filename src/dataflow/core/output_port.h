@@ -119,13 +119,13 @@ namespace df {
      *
      * \param n next port to connect to
      */
-    virtual void connectPort(Port* n) {
-      
+    virtual int connectPort(Port* n) {
       InputPort<T> * in = dynamic_cast<InputPort<T>*>(n);
       nextPorts.push_back(in);
       this->increaseLinked();
       in->increaseLinked();	
       in->setBuffer(buf);
+      return 0;
     } 
 
     /*!
@@ -135,10 +135,10 @@ namespace df {
      * \param p production rate of the port
      * \param c consumption rate of the next port
      */
-    virtual void connectPort(Port* n, int p, int c) {
+    virtual int connectPort(Port* n, int p, int c) {
       rate = p;
       n->setRate(c);
-      connectPort(n);     
+      return connectPort(n);     
     } 
    
     /*!

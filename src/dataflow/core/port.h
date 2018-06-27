@@ -104,9 +104,9 @@ namespace df {
 
     virtual int connectPort(std::string host, int portnb) { return 0; }
 
-    virtual void connectPort(Port* n) {}
+    virtual int connectPort(Port* n) { return 0; }
     
-    virtual void connectPort(Port* n, int p, int c) {}
+    virtual int connectPort(Port* n, int p, int c) { return 0; }
     
     /*!
      * Port descructor
