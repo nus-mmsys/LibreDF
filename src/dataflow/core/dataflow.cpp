@@ -48,14 +48,16 @@ void Dataflow::addActors(Actor * f, ...) {
   
 }
 
-void Dataflow::connectActors(Actor * inf, Actor * outf) {
-  
-  inf->connectActor(outf);
+void Dataflow::connectActors(Actor * src, Actor * snk) {
+  src->connectActor(snk);
 }
 
-void Dataflow::connectActors(Actor * in, Actor * out, int p, int c) {
-    
-  in->connectActor(out, p, c);
+void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
+  src->connectActor(snk, p, c);
+}
+
+void Dataflow::connectActors(Actor * src, Actor * snk, std::string outp, std::string inp, int p, int c) {
+  src->connectActor(snk, outp, inp, p, c);
 }
 
 void Dataflow::init() {

@@ -191,23 +191,40 @@ namespace df {
      * Connect this actor to another actor in the dataflow.
      * It is used by dataflow. User must use Dataflow::connectActors
      *
-     * \param f
+     * \param snk
      *   The actor to connect to.
      */
-    void connectActor(Actor * f);
+    void connectActor(Actor * snk);
 
     /*!
      * Connect this actor to another actor in the dataflow.
      * It is used by dataflow. User must use Dataflow::connectActors
      *
-     * \param f
+     * \param snk
      *   The actor to connect to.
      * \param p
-     *   The production rate of the actor
+     *   The production rate of this actor.
      * \param c
-     *   The consumption rate of the actor f
+     *   The consumption rate of snk actor.
      */
-    void connectActor(Actor * f, int p, int c);
+    void connectActor(Actor * snk, int p, int c);
+
+    /*!
+     * Connect this actor to another actor in the dataflow.
+     * It is used by dataflow. User must use Dataflow::connectActors
+     *
+     * \param snk
+     *   The actor to connect to.
+     * \param outp
+     * 	 The output port of this actor.
+     * \param inp
+     * 	 The input port of snk actor.
+     * \param p
+     *   The production rate of the actor.
+     * \param c
+     *   The consumption rate of snk actor.
+     */
+    void connectActor(Actor * snk, std::string outp, std::string inp, int p, int c);
     
     /*!
      * Execute the init of this actor.

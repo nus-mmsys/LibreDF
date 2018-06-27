@@ -38,8 +38,8 @@ void Actor::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
 }
 
-void Actor::connectActor(Actor * f) {
-  connectActor(f,1,1);  
+void Actor::connectActor(Actor * snk) {
+  connectActor(snk,1,1);  
 }
 
 int Actor::connectActor(std::string portname, std::string host, int portnb) {
@@ -51,11 +51,11 @@ int Actor::connectActor(std::string portname, std::string host, int portnb) {
 
 }
 
-void Actor::connectActor(Actor * f, int p, int c) {
+void Actor::connectActor(Actor * snk, int p, int c) {
   
   bool linked = false;
   for (auto fout : outputPorts) {
-    for (auto fin : f->inputPorts) {
+    for (auto fin : snk->inputPorts) {
       
       string typeOut = fout.second->getPortCap();
       string typeIn = fin.second->getPortCap();
@@ -73,6 +73,10 @@ void Actor::connectActor(Actor * f, int p, int c) {
   }
 }
 
+void Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, int c) {
+
+}
+	
 void Actor::startInit() {
   tinit = thread(&Actor::initActor, this);
 }

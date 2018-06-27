@@ -71,22 +71,36 @@ namespace df {
      * Create an edge between two actors in the dataflow.
      * These actors should be in the dataflow.
      *
-     * \param fi The source actor for the edge.
-     * \param fo The target actor for the edge.
+     * \param src The source actor for the edge.
+     * \param snk The sink actor for the edge.
      */
-    void connectActors(Actor * fi, Actor * fo);
+    void connectActors(Actor * src, Actor * snk);
    
     /*!
      * Create an edge between two actors in the dataflow
      * with the corresponding rates.
      * These actors should be in the dataflow.
      *
-     * \param in The source actor for the edge.
-     * \param out The target actor for the edge.
-     * \param prate The production rate of the source actor for the edge.
-     * \param crate The consumption rate of the sink actor for the edge.
+     * \param src The source actor for the edge.
+     * \param snk The sink actor for the edge.
+     * \param p The production rate of the source actor for the edge.
+     * \param c The consumption rate of the sink actor for the edge.
      */
-    void connectActors(Actor * in, Actor * out, int p, int c);
+    void connectActors(Actor * src, Actor * snk, int p, int c);
+
+    /*!
+     * Create an edge between two actors in the dataflow
+     * with the corresponding rates.
+     * These actors should be in the dataflow.
+     *
+     * \param src The source actor for the edge.
+     * \param snk The sink actor for the edge.
+     * \param outp The output port of the source actor.
+     * \param inp The input port of the sink actor.
+     * \param p The production rate of the source actor.
+     * \param c The consumption rate of the sink actor.
+     */
+    void connectActors(Actor * src, Actor * snk, std::string outp, std::string inp, int p, int c);
 
     /*!
      * Initialize the dataflow.
