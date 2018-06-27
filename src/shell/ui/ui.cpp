@@ -114,12 +114,15 @@ int UI::run_graph() {
 		actormap[acname] = actor;
 	}
 
+	//TODO
+	//Actors should connect themselves using the tmf-discovery.
 	vector<string> edgelist = graph->get_edges();
 	for (auto & ed : edgelist) {
 		df::Actor * src = actormap[graph->get_source_name(ed)];
 		df::Actor * snk = actormap[graph->get_sink_name(ed)];
   		dataflow->connectActors(src, snk, graph->get_source_rate(ed), graph->get_sink_rate(ed));
 	}
+	//////
  
 	dataflow->init();
 

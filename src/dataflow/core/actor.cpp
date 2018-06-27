@@ -144,13 +144,18 @@ void Actor::initActor() {
       status = ActorStatus::ERROR;
     }
   }
-  
+ 
+  //TODO 
+  //Here actor should contact tmf-discovery
+  //to ask which port to connect to. 
   for (auto p : outputPorts) {
     if (p.second->getLinked() == 0) {
       log(p.second->getName()+string(" is not connected"));
       status = ActorStatus::ERROR;
     }
-  } 
+  }
+  //////
+   
   init();
 }
 
