@@ -41,8 +41,28 @@ void Actor::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
 }
 
-std::string Actor::getEdgePort(std::string edgename) {
-  return prop.getKey(edgename);
+std::string Actor::edge2InputPort(std::string edgename) {
+  string portname = prop.getKey(edgename);
+
+  if (inputPorts.find(portname) != inputPorts.end())
+    return portname;
+
+  if (inputPorts.size() == 1)
+	return inputPorts.begin()->second->getName();
+  else
+	return "";
+}
+
+std::string Actor::edge2OutputPort(std::string edgename) {
+  string portname = prop.getKey(edgename);
+
+  if (outputPorts.find(portname) != outputPorts.end())
+    return portname;
+
+  if (outputPorts.size() == 1)
+	return outputPorts.begin()->second->getName();
+  else
+	return "";
 }
 
 int Actor::connectActor(Actor * snk) {
@@ -85,8 +105,8 @@ int Actor::connectActor(Actor * snk, std::string edge, int p, int c) {
 	
   Port *in, *out;
 
-  string outp = getEdgePort(edge);
-  string inp = snk->getEdgePort(edge);
+  string outp = edge2OutputPort(edge);
+  string inp = snk->edge2InputPort(edge);
   
   if (outp == "" && inp == "")
 	  return connectActor(snk, p, c);

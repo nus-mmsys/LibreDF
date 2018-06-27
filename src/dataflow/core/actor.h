@@ -175,15 +175,27 @@ namespace df {
     }
 
     /*!
-     * Get the port associated to an edge
+     * Get the input port associated to an edge
      *
      * \param edgename
      *   The name of the edge.
      *
      * \return 
-     * 	 The name of the associated port.
+     * 	 The name of the associated input port.
      */
-    std::string getEdgePort(std::string edgename);
+    std::string edge2InputPort(std::string edgename);
+
+    /*!
+     * Get the output port associated to an edge
+     *
+     * \param edgename
+     *   The name of the edge.
+     *
+     * \return 
+     * 	 The name of the associated output port.
+     */
+    std::string edge2OutputPort(std::string edgename);
+
 
     /*!
      * Connect the port with a specified port name of this actor 
