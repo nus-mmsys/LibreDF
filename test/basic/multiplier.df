@@ -12,6 +12,8 @@ df adder {
         last = 64;
     }
     actor C {
+	input1 = e1;
+	input2 = e2;
         computation = Multiplication;
     }
 }

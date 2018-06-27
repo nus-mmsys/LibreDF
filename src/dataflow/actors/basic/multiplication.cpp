@@ -25,8 +25,8 @@ ActorRegister<Multiplication> Multiplication::reg("Multiplication");
 
 Multiplication::Multiplication(const string & name) :
 Actor(name) {
-  input1 = createInputPort<int>("input_1");
-  input2 = createInputPort<int>("input_2");
+  input1 = createInputPort<int>("input1");
+  input2 = createInputPort<int>("input2");
 }
 
 
