@@ -20,4 +20,4 @@
 
 using namespace df;
 
-ActorFactory::map_type * ActorFactory::mymap = new ActorFactory::map_type();
+ActorFactory::ActorMap * ActorFactory::actmap = new ActorFactory::ActorMap();

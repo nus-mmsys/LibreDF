@@ -19,43 +19,42 @@
 #ifndef DF_ACTORFACTORY_H_
 #define DF_ACTORFACTORY_H_
 
-#include <string>
-#include <ctime>
-
 #include "actor.h"
 
 namespace df {
   
   template<typename T>
-  Actor * createActorT(std::string name) { return new T(name); }
-  
-  struct ActorFactory {
-    
-    typedef std::map<std::string, std::function<Actor * (std::string)>> map_type;
+  Actor * newActor(std::string name) { 
+      return new T(name); 
+  }
+
+  class ActorFactory {
+  public:
+    typedef std::map<std::string, std::function<Actor * (std::string)>> ActorMap;
     static Actor * createActor(std::string const& s, const std::string& name) {
-      map_type::iterator it = mymap->find(s);
-      if(it == mymap->end())
+      ActorMap::iterator it = actmap->find(s);
+      if(it == actmap->end())
 	return 0;
       return it->second(name);
     }
-    
-  protected:
-    static map_type * getMap() {
-      // never delete'ed. (exist until program termination)
-      // because we can't guarantee correct destruction order 
-      if(!mymap) { mymap = new map_type(); } 
-      return mymap; 
-    }
-    
+
   private:
-    static map_type * mymap;
-    
+    static ActorMap * actmap;
+
+  protected:
+   static ActorMap * getMap() {
+      // never deleted. (exist until program termination)
+      // because we cannot guarantee correct destruction order 
+      if(!actmap) { actmap = new ActorMap(); } 
+      return actmap; 
+    }
   };
   
   template<typename T>
-  struct ActorRegister : ActorFactory { 
+  class ActorRegister : public ActorFactory {
+  public: 
     ActorRegister(std::string const& s) { 
-      getMap()->insert(make_pair(s, &createActorT<T>));
+      getMap()->insert(make_pair(s, &newActor<T>));
     }
   };
   
