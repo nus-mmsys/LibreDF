@@ -20,53 +20,108 @@
 #define DF_H_
 
 #include <string>
-#include <ctime>
+#include <iostream>
+#include <set>
+#include <cstdarg>
 
-#include "dataflow.h"
+#include "actor_factory.h"
 #include "actor.h"
 
 namespace df {
   
-  template<typename T>
-  Actor * createActorT(std::string name) { return new T(name); }
-  
-  struct Factory {
-    
-    typedef std::map<std::string, std::function<Actor * (std::string)>> map_type;
-    static Actor * createActor(std::string const& s, const std::string& name) {
-      map_type::iterator it = mymap->find(s);
-      if(it == mymap->end())
-	return 0;
-      return it->second(name);
-    }
-    
-    static Dataflow * createDataflow(const std::string& name) {
-      return new Dataflow(name);
-    }
-    
-    static void destroyDataflow(Dataflow * dataflow) {
-      delete dataflow; 
-    }
-    
-  protected:
-    static map_type * getMap() {
-      // never delete'ed. (exist until program termination)
-      // because we can't guarantee correct destruction order 
-      if(!mymap) { mymap = new map_type(); } 
-      return mymap; 
-    }
-    
-  private:
-    static map_type * mymap;
-    
+  /*!
+   * \enum DataflowStatus
+   * Status of a actor.
+   */
+  enum class DataflowStatus {
+    STOPPED, /**< The dataflow has stopped. */
+    READY,  /**< The dataflow is ready. */
+    RUNNING, /**< The dataflow is currently running. */
+    PAUSED, /**< The dataflow is currently paused. */
   };
-  
-  template<typename T>
-  struct ActorRegister : Factory { 
-    ActorRegister(std::string const& s) { 
-      getMap()->insert(make_pair(s, &createActorT<T>));
+  /*!
+   * \class Dataflow
+   * A dataflow, consisting of a number of interconnected actors.
+   * Actors have a many-to-many relation, with directed edges. Cycles are not allowed.
+   */
+  class Dataflow {
+    std::mutex io_lock;
+    std::string name; /**< The name of the dataflow. */
+    DataflowStatus status; /**< The current status of the dataflow. */
+    std::set<Actor *> actors; /**< The set of all actors in the dataflow. */
+    bool realtime, distributed;
+    Property prop;
+
+  public:
+    /*!
+     * Dataflow constructor
+     *
+     * \param name The name of the dataflow.
+     */
+    Dataflow(const std::string& name);
+    
+    template<typename T>
+    void setProp(const std::string& key, const T& val) {
+	    prop.setProp(key,val);
     }
+
+    Actor * createActor(std::string const& s, const std::string& name);
+
+    void addActor(Actor * f);
+    
+    void addActors(Actor * f, ...);
+    
+    /*!
+     * Create an edge between two actors in the dataflow.
+     * These actors should be in the dataflow.
+     *
+     * \param src The source actor for the edge.
+     * \param snk The sink actor for the edge.
+     */
+    void connectActors(Actor * src, Actor * snk);
+   
+    /*!
+     * Create an edge between two actors in the dataflow
+     * with the corresponding rates.
+     * These actors should be in the dataflow.
+     *
+     * \param src The source actor for the edge.
+     * \param snk The sink actor for the edge.
+     * \param p The production rate of the source actor for the edge.
+     * \param c The consumption rate of the sink actor for the edge.
+     */
+    void connectActors(Actor * src, Actor * snk, int p, int c);
+
+    /*!
+     * Create an edge between two actors in the dataflow
+     * with the corresponding rates.
+     * These actors should be in the dataflow.
+     *
+     * \param src The source actor for the edge.
+     * \param snk The sink actor for the edge.
+     * \param edge The edge on which two actors will be connected.
+     * \param p The production rate of the source actor.
+     * \param c The consumption rate of the sink actor.
+     */
+    void connectActors(Actor * src, Actor * snk, std::string edge, int p, int c);
+
+    /*!
+     * Initialize the dataflow.
+     *
+     */
+    void init();
+    
+    /*!
+     * Run one iteration of the dataflow.
+     *
+     */
+    void run();
+    
+    /*!
+     * Dataflow destructor
+     */
+    ~Dataflow();
   };
   
 }
-#endif /* DF_H_ */
+#endif /* DF_DATAFLOW_H_ */

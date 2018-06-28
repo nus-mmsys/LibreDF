@@ -91,11 +91,11 @@ int UI::run_graph() {
 	map<string, df::Actor *> actormap;
 
 	//Create dataflow
-	df::Dataflow* dataflow = df::Factory::createDataflow(graph->get_name());
+	df::Dataflow dataflow(graph->get_name());
 	
 	map<string, string> params = graph->get_graph_params();
 	for (auto p : params) {
-		dataflow->setProp(p.first, p.second);
+		dataflow.setProp(p.first, p.second);
 	}
 
 	//Create actors
@@ -107,8 +107,7 @@ int UI::run_graph() {
 			cout << "set the property computation of actor " << acname << "\n";
 			return -1;
 		}
-		df::Actor * actor = df::Factory::createActor(actype, acname);
-		dataflow->addActors(actor, nullptr);
+		df::Actor * actor = dataflow.createActor(actype, acname);
 		map<string, string> props = graph->get_actor_props(acname);
 		for (auto p : props) {
 			actor->setProp(p.first, p.second);
@@ -117,21 +116,20 @@ int UI::run_graph() {
 	}
 
 	//Initialize dataflow
-	dataflow->init();
+	dataflow.init();
 
 	//Connect actors
 	vector<string> edgelist = graph->get_edges();
 	for (auto & ed : edgelist) {
 		df::Actor * src = actormap[graph->get_source_name(ed)];
 		df::Actor * snk = actormap[graph->get_sink_name(ed)];
-		dataflow->connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
+		dataflow.connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
 	}
 
 	//Run dataflow
-  	dataflow->run();
+  	dataflow.run();
 
-	//Destroy and terminate dataflow
-	df::Factory::destroyDataflow(dataflow);
+	//Destructor of dataflow is called.
 	
 	return 0;
 }

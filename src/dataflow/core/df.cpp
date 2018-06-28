@@ -19,5 +19,111 @@
 #include "df.h"
 
 using namespace df;
+using namespace std;
 
-Factory::map_type * Factory::mymap = new Factory::map_type();
+Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::STOPPED) {
+	realtime = false;
+	distributed = false;
+}
+
+Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
+  Actor * res = ActorFactory::createActor(s, name);
+  addActor(res);
+  return res;
+}
+
+void Dataflow::addActor(Actor * f) {
+  f->setPipeLock(&io_lock);
+  actors.insert(f);
+}
+
+void Dataflow::addActors(Actor * f, ...) {
+  
+  va_list arguments;                     
+  
+  Actor * cur;
+  va_start ( arguments, f);
+  
+  cur = f;
+  while(cur != nullptr) {
+    
+    addActor(cur);
+    cur = va_arg(arguments, Actor*);
+  }
+  va_end ( arguments ); 
+  
+}
+
+void Dataflow::connectActors(Actor * src, Actor * snk) {
+  src->connectActor(snk);
+}
+
+void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
+  src->connectActor(snk, p, c);
+}
+
+void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
+  src->connectActor(snk, edge, p, c);
+}
+
+void Dataflow::init() {
+  
+  if (!prop.propEmpty("distributed"))
+	  distributed = prop.getPropBool("distributed");
+
+  if (!prop.propEmpty("realtime"))
+	  realtime = prop.getPropBool("realtime");
+	
+  for (auto f : actors) {
+    f->setProp<bool>("realtime", realtime);
+    f->setProp<bool>("distributed", distributed);
+  }
+  
+  for (auto f: actors) {
+    f->startInit();
+  }
+  
+  for (auto f : actors) {
+    f->waitInit();
+  }
+  
+  status = DataflowStatus::READY;
+  
+  for (auto f : actors) {
+    
+    if (f->getStatus() != ActorStatus::OK)
+      status = DataflowStatus::STOPPED;
+    return;
+  }
+  
+  
+}
+
+void Dataflow::run() {
+  
+  if (status != DataflowStatus::READY) {
+    std::cout << "Dataflow is not ready to run." << endl;
+    return;
+  }
+  
+  for (auto f : actors) {
+    f->startRun();
+  }
+  
+  status = DataflowStatus::RUNNING;
+  
+  for (auto f : actors) {
+    f->waitRun();
+  }
+  
+  status = DataflowStatus::STOPPED;
+  
+}
+
+Dataflow::~Dataflow() {
+  
+  for (auto f : actors)
+    if(f)
+      delete f;
+    
+}
