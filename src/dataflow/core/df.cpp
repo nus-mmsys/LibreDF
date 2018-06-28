@@ -76,7 +76,60 @@ void Dataflow::waitDiscovery() {
 }
 
 void Dataflow::discovery() {
-//  cout << "Discovery started...\n";
+
+    //  cout << "Discovery started...\n";
+
+    int opt = 1;
+
+    // Creating socket file descriptor
+    if ((discsock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    {
+	std::cerr << "discovery socket failed.\n" ;
+	exit(EXIT_FAILURE);
+    }
+
+    // Attaching socket to the port
+    if (setsockopt(discsock, SOL_SOCKET, SO_REUSEADDR,
+        &opt, sizeof(opt)) < 0 )
+    {
+        std::cerr << "discovery setsockopt failed.\n";
+       	exit(EXIT_FAILURE);
+    }
+    discaddress.sin_family = AF_INET;
+    discaddress.sin_addr.s_addr = INADDR_ANY;
+    discaddress.sin_port = htons( DISCOVERY_PORT );
+
+    // Forcefully attaching socket to the port
+    if (bind(discsock, (struct sockaddr *)&discaddress,
+        sizeof(discaddress))<0)
+    {
+	std::cerr << "discovery bind failed.\n";
+        exit(EXIT_FAILURE);
+    }
+    if (listen(discsock, 3) < 0)
+    {
+	std::cerr << "discovery listen failed.\n";
+        exit(EXIT_FAILURE);
+    }
+
+    int addrlen;
+    int new_socket;
+    char discbuf[1024];
+
+    while (status != DataflowStatus::STOPPED) {
+	addrlen = sizeof(discaddress);
+	if ((new_socket = accept(discsock, (struct sockaddr*) &discaddress, (socklen_t*)&addrlen))<0)
+    	{
+		std::cerr << "discovery accept failed.\n";
+        	exit(EXIT_FAILURE);
+    	}
+
+	int valread = read( new_socket , discbuf, 1024);
+        string msg = discbuf;
+	send(new_socket, discbuf, strlen(discbuf), 0);
+	close(new_socket);
+        //handle
+    }
 }
 
 void Dataflow::init() {

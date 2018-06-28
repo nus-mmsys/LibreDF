@@ -19,6 +19,10 @@
 #ifndef DF_H_
 #define DF_H_
 
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+
 #include <string>
 #include <iostream>
 #include <set>
@@ -26,6 +30,8 @@
 
 #include "actor_factory.h"
 #include "actor.h"
+
+#define DISCOVERY_PORT 7007
 
 namespace df {
   
@@ -53,6 +59,8 @@ namespace df {
     std::set<Actor *> actors; /**< The set of all actors in the dataflow. */
     bool realtime, distributed;
     Property prop;
+    int discsock;
+    struct sockaddr_in discaddress;
 
   public:
     /*!
