@@ -190,27 +190,34 @@ void Actor::initActor() {
   if (!propEmpty("distributed"))
 	  distributed = getPropBool("distributed");
 
-  for (auto p : inputPorts) {
-    if (distributed)
+  if (distributed) {
+    for (auto p : inputPorts) {
 	    listen(p.second);
-    else if (p.second->getLinked() == 0) {
-      log(p.second->getName()+string(" is not connected"));
-      status = ActorStatus::ERROR;
     }
   }
- 
+   
+  init();
+
+}
+
+void Actor::runActor() {
+
+  if (!distributed) {
+    for (auto p : inputPorts) {
+      if (p.second->getLinked() == 0) {
+        log(p.second->getName()+string(" is not connected"));
+      	status = ActorStatus::ERROR;
+      }
+    }
+  }
+
   for (auto p : outputPorts) {
     if (p.second->getLinked() == 0) {
       log(p.second->getName()+string(" is not connected"));
       status = ActorStatus::ERROR;
     }
   }
-   
-  init();
-}
 
-void Actor::runActor() {
-  
   while(status != ActorStatus::EOS) {
     realtime? runRT() : run();
     stepno++;

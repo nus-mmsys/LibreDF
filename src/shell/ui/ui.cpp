@@ -90,6 +90,7 @@ int UI::run_graph() {
 
 	map<string, df::Actor *> actormap;
 
+	//Create dataflow
 	df::Dataflow* dataflow = df::Factory::createDataflow(graph->get_name());
 	
 	map<string, string> params = graph->get_graph_params();
@@ -97,6 +98,7 @@ int UI::run_graph() {
 		dataflow->setProp(p.first, p.second);
 	}
 
+	//Create actors
 	vector<string> actorlist = graph->get_actors();
 	for (auto & acname : actorlist) {
 		string actype = graph->get_actor_type(acname);
@@ -114,17 +116,21 @@ int UI::run_graph() {
 		actormap[acname] = actor;
 	}
 
+	//Initialize dataflow
+	dataflow->init();
+
+	//Connect actors
 	vector<string> edgelist = graph->get_edges();
 	for (auto & ed : edgelist) {
 		df::Actor * src = actormap[graph->get_source_name(ed)];
 		df::Actor * snk = actormap[graph->get_sink_name(ed)];
 		dataflow->connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
 	}
- 
-	dataflow->init();
 
+	//Run dataflow
   	dataflow->run();
 
+	//Destroy and terminate dataflow
 	df::Factory::destroyDataflow(dataflow);
 	
 	return 0;
