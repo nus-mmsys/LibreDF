@@ -190,11 +190,18 @@ namespace df {
      *
      * \param edgename
      *   The name of the edge.
+     * \param index
+     *   If the associated port name is indexed, 
+     *   then the index is filled. For example if 
+     *   the associated port is "output[3]", then the
+     *   returned value is "output" and index is set 
+     *   to 3. 
      *
      * \return 
      * 	 The name of the associated output port.
+     * 
      */
-    std::string edge2OutputPort(std::string edgename);
+    std::string edge2OutputPort(std::string edgename, int & index);
 
 
     /*!

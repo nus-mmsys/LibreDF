@@ -106,7 +106,7 @@ namespace df {
 
     virtual int connectPort(Port* n) { return 0; }
     
-    virtual int connectPort(Port* n, int p, int c) { return 0; }
+    virtual int connectPort(Port* n, int index) { return 0; }
     
     /*!
      * Port descructor

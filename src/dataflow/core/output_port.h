@@ -131,8 +131,12 @@ namespace df {
      * \param i index of next port 
      */
     virtual int connectPort(Port* n, int i) {
+      int index = i;
+      if ( i < 0 || i > nextPorts.size() ) {
+	index = nextPorts.size();
+      }
       InputPort<T> * in = dynamic_cast<InputPort<T>*>(n);
-      nextPorts.insert(nextPorts.begin()+i, in);
+      nextPorts.insert(nextPorts.begin()+index, in);
       this->increaseLinked();
       in->increaseLinked();	
       in->setBuffer(buf);

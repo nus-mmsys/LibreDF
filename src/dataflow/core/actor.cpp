@@ -53,8 +53,23 @@ std::string Actor::edge2InputPort(std::string edgename) {
 	return "";
 }
 
-std::string Actor::edge2OutputPort(std::string edgename) {
+std::string Actor::edge2OutputPort(std::string edgename, int & index) {
+  
   string portname = prop.getKey(edgename);
+  index = -1;
+
+  auto bs = portname.find('[');
+  auto be = portname.find(']'); 
+  if (bs != std::string::npos && be != std::string::npos) {
+	string portindex = portname;
+        portname = portindex.substr(0,bs);
+	try {
+		index = stoi(portindex.substr(bs+1,be-bs-1));
+	} catch(...) {
+		log("cannot parse "+portindex);
+		return "";
+	}
+  }
 
   if (outputPorts.find(portname) != outputPorts.end())
     return portname;
@@ -107,7 +122,9 @@ int Actor::connectActor(Actor * snk, std::string edge, int p, int c) {
 	
   Port *in, *out;
 
-  string outp = edge2OutputPort(edge);
+  int index = -1;
+
+  string outp = edge2OutputPort(edge, index);
   string inp = snk->edge2InputPort(edge);
   
   if (outp == "" && inp == "")
@@ -138,7 +155,7 @@ int Actor::connectActor(Actor * snk, std::string edge, int p, int c) {
 	return -1;
   }	
 
-  int ret = out->connectPort(in);
+  int ret = out->connectPort(in, index);
   out->setRate(p);
   in->setRate(c);
   return ret;
