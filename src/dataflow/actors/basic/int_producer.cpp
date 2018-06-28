@@ -38,15 +38,14 @@ void IntProducer::init() {
 
 void IntProducer::run() {
 
-  if(stepno == last) {
-    setEOS(outputInt);
-    return;
-  }
-
   int * out = produce(outputInt);	
   *out = stepno;
   log("producing "+to_string(stepno));
   sleep(500);
+
+  if(stepno == last)
+    setEos(outputInt);
+
   release(outputInt);  
 
 }

@@ -38,21 +38,20 @@ void VideoCapture::init() {
 
   if(!cap->isOpened()){
     cout << "Error opening video stream or file" << endl;
-  } 
+  }
+  *cap >> frame;
 }
 
 void VideoCapture::run() {
 
-  *cap >> frame;
-
-  if(frame.empty()) {
-    setEOS(outputMat);
-    return;
-  }
-
   cv::Mat * out = produce(outputMat);	
   *out = frame.clone();
   log("capturing frame "+to_string(stepno));
+
+  *cap >> frame;
+  if(frame.empty())
+    setEos(outputMat);
+
   release(outputMat);  
 
 }

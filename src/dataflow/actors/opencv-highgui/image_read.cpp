@@ -47,20 +47,18 @@ void ImageRead::init() {
 
 void ImageRead::run() {
 
-  if (files.empty()) {
-    setEOS(output);
-    return;
-  }
-
   file_name = files.back();	
   //log("name: "+ dataset+file_name);
   frame = cv::imread(dataset+file_name, CV_LOAD_IMAGE_COLOR); 
   cv::Mat * out = produce(output);	
   *out = frame.clone();
   log("reading image "+to_string(stepno));
-  release(output);
-  
+
   files.pop_back(); 
+  if (files.empty())
+    setEos(output);
+
+  release(output);
 }
 
 ImageRead::~ImageRead() {

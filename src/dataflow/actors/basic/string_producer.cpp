@@ -36,15 +36,15 @@ void StringProducer::init() {
 
 void StringProducer::run() {
 
-  if(stepno == last) {
-    setEOS(outputString);
-    return;
-  }
  
   string * outStr = produce(outputString);
   *outStr = to_string(stepno);
   log("producing "+*outStr);
   sleep(500);
+
+  if(stepno == last)
+    setEos(outputString);
+
   release(outputString);
 
 }

@@ -49,16 +49,16 @@ void Randu::init() {
 
 void Randu::run() {
 
-  if (stepno == last) {
-    setEOS(output);
-    return;
-  }
 
   cv::randu(*frame, cv::Scalar(0,0,0), cv::Scalar(256,256,256));
   cv::Mat * out = produce(output);
   *out = frame->clone();
   log("sending "+to_string(stepno));
   sleep(100);
+
+  if (stepno == last)
+    setEos(output);
+
   release(output);
 }
 
