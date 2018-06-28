@@ -66,8 +66,21 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
   src->connectActor(snk, edge, p, c);
 }
 
+void Dataflow::startDiscovery() {
+  tdisc = thread(&Dataflow::discovery, this);
+}
+
+void Dataflow::waitDiscovery() {
+//  cout << "Discovery terminated...\n";
+  tdisc.join();
+}
+
+void Dataflow::discovery() {
+//  cout << "Discovery started...\n";
+}
+
 void Dataflow::init() {
-  
+	
   if (!prop.propEmpty("distributed"))
 	  distributed = prop.getPropBool("distributed");
 
@@ -78,7 +91,9 @@ void Dataflow::init() {
     f->setProp<bool>("realtime", realtime);
     f->setProp<bool>("distributed", distributed);
   }
-  
+
+  startDiscovery();
+
   for (auto f: actors) {
     f->startInit();
   }
@@ -115,7 +130,9 @@ void Dataflow::run() {
   for (auto f : actors) {
     f->waitRun();
   }
-  
+ 
+  waitDiscovery();
+
   status = DataflowStatus::STOPPED;
   
 }

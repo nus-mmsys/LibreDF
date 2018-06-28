@@ -45,6 +45,8 @@ namespace df {
    * Actors have a many-to-many relation, with directed edges. Cycles are not allowed.
    */
   class Dataflow {
+
+    std::thread tdisc;
     std::mutex io_lock;
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
@@ -104,6 +106,10 @@ namespace df {
      * \param c The consumption rate of the sink actor.
      */
     void connectActors(Actor * src, Actor * snk, std::string edge, int p, int c);
+
+    void startDiscovery();
+    void waitDiscovery();
+    void discovery();
 
     /*!
      * Initialize the dataflow.
