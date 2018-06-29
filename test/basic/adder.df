@@ -23,5 +23,7 @@ df adder {
     parameter {
 	realtime = false;
 	distributed = false;
+	discovery_host = 194.199.31.39;
+	discovery_port = 7007;
     }
 }
