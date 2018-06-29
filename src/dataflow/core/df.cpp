@@ -24,7 +24,8 @@ using namespace std;
 Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::STOPPED) {
 	realtime = false;
 	distributed = false;
-	sock = new Socket("df:"+name);
+	srvsock = new Socket("df-srv:"+name);
+	clnsock = new Socket("df-cln:"+name);
 }
 
 Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
@@ -64,7 +65,28 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 }
 
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
-  src->connectActor(snk, edge, p, c);
+	if (distributed) {
+		if (dischost == "") {
+			cerr << "discovery_host is not specified.\n";
+			return;
+		}
+		if (discport == -1) {
+			cerr << "discovery_port is not specified.\n";
+			return;
+		}
+
+		clnsock->connect(dischost, discport);
+		//TODO
+		//Ask actor's host and its port number.
+		//snkpname, snkhost, snkport, 
+		string snkpname, snkhost;
+		int snkport;
+		src->connectActor(snkpname, snkhost, snkport);
+
+	} else {
+		src->connectActor(snk, edge, p, c);
+	}
+
 }
 
 void Dataflow::startDiscovery() {
@@ -81,38 +103,35 @@ void Dataflow::discovery() {
   if (!distributed)
 	  return;
 
-  if (prop.propEmpty("discovery_host")) {
-	  cout << "discovery_host is not specified.\n";
+  if (dischost == "") {
+	  cerr << "discovery_host is not specified.\n";
 	  return;
   }
 
-  if (prop.propEmpty("discovery_port")) {
-	  cout << "discovery_port is not specified.\n";
+  if (discport == -1) {
+	  cerr << "discovery_port is not specified.\n";
 	  return;
   }
  
-  string dischost = prop.getProp("discovery_host");
-  int discport = prop.getPropInt("discovery_port");
-
-  string machine_ip = sock->ipaddr("en0");
+  string machine_ip = srvsock->ipaddr("en0");
 
   if (dischost != machine_ip)
 	 return; 
 
   cout << "Discovery started...\n";
   char buf[1024];
-  sock->listen(discport);
+  srvsock->listen(discport);
 
   while (status != DataflowStatus::STOPPED) {
-    sock->accept();
+    srvsock->accept();
 
-    sock->clnread(buf, 1024);
+    srvsock->clnread(buf, 1024);
     //handle message
-    sock->clnsend(buf);
-    sock->clnclose();
+    srvsock->clnsend(buf);
+    srvsock->clnclose();
 
   }
-  sock->srvclose();
+  srvsock->srvclose();
     
 }
 
@@ -123,7 +142,13 @@ void Dataflow::init() {
 
   if (!prop.propEmpty("realtime"))
 	  realtime = prop.getPropBool("realtime");
-	
+
+  if (!prop.propEmpty("discovery_host"))
+	  dischost = prop.getProp("discovery_host");
+
+  if (!prop.propEmpty("discovery_port"))
+	  discport = prop.getPropInt("discovery_port"); 
+
   for (auto f : actors) {
     f->setProp<bool>("realtime", realtime);
     f->setProp<bool>("distributed", distributed);

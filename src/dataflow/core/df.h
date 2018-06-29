@@ -53,8 +53,11 @@ namespace df {
     DataflowStatus status; /**< The current status of the dataflow. */
     std::set<Actor *> actors; /**< The set of all actors in the dataflow. */
     bool realtime, distributed;
+    std::string dischost;
+    int discport;
     Property prop;
-    Socket * sock;
+    Socket * srvsock;
+    Socket * clnsock;
 
   public:
     /*!
