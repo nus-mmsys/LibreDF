@@ -35,6 +35,7 @@ namespace df {
    * Status of a actor.
    */
   enum class DataflowStatus {
+    NONE, /**<The dataflow has not started yet.*/
     STOPPED, /**< The dataflow has stopped. */
     READY,  /**< The dataflow is ready. */
     RUNNING, /**< The dataflow is currently running. */

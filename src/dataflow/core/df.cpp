@@ -21,7 +21,7 @@
 using namespace df;
 using namespace std;
 
-Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::STOPPED) {
+Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::NONE) {
 	realtime = false;
 	distributed = false;
 	srvsock = new Socket("df-srv:"+name);
@@ -79,10 +79,12 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 		//TODO
 		//Ask actor's host and its port number.
 		//snkpname, snkhost, snkport, 
-		string snkpname, snkhost;
-		int snkport;
-		src->connectActor(snkpname, snkhost, snkport);
-
+		//string snkpname, snkhost;
+		//int snkport;
+		char msg[1024] = "";
+		clnsock->srvsend(msg);
+		//src->connectActor(snkpname, snkhost, snkport);
+		
 	} else {
 		src->connectActor(snk, edge, p, c);
 	}
@@ -121,13 +123,14 @@ void Dataflow::discovery() {
   cout << "Discovery started...\n";
   char buf[1024];
   srvsock->listen(discport);
-
+  
   while (status != DataflowStatus::STOPPED) {
     srvsock->accept();
 
     srvsock->clnread(buf, 1024);
+    //TODO
     //handle message
-    srvsock->clnsend(buf);
+    //srvsock->clnsend(buf);
     srvsock->clnclose();
 
   }
