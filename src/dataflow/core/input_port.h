@@ -38,7 +38,6 @@ namespace df {
 
     Buffer<T> * buf;
     int index;
-    int new_socket;
 
   public:
     
@@ -53,56 +52,15 @@ namespace df {
     }
    
     virtual void listenPort(int portnb) {
-	port_nb = portnb;
-
-    	int opt = 1;
-
-    	// Creating socket file descriptor
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-		std::cerr << "port " << name << " socket failed.\n" ;
-		exit(EXIT_FAILURE);
-	}
-
-	// Attaching socket to the port
-        if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR,
-                                                  &opt, sizeof(opt)) < 0 )
-        {
-        	std::cerr << "port " << name << " setsockopt failed.\n";
-       		exit(EXIT_FAILURE);
-        }
-    	address.sin_family = AF_INET;
-    	address.sin_addr.s_addr = INADDR_ANY;
-    	address.sin_port = htons( port_nb );
-
-    	// Forcefully attaching socket to the port
-    	if (bind(sock, (struct sockaddr *)&address,
-                                 sizeof(address))<0)
-    	{
-		std::cerr << "port " << name << "bind failed.\n";
-        	exit(EXIT_FAILURE);
-    	}
-    	if (listen(sock, 3) < 0)
-    	{
-		std::cerr << "port " << name << "listen failed.\n";
-        	exit(EXIT_FAILURE);
-    	}
-
+	sock->listen(portnb);
     } 
 
     virtual void acceptPort() {
-	int addrlen = sizeof(address);
-	if ((new_socket = accept(sock, (struct sockaddr*) &address, (socklen_t*)&addrlen))<0)
-    	{
-		std::cerr << "port " << name << "accept failed.\n";
-        	exit(EXIT_FAILURE);
-    	}
+	sock->accept();
     }
 
-    char * receive() {
-	int valread = read( new_socket , sock_buf, 1024);
-	char * res = sock_buf;
-	return res;	
+    char * readPort() {
+	return sock->read();
     }
 
     void setBuffer(Buffer<T> * b) {

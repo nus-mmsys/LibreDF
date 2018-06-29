@@ -21,10 +21,7 @@
 
 #include "property.h"
 #include "buffer.h"
-
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+#include "socket.h"
 
 #include <cstring>
 #include <typeinfo>
@@ -51,11 +48,7 @@ namespace df {
     std::string name; /**< The name of the port */
     int rate; /**< The port rate */
     std::string port_cap;
-
-    int port_nb;
-    int sock;
-    struct sockaddr_in address;
-    char sock_buf[1024];	
+    Socket * sock;
 
   public:
     

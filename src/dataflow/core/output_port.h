@@ -57,36 +57,11 @@ namespace df {
     }
     
     virtual int connectPort(std::string host, int portnb) {
- 	host_addr = host;
-	port_nb = portnb;	
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-        	std::cerr << "port " << name << " socket creation failed.\n";
-		return -1;
-	}
-  
-	std::memset(&address, '0', sizeof(address));
-  
-	address.sin_family = AF_INET;
-	address.sin_port = htons(port_nb);
-      
-	// Convert IPv4 and IPv6 addresses from text to binary form
-	if(inet_pton(AF_INET, host_addr.c_str(), &address.sin_addr)<=0) 
-	{
-		std::cerr << "port " << name << " invalid address.\n";
-		return -1;
-	}
-  
-	if (connect(sock, (struct sockaddr *)&address, sizeof(address)) < 0)
-	{
-		std::cerr << "port " << name << " connection failed.\n";
-		return -1;
-	}
-	return 0;
+	return sock->connect(host, portnb);
     }
 
     void send(char * buf) {
-	send(sock , buf , std::strlen(buf) , 0 );
+	sock->send(buf);
     }
 
     void lock() {
