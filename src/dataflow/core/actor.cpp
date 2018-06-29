@@ -200,6 +200,17 @@ void Actor::initActor() {
 
 }
 
+void Actor::listen(Port * port) {
+      std::string name = port->getName();
+      if (propEmpty(name+"_port")) {
+	      log(name+"_port is not specified.");
+      } 
+      else {
+	      int portnb = getPropInt(name+"_port");
+      	      port->listenPort(portnb);
+      }
+    }
+
 void Actor::runActor() {
 
   if (!distributed) {

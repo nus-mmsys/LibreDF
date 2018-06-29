@@ -343,18 +343,7 @@ namespace df {
       port->unlock();
     }
 
-    void listen(Port * port) {
-      std::string name = port->getName();
-      if (propEmpty(name+"_port")) {
-	      log(name+"_port is not specified.");
-      } 
-      else {
-	      int portnb = getPropInt(name+"_port");
-      	      port->listenPort(portnb);
-	      port->acceptPort();
-      }
-    }
-
+    void listen(Port * port); 
 
     void destroyPort(Port * port) {
       delete port;
