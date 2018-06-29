@@ -38,8 +38,8 @@ namespace df {
   private:
 
      std::string name;
-     int sock;
-     int clientsock;
+     int srvsock;
+     int clnsock;
      std::string hostaddr;
      int portnb;
      char sockbuf[1024];
@@ -52,8 +52,12 @@ namespace df {
     int listen(int port); 
     int accept();     
     int connect(std::string host, int port); 
-    void send(char * buf); 
-    char * read(); 
+    void clnsend(char * buf); 
+    int clnread(char * buf, int size); 
+    void clnclose(); 
+    void srvsend(char * buf); 
+    int srvread(char * buf, int size); 
+    void srvclose(); 
 
   };
 }

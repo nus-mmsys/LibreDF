@@ -59,8 +59,8 @@ namespace df {
 	sock->accept();
     }
 
-    char * readPort() {
-	return sock->read();
+    int readPort(char * buf, int size) {
+	return sock->srvread(buf, size);
     }
 
     void setBuffer(Buffer<T> * b) {

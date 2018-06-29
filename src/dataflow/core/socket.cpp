@@ -30,14 +30,14 @@ int Socket::listen(int port) {
     	int opt = 1;
 
     	// Creating socket file descriptor
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	if ((srvsock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		std::cerr << name << " socket failed.\n" ;
 		return -1;
 	}
 
 	// Attaching socket to the port
-        if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR,
+        if (setsockopt(srvsock, SOL_SOCKET, SO_REUSEADDR,
                                                   &opt, sizeof(opt)) < 0 )
         {
         	std::cerr << name << " setsockopt failed.\n";
@@ -48,13 +48,13 @@ int Socket::listen(int port) {
     	addr.sin_port = htons( portnb );
 
     	// Forcefully attaching socket to the port
-    	if (bind(sock, (struct sockaddr *)&addr,
+    	if (bind(srvsock, (struct sockaddr *)&addr,
                                  sizeof(addr))<0)
     	{
 		std::cerr << name << "bind failed.\n";
     		return -1;
 	}
-    	if (::listen(sock, 3) < 0)
+    	if (::listen(srvsock, 3) < 0)
     	{
 		std::cerr << name << "listen failed.\n";
     		return -1;
@@ -65,7 +65,7 @@ int Socket::listen(int port) {
 
 int Socket::accept() {
 	int addrlen = sizeof(addr);
-	if ((clientsock = ::accept(sock, (struct sockaddr*) &addr, (socklen_t*)&addrlen))<0)
+	if ((clnsock = ::accept(srvsock, (struct sockaddr*) &addr, (socklen_t*)&addrlen))<0)
     	{
 		std::cerr << name << "accept failed.\n";
     		return -1;
@@ -73,11 +73,10 @@ int Socket::accept() {
 	return 0;
 }
 
-    
 int Socket::connect(std::string host, int port) {
  	hostaddr = host;
 	portnb = port;	
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	if ((srvsock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
         	std::cerr << name << " socket creation failed.\n";
 		return -1;
@@ -95,7 +94,7 @@ int Socket::connect(std::string host, int port) {
 		return -1;
 	}
   
-	if (::connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	if (::connect(srvsock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 	{
 		std::cerr << name << " connection failed.\n";
 		return -1;
@@ -103,12 +102,26 @@ int Socket::connect(std::string host, int port) {
 	return 0;
 }
 
-void Socket::send(char * buf) {
-	::send(sock , buf , std::strlen(buf) , 0 );
+void Socket::clnsend(char * buf) {
+	::send(clnsock , buf , std::strlen(buf) , 0 );
 }
 
-char * Socket::read() {
-	int valread = ::read( clientsock , sockbuf, 1024);
-	char * res = sockbuf;
-	return res;	
+int Socket::clnread(char * buf, int size) {
+	return ::read(clnsock , buf, size);
+}
+
+void Socket::clnclose() {
+	::close(clnsock);
+}
+
+void Socket::srvsend(char * buf) {
+	::send(srvsock , buf , std::strlen(buf) , 0 );
+}
+
+int Socket::srvread(char * buf, int size) {
+	return ::read(srvsock , buf, size);
+}
+
+void Socket::srvclose() {
+	::close(srvsock);
 }

@@ -61,7 +61,7 @@ namespace df {
     }
 
     void send(char * buf) {
-	sock->send(buf);
+	sock->srvsend(buf);
     }
 
     void lock() {
