@@ -22,6 +22,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <ifaddrs.h>
 
 #include <iostream>
 #include <string>
@@ -58,7 +59,7 @@ namespace df {
     void srvsend(char * buf); 
     int srvread(char * buf, int size); 
     void srvclose(); 
-
+    std::string ipaddr(const std::string& interface);
   };
 }
 

@@ -94,6 +94,11 @@ void Dataflow::discovery() {
   string dischost = prop.getProp("discovery_host");
   int discport = prop.getPropInt("discovery_port");
 
+  string machine_ip = sock->ipaddr("en0");
+
+  if (dischost != machine_ip)
+	 return; 
+
   cout << "Discovery started...\n";
   char buf[1024];
   sock->listen(discport);
