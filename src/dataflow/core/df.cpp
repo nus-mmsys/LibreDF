@@ -79,12 +79,19 @@ void Dataflow::waitDiscovery() {
 void Dataflow::discovery() {
 
   //cout << "Discovery started...\n";
+  //char buf[1024];
   //sock->listen(DISCOVERY_PORT);
 
   //while (status != DataflowStatus::STOPPED) {
   //  sock->accept();
-  //  sock->read();
+
+  //  sock->clnread(buf, 1024);
+      //handle message
+  //  sock->clnsend(buf);
+  //  sock->clnclose();
+
   //}
+  //sock->srvclose();
     
 }
 
