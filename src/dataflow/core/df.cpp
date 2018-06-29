@@ -75,15 +75,27 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 			return;
 		}
 
+		int snkport;
+		string snkpname, snkhost;
+		char msg[1024];
 		clnsock->connect(dischost, discport);
-		//TODO
-		//Ask actor's host and its port number.
-		//snkpname, snkhost, snkport, 
-		//string snkpname, snkhost;
-		//int snkport;
-		char msg[1024] = "";
+		strcpy(msg,("actor.host "+snk->getName()).c_str());
 		clnsock->srvsend(msg);
-		//src->connectActor(snkpname, snkhost, snkport);
+		clnsock->srvread(msg, 1024);
+		snkhost = msg;
+
+		clnsock->srvclose();
+
+		clnsock->connect(dischost, discport);
+		strcpy(msg, ("edge.port "+edge).c_str());
+		clnsock->srvsend(msg);
+		clnsock->srvread(msg, 1024);
+	        //TODO
+		//snkpname = msg; // part 1
+		//snkport = msg; // part 2
+		clnsock->srvclose();
+
+		src->connectActor(snkpname, snkhost, snkport);
 		
 	} else {
 		src->connectActor(snk, edge, p, c);
