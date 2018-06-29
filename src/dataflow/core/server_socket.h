@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <ifaddrs.h>
 
+#include <cstring>
 #include <iostream>
 #include <string>
 
