@@ -80,7 +80,7 @@ void Dataflow::discovery() {
     //  cout << "Discovery started...\n";
 
     int opt = 1;
-
+    
     // Creating socket file descriptor
     if ((discsock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
@@ -99,6 +99,7 @@ void Dataflow::discovery() {
     discaddress.sin_addr.s_addr = INADDR_ANY;
     discaddress.sin_port = htons( DISCOVERY_PORT );
 
+    /*
     // Forcefully attaching socket to the port
     if (bind(discsock, (struct sockaddr *)&discaddress,
         sizeof(discaddress))<0)
@@ -127,9 +128,10 @@ void Dataflow::discovery() {
 	int valread = read( new_socket , discbuf, 1024);
         string msg = discbuf;
 	send(new_socket, discbuf, strlen(discbuf), 0);
-	close(new_socket);
         //handle
+	close(new_socket);
     }
+    */
 }
 
 void Dataflow::init() {
