@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_SOCKET_H
-#define DF_SOCKET_H
+#ifndef DF_CLIENTSOCKET_H
+#define DF_CLIENTSOCKET_H
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -34,33 +34,26 @@ namespace df {
    *
    */
   
-  class Socket {
+  class ClientSocket {
     
   private:
 
      std::string name;
-     int srvsock;
-     int clnsock;
+     int sock;
      std::string hostaddr;
      int portnb;
      char sockbuf[1024];
      struct sockaddr_in addr;
 
   public:
-    
-    Socket(const std::string& sockname); 
+    ClientSocket(const std::string& sockname); 
 
-    int listen(int port); 
-    int accept();     
     int connect(std::string host, int port); 
-    void clnsend(char * buf); 
-    int clnread(char * buf, int size); 
-    void clnclose(); 
-    void srvsend(char * buf); 
-    int srvread(char * buf, int size); 
-    void srvclose(); 
-    std::string ipaddr(const std::string& interface);
+    void send(char * buf); 
+    int read(char * buf, int size); 
+    void close();
+
   };
 }
 
-#endif // DF_SOCKET_H
+#endif // DF_CLIENTSOCKET_H

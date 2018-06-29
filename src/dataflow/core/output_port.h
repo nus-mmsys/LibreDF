@@ -19,6 +19,7 @@
 #ifndef DF_OUTPUTPORT_H
 #define DF_OUTPUTPORT_H
 
+#include "client_socket.h"
 #include "port.h"
 #include "input_port.h"
 
@@ -41,7 +42,7 @@ namespace df {
     int index;
     std::vector<InputPort<T>*> nextPorts; /**< A list of the next ports. A subclass actor must add its actors to this list */
     
-    std::string host_addr;
+    ClientSocket * sock;
 
   public:
     
@@ -52,6 +53,7 @@ namespace df {
      *
      */
     OutputPort<T>(std::string name) : Port(name), index(0) {
+      sock = new ClientSocket("port:"+name);
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
     }
@@ -61,7 +63,7 @@ namespace df {
     }
 
     void send(char * buf) {
-	sock->srvsend(buf);
+	sock->send(buf);
     }
 
     void lock() {

@@ -24,8 +24,8 @@ using namespace std;
 Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::NONE) {
 	realtime = false;
 	distributed = false;
-	srvsock = new Socket("df-srv:"+name);
-	clnsock = new Socket("df-cln:"+name);
+	srvsock = new ServerSocket("df-srv:"+name);
+	clnsock = new ClientSocket("df-cln:"+name);
 }
 
 Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
@@ -80,20 +80,20 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 		char msg[1024];
 		clnsock->connect(dischost, discport);
 		strcpy(msg,("actor.host "+snk->getName()).c_str());
-		clnsock->srvsend(msg);
-		clnsock->srvread(msg, 1024);
+		clnsock->send(msg);
+		clnsock->read(msg, 1024);
 		snkhost = msg;
 
-		clnsock->srvclose();
+		clnsock->close();
 
 		clnsock->connect(dischost, discport);
 		strcpy(msg, ("edge.port "+edge).c_str());
-		clnsock->srvsend(msg);
-		clnsock->srvread(msg, 1024);
+		clnsock->send(msg);
+		clnsock->read(msg, 1024);
 	        //TODO
 		//snkpname = msg; // part 1
 		//snkport = msg; // part 2
-		clnsock->srvclose();
+		clnsock->close();
 
 		src->connectActor(snkpname, snkhost, snkport);
 		
@@ -139,10 +139,10 @@ void Dataflow::discovery() {
   while (status != DataflowStatus::STOPPED) {
     srvsock->accept();
 
-    srvsock->clnread(buf, 1024);
+    srvsock->read(buf, 1024);
     //TODO
     //handle message
-    //srvsock->clnsend(buf);
+    //srvsock->send(buf);
     srvsock->clnclose();
 
   }

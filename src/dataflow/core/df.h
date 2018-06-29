@@ -26,7 +26,8 @@
 
 #include "actor_factory.h"
 #include "actor.h"
-#include "socket.h"
+#include "server_socket.h"
+#include "client_socket.h"
 
 namespace df {
   
@@ -57,8 +58,8 @@ namespace df {
     std::string dischost;
     int discport;
     Property prop;
-    Socket * srvsock;
-    Socket * clnsock;
+    ServerSocket * srvsock;
+    ClientSocket * clnsock;
 
   public:
     /*!

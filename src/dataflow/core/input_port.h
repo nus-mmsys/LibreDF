@@ -19,6 +19,7 @@
 #ifndef DF_INPUTPORT_H
 #define DF_INPUTPORT_H
 
+#include "server_socket.h"
 #include "port.h"
 
 namespace df {
@@ -38,6 +39,7 @@ namespace df {
 
     Buffer<T> * buf;
     int index;
+    ServerSocket * sock;
 
   public:
     
@@ -48,7 +50,8 @@ namespace df {
      *
      */
     InputPort<T>(std::string name) : Port(name), buf(nullptr), index(0) {
-	port_cap = std::string(typeid(T).name());
+	sock = new ServerSocket("port:"+name);
+        port_cap = std::string(typeid(T).name());
     }
    
     virtual void listenPort(int portnb) {
@@ -60,7 +63,7 @@ namespace df {
     }
 
     int readPort(char * buf, int size) {
-	return sock->srvread(buf, size);
+	return sock->read(buf, size);
     }
 
     void setBuffer(Buffer<T> * b) {

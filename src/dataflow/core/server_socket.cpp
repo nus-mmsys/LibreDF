@@ -16,15 +16,15 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "socket.h"
+#include "server_socket.h"
 
 using namespace df;
 
-Socket::Socket(const std::string& sockname) { 
+ServerSocket::ServerSocket(const std::string& sockname) { 
 	name = sockname; 
 }
 
-int Socket::listen(int port) {
+int ServerSocket::listen(int port) {
 	portnb = port;
 
     	int opt = 1;
@@ -63,7 +63,7 @@ int Socket::listen(int port) {
     	return 0;
 } 
 
-int Socket::accept() {
+int ServerSocket::accept() {
 	int addrlen = sizeof(addr);
 	if ((clnsock = ::accept(srvsock, (struct sockaddr*) &addr, (socklen_t*)&addrlen))<0)
     	{
@@ -73,60 +73,23 @@ int Socket::accept() {
 	return 0;
 }
 
-int Socket::connect(std::string host, int port) {
- 	hostaddr = host;
-	portnb = port;	
-	if ((srvsock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-        	std::cerr << name << " socket creation failed.\n";
-		return -1;
-	}
-  
-	std::memset(&addr, '0', sizeof(addr));
-  
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(portnb);
-      
-	// Convert IPv4 and IPv6 addres from text to binary form
-	if(inet_pton(AF_INET, hostaddr.c_str(), &addr.sin_addr)<=0) 
-	{
-		std::cerr << name << " invalid addr.\n";
-		return -1;
-	}
-  
-	if (::connect(srvsock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
-	{
-		std::cerr << name << " connection failed.\n";
-		return -1;
-	}
-	return 0;
-}
-
-void Socket::clnsend(char * buf) {
+void ServerSocket::send(char * buf) {
 	::send(clnsock , buf , std::strlen(buf) , 0 );
 }
 
-int Socket::clnread(char * buf, int size) {
+int ServerSocket::read(char * buf, int size) {
 	return ::read(clnsock , buf, size);
 }
 
-void Socket::clnclose() {
+void ServerSocket::clnclose() {
 	::close(clnsock);
 }
 
-void Socket::srvsend(char * buf) {
-	::send(srvsock , buf , std::strlen(buf) , 0 );
-}
-
-int Socket::srvread(char * buf, int size) {
-	return ::read(srvsock , buf, size);
-}
-
-void Socket::srvclose() {
+void ServerSocket::srvclose() {
 	::close(srvsock);
 }
 
-std::string Socket::ipaddr(const std::string& interface){
+std::string ServerSocket::ipaddr(const std::string& interface){
 	std::string ipAddress="";
     struct ifaddrs *interfaces = NULL;
     struct ifaddrs *temp_addr = NULL;

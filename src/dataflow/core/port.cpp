@@ -23,7 +23,6 @@ using namespace std;
 
 Port::Port(string name) :
 name(name), rate(1), linked(0) {
-	sock = new Socket("port:"+name);
 }
 
 string Port::getName() {
