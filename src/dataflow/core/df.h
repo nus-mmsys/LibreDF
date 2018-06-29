@@ -28,8 +28,6 @@
 #include "actor.h"
 #include "socket.h"
 
-#define DISCOVERY_PORT 7007
-
 namespace df {
   
   /*!

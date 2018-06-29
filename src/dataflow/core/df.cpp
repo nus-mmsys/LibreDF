@@ -78,20 +78,36 @@ void Dataflow::waitDiscovery() {
 
 void Dataflow::discovery() {
 
-  //cout << "Discovery started...\n";
-  //char buf[1024];
-  //sock->listen(DISCOVERY_PORT);
+  if (!distributed)
+	  return;
 
-  //while (status != DataflowStatus::STOPPED) {
-  //  sock->accept();
+  if (prop.propEmpty("discovery_host")) {
+	  cout << "discovery_host is not specified.\n";
+	  return;
+  }
 
-  //  sock->clnread(buf, 1024);
-      //handle message
-  //  sock->clnsend(buf);
-  //  sock->clnclose();
+  if (prop.propEmpty("discovery_port")) {
+	  cout << "discovery_port is not specified.\n";
+	  return;
+  }
+ 
+  string dischost = prop.getProp("discovery_host");
+  int discport = prop.getPropInt("discovery_port");
 
-  //}
-  //sock->srvclose();
+  cout << "Discovery started...\n";
+  char buf[1024];
+  sock->listen(discport);
+
+  while (status != DataflowStatus::STOPPED) {
+    sock->accept();
+
+    sock->clnread(buf, 1024);
+    //handle message
+    sock->clnsend(buf);
+    sock->clnclose();
+
+  }
+  sock->srvclose();
     
 }
 
