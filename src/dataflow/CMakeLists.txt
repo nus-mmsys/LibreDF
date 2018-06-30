@@ -11,6 +11,7 @@ include_directories(.)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 aux_source_directory(core core)
+aux_source_directory(types types)
 
 if (BUILD_ML_ACTORS)
   aux_source_directory(actors/machine-learning ml)
@@ -28,7 +29,7 @@ if (BUILD_BASIC_ACTORS)
   aux_source_directory(actors/basic basic)
 endif()
 
-add_library(${PROJECT_NAME} SHARED ${core} ${ml} 
+add_library(${PROJECT_NAME} SHARED ${core} ${types} ${ml} 
 				${ocvcore} ${ocvimg}
 				${ocvgui} ${ocvobj}
 				${ocvvideo} ${basic}
