@@ -66,27 +66,19 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
 	if (distributed) {
-		if (dischost == "") {
-			cerr << "discovery_host is not specified.\n";
-			return;
-		}
-		if (discport == -1) {
-			cerr << "discovery_port is not specified.\n";
-			return;
-		}
 
 		int snkport;
 		string snkpname, snkhost;
 		char msg[1024];
-		clnsock->connect(dischost, discport);
+		
+		clnsock->connect(dischost,discport);
 		strcpy(msg,("actor.host "+snk->getName()).c_str());
 		clnsock->send(msg);
 		clnsock->read(msg, 1024);
 		snkhost = msg;
-
 		clnsock->close();
 
-		clnsock->connect(dischost, discport);
+		clnsock->connect(dischost,discport);
 		strcpy(msg, ("edge.port "+edge).c_str());
 		clnsock->send(msg);
 		clnsock->read(msg, 1024);
@@ -94,7 +86,7 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 		getline(ss, snkpname, ' ');
 		string snkportstr;
 		getline(ss, snkportstr);
-		snkport = stoi(snkportstr);
+		//snkport = stoi(snkportstr);
 		clnsock->close();
 
 		src->connectActor(snkpname, snkhost, snkport);
@@ -106,38 +98,26 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 }
 
 void Dataflow::startDiscovery() {
-  tdisc = thread(&Dataflow::discovery, this);
-}
 
-void Dataflow::waitDiscovery() {
-  //cout << "Discovery terminated...\n";
-  tdisc.join();
-}
-
-void Dataflow::discovery() {
-
-  if (!distributed)
-	  return;
-
-  if (dischost == "") {
-	  cerr << "discovery_host is not specified.\n";
-	  return;
-  }
-
-  if (discport == -1) {
-	  cerr << "discovery_port is not specified.\n";
-	  return;
-  }
- 
   string machine_ip = srvsock->ipaddr("en0");
 
   if (dischost != machine_ip)
 	 return; 
 
   cout << "Discovery started...\n";
-  char buf[1024];
   srvsock->listen(discport);
+
+  tdisc = thread(&Dataflow::discovery, this);
+}
+
+void Dataflow::waitDiscovery() {
+  cout << "Discovery terminated...\n";
+  tdisc.join();
+}
+
+void Dataflow::discovery() {
   
+  char buf[1024];
   while (status != DataflowStatus::STOPPED) {
     srvsock->accept();
 
@@ -171,7 +151,19 @@ void Dataflow::init() {
     f->setProp<bool>("distributed", distributed);
   }
 
-  startDiscovery();
+  if (distributed) {
+
+  	if (dischost == "") {
+		cerr << "discovery_host is not specified.\n";
+	  	return;
+  	}
+
+  	if (discport == -1) {
+	  	cerr << "discovery_port is not specified.\n";
+	  	return;
+  	}
+  	startDiscovery();
+  }
 
   for (auto f: actors) {
     f->startInit();
