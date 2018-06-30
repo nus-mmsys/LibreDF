@@ -36,7 +36,7 @@ Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
 
 void Dataflow::addActor(Actor * f) {
   f->setPipeLock(&io_lock);
-  actors.insert(f);
+  actors.insert(std::make_pair(f->getName(), f));
 }
 
 void Dataflow::addActors(Actor * f, ...) {
@@ -65,27 +65,23 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 }
 
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
+	int snkport;
+	string snkpname, snkportstr;
 	if (distributed) {
-
-		int snkport;
-		string snkpname, snkportstr;
-	
 		string snkhost = clnsock->communicate(dischost, discport,
-				"actor.host "+snk->getName());
-		string msg = clnsock->communicate(dischost, discport,
-				"edge.port "+edge);
-		
-		stringstream ss(msg);
-		getline(ss, snkpname, ' ');
-		getline(ss, snkportstr);
-		//snkport = stoi(snkportstr);
-
-		src->connectActor(snkpname, snkhost, snkport);
-		
+				"actor "+snk->getName()+" host");
+		string snkportstr = clnsock->communicate(dischost, discport,
+				"edge "+snk->getName()+" "+edge);
+		try {
+		    snkport = stoi(snkportstr);
+		    src->connectActor(snkpname, snkhost, snkport);
+		}
+		catch (...) {
+		    cerr << snkportstr << " is invalid port number.\n";
+		}
 	} else {
 		src->connectActor(snk, edge, p, c);
 	}
-
 }
 
 void Dataflow::startDiscovery() {
@@ -107,17 +103,32 @@ void Dataflow::waitDiscovery() {
 }
 
 void Dataflow::discovery() {
-  
+  std::string msg, command, actorname, portname, key, val;
   char buf[1024];
   while (status != DataflowStatus::STOPPED) {
     srvsock->accept();
 
     srvsock->read(buf, 1024);
-    //TODO
-    //handle message
-    //srvsock->send(buf);
-    srvsock->clnclose();
+    msg = buf;
+    stringstream ss(msg);
+    getline(ss, command, ' ');
+    getline(ss, actorname, ' ');
+    getline(ss, key);
 
+    if (actors.find(actorname) == actors.end()) {
+        val = "404 : actor not found";
+    }
+    else if (command == "actor") {
+        val = actors[actorname]->getProp(key);
+    }
+    else if (command == "edge") {
+	portname = actors[actorname]->edge2InputPort(key);
+        val = actors[actorname]->getProp(portname+"_port");
+    }
+
+    strcpy(buf, val.c_str());
+    srvsock->send(buf);
+    srvsock->clnclose();
   }
   srvsock->srvclose();
     
@@ -138,8 +149,8 @@ void Dataflow::init() {
 	  discport = prop.getPropInt("discovery_port"); 
 
   for (auto f : actors) {
-    f->setProp<bool>("realtime", realtime);
-    f->setProp<bool>("distributed", distributed);
+    f.second->setProp<bool>("realtime", realtime);
+    f.second->setProp<bool>("distributed", distributed);
   }
 
   if (distributed) {
@@ -157,18 +168,18 @@ void Dataflow::init() {
   }
 
   for (auto f: actors) {
-    f->startInit();
+    f.second->startInit();
   }
   
   for (auto f : actors) {
-    f->waitInit();
+    f.second->waitInit();
   }
   
   status = DataflowStatus::READY;
   
   for (auto f : actors) {
     
-    if (f->getStatus() != ActorStatus::OK)
+    if (f.second->getStatus() != ActorStatus::OK)
       status = DataflowStatus::STOPPED;
     return;
   }
@@ -184,13 +195,13 @@ void Dataflow::run() {
   }
   
   for (auto f : actors) {
-    f->startRun();
+    f.second->startRun();
   }
   
   status = DataflowStatus::RUNNING;
   
   for (auto f : actors) {
-    f->waitRun();
+    f.second->waitRun();
   }
  
   waitDiscovery();
@@ -202,7 +213,7 @@ void Dataflow::run() {
 Dataflow::~Dataflow() {
   
   for (auto f : actors)
-    if(f)
-      delete f;
+    if(f.second)
+      delete f.second;
     
 }

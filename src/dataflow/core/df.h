@@ -21,7 +21,7 @@
 
 #include <string>
 #include <iostream>
-#include <set>
+#include <map>
 #include <cstdarg>
 #include <sstream>
 
@@ -54,7 +54,7 @@ namespace df {
     std::mutex io_lock;
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
-    std::set<Actor *> actors; /**< The set of all actors in the dataflow. */
+    std::map<std::string, Actor *> actors; /**< The set of all actors in the dataflow. */
     bool realtime, distributed;
     std::string dischost;
     int discport;
