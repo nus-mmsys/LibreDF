@@ -78,6 +78,7 @@ void ServerSocket::send(char * buf) {
 }
 
 int ServerSocket::read(char * buf, int size) {
+	memset(buf, 0, size);
 	return ::read(clnsock , buf, size);
 }
 

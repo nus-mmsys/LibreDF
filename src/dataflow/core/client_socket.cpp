@@ -70,6 +70,7 @@ void ClientSocket::send(char * buf) {
 }
 
 int ClientSocket::read(char * buf, int size) {
+    	memset(buf, 0, size);
 	return ::read(sock , buf, size);
 }
 

@@ -111,6 +111,7 @@ void Dataflow::discovery() {
     srvsock->read(buf, 1024);
     msg = buf;
     stringstream ss(msg);
+
     getline(ss, command, ' ');
     getline(ss, actorname, ' ');
     getline(ss, key);
