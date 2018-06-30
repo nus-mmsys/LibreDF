@@ -25,19 +25,19 @@ ActorRegister<Addition> Addition::reg("Addition");
 
 Addition::Addition(const string & name) :
 Actor(name) {
-  input1 = createInputPort<int>("input1");
-  input2 = createInputPort<int>("input2");
+  input1 = createInputPort<Integer>("input1");
+  input2 = createInputPort<Integer>("input2");
 }
 
 void  Addition::run() {
   
-  int * inputData1 = consume(input1);
+  Integer * in1 = consume(input1);
   
-  int * inputData2 = consume(input2);
+  Integer * in2 = consume(input2);
   
-  int outputint = *inputData1 + *inputData2;
+  int out = in1->get() + in2->get();
   
-  log("addition "+to_string(outputint));
+  log("addition "+to_string(out));
   
   release(input1);
   release(input2);

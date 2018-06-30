@@ -25,18 +25,18 @@ ActorRegister<Doubling> Doubling::reg("Doubling");
 
 Doubling::Doubling(const string & name) :
 Actor(name) {
-  input = createInputPort<int>("input");
-  output = createOutputPort<int>("output");
+  input = createInputPort<Integer>("input");
+  output = createOutputPort<Integer>("output");
 }
 
 void Doubling::run() {
 
-  int * inputData = consume(input);	
-  int outputint = *inputData * 2;
+  Integer * in = consume(input);	
+  int outval = in->get() * 2;
   release(input);
   
-  int * outputData = produce(output);
-  *outputData = outputint;
+  Integer * out = produce(output);
+  out->set(outval);
   release(output);
 }
 

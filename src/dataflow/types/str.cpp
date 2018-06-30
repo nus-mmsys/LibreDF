@@ -16,32 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_HAMILTON_H_
-#define DF_HAMILTON_H_
+#include "str.h"
 
-#include "core/df.h"
-#include "types/str.h"
-
-#include <iostream>
-
-class Hamilton: public df::Actor {
-  
-private:
-  df::InputPort<df::Str> * input;
-  df::OutputPort<df::Str> * output;
-
-  int nbnodes;
-
-  static df::ActorRegister<Hamilton> reg;
-public:
-  
-  Hamilton(const std::string & name);
-  
-  virtual void init();
-  virtual void run();
-  
-  virtual ~Hamilton();
-  
-};
-
-#endif /* DF_HAMILTON_H_ */
+using namespace df;

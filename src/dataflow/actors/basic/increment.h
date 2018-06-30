@@ -20,11 +20,12 @@
 #define DF_INCREMENT_H_
 
 #include "core/df.h"
+#include "types/integer.h"
 
 struct Increment: public df::Actor {
 private:
-  df::InputPort<int> * input;
-  df::OutputPort<int> * output;
+  df::InputPort<df::Integer> * input;
+  df::OutputPort<df::Integer> * output;
 
   static df::ActorRegister<Increment> reg;
 

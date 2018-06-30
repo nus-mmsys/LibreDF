@@ -24,14 +24,14 @@ using namespace std;
 ActorRegister<StringConsumer> StringConsumer::reg("StringConsumer");
 
 StringConsumer::StringConsumer(const string & name) : Actor(name) {
-  input = createInputPort<string>("input");
+  input = createInputPort<Str>("input");
 }
 
 void StringConsumer::run() {
   
-  string * inputData = consume(input);
+  Str * in = consume(input);
   
-  log("consuming "+*inputData);
+  log("consuming "+in->get());
   sleep(500);
   
   release(input);

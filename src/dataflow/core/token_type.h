@@ -19,12 +19,16 @@
 #ifndef DF_TOKENTYPE_H
 #define DF_TOKENTYPE_H
 
+#include <iostream>
+#include <string>
+
 namespace df {
   
   class TokenType  {
    
   public:
-    TokenType() {  } 
+    TokenType() {  }
+    virtual std::string to_string() = 0;
     virtual void load(char * buf) = 0;   
     virtual char * buffer() = 0;   
     ~TokenType() {

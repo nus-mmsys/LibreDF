@@ -25,14 +25,14 @@ ActorRegister<Duplicate> Duplicate::reg("Duplicate");
 
 Duplicate::Duplicate(const string & name) :
 Actor(name) {
-  input = createInputPort<std::string>("input");
+  input = createInputPort<Str>("input");
 }
 
 
 void Duplicate::run() {
-  string * inputData = consume(input);
-  string outputstring = *inputData + "" + *inputData;
-  log("duplicating "+outputstring); 
+  Str * in = consume(input);
+  string out = in->get() + "" + in->get();
+  log("duplicating "+out); 
   release(input);
 }
 

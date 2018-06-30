@@ -20,18 +20,40 @@
 #define DF_INTEGER_H_
 
 #include "core/token_type.h"
+#include <cstdio>
 
-struct Integer : public df::TokenType {
- 
-public:
+namespace df {
+
+  class Integer : public TokenType {
+
+  private:
+    int data;
+    char buf[1024];
+  public:
   
-  Integer() { }
+    Integer() { }
+    void set(int d) { data = d; } 
+    int get() { return data; } 
+    std::string to_string() { return std::to_string(data); }
+    virtual void load(char * buf) {
+	try {
+		data = atoi(buf);
+	} catch (...) {
+		std::cerr << "integer: failed to load data.\n";
+	}
+    }
+    virtual char * buffer() { 
+	try {
+	    sprintf(buf, "%d", data);
+        } catch(...) {
+    		std::cerr << "integer: failed to buffer.\n";
+	}
+	return buf;
+    }
   
-  virtual void load(char * buf) { }
-  virtual char * buffer() { return nullptr; }
-  
-  virtual ~Integer() { }
-  
+    virtual ~Integer() { }
+  };
+
 };
 
 #endif /* DF_INTEGER_H_ */

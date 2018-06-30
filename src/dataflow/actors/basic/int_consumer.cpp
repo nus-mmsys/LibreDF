@@ -24,18 +24,19 @@ using namespace std;
 ActorRegister<IntConsumer> IntConsumer::reg("IntConsumer");
 
 IntConsumer::IntConsumer(const string & name) : Actor(name) {
-  input = createInputPort<int>("input");
+  input = createInputPort<Integer>("input");
 }
 
 void IntConsumer::run() {
-  int * inputData = consume(input);
+  Integer * in = consume(input);
   
-  log("consuming "+to_string(*inputData));
+  log("consuming "+in->to_string());
   sleep(500);
   
   release(input);
 }
 
+/*
 void IntConsumer::runDist() {
 
   std::string msg;
@@ -46,6 +47,7 @@ void IntConsumer::runDist() {
   sleep(500);
   
 }
+*/
 
 IntConsumer::~IntConsumer() {
   destroyPort(input);

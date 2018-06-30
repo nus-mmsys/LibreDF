@@ -20,13 +20,14 @@
 #define DF_STRINGCONSUMER_H_
 
 #include "core/df.h"
+#include "types/str.h"
 
 #include <iostream>
 
 class StringConsumer: public df::Actor {
   
 private:
-  df::InputPort<std::string> * input;
+  df::InputPort<df::Str> * input;
 
   static df::ActorRegister<StringConsumer> reg;
 public:

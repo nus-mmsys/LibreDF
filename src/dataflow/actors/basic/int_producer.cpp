@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<IntProducer> IntProducer::reg("IntProducer");
 
 IntProducer::IntProducer(const string& name) : Actor(name) {
-  outputInt = createOutputPort<int>("output");
+  output = createOutputPort<Integer>("output");
 }
 
 void IntProducer::init() {
@@ -38,34 +38,36 @@ void IntProducer::init() {
 
 void IntProducer::run() {
 
-  int * out = produce(outputInt);	
-  *out = stepno;
+  Integer * out = produce(output);	
+  out->set(stepno);
   log("producing "+to_string(stepno));
   sleep(500);
 
   if(stepno == last)
-    setEos(outputInt);
+    setEos(output);
 
-  release(outputInt);  
+  release(output);  
 
 }
 
+/*
 void IntProducer::runDist() {
 
   char buf[1024];
   memset(buf, 0, 1024);
   strcpy(buf,(to_string(stepno)).c_str());
-  send(outputInt, buf);
+  send(output, buf);
   log("producing "+to_string(stepno));
   sleep(500);
 
 }
+*/
 
 void IntProducer::runRT() {
   
   string data = to_string(stepno);
   
-  bool canlock = outputInt->lockRT();
+  bool canlock = output->lockRT();
   
   if (!canlock) {
     log("droping "+data);
@@ -73,21 +75,21 @@ void IntProducer::runRT() {
     return;
   }
   
-  int * out = outputInt->get(); 
-  *out = stepno;
+  Integer * out = output->get(); 
+  out->set(stepno);
   
   log("producing "+to_string(stepno));
   sleep(500);
   
   if(stepno == last) {
-    outputInt->setStatus(TokenStatus::EOS);
+    output->setStatus(TokenStatus::EOS);
     status = ActorStatus::EOS;
   }
   
-  outputInt->unlock();
+  output->unlock();
   
 }
 
 IntProducer::~IntProducer() {
-  destroyPort(outputInt);
+  destroyPort(output);
 }

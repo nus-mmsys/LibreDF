@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Hamilton> Hamilton::reg("Hamilton");
 
 Hamilton::Hamilton(const string & name) : Actor(name) {
-  input = createInputPort<string>("input");
-  output = createOutputPort<string>("output");
+  input = createInputPort<Str>("input");
+  output = createOutputPort<Str>("output");
 }
 
 void Hamilton::init() {
@@ -34,8 +34,8 @@ void Hamilton::init() {
   } else
     nbnodes = 0;
   
-  string * out = produce(output);
-  *out = name;
+  Str * out = produce(output);
+  out->set(name);
   release(output);
 
 }
@@ -46,9 +46,9 @@ void Hamilton::run() {
   // 2. Port numbers can be variable.
 	
   string msg;
-  string * in = consume(input);
-  if ((*in).find(name)==string::npos) {
-    msg = *in + name;
+  Str * in = consume(input);
+  if (in->get().find(name)==string::npos) {
+    msg = in->get() + name;
   } else
     msg = "";
   release(input);
@@ -56,8 +56,8 @@ void Hamilton::run() {
   if (msg.length() == nbnodes) {
     log("hamiltonian path "+msg+"\n");
   } else {
-    string * out = produce(output);
-    log("sending "+*out);
+    Str * out = produce(output);
+    log("sending "+out->get());
     release(output);
   }
    

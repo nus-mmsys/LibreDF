@@ -38,6 +38,7 @@ namespace df {
     
     
   private:
+    T * data;
     Buffer<T> * buf;
     int index;
     std::vector<InputPort<T>*> nextPorts; /**< A list of the next ports. A subclass actor must add its actors to this list */
@@ -56,14 +57,20 @@ namespace df {
       sock = new ClientSocket("port:"+name);
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
+      data = new T();
     }
     
     virtual int connectPort(std::string host, int portnb) {
 	return sock->connect(host, portnb);
     }
 
-    void send(char * buf) {
-	sock->send(buf);
+    void send() {
+	char * buf = data->buffer();
+    	sock->send(buf);
+    }
+
+    T * getdata() {
+	return data;
     }
 
     void lock() {

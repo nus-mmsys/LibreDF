@@ -3,8 +3,8 @@ project(dataflow)
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
 
-option(BUILD_ML_ACTORS "Build machine-learning actors" ON)
-option(BUILD_OPENCV_ACTORS "Build opencv actors" ON)
+option(BUILD_ML_ACTORS "Build machine-learning actors" OFF)
+option(BUILD_OPENCV_ACTORS "Build opencv actors" OFF)
 option(BUILD_BASIC_ACTORS "Build basic actors" ON)
 
 include_directories(.)

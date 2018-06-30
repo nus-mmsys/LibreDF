@@ -20,6 +20,7 @@
 #define DF_STRINGPRODUCER_H_
 
 #include "core/df.h"
+#include "types/str.h"
 
 #include <iostream>
 #include <string>
@@ -31,7 +32,7 @@ private:
   
   int last;
   
-  df::OutputPort<std::string> * outputString;
+  df::OutputPort<df::Str> * output;
   
   static df::ActorRegister<StringProducer> reg;
 public:

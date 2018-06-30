@@ -20,13 +20,14 @@
 #define DF_INTCONSUMER_H_
 
 #include "core/df.h"
+#include "types/integer.h"
 
 #include <iostream>
 
 class IntConsumer: public df::Actor {
   
 private:
-  df::InputPort<int> * input;
+  df::InputPort<df::Integer> * input;
 
   static df::ActorRegister<IntConsumer> reg;
 public:
@@ -34,7 +35,7 @@ public:
   IntConsumer(const std::string & name);
   
   virtual void run();
-  virtual void runDist();
+  //virtual void runDist();
   
   virtual ~IntConsumer();
   

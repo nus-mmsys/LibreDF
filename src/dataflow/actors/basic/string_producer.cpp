@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<StringProducer> StringProducer::reg("StringProducer");
 
 StringProducer::StringProducer(const string& name) : Actor(name){
-  outputString = createOutputPort<string>("string output");
+  output = createOutputPort<Str>("string output");
 }
 
 void StringProducer::init() {
@@ -36,16 +36,15 @@ void StringProducer::init() {
 
 void StringProducer::run() {
 
- 
-  string * outStr = produce(outputString);
-  *outStr = to_string(stepno);
-  log("producing "+*outStr);
+  Str * out = produce(output);
+  out->set(to_string(stepno));
+  log("producing "+out->get());
   sleep(500);
 
   if(stepno == last)
-    setEos(outputString);
+    setEos(output);
 
-  release(outputString);
+  release(output);
 
 }
 
@@ -53,7 +52,7 @@ void StringProducer::runRT() {
   
   string data = to_string(stepno);
   
-  bool canlock = outputString->lockRT();
+  bool canlock = output->lockRT();
   
   if (!canlock) {
     log("droping "+data);
@@ -61,21 +60,21 @@ void StringProducer::runRT() {
     return;
   }
   
-  string * outStr = outputString->get(); 
-  *outStr = data;
+  Str * outStr = output->get(); 
+  outStr->set(data);
   
-  log("producing "+*outStr);
+  log("producing "+outStr->get());
   sleep(500);
   
   if(stepno == last) {
-    outputString->setStatus(TokenStatus::EOS);
+    output->setStatus(TokenStatus::EOS);
     status = ActorStatus::EOS;
   }
   
-  outputString->unlock();
+  output->unlock();
   
 }
 
 StringProducer::~StringProducer() {
-  destroyPort(outputString);
+  destroyPort(output);
 }

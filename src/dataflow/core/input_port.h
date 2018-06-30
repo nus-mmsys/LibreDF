@@ -39,6 +39,7 @@ namespace df {
     
   private:
 
+    T * data;
     std::thread taccept;
     Buffer<T> * buf;
     int index;
@@ -55,6 +56,7 @@ namespace df {
     InputPort<T>(std::string name) : Port(name), buf(nullptr), index(0) {
 	sock = new ServerSocket("port:"+name);
         port_cap = std::string(typeid(T).name());
+	data = new T();
     }
    
     virtual void listen(int portnb) {
@@ -73,8 +75,11 @@ namespace df {
         taccept.join();
     }
 
-    int read(char * buf, int size) {
-	return sock->read(buf, size);
+    T * read() {
+	char buf[1024];
+	sock->read(buf, 1024);
+	data->load(buf);
+	return data;
     }
 
     void setBuffer(Buffer<T> * b) {
@@ -108,6 +113,7 @@ namespace df {
      *
      */
     virtual ~InputPort() {
+	    delete data;
     }
     
   };

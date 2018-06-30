@@ -20,6 +20,7 @@
 #define DF_MULTIPLICATION_H_
 
 #include "core/df.h"
+#include "types/integer.h"
 
 #include <iostream>
 
@@ -28,8 +29,8 @@ using namespace df;
 struct Multiplication: public df::Actor {
  
 private:
-  df::InputPort<int> * input1;
-  df::InputPort<int>* input2;
+  df::InputPort<df::Integer> * input1;
+  df::InputPort<df::Integer>* input2;
   
   static  ActorRegister<Multiplication> reg;
 public:

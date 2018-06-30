@@ -20,6 +20,7 @@
 #define DF_DUPLICATE_H_
 
 #include "core/df.h"
+#include "types/str.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -27,7 +28,7 @@
 struct Duplicate: public df::Actor {
   
 private:
-  df::InputPort<std::string> * input;
+  df::InputPort<df::Str> * input;
 
   static df::ActorRegister<Duplicate> reg;
 public:

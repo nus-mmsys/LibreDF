@@ -20,6 +20,7 @@
 #define DF_INTPRODUCER_H_
 
 #include "core/df.h"
+#include "types/integer.h"
 
 #include <iostream>
 #include <string>
@@ -33,7 +34,7 @@ private:
   
   int last;
   
-  df::OutputPort<int> * outputInt;
+  df::OutputPort<df::Integer> * output;
  
   static  df::ActorRegister<IntProducer> reg;
 public:
@@ -45,7 +46,7 @@ public:
   virtual void run();
   
   virtual void runRT();
-  virtual void runDist();
+  //virtual void runDist();
   
   virtual ~IntProducer();
   

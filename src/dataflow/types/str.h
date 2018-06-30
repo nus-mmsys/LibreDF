@@ -16,32 +16,31 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_HAMILTON_H_
-#define DF_HAMILTON_H_
+#ifndef DF_STR_H_
+#define DF_STR_H_
 
-#include "core/df.h"
-#include "types/str.h"
+#include "core/token_type.h"
 
-#include <iostream>
+namespace df {
 
-class Hamilton: public df::Actor {
-  
-private:
-  df::InputPort<df::Str> * input;
-  df::OutputPort<df::Str> * output;
+  class Str : public TokenType {
 
-  int nbnodes;
+  private:
+    std::string data; 
+  public:
+  
+    Str() { }
+    void set(std::string d) { data = d; } 
+    std::string get() { return data; } 
+    virtual std::string to_string() { return data; }
+    virtual void load(char * buf) {
+	data = buf;
+    }
+    virtual char * buffer() { return nullptr; }
+  
+    virtual ~Str() { }
+  };
 
-  static df::ActorRegister<Hamilton> reg;
-public:
-  
-  Hamilton(const std::string & name);
-  
-  virtual void init();
-  virtual void run();
-  
-  virtual ~Hamilton();
-  
 };
 
-#endif /* DF_HAMILTON_H_ */
+#endif /* DF_STR_H_ */
