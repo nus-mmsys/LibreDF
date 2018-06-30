@@ -84,12 +84,21 @@ int Actor::connectActor(Actor * snk) {
   return connectActor(snk,1,1);  
 }
 
-int Actor::connectActor(std::string portname, std::string host, int portnb) {
+int Actor::connectActor(std::string edge, std::string host, int portnb) {
+
+  int index = -1;
+
+  string outp = edge2OutputPort(edge, index);
   
-  if (outputPorts.find(portname) == outputPorts.end())
+  if (outputPorts.find(outp) == outputPorts.end()) {
+	  log("port "+outp+" is not found.");
+ 	  return -1; 
+  }  
+
+  if (outputPorts.find(outp) == outputPorts.end())
     return -1;
 
-  return outputPorts[portname]->connectPort(host, portnb);
+  return outputPorts[outp]->connectPort(host, portnb);
 
 }
 

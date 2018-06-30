@@ -11,6 +11,7 @@ df produce_consume {
     actor B {
         computation = IntConsumer;
 	input = e1;
+	host = 192.168.0.89;
 	input_port = 7001;
     }
     parameter {

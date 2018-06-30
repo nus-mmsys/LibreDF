@@ -66,7 +66,7 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
 	int snkport;
-	string snkpname, snkportstr;
+	string snkportstr;
 	if (distributed) {
 		string snkhost = clnsock->communicate(dischost, discport,
 				"actor "+snk->getName()+" host");
@@ -74,7 +74,7 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 				"edge "+snk->getName()+" "+edge);
 		try {
 		    snkport = stoi(snkportstr);
-		    src->connectActor(snkpname, snkhost, snkport);
+		    src->connectActor(edge, snkhost, snkport);
 		}
 		catch (...) {
 		    cerr << snkportstr << " is invalid port number.\n";
