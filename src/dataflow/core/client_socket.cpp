@@ -53,6 +53,18 @@ int ClientSocket::connect(std::string host, int port) {
 	return 0;
 }
 
+std::string ClientSocket::communicate(std::string host, int port, std::string msg) {
+	char buf[1024];
+	std::string res;
+	std::strcpy(buf, msg.c_str());
+	if (connect(host, port) < 0)
+		return "";
+	send(buf);
+	read(buf, 1024);
+	res = buf;
+	close();
+	return res;
+}
 void ClientSocket::send(char * buf) {
 	::send(sock , buf , std::strlen(buf) , 0 );
 }

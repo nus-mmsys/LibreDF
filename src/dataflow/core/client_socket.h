@@ -50,6 +50,7 @@ namespace df {
     ClientSocket(const std::string& sockname); 
 
     int connect(std::string host, int port); 
+    std::string communicate(std::string host, int port, std::string msg);
     void send(char * buf); 
     int read(char * buf, int size); 
     void close();
