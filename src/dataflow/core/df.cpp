@@ -205,7 +205,8 @@ void Dataflow::run() {
     f.second->waitRun();
   }
  
-  waitDiscovery();
+  if (distributed)
+    waitDiscovery();
 
   status = DataflowStatus::STOPPED;
   

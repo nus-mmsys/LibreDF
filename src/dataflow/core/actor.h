@@ -298,7 +298,8 @@ namespace df {
 
     template<typename T>
     T * consume(InputPort<T> * port) {
-      port->lock();
+      if (!distributed)
+      	port->lock();
       if (port->getStatus() == TokenStatus::EOS)
         status = ActorStatus::EOS;
       return port->get(); 
@@ -306,25 +307,11 @@ namespace df {
 
     template<typename T>
     T * produce(OutputPort<T> * port) {
-      port->lock();
+      if (!distributed)
+      	port->lock();
       if (status == ActorStatus::EOS)
         port->setStatus(TokenStatus::EOS);
       return port->get();
-    }
-
-    template<typename T>
-    T * receive(InputPort<T> * port) {
-      T * data = port->receive();
-      if (port->getStatus() == TokenStatus::EOS)
-        status = ActorStatus::EOS;
-      return data; 
-    }
-
-    template<typename T>
-    void send(OutputPort<T> * port, char * buf) {
-      port->send(buf);
-      if (status == ActorStatus::EOS)
-        port->setStatus(TokenStatus::EOS);
     }
 
     template<typename T>
@@ -335,12 +322,14 @@ namespace df {
 
     template<typename T>
     void release(InputPort<T> * port) {
-      port->unlock();
+      if (!distributed) 
+      	port->unlock();
     }
    
     template<typename T>
     void release(OutputPort<T> * port) {
-      port->unlock();
+      if (!distributed)
+	port->unlock();
     }
 
     void listen(Port * port); 
