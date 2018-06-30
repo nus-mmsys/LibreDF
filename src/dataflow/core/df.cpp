@@ -68,26 +68,17 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 	if (distributed) {
 
 		int snkport;
-		string snkpname, snkhost;
-		char msg[1024];
+		string snkpname, snkportstr;
+	
+		string snkhost = clnsock->communicate(dischost, discport,
+				"actor.host "+snk->getName());
+		string msg = clnsock->communicate(dischost, discport,
+				"edge.port "+edge);
 		
-		clnsock->connect(dischost,discport);
-		strcpy(msg,("actor.host "+snk->getName()).c_str());
-		clnsock->send(msg);
-		clnsock->read(msg, 1024);
-		snkhost = msg;
-		clnsock->close();
-
-		clnsock->connect(dischost,discport);
-		strcpy(msg, ("edge.port "+edge).c_str());
-		clnsock->send(msg);
-		clnsock->read(msg, 1024);
 		stringstream ss(msg);
 		getline(ss, snkpname, ' ');
-		string snkportstr;
 		getline(ss, snkportstr);
 		//snkport = stoi(snkportstr);
-		clnsock->close();
 
 		src->connectActor(snkpname, snkhost, snkport);
 		
