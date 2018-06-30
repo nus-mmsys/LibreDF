@@ -50,6 +50,17 @@ void IntProducer::run() {
 
 }
 
+void IntProducer::runDist() {
+
+  char buf[1024];
+  memset(buf, 0, 1024);
+  strcpy(buf,(to_string(stepno)).c_str());
+  send(outputInt, buf);
+  log("producing "+to_string(stepno));
+  sleep(500);
+
+}
+
 void IntProducer::runRT() {
   
   string data = to_string(stepno);

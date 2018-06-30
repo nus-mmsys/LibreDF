@@ -6,8 +6,17 @@ df produce_consume {
     actor A {
         computation = IntProducer;
         last = 64;
+	output = e1;
     }
     actor B {
         computation = IntConsumer;
+	input = e1;
+	input_port = 7001;
+    }
+    parameter {
+	realtime = false;
+	distributed = false;
+	discovery_host = 192.168.0.89;
+	discovery_port = 7000;
     }
 }

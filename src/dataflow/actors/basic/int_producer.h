@@ -45,6 +45,7 @@ public:
   virtual void run();
   
   virtual void runRT();
+  virtual void runDist();
   
   virtual ~IntProducer();
   

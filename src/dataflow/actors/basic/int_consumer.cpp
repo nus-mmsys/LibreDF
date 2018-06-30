@@ -36,6 +36,17 @@ void IntConsumer::run() {
   release(input);
 }
 
+void IntConsumer::runDist() {
+
+  std::string msg;
+  char buf[1024];
+  read(input, buf, 1024);
+  msg = buf;
+  log("consuming "+msg);
+  sleep(500);
+  
+}
+
 IntConsumer::~IntConsumer() {
   destroyPort(input);
 }
