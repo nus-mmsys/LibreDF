@@ -105,7 +105,10 @@ namespace df {
     virtual void runRT() {
       run();
     }
-    
+    virtual void runDist() {
+      run();
+    }
+   
   public:
 
     std::string getName();

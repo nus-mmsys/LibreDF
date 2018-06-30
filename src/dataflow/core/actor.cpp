@@ -237,7 +237,13 @@ void Actor::runActor() {
   }
 
   while(status != ActorStatus::EOS) {
-    realtime? runRT() : run();
+    if (distributed) {
+	    runDist();
+    } else if (!realtime) {
+    	    run();
+    } else {
+	    runRT();
+    }
     stepno++;
   }
   
