@@ -89,14 +89,13 @@ namespace df {
      */
     void increaseLinked();
     
-    virtual void listenPort(int portnb) {}
-
-    virtual void acceptPort() {}
+    virtual void listen(int portnb) {}
+    virtual void accept() {}
+    virtual void startAccept() {}
+    virtual void waitAccept() {}
 
     virtual int connectPort(std::string host, int portnb) { return 0; }
-
     virtual int connectPort(Port* n) { return 0; }
-    
     virtual int connectPort(Port* n, int index) { return 0; }
     
     /*!

@@ -19,6 +19,8 @@
 #ifndef DF_INPUTPORT_H
 #define DF_INPUTPORT_H
 
+#include <thread>
+
 #include "server_socket.h"
 #include "port.h"
 
@@ -37,6 +39,7 @@ namespace df {
     
   private:
 
+    std::thread taccept;
     Buffer<T> * buf;
     int index;
     ServerSocket * sock;
@@ -54,15 +57,23 @@ namespace df {
         port_cap = std::string(typeid(T).name());
     }
    
-    virtual void listenPort(int portnb) {
+    virtual void listen(int portnb) {
 	sock->listen(portnb);
     } 
 
-    virtual void acceptPort() {
+    void accept() {
 	sock->accept();
+    } 
+
+    virtual void startAccept() {
+        taccept = std::thread(&InputPort<T>::accept, this);
     }
 
-    int readPort(char * buf, int size) {
+    virtual void waitAccept() {
+        taccept.join();
+    }
+
+    int read(char * buf, int size) {
 	return sock->read(buf, size);
     }
 

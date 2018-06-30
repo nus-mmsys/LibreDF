@@ -172,10 +172,17 @@ void Actor::startRun() {
 
 void Actor::waitInit() {
   tinit.join();
+
 }
 
 void Actor::waitRun() {
   trun.join();
+  if (distributed) {
+    for (auto p : inputPorts) {
+	    p.second->waitAccept();
+    }
+  }
+
 }
 
 void Actor::setPipeLock(mutex * mux) {
@@ -193,6 +200,7 @@ void Actor::initActor() {
   if (distributed) {
     for (auto p : inputPorts) {
 	    listen(p.second);
+	    p.second->startAccept();
     }
   }
    
@@ -207,7 +215,7 @@ void Actor::listen(Port * port) {
       } 
       else {
 	      int portnb = getPropInt(name+"_port");
-      	      port->listenPort(portnb);
+      	      port->listen(portnb);
       }
     }
 
