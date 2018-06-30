@@ -90,9 +90,11 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 		strcpy(msg, ("edge.port "+edge).c_str());
 		clnsock->send(msg);
 		clnsock->read(msg, 1024);
-	        //TODO
-		//snkpname = msg; // part 1
-		//snkport = msg; // part 2
+		stringstream ss(msg);
+		getline(ss, snkpname, ' ');
+		string snkportstr;
+		getline(ss, snkportstr);
+		snkport = stoi(snkportstr);
 		clnsock->close();
 
 		src->connectActor(snkpname, snkhost, snkport);

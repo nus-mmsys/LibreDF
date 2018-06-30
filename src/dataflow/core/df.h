@@ -23,6 +23,7 @@
 #include <iostream>
 #include <set>
 #include <cstdarg>
+#include <sstream>
 
 #include "actor_factory.h"
 #include "actor.h"
