@@ -220,12 +220,11 @@ void Actor::runActor() {
       	status = ActorStatus::ERROR;
       }
     }
-  }
-
-  for (auto p : outputPorts) {
-    if (p.second->getLinked() == 0) {
-      log(p.second->getName()+string(" is not connected"));
-      status = ActorStatus::ERROR;
+    for (auto p : outputPorts) {
+      if (p.second->getLinked() == 0) {
+        log(p.second->getName()+string(" is not connected"));
+        status = ActorStatus::ERROR;
+      }
     }
   }
 
