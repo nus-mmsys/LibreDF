@@ -53,6 +53,14 @@ std::string Actor::edge2InputPort(std::string edgename) {
 	return "";
 }
 
+int Actor::inputPortNumber(std::string portname) {
+  return getPropInt(portname+"_port");
+}
+
+std::string Actor::hostName() {
+  return getProp("host");
+}
+
 std::string Actor::edge2OutputPort(std::string edgename, int & index) {
   
   string portname = prop.getKey(edgename);

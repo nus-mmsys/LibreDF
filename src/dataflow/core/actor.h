@@ -255,7 +255,11 @@ namespace df {
      *   The consumption rate of snk actor.
      */
     int connectActor(Actor * snk, std::string edge, int p, int c);
-    
+
+    int inputPortNumber(std::string portname);
+
+    std::string hostName();
+
     /*!
      * Execute the init of this actor.
      * The actors are connected by a link list and each actor calls initActor of the next actor.
