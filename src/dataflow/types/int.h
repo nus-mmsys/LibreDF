@@ -39,14 +39,14 @@ namespace df {
 	try {
 		data = atoi(buf);
 	} catch (...) {
-		std::cerr << "integer: failed to load data.\n";
+		std::cerr << "int: from_bytes failed.\n";
 	}
     }
     virtual char * to_bytes() { 
 	try {
 	    sprintf(buf, "%d", data);
         } catch(...) {
-    		std::cerr << "integer: failed to buffer.\n";
+    		std::cerr << "int: from_bytes failed.\n";
 	}
 	return buf;
     }

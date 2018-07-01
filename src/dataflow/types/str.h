@@ -27,6 +27,7 @@ namespace df {
 
   private:
     std::string data; 
+    char buf[1024];
   public:
   
     Str() { }
@@ -36,7 +37,10 @@ namespace df {
     virtual void from_bytes(char * buf) {
 	data = buf;
     }
-    virtual char * to_bytes() { return nullptr; }
+    virtual char * to_bytes() { 
+	std::strcpy(buf, data.c_str());
+	return buf;
+    }
   
     virtual ~Str() { }
   };
