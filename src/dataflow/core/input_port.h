@@ -78,7 +78,7 @@ namespace df {
     T * read() {
 	char buf[1024];
 	sock->read(buf, 1024);
-	data->load(buf);
+	data->from_bytes(buf);
 	return data;
     }
 

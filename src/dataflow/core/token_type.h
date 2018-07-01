@@ -29,8 +29,8 @@ namespace df {
   public:
     TokenType() {  }
     virtual std::string to_string() = 0;
-    virtual void load(char * buf) = 0;   
-    virtual char * buffer() = 0;   
+    virtual void from_bytes(char * buf) = 0;   
+    virtual char * to_bytes() = 0;   
     ~TokenType() {
     }
   };

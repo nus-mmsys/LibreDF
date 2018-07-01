@@ -33,10 +33,10 @@ namespace df {
     void set(std::string d) { data = d; } 
     std::string get() { return data; } 
     virtual std::string to_string() { return data; }
-    virtual void load(char * buf) {
+    virtual void from_bytes(char * buf) {
 	data = buf;
     }
-    virtual char * buffer() { return nullptr; }
+    virtual char * to_bytes() { return nullptr; }
   
     virtual ~Str() { }
   };

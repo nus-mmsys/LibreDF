@@ -65,7 +65,7 @@ namespace df {
     }
 
     void send() {
-	char * buf = data->buffer();
+	char * buf = data->to_bytes();
     	sock->send(buf);
     }
 

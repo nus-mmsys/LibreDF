@@ -35,14 +35,14 @@ namespace df {
     void set(int d) { data = d; } 
     int get() { return data; } 
     std::string to_string() { return std::to_string(data); }
-    virtual void load(char * buf) {
+    virtual void from_bytes(char * buf) {
 	try {
 		data = atoi(buf);
 	} catch (...) {
 		std::cerr << "integer: failed to load data.\n";
 	}
     }
-    virtual char * buffer() { 
+    virtual char * to_bytes() { 
 	try {
 	    sprintf(buf, "%d", data);
         } catch(...) {
