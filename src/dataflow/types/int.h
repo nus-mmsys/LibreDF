@@ -16,22 +16,22 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_INTEGER_H_
-#define DF_INTEGER_H_
+#ifndef DF_INT_H_
+#define DF_INT_H_
 
 #include "core/token_type.h"
 #include <cstdio>
 
 namespace df {
 
-  class Integer : public TokenType {
+  class Int : public TokenType {
 
   private:
     int data;
     char buf[1024];
   public:
   
-    Integer() { }
+    Int() { }
     void set(int d) { data = d; } 
     int get() { return data; } 
     std::string to_string() { return std::to_string(data); }
@@ -51,9 +51,9 @@ namespace df {
 	return buf;
     }
   
-    virtual ~Integer() { }
+    virtual ~Int() { }
   };
 
 };
 
-#endif /* DF_INTEGER_H_ */
+#endif /* DF_INT_H_ */

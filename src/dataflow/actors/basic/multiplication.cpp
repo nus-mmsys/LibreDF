@@ -25,16 +25,16 @@ ActorRegister<Multiplication> Multiplication::reg("Multiplication");
 
 Multiplication::Multiplication(const string & name) :
 Actor(name) {
-  input1 = createInputPort<Integer>("input1");
-  input2 = createInputPort<Integer>("input2");
+  input1 = createInputPort<Int>("input1");
+  input2 = createInputPort<Int>("input2");
 }
 
 
 void  Multiplication::run() {
   
-  Integer * in1 = consume(input1);
+  Int * in1 = consume(input1);
   
-  Integer * in2 = consume(input2);
+  Int * in2 = consume(input2);
   
   int out = in1->get() * in2->get();
   

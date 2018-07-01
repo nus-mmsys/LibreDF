@@ -20,7 +20,7 @@
 #define DF_ADDITION_H_
 
 #include "core/df.h"
-#include "types/integer.h"
+#include "types/int.h"
 
 #include <iostream>
 
@@ -29,8 +29,8 @@ using namespace df;
 struct Addition: public df::Actor {
  
 private:
-  df::InputPort<df::Integer> * input1;
-  df::InputPort<df::Integer>* input2;
+  df::InputPort<df::Int> * input1;
+  df::InputPort<df::Int>* input2;
   
   static  ActorRegister<Addition> reg;
 public:

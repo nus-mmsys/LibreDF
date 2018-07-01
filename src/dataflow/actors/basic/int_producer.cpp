@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<IntProducer> IntProducer::reg("IntProducer");
 
 IntProducer::IntProducer(const string& name) : Actor(name) {
-  output = createOutputPort<Integer>("output");
+  output = createOutputPort<Int>("output");
 }
 
 void IntProducer::init() {
@@ -38,7 +38,7 @@ void IntProducer::init() {
 
 void IntProducer::run() {
 
-  Integer * out = produce(output);	
+  Int * out = produce(output);	
   out->set(stepno);
   log("producing "+to_string(stepno));
   sleep(500);
@@ -75,7 +75,7 @@ void IntProducer::runRT() {
     return;
   }
   
-  Integer * out = output->get(); 
+  Int * out = output->get(); 
   out->set(stepno);
   
   log("producing "+to_string(stepno));

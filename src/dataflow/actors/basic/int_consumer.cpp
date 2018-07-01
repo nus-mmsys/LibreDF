@@ -24,11 +24,11 @@ using namespace std;
 ActorRegister<IntConsumer> IntConsumer::reg("IntConsumer");
 
 IntConsumer::IntConsumer(const string & name) : Actor(name) {
-  input = createInputPort<Integer>("input");
+  input = createInputPort<Int>("input");
 }
 
 void IntConsumer::run() {
-  Integer * in = consume(input);
+  Int * in = consume(input);
   
   log("consuming "+in->to_string());
   sleep(500);

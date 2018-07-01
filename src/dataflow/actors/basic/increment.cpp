@@ -25,17 +25,17 @@ ActorRegister<Increment> Increment::reg("Increment");
 
 Increment::Increment(const string & name) :
 Actor(name) {
-  input = createInputPort<Integer>("input");
-  output = createOutputPort<Integer>("output");
+  input = createInputPort<Int>("input");
+  output = createOutputPort<Int>("output");
 }
 
 void  Increment::run() {
   
-  Integer * in = consume(input);
+  Int * in = consume(input);
   int outval = in->get() + 1;
   release(input);
   
-  Integer * out =  produce(output);
+  Int * out =  produce(output);
   out->set(outval);
   release(output);
   

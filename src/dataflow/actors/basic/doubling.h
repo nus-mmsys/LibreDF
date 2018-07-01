@@ -20,12 +20,12 @@
 #define DF_DOUBLING_H_
 
 #include "core/df.h"
-#include "types/integer.h"
+#include "types/int.h"
 
 class Doubling: public df::Actor {
 private:
-  df::InputPort<df::Integer> * input;
-  df::OutputPort<df::Integer> * output;
+  df::InputPort<df::Int> * input;
+  df::OutputPort<df::Int> * output;
   
   static df::ActorRegister<Doubling> reg;
 public:
