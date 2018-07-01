@@ -19,12 +19,12 @@ df adder {
 	input2 = e2;
 	input1_port = 7000;
 	input2_port = 7001;
-	host = 192.168.0.89;
+	host = 127.0.0.1;
     }
     parameter {
 	realtime = false;
-	distributed = false;
-	discovery_host = 192.168.0.89;
+	distributed = true;
+	discovery_host = 127.0.0.1;
 	discovery_port = 7007;
     }
 }

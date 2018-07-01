@@ -88,7 +88,7 @@ void Dataflow::startDiscovery() {
 
   string machine_ip = srvsock->ipaddr("en0");
 
-  if (dischost != machine_ip)
+  if (dischost != "127.0.0.1" && dischost != machine_ip)
 	 return; 
 
   cout << "Discovery started...\n";

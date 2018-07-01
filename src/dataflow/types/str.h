@@ -23,25 +23,19 @@
 
 namespace df {
 
-  class Str : public TokenType {
+  class Str : public TokenType<std::string> {
 
-  private:
-    std::string data; 
-    char buf[1024];
   public:
   
-    Str() { }
-    void set(std::string d) { data = d; } 
-    std::string get() { return data; } 
-    virtual std::string to_string() { return data; }
+    Str():TokenType<std::string>() { }
+    virtual std::string to_string() { return *data; }
     virtual void from_bytes(char * buf) {
-	data = buf;
+	*data = buf;
     }
     virtual char * to_bytes() { 
-	std::strcpy(buf, data.c_str());
+	std::strcpy(buf, data->c_str());
 	return buf;
     }
-  
     virtual ~Str() { }
   };
 
