@@ -25,10 +25,17 @@
 namespace df {
 
   class Mat : public TokenType<cv::Mat> {
-
+  private:
+    int rows;
+    int cols;
+    int type;
   public:
   
-    Mat():TokenType<cv::Mat>() { }
+    Mat():TokenType<cv::Mat>() {
+    	rows = 0;
+    	cols = 0;
+    	type = 0;
+    }
     virtual std::string to_string() { 
 	cv::Size size = data->size();
 	int total = size.width * size.height * data->channels();
@@ -43,10 +50,34 @@ namespace df {
 	return data->clone();
     }
     virtual void from_bytes(char * buf) {
-	//TODO	
+	if (rows == 0 || cols == 0) {
+		memcpy(&rows, buf, sizeof(int)); 
+		memcpy(&cols, buf+sizeof(int), sizeof(int)); 
+		memcpy(&type, buf+2*sizeof(int), sizeof(int)); 
+		std::cout << "rows = " << rows << "\n";
+		std::cout << "cols = " << cols << "\n";
+		std::cout << "type = " << type << "\n";
+	}
+	delete data;
+	data = new cv::Mat(rows, cols, type, buf+3*sizeof(int));
+        //data->data = reinterpret_cast<uchar *>(buf+3*sizeof(int));
     }
-    virtual char * to_bytes() { 
-	return reinterpret_cast<char *>(data->data);
+    virtual char * to_bytes() {
+	int size = sizeof(data->data)+3*sizeof(int); 
+	if (size > sizeof(buf)) {
+		delete buf;
+		buf = new char[size];
+	}
+	if (rows == 0 || cols == 0 || size > sizeof(buf)) {
+		rows = data->rows;
+		cols = data->cols;
+		type = data->type();
+		memcpy(buf, &rows, sizeof(int)); 
+		memcpy(buf+sizeof(int), &cols, sizeof(int)); 
+		memcpy(buf+2*sizeof(int), &type, sizeof(int));
+	}
+	memcpy(buf+3*sizeof(int), reinterpret_cast<char*>(data->data), size-3*sizeof(int)); 
+	return buf;
     }
     virtual ~Mat() { }
   };

@@ -9,6 +9,13 @@ df imwrite {
     }
     actor B {
     	computation = ImageWrite;
+	host = 127.0.0.1;
+	input_port = 7010;
+    }
+    parameter {
+	distributed = false;
+	discovery_host = 127.0.0.1;
+	discovery_port = 7000;
     }
 }
 
