@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<CascadeClassifier> CascadeClassifier::reg("CascadeClassifier");
 
 CascadeClassifier::CascadeClassifier(const string& name) : Actor(name) {
-  inputGray = createInputPort<cv::Mat>("input_gray");
-  inputImage = createInputPort<cv::Mat>("input_image");
+  inputGray = createInputPort<df::Mat>("input_gray");
+  inputImage = createInputPort<df::Mat>("input_image");
 }
 
 void CascadeClassifier::init() {
@@ -44,10 +44,10 @@ void CascadeClassifier::init() {
 
 void CascadeClassifier::run() {
 
-  cv::Mat * ingray = consume(inputGray);	
-  cv::Mat * inimg = consume(inputImage);	
-  frame = inimg->clone(); 
-  classifier.detectMultiScale(*ingray, objects, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
+  df::Mat * ingray = consume(inputGray);	
+  df::Mat * inimg = consume(inputImage);	
+  frame = inimg->get(); 
+  classifier.detectMultiScale(*(ingray->data), objects, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
     for (cv::Rect r : objects) {
     log("detecting rect in "+to_string(stepno)+" ("+to_string(r.x)+", "+to_string(r.y)+", "+to_string(r.width)+", "+to_string(r.height)+")");
     cv::rectangle(frame, r, cv::Scalar(0, 255, 0));

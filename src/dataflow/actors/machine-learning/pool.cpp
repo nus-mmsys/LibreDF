@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Pool> Pool::reg("Pool");
 
 Pool::Pool(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Pool::init() {
@@ -44,9 +44,9 @@ void Pool::init() {
 
 void Pool::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  cv::resize(*in, *out, cv::Size(0,0), scalex, scaley, cv::INTER_LINEAR);
+  df::Mat * in = consume(input);	
+  df::Mat * out = produce(output);
+  cv::resize(*(in->data), *(out->data), cv::Size(0,0), scalex, scaley, cv::INTER_LINEAR);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

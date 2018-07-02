@@ -20,6 +20,8 @@
 #define DF_VIDEOCAPTURE_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -37,7 +39,7 @@ private:
   cv::VideoCapture * cap;
   cv::Mat frame;
 
-  df::OutputPort<cv::Mat> * outputMat;
+  df::OutputPort<df::Mat> * outputMat;
  
   static  df::ActorRegister<VideoCapture> reg;
 public:

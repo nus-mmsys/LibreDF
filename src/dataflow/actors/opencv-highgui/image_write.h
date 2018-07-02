@@ -20,6 +20,7 @@
 #define DF_IMAGEWRITE_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -36,7 +37,7 @@ private:
   cv::Mat frame;
   std::string file_name;
 
-  df::InputPort<cv::Mat> * input;
+  df::InputPort<df::Mat> * input;
  
   static  df::ActorRegister<ImageWrite> reg;
 public:

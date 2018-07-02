@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Convolution> Convolution::reg("Convolution");
 
 Convolution::Convolution(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Convolution::init() {
@@ -61,9 +61,9 @@ void Convolution::init() {
 void Convolution::run() {
 
   anchor = cv::Point(kernel.cols - anchor.x - 1, kernel.rows - anchor.y -1);
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  cv::filter2D(*in, *out, ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
+  df::Mat * in = consume(input);	
+  df::Mat * out = produce(output);
+  cv::filter2D(*(in->data), *(out->data), ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

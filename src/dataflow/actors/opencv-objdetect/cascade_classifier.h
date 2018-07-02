@@ -20,6 +20,8 @@
 #define DF_CASCADE_CLASSIFIER_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
+
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
@@ -41,8 +43,8 @@ private:
   std::vector<cv::Rect> objects;  
   std::string file_name;
 
-  df::InputPort<cv::Mat> * inputGray;
-  df::InputPort<cv::Mat> * inputImage;
+  df::InputPort<df::Mat> * inputGray;
+  df::InputPort<df::Mat> * inputImage;
  
   static  df::ActorRegister<CascadeClassifier> reg;
 public:

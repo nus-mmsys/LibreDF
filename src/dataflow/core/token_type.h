@@ -29,9 +29,9 @@ namespace df {
   template <typename T>	
   class TokenType  {
   protected:
-    T * data;
     char buf[DF_PKT_SIZE];
   public:
+    T * data;
     TokenType() { data = new T(); }
     virtual void set(const T& d) { *data = d; }
     virtual T get() { return *data; }

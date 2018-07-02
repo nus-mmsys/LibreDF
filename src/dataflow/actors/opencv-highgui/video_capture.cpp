@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<VideoCapture> VideoCapture::reg("VideoCapture");
 
 VideoCapture::VideoCapture(const string& name) : Actor(name){
-  outputMat = createOutputPort<cv::Mat>("output");
+  outputMat = createOutputPort<df::Mat>("output");
 }
 
 void VideoCapture::init() {
@@ -44,8 +44,8 @@ void VideoCapture::init() {
 
 void VideoCapture::run() {
 
-  cv::Mat * out = produce(outputMat);	
-  *out = frame.clone();
+  df::Mat * out = produce(outputMat);	
+  out->set(frame);
   log("capturing frame "+to_string(stepno));
 
   *cap >> frame;

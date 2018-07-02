@@ -33,12 +33,19 @@ namespace df {
    	//TODO
 	return "";
     }
+    virtual void set(const cv::Mat& d) {
+	*data = d.clone();
+    }
+    virtual cv::Mat get() {
+	return data->clone();
+    }
     virtual void from_bytes(char * buf) {
 	//TODO	
     }
     virtual char * to_bytes() { 
 	//TODO
-	return data->data;
+	//return data->data;
+	return nullptr;
     }
     virtual ~Mat() { }
   };

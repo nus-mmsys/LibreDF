@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<ImageWrite> ImageWrite::reg("ImageWrite");
 
 ImageWrite::ImageWrite(const string& name) : Actor(name){
-  input = createInputPort<cv::Mat>("input");
+  input = createInputPort<df::Mat>("input");
 }
 
 void ImageWrite::init() {
@@ -33,8 +33,8 @@ void ImageWrite::init() {
 
 void ImageWrite::run() {
 
-  cv::Mat * in = consume(input);	
-  frame = in->clone();
+  df::Mat * in = consume(input);	
+  frame = in->get();
   log("writing image "+to_string(stepno));
   release(input);
 
