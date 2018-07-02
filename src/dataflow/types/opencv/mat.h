@@ -29,12 +29,17 @@ namespace df {
     int rows;
     int cols;
     int type;
+    char * chdata;
   public:
   
     Mat():TokenType<cv::Mat>() {
     	rows = 0;
     	cols = 0;
     	type = 0;
+	chdata = new char[100000];
+    }
+    virtual int size() {
+	    return 100000;
     }
     virtual std::string to_string() { 
 	cv::Size size = data->size();
@@ -79,7 +84,9 @@ namespace df {
 	memcpy(chdata+3*sizeof(int), reinterpret_cast<char*>(data->data), size-3*sizeof(int)); 
 	return chdata;
     }
-    virtual ~Mat() { }
+    virtual ~Mat() { 
+    	delete chdata;
+    }
   };
 
 };

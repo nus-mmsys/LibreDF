@@ -24,10 +24,16 @@
 namespace df {
 
   class Str : public TokenType<std::string> {
-
+  private:
+	char * chdata;
   public:
   
-    Str():TokenType<std::string>() { }
+    Str():TokenType<std::string>() {
+   	chdata = new char[1024];
+    }
+    virtual int size() {
+	    return 1024;
+    }
     virtual std::string to_string() { return *data; }
     virtual void from_bytes(char * buf) {
 	*data = buf;
@@ -36,7 +42,9 @@ namespace df {
 	std::strcpy(chdata, data->c_str());
 	return chdata;
     }
-    virtual ~Str() { }
+    virtual ~Str() {
+   	delete chdata;
+    }
   };
 
 };

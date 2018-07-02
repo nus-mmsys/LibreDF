@@ -44,6 +44,8 @@ namespace df {
     Buffer<T> * buf;
     int index;
     ServerSocket * sock;
+    char * chdata;
+    int chsize;
 
   public:
     
@@ -57,6 +59,8 @@ namespace df {
 	sock = new ServerSocket("port:"+name);
         port_cap = std::string(typeid(T).name());
 	data = new T();
+	chsize = data->size();
+	chdata = new char[chsize];
     }
    
     virtual void listen(int portnb) {
@@ -76,9 +80,8 @@ namespace df {
     }
 
     T * read() {
-	char buf[1024];
-	sock->read(buf, 1024);
-	data->from_bytes(buf);
+	sock->read(chdata, chsize);
+	data->from_bytes(chdata);
 	return data;
     }
 
@@ -114,6 +117,7 @@ namespace df {
      */
     virtual ~InputPort() {
 	    delete data;
+	    delete chdata;
     }
     
   };

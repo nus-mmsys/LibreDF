@@ -25,24 +25,22 @@
 namespace df {
 
   class Int : public TokenType<int> {
-
+  private:
+	  char * chdata;
   public:
   
-    Int():TokenType<int>() { }
+    Int():TokenType<int>() {
+    	chdata = new char[sizeof(int)];
+    }
+    virtual int size() {
+	    return sizeof(int);
+    }
     std::string to_string() { return std::to_string(*data); }
     virtual void from_bytes(char * buf) {
-	try {
-		*data = atoi(buf);
-	} catch (...) {
-		std::cerr << "int: from_bytes failed.\n";
-	}
+	memcpy(&data, buf, sizeof(int));
     }
     virtual char * to_bytes() { 
-	try {
-	    sprintf(chdata, "%d", *data);
-        } catch(...) {
-    		std::cerr << "int: from_bytes failed.\n";
-	}
+	memcpy(chdata, &data, sizeof(int));
 	return chdata;
     }
   

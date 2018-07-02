@@ -22,26 +22,22 @@
 #include <iostream>
 #include <string>
 
-#define DF_PKT_SIZE 1024
-
 namespace df {
  
   template <typename T>	
   class TokenType  {
-  protected:
-    char * chdata;
   public:
     T * data;
     TokenType() {
-	data = new T(); 
-    	chdata = new char[DF_PKT_SIZE];
+	data = new T();
     }
+    virtual int size() = 0;
     virtual void set(const T& d) { *data = d; }
     virtual T get() { return *data; }
     virtual std::string to_string() = 0;
     virtual void from_bytes(char * buf) = 0;   
     virtual char * to_bytes() = 0;   
-    virtual ~TokenType() { delete data; delete chdata; }
+    virtual ~TokenType() { delete data; }
   };
   
 }
