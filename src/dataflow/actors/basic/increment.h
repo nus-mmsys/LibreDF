@@ -20,7 +20,7 @@
 #define DF_INCREMENT_H_
 
 #include "core/df.h"
-#include "types/int.h"
+#include "types/basic/int.h"
 
 struct Increment: public df::Actor {
 private:

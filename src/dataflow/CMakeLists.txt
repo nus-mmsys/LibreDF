@@ -11,13 +11,14 @@ include_directories(.)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 aux_source_directory(core core)
-aux_source_directory(types types)
 
 if (BUILD_ML_ACTORS)
+  aux_source_directory(types/opencv ocvtype)
   aux_source_directory(actors/machine-learning ml)
 endif()
 
 if (BUILD_OPENCV_ACTORS)
+  aux_source_directory(types/opencv ocvtype)
   aux_source_directory(actors/opencv-core ocvcore)
   aux_source_directory(actors/opencv-imgproc ocvimg)
   aux_source_directory(actors/opencv-highgui ocvgui)
@@ -26,13 +27,16 @@ if (BUILD_OPENCV_ACTORS)
 endif()
 
 if (BUILD_BASIC_ACTORS)
+  aux_source_directory(types/basic basictype)
   aux_source_directory(actors/basic basic)
 endif()
 
-add_library(${PROJECT_NAME} SHARED ${core} ${types} ${ml} 
+add_library(${PROJECT_NAME} SHARED ${core}
+				${ml} 
 				${ocvcore} ${ocvimg}
 				${ocvgui} ${ocvobj}
-				${ocvvideo} ${basic}
+				${ocvvideo} ${ocvtype}
+				${basic} ${basictype}
 				)
 
 if (BUILD_OPENCV_ACTORS OR BUILD_ML_ACTORS)

@@ -16,28 +16,33 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_STRINGCONSUMER_H_
-#define DF_STRINGCONSUMER_H_
+#ifndef DF_MAT_H_
+#define DF_MAT_H_
 
-#include "core/df.h"
-#include "types/basic/str.h"
+#include "core/token_type.h"
+#include "opencv2/core/core.hpp"
 
-#include <iostream>
+namespace df {
 
-class StringConsumer: public df::Actor {
-  
-private:
-  df::InputPort<df::Str> * input;
+  class Mat : public TokenType<cv::Mat> {
 
-  static df::ActorRegister<StringConsumer> reg;
-public:
+  public:
   
-  StringConsumer(const std::string & name);
-  
-  virtual void run();
-  
-  virtual ~StringConsumer();
-  
+    Mat():TokenType<cv::Mat>() { }
+    virtual std::string to_string() { 
+   	//TODO
+	return "";
+    }
+    virtual void from_bytes(char * buf) {
+	//TODO	
+    }
+    virtual char * to_bytes() { 
+	//TODO
+	return data->data;
+    }
+    virtual ~Mat() { }
+  };
+
 };
 
-#endif /* DF_STRINGCONSUMER_H_ */
+#endif /* DF_MAT_H_ */

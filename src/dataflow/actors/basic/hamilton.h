@@ -20,7 +20,7 @@
 #define DF_HAMILTON_H_
 
 #include "core/df.h"
-#include "types/str.h"
+#include "types/basic/str.h"
 
 #include <iostream>
 

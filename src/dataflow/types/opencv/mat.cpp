@@ -16,28 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_STRINGCONSUMER_H_
-#define DF_STRINGCONSUMER_H_
+#include "mat.h"
 
-#include "core/df.h"
-#include "types/basic/str.h"
-
-#include <iostream>
-
-class StringConsumer: public df::Actor {
-  
-private:
-  df::InputPort<df::Str> * input;
-
-  static df::ActorRegister<StringConsumer> reg;
-public:
-  
-  StringConsumer(const std::string & name);
-  
-  virtual void run();
-  
-  virtual ~StringConsumer();
-  
-};
-
-#endif /* DF_STRINGCONSUMER_H_ */
+using namespace df;
