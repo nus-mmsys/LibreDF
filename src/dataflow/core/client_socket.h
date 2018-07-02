@@ -43,7 +43,6 @@ namespace df {
      int sock;
      std::string hostaddr;
      int portnb;
-     char sockbuf[1024];
      struct sockaddr_in addr;
 
   public:
@@ -51,8 +50,8 @@ namespace df {
 
     int connect(std::string host, int port); 
     std::string communicate(std::string host, int port, std::string msg);
-    void send(char * buf); 
-    int read(char * buf, int size); 
+    void send(char * buf, int size); 
+    int recv(char * buf, int size); 
     void close();
 
   };

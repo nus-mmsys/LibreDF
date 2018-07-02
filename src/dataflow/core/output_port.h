@@ -44,7 +44,7 @@ namespace df {
     std::vector<InputPort<T>*> nextPorts; /**< A list of the next ports. A subclass actor must add its actors to this list */
     
     ClientSocket * sock;
-
+    int chsize;
   public:
     
     /*!
@@ -58,6 +58,7 @@ namespace df {
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
       data = new T();
+      chsize = data->size();
     }
     
     virtual int connectPort(std::string host, int portnb) {
@@ -66,7 +67,7 @@ namespace df {
 
     void send() {
 	char * buf = data->to_bytes();
-    	sock->send(buf);
+    	sock->send(buf, chsize);
     }
 
     T * getdata() {

@@ -44,7 +44,6 @@ namespace df {
      int clnsock;
      std::string hostaddr;
      int portnb;
-     char sockbuf[1024];
      struct sockaddr_in addr;
 
   public:
@@ -53,8 +52,8 @@ namespace df {
 
     int listen(int port); 
     int accept();     
-    void send(char * buf); 
-    int read(char * buf, int size); 
+    void send(char * buf, int size); 
+    int recv(char * buf, int size); 
     void clnclose(); 
     void srvclose(); 
     std::string ipaddr(const std::string& interface);

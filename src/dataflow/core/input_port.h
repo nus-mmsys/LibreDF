@@ -80,7 +80,7 @@ namespace df {
     }
 
     T * read() {
-	sock->read(chdata, chsize);
+	sock->recv(chdata, chsize);
 	data->from_bytes(chdata);
 	return data;
     }

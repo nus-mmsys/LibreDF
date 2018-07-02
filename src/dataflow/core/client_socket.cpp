@@ -59,19 +59,19 @@ std::string ClientSocket::communicate(std::string host, int port, std::string ms
 	std::strcpy(buf, msg.c_str());
 	if (connect(host, port) < 0)
 		return "";
-	send(buf);
-	read(buf, 1024);
+	send(buf, std::strlen(buf));
+	recv(buf, 1024);
 	res = buf;
 	close();
 	return res;
 }
-void ClientSocket::send(char * buf) {
-	::send(sock , buf , std::strlen(buf) , 0 );
+void ClientSocket::send(char * buf, int size) {
+	::send(sock , buf , size , 0 );
 }
 
-int ClientSocket::read(char * buf, int size) {
+int ClientSocket::recv(char * buf, int size) {
     	memset(buf, 0, size);
-	return ::read(sock , buf, size);
+	return ::recv(sock , buf, size, 0);
 }
 
 void ClientSocket::close() {

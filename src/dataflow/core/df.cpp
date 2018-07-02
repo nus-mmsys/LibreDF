@@ -108,7 +108,7 @@ void Dataflow::discovery() {
   while (status != DataflowStatus::STOPPED) {
     srvsock->accept();
 
-    srvsock->read(buf, 1024);
+    srvsock->recv(buf, 1024);
     msg = buf;
     stringstream ss(msg);
 
@@ -128,7 +128,7 @@ void Dataflow::discovery() {
     }
 
     strcpy(buf, val.c_str());
-    srvsock->send(buf);
+    srvsock->send(buf, std::strlen(buf));
     srvsock->clnclose();
   }
   srvsock->srvclose();

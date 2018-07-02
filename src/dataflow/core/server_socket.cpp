@@ -73,13 +73,13 @@ int ServerSocket::accept() {
 	return 0;
 }
 
-void ServerSocket::send(char * buf) {
-	::send(clnsock , buf , std::strlen(buf) , 0 );
+void ServerSocket::send(char * buf, int size) {
+	::send(clnsock , buf , size , 0 );
 }
 
-int ServerSocket::read(char * buf, int size) {
+int ServerSocket::recv(char * buf, int size) {
 	memset(buf, 0, size);
-	return ::read(clnsock , buf, size);
+	return ::recv(clnsock , buf, size, 0);
 }
 
 void ServerSocket::clnclose() {
