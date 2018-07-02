@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<EqualizeHist> EqualizeHist::reg("EqualizeHist");
 
 EqualizeHist::EqualizeHist(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void EqualizeHist::init() {
@@ -34,9 +34,9 @@ void EqualizeHist::init() {
 
 void EqualizeHist::run() {
 
-  cv::Mat * in = consume(input);
-  cv::Mat * out = produce(output);
-  cv::equalizeHist(*in, *out);
+  auto in = consume(input);
+  auto out = produce(output);
+  cv::equalizeHist(*in->data, *out->data);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

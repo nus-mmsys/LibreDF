@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<MeanShift> MeanShift::reg("MeanShift");
 
 MeanShift::MeanShift(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
+  input = createInputPort<df::Mat>("input");
 }
 
 void MeanShift::init() {
@@ -39,8 +39,8 @@ void MeanShift::init() {
   track_window = r;
 
   //What we need to track needs to be specified.
-  cv::Mat * in = consume(input);
-  frame = in->clone();  
+  auto in = consume(input);
+  frame = in->get();  
   release(input);
 
   cv::Mat roi = frame(r);
@@ -70,8 +70,8 @@ void MeanShift::run() {
   file_name = dfout_path + std::to_string(stepno) + ".png";
   cv::imwrite(file_name, frame); 
  
-  cv::Mat * in = consume(input);
-  frame = in->clone();  
+  auto in = consume(input);
+  frame = in->get();  
   release(input);
 
 }

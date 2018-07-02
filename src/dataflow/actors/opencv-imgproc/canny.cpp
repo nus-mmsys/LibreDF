@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Canny> Canny::reg("Canny");
 
 Canny::Canny(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Canny::init() {
@@ -49,10 +49,10 @@ void Canny::init() {
 
 void Canny::run() {
 
-  cv::Mat * in = consume(input);
-  cv::Mat * out = produce(output);
-  cv::blur(*in, *out, cv::Size(3,3));  
-  cv::Canny(*out, *out, threshold, threshold*ratio, kernel_size);
+  auto in = consume(input);
+  auto out = produce(output);
+  cv::blur(*in->data, *out->data, cv::Size(3,3));  
+  cv::Canny(*out->data, *out->data, threshold, threshold*ratio, kernel_size);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

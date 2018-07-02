@@ -20,6 +20,7 @@
 #define DF_CVTCOLOR_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -33,8 +34,8 @@ class CvtColor: public df::Actor {
 private:
 
   cv::Mat frame;
-  df::InputPort<cv::Mat> * input;
-  df::OutputPort<cv::Mat> * output;
+  df::InputPort<df::Mat> * input;
+  df::OutputPort<df::Mat> * output;
  
   static  df::ActorRegister<CvtColor> reg;
 public:

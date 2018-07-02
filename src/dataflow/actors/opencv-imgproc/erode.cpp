@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Erode> Erode::reg("Erode");
 
 Erode::Erode(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Erode::init() {
@@ -42,9 +42,9 @@ void Erode::init() {
 
 void Erode::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  cv::erode(*in, *out, kernel);
+  auto in = consume(input);	
+  auto out = produce(output);
+  cv::erode(*in->data, *out->data, kernel);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

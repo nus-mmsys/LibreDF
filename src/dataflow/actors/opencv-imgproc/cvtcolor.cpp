@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<CvtColor> CvtColor::reg("CvtColor");
 
 CvtColor::CvtColor(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void CvtColor::init() {
@@ -34,9 +34,9 @@ void CvtColor::init() {
 
 void CvtColor::run() {
 
-  cv::Mat * in = consume(input);
-  cv::Mat * out = produce(output);
-  cv::cvtColor(*in, *out, CV_BGR2GRAY);
+  auto in = consume(input);
+  auto out = produce(output);
+  cv::cvtColor(*in->data, *out->data, CV_BGR2GRAY);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

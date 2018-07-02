@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Sobel> Sobel::reg("Sobel");
 
 Sobel::Sobel(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Sobel::init() {
@@ -49,9 +49,9 @@ void Sobel::init() {
 
 void Sobel::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  cv::Sobel(*in, *out, ddepth, dx, dy, 3, 1, 0, cv::BORDER_DEFAULT);
+  auto in = consume(input);	
+  auto out = produce(output);
+  cv::Sobel(*in->data, *out->data, ddepth, dx, dy, 3, 1, 0, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

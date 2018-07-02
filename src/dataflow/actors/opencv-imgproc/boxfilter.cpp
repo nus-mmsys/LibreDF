@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<BoxFilter> BoxFilter::reg("BoxFilter");
 
 BoxFilter::BoxFilter(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void BoxFilter::init() {
@@ -47,9 +47,9 @@ void BoxFilter::init() {
 
 void BoxFilter::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  cv::boxFilter(*in, *out, ddepth, ksize, anchor, true, cv::BORDER_DEFAULT);
+  auto in = consume(input);	
+  auto out = produce(output);
+  cv::boxFilter(*in->data, *out->data, ddepth, ksize, anchor, true, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

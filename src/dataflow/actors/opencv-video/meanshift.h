@@ -20,6 +20,7 @@
 #define DF_MEANSHIFT_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
@@ -42,7 +43,7 @@ private:
   cv::Rect track_window;
   std::string file_name;
 
-  df::InputPort<cv::Mat> * input;
+  df::InputPort<df::Mat> * input;
  
   static  df::ActorRegister<MeanShift> reg;
 public:

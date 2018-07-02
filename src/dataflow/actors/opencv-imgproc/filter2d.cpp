@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Filter2D> Filter2D::reg("Filter2D");
 
 Filter2D::Filter2D(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Filter2D::init() {
@@ -44,9 +44,9 @@ void Filter2D::init() {
 
 void Filter2D::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  cv::filter2D(*in, *out, ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
+  auto in = consume(input);	
+  auto out = produce(output);
+  cv::filter2D(*in->data, *out->data, ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

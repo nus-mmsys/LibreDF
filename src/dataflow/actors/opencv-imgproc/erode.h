@@ -20,6 +20,7 @@
 #define DF_ERODE_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -34,8 +35,8 @@ private:
 
   cv::Mat frame, kernel;
   int erosion_size;
-  df::InputPort<cv::Mat> * input;
-  df::OutputPort<cv::Mat> * output;
+  df::InputPort<df::Mat> * input;
+  df::OutputPort<df::Mat> * output;
  
   static  df::ActorRegister<Erode> reg;
 public:
