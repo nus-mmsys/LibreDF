@@ -20,6 +20,7 @@
 #define DF_IMAGEREAD_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -39,7 +40,7 @@ private:
   std::string file_name;
   std::vector<std::string> files;
 
-  df::OutputPort<cv::Mat> * output;
+  df::OutputPort<df::Mat> * output;
  
   static  df::ActorRegister<ImageRead> reg;
 public:

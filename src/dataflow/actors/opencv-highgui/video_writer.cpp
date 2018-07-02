@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<VideoWriter> VideoWriter::reg("VideoWriter");
 
 VideoWriter::VideoWriter(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
+  input = createInputPort<df::Mat>("input");
 }
 
 void VideoWriter::init() {
@@ -39,8 +39,8 @@ void VideoWriter::init() {
 
 void VideoWriter::run() {
 
-  cv::Mat * in = consume(input);	
-  frame = in->clone();
+  auto in = consume(input);	
+  frame = in->get();
   log("writing frame "+to_string(stepno));
   release(input);
 

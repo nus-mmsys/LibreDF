@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<ImageShow> ImageShow::reg("ImageShow");
 
 ImageShow::ImageShow(const string& name) : Actor(name) {
-  inputMat = createInputPort<cv::Mat>("opencv input");
+  inputMat = createInputPort<df::Mat>("opencv input");
 }
 
 void ImageShow::init() {
@@ -34,8 +34,8 @@ void ImageShow::init() {
 
 void ImageShow::run() {
 
-  cv::Mat * in = consume(inputMat);	
-  frame = in->clone();
+  auto in = consume(inputMat);	
+  frame = in->get();
   log("capturing frame "+to_string(stepno));
   release(inputMat);
  

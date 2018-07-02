@@ -20,6 +20,7 @@
 #define DF_IMAGESHOW_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -34,7 +35,7 @@ class ImageShow: public df::Actor {
 private:
 
   cv::Mat frame;
-  df::InputPort<cv::Mat> * inputMat;
+  df::InputPort<df::Mat> * inputMat;
  
   static  df::ActorRegister<ImageShow> reg;
 public:
