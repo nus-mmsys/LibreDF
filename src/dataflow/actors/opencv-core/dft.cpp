@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Dft> Dft::reg("Dft");
 
 Dft::Dft(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Dft::init() {
@@ -34,10 +34,10 @@ void Dft::init() {
 
 void Dft::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  in->convertTo(*out, CV_32F);
-  cv::dft(*out, *out);
+  auto in = consume(input);	
+  auto out = produce(output);
+  in->data->convertTo(*out->data, CV_32F);
+  cv::dft(*out->data, *out->data);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

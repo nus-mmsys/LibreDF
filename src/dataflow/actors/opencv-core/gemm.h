@@ -20,6 +20,7 @@
 #define DF_GEMM_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -36,9 +37,9 @@ private:
   cv::Mat in2planes[3];
   cv::Mat outplanes[3];
 
-  df::InputPort<cv::Mat> * input1;
-  df::InputPort<cv::Mat> * input2;
-  df::OutputPort<cv::Mat> * output;
+  df::InputPort<df::Mat> * input1;
+  df::InputPort<df::Mat> * input2;
+  df::OutputPort<df::Mat> * output;
  
   static  df::ActorRegister<Gemm> reg;
 public:

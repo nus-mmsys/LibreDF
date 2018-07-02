@@ -24,9 +24,9 @@ using namespace std;
 ActorRegister<Gemm> Gemm::reg("Gemm");
 
 Gemm::Gemm(const string& name) : Actor(name) {
-  input1 = createInputPort<cv::Mat>("input1");
-  input2 = createInputPort<cv::Mat>("input2");
-  output = createOutputPort<cv::Mat>("output");
+  input1 = createInputPort<df::Mat>("input1");
+  input2 = createInputPort<df::Mat>("input2");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Gemm::init() {
@@ -34,14 +34,14 @@ void Gemm::init() {
 
 void Gemm::run() {
 
-  cv::Mat * in1 = consume(input1);	
-  cv::Mat * in2 = consume(input2);
+  auto in1 = consume(input1);	
+  auto in2 = consume(input2);
 
-  in1->convertTo(*in1,CV_32F);
-  in2->convertTo(*in2,CV_32F);
+  in1->data->convertTo(*in1->data,CV_32F);
+  in2->data->convertTo(*in2->data,CV_32F);
 
-  cv::split(*in1, in1planes);
-  cv::split(*in2, in2planes);
+  cv::split(*in1->data, in1planes);
+  cv::split(*in2->data, in2planes);
 
   release(input1);
   release(input2);
@@ -54,9 +54,9 @@ void Gemm::run() {
   cv::sqrt(outplanes[1], outplanes[1]);
   cv::sqrt(outplanes[2], outplanes[2]);
 
-  cv::Mat * out = produce(output);
-  cv::merge(outplanes, 3, *out);
-  out->convertTo(*out,CV_8U);
+  auto out = produce(output);
+  cv::merge(outplanes, 3, *out->data);
+  out->data->convertTo(*out->data,CV_8U);
   log("sending "+to_string(stepno));
   release(output);
 

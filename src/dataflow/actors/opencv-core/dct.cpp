@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Dct> Dct::reg("Dct");
 
 Dct::Dct(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Dct::init() {
@@ -34,10 +34,10 @@ void Dct::init() {
 
 void Dct::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  in->convertTo(*out, CV_32F);
-  cv::dct(*out, *out);
+  auto in = consume(input);	
+  auto out = produce(output);
+  in->data->convertTo(*out->data, CV_32F);
+  cv::dct(*out->data, *out->data);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);
