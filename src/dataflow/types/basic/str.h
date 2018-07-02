@@ -33,8 +33,8 @@ namespace df {
 	*data = buf;
     }
     virtual char * to_bytes() { 
-	std::strcpy(buf, data->c_str());
-	return buf;
+	std::strcpy(chdata, data->c_str());
+	return chdata;
     }
     virtual ~Str() { }
   };

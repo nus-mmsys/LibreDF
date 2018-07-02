@@ -39,11 +39,11 @@ namespace df {
     }
     virtual char * to_bytes() { 
 	try {
-	    sprintf(buf, "%d", *data);
+	    sprintf(chdata, "%d", *data);
         } catch(...) {
     		std::cerr << "int: from_bytes failed.\n";
 	}
-	return buf;
+	return chdata;
     }
   
     virtual ~Int() { }

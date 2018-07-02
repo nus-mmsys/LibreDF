@@ -29,19 +29,19 @@ namespace df {
   template <typename T>	
   class TokenType  {
   protected:
-    char * buf;
+    char * chdata;
   public:
     T * data;
     TokenType() {
 	data = new T(); 
-    	buf = new char[DF_PKT_SIZE];
+    	chdata = new char[DF_PKT_SIZE];
     }
     virtual void set(const T& d) { *data = d; }
     virtual T get() { return *data; }
     virtual std::string to_string() = 0;
     virtual void from_bytes(char * buf) = 0;   
     virtual char * to_bytes() = 0;   
-    virtual ~TokenType() { delete data; delete buf; }
+    virtual ~TokenType() { delete data; delete chdata; }
   };
   
 }

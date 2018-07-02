@@ -64,20 +64,20 @@ namespace df {
     }
     virtual char * to_bytes() {
 	int size = sizeof(data->data)+3*sizeof(int); 
-	if (size > sizeof(buf)) {
-		delete buf;
-		buf = new char[size];
+	if (size > sizeof(chdata)) {
+		delete chdata;
+		chdata = new char[size];
 	}
-	if (rows == 0 || cols == 0 || size > sizeof(buf)) {
+	if (rows == 0 || cols == 0 || size > sizeof(chdata)) {
 		rows = data->rows;
 		cols = data->cols;
 		type = data->type();
-		memcpy(buf, &rows, sizeof(int)); 
-		memcpy(buf+sizeof(int), &cols, sizeof(int)); 
-		memcpy(buf+2*sizeof(int), &type, sizeof(int));
+		memcpy(chdata, &rows, sizeof(int)); 
+		memcpy(chdata+sizeof(int), &cols, sizeof(int)); 
+		memcpy(chdata+2*sizeof(int), &type, sizeof(int));
 	}
-	memcpy(buf+3*sizeof(int), reinterpret_cast<char*>(data->data), size-3*sizeof(int)); 
-	return buf;
+	memcpy(chdata+3*sizeof(int), reinterpret_cast<char*>(data->data), size-3*sizeof(int)); 
+	return chdata;
     }
     virtual ~Mat() { }
   };
