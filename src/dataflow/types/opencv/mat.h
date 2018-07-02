@@ -30,8 +30,11 @@ namespace df {
   
     Mat():TokenType<cv::Mat>() { }
     virtual std::string to_string() { 
-   	//TODO
-	return "";
+	cv::Size size = data->size();
+	int total = size.width * size.height * data->channels();
+	std::vector<uchar> dv(data->ptr(), data->ptr() + total);
+        std::string res(dv.begin(), dv.end());
+	return res;
     }
     virtual void set(const cv::Mat& d) {
 	*data = d.clone();
@@ -43,9 +46,7 @@ namespace df {
 	//TODO	
     }
     virtual char * to_bytes() { 
-	//TODO
-	//return data->data;
-	return nullptr;
+	return reinterpret_cast<char *>(data->data);
     }
     virtual ~Mat() { }
   };
