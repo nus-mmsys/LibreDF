@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Idft> Idft::reg("Idft");
 
 Idft::Idft(const string& name) : Actor(name) {
-  input = createInputPort<cv::Mat>("input");
-  output = createOutputPort<cv::Mat>("output");
+  input = createInputPort<df::Mat>("input");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Idft::init() {
@@ -34,10 +34,10 @@ void Idft::init() {
 
 void Idft::run() {
 
-  cv::Mat * in = consume(input);	
-  cv::Mat * out = produce(output);
-  in->convertTo(*out, CV_32F);
-  cv::idft(*out, *out);
+  auto in = consume(input);	
+  auto out = produce(output);
+  in->data->convertTo(*out->data, CV_32F);
+  cv::idft(*out->data, *out->data);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

@@ -24,9 +24,9 @@ using namespace std;
 ActorRegister<Multiply> Multiply::reg("Multiply");
 
 Multiply::Multiply(const string& name) : Actor(name) {
-  input1 = createInputPort<cv::Mat>("input1");
-  input2 = createInputPort<cv::Mat>("input2");
-  output = createOutputPort<cv::Mat>("output");
+  input1 = createInputPort<df::Mat>("input1");
+  input2 = createInputPort<df::Mat>("input2");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Multiply::init() {
@@ -40,10 +40,10 @@ void Multiply::init() {
 
 void Multiply::run() {
 
-  cv::Mat * in1 = consume(input1);	
-  cv::Mat * in2 = consume(input2);	
-  cv::Mat * out = produce(output);
-  cv::multiply(*in1, *in2, *out, scale);
+  auto in1 = consume(input1);	
+  auto in2 = consume(input2);	
+  auto out = produce(output);
+  cv::multiply(*in1->data, *in2->data, *out->data, scale);
   log("sending "+to_string(stepno));
   release(input1);
   release(input2);

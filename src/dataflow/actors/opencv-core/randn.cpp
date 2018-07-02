@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<Randn> Randn::reg("Randn");
 
 Randn::Randn(const string& name) : Actor(name) {
-  output = createOutputPort<cv::Mat>("output");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Randn::init() {
@@ -50,8 +50,8 @@ void Randn::init() {
 void Randn::run() {
 
   cv::randn(*frame, cv::Scalar(0,0,0), cv::Scalar(256,256,256));
-  cv::Mat * out = produce(output);
-  *out = frame->clone();
+  auto out = produce(output);
+  out->set(*frame);
   log("sending "+to_string(stepno));
   sleep(100);
 

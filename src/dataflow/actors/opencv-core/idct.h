@@ -20,6 +20,7 @@
 #define DF_IDCT_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 
 #include <iostream>
@@ -32,8 +33,8 @@ class Idct: public df::Actor {
 private:
 
   cv::Mat frame, inplanes[3];
-  df::InputPort<cv::Mat> * input;
-  df::OutputPort<cv::Mat> * output;
+  df::InputPort<df::Mat> * input;
+  df::OutputPort<df::Mat> * output;
  
   static  df::ActorRegister<Idct> reg;
 public:

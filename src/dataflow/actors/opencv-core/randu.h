@@ -20,6 +20,7 @@
 #define DF_RANDU_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 
 #include <iostream>
@@ -32,7 +33,7 @@ class Randu: public df::Actor {
 private:
 
   cv::Mat * frame;
-  df::OutputPort<cv::Mat> * output;
+  df::OutputPort<df::Mat> * output;
   int width, height, last;
 
   static  df::ActorRegister<Randu> reg;
