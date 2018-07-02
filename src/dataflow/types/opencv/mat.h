@@ -39,9 +39,6 @@ namespace df {
     virtual cv::Mat get() {
 	return data->clone();
     }
-    cv::Mat&& ref() {
-	   return std::move(*data);
-    } 
     virtual void from_bytes(char * buf) {
 	//TODO	
     }
