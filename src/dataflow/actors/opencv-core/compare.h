@@ -20,6 +20,7 @@
 #define DF_COMPARE_H_
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 
 #include <iostream>
@@ -33,9 +34,9 @@ private:
 
   cv::Mat frame;
   int operation;
-  df::InputPort<cv::Mat> * input1;
-  df::InputPort<cv::Mat> * input2;
-  df::OutputPort<cv::Mat> * output;
+  df::InputPort<df::Mat> * input1;
+  df::InputPort<df::Mat> * input2;
+  df::OutputPort<df::Mat> * output;
  
   static  df::ActorRegister<Compare> reg;
 public:
