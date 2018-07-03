@@ -17,9 +17,18 @@ df double_int {
     }
     actor B {
         computation = Doubling;
+	host = 127.0.0.1;
+	input_port = 7001;
     }
     actor C {
         computation = IntConsumer;
+	host = 127.0.0.1;
+	input_port = 7002;
+    }
+    parameter {
+	distributed = true;
+	discovery_host = 127.0.0.1;
+	discovery_port = 7000;
     }
 }
 
