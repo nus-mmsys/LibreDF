@@ -307,7 +307,10 @@ namespace df {
     template<typename T>
     T * consume(InputPort<T> * port) {
       if (distributed) {
-	return port->read();	
+	T * res = port->recv();
+	if (res == nullptr)
+		log(getName()+" did recieve on port "+port->getName());
+      	return res;
       }
       else {
 	port->lock();

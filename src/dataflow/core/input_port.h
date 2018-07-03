@@ -79,8 +79,9 @@ namespace df {
         taccept.join();
     }
 
-    T * read() {
-	sock->recv(chdata, chsize);
+    T * recv() {
+	if (sock->recv(chdata, chsize) < 0)
+		return nullptr;
 	data->from_bytes(chdata);
 	return data;
     }
