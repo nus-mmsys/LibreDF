@@ -33,7 +33,7 @@ int Parser::load_from_file(const char * filename) {
 	if (ret < 0)
 		return ret;
 	if (ret == 0) {
-		cout << "tdf is loaded successfully.\n";
+		cout << "file is loaded successfully.\n";
 		return 0;
 	} else
 		return ret;
