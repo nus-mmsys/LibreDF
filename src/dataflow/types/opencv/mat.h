@@ -38,7 +38,7 @@ namespace df {
     	type = 0;
     }
     virtual int size() {
-	    return (data->total()*data*elemSize)+1024;
+	    return (data->total()*data->elemSize())+1024;
     }
     virtual std::string to_string() { 
 	cv::Size size = data->size();
@@ -78,7 +78,7 @@ namespace df {
 		memcpy(chdata+sizeof(int), &cols, sizeof(int)); 
 		memcpy(chdata+2*sizeof(int), &type, sizeof(int));
 	}
-	memcpy(chdata+3*sizeof(int), reinterpret_cast<char*>(data->data), size-3*sizeof(int)); 
+	memcpy(chdata+3*sizeof(int), reinterpret_cast<char*>(data->data), data->total()*data->elemSize()); 
 	return chdata;
     }
     virtual ~Mat() { 
