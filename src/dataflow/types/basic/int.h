@@ -37,10 +37,10 @@ namespace df {
     }
     std::string to_string() { return std::to_string(*data); }
     virtual void from_bytes(char * buf) {
-	    std::memcpy(&data, buf, sizeof(int));
+	    std::memcpy(data, buf, sizeof(int));
     }
     virtual char * to_bytes() { 
-	    std::memcpy(chdata, &data, sizeof(int));
+	    std::memcpy(chdata, data, sizeof(int));
 	    return chdata;
     }
   
