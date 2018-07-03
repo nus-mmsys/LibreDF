@@ -36,10 +36,9 @@ namespace df {
     	rows = 0;
     	cols = 0;
     	type = 0;
-	chdata = new char[100000];
     }
     virtual int size() {
-	    return 100000;
+	    return (data->total()*data*elemSize)+1024;
     }
     virtual std::string to_string() { 
 	cv::Size size = data->size();
@@ -68,12 +67,10 @@ namespace df {
         //data->data = reinterpret_cast<uchar *>(buf+3*sizeof(int));
     }
     virtual char * to_bytes() {
-	int size = sizeof(data->data)+3*sizeof(int); 
-	if (size > sizeof(chdata)) {
-		delete chdata;
-		chdata = new char[size];
-	}
-	if (rows == 0 || cols == 0 || size > sizeof(chdata)) {
+	if (rows == 0 || cols == 0) {
+		if (chdata)
+			delete chdata;
+		chdata = new char[size()];
 		rows = data->rows;
 		cols = data->cols;
 		type = data->type();
