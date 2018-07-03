@@ -62,6 +62,11 @@ namespace df {
     
     struct stat stat_info; /**< It is to ckeck if the rdf_path exists */
 
+    std::chrono::high_resolution_clock::time_point hrtstart; 
+    std::chrono::high_resolution_clock::time_point hrtend; 
+    clock_t tstart;
+    clock_t tend;
+
   protected:
 
     std::string name; /**< The name of the actor */
@@ -74,18 +79,18 @@ namespace df {
     std::map<std::string, Port*> outputPorts; /**< Map of output ports referenced by their name */
 
     bool distributed, realtime;
-    
-    clock_t tstart;
-    clock_t tend;
-    void start() { 
-	    tstart = clock(); 
-    }
-    void end(std::string msg) { 
-	    tend = clock();
-	    log(msg+" exect = "+std::to_string(double(tend - tstart)/CLOCKS_PER_SEC)); 
-    }
-
     ActorStatus status; 
+   
+    /*!
+     * Timing measurement
+     * hstart, hend : high_resolution_clock
+     * start, end   : clock_t
+     */ 
+    void hstart();
+    void hend(std::string msg); 
+    void start();
+    void end(std::string msg); 
+
     /*!
      * Actor constructor
      * \param name

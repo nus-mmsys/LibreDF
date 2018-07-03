@@ -258,5 +258,21 @@ void Actor::runActor() {
   
 }
 
+void Actor::hstart() { 
+	hrtstart = std::chrono::high_resolution_clock::now(); 
+}
+void Actor::hend(std::string msg) { 
+	hrtend = std::chrono::high_resolution_clock::now(); 
+	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(hrtend - hrtstart); 
+	log(msg+" exect = "+std::to_string(time_span.count())); 
+    }
+void Actor::start() { 
+	tstart = clock(); 
+}
+void Actor::end(std::string msg) { 
+	tend = clock();
+	log(msg+" exect = "+std::to_string(double(tend - tstart)/CLOCKS_PER_SEC)); 
+}
+
 Actor::~Actor() { 
 }
