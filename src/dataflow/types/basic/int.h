@@ -37,11 +37,11 @@ namespace df {
     }
     std::string to_string() { return std::to_string(*data); }
     virtual void from_bytes(char * buf) {
-	memcpy(&data, buf, sizeof(int));
+	    std::memcpy(&data, buf, sizeof(int));
     }
     virtual char * to_bytes() { 
-	memcpy(chdata, &data, sizeof(int));
-	return chdata;
+	    std::memcpy(chdata, &data, sizeof(int));
+	    return chdata;
     }
   
     virtual ~Int() { }

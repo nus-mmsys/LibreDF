@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 
 namespace df {
  
