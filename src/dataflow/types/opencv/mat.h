@@ -36,6 +36,7 @@ namespace df {
     	rows = 0;
     	cols = 0;
     	type = 0;
+    	chdata = nullptr;
     }
     virtual int size() {
 	    return (data->total()*data->elemSize())+1024;
@@ -58,9 +59,6 @@ namespace df {
 		memcpy(&rows, buf, sizeof(int)); 
 		memcpy(&cols, buf+sizeof(int), sizeof(int)); 
 		memcpy(&type, buf+2*sizeof(int), sizeof(int)); 
-		std::cout << "rows = " << rows << "\n";
-		std::cout << "cols = " << cols << "\n";
-		std::cout << "type = " << type << "\n";
 	}
 	delete data;
 	data = new cv::Mat(rows, cols, type, buf+3*sizeof(int));
@@ -68,7 +66,7 @@ namespace df {
     }
     virtual char * to_bytes() {
 	if (rows == 0 || cols == 0) {
-		if (chdata)
+		if (chdata!=nullptr)
 			delete chdata;
 		chdata = new char[size()];
 		rows = data->rows;
