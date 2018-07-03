@@ -309,7 +309,7 @@ namespace df {
       if (distributed) {
 	T * res = port->recv();
 	if (res == nullptr)
-		log(getName()+" did recieve on port "+port->getName());
+		log("cannot recieve on port "+port->getName());
       	return res;
       }
       else {
