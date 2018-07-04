@@ -59,7 +59,7 @@ namespace df {
 	sock = new ServerSocket("port:"+name);
         port_cap = std::string(typeid(T).name());
 	data = new T();
-	chsize = data->size();
+	chsize = 1024;
 	chdata = new char[chsize];
     }
    
@@ -83,6 +83,12 @@ namespace df {
 	if (sock->recv(chdata, chsize) < 0)
 		return nullptr;
 	data->from_bytes(chdata);
+	int size = data->size(chdata)+sizeof(int);
+	if (size != chsize) {
+		chsize = size;
+		delete chdata;
+		chdata = new char[chsize];
+	}
 	return data;
     }
 

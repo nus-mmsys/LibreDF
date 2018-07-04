@@ -27,12 +27,18 @@ namespace df {
  
   template <typename T>	
   class TokenType  {
+  protected:
+    int dsize;
   public:
     T * data;
     TokenType() {
+	dsize = 0;
 	data = new T();
     }
-    virtual int size() = 0;
+    int size(char * buf) {
+	    memcpy(&dsize, buf, sizeof(int));
+	    return dsize;
+    }
     virtual void set(const T& d) { *data = d; }
     virtual T get() { return *data; }
     virtual std::string to_string() = 0;

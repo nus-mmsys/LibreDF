@@ -29,17 +29,18 @@ namespace df {
   public:
   
     Str():TokenType<std::string>() {
-   	chdata = new char[1024];
-    }
-    virtual int size() {
-	    return 1024;
+   	chdata = new char[1024+sizeof(int)];
     }
     virtual std::string to_string() { return *data; }
     virtual void from_bytes(char * buf) {
-	*data = buf;
+	*data = buf+sizeof(int);
     }
     virtual char * to_bytes() { 
-	std::strcpy(chdata, data->c_str());
+	if (dsize == 0) {
+		dsize = 1024;
+		memcpy(chdata, &dsize, sizeof(int));
+	}	
+	std::strcpy(chdata+sizeof(int), data->c_str());
 	return chdata;
     }
     virtual ~Str() {

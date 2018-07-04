@@ -30,17 +30,18 @@ namespace df {
   public:
   
     Int():TokenType<int>() {
-    	chdata = new char[sizeof(int)];
-    }
-    virtual int size() {
-	    return sizeof(int);
+    	chdata = new char[2*sizeof(int)];
     }
     std::string to_string() { return std::to_string(*data); }
     virtual void from_bytes(char * buf) {
-	    std::memcpy(data, buf, sizeof(int));
+	    std::memcpy(data, buf+sizeof(int), sizeof(int));
     }
     virtual char * to_bytes() { 
-	    std::memcpy(chdata, data, sizeof(int));
+	    if (dsize == 0) {
+		dsize = sizeof(int);
+	    	std::memcpy(chdata, &dsize , sizeof(int));
+	    }
+	    std::memcpy(chdata+sizeof(int), data, sizeof(int));
 	    return chdata;
     }
   

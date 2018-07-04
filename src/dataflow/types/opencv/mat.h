@@ -38,12 +38,13 @@ namespace df {
     	type = 0;
     	chdata = nullptr;
     }
-    virtual int size() {
-	    return (data->total()*data->elemSize())+1024;
+    int imgsize() {
+	//cv::Size size = data->size();
+	//return size.width * size.height * data->channels();
+    	return data->total()*data->elemSize();
     }
     virtual std::string to_string() { 
-	cv::Size size = data->size();
-	int total = size.width * size.height * data->channels();
+	int total = imgsize(); 
 	std::vector<uchar> dv(data->ptr(), data->ptr() + total);
         std::string res(dv.begin(), dv.end());
 	return res;
@@ -55,28 +56,32 @@ namespace df {
 	return data->clone();
     }
     virtual void from_bytes(char * buf) {
-	if (rows == 0 || cols == 0) {
-		memcpy(&rows, buf, sizeof(int)); 
-		memcpy(&cols, buf+sizeof(int), sizeof(int)); 
-		memcpy(&type, buf+2*sizeof(int), sizeof(int)); 
+	if (rows == 0 || cols == 0 || dsize == 0) {
+		dsize = size(buf);
+		memcpy(&rows, buf+sizeof(int), sizeof(int)); 
+		memcpy(&cols, buf+2*sizeof(int), sizeof(int)); 
+		memcpy(&type, buf+3*sizeof(int), sizeof(int)); 
+		data = new cv::Mat(rows, cols, type);
+	} else {
+		memcpy(data->data, reinterpret_cast<uchar*>(buf+sizeof(int)), dsize);
 	}
-	delete data;
-	data = new cv::Mat(rows, cols, type, buf+3*sizeof(int));
-        //data->data = reinterpret_cast<uchar *>(buf+3*sizeof(int));
     }
     virtual char * to_bytes() {
-	if (rows == 0 || cols == 0) {
+	if (rows == 0 || cols == 0 || dsize == 0) {
+		dsize = imgsize();
 		if (chdata!=nullptr)
 			delete chdata;
-		chdata = new char[size()];
+		chdata = new char[dsize+sizeof(int)];
 		rows = data->rows;
 		cols = data->cols;
 		type = data->type();
-		memcpy(chdata, &rows, sizeof(int)); 
-		memcpy(chdata+sizeof(int), &cols, sizeof(int)); 
-		memcpy(chdata+2*sizeof(int), &type, sizeof(int));
-	}
-	memcpy(chdata+3*sizeof(int), reinterpret_cast<char*>(data->data), data->total()*data->elemSize()); 
+		memcpy(chdata, &dsize, sizeof(int)); 
+		memcpy(chdata+sizeof(int), &rows, sizeof(int)); 
+		memcpy(chdata+2*sizeof(int), &cols, sizeof(int)); 
+		memcpy(chdata+3*sizeof(int), &type, sizeof(int));
+	} else {
+		memcpy(chdata+sizeof(int), reinterpret_cast<char*>(data->data), dsize);
+	}	
 	return chdata;
     }
     virtual ~Mat() { 

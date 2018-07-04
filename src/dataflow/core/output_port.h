@@ -58,7 +58,7 @@ namespace df {
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
       data = new T();
-      chsize = data->size();
+      chsize = 1024;
     }
     
     virtual int connectPort(std::string host, int portnb) {
@@ -67,7 +67,10 @@ namespace df {
 
     void send() {
 	char * buf = data->to_bytes();
-    	sock->send(buf, chsize);
+	int size = data->size(buf)+sizeof(int);
+	if (size != chsize)
+		chsize = size;
+	sock->send(buf, chsize);
     }
 
     T * getdata() {
