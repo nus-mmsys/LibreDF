@@ -323,7 +323,7 @@ namespace df {
     template<typename T>
     T * produce(OutputPort<T> * port) {
       if (distributed) {
-	return port->getdata();
+	return port->getSocketData();
       }
       else {
         port->lock();

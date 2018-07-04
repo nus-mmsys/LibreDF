@@ -73,7 +73,7 @@ namespace df {
 	sock->send(buf, chsize);
     }
 
-    T * getdata() {
+    T * getSocketData() {
 	return data;
     }
 
