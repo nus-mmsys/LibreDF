@@ -30,6 +30,7 @@ namespace df {
     int cols;
     int type;
     char * chdata;
+    int cpysize;
   public:
   
     Mat():TokenType<cv::Mat>() {
@@ -58,17 +59,18 @@ namespace df {
     virtual void from_bytes(char * buf) {
 	if (rows == 0 || cols == 0 || dsize == 0) {
 		dsize = size(buf);
+		cpysize = dsize - 3*sizeof(int);
 		memcpy(&rows, buf+sizeof(int), sizeof(int)); 
 		memcpy(&cols, buf+2*sizeof(int), sizeof(int)); 
 		memcpy(&type, buf+3*sizeof(int), sizeof(int)); 
 		data = new cv::Mat(rows, cols, type);
-	} else {
-		memcpy(data->data, reinterpret_cast<uchar*>(buf+sizeof(int)), dsize);
 	}
+	memcpy(data->data, reinterpret_cast<uchar*>(buf+4*sizeof(int)), cpysize);
     }
     virtual char * to_bytes() {
 	if (rows == 0 || cols == 0 || dsize == 0) {
-		dsize = imgsize();
+		dsize = imgsize()+3*sizeof(int);
+		cpysize = imgsize();
 		if (chdata!=nullptr)
 			delete chdata;
 		chdata = new char[dsize+sizeof(int)];
@@ -79,9 +81,8 @@ namespace df {
 		memcpy(chdata+sizeof(int), &rows, sizeof(int)); 
 		memcpy(chdata+2*sizeof(int), &cols, sizeof(int)); 
 		memcpy(chdata+3*sizeof(int), &type, sizeof(int));
-	} else {
-		memcpy(chdata+sizeof(int), reinterpret_cast<char*>(data->data), dsize);
-	}	
+	}
+	memcpy(chdata+4*sizeof(int), reinterpret_cast<char*>(data->data), cpysize);	
 	return chdata;
     }
     virtual ~Mat() { 
