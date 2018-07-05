@@ -87,6 +87,11 @@ int ServerSocket::recvwait(char * buf, int size) {
 	return ::recv(clnsock , buf, size, MSG_WAITALL);
 }
 
+int ServerSocket::recvpeek(char * buf, int size) {
+	memset(buf, 0, size);
+	return ::recv(clnsock , buf, size, MSG_PEEK);
+}
+
 void ServerSocket::clnclose() {
 	::close(clnsock);
 }

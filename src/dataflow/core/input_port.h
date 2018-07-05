@@ -80,15 +80,17 @@ namespace df {
     }
 
     T * recv() {
-	if (sock->recv(chdata, chsize) < 0)
-		return nullptr;
-	data->from_bytes(chdata);
+    	if (sock->recvpeek(chdata, chsize) < 0)
+	        return nullptr;
 	int size = data->size(chdata)+sizeof(int);
 	if (size != chsize) {
 		chsize = size;
 		delete chdata;
-		chdata = new char[chsize];
+		chdata = new char[size];
 	}
+    	if (sock->recvwait(chdata, chsize) < 0)
+		return nullptr;
+	data->from_bytes(chdata);
 	return data;
     }
 
