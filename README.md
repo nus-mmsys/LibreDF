@@ -41,6 +41,7 @@ df <name> {
 ## Example
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
 
+### Non-distributed
 ```
 df pedestrian_detection {
     topology {
@@ -62,6 +63,30 @@ df pedestrian_detection {
 	input_gray = e3;
 	input_image = e4;
         classifier = haarcascade_fullbody.xml;
+    }
+}
+```
+
+### Distributed
+```
+df imwrite {
+    topology {
+        nodes = A,B;
+        edges = e1(A,B);
+    }
+    actor A {
+        computation = VideoCapture;
+        file_name = pedestrian.mp4;
+    }
+    actor B {
+        computation = ImageWrite;
+        host = 127.0.0.1;
+        input_port = 7010;
+    }
+    parameter {
+        distributed = true;
+        discovery_host = 127.0.0.1;
+        discovery_port = 7000;
     }
 }
 ```
@@ -168,14 +193,15 @@ New actors must be placed in the ```src/dataflow/actors``` folder. An actor inhe
 // add.h
 
 #include "core/df.h"
+#include "types/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 
 class Add: public df::Actor {
 private:
   cv::Mat frame;
-  df::InputPort<cv::Mat> * input1;
-  df::InputPort<cv::Mat> * input2;
-  df::OutputPort<cv::Mat> * output;
+  df::InputPort<df::Mat> * input1;
+  df::InputPort<df::Mat> * input2;
+  df::OutputPort<df::Mat> * output;
   static  df::ActorRegister<Add> reg;
 public:
   Add(const string& name);
@@ -195,9 +221,9 @@ using namespace df;
 ActorRegister<Add> Add::reg("Add");
 
 Add::Add(const string& name) : Actor(name) {
-  input1 = createInputPort<cv::Mat>("input1");
-  input2 = createInputPort<cv::Mat>("input2");
-  output = createOutputPort<cv::Mat>("output");
+  input1 = createInputPort<df::Mat>("input1");
+  input2 = createInputPort<df::Mat>("input2");
+  output = createOutputPort<df::Mat>("output");
 }
 
 void Add::init() {
@@ -205,10 +231,10 @@ void Add::init() {
 }
 
 void Add::run() {
-  cv::Mat * in1 = consume(input1);	
-  cv::Mat * in2 = consume(input2);	
-  cv::Mat * out = produce(output);
-  *out = (*in1) + (*in2);
+  auto in1 = consume(input1);	
+  auto in2 = consume(input2);	
+  auto out = produce(output);
+  *out->data = *in1->data + *in2->data;
   log("sending "+to_string(stepno));
   release(input1);
   release(input2);
