@@ -38,10 +38,9 @@ df <name> {
 ```
 
 
-## Example
+## Example (pedestrian detection)
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
 
-### Non-distributed
 ```
 df pedestrian_detection {
     topology {
@@ -67,7 +66,8 @@ df pedestrian_detection {
 }
 ```
 
-### Distributed
+## Example (distributed decoding)
+This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections in order to write the decoded frames to png files.
 ```
 df imwrite {
     topology {
