@@ -54,6 +54,7 @@ void VideoCapture::run() {
 
   release(outputMat);  
 
+  sleep(40);
 }
 VideoCapture::~VideoCapture() {
   cap->release();

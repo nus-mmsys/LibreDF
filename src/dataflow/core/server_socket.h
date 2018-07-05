@@ -54,6 +54,7 @@ namespace df {
     int accept();     
     void send(char * buf, int size); 
     int recv(char * buf, int size); 
+    int recvwait(char * buf, int size); 
     void clnclose(); 
     void srvclose(); 
     std::string ipaddr(const std::string& interface);
