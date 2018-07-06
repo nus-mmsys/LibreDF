@@ -56,30 +56,29 @@ namespace df {
 	return data->clone();
     }
     
-    virtual void serialize_data() {
+    virtual void serialize_data(char * buf) {
 	if (rows == 0 || cols == 0) {
 		matsize = calcMatSize();
-		initPacket(calcMatSize()+3*sizeof(int));
+		buf = initPacket(calcMatSize()+3*sizeof(int));
 		rows = data->rows;
 		cols = data->cols;
 		type = data->type();
-		memcpy(pkt+PKTHEAD, &rows, sizeof(int)); 
-		memcpy(pkt+PKTHEAD+sizeof(int), &cols, sizeof(int)); 
-		memcpy(pkt+PKTHEAD+2*sizeof(int), &type, sizeof(int));
+		memcpy(buf, &rows, sizeof(int)); 
+		memcpy(buf+sizeof(int), &cols, sizeof(int)); 
+		memcpy(buf+2*sizeof(int), &type, sizeof(int));
 	}
-	memcpy(pkt+PKTHEAD+3*sizeof(int), reinterpret_cast<char*>(data->data), matsize);
+	memcpy(buf+3*sizeof(int), reinterpret_cast<char*>(data->data), matsize);
     }
 
     virtual void deserialize_pkt(char * buf) {
 	if (rows == 0 || cols == 0) {
-		pktsize = getPktSize(buf);
-		matsize = getDataSize() - 3*sizeof(int);
-		memcpy(&rows, buf+PKTHEAD, sizeof(int)); 
-		memcpy(&cols, buf+PKTHEAD+sizeof(int), sizeof(int)); 
-		memcpy(&type, buf+PKTHEAD+2*sizeof(int), sizeof(int)); 
+		matsize = getDataSize(buf) - 3*sizeof(int);
+		memcpy(&rows, buf, sizeof(int)); 
+		memcpy(&cols, buf+sizeof(int), sizeof(int)); 
+		memcpy(&type, buf+2*sizeof(int), sizeof(int)); 
 		data = new cv::Mat(rows, cols, type);
 	}
-	memcpy(data->data, reinterpret_cast<uchar*>(buf+PKTHEAD+3*sizeof(int)), matsize);
+	memcpy(data->data, reinterpret_cast<uchar*>(buf+3*sizeof(int)), matsize);
     }
 
     virtual ~Mat() { 

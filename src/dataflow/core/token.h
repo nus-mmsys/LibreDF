@@ -37,14 +37,16 @@ namespace df {
 
   template <typename T>
   class Token : public Synchronized {
-    
-  protected:
-    T * data;
+
+  private:
     int number;
     Status status;
     char * pkt;
     int pktsize;
-    
+ 
+  protected:
+    T * data;
+   
   public:
 
     Token(int size): number(0), status(OK) { 
@@ -53,13 +55,14 @@ namespace df {
 	    initPacket(size);
     } 
    
-    void initPacket(int size) {
+    char * initPacket(int size) {
 	    if (pkt != nullptr)
 		    delete pkt;
 	    pktsize = size+PKTHEAD;
 	    pkt = new char[pktsize];
 	    std::memcpy(pkt, &pktsize , sizeof(int));
 	    std::memcpy(pkt+sizeof(int), &status , sizeof(int));
+    	    return pkt+PKTHEAD;
     }
 
     T * get() { return data; }
@@ -72,25 +75,25 @@ namespace df {
 	    return pktsize;
     }
 
-    int getDataSize() {
-	    return pktsize - PKTHEAD;
+    int getDataSize(char * buf) {
+	    return getPktSize(buf) - PKTHEAD;
     }
 
     char * serialize() {
     	std::memcpy(pkt+sizeof(int), &status, sizeof(int));
-    	serialize_data();
+    	serialize_data(pkt+PKTHEAD);
 	return pkt;	
     }
 
     void deserialize(char * buf) {
 	std::memcpy(&status, buf+sizeof(int), sizeof(int));
-    	deserialize_pkt(buf);
+    	deserialize_pkt(buf+PKTHEAD);
     }
 
     virtual void set(const T& d) { *data = d; }
     virtual T clone() { return *data; }
     virtual std::string to_string() = 0; 
-    virtual void serialize_data() = 0;
+    virtual void serialize_data(char *) = 0;
     virtual void deserialize_pkt(char *) = 0; 
 
     virtual ~Token() {

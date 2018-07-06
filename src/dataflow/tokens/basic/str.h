@@ -31,12 +31,12 @@ namespace df {
     
     virtual std::string to_string() { return *data; }
 
-    virtual void serialize_data() { 
-	std::strcpy(pkt+PKTHEAD, data->c_str());
+    virtual void serialize_data(char * buf) { 
+	std::strcpy(buf, data->c_str());
     }
 
     virtual void deserialize_pkt(char * buf) {
-	*data = buf+PKTHEAD;
+	*data = buf;
     }
     virtual ~Str() {
     }
