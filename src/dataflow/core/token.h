@@ -66,13 +66,13 @@ namespace df {
     }
 
     char * serialize() {
-	std::memcpy(pktdata+sizeof(int), &status, sizeof(int));
+    	std::memcpy(pktdata+sizeof(int), &status, sizeof(int));
     	serialize_data();
 	return pktdata;	
     }
 
     void deserialize(char * buf) {
-	std::memcpy(&status, pktdata+sizeof(int), sizeof(int));
+	std::memcpy(&status, buf+sizeof(int), sizeof(int));
     	deserialize_pkt(buf);
     }
 
