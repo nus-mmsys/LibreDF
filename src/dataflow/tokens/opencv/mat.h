@@ -73,7 +73,7 @@ namespace df {
     virtual void deserialize_pkt(char * buf) {
 	if (rows == 0 || cols == 0) {
 		pktsize = getPktSize(buf);
-		matsize = pktsize - 3*sizeof(int) - PKTHEAD;
+		matsize = getDataSize() - 3*sizeof(int);
 		memcpy(&rows, buf+PKTHEAD, sizeof(int)); 
 		memcpy(&cols, buf+PKTHEAD+sizeof(int), sizeof(int)); 
 		memcpy(&type, buf+PKTHEAD+2*sizeof(int), sizeof(int)); 

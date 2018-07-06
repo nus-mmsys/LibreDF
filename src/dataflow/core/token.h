@@ -72,6 +72,10 @@ namespace df {
 	    return pktsize;
     }
 
+    int getDataSize() {
+	    return pktsize - PKTHEAD;
+    }
+
     char * serialize() {
     	std::memcpy(pkt+sizeof(int), &status, sizeof(int));
     	serialize_data();
