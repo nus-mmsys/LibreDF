@@ -25,23 +25,16 @@
 namespace df {
 
   class Int : public Token<int> {
-  private:
-	  char * chdata;
   public:
   
-    Int():Token<int>() {
-    	chdata = new char[2*sizeof(int)];
+    Int():Token<int>(sizeof(int)) {
     }
 
     virtual std::string to_string() { return std::to_string(*data); }
 
     virtual char * serialize() { 
-	    if (size == 0) {
-		size = sizeof(int);
-	    	std::memcpy(chdata, &size , sizeof(int));
-	    }
-	    std::memcpy(chdata+sizeof(int), data, sizeof(int));
-	    return chdata;
+	    std::memcpy(pktdata+sizeof(int), data, sizeof(int));
+	    return pktdata;
     }
 
     virtual void deserialize(char * buf) {

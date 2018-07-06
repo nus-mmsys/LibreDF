@@ -41,11 +41,17 @@ namespace df {
     T * data;
     int number;
     Status status;
+    char * pktdata;
     int size;
     
   public:
 
-    Token(): number(0), status(OK) { data = new T(); } 
+    Token(int pktsize): number(0), status(OK) { 
+	    size = pktsize;
+	    data = new T(); 
+    	    pktdata = new char[size+sizeof(int)];
+	    std::memcpy(pktdata, &size , sizeof(int));
+    } 
     
     T * get() { return data; }
     
@@ -65,7 +71,9 @@ namespace df {
 
     virtual ~Token() {
       delete data;
+      delete pktdata;
       data = nullptr;
+      pktdata = nullptr;
     }
   };
   

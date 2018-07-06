@@ -24,29 +24,23 @@
 namespace df {
 
   class Str : public Token<std::string> {
-  private:
-	char * chdata;
   public:
   
-    Str():Token<std::string>() {
-   	chdata = new char[1024+sizeof(int)];
+    Str():Token<std::string>(1024) {
     }
+    
     virtual std::string to_string() { return *data; }
 
     virtual char * serialize() { 
-	if (size == 0) {
-		size = 1024;
-		memcpy(chdata, &size, sizeof(int));
-	}	
-	std::strcpy(chdata+sizeof(int), data->c_str());
-	return chdata;
+	std::strcpy(pktdata+sizeof(int), data->c_str());
+	return pktdata;
     }
 
     virtual void deserialize(char * buf) {
 	*data = buf+sizeof(int);
     }
     virtual ~Str() {
-   	delete chdata;
+   	delete pktdata;
     }
   };
 

@@ -29,23 +29,22 @@ namespace df {
     int rows;
     int cols;
     int type;
-    char * chdata;
-    int cpysize;
+    int matsize;
   public:
   
-    Mat():Token<cv::Mat>() {
+    Mat():Token<cv::Mat>(1024) {
     	rows = 0;
     	cols = 0;
     	type = 0;
-    	chdata = nullptr;
     }
-    int imgsize() {
+    int calcMatSize() {
 	//cv::Size size = data->size();
 	//return size.width * size.height * data->channels();
-    	return data->total()*data->elemSize();
+    	matsize = data->total()*data->elemSize();
+    	return matsize;
     }
     virtual std::string to_string() { 
-	int total = imgsize(); 
+	int total = calcMatSize(); 
 	std::vector<uchar> dv(data->ptr(), data->ptr() + total);
         std::string res(dv.begin(), dv.end());
 	return res;
@@ -58,38 +57,36 @@ namespace df {
     }
     
     virtual char * serialize() {
-	if (rows == 0 || cols == 0 || size == 0) {
-		size = imgsize()+3*sizeof(int);
-		cpysize = imgsize();
-		if (chdata!=nullptr)
-			delete chdata;
-		chdata = new char[size+sizeof(int)];
+	if (rows == 0 || cols == 0) {
+		size = calcMatSize()+3*sizeof(int);
+		matsize = calcMatSize();
+		delete pktdata;
+		pktdata = new char[size+sizeof(int)];
 		rows = data->rows;
 		cols = data->cols;
 		type = data->type();
-		memcpy(chdata, &size, sizeof(int)); 
-		memcpy(chdata+sizeof(int), &rows, sizeof(int)); 
-		memcpy(chdata+2*sizeof(int), &cols, sizeof(int)); 
-		memcpy(chdata+3*sizeof(int), &type, sizeof(int));
+		memcpy(pktdata, &size, sizeof(int)); 
+		memcpy(pktdata+sizeof(int), &rows, sizeof(int)); 
+		memcpy(pktdata+2*sizeof(int), &cols, sizeof(int)); 
+		memcpy(pktdata+3*sizeof(int), &type, sizeof(int));
 	}
-	memcpy(chdata+4*sizeof(int), reinterpret_cast<char*>(data->data), cpysize);	
-	return chdata;
+	memcpy(pktdata+4*sizeof(int), reinterpret_cast<char*>(data->data), matsize);	
+	return pktdata;
     }
 
     virtual void deserialize(char * buf) {
-	if (rows == 0 || cols == 0 || size == 0) {
+	if (rows == 0 || cols == 0) {
 		size = pktsize(buf);
-		cpysize = size - 3*sizeof(int);
+		matsize = size - 3*sizeof(int);
 		memcpy(&rows, buf+sizeof(int), sizeof(int)); 
 		memcpy(&cols, buf+2*sizeof(int), sizeof(int)); 
 		memcpy(&type, buf+3*sizeof(int), sizeof(int)); 
 		data = new cv::Mat(rows, cols, type);
 	}
-	memcpy(data->data, reinterpret_cast<uchar*>(buf+4*sizeof(int)), cpysize);
+	memcpy(data->data, reinterpret_cast<uchar*>(buf+4*sizeof(int)), matsize);
     }
 
     virtual ~Mat() { 
-    	delete chdata;
     }
   };
 
