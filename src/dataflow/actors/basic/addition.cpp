@@ -35,7 +35,7 @@ void  Addition::run() {
   
   Int * in2 = consume(input2);
   
-  int out = in1->get() + in2->get();
+  int out = *in1->get() + *in2->get();
   
   log("addition "+to_string(out));
   

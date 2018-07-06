@@ -46,7 +46,7 @@ void Filter2D::run() {
 
   auto in = consume(input);	
   auto out = produce(output);
-  cv::filter2D(*in->data, *out->data, ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
+  cv::filter2D(*in->get(), *out->get(), ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

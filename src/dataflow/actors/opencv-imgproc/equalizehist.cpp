@@ -36,7 +36,7 @@ void EqualizeHist::run() {
 
   auto in = consume(input);
   auto out = produce(output);
-  cv::equalizeHist(*in->data, *out->data);
+  cv::equalizeHist(*in->get(), *out->get());
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

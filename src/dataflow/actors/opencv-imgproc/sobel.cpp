@@ -51,7 +51,7 @@ void Sobel::run() {
 
   auto in = consume(input);	
   auto out = produce(output);
-  cv::Sobel(*in->data, *out->data, ddepth, dx, dy, 3, 1, 0, cv::BORDER_DEFAULT);
+  cv::Sobel(*in->get(), *out->get(), ddepth, dx, dy, 3, 1, 0, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

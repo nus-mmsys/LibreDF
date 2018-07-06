@@ -40,7 +40,7 @@ void MeanShift::init() {
 
   //What we need to track needs to be specified.
   auto in = consume(input);
-  frame = in->get();  
+  frame = in->clone();  
   release(input);
 
   cv::Mat roi = frame(r);
@@ -71,7 +71,7 @@ void MeanShift::run() {
   cv::imwrite(file_name, frame); 
  
   auto in = consume(input);
-  frame = in->get();  
+  frame = in->clone();  
   release(input);
 
 }

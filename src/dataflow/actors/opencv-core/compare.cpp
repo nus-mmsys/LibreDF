@@ -58,7 +58,7 @@ void Compare::run() {
   auto in1 = consume(input1);	
   auto in2 = consume(input2);	
   auto out = produce(output);
-  cv::compare(*(in1->data), *(in2->data), *(out->data), operation);
+  cv::compare(*in1->get(), *in2->get(), *out->get(), operation);
   log("sending "+to_string(stepno));
   release(input1);
   release(input2);

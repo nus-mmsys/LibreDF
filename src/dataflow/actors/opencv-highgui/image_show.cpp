@@ -35,7 +35,7 @@ void ImageShow::init() {
 void ImageShow::run() {
 
   auto in = consume(inputMat);	
-  frame = in->get();
+  frame = in->clone();
   log("capturing frame "+to_string(stepno));
   release(inputMat);
  

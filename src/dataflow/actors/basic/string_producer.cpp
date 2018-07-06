@@ -38,7 +38,7 @@ void StringProducer::run() {
 
   Str * out = produce(output);
   out->set(to_string(stepno));
-  log("producing "+out->get());
+  log("producing "+*out->get());
   sleep(500);
 
   if(stepno == last)
@@ -63,7 +63,7 @@ void StringProducer::runRT() {
   Str * outStr = output->get(); 
   outStr->set(data);
   
-  log("producing "+outStr->get());
+  log("producing "+*outStr->get());
   sleep(500);
   
   if(stepno == last) {

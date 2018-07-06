@@ -37,11 +37,11 @@ void Gemm::run() {
   auto in1 = consume(input1);	
   auto in2 = consume(input2);
 
-  in1->data->convertTo(*in1->data,CV_32F);
-  in2->data->convertTo(*in2->data,CV_32F);
+  in1->get()->convertTo(*in1->get(),CV_32F);
+  in2->get()->convertTo(*in2->get(),CV_32F);
 
-  cv::split(*in1->data, in1planes);
-  cv::split(*in2->data, in2planes);
+  cv::split(*in1->get(), in1planes);
+  cv::split(*in2->get(), in2planes);
 
   release(input1);
   release(input2);
@@ -55,8 +55,8 @@ void Gemm::run() {
   cv::sqrt(outplanes[2], outplanes[2]);
 
   auto out = produce(output);
-  cv::merge(outplanes, 3, *out->data);
-  out->data->convertTo(*out->data,CV_8U);
+  cv::merge(outplanes, 3, *out->get());
+  out->get()->convertTo(*out->get(),CV_8U);
   log("sending "+to_string(stepno));
   release(output);
 

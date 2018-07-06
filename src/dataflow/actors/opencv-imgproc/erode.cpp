@@ -44,7 +44,7 @@ void Erode::run() {
 
   auto in = consume(input);	
   auto out = produce(output);
-  cv::erode(*in->data, *out->data, kernel);
+  cv::erode(*in->get(), *out->get(), kernel);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

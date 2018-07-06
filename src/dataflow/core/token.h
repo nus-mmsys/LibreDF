@@ -34,20 +34,34 @@ namespace df {
   template <typename T>
   class Token : public Synchronized {
     
-  private:
-    int number;
+  protected:
     T * data;
+    int number;
     TokenStatus status;
+    int size;
     
   public:
+
+
     Token(): number(0), status(TokenStatus::OK) { data = new T(); } 
     
     T * get() { return data; }
     
     void setStatus(TokenStatus st) {status = st;}
     TokenStatus getStatus() {return status;}
-    
-    ~Token() {
+
+    int pktsize(char * buf) {
+	    memcpy(&size, buf, sizeof(int));
+	    return size;
+    }
+
+    virtual void set(const T& d) { *data = d; }
+    virtual T clone() { return *data; }
+    virtual std::string to_string() = 0; 
+    virtual char * serialize() = 0;
+    virtual void deserialize(char * buf) = 0; 
+
+    virtual ~Token() {
       delete data;
       data = nullptr;
     }

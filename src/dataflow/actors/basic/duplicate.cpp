@@ -31,7 +31,7 @@ Actor(name) {
 
 void Duplicate::run() {
   Str * in = consume(input);
-  string out = in->get() + "" + in->get();
+  string out = *in->get() + "" + *in->get();
   log("duplicating "+out); 
   release(input);
 }

@@ -36,7 +36,7 @@ void CvtColor::run() {
 
   auto in = consume(input);
   auto out = produce(output);
-  cv::cvtColor(*in->data, *out->data, CV_BGR2GRAY);
+  cv::cvtColor(*in->get(), *out->get(), CV_BGR2GRAY);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

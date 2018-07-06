@@ -63,7 +63,7 @@ void Convolution::run() {
   anchor = cv::Point(kernel.cols - anchor.x - 1, kernel.rows - anchor.y -1);
   df::Mat * in = consume(input);	
   df::Mat * out = produce(output);
-  cv::filter2D(*(in->data), *(out->data), ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
+  cv::filter2D(*in->get(), *out->get(), ddepth, kernel, anchor, delta, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

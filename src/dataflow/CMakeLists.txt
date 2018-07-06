@@ -13,12 +13,12 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 aux_source_directory(core core)
 
 if (BUILD_ML_ACTORS)
-  aux_source_directory(types/opencv ocvtype)
+  aux_source_directory(tokens/opencv ocvtoken)
   aux_source_directory(actors/machine-learning ml)
 endif()
 
 if (BUILD_OPENCV_ACTORS)
-  aux_source_directory(types/opencv ocvtype)
+  aux_source_directory(tokens/opencv ocvtoken)
   aux_source_directory(actors/opencv-core ocvcore)
   aux_source_directory(actors/opencv-imgproc ocvimg)
   aux_source_directory(actors/opencv-highgui ocvgui)
@@ -27,7 +27,7 @@ if (BUILD_OPENCV_ACTORS)
 endif()
 
 if (BUILD_BASIC_ACTORS)
-  aux_source_directory(types/basic basictype)
+  aux_source_directory(tokens/basic basictoken)
   aux_source_directory(actors/basic basic)
 endif()
 
@@ -35,8 +35,8 @@ add_library(${PROJECT_NAME} SHARED ${core}
 				${ml} 
 				${ocvcore} ${ocvimg}
 				${ocvgui} ${ocvobj}
-				${ocvvideo} ${ocvtype}
-				${basic} ${basictype}
+				${ocvvideo} ${ocvtoken}
+				${basic} ${basictoken}
 				)
 
 if (BUILD_OPENCV_ACTORS OR BUILD_ML_ACTORS)

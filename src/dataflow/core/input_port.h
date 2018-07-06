@@ -80,9 +80,9 @@ namespace df {
     }
 
     T * recv() {
-    	if (sock->recvpeek(chdata, chsize) < 0)
+    	if (sock->recvpeek(chdata, sizeof(int)) < 0)
 	        return nullptr;
-	int size = data->size(chdata)+sizeof(int);
+	int size = data->pktsize(chdata)+sizeof(int);
 	if (size != chsize) {
 		chsize = size;
 		delete chdata;
@@ -90,7 +90,7 @@ namespace df {
 	}
     	if (sock->recvwait(chdata, chsize) < 0)
 		return nullptr;
-	data->from_bytes(chdata);
+	data->deserialize(chdata);
 	return data;
     }
 
@@ -109,7 +109,7 @@ namespace df {
     }
     
     T * get() {
-    	return buf->at(index)->get();
+    	return buf->at(index);
     }
     
     void setStatus(TokenStatus st) {

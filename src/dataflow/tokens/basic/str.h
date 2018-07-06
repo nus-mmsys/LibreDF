@@ -16,7 +16,40 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "token_type.h"
+#ifndef DF_STR_H_
+#define DF_STR_H_
 
-using namespace df;
-/* All declaration of the template class are in the header file */
+#include "core/token.h"
+
+namespace df {
+
+  class Str : public Token<std::string> {
+  private:
+	char * chdata;
+  public:
+  
+    Str():Token<std::string>() {
+   	chdata = new char[1024+sizeof(int)];
+    }
+    virtual std::string to_string() { return *data; }
+
+    virtual char * serialize() { 
+	if (size == 0) {
+		size = 1024;
+		memcpy(chdata, &size, sizeof(int));
+	}	
+	std::strcpy(chdata+sizeof(int), data->c_str());
+	return chdata;
+    }
+
+    virtual void deserialize(char * buf) {
+	*data = buf+sizeof(int);
+    }
+    virtual ~Str() {
+   	delete chdata;
+    }
+  };
+
+};
+
+#endif /* DF_STR_H_ */

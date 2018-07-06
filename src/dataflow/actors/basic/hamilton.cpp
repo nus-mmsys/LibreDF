@@ -47,8 +47,8 @@ void Hamilton::run() {
 	
   string msg;
   Str * in = consume(input);
-  if (in->get().find(name)==string::npos) {
-    msg = in->get() + name;
+  if (in->get()->find(name)==string::npos) {
+    msg = *in->get() + name;
   } else
     msg = "";
   release(input);
@@ -57,7 +57,7 @@ void Hamilton::run() {
     log("hamiltonian path "+msg+"\n");
   } else {
     Str * out = produce(output);
-    log("sending "+out->get());
+    log("sending "+*out->get());
     release(output);
   }
    

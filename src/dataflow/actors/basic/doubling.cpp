@@ -32,7 +32,7 @@ Actor(name) {
 void Doubling::run() {
 
   Int * in = consume(input);	
-  int outval = in->get() * 2;
+  int outval = *in->get() * 2;
   release(input);
   
   Int * out = produce(output);

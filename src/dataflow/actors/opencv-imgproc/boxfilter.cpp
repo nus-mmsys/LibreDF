@@ -49,7 +49,7 @@ void BoxFilter::run() {
 
   auto in = consume(input);	
   auto out = produce(output);
-  cv::boxFilter(*in->data, *out->data, ddepth, ksize, anchor, true, cv::BORDER_DEFAULT);
+  cv::boxFilter(*in->get(), *out->get(), ddepth, ksize, anchor, true, cv::BORDER_DEFAULT);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

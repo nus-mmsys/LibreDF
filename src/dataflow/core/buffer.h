@@ -19,8 +19,6 @@
 #ifndef DF_BUFFER_H_
 #define DF_BUFFER_H_
 
-#include "token.h"
-
 namespace df {
   
   const int DF_BUFFER_SIZE = 8;
@@ -35,7 +33,7 @@ namespace df {
   template <typename T>
   class Buffer {
   protected:
-    Token<T> * tokens[DF_BUFFER_SIZE];  /**< The array containing the tokens */
+    T * tokens[DF_BUFFER_SIZE];  /**< The array containing the tokens */
     int size;  /**< The size of the buffer */
     
   public:
@@ -48,7 +46,7 @@ namespace df {
     Buffer<T>(): size(DF_BUFFER_SIZE) {
       
       for (int i=0; i<size; i++) {
-	tokens[i] = new Token<T>();
+	tokens[i] = new T();
       }
     }
     
@@ -71,7 +69,7 @@ namespace df {
      * \param idx the number of the element
      * \return the element number idx
      */
-    Token<T>* at(int idx) const  { return tokens[idx]; }
+    T * at(int idx) const  { return tokens[idx]; }
     
     /*!
      * Buffer destructor

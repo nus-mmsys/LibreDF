@@ -20,7 +20,7 @@
 #define DF_INTCONSUMER_H_
 
 #include "core/df.h"
-#include "types/basic/int.h"
+#include "tokens/basic/int.h"
 
 #include <iostream>
 

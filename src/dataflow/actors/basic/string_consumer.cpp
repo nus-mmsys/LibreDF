@@ -31,7 +31,7 @@ void StringConsumer::run() {
   
   Str * in = consume(input);
   
-  log("consuming "+in->get());
+  log("consuming "+*in->get());
   sleep(500);
   
   release(input);

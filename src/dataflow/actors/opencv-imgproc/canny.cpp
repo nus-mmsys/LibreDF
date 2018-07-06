@@ -51,8 +51,8 @@ void Canny::run() {
 
   auto in = consume(input);
   auto out = produce(output);
-  cv::blur(*in->data, *out->data, cv::Size(3,3));  
-  cv::Canny(*out->data, *out->data, threshold, threshold*ratio, kernel_size);
+  cv::blur(*in->get(), *out->get(), cv::Size(3,3));  
+  cv::Canny(*out->get(), *out->get(), threshold, threshold*ratio, kernel_size);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

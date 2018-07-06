@@ -40,7 +40,7 @@ void VideoWriter::init() {
 void VideoWriter::run() {
 
   auto in = consume(input);	
-  frame = in->get();
+  frame = in->clone();
   log("writing frame "+to_string(stepno));
   release(input);
 

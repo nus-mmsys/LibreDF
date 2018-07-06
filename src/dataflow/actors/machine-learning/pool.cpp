@@ -46,7 +46,7 @@ void Pool::run() {
 
   df::Mat * in = consume(input);	
   df::Mat * out = produce(output);
-  cv::resize(*(in->data), *(out->data), cv::Size(0,0), scalex, scaley, cv::INTER_LINEAR);
+  cv::resize(*in->get(), *out->get(), cv::Size(0,0), scalex, scaley, cv::INTER_LINEAR);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

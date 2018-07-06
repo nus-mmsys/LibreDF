@@ -20,7 +20,7 @@
 #define DF_MEANSHIFT_H_
 
 #include "core/df.h"
-#include "types/opencv/mat.h"
+#include "tokens/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>

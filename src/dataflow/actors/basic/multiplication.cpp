@@ -36,7 +36,7 @@ void  Multiplication::run() {
   
   Int * in2 = consume(input2);
   
-  int out = in1->get() * in2->get();
+  int out = *in1->get() * *in2->get();
   
   log("multiplication "+to_string(out));
   

@@ -16,38 +16,41 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_STR_H_
-#define DF_STR_H_
+#ifndef DF_INT_H_
+#define DF_INT_H_
 
-#include "core/token_type.h"
+#include "core/token.h"
+#include <cstdio>
 
 namespace df {
 
-  class Str : public TokenType<std::string> {
+  class Int : public Token<int> {
   private:
-	char * chdata;
+	  char * chdata;
   public:
   
-    Str():TokenType<std::string>() {
-   	chdata = new char[1024+sizeof(int)];
+    Int():Token<int>() {
+    	chdata = new char[2*sizeof(int)];
     }
-    virtual std::string to_string() { return *data; }
-    virtual void from_bytes(char * buf) {
-	*data = buf+sizeof(int);
+
+    std::string to_string() { return std::to_string(*data); }
+
+    virtual char * serialize() { 
+	    if (size == 0) {
+		size = sizeof(int);
+	    	std::memcpy(chdata, &size , sizeof(int));
+	    }
+	    std::memcpy(chdata+sizeof(int), data, sizeof(int));
+	    return chdata;
     }
-    virtual char * to_bytes() { 
-	if (dsize == 0) {
-		dsize = 1024;
-		memcpy(chdata, &dsize, sizeof(int));
-	}	
-	std::strcpy(chdata+sizeof(int), data->c_str());
-	return chdata;
+
+    virtual void deserialize(char * buf) {
+	    std::memcpy(data, buf+sizeof(int), sizeof(int));
     }
-    virtual ~Str() {
-   	delete chdata;
-    }
+      
+    virtual ~Int() { }
   };
 
 };
 
-#endif /* DF_STR_H_ */
+#endif /* DF_INT_H_ */

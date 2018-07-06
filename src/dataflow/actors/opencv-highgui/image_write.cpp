@@ -34,7 +34,7 @@ void ImageWrite::init() {
 void ImageWrite::run() {
 
   df::Mat * in = consume(input);	
-  frame = in->get();
+  frame = in->clone();
   log("writing image "+to_string(stepno));
   release(input);
 

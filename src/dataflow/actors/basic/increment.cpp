@@ -32,7 +32,7 @@ Actor(name) {
 void  Increment::run() {
   
   Int * in = consume(input);
-  int outval = in->get() + 1;
+  int outval = *in->get() + 1;
   release(input);
   
   Int * out =  produce(output);

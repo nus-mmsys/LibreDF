@@ -43,7 +43,7 @@ void Multiply::run() {
   auto in1 = consume(input1);	
   auto in2 = consume(input2);	
   auto out = produce(output);
-  cv::multiply(*in1->data, *in2->data, *out->data, scale);
+  cv::multiply(*in1->get(), *in2->get(), *out->get(), scale);
   log("sending "+to_string(stepno));
   release(input1);
   release(input2);

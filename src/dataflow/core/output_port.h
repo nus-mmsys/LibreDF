@@ -66,8 +66,8 @@ namespace df {
     }
 
     void send() {
-	char * buf = data->to_bytes();
-	int size = data->size(buf)+sizeof(int);
+	char * buf = data->serialize();
+	int size = data->pktsize(buf)+sizeof(int);
 	if (size != chsize)
 		chsize = size;
 	sock->send(buf, chsize);
@@ -92,7 +92,7 @@ namespace df {
     }
     
     T * get() {
-      return buf->at(index)->get();
+      return buf->at(index);
     }
     
     void setStatus(TokenStatus st) {

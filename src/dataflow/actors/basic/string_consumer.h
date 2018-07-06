@@ -20,7 +20,7 @@
 #define DF_STRINGCONSUMER_H_
 
 #include "core/df.h"
-#include "types/basic/str.h"
+#include "tokens/basic/str.h"
 
 #include <iostream>
 

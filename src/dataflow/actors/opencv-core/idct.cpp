@@ -36,8 +36,8 @@ void Idct::run() {
 
   auto in = consume(input);	
   auto out = produce(output);
-  in->data->convertTo(*out->data, CV_32F);
-  cv::idct(*out->data, *out->data);
+  in->get()->convertTo(*out->get(), CV_32F);
+  cv::idct(*out->get(), *out->get());
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

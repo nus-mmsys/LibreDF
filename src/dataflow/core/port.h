@@ -21,6 +21,7 @@
 
 #include "property.h"
 #include "buffer.h"
+#include "token.h"
 
 #include <cstring>
 #include <typeinfo>

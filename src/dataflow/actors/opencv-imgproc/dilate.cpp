@@ -44,7 +44,7 @@ void Dilate::run() {
 
   auto in = consume(input);	
   auto out = produce(output);
-  cv::dilate(*in->data, *out->data, kernel);
+  cv::dilate(*in->get(), *out->get(), kernel);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);
