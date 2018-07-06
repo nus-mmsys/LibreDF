@@ -297,6 +297,7 @@ namespace df {
     template<typename T>
     T * consume(InputPort<T> * port) {
       if (distributed) {
+	status = port->getSocketStatus();
 	T * res = port->recv();
 	if (res == nullptr)
 		log("cannot recieve on port "+port->getName());
@@ -312,6 +313,7 @@ namespace df {
     template<typename T>
     T * produce(OutputPort<T> * port) {
       if (distributed) {
+	port->setSocketStatus(status);
 	return port->getSocketData();
       }
       else {
@@ -324,7 +326,10 @@ namespace df {
     template<typename T>
     void setEos(OutputPort<T> * port) {
       status = EOS;
-      port->setStatus(status);
+      if (distributed)
+	      port->setSocketStatus(status);
+      else
+	      port->setStatus(status);
     }
     
     template<typename T>

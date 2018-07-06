@@ -67,7 +67,7 @@ namespace df {
 
     void send() {
 	char * buf = data->serialize();
-	int size = data->pktsize(buf)+sizeof(int);
+	int size = data->pktsize(buf);
 	if (size != chsize)
 		chsize = size;
 	sock->send(buf, chsize);
@@ -101,7 +101,13 @@ namespace df {
     Status getStatus() {
       return buf->at(index)->getStatus();
     } 
-    
+    void setSocketStatus(Status st) {
+      data->setStatus(st);
+    }
+    Status getSocketStatus() {
+      return data->getStatus();
+    }
+
     /*!
      * Add next port to this port
      *

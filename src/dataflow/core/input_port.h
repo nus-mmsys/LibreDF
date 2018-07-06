@@ -82,7 +82,7 @@ namespace df {
     T * recv() {
     	if (sock->recvpeek(chdata, sizeof(int)) < 0)
 	        return nullptr;
-	int size = data->pktsize(chdata)+sizeof(int);
+	int size = data->pktsize(chdata);
 	if (size != chsize) {
 		chsize = size;
 		delete chdata;
@@ -119,7 +119,14 @@ namespace df {
     Status getStatus() {
       return buf->at(index)->getStatus();
     }  
-    
+    void setSocketStatus(Status st) {
+      data->setStatus(st);
+    }
+
+    Status getSocketStatus() {
+      return data->getStatus();
+    }
+
     /*!
      * InputPort destructor
      *

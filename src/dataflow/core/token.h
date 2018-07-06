@@ -24,7 +24,8 @@
 #include <string>
 
 namespace df {
- 
+
+  #define PKTHEAD 2*sizeof(int)
   /*!
    * \enum Status
    */
@@ -47,10 +48,11 @@ namespace df {
   public:
 
     Token(int pktsize): number(0), status(OK) { 
-	    size = pktsize;
+	    size = pktsize+PKTHEAD;
 	    data = new T(); 
-    	    pktdata = new char[size+sizeof(int)];
+    	    pktdata = new char[size];
 	    std::memcpy(pktdata, &size , sizeof(int));
+	    std::memcpy(pktdata+sizeof(int), &status , sizeof(int));
     } 
     
     T * get() { return data; }
@@ -63,11 +65,17 @@ namespace df {
 	    return size;
     }
 
+    char * serialize() {
+	std::memcpy(pktdata+sizeof(int), &status, sizeof(int));
+    	serialize_data();
+	return pktdata;	
+    }
+
     virtual void set(const T& d) { *data = d; }
     virtual T clone() { return *data; }
     virtual std::string to_string() = 0; 
-    virtual char * serialize() = 0;
-    virtual void deserialize(char * buf) = 0; 
+    virtual void serialize_data() = 0;
+    virtual void deserialize(char *) = 0; 
 
     virtual ~Token() {
       delete data;

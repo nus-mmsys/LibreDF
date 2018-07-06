@@ -32,13 +32,12 @@ namespace df {
 
     virtual std::string to_string() { return std::to_string(*data); }
 
-    virtual char * serialize() { 
-	    std::memcpy(pktdata+sizeof(int), data, sizeof(int));
-	    return pktdata;
+    virtual void serialize_data() { 
+	    std::memcpy(pktdata+PKTHEAD, data, sizeof(int));
     }
 
     virtual void deserialize(char * buf) {
-	    std::memcpy(data, buf+sizeof(int), sizeof(int));
+	    std::memcpy(data, buf+PKTHEAD, sizeof(int));
     }
       
     virtual ~Int() { }
