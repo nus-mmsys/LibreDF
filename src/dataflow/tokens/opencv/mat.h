@@ -59,7 +59,6 @@ namespace df {
     virtual void serialize_data() {
 	if (rows == 0 || cols == 0) {
 		matsize = calcMatSize();
-		delete pkt;
 		initPacket(calcMatSize()+3*sizeof(int));
 		rows = data->rows;
 		cols = data->cols;

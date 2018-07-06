@@ -54,7 +54,9 @@ namespace df {
     } 
    
     void initPacket(int size) {
-    	    pktsize = size+PKTHEAD;
+	    if (pkt != nullptr)
+		    delete pkt;
+	    pktsize = size+PKTHEAD;
 	    pkt = new char[pktsize];
 	    std::memcpy(pkt, &pktsize , sizeof(int));
 	    std::memcpy(pkt+sizeof(int), &status , sizeof(int));
