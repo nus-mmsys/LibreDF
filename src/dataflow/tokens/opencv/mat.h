@@ -63,23 +63,23 @@ namespace df {
 		rows = data->rows;
 		cols = data->cols;
 		type = data->type();
-		memcpy(pkt+2*sizeof(int), &rows, sizeof(int)); 
-		memcpy(pkt+3*sizeof(int), &cols, sizeof(int)); 
-		memcpy(pkt+4*sizeof(int), &type, sizeof(int));
+		memcpy(pkt+PKTHEAD, &rows, sizeof(int)); 
+		memcpy(pkt+PKTHEAD+sizeof(int), &cols, sizeof(int)); 
+		memcpy(pkt+PKTHEAD+2*sizeof(int), &type, sizeof(int));
 	}
-	memcpy(pkt+5*sizeof(int), reinterpret_cast<char*>(data->data), matsize);
+	memcpy(pkt+PKTHEAD+3*sizeof(int), reinterpret_cast<char*>(data->data), matsize);
     }
 
     virtual void deserialize_pkt(char * buf) {
 	if (rows == 0 || cols == 0) {
 		pktsize = getPktSize(buf);
 		matsize = pktsize - 3*sizeof(int) - PKTHEAD;
-		memcpy(&rows, buf+2*sizeof(int), sizeof(int)); 
-		memcpy(&cols, buf+3*sizeof(int), sizeof(int)); 
-		memcpy(&type, buf+4*sizeof(int), sizeof(int)); 
+		memcpy(&rows, buf+PKTHEAD, sizeof(int)); 
+		memcpy(&cols, buf+PKTHEAD+sizeof(int), sizeof(int)); 
+		memcpy(&type, buf+PKTHEAD+2*sizeof(int), sizeof(int)); 
 		data = new cv::Mat(rows, cols, type);
 	}
-	memcpy(data->data, reinterpret_cast<uchar*>(buf+5*sizeof(int)), matsize);
+	memcpy(data->data, reinterpret_cast<uchar*>(buf+PKTHEAD+3*sizeof(int)), matsize);
     }
 
     virtual ~Mat() { 
