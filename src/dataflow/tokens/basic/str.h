@@ -40,7 +40,6 @@ namespace df {
 	*data = buf+sizeof(int);
     }
     virtual ~Str() {
-   	delete pktdata;
     }
   };
 

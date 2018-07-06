@@ -1,0 +1,23 @@
+df produce_consume {
+    topology {
+        nodes = A,B;
+        edges = e1(A,B);
+    }
+    actor A {
+        computation = StringProducer;
+        last = 64;
+	output = e1;
+    }
+    actor B {
+        computation = StringConsumer;
+	input = e1;
+	host = 127.0.0.1;
+	input_port = 7001;
+    }
+    parameter {
+	realtime = false;
+	distributed = true;
+	discovery_host = 127.0.0.1;
+	discovery_port = 7000;
+    }
+}
