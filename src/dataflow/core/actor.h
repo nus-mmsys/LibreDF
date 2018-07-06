@@ -32,16 +32,6 @@
 
 namespace df {
   
-  /*!
-   * \enum void
-   * Status of a actor.
-   */
-  enum class ActorStatus {
-    OK, /**< Actor processed successfully. */
-    ERROR, /**< An error occurred while processing. */
-    EOS, /**< Actor is done generating more data. Used in data sources. */
-  };
-
  
   /*!
    * \class Actor
@@ -79,7 +69,7 @@ namespace df {
     std::map<std::string, Port*> outputPorts; /**< Map of output ports referenced by their name */
 
     bool distributed, realtime;
-    ActorStatus status; 
+    Status status; 
    
     /*!
      * Timing measurement
@@ -314,8 +304,7 @@ namespace df {
       }
       else {
 	port->lock();
-        if (port->getStatus() == TokenStatus::EOS)
-          status = ActorStatus::EOS;
+	status = port->getStatus();
         return port->get();
       }	
     }
@@ -327,16 +316,15 @@ namespace df {
       }
       else {
         port->lock();
-        if (status == ActorStatus::EOS)
-          port->setStatus(TokenStatus::EOS);
+        port->setStatus(status);
         return port->get();
       }
     }
 
     template<typename T>
     void setEos(OutputPort<T> * port) {
-      port->setStatus(TokenStatus::EOS);
-      status = ActorStatus::EOS;
+      status = EOS;
+      port->setStatus(status);
     }
     
     template<typename T>
@@ -358,7 +346,7 @@ namespace df {
     void destroyPort(Port * port) {
       delete port;
     }
-    ActorStatus getStatus() { return status; }
+    Status getStatus() { return status; }
     /*!
      * Destructor of the actor.
      */

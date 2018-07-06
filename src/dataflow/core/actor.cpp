@@ -21,7 +21,7 @@
 using namespace df;
 using namespace std;
 
-Actor::Actor(const string &name) : status(ActorStatus::OK), stepno(0), name(name) {
+Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
   realtime = false;
   distributed = false;
   home_path = std::getenv("HOME");
@@ -234,18 +234,18 @@ void Actor::runActor() {
     for (auto p : inputPorts) {
       if (p.second->getLinked() == 0) {
         log(p.second->getName()+string(" is not connected"));
-      	status = ActorStatus::ERROR;
+      	status = ERROR;
       }
     }
     for (auto p : outputPorts) {
       if (p.second->getLinked() == 0) {
         log(p.second->getName()+string(" is not connected"));
-        status = ActorStatus::ERROR;
+        status = ERROR;
       }
     }
   }
 
-  while(status != ActorStatus::EOS) {
+  while(status != EOS) {
     if (distributed) {
 	    runDist();
     } else if (!realtime) {

@@ -81,10 +81,8 @@ void IntProducer::runRT() {
   log("producing "+to_string(stepno));
   sleep(500);
   
-  if(stepno == last) {
-    output->setStatus(TokenStatus::EOS);
-    status = ActorStatus::EOS;
-  }
+  if(stepno == last)
+    setEos(output);
   
   output->unlock();
   

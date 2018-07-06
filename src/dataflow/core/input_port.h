@@ -112,11 +112,11 @@ namespace df {
     	return buf->at(index);
     }
     
-    void setStatus(TokenStatus st) {
+    void setStatus(Status st) {
       buf->at(index)->setStatus(st);
     }
 
-    TokenStatus getStatus() {
+    Status getStatus() {
       return buf->at(index)->getStatus();
     }  
     

@@ -24,30 +24,33 @@
 #include <string>
 
 namespace df {
-  
-  enum class TokenStatus {
-    OK,
-    ERROR,
-    EOS
+ 
+  /*!
+   * \enum Status
+   */
+  enum Status {
+    OK, /**< Processed successfully. */
+    ERROR, /**< An error occurred while processing. */
+    EOS, /**< End of stream occured. */
   };
-  
+
   template <typename T>
   class Token : public Synchronized {
     
   protected:
     T * data;
     int number;
-    TokenStatus status;
+    Status status;
     int size;
     
   public:
 
-    Token(): number(0), status(TokenStatus::OK) { data = new T(); } 
+    Token(): number(0), status(OK) { data = new T(); } 
     
     T * get() { return data; }
     
-    void setStatus(TokenStatus st) {status = st;}
-    TokenStatus getStatus() {return status;}
+    void setStatus(Status st) {status = st;}
+    Status getStatus() {return status;}
 
     int pktsize(char * buf) {
 	    memcpy(&size, buf, sizeof(int));

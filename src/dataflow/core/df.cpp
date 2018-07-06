@@ -180,7 +180,7 @@ void Dataflow::init() {
   
   for (auto f : actors) {
     
-    if (f.second->getStatus() != ActorStatus::OK)
+    if (f.second->getStatus() != OK)
       status = DataflowStatus::STOPPED;
     return;
   }

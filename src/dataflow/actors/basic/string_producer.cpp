@@ -66,10 +66,8 @@ void StringProducer::runRT() {
   log("producing "+*outStr->get());
   sleep(500);
   
-  if(stepno == last) {
-    output->setStatus(TokenStatus::EOS);
-    status = ActorStatus::EOS;
-  }
+  if(stepno == last)
+    setEos(output);
   
   output->unlock();
   
