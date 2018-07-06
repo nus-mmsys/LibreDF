@@ -71,11 +71,16 @@ namespace df {
 	return pktdata;	
     }
 
+    void deserialize(char * buf) {
+	std::memcpy(&status, pktdata+sizeof(int), sizeof(int));
+    	deserialize_pkt(buf);
+    }
+
     virtual void set(const T& d) { *data = d; }
     virtual T clone() { return *data; }
     virtual std::string to_string() = 0; 
     virtual void serialize_data() = 0;
-    virtual void deserialize(char *) = 0; 
+    virtual void deserialize_pkt(char *) = 0; 
 
     virtual ~Token() {
       delete data;

@@ -36,7 +36,7 @@ namespace df {
 	    std::memcpy(pktdata+PKTHEAD, data, sizeof(int));
     }
 
-    virtual void deserialize(char * buf) {
+    virtual void deserialize_pkt(char * buf) {
 	    std::memcpy(data, buf+PKTHEAD, sizeof(int));
     }
       

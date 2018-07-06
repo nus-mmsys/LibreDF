@@ -35,7 +35,7 @@ namespace df {
 	std::strcpy(pktdata+PKTHEAD, data->c_str());
     }
 
-    virtual void deserialize(char * buf) {
+    virtual void deserialize_pkt(char * buf) {
 	*data = buf+PKTHEAD;
     }
     virtual ~Str() {

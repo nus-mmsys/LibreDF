@@ -297,11 +297,11 @@ namespace df {
     template<typename T>
     T * consume(InputPort<T> * port) {
       if (distributed) {
-	status = port->getSocketStatus();
 	T * res = port->recv();
 	if (res == nullptr)
 		log("cannot recieve on port "+port->getName());
-      	return res;
+	status = res->getStatus();
+	return res;
       }
       else {
 	port->lock();
@@ -313,8 +313,9 @@ namespace df {
     template<typename T>
     T * produce(OutputPort<T> * port) {
       if (distributed) {
-	port->setSocketStatus(status);
-	return port->getSocketData();
+	T * res = port->getSocketData();
+	res->setStatus(status);
+	return res;
       }
       else {
         port->lock();
