@@ -98,6 +98,7 @@ void Dataflow::startDiscovery() {
 }
 
 void Dataflow::waitDiscovery() {
+  srvsock->srvclose();
   cout << "Discovery terminated...\n";
   tdisc.join();
 }
@@ -105,8 +106,9 @@ void Dataflow::waitDiscovery() {
 void Dataflow::discovery() {
   std::string msg, command, actorname, portname, key, val;
   char buf[1024];
+
+  srvsock->accept();
   while (status != DataflowStatus::STOPPED) {
-    srvsock->accept();
 
     srvsock->recv(buf, 1024);
     msg = buf;
@@ -130,6 +132,8 @@ void Dataflow::discovery() {
     strcpy(buf, val.c_str());
     srvsock->send(buf, std::strlen(buf));
     srvsock->clnclose();
+
+    srvsock->accept();
   }
   srvsock->srvclose();
     
@@ -205,11 +209,11 @@ void Dataflow::run() {
     f.second->waitRun();
   }
  
+  status = DataflowStatus::STOPPED;
+ 
   if (distributed)
     waitDiscovery();
-
-  status = DataflowStatus::STOPPED;
-  
+ 
 }
 
 Dataflow::~Dataflow() {

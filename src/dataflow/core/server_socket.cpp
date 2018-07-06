@@ -65,11 +65,7 @@ int ServerSocket::listen(int port) {
 
 int ServerSocket::accept() {
 	int addrlen = sizeof(addr);
-	if ((clnsock = ::accept(srvsock, (struct sockaddr*) &addr, (socklen_t*)&addrlen))<0)
-    	{
-		std::cerr << name << "accept failed.\n";
-    		return -1;
-	}
+	clnsock = ::accept(srvsock, (struct sockaddr*) &addr, (socklen_t*)&addrlen);
 	return 0;
 }
 
