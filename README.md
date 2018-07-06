@@ -193,7 +193,7 @@ New actors must be placed in the ```src/dataflow/actors``` folder. An actor inhe
 // add.h
 
 #include "core/df.h"
-#include "types/opencv/mat.h"
+#include "tokens/opencv/mat.h"
 #include <opencv2/core/core.hpp>
 
 class Add: public df::Actor {
@@ -202,7 +202,7 @@ private:
   df::InputPort<df::Mat> * input1;
   df::InputPort<df::Mat> * input2;
   df::OutputPort<df::Mat> * output;
-  static  df::ActorRegister<Add> reg;
+  static df::ActorRegister<Add> reg;
 public:
   Add(const string& name);
   virtual void init();
