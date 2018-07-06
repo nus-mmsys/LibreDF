@@ -67,7 +67,7 @@ namespace df {
 
     void send() {
 	char * buf = data->serialize();
-	int size = data->pktsize(buf);
+	int size = data->getPktSize(buf);
 	if (size != chsize)
 		chsize = size;
 	sock->send(buf, chsize);

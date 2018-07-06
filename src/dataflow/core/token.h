@@ -42,33 +42,38 @@ namespace df {
     T * data;
     int number;
     Status status;
-    char * pktdata;
-    int size;
+    char * pkt;
+    int pktsize;
     
   public:
 
-    Token(int pktsize): number(0), status(OK) { 
-	    size = pktsize+PKTHEAD;
+    Token(int size): number(0), status(OK) { 
 	    data = new T(); 
-    	    pktdata = new char[size];
-	    std::memcpy(pktdata, &size , sizeof(int));
-	    std::memcpy(pktdata+sizeof(int), &status , sizeof(int));
+	    pkt = nullptr;
+	    initPacket(size);
     } 
-    
+   
+    void initPacket(int size) {
+    	    pktsize = size+PKTHEAD;
+	    pkt = new char[pktsize];
+	    std::memcpy(pkt, &pktsize , sizeof(int));
+	    std::memcpy(pkt+sizeof(int), &status , sizeof(int));
+    }
+
     T * get() { return data; }
     
     void setStatus(Status st) {status = st;}
     Status getStatus() {return status;}
 
-    int pktsize(char * buf) {
-	    memcpy(&size, buf, sizeof(int));
-	    return size;
+    int getPktSize(char * buf) {
+	    memcpy(&pktsize, buf, sizeof(int));
+	    return pktsize;
     }
 
     char * serialize() {
-    	std::memcpy(pktdata+sizeof(int), &status, sizeof(int));
+    	std::memcpy(pkt+sizeof(int), &status, sizeof(int));
     	serialize_data();
-	return pktdata;	
+	return pkt;	
     }
 
     void deserialize(char * buf) {
@@ -84,9 +89,9 @@ namespace df {
 
     virtual ~Token() {
       delete data;
-      delete pktdata;
+      delete pkt;
       data = nullptr;
-      pktdata = nullptr;
+      pkt = nullptr;
     }
   };
   

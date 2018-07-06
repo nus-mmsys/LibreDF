@@ -32,7 +32,7 @@ namespace df {
     virtual std::string to_string() { return *data; }
 
     virtual void serialize_data() { 
-	std::strcpy(pktdata+PKTHEAD, data->c_str());
+	std::strcpy(pkt+PKTHEAD, data->c_str());
     }
 
     virtual void deserialize_pkt(char * buf) {

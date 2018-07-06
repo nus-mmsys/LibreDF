@@ -58,25 +58,23 @@ namespace df {
     
     virtual void serialize_data() {
 	if (rows == 0 || cols == 0) {
-		size = calcMatSize()+3*sizeof(int)+PKTHEAD;
 		matsize = calcMatSize();
-		delete pktdata;
-		pktdata = new char[size];
+		delete pkt;
+		initPacket(calcMatSize()+3*sizeof(int));
 		rows = data->rows;
 		cols = data->cols;
 		type = data->type();
-		memcpy(pktdata, &size, sizeof(int)); 
-		memcpy(pktdata+2*sizeof(int), &rows, sizeof(int)); 
-		memcpy(pktdata+3*sizeof(int), &cols, sizeof(int)); 
-		memcpy(pktdata+4*sizeof(int), &type, sizeof(int));
+		memcpy(pkt+2*sizeof(int), &rows, sizeof(int)); 
+		memcpy(pkt+3*sizeof(int), &cols, sizeof(int)); 
+		memcpy(pkt+4*sizeof(int), &type, sizeof(int));
 	}
-	memcpy(pktdata+5*sizeof(int), reinterpret_cast<char*>(data->data), matsize);
+	memcpy(pkt+5*sizeof(int), reinterpret_cast<char*>(data->data), matsize);
     }
 
     virtual void deserialize_pkt(char * buf) {
 	if (rows == 0 || cols == 0) {
-		size = pktsize(buf);
-		matsize = size - 3*sizeof(int) - PKTHEAD;
+		pktsize = getPktSize(buf);
+		matsize = pktsize - 3*sizeof(int) - PKTHEAD;
 		memcpy(&rows, buf+2*sizeof(int), sizeof(int)); 
 		memcpy(&cols, buf+3*sizeof(int), sizeof(int)); 
 		memcpy(&type, buf+4*sizeof(int), sizeof(int)); 
