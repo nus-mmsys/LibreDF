@@ -66,7 +66,7 @@ df pedestrian_detection {
 }
 ```
 
-## Example (distributed Canny edge detection)
+## Example (distributed canny edge detection)
 This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections to a canny edge detector, and another actor to write the decoded frames to png files.
 ```
 df canny {
