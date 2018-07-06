@@ -33,7 +33,7 @@ namespace df {
     	chdata = new char[2*sizeof(int)];
     }
 
-    std::string to_string() { return std::to_string(*data); }
+    virtual std::string to_string() { return std::to_string(*data); }
 
     virtual char * serialize() { 
 	    if (size == 0) {

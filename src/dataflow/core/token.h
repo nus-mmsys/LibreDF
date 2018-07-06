@@ -42,7 +42,6 @@ namespace df {
     
   public:
 
-
     Token(): number(0), status(TokenStatus::OK) { data = new T(); } 
     
     T * get() { return data; }
