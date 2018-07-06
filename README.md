@@ -66,27 +66,39 @@ df pedestrian_detection {
 }
 ```
 
-## Example (distributed decoding)
-This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections in order to write the decoded frames to png files.
+## Example (distributed Canny edge detection)
+This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections to a canny edge detector, and another actor to write the decoded frames to png files.
 ```
-df imwrite {
+df canny {
     topology {
-        nodes = A,B;
-        edges = e1(A,B);
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
     }
     actor A {
-        computation = VideoCapture;
+    	computation = VideoCapture;
         file_name = pedestrian.mp4;
     }
     actor B {
-        computation = ImageWrite;
-        host = 127.0.0.1;
-        input_port = 7010;
+    	computation = CvtColor;
+	host = 127.0.0.1;
+	input_port = 7007;
+    }
+    actor C {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+	host = 127.0.0.1;
+	input_port = 7008;
+    }
+    actor D {
+    	computation = ImageWrite;
+	host = 127.0.0.1;
+	input_port = 7009;
     }
     parameter {
-        distributed = true;
-        discovery_host = 127.0.0.1;
-        discovery_port = 7000;
+	distributed = true;
+	discovery_host = 127.0.0.1;
+	disocvery_port = 7000;
     }
 }
 ```
