@@ -234,7 +234,7 @@ void Add::run() {
   auto in1 = consume(input1);	
   auto in2 = consume(input2);	
   auto out = produce(output);
-  *out->data = *in1->data + *in2->data;
+  out->set(*in1->get() + *in2->get());
   log("sending "+to_string(stepno));
   release(input1);
   release(input2);
