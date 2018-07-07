@@ -1,28 +1,5 @@
 # TMF
 
-## Getting started
-
-### Build
-
-```bash
-  cd build
-  ./build.sh
-  # or
-  ./build.sh debug # for debuging
-```
-
-### Run
-
-```bash
-  ./tmf ../test/basic/adder.df
-```
-
-### Commands
-
-	graph		        display df graph.
-	h		        display help menu.
-	run		        run the data graph.
-
 ## Application development (Dataflow Interchange Format)
 
 ```
@@ -261,6 +238,29 @@ Add::~Add() {
   destroyPort(output);
 }
 ```
+
+## Getting started
+
+### Build
+
+```bash
+  cd build
+  ./build.sh
+  # or
+  ./build.sh debug # for debuging
+```
+
+### Run
+
+```bash
+  ./tmf ../test/basic/adder.df
+```
+
+### Commands
+
+	graph		        display df graph.
+	h		        display help menu.
+	run		        run the data graph.
 
 ### Folder structure
 
