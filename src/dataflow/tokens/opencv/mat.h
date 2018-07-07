@@ -32,14 +32,15 @@ namespace df {
     int matsize;
   public:
   
-    Mat():Token<cv::Mat>(1024) {
+    Mat():Token<cv::Mat>(0) {
     	rows = 0;
     	cols = 0;
     	type = 0;
+	matsize = 0;
     }
     int calcMatSize() {
 	//cv::Size size = data->size();
-	//return size.width * size.height * data->channels();
+	//matsize = size.width * size.height * data->channels();
     	matsize = data->total()*data->elemSize();
     	return matsize;
     }
