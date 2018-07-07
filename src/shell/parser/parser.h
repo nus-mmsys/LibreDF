@@ -31,14 +31,13 @@
 using namespace std;
 
 /*!
- * \class TDFUI
- * The user interface class for RDF.
+ * \class Parser
  *
  */
 class Parser {
 
 protected:
-	Graph * graph; /**< RDF data graph. */
+	Graph * graph; /**< data graph. */
 
 	/*!
 	 * Trims a string and removes all 

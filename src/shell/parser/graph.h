@@ -177,14 +177,31 @@ private:
 	 * 	The GCD of a and b.
 	 *
 	 */
-	int gdc(int a, int b);
+	int gcd(int a, int b);
 	
 	//vector<vector<Actor *>> pathlist;
 	//void findpaths();
 	//void findpaths_from(Actor * head, vector<Actor *> path);
 	//void findpaths2();
 public:
-      
+
+  	using actor_iterator = std::map<string, Actor *>::const_iterator;	
+  	using edge_iterator = std::map<string, Edge *>::const_iterator;	
+	using param_iterator = std::map<string, string>::const_iterator;
+
+	actor_iterator actor_begin() { return actors.begin(); } 
+	actor_iterator actor_end() { return actors.end(); } 
+	int actor_size() { return actors.size(); } 
+
+	edge_iterator edge_begin() { return edges.begin(); } 
+	edge_iterator edge_end() { return edges.end(); } 
+	int edge_size() { return edges.size(); } 
+
+	param_iterator param_begin() { return params.begin(); } 
+	param_iterator param_end() { return params.end(); } 
+	int param_size() { return params.size(); } 
+
+
 	/*!
 	 * Set the name of the graph.
 	 *

@@ -57,7 +57,7 @@ Edge * Graph::get_edge(Actor * source, Actor * sink) {
 	return edges[edgename];
 }
 
-int gcd(int a, int b) {
+int Graph::gcd(int a, int b) {
 	int r;
 	while (b != 0) {
 		r = a % b;
