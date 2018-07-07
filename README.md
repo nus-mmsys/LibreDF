@@ -1,6 +1,8 @@
 # TMF
 
-## Build
+## Getting started
+
+### Build
 
 ```bash
   cd build
@@ -9,19 +11,19 @@
   ./build.sh debug # for debuging
 ```
 
-## Run
+### Run
 
 ```bash
   ./tmf ../test/basic/adder.df
 ```
 
-## Commands
+### Commands
 
 	graph		        display df graph.
 	h		        display help menu.
 	run		        run the data graph.
 
-## Dataflow Interchange Format (DIF)
+## Application development (Dataflow Interchange Format)
 
 ```
 df <name> {
