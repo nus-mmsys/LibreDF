@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RDFUI_H
-#define RDFUI_H
+#ifndef RDFAnalyse_H
+#define RDFAnalyse_H
 
 #include <iostream>
 #include <fstream>
@@ -25,19 +25,17 @@
 #include <vector>
 #include <map>
 #include <functional>
-#include "rdf/rdfui.h"
+#include "analyse/analyse.h"
 #include "rdf/rdfparser.h"
-#include "ui/ui.h"
-#include "core/df.h"
 
 using namespace std;
 
 /*!
- * \class RDFUI
+ * \class RDFAnalyse
  * The user interface class for RDF.
  *
  */
-class RDFUI : public UI {
+class RDFAnalyse : public Analyse {
 
 private:
 	vector<Rule *> rules;
@@ -73,7 +71,7 @@ protected:
 
 public:
 	/*!
-	 * RDFUI constructor
+	 * RDFAnalyse constructor
 	 *
 	 *  \param argc
 	 * 	The number of arguments
@@ -82,7 +80,7 @@ public:
 	 *  	The list of strings containing the arguments
 	 *
 	 */ 
-	RDFUI(int argc, char * argv[], RDFParser * p);
+	RDFAnalyse(int argc, char * argv[], RDFParser * p);
 };
 
 #endif

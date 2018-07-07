@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_UI_H
-#define DF_UI_H
+#ifndef DF_ANALYSE_H
+#define DF_ANALYSE_H
 
 #include <iostream>
 #include <fstream>
@@ -26,16 +26,15 @@
 #include <map>
 #include <functional>
 #include "parser/parser.h"
-#include "core/df.h"
 
 using namespace std;
 
 /*!
- * \class UI
+ * \class Analyse
  * The user interface class for RDF.
  *
  */
-class UI {
+class Analyse {
 
 protected:
 	
@@ -72,14 +71,6 @@ protected:
 	int display_help();
 
 	/*!
-	 * Run the data graph
-	 *
-	 * \return
-	 *
-	 */ 
-	int run_graph();
-
-	/*!
 	 * Process a command given by the user
 	 *
 	 *  \param command
@@ -93,7 +84,7 @@ protected:
 public:
 
 	/*!
-	 * UI constructor
+	 * Analyse constructor
 	 *
 	 *  \param argc
 	 * 	The number of arguments
@@ -102,10 +93,10 @@ public:
 	 *  	The list of strings containing the arguments
 	 *
 	 */ 
-	UI(int argc, char * argv[], Parser * parser);
+	Analyse(int argc, char * argv[], Parser * parser);
 	
 	/*!
-	 * Main loop of the UI
+	 * Main loop of the Analyse
 	 *
 	 * \return
 	 *

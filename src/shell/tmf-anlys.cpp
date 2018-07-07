@@ -16,14 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui/ui.h"
+#include "analyse/analyse.h"
 
 int main(int argc, char * argv[]) {
 
     Parser * parser = new Parser();
-    UI * ui = new UI(argc, argv, parser);
+    Analyse * analyse = new Analyse(argc, argv, parser);
 
-    ui->loop();
+    analyse->loop();
 
     return 0;
 }

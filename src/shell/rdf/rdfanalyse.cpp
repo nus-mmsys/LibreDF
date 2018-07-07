@@ -16,11 +16,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "rdfui.h"
+#include "rdfanalyse.h"
 
-RDFUI::RDFUI(int argc, char * argv[], RDFParser * p) : UI(argc,argv,p) {
-	cmd["benchmark"] = bind(&RDFUI::display_benchmark, this);
-	cmd["rules"] = bind(&RDFUI::display_rules, this);
+RDFAnalyse::RDFAnalyse(int argc, char * argv[], RDFParser * p) : Analyse(argc,argv,p) {
+	cmd["benchmark"] = bind(&RDFAnalyse::display_benchmark, this);
+	cmd["rules"] = bind(&RDFAnalyse::display_rules, this);
 
 	comment["benchmark"] = "display benchmark.";
 	comment["rules"] = "\tdisplay list of rules.";
@@ -28,7 +28,7 @@ RDFUI::RDFUI(int argc, char * argv[], RDFParser * p) : UI(argc,argv,p) {
 	rules = p->get_rules();
 }
 
-int RDFUI::display_graph(Graph * g) {
+int RDFAnalyse::display_graph(Graph * g) {
 	int ac_index = 0;
 	int ed_index = 0;
 	vector<string> actorlist = g->get_actors();
@@ -82,7 +82,7 @@ int RDFUI::display_graph(Graph * g) {
 	return 0;
 }
 
-int RDFUI::display_rules() {
+int RDFAnalyse::display_rules() {
 
 	if (rules.size() == 0) {
 		cout << "No rule is found.\n";
@@ -134,7 +134,7 @@ int RDFUI::display_rules() {
 	return 0;
 }
 
-int RDFUI::display_benchmark() {
+int RDFAnalyse::display_benchmark() {
 	if (rules.size() == 0) {
 		cout << "No rule is found.\n";
 		return 0;

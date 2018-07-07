@@ -17,14 +17,14 @@
  */
 
 
-#include "rdf/rdfui.h"
+#include "rdf/rdfanalyse.h"
 
 int main(int argc, char * argv[]) {
 
     RDFParser * parser = new RDFParser();
-    UI * ui = new RDFUI(argc, argv, parser);
+    Analyse * analyse = new RDFAnalyse(argc, argv, parser);
 
-    ui->loop();
+    analyse->loop();
 
     return 0;
 }
