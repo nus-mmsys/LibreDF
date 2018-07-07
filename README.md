@@ -40,7 +40,7 @@ df <name> {
 ```
 
 
-## Example (pedestrian detection)
+### Example (pedestrian detection)
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
 
 ```
@@ -68,7 +68,7 @@ df pedestrian_detection {
 }
 ```
 
-## Example (distributed canny edge detection)
+### Example (distributed canny edge detection)
 This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections to a canny edge detector, and another actor to write the decoded frames to png files.
 ```
 df canny {
@@ -105,7 +105,7 @@ df canny {
 }
 ```
 
-## Actor types
+### Actor types
 
     machine-learning
         Convolution         % output:Mat = filter2D(input:Mat) ;
@@ -262,7 +262,7 @@ Add::~Add() {
 }
 ```
 
-## Folder structure
+### Folder structure
 
 	build
 	src
