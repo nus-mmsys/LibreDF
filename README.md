@@ -258,16 +258,17 @@ Add::~Add() {
 
 ### Commands
 
-	graph		        display df graph.
+	graph		        display the graph.
 	h		        display help menu.
-	run		        run the data graph.
+	run		        run the graph on shared memory.
+	runtcp		        run the graph on tcp.
 
 ### Folder structure
 
 	build
 	src
 	    dataflow
-	        core
+	    	core
 	        actors
 	            machine-learning
 	            opencv-core
@@ -275,9 +276,14 @@ Add::~Add() {
 	            opencv-imgproc
 	            opencv-objdetect
 	            basic
+		tokens
+		    opencv
+		    basic
 	    shell
-	        parser
-	        ui
+	    	analyse
+		deploy
+		parser
+		rdf
 	test
 	    machine-learning
 	    opencv
