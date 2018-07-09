@@ -271,6 +271,11 @@ Add::~Add() {
 
 	build
 	src
+	    analyse
+	    deploy
+	    parser
+	    rdf
+	    server
 	    dataflow
 	    	core
 	        actors
@@ -283,11 +288,6 @@ Add::~Add() {
 		tokens
 		    opencv
 		    basic
-	    shell
-	    	analyse
-		deploy
-		parser
-		rdf
 	test
 	    machine-learning
 	    opencv
