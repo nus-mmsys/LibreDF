@@ -31,32 +31,35 @@ namespace df {
     int type;
     int matsize;
   public:
-  
+
     Mat():Token<cv::Mat>() {
     	rows = 0;
     	cols = 0;
     	type = 0;
 	matsize = 0;
     }
+
     int calcMatSize() {
 	//cv::Size size = data->size();
-	//matsize = size.width * size.height * data->channels();
-    	matsize = data->total()*data->elemSize();
-    	return matsize;
+	//return size.width * size.height * data->channels();
+    	return data->total()*data->elemSize();
     }
+
     virtual std::string to_string() { 
 	int total = calcMatSize(); 
 	std::vector<uchar> dv(data->ptr(), data->ptr() + total);
         std::string res(dv.begin(), dv.end());
 	return res;
     }
+
     virtual void set(const cv::Mat& d) {
 	*data = d.clone();
     }
+
     virtual cv::Mat clone() {
 	return data->clone();
     }
-    
+
     virtual int data_size() {
 	return calcMatSize() + 3*sizeof(int);
     }
@@ -82,7 +85,7 @@ namespace df {
 	memcpy(&type, buf+2*sizeof(int), sizeof(int)); 
 	data = new cv::Mat(rows, cols, type);
     }
-    
+
     virtual void deserialize_pkt(char * buf) {
 	memcpy(data->data, reinterpret_cast<uchar*>(buf+3*sizeof(int)), matsize);
     }
