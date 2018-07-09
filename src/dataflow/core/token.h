@@ -49,20 +49,21 @@ namespace df {
    
   public:
 
-    Token(int size): number(0), status(OK) { 
+    Token(): number(0), status(OK) { 
 	    data = new T(); 
 	    pkt = nullptr;
-	    initPacket(size);
+	    pktsize = 0;
     } 
    
-    char * initPacket(int size) {
-	    if (pkt != nullptr)
-		    delete pkt;
+    void initPacket(int size) {
+	    if (size+PKTHEAD == pktsize)
+		    return;	    
+	    if (pkt != nullptr) 
+            	    delete pkt;
 	    pktsize = size+PKTHEAD;
 	    pkt = new char[pktsize];
 	    std::memcpy(pkt, &pktsize , sizeof(int));
 	    std::memcpy(pkt+sizeof(int), &status , sizeof(int));
-    	    return pkt+PKTHEAD;
     }
 
     T * get() { return data; }
@@ -75,17 +76,19 @@ namespace df {
 	    return pktsize;
     }
 
-    int getDataSize(char * buf) {
-	    return getPktSize(buf) - PKTHEAD;
-    }
-
     char * serialize() {
+	if (pktsize == 0) {
+		initPacket(data_size());
+		serialize_init(pkt+PKTHEAD);
+	}
     	std::memcpy(pkt+sizeof(int), &status, sizeof(int));
     	serialize_data(pkt+PKTHEAD);
 	return pkt;	
     }
 
     void deserialize(char * buf) {
+	if (pktsize == 0)
+		deserialize_init(buf+PKTHEAD, getPktSize(buf)-PKTHEAD);
 	std::memcpy(&status, buf+sizeof(int), sizeof(int));
     	deserialize_pkt(buf+PKTHEAD);
     }
@@ -95,6 +98,9 @@ namespace df {
     virtual std::string to_string() = 0; 
     virtual void serialize_data(char *) = 0;
     virtual void deserialize_pkt(char *) = 0; 
+    virtual void serialize_init(char *) { }
+    virtual void deserialize_init(char *, int) { }; 
+    virtual int data_size() = 0;
 
     virtual ~Token() {
       delete data;

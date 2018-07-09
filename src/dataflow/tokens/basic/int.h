@@ -27,10 +27,14 @@ namespace df {
   class Int : public Token<int> {
   public:
   
-    Int():Token<int>(sizeof(int)) {
+    Int():Token<int>() {
     }
 
     virtual std::string to_string() { return std::to_string(*data); }
+
+    virtual int data_size() {
+	    return sizeof(int);
+    }
 
     virtual void serialize_data(char * buf) { 
 	    std::memcpy(buf, data, sizeof(int));

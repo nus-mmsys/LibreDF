@@ -26,10 +26,14 @@ namespace df {
   class Str : public Token<std::string> {
   public:
   
-    Str():Token<std::string>(1024) {
+    Str():Token<std::string>() {
     }
     
     virtual std::string to_string() { return *data; }
+
+    virtual int data_size() {
+	    return 1024;
+    }
 
     virtual void serialize_data(char * buf) { 
 	std::strcpy(buf, data->c_str());

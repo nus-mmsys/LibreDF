@@ -32,7 +32,7 @@ namespace df {
     int matsize;
   public:
   
-    Mat():Token<cv::Mat>(0) {
+    Mat():Token<cv::Mat>() {
     	rows = 0;
     	cols = 0;
     	type = 0;
@@ -57,28 +57,33 @@ namespace df {
 	return data->clone();
     }
     
+    virtual int data_size() {
+	return calcMatSize() + 3*sizeof(int);
+    }
+
+    virtual void serialize_init(char * buf) {
+	rows = data->rows;
+	cols = data->cols;
+	type = data->type();
+	matsize = calcMatSize();
+	memcpy(buf, &rows, sizeof(int)); 
+	memcpy(buf+sizeof(int), &cols, sizeof(int)); 
+	memcpy(buf+2*sizeof(int), &type, sizeof(int));
+    }
+
     virtual void serialize_data(char * buf) {
-	if (rows == 0 || cols == 0) {
-		matsize = calcMatSize();
-		buf = initPacket(calcMatSize()+3*sizeof(int));
-		rows = data->rows;
-		cols = data->cols;
-		type = data->type();
-		memcpy(buf, &rows, sizeof(int)); 
-		memcpy(buf+sizeof(int), &cols, sizeof(int)); 
-		memcpy(buf+2*sizeof(int), &type, sizeof(int));
-	}
 	memcpy(buf+3*sizeof(int), reinterpret_cast<char*>(data->data), matsize);
     }
 
+    virtual void deserialize_init(char * buf, int dsize) {
+	matsize = dsize - 3*sizeof(int);
+	memcpy(&rows, buf, sizeof(int)); 
+	memcpy(&cols, buf+sizeof(int), sizeof(int)); 
+	memcpy(&type, buf+2*sizeof(int), sizeof(int)); 
+	data = new cv::Mat(rows, cols, type);
+    }
+    
     virtual void deserialize_pkt(char * buf) {
-	if (rows == 0 || cols == 0) {
-		matsize = getDataSize(buf) - 3*sizeof(int);
-		memcpy(&rows, buf, sizeof(int)); 
-		memcpy(&cols, buf+sizeof(int), sizeof(int)); 
-		memcpy(&type, buf+2*sizeof(int), sizeof(int)); 
-		data = new cv::Mat(rows, cols, type);
-	}
 	memcpy(data->data, reinterpret_cast<uchar*>(buf+3*sizeof(int)), matsize);
     }
 
