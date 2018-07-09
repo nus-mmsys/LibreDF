@@ -1,17 +1,6 @@
 # RDF
 
-## Commands 
-
-```
-benchmark           display benchmark.
-graph               display the graph.
-h	                display help menu.
-rules	            display list of rules.
-run	                run the data graph on shared memory.
-runtcp	            run the data graph on tcp.
-```
-
-## RDF extension
+## Application development (RDF extension)
 
 ```
 rule <name> {
@@ -60,4 +49,24 @@ main {
    ...
    <condition_n> ? <rule_t>*;
 }
+```
+
+
+## Getting started
+
+### Build
+
+```
+./build -DBUILD_RDF_MODULE=ON
+```
+
+### Commands 
+
+```
+benchmark           display benchmark.
+graph               display the graph.
+h	                display help menu.
+rules	            display list of rules.
+run	                run the data graph on shared memory.
+runtcp	            run the data graph on tcp.
 ```
