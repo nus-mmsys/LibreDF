@@ -1,6 +1,8 @@
 # RDF
 
-## Application development (RDF extension)
+## Application development
+
+### RDF extension
 
 ```
 rule <name> {
@@ -38,7 +40,7 @@ right {
 }
 ```
 
-## Controller
+### Controller
 
 A controller decides when and how to apply a transformation rule. It is not implemented yet. Controller can be implemented as follows.
 
