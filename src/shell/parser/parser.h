@@ -53,66 +53,66 @@ protected:
 
 
 	/*!
-	 * Read a string from a file stream.
+	 * Read a string from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 *
 	 * \param str
-	 * 	String to read from the file stream.
+	 * 	String to read from the stream.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_str(ifstream & file, string str);
+	int read_str(std::stringstream & stream, string str);
 
 	/*!
-	 * Read a topology from a file stream.
+	 * Read a topology from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 *
 	 * \param g
-	 * 	Reference of graph to read from the file stream.
+	 * 	Reference of graph to read from the stream.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_topology(ifstream & file, Graph * g);
+	int read_topology(std::stringstream & stream, Graph * g);
 
 	/*!
-	 * Read a graph from a file stream.
+	 * Read a graph from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 *
 	 * \param g
-	 * 	Reference of graph to read from the file stream.
+	 * 	Reference of graph to read from the stream.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_graph(ifstream & file, Graph * g);
+	int read_graph(std::stringstream & stream, Graph * g);
 
 	/*!
-	 * Read the list of actors of a graph from a file stream.
+	 * Read the list of actors of a graph from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 *
 	 * \param g
-	 * 	Reference of graph containing the actors to read from the file stream.
+	 * 	Reference of graph containing the actors to read from the stream.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_actors(ifstream & file, Graph * g);
+	int read_actors(std::stringstream & stream, Graph * g);
 	
 	/*!
-	 * Read the production rates from a file stream.
+	 * Read the production rates from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 * 
 	 * \param g
 	 * 	Reference of graph containing the actor
@@ -120,13 +120,13 @@ protected:
 	 * \return
 	 *
 	 */ 
-        int read_productions(ifstream & file, Graph * g);
+        int read_productions(std::stringstream & stream, Graph * g);
 
 	/*!
-	 * Read the consumption rates from a file stream.
+	 * Read the consumption rates from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 * 
 	 * \param g
 	 * 	Reference of graph containing the actor
@@ -134,14 +134,14 @@ protected:
 	 * \return
 	 *
 	 */ 
-        int read_consumptions(ifstream & file, Graph * g);
+        int read_consumptions(std::stringstream & stream, Graph * g);
 	
 	/*!
 	 * Read the list of parameters of the dataflow
-	 * from a file stream.
+	 * from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 * 
 	 * \param g
 	 * 	Reference of graph containing the actor
@@ -149,14 +149,14 @@ protected:
 	 * \return
 	 *
 	 */ 
-        int read_parameters(ifstream & file, Graph * g);
+        int read_parameters(std::stringstream & stream, Graph * g);
 
 	/*!
 	 * Read the list of properties of an actor from 
-	 * a file stream.
+	 * a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 * 
 	 * \param g
 	 * 	Reference of graph containing the actor
@@ -164,7 +164,7 @@ protected:
 	 * \return
 	 *
 	 */ 
-        int read_props(ifstream & file, Graph * g);
+        int read_props(std::stringstream & stream, Graph * g);
 
 	/*!
 	 * Load the actor type from the property
@@ -179,18 +179,18 @@ protected:
         int load_actor_types(Graph * g);
 
 	/*!
-	 * Read the list of edges of a graph from a file stream.
+	 * Read the list of edges of a graph from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 *
 	 * \param g
-	 * 	Reference of graph containing the edges to read from the file stream.
+	 * 	Reference of graph containing the edges to read from the stream.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_edges(ifstream & file, Graph * g);
+	int read_edges(std::stringstream & stream, Graph * g);
 
 	/*!
 	 * Add production rate.
@@ -314,6 +314,7 @@ protected:
 	 */ 
 	int add_edge(const string& edge, Graph * g);
 
+	virtual int load_from_stream(std::stringstream& ss);
 public:
 
 	/*!
@@ -330,10 +331,10 @@ public:
 	 * \return 
 	 *
 	 */
-	virtual int load_from_file(const char * filename);
+	int load_from_file(const char * filename);
 
 	/*! 
-	 * Load an graph from file.
+	 * Load a graph from string.
 	 *
 	 * \param app
 	 * 	Application in string format.
@@ -341,7 +342,7 @@ public:
 	 * \return 
 	 *
 	 */
-	virtual int load_from_string(const std::string& app);
+	int load_from_string(const std::string& app);
 	
 	Graph * get_graph();	
 };

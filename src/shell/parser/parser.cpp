@@ -22,34 +22,46 @@ Parser::Parser() {
 }
 
 int Parser::load_from_string(const std::string& app) {
-	//TODO
-	return 0;
+	std::stringstream ss(app);
+	return load_from_stream(ss);	
 }
 
 int Parser::load_from_file(const char * filename) {
+	ifstream file(filename);
+	if (!file)
+       		return -1;
+
+	std::stringstream ss;
+	ss << file.rdbuf();
+	file.close();
+
+	return load_from_stream(ss);
+}
+
+
+int Parser::load_from_stream(stringstream& ss) {
 	int ret;
 	graph = new Graph();
-	string rdfname;
-	ifstream file(filename);
-        read_str(file, "df");
-        file >> rdfname;
-        graph->set_name(rdfname);
-	ret = read_graph(file, graph);
+	string gname;
+        read_str(ss, "df");
+        ss >> gname;
+        graph->set_name(gname);
+	ret = read_graph(ss, graph);
 	if (ret < 0)
 		return ret;
 	if (ret == 0) {
-		cout << "file is loaded successfully.\n";
+		cout << "graph is loaded successfully.\n";
 		return 0;
 	} else
 		return ret;
 }
 
-int Parser::read_str(ifstream & file, string str) {
+int Parser::read_str(stringstream & stream, string str) {
 	string tmp;
-	file >> tmp;
+	stream >> tmp;
 	if (tmp == str)
 		return 0;
-	else if (file.eof()) {
+	else if (stream.eof()) {
 		return -2;
 	}
 	else {
@@ -71,27 +83,27 @@ int Parser::trim_str(string & str) {
 
 	return 0;
 }
-int Parser::read_graph(ifstream & file, Graph * g) {
+int Parser::read_graph(stringstream & stream, Graph * g) {
 	int ret;
 	string tmp;
-	read_str(file, "{");
-        read_str(file, "topology");
-	ret = read_topology(file,g);
+	read_str(stream, "{");
+        read_str(stream, "topology");
+	ret = read_topology(stream,g);
 	if (ret < 0)
 		return ret;
 	while (true) {
 		ret = 0;
-		file >> tmp;
+		stream >> tmp;
 		if (tmp == "}")
 			break;
 		else if (tmp == "parameter")
-			ret = read_parameters(file, g);
+			ret = read_parameters(stream, g);
 		else if (tmp == "actor")
-			ret = read_props(file, g);
+			ret = read_props(stream, g);
 		else if (tmp == "production")
-			ret = read_productions(file, g);
+			ret = read_productions(stream, g);
 		else if (tmp == "consumption")
-			ret = read_consumptions(file, g);
+			ret = read_consumptions(stream, g);
 		else {
 			cout << "cannot parse the graph.\n";
 			return -1;
@@ -116,12 +128,12 @@ int Parser::load_actor_types(Graph * g) {
 }
 
 
-int Parser::read_productions(ifstream & file, Graph * g) {
+int Parser::read_productions(stringstream & stream, Graph * g) {
 
 	int ret;
 	string ratelist, edgename, rate;
-	read_str(file, "{");	
-	getline(file, ratelist, '}');
+	read_str(stream, "{");	
+	getline(stream, ratelist, '}');
 
 	trim_str(ratelist);
 
@@ -134,12 +146,12 @@ int Parser::read_productions(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int Parser::read_consumptions(ifstream & file, Graph * g) {
+int Parser::read_consumptions(stringstream & stream, Graph * g) {
 
 	int ret;
 	string ratelist, edgename, rate;
-	read_str(file, "{");	
-	getline(file, ratelist, '}');
+	read_str(stream, "{");	
+	getline(stream, ratelist, '}');
 
 	trim_str(ratelist);
 
@@ -152,12 +164,12 @@ int Parser::read_consumptions(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int Parser::read_parameters(ifstream & file, Graph * g) {
+int Parser::read_parameters(stringstream & stream, Graph * g) {
 
 	int ret;
 	string params;
-	read_str(file, "{");	
-	getline(file, params, '}');
+	read_str(stream, "{");	
+	getline(stream, params, '}');
 
 	trim_str(params);
 	
@@ -171,13 +183,13 @@ int Parser::read_parameters(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int Parser::read_props(ifstream & file, Graph * g) {
+int Parser::read_props(stringstream & stream, Graph * g) {
 
 	int ret;
 	string actname, props, prop;
-	file >> actname;
-	read_str(file, "{");	
-	getline(file, props, '}');
+	stream >> actname;
+	read_str(stream, "{");	
+	getline(stream, props, '}');
 	
 	trim_str(props);
 	
@@ -191,19 +203,19 @@ int Parser::read_props(ifstream & file, Graph * g) {
 
 }
 
-int Parser::read_topology(ifstream & file, Graph * g) {
+int Parser::read_topology(stringstream & stream, Graph * g) {
         int ret;
 	string actorlist, edgelist, actor, edge;
-	read_str(file, "{");
-	read_str(file, "nodes");
-	read_str(file, "=");
-	getline(file, actorlist, ';');
+	read_str(stream, "{");
+	read_str(stream, "nodes");
+	read_str(stream, "=");
+	getline(stream, actorlist, ';');
 
-	read_str(file, "edges");
-	read_str(file, "=");
-	getline(file, edgelist, ';');
+	read_str(stream, "edges");
+	read_str(stream, "=");
+	getline(stream, edgelist, ';');
 
-	read_str(file, "}");
+	read_str(stream, "}");
 
 	trim_str(actorlist);
 	trim_str(edgelist);
@@ -256,11 +268,11 @@ int Parser::add_actor(const string& actor, Graph * g) {
 	return ret;
 }
 
-int Parser::read_actors(ifstream & file, Graph * g) {
+int Parser::read_actors(stringstream & stream, Graph * g) {
         int ret;
 	string actorlist, actor;
-	read_str(file, "{");
-	getline(file, actorlist, '}');
+	read_str(stream, "{");
+	getline(stream, actorlist, '}');
 
 	trim_str(actorlist);
 
@@ -273,14 +285,14 @@ int Parser::read_actors(ifstream & file, Graph * g) {
 	return 0;
 }
 
-int Parser::read_edges(ifstream & file, Graph * g) {
+int Parser::read_edges(stringstream & stream, Graph * g) {
 	int ret;	
 	int source, sink;
 	string edgelist, edgeline, source_str, sink_str;
 	string edge, edge_source, edge_sink;
-	read_str(file, "{");
+	read_str(stream, "{");
 
-	getline(file, edgelist, '}');
+	getline(stream, edgelist, '}');
 
 	trim_str(edgelist);
 	
@@ -294,7 +306,7 @@ int Parser::read_edges(ifstream & file, Graph * g) {
 		getline(edl, sink_str);
 		ret = add_edge(edge_source, edge_sink, g);
 		if (ret < 0) {
-			cout << "error: parsing file failed.\n";
+			cout << "error: parsing stream failed.\n";
 			return ret;
 		}
 		source = std::stoi(source_str);

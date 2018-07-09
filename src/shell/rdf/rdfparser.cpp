@@ -22,53 +22,52 @@ RDFParser::RDFParser() {
 
 }
 
-int RDFParser::load_from_file(const char * filename) {
+int RDFParser::load_from_stream(std::stringstream & ss) {
 	int ret;
 	graph = new Graph();
 	string rdfname;
-	ifstream file(filename);
-        read_str(file, "df");
-        file >> rdfname;
+        read_str(ss, "df");
+        ss >> rdfname;
         graph->set_name(rdfname);
-	ret = read_graph(file, graph);
+	ret = read_graph(ss, graph);
 	if (ret < 0)
 		return ret;
-	ret = read_rules(file);
+	ret = read_rules(ss);
 	if (ret == -2) {
-		cout << "rdf is loaded successfully.\n";
+		cout << "graph is loaded successfully.\n";
 		return 0;
 	} else
 		return ret;
 }
 
-int RDFParser::read_rules(ifstream & file) {
+int RDFParser::read_rules(stringstream & stream) {
 	int ret=0;
 	string rulename;
 	string rulestr;
 	Rule * rule;
 	graph->resolve();
-	while (!file.eof() && ret >= 0) {
-		ret = read_str(file, "rule");
+	while (!stream.eof() && ret >= 0) {
+		ret = read_str(stream, "rule");
 		if (ret < 0)
 			return ret;
-		file >> rulename;
+		stream >> rulename;
 		rule = new Rule(rulename);
-		ret = read_str(file, "{");
+		ret = read_str(stream, "{");
 		if (ret < 0)
 			return ret;
-		ret = read_str(file, "left");
+		ret = read_str(stream, "left");
 		if (ret < 0)
 			return ret;
-		ret = read_graph(file, rule->left());
+		ret = read_graph(stream, rule->left());
 		if (ret < 0)
 			return ret;
-		ret = read_str(file, "right");
+		ret = read_str(stream, "right");
 		if (ret < 0)
 			return ret;
-		ret = read_graph(file, rule->right());
+		ret = read_graph(stream, rule->right());
 		if (ret < 0)
 			return ret;
-		ret = read_str(file, "}");
+		ret = read_str(stream, "}");
 		if (ret < 0)
 			return ret;
 

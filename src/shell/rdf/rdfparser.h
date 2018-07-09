@@ -41,15 +41,15 @@ protected:
 	vector<Rule *> rules; /**< RDF transformation rules. */
 
 	/*!
-	 * Read a set of rules from a file stream.
+	 * Read a set of rules from a stream.
 	 *
-	 * \param file
-	 * 	Reference of the file stream.
+	 * \param stream
+	 * 	Reference of the stream.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_rules(ifstream & file);
+	int read_rules(std::stringstream & stream);
 
 public:
 
@@ -59,7 +59,7 @@ public:
 	 */ 
 	RDFParser();
 
-	virtual int load_from_file(const char * filename);
+	virtual int load_from_stream(std::stringstream& ss);
 
 	vector<Rule *> get_rules();
 
