@@ -72,8 +72,9 @@ namespace df {
     Status getStatus() {return status;}
 
     int getPktSize(char * buf) {
-	    memcpy(&pktsize, buf, sizeof(int));
-	    return pktsize;
+	    int size;
+	    memcpy(&size, buf, sizeof(int));
+	    return size;
     }
 
     char * serialize() {
@@ -87,8 +88,10 @@ namespace df {
     }
 
     void deserialize(char * buf) {
-	if (pktsize == 0)
+	if (pktsize == 0) {
+		pktsize = getPktSize(buf); 
 		deserialize_init(buf+PKTHEAD, getPktSize(buf)-PKTHEAD);
+	}
 	std::memcpy(&status, buf+sizeof(int), sizeof(int));
     	deserialize_pkt(buf+PKTHEAD);
     }
