@@ -322,7 +322,7 @@ public:
 	Parser();
 
 	/*! 
-	 * Load an RDF from file.
+	 * Load a graph from file.
 	 *
 	 * \param filename
 	 * 	Name of the file in string format.
@@ -331,6 +331,17 @@ public:
 	 *
 	 */
 	virtual int load_from_file(const char * filename);
+
+	/*! 
+	 * Load an graph from file.
+	 *
+	 * \param app
+	 * 	Application in string format.
+	 *
+	 * \return 
+	 *
+	 */
+	virtual int load_from_string(const std::string& app);
 	
 	Graph * get_graph();	
 };

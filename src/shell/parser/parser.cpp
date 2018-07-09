@@ -21,6 +21,11 @@
 Parser::Parser() {
 }
 
+int Parser::load_from_string(const std::string& app) {
+	//TODO
+	return 0;
+}
+
 int Parser::load_from_file(const char * filename) {
 	int ret;
 	graph = new Graph();
