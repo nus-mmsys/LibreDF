@@ -120,6 +120,20 @@ namespace df {
     void setProp(const std::string & key, const T& val) {
       prop.setProp(key, val);
     }
+
+    /*!
+     * Replace a property of the actor.
+     *
+     * \param key
+     *   The property name.
+     * \param val
+     *   The property value.
+     */
+    template<typename T>
+    void replaceProp(const std::string & key, const T& val) {
+      prop.replaceProp(key, val);
+    }
+
     /*!
      * Get the value of a actor property.
      *

@@ -96,6 +96,20 @@ namespace df {
     }
     
     /*!
+     * Replace the value of the key if key exists and 
+     * insert otherwise.
+     *
+     * \param key the key of the message
+     * \param val the value of the message
+     *
+     */
+    template <typename T>
+    void replaceProp(const std::string & key, const T & val) {
+      props.erase(key);
+      setProp<T>(key, val);
+    }
+
+    /*!
      * Set the message of string type by key and value
      *
      * \param key the key of the message
@@ -103,7 +117,16 @@ namespace df {
      *
      */ 
     void setProp(const std::string & key, const std::string& val);
-    
+     
+    /*!
+     * Replace the value of the key if it exists and insert otherwise.
+     *
+     * \param key the key of the message
+     * \param val the string value of the message
+     *
+     */ 
+    void replaceProp(const std::string & key, const std::string& val);
+
     /*!
      * Set the message of char sequence type by key and value
      *

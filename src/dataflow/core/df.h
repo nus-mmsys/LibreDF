@@ -75,6 +75,11 @@ namespace df {
 	    prop.setProp(key,val);
     }
 
+    template<typename T>
+    void replaceProp(const std::string& key, const T& val) {
+	    prop.replaceProp(key,val);
+    }
+
     Actor * createActor(std::string const& s, const std::string& name);
 
     void addActor(Actor * f);

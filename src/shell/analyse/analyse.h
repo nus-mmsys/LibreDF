@@ -71,6 +71,16 @@ protected:
 	int display_help();
 
 	/*!
+	 * Run the graph the help menu to the user
+	 * 
+	 * \param dist
+	 * 	Run on TCP if true, and on shared memory otherwise 
+	 * \return
+	 *	0 if successful, -1 otherwise
+	 */ 
+	int run(bool dist);
+
+	/*!
 	 * Process a command given by the user
 	 *
 	 *  \param command

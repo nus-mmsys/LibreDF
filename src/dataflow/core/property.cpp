@@ -81,6 +81,11 @@ void Property::setProp(const std::string & key, const std::string& val) {
   props.insert(std::make_pair(key, val));
 }
 
+void Property::replaceProp(const std::string & key, const std::string& val) {
+  props.erase(key);
+  setProp(key, val);
+}
+
 void Property::setProp(const std::string & key, const char* val) {
   std::string valstr = std::string(val);
   props.insert(std::make_pair(key, valstr));
