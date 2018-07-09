@@ -13,6 +13,9 @@ df <name> {
         <property x> = <value y>;
         ...
     }
+    parameter {
+    	<property z> = <value t>;
+    }
 }
 ```
 
