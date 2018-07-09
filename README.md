@@ -81,7 +81,7 @@ df canny {
     parameter {
 	distributed = true;
 	discovery_host = 127.0.0.1;
-	disocvery_port = 7000;
+	disocvery_port = 7001;
     }
 }
 ```
