@@ -75,6 +75,6 @@ benchmark           display benchmark.
 graph               display the graph.
 h                   display help menu.
 rules               display list of rules.
-run	                run the data graph on shared memory.
+run                 run the data graph on shared memory.
 runtcp              run the data graph on tcp.
 ```
