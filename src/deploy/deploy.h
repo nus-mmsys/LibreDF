@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_SERVER_H
-#define DF_SERVER_H
+#ifndef DF_DEPLOY_H
+#define DF_DEPLOY_H
 
 #include <iostream>
 #include <fstream>
@@ -26,33 +26,33 @@
 #include <map>
 #include <functional>
 #include "parser/parser.h"
-#include "core/df.h"
+#include "dataflow/core/df.h"
 
 using namespace std;
 
 /*!
- * \class Server
+ * \class Deploy
  *
  */
-class Server {
+class Deploy {
 
-private:
-	df::ServerSocket * sock;
-	Parser * parser;
 protected:
 	Graph * graph;
 
 public:
 
 	/*!
-	 * Server constructor
+	 * Deploy constructor
 	 *
-	 *  \param parser
+	 *  \param argc
+	 * 	The number of arguments
+	 *
+	 *  \param argv
+	 *  	The list of strings containing the arguments
 	 *
 	 */ 
-	Server(Parser * parser);
+	Deploy(int argc, char * argv[], Parser * parser);
 	
-	int init();
 	int run();
 };
 

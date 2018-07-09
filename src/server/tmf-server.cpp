@@ -16,44 +16,15 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_DEPLOY_H
-#define DF_DEPLOY_H
+#include "server.h"
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <functional>
-#include "parser/parser.h"
-#include "core/df.h"
+int main(int argc, char * argv[]) {
 
-using namespace std;
+    Parser * parser = new Parser();
+    Server * server = new Server(parser);
 
-/*!
- * \class Deploy
- *
- */
-class Deploy {
+    server->init();
+    server->run();
 
-protected:
-	Graph * graph;
-
-public:
-
-	/*!
-	 * Deploy constructor
-	 *
-	 *  \param argc
-	 * 	The number of arguments
-	 *
-	 *  \param argv
-	 *  	The list of strings containing the arguments
-	 *
-	 */ 
-	Deploy(int argc, char * argv[], Parser * parser);
-	
-	int run();
-};
-
-#endif
+    return 0;
+}

@@ -26,7 +26,7 @@
 #include <map>
 #include <functional>
 #include "graph.h"
-#include "core/df.h"
+#include "dataflow/core/df.h"
 
 using namespace std;
 

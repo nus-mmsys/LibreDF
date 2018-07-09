@@ -16,15 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "server/server.h"
+#include "deploy.h"
 
 int main(int argc, char * argv[]) {
 
     Parser * parser = new Parser();
-    Server * server = new Server(parser);
+    Deploy * deploy = new Deploy(argc, argv, parser);
 
-    server->init();
-    server->run();
+    deploy->run();
 
     return 0;
 }
