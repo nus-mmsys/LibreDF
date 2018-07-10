@@ -78,15 +78,15 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
 	int snkport;
-	string snkportstr;
+	string snkhost, snkportstr;
 	if (distributed) {
 
 		if (remoteactors.find(src->getName()) != remoteactors.end())
 			return;
 
-		string snkhost = clnsock->communicate(dischost, discport,
+		snkhost = clnsock->communicate(dischost, discport,
 				"actor "+snk->getName()+" host");
-		string snkportstr = clnsock->communicate(dischost, discport,
+		snkportstr = clnsock->communicate(dischost, discport,
 				"edge "+snk->getName()+" "+edge);
 		try {
 		    snkport = stoi(snkportstr);
