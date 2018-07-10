@@ -6,6 +6,7 @@ df canny {
     actor A {
     	computation = VideoCapture;
         file_name = pedestrian.mp4;
+	host = 127.0.0.1;
     }
     actor B {
     	computation = CvtColor;
