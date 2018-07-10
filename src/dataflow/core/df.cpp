@@ -35,12 +35,20 @@ Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
 }
 
 Actor * Dataflow::createRemoteActor(const std::string& name) {
-	return ActorFactory::createActor("Remote", name);
+	
+	Actor * res = ActorFactory::createActor("Remote", name);
+	addRemoteActor(res);
+	return res;
 }
 
 void Dataflow::addActor(Actor * f) {
   f->setPipeLock(&io_lock);
   actors.insert(std::make_pair(f->getName(), f));
+}
+
+void Dataflow::addRemoteActor(Actor * f) {
+  f->setPipeLock(&io_lock);
+  remoteactors.insert(std::make_pair(f->getName(), f));
 }
 
 void Dataflow::addActors(Actor * f, ...) {
@@ -72,6 +80,10 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 	int snkport;
 	string snkportstr;
 	if (distributed) {
+
+		if (remoteactors.find(src->getName()) != remoteactors.end())
+			return;
+
 		string snkhost = clnsock->communicate(dischost, discport,
 				"actor "+snk->getName()+" host");
 		string snkportstr = clnsock->communicate(dischost, discport,

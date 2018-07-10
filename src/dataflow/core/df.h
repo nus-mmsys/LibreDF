@@ -55,6 +55,7 @@ namespace df {
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
     std::map<std::string, Actor *> actors; /**< The set of all actors in the dataflow. */
+    std::map<std::string, Actor *> remoteactors; /**< The set of all remote actors in the dataflow. */
     bool realtime, distributed;
     std::string dischost;
     int discport;
@@ -84,6 +85,8 @@ namespace df {
     Actor * createRemoteActor(const std::string& name);
 
     void addActor(Actor * f);
+    
+    void addRemoteActor(Actor * f);
     
     void addActors(Actor * f, ...);
     

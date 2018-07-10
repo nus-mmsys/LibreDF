@@ -75,13 +75,12 @@ int Server::run() {
 			for (auto p : props) {
 				actor->setProp(p.first, p.second);
 			}
-			actormap[acname] = actor;
 		}
+		actormap[acname] = actor;
 	}
 
 	//Initialize dataflow
 	dataflow.init();
-
 
 	//Connect actors
 	vector<string> edgelist = graph->get_edges();
@@ -89,14 +88,9 @@ int Server::run() {
 		srcname = graph->get_source_name(ed);
 		snkname = graph->get_sink_name(ed);
 
-		if (actormap.find(srcname) != actormap.end() &&
-			actormap.find(snkname) != actormap.end() ) {
-
-				df::Actor * src = actormap[srcname];
-				df::Actor * snk = actormap[snkname];
-				dataflow.connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
-		}
-
+		df::Actor * src = actormap[srcname];
+		df::Actor * snk = actormap[snkname];
+		dataflow.connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
 	}
 
 	//Run dataflow
