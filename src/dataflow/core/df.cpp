@@ -102,6 +102,16 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 
 void Dataflow::runDiscovery() {
 
+  if (!prop.propEmpty("distributed"))
+	  distributed = prop.getPropBool("distributed");
+
+  if (!prop.propEmpty("discovery_host"))
+	  dischost = prop.getProp("discovery_host");
+
+  if (!prop.propEmpty("discovery_port"))
+	  discport = prop.getPropInt("discovery_port"); 
+
+
   if (!distributed)
 	  return;
 
@@ -116,14 +126,18 @@ void Dataflow::runDiscovery() {
   tdisc = thread(&Dataflow::discovery, this);
 }
 
-void Dataflow::waitDiscovery() {
- 
+void Dataflow::stopDiscovery() {
   if (!distributed)
 	  return;
-
   srvsock->srvclose();
-  cout << "Discovery terminated...\n";
+  waitDiscovery();
+}
+
+void Dataflow::waitDiscovery() {
+  if (!distributed)
+	  return;
   tdisc.join();
+  cout << "Discovery terminated...\n";
 }
 
 void Dataflow::discovery() {
@@ -158,7 +172,6 @@ void Dataflow::discovery() {
 
     srvsock->accept();
   }
-  srvsock->srvclose();
     
 }
 
@@ -232,8 +245,6 @@ void Dataflow::run() {
   }
  
   status = DataflowStatus::STOPPED;
- 
-  waitDiscovery();
  
 }
 

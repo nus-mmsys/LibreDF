@@ -64,7 +64,6 @@ namespace df {
     ServerSocket * srvsock;
     ClientSocket * clnsock;
     
-    void waitDiscovery();
     void discovery();
 
   public:
@@ -129,6 +128,9 @@ namespace df {
     void connectActors(Actor * src, Actor * snk, std::string edge, int p, int c);
 
     void runDiscovery();
+    void waitDiscovery();
+    void stopDiscovery();
+    
     /*!
      * Initialize the dataflow.
      *

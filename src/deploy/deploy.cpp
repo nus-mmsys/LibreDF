@@ -58,9 +58,6 @@ int Deploy::run() {
 		}
 	}
 
-	//Initialize dataflow
-	dataflow.init();
-
 	//Initialize discovery
 	dataflow.runDiscovery();
 
@@ -75,5 +72,7 @@ int Deploy::run() {
 		sock->close();
 	}
 
+	dataflow.waitDiscovery();
+	
 	return 0;
 }
