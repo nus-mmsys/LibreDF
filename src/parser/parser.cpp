@@ -50,7 +50,7 @@ int Parser::load_from_stream(stringstream& ss) {
 	string gname;
         read_str(ss, "df");
         ss >> gname;
-        graph->set_name(gname);
+	graph->set_name(gname);
 	ret = read_graph(ss, graph);
 	if (ret < 0)
 		return ret;
@@ -66,7 +66,7 @@ std::string Parser::df_all() {
 }
 
 std::string Parser::df_byip(const std::string& ip) {
-	return topology + dfactor_byip(ip) + parameter;
+	return "df " + graph->get_name() + " {\n" + topology + dfactor_byip(ip) + parameter + "\n}";
 }
 
 int Parser::read_str(stringstream & stream, string str) {
@@ -107,7 +107,7 @@ std::string Parser::dfactor_byip(std::string ip) {
 	std::string res = "";
 	std::vector<std::string> actlist = iplookup[ip];
 	for (auto&& ac : actlist) {
-		res = res + "actor " + ac + dfactor[ac];	
+		res = res + "actor " + ac + " " + dfactor[ac] + "\n";	
 	}
 	return res;
 }
@@ -178,7 +178,7 @@ int Parser::read_productions(stringstream & stream, Graph * g) {
 	read_str(stream, "{");	
 	getline(stream, ratelist, '}');
 	
-	topology = topology + "production {"+ratelist+"}";
+	topology = topology + "production {\n"+ratelist+"\n}";
 
 	trim_str(ratelist);
 
@@ -198,7 +198,7 @@ int Parser::read_consumptions(stringstream & stream, Graph * g) {
 	read_str(stream, "{");	
 	getline(stream, ratelist, '}');
 
-	topology = topology + "consumption {"+ratelist+"}";
+	topology = topology + "consumption {\n"+ratelist+"\n}";
 	
 	trim_str(ratelist);
 
@@ -268,7 +268,7 @@ int Parser::read_topology(stringstream & stream, Graph * g) {
 
 	read_str(stream, "}");
 
-	topology = "topology {nodes="+actorlist+";edges="+edgelist+";}";
+	topology = "topology {\n\tnodes = "+actorlist+";\n\tedges = "+edgelist+";\n}\n";
 
 	trim_str(actorlist);
 	trim_str(edgelist);

@@ -32,7 +32,7 @@ int Server::init() {
 	std::cout << "waiting tmf-deploy...\n";
 	sock->accept();
 	sock->recv(buf, bufsize);
-
+	std::cout << buf << std::endl;
 	parser->load_from_string(buf);
 	graph = parser->get_graph();
 

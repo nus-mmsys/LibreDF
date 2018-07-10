@@ -32,10 +32,16 @@ Deploy::Deploy(int argc, char * argv[], Parser * p) {
 
 int Deploy::run() {
 
-	sock->connect(serverip, SERVER_PORT);
-	std::string msg = parser->df_all();
-	sock->send(msg.c_str(), msg.size());
-	sock->close();
+	std::string msg;
+	auto ips = parser->get_ips();
+
+	for (auto&& ip : ips) {
+		sock->connect(serverip, SERVER_PORT);
+		//msg = parser->df_all();
+		msg = parser->df_byip(ip);	
+		sock->send(msg.c_str(), msg.size());
+		sock->close();
+	}
 
 	return 0;
 }
