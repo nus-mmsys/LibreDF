@@ -45,6 +45,7 @@ int Server::init() {
 int Server::run() {
 	
 	map<string, df::Actor *> actormap;
+	std::string srcname, snkname;
 
 	//Create dataflow
 	df::Dataflow dataflow(graph->get_name());
@@ -64,7 +65,6 @@ int Server::run() {
 			cout << acname << " is deployed elsewhere.\n";
 			actor = dataflow.createRemoteActor(acname);
 		} else {
-
 			string actype = graph->get_actor_type(acname);
 			if (actype == "") {
 				cout << "error: actor type cannot be unknown.\n";
@@ -75,19 +75,28 @@ int Server::run() {
 			for (auto p : props) {
 				actor->setProp(p.first, p.second);
 			}
+			actormap[acname] = actor;
 		}
-		actormap[acname] = actor;
 	}
 
 	//Initialize dataflow
 	dataflow.init();
 
+
 	//Connect actors
 	vector<string> edgelist = graph->get_edges();
 	for (auto & ed : edgelist) {
-		df::Actor * src = actormap[graph->get_source_name(ed)];
-		df::Actor * snk = actormap[graph->get_sink_name(ed)];
-		dataflow.connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
+		srcname = graph->get_source_name(ed);
+		snkname = graph->get_sink_name(ed);
+
+		if (actormap.find(srcname) != actormap.end() &&
+			actormap.find(snkname) != actormap.end() ) {
+
+				df::Actor * src = actormap[srcname];
+				df::Actor * snk = actormap[snkname];
+				dataflow.connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
+		}
+
 	}
 
 	//Run dataflow
