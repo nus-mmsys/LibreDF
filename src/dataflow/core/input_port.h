@@ -80,8 +80,8 @@ namespace df {
     }
 
     T * recv() {
-    	if (sock->recvpeek(chdata, sizeof(int)) < 0)
-	        return nullptr;
+    	while (sock->recvpeek(chdata, sizeof(int)) < 0);
+
 	int size = data->getPktSize(chdata);
 	if (size != chsize) {
 		chsize = size;
