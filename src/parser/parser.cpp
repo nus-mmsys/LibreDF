@@ -19,6 +19,10 @@
 #include "parser.h"
 
 Parser::Parser() {
+	dfstr = "";
+	topology = "";
+	parameter = "";
+
 }
 
 int Parser::load_from_string(const std::string& app) {
@@ -88,6 +92,7 @@ int Parser::trim_str(string & str) {
 
 	return 0;
 }
+
 int Parser::read_graph(stringstream & stream, Graph * g) {
 	int ret;
 	string tmp;
@@ -139,6 +144,8 @@ int Parser::read_productions(stringstream & stream, Graph * g) {
 	string ratelist, edgename, rate;
 	read_str(stream, "{");	
 	getline(stream, ratelist, '}');
+	
+	topology = topology + "production {"+ratelist+"}";
 
 	trim_str(ratelist);
 
@@ -158,6 +165,8 @@ int Parser::read_consumptions(stringstream & stream, Graph * g) {
 	read_str(stream, "{");	
 	getline(stream, ratelist, '}');
 
+	topology = topology + "consumption {"+ratelist+"}";
+	
 	trim_str(ratelist);
 
 	istringstream ss(ratelist);
@@ -175,6 +184,8 @@ int Parser::read_parameters(stringstream & stream, Graph * g) {
 	string params;
 	read_str(stream, "{");	
 	getline(stream, params, '}');
+
+	parameter = "parameter {"+params+"}";
 
 	trim_str(params);
 	
@@ -222,7 +233,7 @@ int Parser::read_topology(stringstream & stream, Graph * g) {
 
 	read_str(stream, "}");
 
-	topology = "{nodes="+actorlist+";edges="+edgelist+";}";
+	topology = "topology {nodes="+actorlist+";edges="+edgelist+";}";
 
 	trim_str(actorlist);
 	trim_str(edgelist);
