@@ -43,7 +43,7 @@ int Server::init() {
 }
 
 int Server::run() {
-	/*
+	
 	map<string, df::Actor *> actormap;
 
 	//Create dataflow
@@ -86,6 +86,6 @@ int Server::run() {
   	dataflow.run();
 
 	//Destructor of dataflow is called.
-	*/
+
 	return 0;
 }

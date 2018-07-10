@@ -39,6 +39,7 @@ class Parser {
 protected:
 	Graph * graph; /**< data graph. */
 
+	std::string dfstr; /**< content of df file in string format. */
 	/*!
 	 * Trims a string and removes all 
 	 * ' ', '\t', and '\n'.
@@ -343,7 +344,9 @@ public:
 	 *
 	 */
 	int load_from_string(const std::string& app);
-	
+
+	std::string get_df_string();
+
 	Graph * get_graph();	
 };
 

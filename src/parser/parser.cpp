@@ -22,6 +22,7 @@ Parser::Parser() {
 }
 
 int Parser::load_from_string(const std::string& app) {
+	dfstr = app;
 	std::stringstream ss(app);
 	return load_from_stream(ss);	
 }
@@ -34,7 +35,7 @@ int Parser::load_from_file(const char * filename) {
 	std::stringstream ss;
 	ss << file.rdbuf();
 	file.close();
-
+	dfstr = ss.str();
 	return load_from_stream(ss);
 }
 
@@ -54,6 +55,10 @@ int Parser::load_from_stream(stringstream& ss) {
 		return 0;
 	} else
 		return ret;
+}
+
+std::string Parser::get_df_string() {
+	return dfstr;
 }
 
 int Parser::read_str(stringstream & stream, string str) {

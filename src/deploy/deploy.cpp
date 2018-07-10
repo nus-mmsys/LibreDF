@@ -33,7 +33,7 @@ Deploy::Deploy(int argc, char * argv[], Parser * p) {
 int Deploy::run() {
 
 	sock->connect(serverip, SERVER_PORT);
-	std::string msg = ""; //parser->get_df_string();
+	std::string msg = parser->get_df_string();
 	sock->send(msg.c_str(), msg.size());
 	sock->close();
 
