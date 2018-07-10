@@ -91,6 +91,13 @@ void Parser::insert_lookup(std::string ip, std::string actname) {
 	}
 }
 
+std::vector<std::string> Parser::get_ips() {
+	std::vector<std::string> res;
+	for (auto&& ip : iplookup)
+		res.push_back(ip.first);
+	return res;
+}
+
 int Parser::trim_str(string & str) {
 
 	auto end_pos = std::remove(str.begin(), str.end(), ' ');

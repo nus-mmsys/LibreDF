@@ -68,6 +68,12 @@ protected:
 	 *
 	 */ 
 	void insert_lookup(std::string ip, std::string actname);
+	
+	/*!
+	 * Returns list of IPs 
+	 *
+	 */ 
+	std::vector<std::string> get_ips();
 
 	/*!
 	 * Read a string from a stream.
