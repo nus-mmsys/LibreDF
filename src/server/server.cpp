@@ -59,8 +59,10 @@ int Server::run() {
 	for (auto & acname : actorlist) {
 		
 		map<string, string> props = graph->get_actor_props(acname);
-	        if (props.empty()) {
+	        df::Actor * actor; 
+		if (props.empty()) {
 			cout << acname << " is deployed elsewhere.\n";
+			actor = dataflow.createRemoteActor(acname);
 		} else {
 
 			string actype = graph->get_actor_type(acname);
@@ -69,12 +71,12 @@ int Server::run() {
 				cout << "set the property computation of actor " << acname << "\n";
 				return -1;
 			}
-			df::Actor * actor = dataflow.createActor(actype, acname);
+			actor = dataflow.createActor(actype, acname);
 			for (auto p : props) {
 				actor->setProp(p.first, p.second);
 			}
-			actormap[acname] = actor;
 		}
+		actormap[acname] = actor;
 	}
 
 	//Initialize dataflow
