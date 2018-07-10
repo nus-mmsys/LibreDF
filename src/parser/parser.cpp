@@ -222,6 +222,8 @@ int Parser::read_topology(stringstream & stream, Graph * g) {
 
 	read_str(stream, "}");
 
+	topology = "{nodes="+actorlist+";edges="+edgelist+";}";
+
 	trim_str(actorlist);
 	trim_str(edgelist);
 
