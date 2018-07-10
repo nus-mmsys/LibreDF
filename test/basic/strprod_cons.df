@@ -7,6 +7,7 @@ df produce_consume {
         computation = StringProducer;
         last = 64;
 	output = e1;
+	host = 127.0.0.1;
     }
     actor B {
         computation = StringConsumer;
