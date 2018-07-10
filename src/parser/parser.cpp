@@ -206,6 +206,8 @@ int Parser::read_props(stringstream & stream, Graph * g) {
 	stream >> actname;
 	read_str(stream, "{");	
 	getline(stream, props, '}');
+
+	dfactor.insert(std::make_pair(actname, "{"+props+"}"));
 	
 	trim_str(props);
 	

@@ -40,7 +40,7 @@ protected:
 	Graph * graph; /**< data graph. */
 
 	std::string dfstr; /**< content of df file in string format. */
-	std::map<std::string, std::string> ipactor; /**< map from ip addresses to the actor description in df file. */
+	std::map<std::string, std::string> dfactor; /**< map from actor names to actor descriptions in df file. */
 	std::string topology; /**< topology of the df file. */
 	std::string parameter; /**< parameter section of the df file. */
 
