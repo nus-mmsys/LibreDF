@@ -178,7 +178,7 @@ int Parser::read_productions(stringstream & stream, Graph * g) {
 	read_str(stream, "{");	
 	getline(stream, ratelist, '}');
 	
-	topology = topology + "production {\n"+ratelist+"\n}";
+	topology = topology + "production {\n"+ratelist+"\n}\n";
 
 	trim_str(ratelist);
 
@@ -198,7 +198,7 @@ int Parser::read_consumptions(stringstream & stream, Graph * g) {
 	read_str(stream, "{");	
 	getline(stream, ratelist, '}');
 
-	topology = topology + "consumption {\n"+ratelist+"\n}";
+	topology = topology + "consumption {\n"+ratelist+"\n}\n";
 	
 	trim_str(ratelist);
 
