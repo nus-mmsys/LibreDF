@@ -76,6 +76,13 @@ protected:
 	std::vector<std::string> get_ips();
 
 	/*!
+	 * Returns description of actors 
+	 * from df file retrieved by ip. 
+	 *
+	 */ 
+	std::string dfactor_byip(std::string ip);
+
+	/*!
 	 * Read a string from a stream.
 	 *
 	 * \param stream

@@ -98,6 +98,16 @@ std::vector<std::string> Parser::get_ips() {
 	return res;
 }
 
+
+std::string Parser::dfactor_byip(std::string ip) {
+	std::string res = "";
+	std::vector<std::string> actlist = iplookup[ip];
+	for (auto&& ac : actlist) {
+		res = res + dfactor[ac];	
+	}
+	return res;
+}
+
 int Parser::trim_str(string & str) {
 
 	auto end_pos = std::remove(str.begin(), str.end(), ' ');
