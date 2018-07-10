@@ -68,12 +68,6 @@ protected:
 	 *
 	 */ 
 	void insert_lookup(std::string ip, std::string actname);
-	
-	/*!
-	 * Returns list of IPs 
-	 *
-	 */ 
-	std::vector<std::string> get_ips();
 
 	/*!
 	 * Returns description of actors 
@@ -374,7 +368,15 @@ public:
 	 */
 	int load_from_string(const std::string& app);
 
-	std::string get_df_string();
+	std::string df_all();
+	
+	/*!
+	 * Returns list of IPs 
+	 *
+	 */ 
+	std::vector<std::string> get_ips();
+
+	std::string df_byip(const std::string& ip);
 
 	Graph * get_graph();	
 };

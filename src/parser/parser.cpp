@@ -61,8 +61,12 @@ int Parser::load_from_stream(stringstream& ss) {
 		return ret;
 }
 
-std::string Parser::get_df_string() {
+std::string Parser::df_all() {
 	return dfstr;
+}
+
+std::string Parser::df_byip(const std::string& ip) {
+	return topology + dfactor_byip(ip) + parameter;
 }
 
 int Parser::read_str(stringstream & stream, string str) {
@@ -103,7 +107,7 @@ std::string Parser::dfactor_byip(std::string ip) {
 	std::string res = "";
 	std::vector<std::string> actlist = iplookup[ip];
 	for (auto&& ac : actlist) {
-		res = res + dfactor[ac];	
+		res = res + "actor " + ac + dfactor[ac];	
 	}
 	return res;
 }
