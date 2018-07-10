@@ -100,7 +100,10 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 	}
 }
 
-void Dataflow::startDiscovery() {
+void Dataflow::runDiscovery() {
+
+  if (!distributed)
+	  return;
 
   string machine_ip = srvsock->ipaddr("en0");
 
@@ -114,6 +117,10 @@ void Dataflow::startDiscovery() {
 }
 
 void Dataflow::waitDiscovery() {
+ 
+  if (!distributed)
+	  return;
+
   srvsock->srvclose();
   cout << "Discovery terminated...\n";
   tdisc.join();
@@ -185,7 +192,6 @@ void Dataflow::init() {
 	  	cerr << "discovery_port is not specified.\n";
 	  	return;
   	}
-  	startDiscovery();
   }
 
   for (auto f: actors) {
@@ -227,8 +233,7 @@ void Dataflow::run() {
  
   status = DataflowStatus::STOPPED;
  
-  if (distributed)
-    waitDiscovery();
+  waitDiscovery();
  
 }
 

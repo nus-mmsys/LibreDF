@@ -150,6 +150,8 @@ int Analyse::run(bool dist) {
 	//Initialize dataflow
 	dataflow.init();
 
+	dataflow.runDiscovery();
+
 	//Connect actors
 	vector<string> edgelist = graph->get_edges();
 	for (auto & ed : edgelist) {

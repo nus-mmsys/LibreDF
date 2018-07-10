@@ -49,6 +49,7 @@ namespace df {
    * Actors have a many-to-many relation, with directed edges. Cycles are not allowed.
    */
   class Dataflow {
+  private:
 
     std::thread tdisc;
     std::mutex io_lock;
@@ -62,6 +63,9 @@ namespace df {
     Property prop;
     ServerSocket * srvsock;
     ClientSocket * clnsock;
+    
+    void waitDiscovery();
+    void discovery();
 
   public:
     /*!
@@ -124,10 +128,7 @@ namespace df {
      */
     void connectActors(Actor * src, Actor * snk, std::string edge, int p, int c);
 
-    void startDiscovery();
-    void waitDiscovery();
-    void discovery();
-
+    void runDiscovery();
     /*!
      * Initialize the dataflow.
      *
