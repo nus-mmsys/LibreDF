@@ -6,11 +6,12 @@ df imwrite {
     actor A {
     	computation = VideoCapture;
 	file_name = pedestrian.mp4;
+	host = 127.0.0.1;
     }
     actor B {
     	computation = ImageWrite;
 	host = 127.0.0.1;
-	input_port = 7010;
+	input_port = 7001;
     }
     parameter {
 	distributed = true;
