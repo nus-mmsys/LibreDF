@@ -22,6 +22,7 @@
 #include "synchronized.h"
 
 #include <string>
+#include <cstring>
 
 namespace df {
 
