@@ -24,7 +24,7 @@ ClientSocket::ClientSocket(const std::string& sockname) {
 	name = sockname; 
 }
 
-int ClientSocket::connect(std::string host, int port) {
+int ClientSocket::connect(const std::string& host, int port) {
  	hostaddr = host;
 	portnb = port;	
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -53,7 +53,7 @@ int ClientSocket::connect(std::string host, int port) {
 	return 0;
 }
 
-std::string ClientSocket::communicate(std::string host, int port, std::string msg) {
+std::string ClientSocket::communicate(const std::string& host, int port, const std::string& msg) {
 	char buf[1024];
 	std::string res;
 	std::strcpy(buf, msg.c_str());
@@ -65,7 +65,7 @@ std::string ClientSocket::communicate(std::string host, int port, std::string ms
 	close();
 	return res;
 }
-void ClientSocket::send(char * buf, int size) {
+void ClientSocket::send(const char * buf, int size) {
 	::send(sock , buf , size , 0 );
 }
 

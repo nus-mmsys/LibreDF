@@ -28,6 +28,8 @@
 #include "parser/parser.h"
 #include "dataflow/core/df.h"
 
+#define SERVER_PORT 7000
+
 using namespace std;
 
 /*!
@@ -37,8 +39,10 @@ using namespace std;
 class Deploy {
 
 protected:
-	Graph * graph;
-
+	Parser * parser;
+	std::string dfstr;
+	df::ClientSocket * sock;
+	std::string serverip;
 public:
 
 	/*!

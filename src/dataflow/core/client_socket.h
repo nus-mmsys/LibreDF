@@ -48,9 +48,9 @@ namespace df {
   public:
     ClientSocket(const std::string& sockname); 
 
-    int connect(std::string host, int port); 
-    std::string communicate(std::string host, int port, std::string msg);
-    void send(char * buf, int size); 
+    int connect(const std::string& host, int port); 
+    std::string communicate(const std::string& host, int port, const std::string& msg);
+    void send(const char * buf, int size); 
     int recv(char * buf, int size); 
     void close();
 
