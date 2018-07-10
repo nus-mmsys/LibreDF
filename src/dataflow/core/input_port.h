@@ -132,6 +132,8 @@ namespace df {
      *
      */
     virtual ~InputPort() {
+	    sock->clnclose();
+	    sock->srvclose();
 	    delete data;
 	    delete chdata;
     }

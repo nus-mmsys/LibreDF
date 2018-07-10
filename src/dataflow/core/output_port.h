@@ -142,6 +142,7 @@ namespace df {
      *
      */
     virtual ~OutputPort<T>() {
+      sock->close();
       delete buf;
     }
   };
