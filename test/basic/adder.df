@@ -7,24 +7,26 @@ df adder {
         computation = IntProducer;
 	output = e1;
         last = 64;
+	host = 127.0.0.1;
     }
     actor B {
         computation = IntProducer;
 	output = e2;
         last = 64;
+	host = 127.0.0.1;
     }
     actor C {
         computation = Addition;
 	input1 = e1;
 	input2 = e2;
-	input1_port = 7000;
-	input2_port = 7001;
+	input1_port = 7071;
+	input2_port = 7072;
 	host = 127.0.0.1;
     }
     parameter {
 	realtime = false;
 	distributed = true;
 	discovery_host = 127.0.0.1;
-	discovery_port = 7007;
+	discovery_port = 7070;
     }
 }
