@@ -81,6 +81,7 @@ namespace df {
     }
 
     Actor * createActor(std::string const& s, const std::string& name);
+    Actor * createRemoteActor(const std::string& name);
 
     void addActor(Actor * f);
     
