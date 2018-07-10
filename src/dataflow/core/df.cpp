@@ -34,7 +34,7 @@ Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
   return res;
 }
 
-Actor * createRemoteActor(const std::string& name) {
+Actor * Dataflow::createRemoteActor(const std::string& name) {
 	return ActorFactory::createActor("Remote", name);
 }
 
