@@ -19,14 +19,14 @@ df adder {
         computation = Addition;
 	input1 = e1;
 	input2 = e2;
-	input1_port = 7071;
-	input2_port = 7072;
+	input1_port = 7001;
+	input2_port = 7002;
 	host = 127.0.0.1;
     }
     parameter {
 	realtime = false;
 	distributed = true;
 	discovery_host = 127.0.0.1;
-	discovery_port = 7070;
+	discovery_port = 7000;
     }
 }
