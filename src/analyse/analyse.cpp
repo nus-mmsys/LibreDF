@@ -163,7 +163,7 @@ int Analyse::run(bool dist) {
 	//Run dataflow
   	dataflow.run();
 
-	dataflow.stopDiscovery();
+	dataflow.waitDiscovery();
 
 	//Destructor of dataflow is called.
 	

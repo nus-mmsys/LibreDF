@@ -126,13 +126,6 @@ void Dataflow::runDiscovery() {
   tdisc = thread(&Dataflow::discovery, this);
 }
 
-void Dataflow::stopDiscovery() {
-  if (!distributed)
-	  return;
-  srvsock->srvclose();
-  waitDiscovery();
-}
-
 void Dataflow::waitDiscovery() {
   if (!distributed)
 	  return;
@@ -165,6 +158,10 @@ void Dataflow::discovery() {
 	portname = actors[actorname]->edge2InputPort(key);
         val = actors[actorname]->getProp(portname+"_port");
     }
+    else if (command == "close") {
+	srvsock->clnclose();
+	break;
+    }
 
     strcpy(buf, val.c_str());
     srvsock->send(buf, std::strlen(buf));
@@ -172,7 +169,7 @@ void Dataflow::discovery() {
 
     srvsock->accept();
   }
-    
+  srvsock->srvclose();    
 }
 
 void Dataflow::init() {
@@ -245,7 +242,14 @@ void Dataflow::run() {
   }
  
   status = DataflowStatus::STOPPED;
- 
+
+  if (distributed) {
+	char msg[8];
+	strcpy(msg, "close");
+	clnsock->connect(dischost, discport);
+	clnsock->send(msg, 8);
+	clnsock->close();
+  } 
 }
 
 Dataflow::~Dataflow() {

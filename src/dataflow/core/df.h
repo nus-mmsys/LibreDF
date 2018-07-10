@@ -129,7 +129,6 @@ namespace df {
 
     void runDiscovery();
     void waitDiscovery();
-    void stopDiscovery();
     
     /*!
      * Initialize the dataflow.
