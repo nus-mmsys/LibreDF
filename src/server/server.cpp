@@ -57,18 +57,24 @@ int Server::run() {
 	//Create actors
 	vector<string> actorlist = graph->get_actors();
 	for (auto & acname : actorlist) {
-		string actype = graph->get_actor_type(acname);
-		if (actype == "") {
-			cout << "error: actor type cannot be unknown.\n";
-			cout << "set the property computation of actor " << acname << "\n";
-			return -1;
-		}
-		df::Actor * actor = dataflow.createActor(actype, acname);
+		
 		map<string, string> props = graph->get_actor_props(acname);
-		for (auto p : props) {
-			actor->setProp(p.first, p.second);
+	        if (props.empty()) {
+			cout << acname << " is deployed elsewhere.\n";
+		} else {
+
+			string actype = graph->get_actor_type(acname);
+			if (actype == "") {
+				cout << "error: actor type cannot be unknown.\n";
+				cout << "set the property computation of actor " << acname << "\n";
+				return -1;
+			}
+			df::Actor * actor = dataflow.createActor(actype, acname);
+			for (auto p : props) {
+				actor->setProp(p.first, p.second);
+			}
+			actormap[acname] = actor;
 		}
-		actormap[acname] = actor;
 	}
 
 	//Initialize dataflow
