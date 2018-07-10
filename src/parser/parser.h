@@ -41,6 +41,7 @@ protected:
 
 	std::string dfstr; /**< content of df file in string format. */
 	std::map<std::string, std::string> dfactor; /**< map from actor names to actor descriptions in df file. */
+	std::map<std::string, vector<std::string>> iplookup; /**< map from ips to actor names. */
 	std::string topology; /**< topology of the df file. */
 	std::string parameter; /**< parameter section of the df file. */
 
@@ -56,6 +57,17 @@ protected:
 	 */ 
 	int trim_str(string & str);
 
+	/*!
+	 * Insert an IP and its corresponding actor name
+	 * into iplookup table.
+	 *
+	 * \param ip
+	 * 	IP address
+	 * \param actname
+	 * 	Actor name
+	 *
+	 */ 
+	void insert_lookup(std::string ip, std::string actname);
 
 	/*!
 	 * Read a string from a stream.

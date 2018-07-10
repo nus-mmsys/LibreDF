@@ -79,6 +79,18 @@ int Parser::read_str(stringstream & stream, string str) {
 	}
 }
 
+
+void Parser::insert_lookup(std::string ip, std::string actname) {
+	if (iplookup.find(ip) == iplookup.end()) {
+		std::vector<std::string> v;
+		v.push_back(actname);
+		iplookup.insert(std::make_pair(ip, v));
+	}
+	else {
+		iplookup[ip].push_back(actname);
+	}
+}
+
 int Parser::trim_str(string & str) {
 
 	auto end_pos = std::remove(str.begin(), str.end(), ' ');
@@ -410,6 +422,9 @@ int Parser::add_actor_prop(const string& actname, const string& prop, Graph * g)
         if (key=="" || val=="") {
 		cout << "error: actor property is not well formatted.\n";
 		return -2;
+	}
+	if (key == "host") {
+		insert_lookup(val, actname);
 	}
 	int ret = g->add_actor_prop(actname, key, val);
 	return ret;
