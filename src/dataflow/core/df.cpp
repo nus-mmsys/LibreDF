@@ -137,7 +137,6 @@ void Dataflow::discovery() {
   std::string msg, command, actorname, portname, key, val;
   char buf[1024];
 
-  int close_cmds = 0;
   srvsock->accept();
   while (status != DataflowStatus::STOPPED) {
 
@@ -160,10 +159,6 @@ void Dataflow::discovery() {
         val = actors[actorname]->getProp(portname+"_port");
     }
     else if (command == "close") {
-	close_cmds ++;
-    }
-
-    if (close_cmds == actors.size()) {
     	srvsock->clnclose();
 	break;
     }

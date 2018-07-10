@@ -28,7 +28,7 @@
 #include "parser/parser.h"
 #include "dataflow/core/df.h"
 
-#define SERVER_PORT 7000
+#define SERVER_PORT 7070
 
 using namespace std;
 

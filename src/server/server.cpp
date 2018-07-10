@@ -28,7 +28,7 @@ int Server::init() {
 	int bufsize = 100000;
 	char buf[bufsize];
 
-	sock->listen(7000);
+	sock->listen(SERVER_PORT);
 	std::cout << "waiting tmf-deploy...\n";
 	sock->accept();
 	sock->recv(buf, bufsize);
