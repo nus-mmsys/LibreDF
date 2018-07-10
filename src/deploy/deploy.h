@@ -42,7 +42,6 @@ protected:
 	Parser * parser;
 	std::string dfstr;
 	df::ClientSocket * sock;
-	std::string serverip;
 public:
 
 	/*!

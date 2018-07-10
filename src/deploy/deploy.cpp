@@ -27,7 +27,6 @@ Deploy::Deploy(int argc, char * argv[], Parser * p) {
 	parser = p;		
 	parser->load_from_file(argv[1]);
 	sock = new df::ClientSocket("tmf-deploy");
-	serverip = "127.0.0.1";
 }
 
 int Deploy::run() {
@@ -36,7 +35,7 @@ int Deploy::run() {
 	auto ips = parser->get_ips();
 
 	for (auto&& ip : ips) {
-		sock->connect(serverip, SERVER_PORT);
+		sock->connect(ip, SERVER_PORT);
 		//msg = parser->df_all();
 		msg = parser->df_byip(ip);	
 		sock->send(msg.c_str(), msg.size());
