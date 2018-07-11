@@ -254,8 +254,11 @@ void Dataflow::run() {
 
 Dataflow::~Dataflow() {
   
-  for (auto f : actors)
-    if(f.second)
-      delete f.second;
+  for (auto ac : actors)
+    if(ac.second)
+      delete ac.second;
+  for (auto ac : remoteactors)
+    if(ac.second)
+      delete ac.second;
     
 }

@@ -25,6 +25,7 @@ ActorRegister<VideoCapture> VideoCapture::reg("VideoCapture");
 
 VideoCapture::VideoCapture(const string& name) : Actor(name){
   outputMat = createOutputPort<df::Mat>("output");
+  cap = nullptr;
 }
 
 void VideoCapture::init() {
@@ -57,6 +58,7 @@ void VideoCapture::run() {
   sleep(40);
 }
 VideoCapture::~VideoCapture() {
-  cap->release();
+  if (cap != nullptr)
+	  cap->release();
   destroyPort(outputMat);
 }
