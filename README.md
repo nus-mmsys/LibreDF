@@ -199,6 +199,14 @@ df canny {
 
 New actors must be placed in the ```src/dataflow/actors``` folder. An actor inherits from the Actor class and defines a set of ports and their data type. The actor then implements ```init()``` and ```run()``` functions.
 
+The followinf APIs are provided for actor developers :
+
+- createInputPort, createOutputPort : Create ports
+- propEmpty, getProp, getPropInt, getPropFloat : Initialize actors and get the properties
+- consume, release : Read from input ports
+- produce, release : Write on output ports
+- destroyPort : Destroy ports
+
 ```c++
 // add.h
 
