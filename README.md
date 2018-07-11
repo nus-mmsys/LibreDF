@@ -1,5 +1,18 @@
 # TMF
 
+## Introduction
+
+TMF models an application as a directected graph of actors. Tokens are abstract data flowing on the edges. Each actor performs part of the whole computation.
+
+This repository contains two libraries and three tools.
+
+- libdataflow : dataflow, actor, input/output port, buffer, token, synchronizer, and socket implementation as well as actor implementations and token serialization and deserialization.
+- libtmfparser : parser for Dataflow Intechange Format (DIF)
+
+- tmf : displays and analyses the graph and runs the graph on shared memory and on tcp locally.
+- tmf-deploy : deploys a graph on multiple servers.
+- tmf-server : runs part of the graph which is deployed on a specific server.
+
 ## Application development (Dataflow Interchange Format)
 
 ```
