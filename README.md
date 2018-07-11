@@ -103,6 +103,79 @@ df canny {
 }
 ```
 
+## Actor developement
+
+New actors must be placed in the ```src/dataflow/actors``` folder. An actor inherits from the Actor class and defines a set of ports and their data type. The actor then implements ```init()``` and ```run()``` functions.
+
+The followinf APIs are provided for actor developers :
+
+- createInputPort, createOutputPort : Create ports
+- propEmpty, getProp, getPropInt, getPropFloat : Initialize actors and get the properties
+- consume, release : Read from input ports
+- produce, release : Write on output ports
+- destroyPort : Destroy ports
+
+### Example 
+
+```c++
+// add.h
+
+#include "core/df.h"
+#include "tokens/opencv/mat.h"
+#include <opencv2/core/core.hpp>
+
+class Add: public df::Actor {
+private:
+  cv::Mat frame;
+  df::InputPort<df::Mat> * input1;
+  df::InputPort<df::Mat> * input2;
+  df::OutputPort<df::Mat> * output;
+  static df::ActorRegister<Add> reg;
+public:
+  Add(const string& name);
+  virtual void init();
+  virtual void run();
+  virtual ~Add();
+};
+```
+
+```c++
+// add.cpp
+
+#include "add.h"
+
+using namespace df;
+
+ActorRegister<Add> Add::reg("Add");
+
+Add::Add(const string& name) : Actor(name) {
+  input1 = createInputPort<df::Mat>("input1");
+  input2 = createInputPort<df::Mat>("input2");
+  output = createOutputPort<df::Mat>("output");
+}
+
+void Add::init() {
+  // Initializations
+}
+
+void Add::run() {
+  auto in1 = consume(input1);	
+  auto in2 = consume(input2);	
+  auto out = produce(output);
+  out->set(*in1->get() + *in2->get());
+  log("sending "+to_string(stepno));
+  release(input1);
+  release(input2);
+  release(output);
+}
+
+Add::~Add() {
+  destroyPort(input1);
+  destroyPort(input2);
+  destroyPort(output);
+}
+```
+
 ### Actor types
 
     machine-learning
@@ -197,78 +270,6 @@ df canny {
         StringConsumer      % reads a string.
         StringProducer      % sends a string ["1".."100"].
 
-## Actor developement
-
-New actors must be placed in the ```src/dataflow/actors``` folder. An actor inherits from the Actor class and defines a set of ports and their data type. The actor then implements ```init()``` and ```run()``` functions.
-
-The followinf APIs are provided for actor developers :
-
-- createInputPort, createOutputPort : Create ports
-- propEmpty, getProp, getPropInt, getPropFloat : Initialize actors and get the properties
-- consume, release : Read from input ports
-- produce, release : Write on output ports
-- destroyPort : Destroy ports
-
-### Example 
-
-```c++
-// add.h
-
-#include "core/df.h"
-#include "tokens/opencv/mat.h"
-#include <opencv2/core/core.hpp>
-
-class Add: public df::Actor {
-private:
-  cv::Mat frame;
-  df::InputPort<df::Mat> * input1;
-  df::InputPort<df::Mat> * input2;
-  df::OutputPort<df::Mat> * output;
-  static df::ActorRegister<Add> reg;
-public:
-  Add(const string& name);
-  virtual void init();
-  virtual void run();
-  virtual ~Add();
-};
-```
-
-```c++
-// add.cpp
-
-#include "add.h"
-
-using namespace df;
-
-ActorRegister<Add> Add::reg("Add");
-
-Add::Add(const string& name) : Actor(name) {
-  input1 = createInputPort<df::Mat>("input1");
-  input2 = createInputPort<df::Mat>("input2");
-  output = createOutputPort<df::Mat>("output");
-}
-
-void Add::init() {
-  // Initializations
-}
-
-void Add::run() {
-  auto in1 = consume(input1);	
-  auto in2 = consume(input2);	
-  auto out = produce(output);
-  out->set(*in1->get() + *in2->get());
-  log("sending "+to_string(stepno));
-  release(input1);
-  release(input2);
-  release(output);
-}
-
-Add::~Add() {
-  destroyPort(input1);
-  destroyPort(input2);
-  destroyPort(output);
-}
-```
 
 ## Getting started
 
