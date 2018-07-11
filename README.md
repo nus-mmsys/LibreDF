@@ -17,6 +17,8 @@ These tools use the following libraries:
 
 ## Application development (Dataflow Interchange Format)
 
+Actors must specify the topology of the graph with its parameters as well as the properties of the actors.
+
 ```
 df <name> {
     topology {
