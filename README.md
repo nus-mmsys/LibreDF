@@ -207,6 +207,8 @@ The followinf APIs are provided for actor developers :
 - produce, release : Write on output ports
 - destroyPort : Destroy ports
 
+### Example 
+
 ```c++
 // add.h
 
