@@ -10,7 +10,7 @@ This repository contains the following tools :
 - tmf-deploy : deploys a graph on multiple servers.
 - tmf-server : runs part of the graph which is deployed on a specific server.
 
-These tools use the following libraries:
+The repository contains the following libraries :
 
 - libdataflow : dataflow, actor, input/output port, buffer, token, synchronizer, and socket implementation as well as actor implementations and token serialization and deserialization.
 - libtmfparser : parser for Dataflow Intechange Format (DIF)
