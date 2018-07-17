@@ -34,9 +34,10 @@ Analyse::Analyse(int argc, char * argv[], Parser * p) {
 	comment["run"] = "\trun the graph on shared memory.";
 	comment["runtcp"] = "\trun the graph on tcp.";
 	comment["h"] = "\tdisplay help menu.";
-		
-	p->load_from_file(argv[1]);
-	graph = p->get_graph();
+
+	parser = p;	
+	parser->load_from_file(argv[1]);
+	graph = parser->get_graph();
 }
 
 int Analyse::display_df_graph() {
@@ -167,5 +168,32 @@ int Analyse::run(bool dist) {
 
 	//Destructor of dataflow is called.
 	
+	return 0;
+}
+
+int Analyse::run2(bool dist) {
+
+	df::Dataflow * dfg = parser->get_dataflow();
+
+	std::string localhost = "127.0.0.1";
+		
+	dfg->replaceProp<bool>("distributed", dist);
+	dfg->replaceProp("discovery_host", localhost);
+	dfg->replaceActorsProp("host", localhost);
+
+	//Initialize dataflow
+	dfg->init();
+
+	dfg->runDiscovery();
+
+	dfg->connect();
+
+	//Run dataflow
+  	dfg->run();
+
+	dfg->waitDiscovery();
+
+	delete dfg;
+
 	return 0;
 }

@@ -79,6 +79,7 @@ protected:
 	 *	0 if successful, -1 otherwise
 	 */ 
 	int run(bool dist);
+	int run2(bool dist);
 
 	/*!
 	 * Process a command given by the user
