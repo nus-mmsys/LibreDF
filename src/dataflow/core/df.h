@@ -100,6 +100,9 @@ namespace df {
 	    prop.replaceProp(key,val);
     }
 
+    Edge * createEdge(const std::string& name, const std::string& src,
+		      const std::string& snk);
+
     Actor * createActor(std::string const& s, const std::string& name);
     Actor * createRemoteActor(const std::string& name);
 

@@ -110,7 +110,7 @@ namespace df {
 	 * 	Source actor of the edge.
 	 *
 	 */
-	Actor * getSourceActor();
+	Actor * getSource();
 	
 	/*!
 	 * Get sink actor of the edge.
@@ -119,7 +119,7 @@ namespace df {
 	 * 	Sink actor of the edge.
 	 *
 	 */
-	Actor * getSinkActor();
+	Actor * getSink();
 	
 	/*!
 	 * Set source rate of the edge.

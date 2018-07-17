@@ -25,6 +25,8 @@ Edge::Edge() {
 	visited = false;
 	source = nullptr;
 	sink = nullptr;
+	src_rate = 1;
+	snk_rate = 1;
 }
 
 Edge::Edge(std::string edgename) : Edge() {
@@ -47,10 +49,10 @@ void Edge::setVisited(bool v) {
 bool Edge::getVisited() {
 	return visited;
 }
-Actor * Edge::getSourceActor() {
+Actor * Edge::getSource() {
 	return source;
 }
-Actor * Edge::getSinkActor() {
+Actor * Edge::getSink() {
 	return sink;
 }
 void Edge::setSourceRate(int r) {

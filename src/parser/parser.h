@@ -379,6 +379,9 @@ public:
 	std::string df_byip(const std::string& ip);
 
 	Graph * get_graph();	
+
+	df::Dataflow * get_dataflow();
+
 };
 
 #endif

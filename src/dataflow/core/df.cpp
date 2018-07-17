@@ -56,6 +56,30 @@ int Dataflow::edgeSize() {
 	return edges.size(); 
 } 
 
+Edge * Dataflow::createEdge(const std::string& name, const std::string& src,
+		      const std::string& snk) {
+	Actor *srcactor, *snkactor;
+	if (edges.find(name) != edges.end()) {
+		std::cerr << "[df.createEdge] error: edge " << name << " already exists.\n";
+	       return nullptr;	
+	}
+	if (actors.find(src) == actors.end()) {
+		std::cerr << "[df.createEdge] error: cannot find source actor " << src << "\n"; 
+		return nullptr;
+	}
+
+	if (actors.find(snk) == actors.end()) {
+		std::cerr << "[df.createEdge] error: cannot find sink actor " << snk << "\n"; 
+		return nullptr;
+	}
+	
+	Edge * e = new Edge(name);
+	e->setSource(srcactor);	
+	e->setSink(snkactor);	
+	edges.insert(std::make_pair(name, e));
+	return e;
+}
+
 Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
   Actor * res = ActorFactory::createActor(s, name);
   addActor(res);
