@@ -276,6 +276,18 @@ void Dataflow::init() {
   
 }
 
+void Dataflow::connect() {
+
+	for (auto & ed : edges) {
+		df::Edge * e = ed.second;
+
+		df::Actor * src = e->getSource();
+		df::Actor * snk = e->getSink(); 
+
+		connectActors(src, snk, ed.first, e->getSourceRate(), e->getSinkRate());
+	}
+
+}
 void Dataflow::run() {
   
   if (status != DataflowStatus::READY) {

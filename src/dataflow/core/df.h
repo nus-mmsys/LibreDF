@@ -154,7 +154,9 @@ namespace df {
      *
      */
     void init();
-    
+   
+    void connect();
+
     /*!
      * Run one iteration of the dataflow.
      *
