@@ -57,8 +57,11 @@ std::string ClientSocket::communicate(const std::string& host, int port, const s
 	char buf[1024];
 	std::string res;
 	std::strcpy(buf, msg.c_str());
-	if (connect(host, port) < 0)
+	if (connect(host, port) < 0) {
+		std::cerr << name << " cannot communicate.\n";
+		close();
 		return "";
+	}
 	send(buf, std::strlen(buf));
 	recv(buf, 1024);
 	res = buf;
