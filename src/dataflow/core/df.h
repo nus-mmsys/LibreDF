@@ -100,6 +100,12 @@ namespace df {
 	    prop.replaceProp(key,val);
     }
 
+    template<typename T>
+    void replaceActorsProp(const std::string& key, const T& val) {
+	    for (auto & ac : actors)
+	    	ac.second->replaceProp(key,val);
+    }
+
     Edge * createEdge(const std::string& name, const std::string& src,
 		      const std::string& snk);
 
