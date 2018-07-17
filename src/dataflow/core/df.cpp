@@ -28,6 +28,34 @@ Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::NONE)
 	clnsock = new ClientSocket("df-cln:"+name);
 }
 
+std::string Dataflow::getName() {
+	return name;
+}
+
+Dataflow::actor_iter Dataflow::actorBegin() { 
+	return actors.begin(); 
+} 
+
+Dataflow::actor_iter Dataflow::actorEnd() { 
+	return actors.end(); 
+} 
+
+int Dataflow::actorSize() { 
+	return actors.size(); 
+} 
+    
+Dataflow::edge_iter Dataflow::edgeBegin() { 
+	return edges.begin(); 
+} 
+
+Dataflow::edge_iter Dataflow::edgeEnd() { 
+	return edges.end(); 
+} 
+
+int Dataflow::edgeSize() { 
+	return edges.size(); 
+} 
+
 Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
   Actor * res = ActorFactory::createActor(s, name);
   addActor(res);

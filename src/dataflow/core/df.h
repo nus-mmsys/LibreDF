@@ -69,13 +69,27 @@ namespace df {
     void discovery();
 
   public:
+
+    using actor_iter = std::map<std::string, Actor *>::const_iterator;	
+    using edge_iter = std::map<std::string, Edge *>::const_iterator;	
+
+    actor_iter actorBegin();
+    actor_iter actorEnd();
+    int actorSize();
+    
+    edge_iter edgeBegin();
+    edge_iter edgeEnd();
+    int edgeSize();
+
     /*!
      * Dataflow constructor
      *
      * \param name The name of the dataflow.
      */
     Dataflow(const std::string& name);
-    
+
+    std::string getName();
+
     template<typename T>
     void setProp(const std::string& key, const T& val) {
 	    prop.setProp(key,val);
