@@ -20,6 +20,7 @@
 #define DF_EDGE_H_
 
 #include "actor.h"
+#include "port.h"
 
 namespace df {
 
@@ -35,6 +36,9 @@ namespace df {
 	Actor * source; /**< Source actor of the edge */
 	Actor * sink; /**< Sink actor of the edge */
 
+	Port * src_port; /**< Source port of the edge */
+	Port * snk_port; /**< Sink port of the edge */
+	
 	int src_rate;
 	int snk_rate;
 
