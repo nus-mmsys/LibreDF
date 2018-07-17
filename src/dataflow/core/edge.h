@@ -65,7 +65,7 @@ namespace df {
 	 * 	Name of the edge
 	 *
 	 */
-	std::string get_name();
+	std::string getName();
 	
 	/*!
 	 * Set the source actor of the edge
@@ -74,7 +74,7 @@ namespace df {
 	 * 	The source actor to set.
 	 *
 	 */
-	void set_source(Actor * src);
+	void setSource(Actor * src);
 
 	/*!
 	 * Set the sink actor of the edge
@@ -83,7 +83,7 @@ namespace df {
 	 * 	The sink actor to set.
 	 *
 	 */
-	void set_sink(Actor * snk);
+	void setSink(Actor * snk);
 	
 	/*!
 	 * Set the visited boolean.
@@ -92,7 +92,7 @@ namespace df {
 	 * 	The boolean value to assign to the visited.
 	 *
 	 */
-	void set_visited(bool v);
+	void setVisited(bool v);
 	
 	/*!
 	 * Get the visited boolean.
@@ -101,7 +101,7 @@ namespace df {
 	 * 	The value of the visited.
 	 *
 	 */
-	bool get_visited();
+	bool getVisited();
 	
 	/*!
 	 * Get source actor of the edge.
@@ -110,7 +110,7 @@ namespace df {
 	 * 	Source actor of the edge.
 	 *
 	 */
-	Actor * get_source_actor();
+	Actor * getSourceActor();
 	
 	/*!
 	 * Get sink actor of the edge.
@@ -119,7 +119,7 @@ namespace df {
 	 * 	Sink actor of the edge.
 	 *
 	 */
-	Actor * get_sink_actor();
+	Actor * getSinkActor();
 	
 	/*!
 	 * Set source rate of the edge.
@@ -128,7 +128,7 @@ namespace df {
 	 * 	The source rate to set.
 	 *
 	 */
-	void set_source_rate(int rate);
+	void setSourceRate(int rate);
 	
 	/*!
 	 * Set sink rate of the edge.
@@ -137,7 +137,7 @@ namespace df {
 	 * 	The sink rate to set.
 	 *
 	 */
-	void set_sink_rate(int rate);
+	void setSinkRate(int rate);
 	
 	/*!
 	 * Get source rate of the edge.
@@ -146,7 +146,7 @@ namespace df {
 	 * 	The source rate of the edge.
 	 *
 	 */
-	int get_source_rate();
+	int getSourceRate();
 
 	/*!
 	 * Get sink rate of the edge.
@@ -155,7 +155,7 @@ namespace df {
 	 * 	The sink rate of the edge.
 	 *
 	 */
-	int get_sink_rate();
+	int getSinkRate();
     };
 
 }

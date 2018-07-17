@@ -31,38 +31,37 @@ Edge::Edge(std::string edgename) : Edge() {
 	name = edgename;
 }
 
-std::string Edge::get_name() {
+std::string Edge::getName() {
 	return name;
 }
 
-void Edge::set_source(Actor * src) {
+void Edge::setSource(Actor * src) {
 	source = src;
 }
-void Edge::set_sink(Actor * snk) {
+void Edge::setSink(Actor * snk) {
 	sink = snk;
 }
-void Edge::set_visited(bool v) {
+void Edge::setVisited(bool v) {
 	visited = v;
 }
-bool Edge::get_visited() {
+bool Edge::getVisited() {
 	return visited;
 }
-Actor * Edge::get_source_actor() {
+Actor * Edge::getSourceActor() {
 	return source;
 }
-Actor * Edge::get_sink_actor() {
+Actor * Edge::getSinkActor() {
 	return sink;
 }
-void Edge::set_source_rate(int r) {
+void Edge::setSourceRate(int r) {
 	src_rate = r;
 }
-void Edge::set_sink_rate(int r) {
+void Edge::setSinkRate(int r) {
 	snk_rate = r;
 }
-int Edge::get_source_rate() {
+int Edge::getSourceRate() {
 	return src_rate;
 }
-int Edge::get_sink_rate() {
+int Edge::getSinkRate() {
 	return snk_rate;
 }
-
