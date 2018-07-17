@@ -77,27 +77,28 @@ df canny {
     actor A {
     	computation = VideoCapture;
         file_name = pedestrian.mp4;
+	host = 192.168.1.9;
     }
     actor B {
     	computation = CvtColor;
-	host = 127.0.0.1;
+	host = 192.168.1.10;
 	input_port = 7007;
     }
     actor C {
     	computation = Canny;
 	threshold = 100;
 	ratio = 2;
-	host = 127.0.0.1;
+	host = 192.168.1.9;
 	input_port = 7008;
     }
     actor D {
     	computation = ImageWrite;
-	host = 127.0.0.1;
+	host = 192.168.1.10;
 	input_port = 7009;
     }
     parameter {
 	distributed = true;
-	discovery_host = 127.0.0.1;
+	host = 192.168.1.9;
 	discovery_port = 7000;
     }
 }
@@ -284,11 +285,27 @@ Add::~Add() {
 
 ### Run
 
+
+#### tmf
+
 ```bash
-  ./tmf ../test/basic/adder.df
+  ./tmf ../test/opencv/pedestrian_detection.df
 ```
 
-### Commands
+#### tmf-server
+
+```bash
+  ./tmf-server
+```
+
+#### tmf-deploy
+
+```bash
+  ./tmf-deploy ../test/opencv/canny.df
+```
+
+
+### Commands (tmf)
 
 	graph		        display the graph.
 	h		        display help menu.
