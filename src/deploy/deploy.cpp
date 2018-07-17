@@ -26,40 +26,15 @@ Deploy::Deploy(int argc, char * argv[], Parser * p) {
 	}
 	parser = p;		
 	parser->load_from_file(argv[1]);
-	graph = parser->get_graph();
+	dfg = parser->get_dataflow();
 
 	sock = new df::ClientSocket("tmf-deploy");
 }
 
 int Deploy::run() {
 
-	//Create dataflow
-	df::Dataflow dataflow(graph->get_name());
-	
-	map<string, string> params = graph->get_graph_params();
-	for (auto p : params) {
-		dataflow.setProp(p.first, p.second);
-	}
-
-	//Create actors
-	vector<string> actorlist = graph->get_actors();
-	for (auto & acname : actorlist) {
-		
-		map<string, string> props = graph->get_actor_props(acname);
-		string actype = graph->get_actor_type(acname);
-		if (actype == "") {
-			cout << "error: actor type cannot be unknown.\n";
-			cout << "set the property computation of actor " << acname << "\n";
-			return -1;
-		}
-		df::Actor * actor = dataflow.createActor(actype, acname);
-		for (auto p : props) {
-			actor->setProp(p.first, p.second);
-		}
-	}
-
 	//Initialize discovery
-	dataflow.runDiscovery();
+	dfg->runDiscovery();
 
 	std::string msg;
 	auto ips = parser->get_ips();
@@ -72,7 +47,7 @@ int Deploy::run() {
 		sock->close();
 	}
 
-	dataflow.waitDiscovery();
+	dfg->waitDiscovery();
 	
 	return 0;
 }

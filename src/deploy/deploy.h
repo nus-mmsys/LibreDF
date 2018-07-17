@@ -39,7 +39,7 @@ using namespace std;
 class Deploy {
 
 protected:
-	Graph * graph;
+	df::Dataflow * dfg;
 	Parser * parser;
 	std::string dfstr;
 	df::ClientSocket * sock;
