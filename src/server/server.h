@@ -42,7 +42,7 @@ private:
 	df::ServerSocket * sock;
 	Parser * parser;
 protected:
-	Graph * graph;
+	df::Dataflow * dfg;
 
 public:
 

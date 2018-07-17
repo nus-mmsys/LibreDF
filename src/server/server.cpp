@@ -34,7 +34,7 @@ int Server::init() {
 	sock->recv(buf, bufsize);
 	std::cout << buf << std::endl;
 	parser->load_from_string(buf);
-	graph = parser->get_graph();
+	dfg = parser->get_dataflow();
 
 	sock->clnclose();
 	sock->srvclose();
@@ -43,60 +43,15 @@ int Server::init() {
 }
 
 int Server::run() {
-	
-	map<string, df::Actor *> actormap;
-	std::string srcname, snkname;
 
-	//Create dataflow
-	df::Dataflow dataflow(graph->get_name());
-	
-	map<string, string> params = graph->get_graph_params();
-	for (auto p : params) {
-		dataflow.setProp(p.first, p.second);
-	}
+	// Initialize dataflow
+	dfg->init();
 
-	//Create actors
-	vector<string> actorlist = graph->get_actors();
-	for (auto & acname : actorlist) {
-		
-		map<string, string> props = graph->get_actor_props(acname);
-	        df::Actor * actor; 
-		if (props.empty()) {
-			cout << acname << " is deployed elsewhere.\n";
-			actor = dataflow.createRemoteActor(acname);
-		} else {
-			string actype = graph->get_actor_type(acname);
-			if (actype == "") {
-				cout << "error: actor type cannot be unknown.\n";
-				cout << "set the property computation of actor " << acname << "\n";
-				return -1;
-			}
-			actor = dataflow.createActor(actype, acname);
-			for (auto p : props) {
-				actor->setProp(p.first, p.second);
-			}
-		}
-		actormap[acname] = actor;
-	}
+	// Connect actors
+	dfg->connect();
 
-	//Initialize dataflow
-	dataflow.init();
-
-	//Connect actors
-	vector<string> edgelist = graph->get_edges();
-	for (auto & ed : edgelist) {
-		srcname = graph->get_source_name(ed);
-		snkname = graph->get_sink_name(ed);
-
-		df::Actor * src = actormap[srcname];
-		df::Actor * snk = actormap[snkname];
-		dataflow.connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
-	}
-
-	//Run dataflow
-  	dataflow.run();
-
-	//Destructor of dataflow is called.
+	// Run dataflow
+  	dfg->run();
 
 	return 0;
 }
