@@ -39,7 +39,7 @@ class Analyse {
 protected:
 	
 	Graph * graph;
-
+	Parser * parser;
 	map<string, function<int()>> cmd; /**< A map from command name to command funtion. */
 	map<string, string> comment; /**< A map from command name to command description. */
 
