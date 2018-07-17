@@ -289,7 +289,7 @@ Add::~Add() {
 #### tmf
 
 ```bash
-  ./tmf ../test/opencv/pedestrian_detection.df
+  ./tmf <df file> (e.g., ../test/opencv/pedestrian_detection.df)
 ```
 
 #### tmf-server
@@ -301,7 +301,7 @@ Add::~Add() {
 #### tmf-deploy
 
 ```bash
-  ./tmf-deploy ../test/opencv/canny.df
+  ./tmf-deploy <df file> (e.g., ../test/opencv/canny.df)
 ```
 
 
