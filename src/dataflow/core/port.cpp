@@ -22,7 +22,7 @@ using namespace df;
 using namespace std;
 
 Port::Port(string name) :
-name(name), rate(1), linked(0) {
+name(name), rate(1), linked(0), distributed(false) {
 }
 
 string Port::getName() {

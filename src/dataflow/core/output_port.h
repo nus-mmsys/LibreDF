@@ -62,7 +62,8 @@ namespace df {
     }
     
     virtual int connectPort(std::string host, int portnb) {
-	return sock->connect(host, portnb);
+	distributed = true;
+    	return sock->connect(host, portnb);
     }
 
     void send() {
@@ -142,7 +143,8 @@ namespace df {
      *
      */
     virtual ~OutputPort<T>() {
-      sock->close();
+      if (distributed)
+	      sock->close();
       delete buf;
     }
   };

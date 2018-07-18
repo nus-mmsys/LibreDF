@@ -48,6 +48,7 @@ namespace df {
     std::string name; /**< The name of the port */
     int rate; /**< The port rate */
     std::string port_cap;
+    bool distributed;
 
   public:
     

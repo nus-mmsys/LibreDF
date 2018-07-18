@@ -64,7 +64,8 @@ namespace df {
     }
    
     virtual void listen(int portnb) {
-	sock->listen(portnb);
+	distributed = true;
+        sock->listen(portnb);
     } 
 
     void accept() {
@@ -132,8 +133,10 @@ namespace df {
      *
      */
     virtual ~InputPort() {
-	    sock->clnclose();
-	    sock->srvclose();
+	    if (distributed) {
+	    	sock->clnclose();
+	    	sock->srvclose();
+	    }
 	    delete data;
 	    delete chdata;
     }
