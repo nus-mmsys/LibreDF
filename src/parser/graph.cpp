@@ -123,8 +123,12 @@ int Graph::add_edge(string edgename, string edge_source, string edge_sink) {
 		return -1;
 	Port * op = sourceactor->create_oport();
 	Port * ip = sinkactor->create_iport();
+
 	edge->connect_source(op);
 	edge->connect_sink(ip);
+
+	edge->set_source_actor(sourceactor);
+	edge->set_sink_actor(sinkactor);
 
 	return 0;
 }
@@ -136,10 +140,28 @@ int Graph::add_edge(string edge_source, string edge_sink) {
         return add_edge(edgename, edge_source, edge_sink);
 }
 
+vector<Edge *> Graph::get_iedges(Actor * ac) {
+	vector <Edge *> res;
+	for (auto & e : edges) {
+		if (e.second->get_sink_actor()->get_name() == ac->get_name())
+			res.push_back(e.second);
+	}
+	return res;
+}
+
+vector<Edge *> Graph::get_oedges(Actor * ac) {
+	vector <Edge *> res;
+	for (auto & e : edges) {
+		if (e.second->get_source_actor()->get_name() == ac->get_name())
+			res.push_back(e.second);
+	}
+	return res;
+}
+
 vector<Actor *> Graph::findsources() {
 	vector<Actor *> sourcelist;
 	for (auto n : actors) {
-		if (n.second->get_iedges().size() == 0) {
+		if (n.second->iport_size() == 0) {
 			sourcelist.push_back(n.second);
 		}
 	}
@@ -167,7 +189,7 @@ void Graph::dfs_visited_actors(Actor * curr, int & visited) {
 	visited++;
 	Actor * adj;
 
-	for (auto e : curr->get_oedges()) {
+	for (auto e : get_oedges(curr)) {
 		if (!e->get_visited()) {
 			adj = e->get_sink_actor();
 			e->set_visited(true);
@@ -175,7 +197,7 @@ void Graph::dfs_visited_actors(Actor * curr, int & visited) {
 		}
 	}
 
-	for (auto e : curr->get_iedges()) {
+	for (auto e : get_iedges(curr)) {
 		if (!e->get_visited()) {
 			adj = e->get_source_actor();
 			e->set_visited(true);
@@ -203,7 +225,7 @@ int Graph::dfs(Actor * curr, int num, int den) {
 		return -1;
 	}
 
-	for (auto e : curr->get_oedges()) {
+	for (auto e : get_oedges(curr)) {
 		if (!e->get_visited()) {
 			adj = e->get_sink_actor();
 			e->set_visited(true);
@@ -216,7 +238,7 @@ int Graph::dfs(Actor * curr, int num, int den) {
 		}
 	}
 
-	for (auto e : curr->get_iedges()) {
+	for (auto e : get_iedges(curr)) {
 		if (!e->get_visited()) {
 			adj = e->get_source_actor();
 			e->set_visited(true);
@@ -336,7 +358,7 @@ vector<vector<Actor *>> Graph::findorders_from(vector<Actor *> heads) {
 		return orderlist;
 
 	for (auto h: heads) {
-		vector<Edge *> edges = h->get_oedges();
+		vector<Edge *> edges = get_oedges(h);
 		h->set_visited(true);		
 		for (auto e : edges)
 			if (find(restheads.begin(), restheads.end(), e->get_sink_actor()) == restheads.end() 
@@ -349,7 +371,7 @@ vector<vector<Actor *>> Graph::findorders_from(vector<Actor *> heads) {
 	bool found = false;
 	while (i != restheads.end()) {
 		found = false;
-		vector<Edge *> ed = (*i)->get_iedges();
+		vector<Edge *> ed = get_iedges(*i);
 		for (auto e : ed) {
 			if (find(restheads.begin(), restheads.end(), e->get_source_actor()) != restheads.end()) {
 				i = restheads.erase(i);

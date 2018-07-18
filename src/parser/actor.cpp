@@ -21,28 +21,10 @@
 Port::Port() {
 	name = "";
 	rate = 1;
-	actor = nullptr;
-	edge = nullptr;
 }
 
 Port::Port(string portname) : Port() {
 	name = portname;
-}
-
-void Port::set_actor(Actor * ac) {
-	actor = ac;
-}
-
-void Port::set_edge(Edge * ed) {
-	edge = ed;
-}
-
-Actor * Port::get_actor() {
-	return actor;
-}
-
-Edge * Port::get_edge() {
-	return edge;
 }
 
 void Port::set_rate(int r) {
@@ -70,11 +52,9 @@ string Edge::get_name() {
 
 void Edge::connect_source(Port * sourceport) {
 	source = sourceport;
-	source->set_edge(this);
 }
 void Edge::connect_sink(Port * sinkport) {
 	sink = sinkport;
-	sink->set_edge(this);
 }
 void Edge::set_visited(bool v) {
 	visited = v;
@@ -82,12 +62,23 @@ void Edge::set_visited(bool v) {
 bool Edge::get_visited() {
 	return visited;
 }
+
 Actor * Edge::get_source_actor() {
-	return source->get_actor();
+	return src_actor;
 }
+
 Actor * Edge::get_sink_actor() {
-	return sink->get_actor();
+	return snk_actor;
 }
+
+void Edge::set_source_actor(Actor * src) {
+	src_actor = src;
+}
+
+void Edge::set_sink_actor(Actor * snk) {
+	snk_actor = snk;
+}
+
 void Edge::set_source_rate(int r) {
 	source->set_rate(r);
 }
@@ -157,28 +148,23 @@ bool Actor::get_visited() {
 Port * Actor::create_iport() {
 	Port * iport = new Port();
 	iports.push_back(iport);
-	iport->set_actor(this);
 	return iport;
 }
 
 Port * Actor::create_oport() {
 	Port * oport = new Port();
 	oports.push_back(oport);
-	oport->set_actor(this);
 	return oport;
 }
-vector<Edge *> Actor::get_iedges() {
-	vector<Edge *> iedges;
-	for (auto ip : iports)
-		iedges.push_back(ip->get_edge());
-	return iedges;
+
+int Actor::iport_size() {
+	return iports.size();
 }
-vector<Edge *> Actor::get_oedges() {
-	vector<Edge *> oedges;
-	for (auto op : oports)
-		oedges.push_back(op->get_edge());
-	return oedges;
+
+int Actor::oport_size() {
+	return oports.size();
 }
+
 
 void Actor::set_prop(const string & p, const string & v) {
 	properties.insert(std::make_pair(p,v));

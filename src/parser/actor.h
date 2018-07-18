@@ -25,9 +25,6 @@
 
 using namespace std;
 
-class Actor;
-class Edge;
-
 /*!
  * Status enumeration class
  *  The status value to return in functions.
@@ -47,8 +44,6 @@ class Port {
 private:
 	string name; /**< Port name */
 	int rate; /**< Port rate */
-	Actor * actor; /**< The actor to which the port belongs. */
-	Edge * edge; /**< The edge to which the port is connected. */
 public:
 	/*!
 	 * Port constructor
@@ -64,42 +59,6 @@ public:
 	 */
 	Port(string portname);
 
-	/*!
-	 * Assign the actor of the port
-	 *
-	 * \param ac
-	 * 	The actor to assign the port
-	 *
-	 */
-	void set_actor(Actor * ac);
-	
-	/*!
-	 * Connect an edge to the port
-	 *
-	 * \param ed
-	 * 	The edge to connect to the port
-	 *
-	 */
-	void set_edge(Edge * ed);
-	
-	/*!
-	 * Get the actor of the port
-	 *
-	 * \return
-	 * 	The actor to which the port belongs.
-	 *
-	 */ 
-	Actor * get_actor();
-	
-	/*!
-	 * Get the edge connected to the port
-	 *
-	 * \return
-	 * 	The edge connected to the port.
-	 *
-	 */
-	Edge * get_edge();
-	
 	/*!
 	 * Set the rate of the port
 	 *
@@ -117,133 +76,6 @@ public:
 	 *
 	 */
 	int get_rate();
-};
-
-/*!
- * Edge class
- *  A edge has reference to its source and sink ports.
- *
- */
-class Edge {
-private:
-	string name; /**< Edge name */
-	bool visited; /**< Boolean to check the edge is visited in dfs algorithm. */
-	Port * source; /**< Source port of the edge */
-	Port * sink; /**< Sink port of the edge */
-public:
-	/*!
-	 * Edge constructor
-	 *
-	 */
-	Edge();
-	
-	/*!
-	 * Edge constructor with name
-	 *
-	 * \param edgename
-	 * 	Name of the edge
-	 *
-	 */
-	Edge(string edgename);
-	
-	/*!
-	 * Get name of the edge
-	 *
-	 * \return
-	 * 	Name of the edge
-	 *
-	 */
-	string get_name();
-	
-	/*!
-	 * Connect the edge to a source port
-	 *
-	 * \param sourceport
-	 * 	The source port to connect to.
-	 *
-	 */
-	void connect_source(Port * sourceport);
-	
-	/*!
-	 * Connect the edge to a sink port
-	 *
-	 * \param sinkport
-	 * 	The sink port to connect to.
-	 *
-	 */
-	void connect_sink(Port * sinkport);
-	
-	/*!
-	 * Set the visited boolean.
-	 *
-	 * \param v
-	 * 	The boolean value to assign to the visited.
-	 *
-	 */
-	void set_visited(bool v);
-	
-	/*!
-	 * Get the visited boolean.
-	 *
-	 * \return
-	 * 	The value of the visited.
-	 *
-	 */
-	bool get_visited();
-	
-	/*!
-	 * Get source actor of the edge.
-	 *
-	 * \return
-	 * 	Source actor of the edge.
-	 *
-	 */
-	Actor * get_source_actor();
-	
-	/*!
-	 * Get sink actor of the edge.
-	 *
-	 * \return
-	 * 	Sink actor of the edge.
-	 *
-	 */
-	Actor * get_sink_actor();
-	
-	/*!
-	 * Set source rate of the edge.
-	 *
-	 * \param rate
-	 * 	The source rate to set.
-	 *
-	 */
-	void set_source_rate(int rate);
-	
-	/*!
-	 * Set sink rate of the edge.
-	 *
-	 * \param rate
-	 * 	The sink rate to set.
-	 *
-	 */
-	void set_sink_rate(int rate);
-	
-	/*!
-	 * Get source rate of the edge.
-	 *
-	 * \return
-	 * 	The source rate of the edge.
-	 *
-	 */
-	int get_source_rate();
-
-	/*!
-	 * Get sink rate of the edge.
-	 *
-	 * \return
-	 * 	The sink rate of the edge.
-	 *
-	 */
-	int get_sink_rate();
 };
 
 /*!
@@ -403,23 +235,8 @@ public:
 	 */
 	Port * create_oport();
 
-	/*!
-	 * Get input edges
-	 *
-	 * \return
-	 * 	List of all input edges.
-	 *
-	 */
-	vector<Edge *> get_iedges();
-
-	/*!
-	 * Get output edges
-	 *
-	 * \return
-	 * 	List of all output edges.
-	 *
-	 */
-	vector<Edge *> get_oedges();
+	int iport_size();
+	int oport_size();
 
 	/*!
 	 * Set a property of the actor
@@ -449,6 +266,139 @@ public:
 	 */
 	std::map<std::string, std::string> get_props();
 
+};
+
+/*!
+ * Edge class
+ *  A edge has reference to its source and sink ports.
+ *
+ */
+class Edge {
+private:
+	string name; /**< Edge name */
+	bool visited; /**< Boolean to check the edge is visited in dfs algorithm. */
+	Port * source; /**< Source port of the edge */
+	Port * sink; /**< Sink port of the edge */
+
+	Actor * src_actor;
+	Actor * snk_actor;
+public:
+	/*!
+	 * Edge constructor
+	 *
+	 */
+	Edge();
+	
+	/*!
+	 * Edge constructor with name
+	 *
+	 * \param edgename
+	 * 	Name of the edge
+	 *
+	 */
+	Edge(string edgename);
+	
+	/*!
+	 * Get name of the edge
+	 *
+	 * \return
+	 * 	Name of the edge
+	 *
+	 */
+	string get_name();
+	
+	/*!
+	 * Connect the edge to a source port
+	 *
+	 * \param sourceport
+	 * 	The source port to connect to.
+	 *
+	 */
+	void connect_source(Port * sourceport);
+	
+	/*!
+	 * Connect the edge to a sink port
+	 *
+	 * \param sinkport
+	 * 	The sink port to connect to.
+	 *
+	 */
+	void connect_sink(Port * sinkport);
+	
+	/*!
+	 * Set the visited boolean.
+	 *
+	 * \param v
+	 * 	The boolean value to assign to the visited.
+	 *
+	 */
+	void set_visited(bool v);
+	
+	/*!
+	 * Get the visited boolean.
+	 *
+	 * \return
+	 * 	The value of the visited.
+	 *
+	 */
+	bool get_visited();
+	
+	/*!
+	 * Get source actor of the edge.
+	 *
+	 * \return
+	 * 	Source actor of the edge.
+	 *
+	 */
+	Actor * get_source_actor();
+	
+	/*!
+	 * Get sink actor of the edge.
+	 *
+	 * \return
+	 * 	Sink actor of the edge.
+	 *
+	 */
+	Actor * get_sink_actor();
+	
+	void set_source_actor(Actor * src);
+	void set_sink_actor(Actor * snk);
+
+	/*!
+	 * Set source rate of the edge.
+	 *
+	 * \param rate
+	 * 	The source rate to set.
+	 *
+	 */
+	void set_source_rate(int rate);
+	
+	/*!
+	 * Set sink rate of the edge.
+	 *
+	 * \param rate
+	 * 	The sink rate to set.
+	 *
+	 */
+	void set_sink_rate(int rate);
+	
+	/*!
+	 * Get source rate of the edge.
+	 *
+	 * \return
+	 * 	The source rate of the edge.
+	 *
+	 */
+	int get_source_rate();
+
+	/*!
+	 * Get sink rate of the edge.
+	 *
+	 * \return
+	 * 	The sink rate of the edge.
+	 *
+	 */
+	int get_sink_rate();
 };
 
 /*!

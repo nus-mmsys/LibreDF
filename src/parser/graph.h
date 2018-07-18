@@ -108,6 +108,9 @@ private:
 	 */
 	vector<vector<Actor *>> findorders();
 
+	vector<Edge *> get_iedges(Actor * ac);
+	vector<Edge *> get_oedges(Actor * ac);
+
 	/*!
 	 * A DFS (Depth First Search) to solve the graph for consistency with fractional values.
 	 *
