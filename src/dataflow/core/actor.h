@@ -70,7 +70,8 @@ namespace df {
 
     bool distributed, realtime;
     Status status; 
-   
+    std::mutex status_mux;
+
     /*!
      * Timing measurement
      * hstart, hend : high_resolution_clock
@@ -103,8 +104,23 @@ namespace df {
     virtual void runDist() {
       run();
     }
-   
+  
+
   public:
+
+    Status getStatus() {
+	Status res;
+	status_mux.lock();
+	res = status;
+	status_mux.unlock();
+	return res;
+    }
+
+    void setStatus(Status st) {
+	status_mux.lock();
+	status = st;
+	status_mux.unlock();
+    }
 
     std::string getName();
 
@@ -314,12 +330,12 @@ namespace df {
 	T * res = port->recv();
 	if (res == nullptr)
 		log("cannot recieve on port "+port->getName());
-	status = res->getStatus();
+	setStatus(res->getStatus());
 	return res;
       }
       else {
 	port->lock();
-	status = port->getStatus();
+	setStatus(port->getStatus());
         return port->get();
       }	
     }
@@ -328,23 +344,23 @@ namespace df {
     T * produce(OutputPort<T> * port) {
       if (distributed) {
 	T * res = port->getSocketData();
-	res->setStatus(status);
+	res->setStatus(getStatus());
 	return res;
       }
       else {
         port->lock();
-        port->setStatus(status);
+        port->setStatus(getStatus());
         return port->get();
       }
     }
 
     template<typename T>
     void setEos(OutputPort<T> * port) {
-      status = EOS;
+      setStatus(EOS);
       if (distributed)
-	      port->setSocketStatus(status);
+	      port->setSocketStatus(getStatus());
       else
-	      port->setStatus(status);
+	      port->setStatus(getStatus());
     }
     
     template<typename T>
@@ -366,7 +382,6 @@ namespace df {
     void destroyPort(Port * port) {
       delete port;
     }
-    Status getStatus() { return status; }
     /*!
      * Destructor of the actor.
      */

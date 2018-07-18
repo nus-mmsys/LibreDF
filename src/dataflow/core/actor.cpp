@@ -234,18 +234,18 @@ void Actor::runActor() {
     for (auto p : inputPorts) {
       if (p.second->getLinked() == 0) {
         log(p.second->getName()+string(" is not connected"));
-      	status = ERROR;
+      	setStatus(ERROR);
       }
     }
     for (auto p : outputPorts) {
       if (p.second->getLinked() == 0) {
         log(p.second->getName()+string(" is not connected"));
-        status = ERROR;
+        setStatus(ERROR);
       }
     }
   }
 
-  while(status != EOS) {
+  while(getStatus() != EOS) {
     if (distributed) {
 	    runDist();
     } else if (!realtime) {
