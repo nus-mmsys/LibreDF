@@ -25,6 +25,7 @@
 #include <vector>
 #include <map>
 #include "actor.h"
+#include "edge.h"
 
 using namespace std;
 

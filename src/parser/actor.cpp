@@ -35,62 +35,6 @@ int Port::get_rate() {
 	return rate;
 }
 
-Edge::Edge() {
-	name = "";
-	visited = false;
-	source = nullptr;
-	sink = nullptr;
-}
-
-Edge::Edge(string edgename) : Edge() {
-	name = edgename;
-}
-
-string Edge::get_name() {
-	return name;
-}
-
-void Edge::connect_source(Port * sourceport) {
-	source = sourceport;
-}
-void Edge::connect_sink(Port * sinkport) {
-	sink = sinkport;
-}
-void Edge::set_visited(bool v) {
-	visited = v;
-}
-bool Edge::get_visited() {
-	return visited;
-}
-
-Actor * Edge::get_source_actor() {
-	return src_actor;
-}
-
-Actor * Edge::get_sink_actor() {
-	return snk_actor;
-}
-
-void Edge::set_source_actor(Actor * src) {
-	src_actor = src;
-}
-
-void Edge::set_sink_actor(Actor * snk) {
-	snk_actor = snk;
-}
-
-void Edge::set_source_rate(int r) {
-	source->set_rate(r);
-}
-void Edge::set_sink_rate(int r) {
-	sink->set_rate(r);
-}
-int Edge::get_source_rate() {
-	return source->get_rate();
-}
-int Edge::get_sink_rate() {
-	return sink->get_rate();
-}
 Actor::Actor() {
 	name = "";
 	type = "";
