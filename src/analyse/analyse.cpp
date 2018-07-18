@@ -116,63 +116,6 @@ int Analyse::loop() {
 
 int Analyse::run(bool dist) {
 
-	map<string, df::Actor *> actormap;
-	std::string localhost = "127.0.0.1";
-
-	//Create dataflow
-	df::Dataflow dataflow(graph->get_name());
-	
-	map<string, string> params = graph->get_graph_params();
-	for (auto p : params) {
-		dataflow.setProp(p.first, p.second);
-	}
-		
-	dataflow.replaceProp<bool>("distributed", dist);
-	dataflow.replaceProp("discovery_host", localhost);
-	
-	//Create actors
-	vector<string> actorlist = graph->get_actors();
-	for (auto & acname : actorlist) {
-		string actype = graph->get_actor_type(acname);
-		if (actype == "") {
-			cout << "error: actor type cannot be unknown.\n";
-			cout << "set the property computation of actor " << acname << "\n";
-			return -1;
-		}
-		df::Actor * actor = dataflow.createActor(actype, acname);
-		map<string, string> props = graph->get_actor_props(acname);
-		for (auto p : props) {
-			actor->setProp(p.first, p.second);
-		}
-		actor->replaceProp("host", localhost);
-		actormap[acname] = actor;
-	}
-
-	//Initialize dataflow
-	dataflow.init();
-
-	dataflow.runDiscovery();
-
-	//Connect actors
-	vector<string> edgelist = graph->get_edges();
-	for (auto & ed : edgelist) {
-		df::Actor * src = actormap[graph->get_source_name(ed)];
-		df::Actor * snk = actormap[graph->get_sink_name(ed)];
-		dataflow.connectActors(src, snk, ed, graph->get_source_rate(ed), graph->get_sink_rate(ed));
-	}
-
-	//Run dataflow
-  	dataflow.run();
-
-	dataflow.waitDiscovery();
-
-	//Destructor of dataflow is called.
-	
-	return 0;
-}
-
-int Analyse::run2(bool dist) {
-
 	df::Dataflow * dfg = parser->get_dataflow();
 
 	std::string localhost = "127.0.0.1";
@@ -181,14 +124,12 @@ int Analyse::run2(bool dist) {
 	dfg->replaceProp("discovery_host", localhost);
 	dfg->replaceActorsProp("host", localhost);
 
-	//Initialize dataflow
 	dfg->init();
 
 	dfg->runDiscovery();
 
 	dfg->connect();
 
-	//Run dataflow
   	dfg->run();
 
 	dfg->waitDiscovery();
