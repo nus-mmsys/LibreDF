@@ -28,7 +28,7 @@ df vcanny {
     }
     actor E {
      	computation = VideoWriter;
-        file_name = vcanny.mp4;
+        file_name = vcanny.avi;
 	host = 127.0.0.1;
 	input_port = 7001;
     }
