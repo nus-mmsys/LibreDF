@@ -68,7 +68,7 @@ Edge * Dataflow::createEdge(const std::string& name, const std::string& src,
 	
 	if (actors.find(src) != actors.end()) {
 		src_actor = actors[src];			
-	} else (remoteactors.find(src) != remoteactors.end()) {
+	} else if (remoteactors.find(src) != remoteactors.end()) {
 		src_actor = remoteactors[src];
 	} else {
 		std::cerr << "[df.createEdge] error: cannot find source actor " << src << "\n"; 
@@ -77,7 +77,7 @@ Edge * Dataflow::createEdge(const std::string& name, const std::string& src,
 
 	if (actors.find(snk) != actors.end()) {
 		snk_actor = actors[snk];
-	} else (remoteactors.find(snk) != remoteactors.end()) {
+	} else if (remoteactors.find(snk) != remoteactors.end()) {
 		snk_actor = remoteactors[snk];
 	} else {
 		std::cerr << "[df.createEdge] error: cannot find sink actor " << snk << "\n"; 
