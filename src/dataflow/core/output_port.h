@@ -146,6 +146,8 @@ namespace df {
       if (distributed)
 	      sock->close();
       delete buf;
+      delete data;
+      delete sock;
     }
   };
   
