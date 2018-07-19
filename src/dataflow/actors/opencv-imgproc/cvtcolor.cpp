@@ -29,14 +29,22 @@ CvtColor::CvtColor(const string& name) : Actor(name) {
 }
 
 void CvtColor::init() {
-
+  if (!propEmpty("cvt")) {
+	string cvtstr = getProp("cvt");
+	if (cvtstr == "bgr2gray")
+		cvt = CV_BGR2GRAY;
+	if (cvtstr == "gray2bgr")
+		cvt = CV_GRAY2BGR;
+  } else {
+	  cvt = CV_BGR2GRAY;
+  }
 }
 
 void CvtColor::run() {
 
   auto in = consume(input);
   auto out = produce(output);
-  cv::cvtColor(*in->get(), *out->get(), CV_BGR2GRAY);
+  cv::cvtColor(*in->get(), *out->get(), cvt);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);

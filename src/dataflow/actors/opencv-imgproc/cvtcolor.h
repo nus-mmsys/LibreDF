@@ -36,7 +36,9 @@ private:
   cv::Mat frame;
   df::InputPort<df::Mat> * input;
   df::OutputPort<df::Mat> * output;
- 
+
+  int cvt;
+
   static  df::ActorRegister<CvtColor> reg;
 public:
   
