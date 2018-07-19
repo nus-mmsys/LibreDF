@@ -23,8 +23,10 @@ using namespace df;
 Edge::Edge() {
 	name = "";
 	visited = false;
-	source = nullptr;
-	sink = nullptr;
+	src_actor = nullptr;
+	snk_actor = nullptr;
+	src_port = nullptr;
+	snk_port = nullptr;
 	src_rate = 1;
 	snk_rate = 1;
 }
@@ -38,10 +40,10 @@ std::string Edge::getName() {
 }
 
 void Edge::setSource(Actor * src) {
-	source = src;
+	src_actor = src;
 }
 void Edge::setSink(Actor * snk) {
-	sink = snk;
+	snk_actor = snk;
 }
 void Edge::setVisited(bool v) {
 	visited = v;
@@ -50,10 +52,10 @@ bool Edge::getVisited() {
 	return visited;
 }
 Actor * Edge::getSource() {
-	return source;
+	return src_actor;
 }
 Actor * Edge::getSink() {
-	return sink;
+	return snk_actor;
 }
 void Edge::setSourceRate(int r) {
 	src_rate = r;

@@ -33,8 +33,8 @@ namespace df {
      private:
 	std::string name; /**< Edge name */
 	bool visited; /**< Boolean to check the edge is visited in dfs algorithm. */
-	Actor * source; /**< Source actor of the edge */
-	Actor * sink; /**< Sink actor of the edge */
+	Actor * src_actor; /**< Source actor of the edge */
+	Actor * snk_actor; /**< Sink actor of the edge */
 
 	Port * src_port; /**< Source port of the edge */
 	Port * snk_port; /**< Sink port of the edge */

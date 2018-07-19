@@ -35,11 +35,15 @@ class Edge {
 private:
 	string name; /**< Edge name */
 	bool visited; /**< Boolean to check the edge is visited in dfs algorithm. */
-	Port * source; /**< Source port of the edge */
-	Port * sink; /**< Sink port of the edge */
+	Port * src_port; /**< Source port of the edge */
+	Port * snk_port; /**< Sink port of the edge */
 
 	Actor * src_actor;
 	Actor * snk_actor;
+
+	int src_rate;
+	int snk_rate;
+
 public:
 	/*!
 	 * Edge constructor
