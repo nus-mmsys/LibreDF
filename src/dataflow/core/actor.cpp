@@ -34,7 +34,7 @@ std::string Actor::getName() {
 }
 void Actor::log(std::string msg) {
   dataflowlock->lock(); 
-  std::cout << name << ": " << msg << std::endl;
+  std::cout << name << ": [" << to_string(now()) << "] " << msg << std::endl;
   dataflowlock->unlock();
 }
 void Actor::sleep(int s) {
@@ -272,6 +272,12 @@ void Actor::start() {
 void Actor::end(std::string msg) { 
 	tend = clock();
 	log(msg+" exect = "+std::to_string(double(tend - tstart)/CLOCKS_PER_SEC)); 
+}
+
+int Actor::now() {
+  std::chrono::high_resolution_clock::time_point p = std::chrono::high_resolution_clock::now();
+  std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(p.time_since_epoch());
+  return ms.count();
 }
 
 Actor::~Actor() { 

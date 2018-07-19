@@ -81,7 +81,7 @@ namespace df {
     void hend(std::string msg); 
     void start();
     void end(std::string msg); 
-
+    int now();
     /*!
      * Actor constructor
      * \param name
