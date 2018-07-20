@@ -305,9 +305,11 @@ void Dataflow::run() {
     std::cout << "Dataflow is not ready to run." << endl;
     return;
   }
-  
+ 
+  int cpuid = 0; 
   for (auto f : actors) {
-    f.second->startRun();
+    f.second->startRun(cpuid);
+    cpuid = (cpuid + 1) % CPUNB;
   }
   
   status = DataflowStatus::RUNNING;

@@ -331,7 +331,7 @@ namespace df {
     
     void startInit();
     
-    void startRun();
+    void startRun(int cpu);
     
     void waitInit();
     
