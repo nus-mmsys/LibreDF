@@ -33,8 +33,10 @@ std::string Actor::getName() {
 	return name;
 }
 void Actor::log(std::string msg) {
+  GETCPU(cpuid);
+  string s = name + ": [" + to_string(now()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
   dataflowlock->lock(); 
-  std::cout << name << ": [" << to_string(now()) << "] " << msg << std::endl;
+  std::cout << s;
   dataflowlock->unlock();
 }
 void Actor::sleep(int s) {
