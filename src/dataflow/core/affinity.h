@@ -19,6 +19,8 @@
 #ifndef DF_AFFINITY_H_
 #define DF_AFFINITY_H_
 
+#include <pthread.h>
+
 #ifdef __linux__
   #include <sched.h>
 
@@ -28,16 +30,15 @@
 
 #elif __APPLE__
 
-  #define SYSCTL_CORE_COUNT "machdep.cpu.core_count"
-
   #include <cstdint>
   #include <sys/types.h>
   #include <sys/sysctl.h>
   #include <mach/mach_types.h>
   #include <mach/thread_act.h>
-  #include <pthread.h>
   #include <cpuid.h>
 
+  #define SYSCTL_CORE_COUNT "machdep.cpu.core_count"
+  
   #define CPUID(INFO, LEAF, SUBLEAF) __cpuid_count(LEAF, SUBLEAF, INFO[0], INFO[1], INFO[2], INFO[3])
 
   #define GETCPU(CPU) {                              \
@@ -70,7 +71,7 @@
 	return (cs->count & (1 << num));
   }
 
-  inline int getaffinity(pid_t pid, size_t cpu_size, cpu_set_t *cpu_set) {
+  inline int sched_getaffinity(pid_t pid, size_t cpu_size, cpu_set_t *cpu_set) {
 	int32_t core_count = 0;
 	size_t len = sizeof(core_count);
 	int ret = sysctlbyname(SYSCTL_CORE_COUNT, &core_count, &len, 0, 0);
@@ -85,7 +86,7 @@
 	return 0;
   }
  
-  inline int setaffinity(pthread_t thread, size_t cpu_size, cpu_set_t *cpu_set) {
+  inline int pthread_setaffinity_np(pthread_t thread, size_t cpu_size, cpu_set_t *cpu_set) {
 	thread_port_t mach_thread;
 	int core = 0;
 
