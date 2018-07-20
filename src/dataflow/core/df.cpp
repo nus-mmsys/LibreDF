@@ -106,12 +106,12 @@ Actor * Dataflow::createRemoteActor(const std::string& name) {
 }
 
 void Dataflow::addActor(Actor * f) {
-  f->setPipeLock(&io_lock);
+  f->setIOLock(&iolock);
   actors.insert(std::make_pair(f->getName(), f));
 }
 
 void Dataflow::addRemoteActor(Actor * f) {
-  f->setPipeLock(&io_lock);
+  f->setIOLock(&iolock);
   remoteactors.insert(std::make_pair(f->getName(), f));
 }
 

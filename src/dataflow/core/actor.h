@@ -47,7 +47,7 @@ namespace df {
     	  
     std::thread tinit;
     std::thread trun;
-    std::mutex * dataflowlock;
+    std::mutex * iolock;
 
     Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
     
@@ -311,7 +311,7 @@ namespace df {
     
     void waitRun();
     
-    void setPipeLock(std::mutex * mux);
+    void setIOLock(std::mutex * mux);
     
     template <typename T>
     InputPort<T> * createInputPort(std::string name) {

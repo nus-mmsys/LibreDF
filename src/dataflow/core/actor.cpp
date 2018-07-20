@@ -35,9 +35,9 @@ std::string Actor::getName() {
 void Actor::log(std::string msg) {
   GETCPU(cpuid);
   string s = name + ": [" + to_string(now()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
-  dataflowlock->lock(); 
+  iolock->lock(); 
   std::cout << s;
-  dataflowlock->unlock();
+  iolock->unlock();
 }
 void Actor::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
@@ -208,8 +208,8 @@ void Actor::waitRun() {
 
 }
 
-void Actor::setPipeLock(mutex * mux) {
-  dataflowlock = mux;
+void Actor::setIOLock(mutex * mux) {
+  iolock = mux;
 }
 
 void Actor::initActor() {

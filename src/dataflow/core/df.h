@@ -55,7 +55,7 @@ namespace df {
   private:
 
     std::thread tdisc;
-    std::mutex io_lock;
+    std::mutex iolock;
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
     std::map<std::string, Actor *> actors; /**< The set of all actors in the dataflow. */
