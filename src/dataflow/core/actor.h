@@ -19,6 +19,7 @@
 #ifndef DF_ACTOR_H_
 #define DF_ACTOR_H_
 
+#include "affinity.h"
 #include "property.h"
 #include "port.h"
 #include "input_port.h"
