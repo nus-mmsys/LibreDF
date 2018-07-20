@@ -305,11 +305,12 @@ void Dataflow::run() {
     std::cout << "Dataflow is not ready to run." << endl;
     return;
   }
- 
+
+  int cpunb = std::thread::hardware_concurrency();
   int cpuid = 0; 
   for (auto f : actors) {
     f.second->startRun(cpuid);
-    cpuid = (cpuid + 1) % CPUNB;
+    cpuid = (cpuid + 1) % cpunb;
   }
   
   status = DataflowStatus::RUNNING;

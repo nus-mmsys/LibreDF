@@ -31,8 +31,6 @@
 #include "server_socket.h"
 #include "client_socket.h"
 
-#define CPUNB 8
-
 namespace df {
   
   /*!
