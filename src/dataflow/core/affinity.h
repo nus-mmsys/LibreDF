@@ -25,7 +25,7 @@
   #include <sched.h>
 
   #define GETCPU(CPU) { \
-	CPU = -1; /* CPU = sched_getcpu(); */ \
+	 CPU = sched_getcpu(); \
   }
 
 #elif __APPLE__

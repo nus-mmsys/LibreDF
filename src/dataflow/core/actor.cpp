@@ -181,7 +181,6 @@ void Actor::startRun(int cpu) {
 
   trun = thread(&Actor::runActor, this);
  
-  /* 
   cpu_set_t cpuset;
   CPU_ZERO(&cpuset);
   CPU_SET(cpu, &cpuset);
@@ -189,7 +188,6 @@ void Actor::startRun(int cpu) {
   int rc = pthread_setaffinity_np(trun.native_handle(), sizeof(cpu_set_t), &cpuset);
   if (rc != 0)
 	  log("error calling pthread_setaffinity_np");
-  */
 
 }
 
@@ -288,10 +286,8 @@ void Actor::end(std::string msg) {
 	log(msg+" exect = "+std::to_string(double(tend - tstart)/CLOCKS_PER_SEC)); 
 }
 
-int Actor::now() {
-  std::chrono::high_resolution_clock::time_point p = std::chrono::high_resolution_clock::now();
-  std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(p.time_since_epoch());
-  return ms.count();
+unsigned long Actor::now() {
+  return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
 Actor::~Actor() { 
