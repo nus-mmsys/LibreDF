@@ -49,9 +49,10 @@
         if (CPU < 0) CPU = 0;                          \
       }
 #elif __linux__
-
+   
+  /* #include <sched.h> */
   #define GETCPU(CPU) { \
-	CPU = -1; \
+	CPU = -1; /* CPU = sched_getcpu(); */ \
   }
 
 #endif
