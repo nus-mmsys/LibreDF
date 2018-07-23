@@ -64,7 +64,7 @@
 	return (cs->count & (1 << num));
   }
 
-  inline int sched_getaffinity(pid_t pid, size_t cpu_size, cpu_set_t *cpu_set) {
+  static int sched_getaffinity(pid_t pid, size_t cpu_size, cpu_set_t *cpu_set) {
 	int32_t core_count = 0;
 	size_t len = sizeof(core_count);
 	int ret = sysctlbyname(SYSCTL_CORE_COUNT, &core_count, &len, 0, 0);
@@ -79,7 +79,7 @@
 	return 0;
   }
  
-  inline int pthread_setaffinity_np(pthread_t thread, size_t cpu_size, cpu_set_t *cpu_set) {
+  static int pthread_setaffinity_np(pthread_t thread, size_t cpu_size, cpu_set_t *cpu_set) {
 	thread_port_t mach_thread;
 	int core = 0;
 
