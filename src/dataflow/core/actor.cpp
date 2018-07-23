@@ -33,7 +33,7 @@ std::string Actor::getName() {
 	return name;
 }
 void Actor::log(std::string msg) {
-  GETCPU(cpuid);
+  cpuid = sched_getcpu();
   string s = name + ": [" + to_string(stepno) + "] [" + to_string(now()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
   iolock->lock(); 
   std::cout << s;
