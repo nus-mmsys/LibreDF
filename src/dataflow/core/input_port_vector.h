@@ -33,12 +33,28 @@ namespace df {
   class InputPortVector: public PortVector {
     
   private:
+    std::vector<InputPort<T> *> inputs;
 
   public:
 	  
     InputPortVector<T>(std::string name) : PortVector(name) {
     }
     
+    int arity() {
+	    return inputs.size();
+    }
+
+    InputPort<T> * at(int i) {
+	    return inputs[i];
+    }
+
+    void setArity(int r) {
+	for (int i=0; i<r; i++) {
+		InputPort<T> * in = new InputPort<T>(name+std::to_string(i));
+		inputs.push_back(in);
+	}
+    }
+
     virtual ~InputPortVector() {
     }
     

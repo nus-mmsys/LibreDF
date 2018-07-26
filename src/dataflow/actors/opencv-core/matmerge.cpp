@@ -30,6 +30,15 @@ MatMerge::MatMerge(const string& name) : Actor(name) {
 
 void MatMerge::init() {
 
+  if (propEmpty("level"))
+	  level = 2;
+  else
+	  level = getPropInt("level");
+
+  tilew = 0;
+  tileh = 0;
+
+  input->setArity(level * level);
 
 }
 
