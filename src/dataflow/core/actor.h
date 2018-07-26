@@ -417,6 +417,17 @@ namespace df {
 	    port->unlock();
     }
 
+    template<typename T>
+    void release(OutputPortVector<T> * port) {
+      
+      for (int i=0; i<port->arity(); i++) {
+      	if (distributed)
+	    port->at(i)->send();
+      	else
+	    port->at(i)->unlock();
+      }
+    }
+
     void listen(Port * port); 
 
     void destroyPort(Port * port) {

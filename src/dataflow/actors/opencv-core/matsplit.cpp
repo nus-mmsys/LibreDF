@@ -61,7 +61,7 @@ void MatSplit::run() {
 
   log("sending "+to_string(stepno));
   release(input);
-  //release(output);
+  release(output);
 
 }
 
