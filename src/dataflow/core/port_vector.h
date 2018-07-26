@@ -16,41 +16,36 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_OUTPUTPORT_VECTOR_H
-#define DF_OUTPUTPORT_VECTOR_H
+#ifndef DF_PORT_VECTOR_H_
+#define DF_PORT_VECTOR_H_
 
-#include "output_port.h"
-#include "port_vector.h"
+#include "port.h"
 
 namespace df {
   
   /*!
-   * \class OutputPortVector
-   *
+   * \class Port
+   * Abstraction of a port in a actor.
+   * A port can be either input port of output port.
    */
   
-  template <typename T>
-  class OutputPortVector : public PortVector {
-    
-  private:
-    std::vector<OutputPort<T> *> outputs;
+  class PortVector : public Port {
 
   public:
     
-    OutputPortVector<T>(const std::string & name) : PortVector(name) {
-    }
-
-    void setArity(int r) {
-	for (int i=0; i<r; i++) {
-		OutputPort<T> * out = new OutputPort<T>(name+std::to_string(i));
-		outputs.push_back(out);
-	}
-    }
-
-    virtual ~OutputPortVector<T>() {
-    }
-
+    /*!
+     * PortiVector constructor
+     *
+     * \param name The name of the actor.
+     */
+    PortVector(std::string name);
+   
+    /*!
+     * Port descructor
+     *
+     */
+    virtual ~PortVector() {}
   };
   
 }
-#endif // DF_OUTPUTPORT_VECTOR_H
+#endif /* DF_PORT_VECTOR_H_ */

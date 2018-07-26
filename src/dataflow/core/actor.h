@@ -73,8 +73,8 @@ namespace df {
     std::map<std::string, Port*>inputPorts; /**< Map of input ports referenced by their name  */
     std::map<std::string, Port*> outputPorts; /**< Map of output ports referenced by their name */
 
-    std::map<std::string, Port*> inputPortVectors; /**< Map of input port vectors referenced by their name  */
-    std::map<std::string, Port*> outputPortVectors; /**< Map of output port vectors referenced by their name */
+    std::map<std::string, PortVector*> inputPortVectors; /**< Map of input port vectors referenced by their name  */
+    std::map<std::string, PortVector*> outputPortVectors; /**< Map of output port vectors referenced by their name */
 
     bool distributed, realtime;
     Status status; 

@@ -20,6 +20,7 @@
 #define DF_INPUTPORT_VECTOR_H
 
 #include "input_port.h"
+#include "port_vector.h"
 
 namespace df {
   
@@ -29,13 +30,13 @@ namespace df {
    */
   
   template <typename T>
-  class InputPortVector: public InputPort<T> {
+  class InputPortVector: public PortVector {
     
   private:
 
   public:
 	  
-    InputPortVector<T>(std::string name) : InputPort<T>(name) {
+    InputPortVector<T>(std::string name) : PortVector(name) {
     }
     
     virtual ~InputPortVector() {

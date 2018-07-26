@@ -38,7 +38,7 @@ void MatSplit::init() {
   tilew = 0;
   tileh = 0;
 
-  //output->setArity(level * level);
+  output->setArity(level * level);
 
 }
 
@@ -67,5 +67,5 @@ void MatSplit::run() {
 
 MatSplit::~MatSplit() {
   destroyPort(input);
-  destroyPort(output);
+  //destroyPort(output);
 }

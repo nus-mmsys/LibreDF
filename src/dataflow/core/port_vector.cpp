@@ -16,41 +16,10 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_OUTPUTPORT_VECTOR_H
-#define DF_OUTPUTPORT_VECTOR_H
-
-#include "output_port.h"
 #include "port_vector.h"
 
-namespace df {
-  
-  /*!
-   * \class OutputPortVector
-   *
-   */
-  
-  template <typename T>
-  class OutputPortVector : public PortVector {
-    
-  private:
-    std::vector<OutputPort<T> *> outputs;
+using namespace df;
+using namespace std;
 
-  public:
-    
-    OutputPortVector<T>(const std::string & name) : PortVector(name) {
-    }
-
-    void setArity(int r) {
-	for (int i=0; i<r; i++) {
-		OutputPort<T> * out = new OutputPort<T>(name+std::to_string(i));
-		outputs.push_back(out);
-	}
-    }
-
-    virtual ~OutputPortVector<T>() {
-    }
-
-  };
-  
+PortVector::PortVector(string name) : Port(name) {
 }
-#endif // DF_OUTPUTPORT_VECTOR_H
