@@ -38,6 +38,8 @@ void MatSplit::init() {
   tilew = 0;
   tileh = 0;
 
+  //output->setArity(level * level);
+
 }
 
 void MatSplit::run() {
@@ -54,7 +56,7 @@ void MatSplit::run() {
 	  cv::Rect tile(level * tilew,
 			level * tileh,
 			tilew, tileh);
-  	  //in->data(tile).copyTo(out->data[i]);
+  	  //in->get()(tile).copyTo(out->get(i));
   }
 
   log("sending "+to_string(stepno));
