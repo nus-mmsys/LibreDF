@@ -56,7 +56,7 @@ void MatSplit::run() {
 	  cv::Rect tile(level * tilew,
 			level * tileh,
 			tilew, tileh);
-  	  //in->get()(tile).copyTo(out->get(i));
+  	  out[i]->set(in->crop(tile));
   }
 
   log("sending "+to_string(stepno));

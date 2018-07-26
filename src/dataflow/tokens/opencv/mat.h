@@ -60,6 +60,10 @@ namespace df {
 	return data->clone();
     }
 
+    cv::Mat crop(const cv::Rect & tile) {
+	return (*data)(tile);
+    }
+
     virtual int data_size() {
 	return calcMatSize() + 3*sizeof(int);
     }
