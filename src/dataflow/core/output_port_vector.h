@@ -40,6 +40,14 @@ namespace df {
     OutputPortVector<T>(const std::string & name) : PortVector(name) {
     }
 
+    int arity() {
+	    return outputs.size();
+    }
+
+    OutputPort<T> * at(int i) {
+	    return outputs[i];
+    }
+
     void setArity(int r) {
 	for (int i=0; i<r; i++) {
 		OutputPort<T> * out = new OutputPort<T>(name+std::to_string(i));

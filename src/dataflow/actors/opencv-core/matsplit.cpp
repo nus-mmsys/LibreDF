@@ -45,7 +45,7 @@ void MatSplit::init() {
 void MatSplit::run() {
 
   auto in = consume(input);	
-  //auto out = produce(output);
+  auto out = produce(output);
  
   if (tilew == 0 || tileh == 0) { 
   	tilew = in->get()->cols / level;

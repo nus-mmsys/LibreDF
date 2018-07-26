@@ -377,6 +377,24 @@ namespace df {
     }
 
     template<typename T>
+    std::vector<T *> produce(OutputPortVector<T> * port) {
+	std::vector<T *> res;
+	for (int i=0; i<port->arity(); i++) {
+	    T * token = nullptr;
+	    if (distributed) {
+		token = port->at(i)->getSocketData();
+		token->setStatus(getStatus());
+	    } else {
+        	port->at(i)->lock();
+        	port->at(i)->setStatus(getStatus());
+        	token = port->at(i)->get();
+      	    }
+	    res.push_back(token);
+    	}
+	return res;
+    }
+
+    template<typename T>
     void setEos(OutputPort<T> * port) {
       setStatus(EOS);
       if (distributed)
