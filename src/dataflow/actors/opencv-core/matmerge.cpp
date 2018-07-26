@@ -56,7 +56,7 @@ void MatMerge::run() {
 	  cv::Rect tile(level * tilew,
 			level * tileh,
 			tilew, tileh);
-  	  //out->set_tile(tile, in->get());
+  	  out->set_view(tile, in[i]->get());
   }
 
   log("sending "+to_string(stepno));

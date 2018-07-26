@@ -56,6 +56,10 @@ namespace df {
 	*data = d.clone();
     }
 
+    void set_view(const cv::Rect& t, const cv::Mat * m) {
+	(*data)(t) = m->clone();
+    }
+
     virtual cv::Mat clone() {
 	return data->clone();
     }
