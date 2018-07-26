@@ -36,7 +36,10 @@ private:
   cv::Mat frame;
   df::InputPort<df::Mat> * input;
   df::OutputPortVector<df::Mat> * output;
- 
+
+  int level;
+  int tilew, tileh;
+
   static  df::ActorRegister<MatSplit> reg;
 public:
   

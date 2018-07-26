@@ -30,6 +30,13 @@ MatSplit::MatSplit(const string& name) : Actor(name) {
 
 void MatSplit::init() {
 
+  if (propEmpty("level"))
+	  level = 2;
+  else
+	  level = getPropInt("level");
+
+  tilew = 0;
+  tileh = 0;
 
 }
 
@@ -37,6 +44,19 @@ void MatSplit::run() {
 
   auto in = consume(input);	
   //auto out = produce(output);
+ 
+  if (tilew == 0 || tileh == 0) { 
+  	tilew = in->get()->cols / level;
+  	tileh = in->get()->rows / level;
+  }
+
+  for (int i=0; i < level*level ; i++) {
+	  cv::Rect tile(level * tilew,
+			level * tileh,
+			tilew, tileh);
+  	  //in->data(tile).copyTo(out->data[i]);
+  }
+
   log("sending "+to_string(stepno));
   release(input);
   //release(output);
