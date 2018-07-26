@@ -67,5 +67,5 @@ void MatSplit::run() {
 
 MatSplit::~MatSplit() {
   destroyPort(input);
-  //destroyPort(output);
+  destroyPort(output);
 }

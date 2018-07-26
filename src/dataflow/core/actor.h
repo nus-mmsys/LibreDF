@@ -433,6 +433,11 @@ namespace df {
     void destroyPort(Port * port) {
       delete port;
     }
+
+    void destroyPort(PortVector * port) {
+      delete port;
+    }
+
     /*!
      * Destructor of the actor.
      */
