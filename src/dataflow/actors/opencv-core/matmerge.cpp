@@ -44,10 +44,23 @@ void MatMerge::init() {
 
 void MatMerge::run() {
 
-  //auto in = consume(input);	
+  auto in = consume(input);	
   auto out = produce(output);
+ 
+  if (tilew == 0 || tileh == 0) { 
+  	tilew = in[0]->get()->cols;
+  	tileh = in[0]->get()->rows;
+  }
+
+  for (int i=0; i < level*level ; i++) {
+	  cv::Rect tile(level * tilew,
+			level * tileh,
+			tilew, tileh);
+  	  //out->set_tile(tile, in->get());
+  }
+
   log("sending "+to_string(stepno));
-  //release(input);
+  release(input);
   release(output);
 
 }

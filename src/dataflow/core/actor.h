@@ -363,6 +363,26 @@ namespace df {
     }
 
     template<typename T>
+    std::vector<T *> consume(InputPortVector<T> * port) {
+      std::vector<T *> res;
+      T * token = nullptr;  
+      for (int i=0; i<port->arity(); i++) {
+        if (distributed) {
+	  token = port->at(i)->recv();
+	  if (token == nullptr)
+	  	  log("cannot recieve on port "+port->at(i)->getName());
+	  setStatus(token->getStatus());
+        } else {
+	  port->at(i)->lock();
+	  setStatus(port->at(i)->getStatus());
+          token = port->at(i)->get();
+        }
+	res.push_back(token);
+      }
+      return res;
+    }
+
+    template<typename T>
     T * produce(OutputPort<T> * port) {
       if (distributed) {
 	T * res = port->getSocketData();
@@ -379,8 +399,9 @@ namespace df {
     template<typename T>
     std::vector<T *> produce(OutputPortVector<T> * port) {
 	std::vector<T *> res;
+	T * token = nullptr;
 	for (int i=0; i<port->arity(); i++) {
-	    T * token = nullptr;
+	    token = nullptr;
 	    if (distributed) {
 		token = port->at(i)->getSocketData();
 		token->setStatus(getStatus());
@@ -408,7 +429,15 @@ namespace df {
       if (!distributed)
 	    port->unlock();
     }
-   
+ 
+    template<typename T>
+    void release(InputPortVector<T> * port) {
+      for (int i=0; i<port->arity(); i++) {
+      	if (!distributed)
+		    port->at(i)->unlock();
+      }
+    }
+  
     template<typename T>
     void release(OutputPort<T> * port) {
       if (distributed)
