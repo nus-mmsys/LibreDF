@@ -25,7 +25,7 @@ ActorRegister<MatSplit> MatSplit::reg("MatSplit");
 
 MatSplit::MatSplit(const string& name) : Actor(name) {
   input = createInputPort<df::Mat>("input");
-  output = createOutputPort<df::Mat>("output");
+  //output = createOutputPortVector<df::Mat>("output");
 }
 
 void MatSplit::init() {
@@ -36,10 +36,10 @@ void MatSplit::init() {
 void MatSplit::run() {
 
   auto in = consume(input);	
-  auto out = produce(output);
+  //auto out = produce(output);
   log("sending "+to_string(stepno));
   release(input);
-  release(output);
+  //release(output);
 
 }
 

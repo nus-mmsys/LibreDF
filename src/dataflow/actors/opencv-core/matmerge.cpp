@@ -24,7 +24,7 @@ using namespace std;
 ActorRegister<MatMerge> MatMerge::reg("MatMerge");
 
 MatMerge::MatMerge(const string& name) : Actor(name) {
-  input = createInputPort<df::Mat>("input");
+  //input = createInputPortVector<df::Mat>("input");
   output = createOutputPort<df::Mat>("output");
 }
 
@@ -35,10 +35,10 @@ void MatMerge::init() {
 
 void MatMerge::run() {
 
-  auto in = consume(input);	
+  //auto in = consume(input);	
   auto out = produce(output);
   log("sending "+to_string(stepno));
-  release(input);
+  //release(input);
   release(output);
 
 }

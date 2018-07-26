@@ -16,38 +16,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_MATMERGE_H_
-#define DF_MATMERGE_H_
+#include "output_port_vector.h"
 
-#include "core/df.h"
-#include "tokens/opencv/mat.h"
-
-#include <opencv2/core/core.hpp>
-
-#include <iostream>
-#include <string>
-
-using namespace std;
-
-class MatMerge: public df::Actor {
-  
-private:
-
-  cv::Mat frame;
-  df::InputPortVector<df::Mat> * input;
-  df::OutputPort<df::Mat> * output;
- 
-  static  df::ActorRegister<MatMerge> reg;
-public:
-  
-  MatMerge(const string& name);
-  
-  virtual void init();
-  
-  virtual void run();
-  
-  virtual ~MatMerge();
-  
-};
-
-#endif /* DF_MATMERGE_H_ */
+using namespace df;
+/* All declaration of the template class are in the header file */

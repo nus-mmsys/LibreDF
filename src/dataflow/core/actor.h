@@ -24,6 +24,8 @@
 #include "port.h"
 #include "input_port.h"
 #include "output_port.h"
+#include "input_port_vector.h"
+#include "output_port_vector.h"
 
 #include <vector>
 #include <map>

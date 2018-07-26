@@ -35,7 +35,7 @@ private:
 
   cv::Mat frame;
   df::InputPort<df::Mat> * input;
-  df::OutputPort<df::Mat> * output;
+  df::OutputPortVector<df::Mat> * output;
  
   static  df::ActorRegister<MatSplit> reg;
 public:

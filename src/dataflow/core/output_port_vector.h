@@ -16,38 +16,33 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_MATMERGE_H_
-#define DF_MATMERGE_H_
+#ifndef DF_OUTPUTPORT_VECTOR_H
+#define DF_OUTPUTPORT_VECTOR_H
 
-#include "core/df.h"
-#include "tokens/opencv/mat.h"
+#include "output_port.h"
 
-#include <opencv2/core/core.hpp>
-
-#include <iostream>
-#include <string>
-
-using namespace std;
-
-class MatMerge: public df::Actor {
+namespace df {
   
-private:
+  /*!
+   * \class OutputPortVector
+   *
+   */
+  
+  template <typename T>
+  class OutputPortVector: public OutputPort<T> {
+    
+    
+  private:
 
-  cv::Mat frame;
-  df::InputPortVector<df::Mat> * input;
-  df::OutputPort<df::Mat> * output;
- 
-  static  df::ActorRegister<MatMerge> reg;
-public:
-  
-  MatMerge(const string& name);
-  
-  virtual void init();
-  
-  virtual void run();
-  
-  virtual ~MatMerge();
-  
-};
+  public:
+    
+    OutputPortVector<T>(std::string name) : OutputPort<T>(name) {
+    }
 
-#endif /* DF_MATMERGE_H_ */
+    virtual ~OutputPortVector<T>() {
+    }
+
+  };
+  
+}
+#endif // DF_OUTPUTPORT_VECTOR_H
