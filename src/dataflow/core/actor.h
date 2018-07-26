@@ -73,6 +73,9 @@ namespace df {
     std::map<std::string, Port*>inputPorts; /**< Map of input ports referenced by their name  */
     std::map<std::string, Port*> outputPorts; /**< Map of output ports referenced by their name */
 
+    std::map<std::string, Port*> inputPortVectors; /**< Map of input port vectors referenced by their name  */
+    std::map<std::string, Port*> outputPortVectors; /**< Map of output port vectors referenced by their name */
+
     bool distributed, realtime;
     Status status; 
     std::mutex status_mux;
@@ -323,9 +326,23 @@ namespace df {
     }
 
     template <typename T>
+    InputPortVector<T> * createInputPortVector(std::string name) {
+      InputPortVector<T> * res = new InputPortVector<T>(name);
+      this->inputPortVectors.insert(std::make_pair(name, res));
+      return res;
+    }
+
+    template <typename T>
     OutputPort<T> * createOutputPort(std::string name) {
       OutputPort<T> * res = new OutputPort<T>(name);
       this->outputPorts.insert(std::make_pair(name, res));
+      return res;
+    }
+
+    template <typename T>
+    OutputPortVector<T> * createOutputPortVector(std::string name) {
+      OutputPortVector<T> * res = new OutputPortVector<T>(name);
+      this->outputPortVectors.insert(std::make_pair(name, res));
       return res;
     }
 

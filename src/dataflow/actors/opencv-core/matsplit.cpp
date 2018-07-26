@@ -25,7 +25,7 @@ ActorRegister<MatSplit> MatSplit::reg("MatSplit");
 
 MatSplit::MatSplit(const string& name) : Actor(name) {
   input = createInputPort<df::Mat>("input");
-  //output = createOutputPortVector<df::Mat>("output");
+  output = createOutputPortVector<df::Mat>("output");
 }
 
 void MatSplit::init() {
