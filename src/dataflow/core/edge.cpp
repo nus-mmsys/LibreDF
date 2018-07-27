@@ -63,6 +63,14 @@ void Edge::setSourceRate(int r) {
 void Edge::setSinkRate(int r) {
 	snk_rate = r;
 }
+
+void Edge::setSourcePort(std::string p) {
+	src_port = p;
+}
+void Edge::setSinkPort(std::string p) {
+	snk_port = p;
+}
+
 int Edge::getSourceRate() {
 	return src_rate;
 }

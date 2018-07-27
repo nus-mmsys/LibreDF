@@ -36,8 +36,8 @@ namespace df {
 	Actor * src_actor; /**< Source actor of the edge */
 	Actor * snk_actor; /**< Sink actor of the edge */
 
-	Port * src_port; /**< Source port of the edge */
-	Port * snk_port; /**< Sink port of the edge */
+	std::string src_port; /**< Source port of the edge */
+	std::string snk_port; /**< Sink port of the edge */
 	
 	int src_rate;
 	int snk_rate;
@@ -139,6 +139,24 @@ namespace df {
 	 */
 	void setSinkRate(int rate);
 	
+	/*!
+	 * Set source port of the edge.
+	 *
+	 * \param p
+	 * 	The source port to set.
+	 *
+	 */
+	void setSourcePort(std::string p);
+	
+	/*!
+	 * Set sink port of the edge.
+	 *
+	 * \param p
+	 * 	The sink port to set.
+	 *
+	 */
+	void setSinkPort(std::string p);
+
 	/*!
 	 * Get source rate of the edge.
 	 *

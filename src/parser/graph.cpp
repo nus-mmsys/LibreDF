@@ -449,6 +449,12 @@ int Graph::get_source_rate(string edgename) {
 	return edges[edgename]->get_source_rate();
 }
 
+string Graph::get_source_port(string edgename) { 
+	if (edges.find(edgename) == edges.end())
+		return "";
+	return edges[edgename]->get_source_port();
+}
+
 string Graph::get_source_name(string edgename) { 
 	if (edges.find(edgename) == edges.end())
 		return "";
@@ -472,6 +478,12 @@ int Graph::get_sink_rate(string edgename) {
 	if (edges.find(edgename) == edges.end())
 		return -1;
 	return edges[edgename]->get_sink_rate();
+}
+
+string Graph::get_sink_port(string edgename) { 
+	if (edges.find(edgename) == edges.end())
+		return "";
+	return edges[edgename]->get_sink_port();
 }
 
 string Graph::get_sink_name(string edgename) { 

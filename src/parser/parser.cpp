@@ -539,6 +539,8 @@ df::Dataflow * Parser::get_dataflow() {
 		df::Edge * e = res->createEdge(edname, srcname, snkname);
 		e->setSourceRate(graph->get_source_rate(edname));
 		e->setSinkRate(graph->get_sink_rate(edname));
+		e->setSourcePort(graph->get_source_port(edname));
+		e->setSinkPort(graph->get_sink_port(edname));
 	}	
 
 	return res;

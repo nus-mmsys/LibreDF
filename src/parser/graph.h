@@ -439,6 +439,30 @@ public:
 	 *
 	 */
 	int set_sink_rate(string edgename, int rate);
+	
+	/*!
+	 * Get the source port of a given edge.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \return
+	 *	Source port of the edge.
+	 *
+	 */
+	std::string get_source_port(string edgename);
+	
+	/*!
+	 * Get the sink port of a given edge.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \return
+	 *	Sink port of the edge.
+	 *
+	 */
+	std::string get_sink_port(string edgename);
 
 	/*!
 	 * Get the source name of a given edge.
