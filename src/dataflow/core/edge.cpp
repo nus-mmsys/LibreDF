@@ -25,8 +25,8 @@ Edge::Edge() {
 	visited = false;
 	src_actor = nullptr;
 	snk_actor = nullptr;
-	src_port = nullptr;
-	snk_port = nullptr;
+	src_port = "";
+	snk_port = "";
 	src_rate = 1;
 	snk_rate = 1;
 }
@@ -69,6 +69,13 @@ void Edge::setSourcePort(std::string p) {
 }
 void Edge::setSinkPort(std::string p) {
 	snk_port = p;
+}
+
+std::string Edge::getSourcePort() {
+	return src_port;
+}
+std::string Edge::getSinkPort() {
+	return snk_port;
 }
 
 int Edge::getSourceRate() {
