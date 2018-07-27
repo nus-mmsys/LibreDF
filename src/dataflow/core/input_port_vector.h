@@ -50,7 +50,7 @@ namespace df {
 
     void setArity(int r) {
 	for (int i=0; i<r; i++) {
-		InputPort<T> * in = new InputPort<T>(name+std::to_string(i));
+		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i));
 		inputs.push_back(in);
 	}
     }

@@ -60,13 +60,12 @@ std::string Actor::edge2OutputPort(std::string edgename, int & index) {
   string portname = prop.getKey(edgename);
   index = -1;
 
-  auto bs = portname.find('[');
-  auto be = portname.find(']'); 
-  if (bs != std::string::npos && be != std::string::npos) {
+  auto bs = portname.find('.');
+  if (bs != std::string::npos) {
 	string portindex = portname;
         portname = portindex.substr(0,bs);
 	try {
-		index = stoi(portindex.substr(bs+1,be-bs-1));
+		index = stoi(portindex.substr(bs+1,portname.size()-bs-1));
 	} catch(...) {
 		log("cannot parse "+portindex);
 		return "";

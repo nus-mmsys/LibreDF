@@ -320,6 +320,10 @@ namespace df {
     
     template <typename T>
     InputPort<T> * createInputPort(std::string name) {
+      if (name.find(".") != std::string::npos) {
+	      std::cerr << "port name " << name << " is not valid.\n";
+	      return nullptr;
+      } 
       InputPort<T> * res = new InputPort<T>(name);
       this->inputPorts.insert(std::make_pair(name, res));
       return res;
@@ -327,6 +331,10 @@ namespace df {
 
     template <typename T>
     InputPortVector<T> * createInputPortVector(std::string name) {
+      if (name.find(".") != std::string::npos) {
+	      std::cerr << "port name " << name << " is not valid.\n";
+	      return nullptr;
+      } 
       InputPortVector<T> * res = new InputPortVector<T>(name);
       this->inputPortVectors.insert(std::make_pair(name, res));
       return res;
@@ -334,6 +342,10 @@ namespace df {
 
     template <typename T>
     OutputPort<T> * createOutputPort(std::string name) {
+      if (name.find(".") != std::string::npos) {
+	      std::cerr << "port name " << name << " is not valid.\n";
+	      return nullptr;
+      } 
       OutputPort<T> * res = new OutputPort<T>(name);
       this->outputPorts.insert(std::make_pair(name, res));
       return res;
@@ -341,6 +353,10 @@ namespace df {
 
     template <typename T>
     OutputPortVector<T> * createOutputPortVector(std::string name) {
+      if (name.find(".") != std::string::npos) {
+	      std::cerr << "port name " << name << " is not valid.\n";
+	      return nullptr;
+      } 
       OutputPortVector<T> * res = new OutputPortVector<T>(name);
       this->outputPortVectors.insert(std::make_pair(name, res));
       return res;
