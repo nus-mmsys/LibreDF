@@ -64,11 +64,32 @@ void Edge::setSinkRate(int r) {
 	snk_rate = r;
 }
 
-void Edge::setSourcePort(std::string p) {
-	src_port = p;
+std::string Edge::readPortName(std::string p, int & idx) {
+  std::string res;
+  auto bs = p.find('.');
+  if (bs != std::string::npos) {
+        res = p.substr(0,bs);
+	try {
+		idx = stoi(p.substr(bs+1,p.size()-bs-1));
+	} catch(...) {
+		std::cerr << "cannot parse port name "+p << std::endl;
+		idx = -1;
+	}
+  } else {
+  	res = p;
+	idx = -1;
+  }
+  return res;
 }
+
+void Edge::setSourcePort(std::string p) {
+  if (p!="")
+  	src_port = readPortName(p, src_port_idx);
+}
+
 void Edge::setSinkPort(std::string p) {
-	snk_port = p;
+  if (p!="")
+      	snk_port = readPortName(p, snk_port_idx);
 }
 
 std::string Edge::getSourcePort() {

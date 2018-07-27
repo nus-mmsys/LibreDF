@@ -87,7 +87,11 @@ Edge * Dataflow::createEdge(const std::string& name, const std::string& src,
 	Edge * e = new Edge(name);
 	
 	e->setSource(src_actor);	
-	e->setSink(snk_actor);	
+	e->setSink(snk_actor);
+
+	e->setSourcePort(src_actor->getSingleOutputPort());
+	e->setSinkPort(snk_actor->getSingleInputPort());
+			
 	edges.insert(std::make_pair(name, e));
 	return e;
 }
@@ -142,7 +146,7 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
 	int snkport;
-	string snkhost, snkportstr, outp;
+	string snkhost, snkportstr, inp, outp;
 	if (distributed) {
 
 		if (remoteactors.find(src->getName()) != remoteactors.end())
@@ -161,8 +165,9 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 		    cerr << snkportstr << " is invalid port number.\n";
 		}
 	} else {
-		//Edge to port
-		src->connectActor(snk, edge, p, c);
+		outp = edges[edge]->getSourcePort();
+		inp = edges[edge]->getSinkPort();
+		src->connectActor(snk, outp, inp, p, c);
 	}
 }
 
@@ -202,7 +207,6 @@ void Dataflow::waitDiscovery() {
 void Dataflow::discovery() {
   std::string msg, command, actorname, portname, key, val;
   char buf[1024];
-
   srvsock->accept();
   while (status != DataflowStatus::STOPPED) {
 
@@ -215,13 +219,13 @@ void Dataflow::discovery() {
     getline(ss, key);
 
     if (actors.find(actorname) == actors.end()) {
-        val = "404 : actor not found";
+        val = "actor not found";
     }
     else if (command == "actor") {
         val = actors[actorname]->getProp(key);
     }
     else if (command == "edge") {
-	portname = actors[actorname]->edge2InputPort(key);
+	portname = edges[key]->getSinkPort();
         val = actors[actorname]->getProp(portname+"_port");
     }
     else if (command == "close") {

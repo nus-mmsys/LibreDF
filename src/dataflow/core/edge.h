@@ -36,6 +36,9 @@ namespace df {
 	Actor * src_actor; /**< Source actor of the edge */
 	Actor * snk_actor; /**< Sink actor of the edge */
 
+	int src_port_idx;
+	int snk_port_idx;
+
 	std::string src_port; /**< Source port of the edge */
 	std::string snk_port; /**< Sink port of the edge */
 	
@@ -139,6 +142,8 @@ namespace df {
 	 */
 	void setSinkRate(int rate);
 	
+	std::string readPortName(std::string p, int & idx);
+
 	/*!
 	 * Set source port of the edge.
 	 *

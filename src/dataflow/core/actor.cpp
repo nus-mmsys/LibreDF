@@ -43,41 +43,15 @@ void Actor::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
 }
 
-std::string Actor::edge2InputPort(std::string edgename) {
-  string portname = prop.getKey(edgename);
-
-  if (inputPorts.find(portname) != inputPorts.end())
-    return portname;
-
-  if (inputPorts.size() == 1)
-	return inputPorts.begin()->second->getName();
-  else
+std::string Actor::getSingleInputPort() {
+	if (inputPorts.size() == 1)
+		return inputPorts.begin()->second->getName();
 	return "";
 }
 
-std::string Actor::edge2OutputPort(std::string edgename, int & index) {
-  
-  string portname = prop.getKey(edgename);
-  index = -1;
-
-  auto bs = portname.find('.');
-  if (bs != std::string::npos) {
-	string portindex = portname;
-        portname = portindex.substr(0,bs);
-	try {
-		index = stoi(portindex.substr(bs+1,portname.size()-bs-1));
-	} catch(...) {
-		log("cannot parse "+portindex);
-		return "";
-	}
-  }
-
-  if (outputPorts.find(portname) != outputPorts.end())
-    return portname;
-
-  if (outputPorts.size() == 1)
-	return outputPorts.begin()->second->getName();
-  else
+std::string Actor::getSingleOutputPort() {
+	if (outputPorts.size() == 1)
+		return outputPorts.begin()->second->getName();
 	return "";
 }
 
@@ -87,19 +61,15 @@ int Actor::connectActor(Actor * snk) {
 
 int Actor::connectActor(std::string outp, std::string host, int portnb) {
 
-  std::string p = outp;  
-  if (p == "" && outputPorts.size() == 1)
-	p = outputPorts.begin()->second->getName();
-
-  if (outputPorts.find(p) == outputPorts.end()) {
-	  log("port "+p+" is not found.");
+  if (outputPorts.find(outp) == outputPorts.end()) {
+	  log("port "+outp+" is not found.");
  	  return -1; 
   }  
 
-  if (outputPorts.find(p) == outputPorts.end())
+  if (outputPorts.find(outp) == outputPorts.end())
     return -1;
 
-  return outputPorts[p]->connectPort(host, portnb);
+  return outputPorts[outp]->connectPort(host, portnb);
 
 }
 
@@ -128,15 +98,13 @@ int Actor::connectActor(Actor * snk, int p, int c) {
   return 0;
 }
 
-int Actor::connectActor(Actor * snk, std::string edge, int p, int c) {
+int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, int c) {
 	
   Port *in, *out;
 
+  //retrieve index from outp
   int index = -1;
 
-  string outp = edge2OutputPort(edge, index);
-  string inp = snk->edge2InputPort(edge);
-  
   if (outp == "" && inp == "")
 	  return connectActor(snk, p, c);
 

@@ -210,35 +210,8 @@ namespace df {
       return prop.propEmpty(key);
     }
 
-    /*!
-     * Get the input port associated to an edge
-     *
-     * \param edgename
-     *   The name of the edge.
-     *
-     * \return 
-     * 	 The name of the associated input port.
-     */
-    std::string edge2InputPort(std::string edgename);
-
-    /*!
-     * Get the output port associated to an edge
-     *
-     * \param edgename
-     *   The name of the edge.
-     * \param index
-     *   If the associated port name is indexed, 
-     *   then the index is filled. For example if 
-     *   the associated port is "output[3]", then the
-     *   returned value is "output" and index is set 
-     *   to 3. 
-     *
-     * \return 
-     * 	 The name of the associated output port.
-     * 
-     */
-    std::string edge2OutputPort(std::string edgename, int & index);
-
+    std::string getSingleInputPort();
+    std::string getSingleOutputPort();
 
     /*!
      * Connect the port with a specified port name of this actor 
@@ -290,7 +263,7 @@ namespace df {
      * \param c
      *   The consumption rate of snk actor.
      */
-    int connectActor(Actor * snk, std::string edge, int p, int c);
+    int connectActor(Actor * snk, std::string outp, std::string inp, int p, int c);
 
     /*!
      * Execute the init of this actor.
