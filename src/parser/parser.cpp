@@ -178,10 +178,10 @@ int Parser::load_edge_ports(Graph * g) {
 		string src = e->get_source_actor()->get_name();
 		string snk = e->get_sink_actor()->get_name();
 
-		//e->set_source_port(
-		//	g->get_actor_prop_key(src, i->first));
-		//e->set_sink_port(
-		//	g->get_actor_prop_key(snk, i->first));
+		e->set_source_port(
+			g->get_actor_prop_key(src, i->first));
+		e->set_sink_port(
+			g->get_actor_prop_key(snk, i->first));
 	}
 	
 	return 0;

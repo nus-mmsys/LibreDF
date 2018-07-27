@@ -507,6 +507,13 @@ string Graph::get_actor_prop(string actname, string prop) {
 	return actors[actname]->get_prop(prop);
 }
 
+string Graph::get_actor_prop_key(string actname, string val) {
+	string res = "";
+	if (actors.find(actname) == actors.end())
+		return res;
+	return actors[actname]->get_prop_key(val);
+}
+
 map<string, string> Graph::get_graph_params() {
 	return params;
 }

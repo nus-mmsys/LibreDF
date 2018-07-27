@@ -190,6 +190,16 @@ public:
 	 * 	property value
 	 */
 	std::string get_prop(const std::string & p);
+	
+	/*!
+	 * Get a property key of the actor
+	 *
+	 * \param val
+	 * 	property value
+	 * \return
+	 * 	property key
+	 */
+	std::string get_prop_key(const std::string & val);
 
 	/*!
 	 * Get the map of all properties

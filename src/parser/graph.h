@@ -546,6 +546,22 @@ public:
 	 *
 	 */
 	string get_actor_prop(string actname, string prop);
+	
+	/*!
+	 * Get a property key of a given actor by its value.
+	 *
+	 * \param actname
+	 * 	The name of the actor.
+	 *
+	 * \param key
+	 * 	The property val.
+	 *
+	 * \return
+	 *	The key of property of the actor.
+	 *
+	 */
+	string get_actor_prop_key(string actname, string val);
+
 
 	/*!
 	 * Get the properties of the graph.

@@ -86,6 +86,14 @@ string Actor::get_prop(const string & p) {
 
 }
 
+string Actor::get_prop_key(const string & val) {
+	for (auto p : properties) {
+		if (p.second == val)
+			return p.first;
+	}
+	return "";
+}
+
 map<string, string> Actor::get_props() {
 	return properties;
 }
