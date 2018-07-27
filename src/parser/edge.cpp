@@ -21,8 +21,8 @@
 Edge::Edge() {
 	name = "";
 	visited = false;
-	src_port = nullptr;
-	snk_port = nullptr;
+	src_port = "";
+	snk_port = "";
 	src_actor = nullptr;
 	snk_actor = nullptr;
 	src_rate = 1;
@@ -37,12 +37,22 @@ string Edge::get_name() {
 	return name;
 }
 
-void Edge::connect_source(Port * sourceport) {
-	src_port = sourceport;
+void Edge::set_source_port(string src) {
+	src_port = src;
 }
-void Edge::connect_sink(Port * sinkport) {
-	snk_port = sinkport;
+
+void Edge::set_sink_port(string snk) {
+	snk_port = snk;
 }
+
+string Edge::get_source_port() {
+	return src_port;
+}
+
+string Edge::get_sink_port() {
+	return snk_port;
+}
+
 void Edge::set_visited(bool v) {
 	visited = v;
 }
@@ -67,12 +77,10 @@ void Edge::set_sink_actor(Actor * snk) {
 }
 
 void Edge::set_source_rate(int r) {
-	src_port->set_rate(r);
 	src_rate = r;
 }
 
 void Edge::set_sink_rate(int r) {
-	snk_port->set_rate(r);
 	snk_rate = r;
 }
 

@@ -18,23 +18,6 @@
 
 #include "actor.h"
 
-Port::Port() {
-	name = "";
-	rate = 1;
-}
-
-Port::Port(string portname) : Port() {
-	name = portname;
-}
-
-void Port::set_rate(int r) {
-	rate = r;
-}
-
-int Port::get_rate() {
-	return rate;
-}
-
 Actor::Actor() {
 	name = "";
 	type = "";
@@ -88,27 +71,6 @@ void Actor::set_visited(bool v) {
 bool Actor::get_visited() {
 	return visited;
 }
-
-Port * Actor::create_iport() {
-	Port * iport = new Port();
-	iports.push_back(iport);
-	return iport;
-}
-
-Port * Actor::create_oport() {
-	Port * oport = new Port();
-	oports.push_back(oport);
-	return oport;
-}
-
-int Actor::iport_size() {
-	return iports.size();
-}
-
-int Actor::oport_size() {
-	return oports.size();
-}
-
 
 void Actor::set_prop(const string & p, const string & v) {
 	properties.insert(std::make_pair(p,v));

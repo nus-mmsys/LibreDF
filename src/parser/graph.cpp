@@ -127,11 +127,6 @@ int Graph::add_edge(string edgename, string edge_source, string edge_sink) {
 	Actor * sinkactor = get_actor(edge_sink);
 	if (sinkactor == nullptr)
 		return -1;
-	Port * op = sourceactor->create_oport();
-	Port * ip = sinkactor->create_iport();
-
-	edge->connect_source(op);
-	edge->connect_sink(ip);
 
 	edge->set_source_actor(sourceactor);
 	edge->set_sink_actor(sinkactor);
@@ -167,7 +162,7 @@ vector<Edge *> Graph::get_oedges(Actor * ac) {
 vector<Actor *> Graph::findsources() {
 	vector<Actor *> sourcelist;
 	for (auto n : actors) {
-		if (n.second->iport_size() == 0) {
+		if (get_iedges(n.second).size() == 0) {
 			sourcelist.push_back(n.second);
 		}
 	}

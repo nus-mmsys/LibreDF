@@ -35,11 +35,11 @@ class Edge {
 private:
 	string name; /**< Edge name */
 	bool visited; /**< Boolean to check the edge is visited in dfs algorithm. */
-	Port * src_port; /**< Source port of the edge */
-	Port * snk_port; /**< Sink port of the edge */
-
 	Actor * src_actor;
 	Actor * snk_actor;
+
+	string src_port; /**< Source port of the edge */
+	string snk_port; /**< Sink port of the edge */
 
 	int src_rate;
 	int snk_rate;
@@ -69,23 +69,6 @@ public:
 	 */
 	string get_name();
 	
-	/*!
-	 * Connect the edge to a source port
-	 *
-	 * \param sourceport
-	 * 	The source port to connect to.
-	 *
-	 */
-	void connect_source(Port * sourceport);
-	
-	/*!
-	 * Connect the edge to a sink port
-	 *
-	 * \param sinkport
-	 * 	The sink port to connect to.
-	 *
-	 */
-	void connect_sink(Port * sinkport);
 	
 	/*!
 	 * Set the visited boolean.
@@ -125,6 +108,27 @@ public:
 	
 	void set_source_actor(Actor * src);
 	void set_sink_actor(Actor * snk);
+	
+	/*!
+	 * Set the source port of the edge
+	 *
+	 * \param src
+	 * 	The source port name.
+	 *
+	 */
+	void set_source_port(std::string src);
+	
+	/*!
+	 * Set the sink port of the edge
+	 *
+	 * \param snk
+	 * 	The sink port name.
+	 *
+	 */
+	void set_sink_port(std::string snk);
+	
+	std::string get_source_port();
+	std::string get_sink_port();
 
 	/*!
 	 * Set source rate of the edge.

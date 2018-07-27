@@ -203,6 +203,17 @@ protected:
         int load_actor_types(Graph * g);
 
 	/*!
+	 * Load the source/sink ports of all edges.
+	 *
+	 * \param g
+	 * 	Reference of graph containing the actor
+	 *
+	 * \return
+	 *
+	 */ 
+	int load_edge_ports(Graph * g);
+	
+	/*!
 	 * Read the list of edges of a graph from a stream.
 	 *
 	 * \param stream

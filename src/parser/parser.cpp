@@ -155,6 +155,7 @@ int Parser::read_graph(stringstream & stream, Graph * g) {
 			return ret;
 	}
 	load_actor_types(g);
+	load_edge_ports(g);
 	return 0;
 }
 
@@ -170,6 +171,21 @@ int Parser::load_actor_types(Graph * g) {
 	return 0;
 }
 
+int Parser::load_edge_ports(Graph * g) {
+
+	for (auto i = g->edge_begin(); i != g->edge_end(); i++) {
+		Edge * e = i->second;
+		string src = e->get_source_actor()->get_name();
+		string snk = e->get_sink_actor()->get_name();
+
+		//e->set_source_port(
+		//	g->get_actor_prop_key(src, i->first));
+		//e->set_sink_port(
+		//	g->get_actor_prop_key(snk, i->first));
+	}
+	
+	return 0;
+}
 
 int Parser::read_productions(stringstream & stream, Graph * g) {
 

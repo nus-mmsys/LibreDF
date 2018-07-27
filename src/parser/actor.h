@@ -36,49 +36,6 @@ enum class Status {
 };
 
 /*!
- * Port class
- *  A port connects an actor to an edge.
- *
- */
-class Port {
-private:
-	string name; /**< Port name */
-	int rate; /**< Port rate */
-public:
-	/*!
-	 * Port constructor
-	 *
-	 */
-	Port();
-
-	/*! Port constructor with specified port name
-	 *
-	 * \param portname
-	 * 	Name of the port to create.
-	 *
-	 */
-	Port(string portname);
-
-	/*!
-	 * Set the rate of the port
-	 *
-	 * \param r
-	 * 	The rate to set
-	 *
-	 */
-	void set_rate(int r);
-	
-	/*!
-	 * Get the rate of the port
-	 *
-	 * \return
-	 * 	The rate of the port
-	 *
-	 */
-	int get_rate();
-};
-
-/*!
  * Actor class
  *  An actor has a number of input and output ports.
  *
@@ -91,9 +48,6 @@ private:
 	int firing; /**< Number of firings (solution) of the actor */
 	int num; /**< Numinator of the fractional form of the firing of the actor */
 	int den; /**< Denuminator of the fractional form of the firing of the actor */
-	vector<Port *> oports; /**< List of output ports of the actor */
-	vector<Port *> iports; /**< List of input ports of the actor */
-
 	std::map<std::string, std::string> properties; /**< List of properties of actors */
 
 public:
@@ -216,27 +170,6 @@ public:
 	 *
 	 */
 	bool get_visited();
-
-	/*!
-	 * Create an input port
-	 *
-	 * \return
-	 * 	The created port
-	 *
-	 */
-	Port * create_iport();
-
-	/*!
-	 * Create an output port
-	 *
-	 * \return
-	 * 	The created port
-	 *
-	 */
-	Port * create_oport();
-
-	int iport_size();
-	int oport_size();
 
 	/*!
 	 * Set a property of the actor
