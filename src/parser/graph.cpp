@@ -34,11 +34,17 @@ Actor * Graph::create_actor(string name, string type) {
 	return actors[name];
 }
 
-Actor * Graph::get_actor(string actor) {
+Actor * Graph::get_actor(std::string actor) {
 	if (actors.find(actor) == actors.end()) {
 		return nullptr;
 	}
 	return actors[actor];
+}
+
+Edge * Graph::get_edge(std::string name) {
+	if (edges.find(name) == edges.end())
+		return nullptr;
+	return edges[name];
 }
 
 Edge * Graph::create_edge(string name) {

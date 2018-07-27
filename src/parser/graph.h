@@ -166,8 +166,20 @@ private:
 	 * 	Reference to the corresponding actor.
 	 *
 	 */
-	Actor * get_actor(string name);
+	Actor * get_actor(std::string name);
 	
+	/*!
+	 * Get the reference to an edge with a specified name.
+	 *
+	 * \param name
+	 * 	Name of the edge.
+	 *
+	 * \return
+	 * 	Reference to the corresponding edge.
+	 *
+	 */
+	Edge * get_edge(std::string name);
+
 	/*!
 	 * GCD (Greatest Common Divisor) of two integers.
 	 *
