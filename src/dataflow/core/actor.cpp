@@ -85,21 +85,21 @@ int Actor::connectActor(Actor * snk) {
   return connectActor(snk,1,1);  
 }
 
-int Actor::connectActor(std::string edge, std::string host, int portnb) {
+int Actor::connectActor(std::string outp, std::string host, int portnb) {
 
-  int index = -1;
+  std::string p = outp;  
+  if (p == "" && outputPorts.size() == 1)
+	p = outputPorts.begin()->second->getName();
 
-  string outp = edge2OutputPort(edge, index);
-  
-  if (outputPorts.find(outp) == outputPorts.end()) {
-	  log("port "+outp+" is not found.");
+  if (outputPorts.find(p) == outputPorts.end()) {
+	  log("port "+p+" is not found.");
  	  return -1; 
   }  
 
-  if (outputPorts.find(outp) == outputPorts.end())
+  if (outputPorts.find(p) == outputPorts.end())
     return -1;
 
-  return outputPorts[outp]->connectPort(host, portnb);
+  return outputPorts[p]->connectPort(host, portnb);
 
 }
 

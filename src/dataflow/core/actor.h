@@ -253,7 +253,7 @@ namespace df {
      *   The port number of another actor to connect to.
      *
      */
-    int connectActor(std::string edge, std::string host, int portnb);
+    int connectActor(std::string outp, std::string host, int portnb);
 
     /*!
      * Connect this actor to another actor in the dataflow.

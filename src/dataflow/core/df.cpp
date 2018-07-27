@@ -142,7 +142,7 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
 	int snkport;
-	string snkhost, snkportstr;
+	string snkhost, snkportstr, outp;
 	if (distributed) {
 
 		if (remoteactors.find(src->getName()) != remoteactors.end())
@@ -154,7 +154,8 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 				"edge "+snk->getName()+" "+edge);
 		try {
 		    snkport = stoi(snkportstr);
-		    src->connectActor(edge, snkhost, snkport);
+		    outp = edges[edge]->getSourcePort();
+		    src->connectActor(outp, snkhost, snkport);
 		}
 		catch (...) {
 		    cerr << snkportstr << " is invalid port number.\n";
@@ -292,7 +293,6 @@ void Dataflow::connect() {
 
 	for (auto & ed : edges) {
 		df::Edge * e = ed.second;
-
 		df::Actor * src = e->getSource();
 		df::Actor * snk = e->getSink(); 
 		connectActors(src, snk, ed.first, e->getSourceRate(), e->getSinkRate());
