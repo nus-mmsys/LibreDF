@@ -161,6 +161,7 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 		    cerr << snkportstr << " is invalid port number.\n";
 		}
 	} else {
+		//Edge to port
 		src->connectActor(snk, edge, p, c);
 	}
 }
