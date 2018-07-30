@@ -20,7 +20,6 @@
 #define DF_INPUTPORT_VECTOR_H
 
 #include "input_port.h"
-#include "port_vector.h"
 
 namespace df {
   
@@ -30,14 +29,14 @@ namespace df {
    */
   
   template <typename T>
-  class InputPortVector: public PortVector {
+  class InputPortVector: public IPort {
     
   private:
     std::vector<InputPort<T> *> inputs;
 
   public:
 	  
-    InputPortVector<T>(std::string name) : PortVector(name) {
+    InputPortVector<T>(std::string name) : IPort(name) {
     }
     
     int arity() {
@@ -55,6 +54,22 @@ namespace df {
 	}
     }
 
+    virtual void listen(int portnb) {
+	//TODO
+    }
+
+    virtual void accept() {
+	//TODO
+    }
+
+    virtual void startAccept() {
+	//TODO
+    }
+
+    virtual void waitAccept() {
+	//TODO
+    }
+ 
     virtual ~InputPortVector() {
     }
     

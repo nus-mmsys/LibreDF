@@ -100,7 +100,8 @@ int Actor::connectActor(Actor * snk, int p, int c) {
 
 int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, int c) {
 	
-  Port *in, *out;
+  IPort * in;
+  OPort * out;
 
   //retrieve index from outp
   int index = -1;
@@ -196,7 +197,7 @@ void Actor::initActor() {
 
 }
 
-void Actor::listen(Port * port) {
+void Actor::listen(IPort * port) {
       std::string name = port->getName();
       if (propEmpty(name+"_port")) {
 	      log(name+"_port is not specified.");
@@ -205,7 +206,7 @@ void Actor::listen(Port * port) {
 	      int portnb = getPropInt(name+"_port");
       	      port->listen(portnb);
       }
-    }
+}
 
 void Actor::runActor() {
 

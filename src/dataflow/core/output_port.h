@@ -34,7 +34,7 @@ namespace df {
    */
   
   template <typename T>
-  class OutputPort: public Port {
+  class OutputPort: public OPort {
     
     
   private:
@@ -53,7 +53,7 @@ namespace df {
      * \param name The name of the output port
      *
      */
-    OutputPort<T>(std::string name) : Port(name), index(0) {
+    OutputPort<T>(std::string name) : OPort(name), index(0) {
       sock = new ClientSocket("port:"+name);
       buf = new Buffer<T>();
       port_cap = std::string(typeid(T).name());
@@ -114,7 +114,7 @@ namespace df {
      *
      * \param n next port to connect to
      */
-    virtual int connectPort(Port* n) {
+    virtual int connectPort(IPort* n) {
       return connectPort(n, nextPorts.size());
     } 
 
@@ -125,12 +125,12 @@ namespace df {
      *
      * \param i index of next port 
      */
-    virtual int connectPort(Port* n, int i) {
+    virtual int connectPort(IPort* n, int i) {
       int index = i;
       if ( i < 0 || i > nextPorts.size() ) {
 	index = nextPorts.size();
       }
-      InputPort<T> * in = dynamic_cast<InputPort<T>*>(n);
+      InputPort<T> * in = static_cast<InputPort<T>*>(n);
       nextPorts.insert(nextPorts.begin()+index, in);
       this->increaseLinked();
       in->increaseLinked();	

@@ -35,7 +35,7 @@ namespace df {
    */
   
   template <typename T>
-  class InputPort: public Port {
+  class InputPort: public IPort {
     
   private:
 
@@ -55,7 +55,7 @@ namespace df {
      * \param name The name of the port
      *
      */
-    InputPort<T>(std::string name) : Port(name), buf(nullptr), index(0) {
+    InputPort<T>(std::string name) : IPort(name), buf(nullptr), index(0) {
 	sock = new ServerSocket("port:"+name);
         port_cap = std::string(typeid(T).name());
 	data = new T();

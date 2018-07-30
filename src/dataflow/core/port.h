@@ -90,22 +90,33 @@ namespace df {
      *
      */
     void increaseLinked();
-    
-    virtual void listen(int portnb) {}
-    virtual void accept() {}
-    virtual void startAccept() {}
-    virtual void waitAccept() {}
-
-    virtual int connectPort(std::string host, int portnb) { return 0; }
-    virtual int connectPort(Port* n) { return 0; }
-    virtual int connectPort(Port* n, int index) { return 0; }
-    
+   
     /*!
      * Port descructor
      *
      */
     virtual ~Port() {}
   };
-  
+ 
+  class IPort : public Port {
+  public:
+    IPort(std::string name) : Port(name) {}
+    virtual void listen(int portnb) = 0;
+    virtual void accept() = 0;
+    virtual void startAccept() = 0;
+    virtual void waitAccept() = 0;
+    virtual ~IPort() {}
+  };
+
+  class OPort : public Port {
+  public:
+    OPort(std::string name) : Port(name) {}
+    virtual int connectPort(std::string host, int portnb) = 0;
+    virtual int connectPort(IPort* n) = 0;
+    virtual int connectPort(IPort* n, int index) = 0;
+    virtual ~OPort() {}
+  };
+
 }
+
 #endif /* DF_PORT_H_ */

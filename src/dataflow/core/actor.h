@@ -70,11 +70,8 @@ namespace df {
     std::string df_path; /**< The path for actors to use */
     std::string dfout_path; /**< The path for actors to use as output */
     
-    std::map<std::string, Port*>inputPorts; /**< Map of input ports referenced by their name  */
-    std::map<std::string, Port*> outputPorts; /**< Map of output ports referenced by their name */
-
-    std::map<std::string, PortVector*> inputPortVectors; /**< Map of input port vectors referenced by their name  */
-    std::map<std::string, PortVector*> outputPortVectors; /**< Map of output port vectors referenced by their name */
+    std::map<std::string, IPort*> inputPorts; /**< Map of input ports referenced by their name  */
+    std::map<std::string, OPort*> outputPorts; /**< Map of output ports referenced by their name */
 
     bool distributed, realtime;
     Status status; 
@@ -309,7 +306,7 @@ namespace df {
 	      return nullptr;
       } 
       InputPortVector<T> * res = new InputPortVector<T>(name);
-      this->inputPortVectors.insert(std::make_pair(name, res));
+      this->inputPorts.insert(std::make_pair(name, res));
       return res;
     }
 
@@ -331,7 +328,7 @@ namespace df {
 	      return nullptr;
       } 
       OutputPortVector<T> * res = new OutputPortVector<T>(name);
-      this->outputPortVectors.insert(std::make_pair(name, res));
+      this->outputPorts.insert(std::make_pair(name, res));
       return res;
     }
 
@@ -446,13 +443,9 @@ namespace df {
       }
     }
 
-    void listen(Port * port); 
+    void listen(IPort * port); 
 
     void destroyPort(Port * port) {
-      delete port;
-    }
-
-    void destroyPort(PortVector * port) {
       delete port;
     }
 

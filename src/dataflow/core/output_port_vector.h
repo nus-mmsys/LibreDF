@@ -20,7 +20,6 @@
 #define DF_OUTPUTPORT_VECTOR_H
 
 #include "output_port.h"
-#include "port_vector.h"
 
 namespace df {
   
@@ -30,14 +29,14 @@ namespace df {
    */
   
   template <typename T>
-  class OutputPortVector : public PortVector {
+  class OutputPortVector : public OPort {
     
   private:
     std::vector<OutputPort<T> *> outputs;
 
   public:
     
-    OutputPortVector<T>(const std::string & name) : PortVector(name) {
+    OutputPortVector<T>(const std::string & name) : OPort(name) {
     }
 
     int arity() {
@@ -55,6 +54,21 @@ namespace df {
 	}
     }
 
+    virtual int connectPort(std::string host, int portnb) { 
+    	//TODO
+	return 0;
+    }
+
+    virtual int connectPort(IPort* n) {
+	//TODO
+	return 0;
+    }
+
+    virtual int connectPort(IPort* n, int index) {
+	//TODO
+	return 0;
+    }
+    
     virtual ~OutputPortVector<T>() {
     }
 
