@@ -1,7 +1,7 @@
 df split {
     topology {
-        nodes = A,B,C,D;
-	edges = e1(A,B), e2(B,C), e3(C,D);
+        nodes = A,B,C,D,E;
+	edges = e1(A,B), e2(B,C), e3(C,D), e4(D,E);
     }
     actor A {
     	computation = VideoCapture;
@@ -12,14 +12,22 @@ df split {
     	computation = MatSplit;
 	level = 1;
 	host = 127.0.0.1;
+	input_port = 7400;
     }
     actor C {
-    	computation = MatMerge;
-	level = 1;
+    	computation = CvtColor;
 	host = 127.0.0.1;
+	input_port = 7300;
     }
     actor D {
+    	computation = MatMerge;
+	level = 1;
+	input_port = 7200;
+	host = 127.0.0.1;
+    }
+    actor E {
     	computation = ImageWrite;
+	input_port = 7100;
 	host = 127.0.0.1;
     }
     parameter {
