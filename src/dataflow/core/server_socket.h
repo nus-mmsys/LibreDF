@@ -57,7 +57,8 @@ namespace df {
     int recvwait(char * buf, int size); 
     int recvpeek(char * buf, int size); 
     void clnclose(); 
-    void srvclose(); 
+    void srvclose();
+    int communicate(int port, const std::string& inmsg, const std::string& outmsg);
     std::string ipaddr(const std::string& interface);
   };
 }

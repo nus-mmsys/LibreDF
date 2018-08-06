@@ -66,6 +66,7 @@ namespace df {
     virtual void listen(int portnb) {
 	distributed = true;
         sock->listen(portnb);
+	//Communicate port
     } 
 
     void accept() {
