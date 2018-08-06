@@ -70,6 +70,7 @@ namespace df {
 	}
 	std::string resp = sock->sendrecv("port");
 	if (resp == "continue") {
+		increaseLinked();
 		return 0;
 	}
 

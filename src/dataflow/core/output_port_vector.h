@@ -55,7 +55,12 @@ namespace df {
     }
 
     virtual int connectPort(std::string host, int portnb) { 
-    	//TODO
+    	for (auto out : outputs) {
+		if (out->getLinked() < 1) {
+			out->connectPort(host, portnb);
+			break;
+		}
+	}
 	return 0;
     }
 

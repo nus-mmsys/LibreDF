@@ -68,6 +68,7 @@ namespace df {
     virtual void accept() {
 	sock->accept();
 	sock->recvsend("port", "continue");
+	increaseLinked();
     } 
     
     T * recv() {
