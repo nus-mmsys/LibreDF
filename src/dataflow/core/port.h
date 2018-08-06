@@ -30,6 +30,8 @@
 #include <map>
 #include <string>
 
+#define MAX_ARITY 100
+
 namespace df {
   
   /*!
