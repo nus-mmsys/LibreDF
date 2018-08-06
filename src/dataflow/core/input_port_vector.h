@@ -33,6 +33,7 @@ namespace df {
     
   private:
     std::vector<InputPort<T> *> inputs;
+    std::vector<int> portNumbers;
 
   public:
 	  
@@ -55,17 +56,23 @@ namespace df {
     }
 
     virtual void accept() {
-	//TODO
+	sock->accept();
+	int p = portNumbers.back();
+	sock->recvsend("port", std::to_string(p));
+    	portNumbers.pop_back();
+	sock->clnclose();
     }
 
     virtual void startAccept() {
-            taccept = std::thread(&InputPortVector<T>::accept, this);
 	    int i = 1;
 	    for (auto in : inputs) {
-		    in->listen(portnb+i);
+		    int p = portnb + i;
+		    portNumbers.push_back(p);
+		    in->listen(p);
 		    in->startAccept();
 	    	    i++;
 	    }
+            taccept = std::thread(&InputPortVector<T>::accept, this);
     }
 
     virtual void waitAccept() {
