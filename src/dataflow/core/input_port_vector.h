@@ -54,19 +54,7 @@ namespace df {
 	}
     }
 
-    virtual void listen(int portnb) {
-	//TODO
-    }
-
     virtual void accept() {
-	//TODO
-    }
-
-    virtual void startAccept() {
-	//TODO
-    }
-
-    virtual void waitAccept() {
 	//TODO
     }
  

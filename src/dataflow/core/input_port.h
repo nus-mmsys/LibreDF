@@ -19,9 +19,6 @@
 #ifndef DF_INPUTPORT_H
 #define DF_INPUTPORT_H
 
-#include <thread>
-
-#include "server_socket.h"
 #include "port.h"
 
 namespace df {
@@ -38,12 +35,9 @@ namespace df {
   class InputPort: public IPort {
     
   private:
-
     T * data;
-    std::thread taccept;
     Buffer<T> * buf;
     int index;
-    ServerSocket * sock;
     char * chdata;
     int chsize;
 
@@ -63,24 +57,11 @@ namespace df {
 	chdata = new char[chsize];
     }
    
-    virtual void listen(int portnb) {
-	distributed = true;
-        sock->listen(portnb);
-    } 
-
-    void accept() {
+    virtual void accept() {
 	sock->accept();
 	sock->recvsend("port", "continue");
     } 
-
-    virtual void startAccept() {
-        taccept = std::thread(&InputPort<T>::accept, this);
-    }
-
-    virtual void waitAccept() {
-        taccept.join();
-    }
-
+    
     T * recv() {
     	while (sock->recvpeek(chdata, sizeof(int)) < 0);
 
