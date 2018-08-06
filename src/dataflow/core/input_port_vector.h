@@ -58,7 +58,6 @@ namespace df {
 
     virtual void accept() {
 	sock->accept();
-	// TODO: no input is created yet.
 	int p = portNumbers.back();
     	portNumbers.pop_back();
 	sock->recvsend("port", std::to_string(p));

@@ -37,6 +37,7 @@ namespace df {
   public:
     
     OutputPortVector<T>(const std::string & name) : OPort(name) {
+        port_cap = std::string(typeid(T).name());
     }
 
     int arity() {
