@@ -52,11 +52,13 @@ void MatMerge::run() {
   	tileh = in[0]->get()->rows;
   }
 
-  for (int i=0; i < level*level ; i++) {
-	  cv::Rect tile(level * tilew,
-			level * tileh,
-			tilew, tileh);
-  	  out->set_view(tile, in[i]->get());
+  for (int j=0; j < level ; j++) {
+  	for (int i=0; i < level ; i++) {
+		cv::Rect tile(i * tilew,
+				j * tileh,
+				tilew, tileh);
+		out->set_view(tile, in[j*level+i]->get());
+	}
   }
 
   log("sending "+to_string(stepno));

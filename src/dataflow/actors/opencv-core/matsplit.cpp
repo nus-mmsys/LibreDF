@@ -52,11 +52,13 @@ void MatSplit::run() {
   	tileh = in->get()->rows / level;
   }
 
-  for (int i=0; i < level*level ; i++) {
-	  cv::Rect tile(level * tilew,
-			level * tileh,
-			tilew, tileh);
-  	  out[i]->set(in->crop(tile));
+  for (int j=0; j < level ; j++) {
+	  for (int i=0; i < level ; i++) {
+	  	cv::Rect tile(i * tilew,
+				j * tileh,
+				tilew, tileh);
+  	  	out[j*level+i]->set(in->crop(tile));
+	  }
   }
 
   log("sending "+to_string(stepno));
