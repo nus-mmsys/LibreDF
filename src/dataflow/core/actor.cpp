@@ -165,11 +165,6 @@ void Actor::waitInit() {
 
 void Actor::waitRun() {
   trun.join();
-  if (distributed) {
-    for (auto p : inputPorts) {
-	    p.second->waitAccept();
-    }
-  }
 
 }
 
@@ -222,6 +217,12 @@ void Actor::runActor() {
         log(p.second->getName()+string(" is not connected"));
         setStatus(ERROR);
       }
+    }
+  }
+
+  if (distributed) {
+    for (auto p : inputPorts) {
+	    p.second->waitAccept();
     }
   }
 

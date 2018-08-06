@@ -354,7 +354,9 @@ namespace df {
       T * token = nullptr;  
       for (int i=0; i<port->arity(); i++) {
         if (distributed) {
+	  //TODO : bug
 	  token = port->at(i)->recv();
+	  //
 	  if (token == nullptr)
 	  	  log("cannot recieve on port "+port->at(i)->getName());
 	  setStatus(token->getStatus());
