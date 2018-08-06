@@ -35,6 +35,7 @@ namespace df {
   class InputPort: public IPort {
     
   private:
+    std::thread taccept;
     T * data;
     Buffer<T> * buf;
     int index;
@@ -56,7 +57,15 @@ namespace df {
 	chsize = 1024;
 	chdata = new char[chsize];
     }
-   
+    
+    virtual void startAccept() {
+        taccept = std::thread(&InputPort<T>::accept, this);
+    }
+
+    virtual void waitAccept() {
+        taccept.join();
+    }
+
     virtual void accept() {
 	sock->accept();
 	sock->recvsend("port", "continue");

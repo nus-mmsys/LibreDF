@@ -102,22 +102,16 @@ namespace df {
   };
  
   class IPort : public Port {
-  private:
-    std::thread taccept;
   protected:
     ServerSocket * sock;
   public:
     IPort(std::string name) : Port(name) {}
     virtual void accept() = 0; 
+    virtual void startAccept() = 0;
+    virtual void waitAccept() = 0;
     void listen(int portnb) {
 	distributed = true;
         sock->listen(portnb);
-    }
-    void startAccept() {
-        taccept = std::thread(&IPort::accept, this);
-    }
-    void waitAccept() {
-        taccept.join();
     }
     virtual ~IPort() {}
   };

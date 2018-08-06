@@ -57,7 +57,17 @@ namespace df {
     virtual void accept() {
 	//TODO
     }
- 
+
+    virtual void startAccept() {
+	    for (auto in : inputs)
+		    in->startAccept();
+    }
+
+    virtual void waitAccept() {
+	    for (auto in : inputs)
+		    in->waitAccept();
+    }
+
     virtual ~InputPortVector() {
     }
     
