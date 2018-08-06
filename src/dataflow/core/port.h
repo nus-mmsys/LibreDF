@@ -105,7 +105,6 @@ namespace df {
   protected:
     std::thread taccept;
     ServerSocket * sock;
-    int portnb;
   public:
     IPort(std::string name) : Port(name) {
 	sock = new ServerSocket("port:"+name);
@@ -113,11 +112,7 @@ namespace df {
     virtual void accept() = 0; 
     virtual void startAccept() = 0;
     virtual void waitAccept() = 0;
-    void listen(int portnb) {
-	distributed = true;
-	this->portnb = portnb;
-        sock->listen(portnb);
-    }
+    virtual void listen(int portnb) = 0;
     virtual ~IPort() {
 	delete sock;
     }

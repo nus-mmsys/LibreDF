@@ -56,6 +56,11 @@ namespace df {
 	chdata = new char[chsize];
     }
     
+    virtual void listen(int portnb) {
+	distributed = true;
+        sock->listen(portnb);
+    }
+
     virtual void startAccept() {
         taccept = std::thread(&InputPort<T>::accept, this);
     }

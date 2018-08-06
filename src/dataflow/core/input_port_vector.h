@@ -38,6 +38,7 @@ namespace df {
   public:
 	  
     InputPortVector<T>(std::string name) : IPort(name) {
+        port_cap = std::string(typeid(T).name());
     }
     
     int arity() {
@@ -57,21 +58,29 @@ namespace df {
 
     virtual void accept() {
 	sock->accept();
+	// TODO: no input is created yet.
 	int p = portNumbers.back();
-	sock->recvsend("port", std::to_string(p));
     	portNumbers.pop_back();
+	sock->recvsend("port", std::to_string(p));
 	sock->clnclose();
     }
 
+    virtual void listen(int portnb) {
+	distributed = true;
+        sock->listen(portnb);
+
+	int i = 1;
+       	for (auto in : inputs) {
+		int p = portnb + i;
+		portNumbers.push_back(p);
+		in->listen(p);
+	    	i++;
+	}
+    }
+
     virtual void startAccept() {
-	    int i = 1;
-	    for (auto in : inputs) {
-		    int p = portnb + i;
-		    portNumbers.push_back(p);
-		    in->listen(p);
+	    for (auto in : inputs)
 		    in->startAccept();
-	    	    i++;
-	    }
             taccept = std::thread(&InputPortVector<T>::accept, this);
     }
 
