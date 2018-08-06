@@ -69,8 +69,8 @@ int Actor::connectActor(std::string outp, std::string host, int portnb) {
   if (outputPorts.find(outp) == outputPorts.end())
     return -1;
 
-  return outputPorts[outp]->connectPort(host, portnb);
-
+  int ret = outputPorts[outp]->connectPort(host, portnb);
+  return ret;
 }
 
 int Actor::connectActor(Actor * snk, int p, int c) {
@@ -156,7 +156,6 @@ void Actor::startRun(int cpu) {
   int rc = pthread_setaffinity_np(trun.native_handle(), sizeof(cpu_set_t), &cpuset);
   if (rc != 0)
 	  log("error calling pthread_setaffinity_np");
-
 }
 
 void Actor::waitInit() {
@@ -194,10 +193,10 @@ void Actor::initActor() {
   }
    
   init();
-
 }
 
 void Actor::listen(IPort * port) {
+
       std::string name = port->getName();
       if (propEmpty(name+"_port")) {
 	      log(name+"_port is not specified.");

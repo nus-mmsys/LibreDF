@@ -107,7 +107,9 @@ namespace df {
     ServerSocket * sock;
     int portnb;
   public:
-    IPort(std::string name) : Port(name) {}
+    IPort(std::string name) : Port(name) {
+	sock = new ServerSocket("port:"+name);
+    }
     virtual void accept() = 0; 
     virtual void startAccept() = 0;
     virtual void waitAccept() = 0;
@@ -115,9 +117,6 @@ namespace df {
 	distributed = true;
 	this->portnb = portnb;
         sock->listen(portnb);
-    }
-    int getPortNumber() {
-	    return this->portnb;
     }
     virtual ~IPort() {}
   };

@@ -77,6 +77,7 @@ namespace df {
 	try {
 		int p = stoi(resp);
 		sock->close();
+		increaseLinked();
     		return sock->connect(host, p);
 	} catch (...) {
 		std::cerr << "port " << name << " cannot connect.\n";

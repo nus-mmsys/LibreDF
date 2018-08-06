@@ -50,7 +50,6 @@ namespace df {
      *
      */
     InputPort<T>(std::string name) : IPort(name), buf(nullptr), index(0) {
-	sock = new ServerSocket("port:"+name);
         port_cap = std::string(typeid(T).name());
 	data = new T();
 	chsize = 1024;
