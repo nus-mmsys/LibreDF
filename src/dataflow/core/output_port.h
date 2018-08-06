@@ -63,7 +63,24 @@ namespace df {
     
     virtual int connectPort(std::string host, int portnb) {
 	distributed = true;
-    	return sock->connect(host, portnb);
+    	int ret = sock->connect(host, portnb);
+	if (ret < 0) {
+		std::cerr << "port " << name << " cannot connect.\n";
+		return ret;
+	}
+	std::string resp = sock->sendrecv("port");
+	if (resp == "continue") {
+		return 0;
+	}
+
+	try {
+		int p = stoi(resp);
+		sock->close();
+    		return sock->connect(host, p);
+	} catch (...) {
+		std::cerr << "port " << name << " cannot connect.\n";
+		return -1;
+	}
     }
 
     void send() {

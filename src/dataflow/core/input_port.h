@@ -66,11 +66,11 @@ namespace df {
     virtual void listen(int portnb) {
 	distributed = true;
         sock->listen(portnb);
-	//Communicate port
     } 
 
     void accept() {
 	sock->accept();
+	sock->recvsend("port", "continue");
     } 
 
     virtual void startAccept() {
