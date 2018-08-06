@@ -35,7 +35,6 @@ namespace df {
   class InputPort: public IPort {
     
   private:
-    std::thread taccept;
     T * data;
     Buffer<T> * buf;
     int index;

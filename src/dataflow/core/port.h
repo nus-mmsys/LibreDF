@@ -103,7 +103,9 @@ namespace df {
  
   class IPort : public Port {
   protected:
+    std::thread taccept;
     ServerSocket * sock;
+    int portnb;
   public:
     IPort(std::string name) : Port(name) {}
     virtual void accept() = 0; 
@@ -111,7 +113,11 @@ namespace df {
     virtual void waitAccept() = 0;
     void listen(int portnb) {
 	distributed = true;
+	this->portnb = portnb;
         sock->listen(portnb);
+    }
+    int getPortNumber() {
+	    return this->portnb;
     }
     virtual ~IPort() {}
   };

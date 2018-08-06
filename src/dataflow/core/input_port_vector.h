@@ -59,13 +59,19 @@ namespace df {
     }
 
     virtual void startAccept() {
-	    for (auto in : inputs)
+            taccept = std::thread(&InputPortVector<T>::accept, this);
+	    int i = 1;
+	    for (auto in : inputs) {
+		    in->listen(portnb+i);
 		    in->startAccept();
+	    	    i++;
+	    }
     }
 
     virtual void waitAccept() {
 	    for (auto in : inputs)
 		    in->waitAccept();
+	    taccept.join();
     }
 
     virtual ~InputPortVector() {
