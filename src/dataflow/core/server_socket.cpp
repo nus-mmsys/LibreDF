@@ -96,24 +96,15 @@ void ServerSocket::srvclose() {
 	::close(srvsock);
 }
 
-int ServerSocket::communicate(int port, const std::string& inmsg, const std::string& outmsg) {
-	char inbuf[1024];
-	char outbuf[1024];
-	if (listen(port) < 0) {
-		std::cerr << name << " cannot communicate.\n";
-		return -1;
-	}
-	accept();
-	recv(inbuf, 1024);
-	if (strcmp(inbuf, inmsg.c_str()) == 0) {
+void ServerSocket::recvsend(const std::string& inmsg, const std::string& outmsg) {
+	int bufsize = 1024;
+	char inbuf[bufsize], outbuf[bufsize];
+	recv(inbuf, bufsize);
+	if (strcmp(inbuf, inmsg.c_str()) == 0)
 		strcpy(outbuf, outmsg.c_str());
-	} else {
+	else
 		strcpy(outbuf, "");
-	}
-	send(outbuf, 1024);
-	clnclose();
-	srvclose();
-	return 0;
+	send(outbuf, bufsize);
 }
 
 std::string ServerSocket::ipaddr(const std::string& interface){

@@ -68,6 +68,18 @@ std::string ClientSocket::communicate(const std::string& host, int port, const s
 	close();
 	return res;
 }
+
+std::string ClientSocket::sendrecv(const std::string& msg) {
+	int bufsize = 1024;
+	char inbuf[bufsize], outbuf[bufsize];
+	std::string res;
+	std::strcpy(outbuf, msg.c_str());
+	send(outbuf, std::strlen(outbuf));
+	recv(inbuf, bufsize);
+	res = inbuf;
+	return res;
+}
+
 void ClientSocket::send(const char * buf, int size) {
 	::send(sock , buf , size , 0 );
 }
