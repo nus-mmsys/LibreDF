@@ -129,7 +129,6 @@ namespace df {
 	    }
 	    delete data;
 	    delete chdata;
-	    delete sock;
     }
     
   };

@@ -118,7 +118,9 @@ namespace df {
 	this->portnb = portnb;
         sock->listen(portnb);
     }
-    virtual ~IPort() {}
+    virtual ~IPort() {
+	delete sock;
+    }
   };
 
   class OPort : public Port {
