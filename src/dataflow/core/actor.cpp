@@ -179,6 +179,8 @@ void Actor::setIOLock(mutex * mux) {
 
 void Actor::initActor() {
 
+  init();
+
   if (!propEmpty("realtime"))
 	  realtime = getPropBool("realtime");
 
@@ -192,7 +194,6 @@ void Actor::initActor() {
     }
   }
    
-  init();
 }
 
 void Actor::listen(IPort * port) {
