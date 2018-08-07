@@ -90,6 +90,10 @@ namespace df {
 	return data;
     }
 
+    int getPortNumber() {
+	    return sock->getport();
+    }
+
     void setBuffer(Buffer<T> * b) {
       buf = b;
       buf->addConsumer();

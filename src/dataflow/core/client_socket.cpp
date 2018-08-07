@@ -69,6 +69,10 @@ std::string ClientSocket::communicate(const std::string& host, int port, const s
 	return res;
 }
 
+int ClientSocket::getport() {
+	return portnb;
+}
+
 std::string ClientSocket::sendrecv(const std::string& msg) {
 	int bufsize = 1024;
 	char inbuf[bufsize], outbuf[bufsize];
@@ -80,8 +84,8 @@ std::string ClientSocket::sendrecv(const std::string& msg) {
 	return res;
 }
 
-void ClientSocket::send(const char * buf, int size) {
-	::send(sock , buf , size , 0 );
+int ClientSocket::send(const char * buf, int size) {
+	return ::send(sock , buf , size , 0 );
 }
 
 int ClientSocket::recv(char * buf, int size) {

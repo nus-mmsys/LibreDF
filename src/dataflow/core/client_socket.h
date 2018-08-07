@@ -51,8 +51,9 @@ namespace df {
     int connect(const std::string& host, int port); 
     std::string communicate(const std::string& host, int port, const std::string& msg);
     std::string sendrecv(const std::string& msg);
-    void send(const char * buf, int size); 
+    int send(const char * buf, int size); 
     int recv(char * buf, int size); 
+    int getport();
     void close();
 
   };

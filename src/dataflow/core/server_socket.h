@@ -50,9 +50,10 @@ namespace df {
     
     ServerSocket(const std::string& sockname); 
 
+    int getport();
     int listen(int port); 
     int accept();     
-    void send(char * buf, int size); 
+    int send(char * buf, int size); 
     int recv(char * buf, int size); 
     int recvwait(char * buf, int size); 
     int recvpeek(char * buf, int size); 

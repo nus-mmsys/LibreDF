@@ -87,12 +87,16 @@ namespace df {
 	}
     }
 
-    void send() {
+    int send() {
 	char * buf = data->serialize();
 	int size = data->getPktSize(buf);
 	if (size != chsize)
 		chsize = size;
-	sock->send(buf, chsize);
+	return sock->send(buf, chsize);
+    }
+
+    int getPortNumber() {
+	    return sock->getport();
     }
 
     T * getSocketData() {

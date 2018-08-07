@@ -24,6 +24,10 @@ ServerSocket::ServerSocket(const std::string& sockname) {
 	name = sockname; 
 }
 
+int ServerSocket::getport() {
+	return portnb;
+}
+
 int ServerSocket::listen(int port) {
 	portnb = port;
 
@@ -69,8 +73,8 @@ int ServerSocket::accept() {
 	return 0;
 }
 
-void ServerSocket::send(char * buf, int size) {
-	::send(clnsock , buf , size , 0 );
+int ServerSocket::send(char * buf, int size) {
+	return ::send(clnsock , buf , size , 0 );
 }
 
 int ServerSocket::recv(char * buf, int size) {
