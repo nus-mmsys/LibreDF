@@ -1,0 +1,53 @@
+df split4 {
+    topology {
+        nodes = A,B,C1,C2,C3,C4,D,E;
+	edges = e1(A,B), e21(B,C1), e22(B,C2), e23(B,C3), e24(B,C4), e31(C1,D), e32(C2,D), e33(C3,D), e34(C4,D), e4(D,E);
+    }
+    actor A {
+    	computation = VideoCapture;
+	file_name = pedestrian.mp4;
+	host = 127.0.0.1;
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 2;
+	host = 127.0.0.1;
+	input_port = 7700;
+    }
+    actor C1 {
+    	computation = CvtColor;
+	host = 127.0.0.1;
+	input_port = 7600;
+    }
+    actor C2 {
+    	computation = CvtColor;
+	host = 127.0.0.1;
+	input_port = 7500;
+    }
+    actor C3 {
+    	computation = CvtColor;
+	host = 127.0.0.1;
+	input_port = 7400;
+    }
+    actor C4 {
+    	computation = CvtColor;
+	host = 127.0.0.1;
+	input_port = 7300;
+    }
+    actor D {
+    	computation = MatMerge;
+	level = 2;
+	input_port = 7200;
+	host = 127.0.0.1;
+    }
+    actor E {
+    	computation = ImageWrite;
+	input_port = 7100;
+	host = 127.0.0.1;
+    }
+    parameter {
+	distributed = false;
+	discovery_host = 127.0.0.1;
+	discovery_port = 7000;
+    }
+}
