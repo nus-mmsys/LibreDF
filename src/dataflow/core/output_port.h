@@ -166,7 +166,6 @@ namespace df {
       InputPort<T> * in = static_cast<InputPort<T>*>(n);
       nextPorts.insert(nextPorts.begin()+index, in);
       this->increaseLinked();
-      in->increaseLinked();	
       in->setBuffer(buf);
       return 0;
     } 

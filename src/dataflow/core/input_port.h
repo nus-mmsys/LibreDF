@@ -97,6 +97,7 @@ namespace df {
     void setBuffer(Buffer<T> * b) {
       buf = b;
       buf->addConsumer();
+      increaseLinked();	
     }
     
     void lock() {

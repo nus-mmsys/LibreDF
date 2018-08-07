@@ -92,6 +92,15 @@ namespace df {
 	    taccept.join();
     }
 
+    void setBuffer(Buffer<T> * b) {
+      for (auto in : inputs) {
+	      if (in->getLinked() < 1) {
+		      in->setBuffer(b);
+		      break;
+	      }
+      }
+    }
+
     virtual ~InputPortVector() {
     }
     
