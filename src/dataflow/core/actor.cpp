@@ -32,6 +32,7 @@ Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
 std::string Actor::getName() {
 	return name;
 }
+
 void Actor::log(std::string msg) {
   cpuid = sched_getcpu();
   string s = name + ": [" + to_string(stepno) + "] [" + to_string(now()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
@@ -204,7 +205,6 @@ void Actor::listen(IPort * port) {
 }
 
 void Actor::runActor() {
-
   if (!distributed) {
     for (auto p : inputPorts) {
       if (p.second->getLinked() == 0) {
@@ -219,13 +219,11 @@ void Actor::runActor() {
       }
     }
   }
-
   if (distributed) {
     for (auto p : inputPorts) {
 	    p.second->waitAccept();
     }
   }
-
   while(getStatus() != EOS) {
     if (distributed) {
 	    runDist();
@@ -242,14 +240,17 @@ void Actor::runActor() {
 void Actor::hstart() { 
 	hrtstart = std::chrono::high_resolution_clock::now(); 
 }
+
 void Actor::hend(std::string msg) { 
 	hrtend = std::chrono::high_resolution_clock::now(); 
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(hrtend - hrtstart); 
 	log(msg+" exect = "+std::to_string(time_span.count())); 
-    }
+}
+
 void Actor::start() { 
 	tstart = clock(); 
 }
+
 void Actor::end(std::string msg) { 
 	tend = clock();
 	log(msg+" exect = "+std::to_string(double(tend - tstart)/CLOCKS_PER_SEC)); 

@@ -46,7 +46,6 @@ namespace df {
   class Actor  {
   private:
 
-    	  
     std::thread tinit;
     std::thread trun;
     std::mutex * iolock;

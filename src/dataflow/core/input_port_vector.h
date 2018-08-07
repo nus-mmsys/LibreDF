@@ -57,11 +57,14 @@ namespace df {
     }
 
     virtual void accept() {
-	sock->accept();
-	int p = portNumbers.back();
-    	portNumbers.pop_back();
-	sock->recvsend("port", std::to_string(p));
-	sock->clnclose();
+	while (!portNumbers.empty()) {
+		sock->accept();
+		int p = portNumbers.back();
+    		portNumbers.pop_back();
+		std::cout << "sending port for connection " << p << "\n";
+		sock->recvsend("port", std::to_string(p));
+		sock->clnclose();
+	}
     }
 
     virtual void listen(int portnb) {
