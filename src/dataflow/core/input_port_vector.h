@@ -74,7 +74,7 @@ namespace df {
 	int i = 1;
        	for (auto in : inputs) {
 		int p = portnb + i;
-		portNumbers.push_back(p);
+		portNumbers.insert(portNumbers.begin(), p);
 		in->listen(p);
 	    	i++;
 	}
