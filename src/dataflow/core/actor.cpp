@@ -121,11 +121,13 @@ int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, i
 	  return -1;
   } else
 	in = snk->inputPorts[inp];
- 
+
+  /* 
   if ( in->getLinked() > 0 ) {
 	 log("port "+inp+" is already linked.");
 	 return -1;
   }
+  */
 
   string type_out = out->getPortCap();
   string type_in = in->getPortCap();
