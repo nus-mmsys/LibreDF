@@ -58,21 +58,28 @@ namespace df {
     virtual int connectPort(std::string host, int portnb) { 
     	for (auto out : outputs) {
 		if (out->getLinked() < 1) {
-			out->connectPort(host, portnb);
-			break;
+			return out->connectPort(host, portnb);
 		}
 	}
-	return 0;
+	return -1;
     }
 
     virtual int connectPort(IPort* n) {
-	//TODO
-	return 0;
+	for (auto out : outputs) {
+		if (out->getLinked() < 1) {
+			return out->connectPort(n);
+		}
+	}
+	return -1;
     }
 
     virtual int connectPort(IPort* n, int index) {
-	//TODO
-	return 0;
+	for (auto out : outputs) {
+		if (out->getLinked() < 1) {
+			return out->connectPort(n, index);
+		}
+	}
+	return -1;
     }
     
     virtual ~OutputPortVector<T>() {
