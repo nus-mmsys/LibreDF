@@ -329,25 +329,26 @@ namespace df {
 
     template<typename T>
     T * consume(InputPort<T> * port) {
+      T * res = nullptr;
       if (distributed) {
-	T * res = port->recv();
+	res = port->recv();
 	if (res == nullptr)
 		log("cannot recieve on port "+port->getName());
 	setStatus(res->getStatus());
-	return res;
       }
       else {
 	port->lock();
+	res = port->get();
 	setStatus(port->getStatus());
-        return port->get();
-      }	
+      }
+      return res;      
     }
 
     template<typename T>
     std::vector<T *> consume(InputPortVector<T> * port) {
       std::vector<T *> res;
       T * token = nullptr;  
-      for (int i=0; i<port->arity(); i++) {
+      for (int i=0; i < port->arity(); i++) {
         if (distributed) {
 	  token = port->at(i)->recv();
 	  if (token == nullptr)
@@ -355,8 +356,8 @@ namespace df {
 	  setStatus(token->getStatus());
         } else {
 	  port->at(i)->lock();
-	  setStatus(port->at(i)->getStatus());
           token = port->at(i)->get();
+	  setStatus(port->at(i)->getStatus());
         }
 	res.push_back(token);
       }
@@ -365,16 +366,17 @@ namespace df {
 
     template<typename T>
     T * produce(OutputPort<T> * port) {
+      T * res;
       if (distributed) {
-	T * res = port->getSocketData();
+	res = port->getSocketData();
 	res->setStatus(getStatus());
-	return res;
       }
       else {
         port->lock();
+        res = port->get();
         port->setStatus(getStatus());
-        return port->get();
       }
+      return res;
     }
 
     template<typename T>
@@ -382,14 +384,13 @@ namespace df {
 	std::vector<T *> res;
 	T * token = nullptr;
 	for (int i=0; i<port->arity(); i++) {
-	    token = nullptr;
 	    if (distributed) {
 		token = port->at(i)->getSocketData();
 		token->setStatus(getStatus());
 	    } else {
         	port->at(i)->lock();
-        	port->at(i)->setStatus(getStatus());
         	token = port->at(i)->get();
+        	port->at(i)->setStatus(getStatus());
       	    }
 	    res.push_back(token);
     	}
