@@ -225,12 +225,10 @@ void Actor::runActor() {
     }
   }
   while(getStatus() != EOS) {
-    if (distributed) {
-	    runDist();
-    } else if (!realtime) {
-    	    run();
-    } else {
+    if (realtime) {
 	    runRT();
+    } else {
+	    run();
     }
     stepno++;
   }
