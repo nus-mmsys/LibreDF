@@ -62,8 +62,9 @@ namespace df {
     }
     
     virtual int connectPort(std::string host, int portnb) {
+	int ret;
 	distributed = true;
-    	int ret = sock->connect(host, portnb);
+    	ret = sock->connect(host, portnb);
 	if (ret < 0) {
 		std::cerr << "port " << name << " cannot connect.\n";
 		return ret;
@@ -78,7 +79,8 @@ namespace df {
 		int p = stoi(resp);
 		sock->close();
 		increaseLinked();
-    		return sock->connect(host, p);
+    		ret = sock->connect(host, p);
+		return ret;
 	} catch (...) {
 		std::cerr << "port " << name << " cannot connect.\n";
 		return -1;
