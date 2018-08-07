@@ -58,6 +58,7 @@ namespace df {
     virtual int connectPort(std::string host, int portnb) { 
     	for (auto out : outputs) {
 		if (out->getLinked() < 1) {
+			increaseLinked();
 			return out->connectPort(host, portnb);
 		}
 	}
@@ -67,6 +68,7 @@ namespace df {
     virtual int connectPort(IPort* n) {
 	for (auto out : outputs) {
 		if (out->getLinked() < 1) {
+			increaseLinked();
 			return out->connectPort(n);
 		}
 	}
@@ -76,6 +78,7 @@ namespace df {
     virtual int connectPort(IPort* n, int index) {
 	for (auto out : outputs) {
 		if (out->getLinked() < 1) {
+			increaseLinked();
 			return out->connectPort(n, index);
 		}
 	}

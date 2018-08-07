@@ -61,7 +61,6 @@ namespace df {
 		sock->accept();
 		int p = portNumbers.back();
     		portNumbers.pop_back();
-		std::cout << "sending port for connection " << p << "\n";
 		sock->recvsend("port", std::to_string(p));
 		sock->clnclose();
 	}
@@ -95,6 +94,7 @@ namespace df {
     void setBuffer(Buffer<T> * b) {
       for (auto in : inputs) {
 	      if (in->getLinked() < 1) {
+		      increaseLinked();
 		      in->setBuffer(b);
 		      break;
 	      }
