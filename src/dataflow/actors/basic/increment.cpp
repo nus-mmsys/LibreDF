@@ -29,7 +29,11 @@ Actor(name) {
   output = createOutputPort<Int>("output");
 }
 
-void  Increment::run() {
+void Increment::init() {
+
+}
+
+void Increment::run() {
   
   Int * in = consume(input);
   int outval = *in->get() + 1;

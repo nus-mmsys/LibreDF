@@ -34,8 +34,8 @@ public:
   
   IntConsumer(const std::string & name);
   
+  virtual void init();
   virtual void run();
-  //virtual void runDist();
   
   virtual ~IntConsumer();
   

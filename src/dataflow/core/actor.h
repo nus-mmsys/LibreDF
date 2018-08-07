@@ -100,7 +100,7 @@ namespace df {
      * Virtual function, to be implemented in the subclass actors.
      * Read data from input actor, process the data, and write the result to the output port.
      */
-    virtual void init() {}
+    virtual void init() = 0;
     virtual void run() = 0;
     virtual void runRT() {
       run();

@@ -29,6 +29,9 @@ Actor(name) {
   input2 = createInputPort<Int>("input2");
 }
 
+void Multiplication::init() {
+
+}
 
 void  Multiplication::run() {
   

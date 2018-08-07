@@ -29,7 +29,11 @@ Actor(name) {
   input2 = createInputPort<Int>("input2");
 }
 
-void  Addition::run() {
+void Addition::init() {
+
+}
+
+void Addition::run() {
   
   Int * in1 = consume(input1);
   

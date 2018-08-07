@@ -29,6 +29,10 @@ Actor(name) {
   output = createOutputPort<Int>("output");
 }
 
+void Doubling::init() {
+
+}
+
 void Doubling::run() {
 
   Int * in = consume(input);	

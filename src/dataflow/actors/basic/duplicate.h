@@ -35,6 +35,7 @@ public:
   
   Duplicate(const std::string & name);
   
+  virtual void init();
   virtual void run();
   
   virtual ~Duplicate();

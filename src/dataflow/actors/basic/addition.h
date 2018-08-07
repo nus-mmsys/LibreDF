@@ -37,6 +37,7 @@ public:
   
   Addition(const std::string & name);
   
+  virtual void init();
   virtual void run();
   
   virtual ~Addition();

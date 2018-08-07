@@ -27,6 +27,10 @@ StringConsumer::StringConsumer(const string & name) : Actor(name) {
   input = createInputPort<Str>("input");
 }
 
+void StringConsumer::init() {
+
+}
+
 void StringConsumer::run() {
   
   Str * in = consume(input);

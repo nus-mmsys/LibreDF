@@ -33,6 +33,7 @@ public:
   
   Increment(const std::string & name);
   
+  virtual void init();
   virtual void run();
   
   virtual ~Increment();

@@ -30,6 +30,7 @@ private:
 public:
   
   Remote(const std::string & name): df::Actor(name) {}
+  virtual void init() {}
   virtual void run() {}
   virtual ~Remote() {}
   

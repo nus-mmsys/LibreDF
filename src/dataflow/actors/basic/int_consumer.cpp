@@ -27,6 +27,10 @@ IntConsumer::IntConsumer(const string & name) : Actor(name) {
   input = createInputPort<Int>("input");
 }
 
+void IntConsumer::init() {
+
+}
+
 void IntConsumer::run() {
   Int * in = consume(input);
   
@@ -35,19 +39,6 @@ void IntConsumer::run() {
   
   release(input);
 }
-
-/*
-void IntConsumer::runDist() {
-
-  std::string msg;
-  char buf[1024];
-  read(input, buf, 1024);
-  msg = buf;
-  log("consuming "+msg);
-  sleep(500);
-  
-}
-*/
 
 IntConsumer::~IntConsumer() {
   destroyPort(input);

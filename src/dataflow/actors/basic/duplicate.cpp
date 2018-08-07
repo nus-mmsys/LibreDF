@@ -28,6 +28,9 @@ Actor(name) {
   input = createInputPort<Str>("input");
 }
 
+void Duplicate::init() {
+
+}
 
 void Duplicate::run() {
   Str * in = consume(input);
