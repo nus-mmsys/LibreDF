@@ -56,8 +56,16 @@ namespace df {
 	*data = d.clone();
     }
 
+    void mat_init(int c, int r, int t, int s) {
+        cols = c;
+	rows = r;
+	type = t;	
+	matsize = s;
+	data = new cv::Mat(rows, cols, type);
+    }
+
     void set_view(const cv::Rect& t, const cv::Mat * m) {
-	(*data)(t) = m->clone();
+    	m->copyTo((*data)(t));
     }
 
     virtual cv::Mat clone() {

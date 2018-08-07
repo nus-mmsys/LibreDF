@@ -37,7 +37,7 @@ private:
   df::InputPortVector<df::Mat> * input;
   df::OutputPort<df::Mat> * output;
 
-  int level, tileh, tilew;
+  int level, tileh, tilew, type, size;
 
   static  df::ActorRegister<MatMerge> reg;
 public:

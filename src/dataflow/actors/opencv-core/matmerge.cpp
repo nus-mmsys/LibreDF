@@ -50,6 +50,9 @@ void MatMerge::run() {
   if (tilew == 0 || tileh == 0) { 
   	tilew = in[0]->get()->cols;
   	tileh = in[0]->get()->rows;
+	type = in[0]->get()->type();
+	size = in[0]->get()->total()*in[0]->get()->elemSize();
+	out->mat_init(tilew*level, tileh*level, type, size*level*level);
   }
 
   for (int j=0; j < level ; j++) {
@@ -57,6 +60,7 @@ void MatMerge::run() {
 		cv::Rect tile(i * tilew,
 				j * tileh,
 				tilew, tileh);
+
 		out->set_view(tile, in[j*level+i]->get());
 	}
   }
