@@ -53,6 +53,8 @@ void MatMerge::run() {
 	type = in[0]->get()->type();
 	size = in[0]->get()->total()*in[0]->get()->elemSize();
 	out->mat_init(tilew*level, tileh*level, type, size*level*level);
+  	for (int i=0; i<output->getBufferSize();i++)
+		output->get(i)->mat_init(tilew*level, tileh*level, type, size*level*level);
   }
 
   for (int j=0; j < level ; j++) {

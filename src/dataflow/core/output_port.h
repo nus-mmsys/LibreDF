@@ -128,7 +128,15 @@ namespace df {
     T * get() {
       return buf->at(index);
     }
-    
+
+    T * get(int i) {
+	    return buf->at(i);
+    }
+
+    int getBufferSize() {
+	    return buf->getSize();
+    }
+   
     void setStatus(Status st) {
       buf->at(index)->setStatus(st);
     }
