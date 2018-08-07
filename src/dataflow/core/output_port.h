@@ -41,7 +41,7 @@ namespace df {
     T * data;
     Buffer<T> * buf;
     int index;
-    std::vector<InputPort<T>*> nextPorts; /**< A list of the next ports. A subclass actor must add its actors to this list */
+    std::vector<IPort *> nextPorts; /**< A list of the next ports. A subclass actor must add its actors to this list */
     
     ClientSocket * sock;
     int chsize;
@@ -163,10 +163,9 @@ namespace df {
       if ( i < 0 || i > nextPorts.size() ) {
 	index = nextPorts.size();
       }
-      InputPort<T> * in = static_cast<InputPort<T>*>(n);
-      nextPorts.insert(nextPorts.begin()+index, in);
-      this->increaseLinked();
-      in->setBuffer(buf);
+      nextPorts.insert(nextPorts.begin()+index, n);
+      increaseLinked();
+      n->setBuffer(buf);
       return 0;
     } 
 

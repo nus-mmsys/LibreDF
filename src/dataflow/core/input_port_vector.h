@@ -91,7 +91,7 @@ namespace df {
 	    taccept.join();
     }
 
-    void setBuffer(Buffer<T> * b) {
+    void setBuffer(BufferInfc * b) {
       for (auto in : inputs) {
 	      if (in->getLinked() < 1) {
 		      increaseLinked();

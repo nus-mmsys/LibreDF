@@ -113,6 +113,7 @@ namespace df {
     virtual void startAccept() = 0;
     virtual void waitAccept() = 0;
     virtual void listen(int portnb) = 0;
+    virtual void setBuffer(BufferInfc * buf) = 0;
     virtual ~IPort() {
 	delete sock;
     }

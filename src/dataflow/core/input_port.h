@@ -94,8 +94,8 @@ namespace df {
 	    return sock->getport();
     }
 
-    void setBuffer(Buffer<T> * b) {
-      buf = b;
+    void setBuffer(BufferInfc * b) {
+      buf = static_cast<Buffer<T> *>(b);
       buf->addConsumer();
       increaseLinked();	
     }
