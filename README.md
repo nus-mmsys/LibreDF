@@ -2,7 +2,7 @@
 
 ## Introduction
 
-TMF models an application as a directected graph of actors. Tokens are abstract data flowing on the edges. Each actor performs part of the whole computation.
+TMF models an application as a directed graph of actors. Tokens are abstract data flowing on the edges. Each actor performs part of the whole computation.
 
 This repository contains the following tools :
 
