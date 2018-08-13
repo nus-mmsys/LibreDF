@@ -273,6 +273,9 @@ CvtColor::~CvtColor() {
         StringConsumer      % reads a string.
         StringProducer      % sends a string ["1".."100"].
 
+## Parallelization
+
+## Distribution
 
 ## Getting started
 
