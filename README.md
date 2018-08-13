@@ -82,19 +82,19 @@ df canny {
     actor B {
     	computation = CvtColor;
 	host = 192.168.1.10;
-	input_port = 7007;
+	input_port = 7300;
     }
     actor C {
     	computation = Canny;
 	threshold = 100;
 	ratio = 2;
 	host = 192.168.1.9;
-	input_port = 7008;
+	input_port = 7200;
     }
     actor D {
     	computation = ImageWrite;
 	host = 192.168.1.10;
-	input_port = 7009;
+	input_port = 7100;
     }
     parameter {
 	distributed = true;
