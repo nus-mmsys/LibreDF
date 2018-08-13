@@ -157,7 +157,7 @@ CvtColor::CvtColor(const string& name) : Actor(name) {
 
 void CvtColor::init() {
   if (!propEmpty("cvt"))
-        cvt = getProp("cvt");
+        cvt = getPropInt("cvt");
   else
         cvt = CV_BGR2GRAY;
 }
