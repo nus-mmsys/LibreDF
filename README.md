@@ -4,17 +4,6 @@
 
 TMF is a framework for modelling system programs with a dataflow model. A dataflow model is a directed graph in which nodes represent computation tasks called actors and edges represent communication between tasks. Modeling system programs with dataflow allows programs to be parallelized and distributed.
 
-This repository contains the following tools :
-
-- tmf : displays and analyses the graph and runs the graph on shared memory and on tcp locally.
-- tmf-deploy : deploys a graph on multiple servers.
-- tmf-server : runs part of the graph which is deployed on a specific server.
-
-The repository contains the following libraries :
-
-- libdataflow : dataflow, actor, input/output port, buffer, token, synchronizer, and socket implementation as well as actor implementations and token serialization and deserialization.
-- libtmfparser : parser for Dataflow Intechange Format (DIF)
-
 ## Application development
 
 Application developers specify the application graph in Dataflow Interchange Format (DIF). The topology of the graph including the nodes and edges is specified in the section. Each actor has a number of properties that can specify the actor in the actor section. These properties are metadata that the actor needs during its execution (e.g. its computational behavior). Parameters of the dataflow can be specified in the parameter section.
@@ -275,7 +264,25 @@ CvtColor::~CvtColor() {
 
 ## Parallelization
 
+Data parallelization is a mean to improve the latency and throughput of a dataflow. In data parallelization a token is split into several tokens to be processed by different actors in parallel.
+
+Two special actors called ```MatMerge``` and ```MatSplit``` are provided in TMF for splitting and merging OpenCV ```Mat``` structure. These actors create ports of variable arity using ```createInputPortVector``` and ```createOutputPortVector```.
+
 ## Distribution
+
+If the bandwidth is high enough so that the execution of an actor can be done faster on a remote machine, the actor can be distributed. TMF provides support for such actor distribution using two tools : 
+
+- tmf-server : It runs on all machines hosting actors and runs part of the graph deployed on a server.
+- tmf-deploy : It deploys a dataflow on multiple servers.
+
+The application developer specifies on which machine and which port each actor should run. Then the specification (in DIF format) is passed to the tmf-deploy in order to send actors specification to the corresponding machines.
+
+## Libraries
+
+The repository contains the following libraries :
+
+- libdataflow : dataflow, actor, input/output port, buffer, token, synchronizer, and socket implementation as well as actor implementations and token serialization and deserialization.
+- libtmfparser : parser for Dataflow Intechange Format (DIF)
 
 ## Getting started
 
@@ -293,17 +300,23 @@ CvtColor::~CvtColor() {
 
 #### tmf
 
+```tmf``` displays and analyses the graph and runs the graph on shared memory and on tcp locally.
+
 ```bash
   ./tmf <df file> (e.g., ../test/opencv/pedestrian_detection.df)
 ```
 
 #### tmf-server
 
+```tmf-server``` runs part of the graph deployed on a server.
+
 ```bash
   ./tmf-server
 ```
 
 #### tmf-deploy
+
+```tmf-deploy``` deploys a dataflow on multiple servers.
 
 ```bash
   ./tmf-deploy <df file> (e.g., ../test/opencv/canny.df)
