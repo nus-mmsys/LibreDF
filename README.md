@@ -2,7 +2,7 @@
 
 ## Introduction
 
-TMF models an application as a directed graph of actors. Tokens are abstract data flowing on the edges. Each actor performs part of the whole computation.
+TMF is a framework for modelling system programs with a dataflow model. A dataflow model is a directed graph in which nodes represent computation tasks called actors and edges represent communication between tasks. Modeling system programs with dataflow allows programs to be parallelized and distributed.
 
 This repository contains the following tools :
 
@@ -15,9 +15,9 @@ The repository contains the following libraries :
 - libdataflow : dataflow, actor, input/output port, buffer, token, synchronizer, and socket implementation as well as actor implementations and token serialization and deserialization.
 - libtmfparser : parser for Dataflow Intechange Format (DIF)
 
-## Application development (Dataflow Interchange Format)
+## Application development
 
-Application developers specify the topology of the graph with its parameters as well as the properties of the actors. If an application is distributed, the host and port of actors must be also specified.
+Application developers specify the application graph in Dataflow Interchange Format (DIF). The topology of the graph including the nodes and edges is specified in the section. Each actor has a number of properties that can specify the actor in the actor section. These properties are metadata that the actor needs during its execution (e.g. its computational behavior). Parameters of the dataflow can be specified in the parameter section.
 
 ```
 df <name> {
@@ -39,6 +39,7 @@ df <name> {
 
 
 ### Example (pedestrian detection)
+
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
 
 ```
@@ -67,7 +68,7 @@ df pedestrian_detection {
 ```
 
 ### Example (distributed canny edge detection)
-This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections to a canny edge detector, and another actor to write the decoded frames to png files.
+This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections to a color convertor and a canny edge detector, and another actor to write the decoded frames to png files.
 ```
 df canny {
     topology {
@@ -106,7 +107,7 @@ df canny {
 
 ## Actor developement
 
-New actors must be placed in the ```src/dataflow/actors``` folder. An actor inherits from the Actor class and defines a set of ports and their data type. The actor then implements ```init()``` and ```run()``` functions.
+TMF provides APIs for actor developers. An actor inherits from the Actor class and defines a set of ports and their data type while construction. During the initialization, the actor can read the properties set in the DIF. During the execution, the actor reads from the input ports and write to the output ports. Finally the actor destroys its ports. An actor implements ```init()``` and ```run()``` functions and is placed in the ```src/dataflow/actors``` folder. 
 
 The followinf APIs are provided for actor developers :
 
