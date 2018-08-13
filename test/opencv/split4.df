@@ -7,43 +7,51 @@ df split4 {
     	computation = VideoCapture;
 	file_name = pedestrian.mp4;
 	host = 127.0.0.1;
+	cpu = 0;
     }
     actor B {
     	computation = MatSplit;
 	level = 2;
 	host = 127.0.0.1;
 	input_port = 7700;
+	cpu = 0;
     }
     actor C1 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7600;
+	cpu = 3;
     }
     actor C2 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7500;
+	cpu = 2;
     }
     actor C3 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7400;
+	cpu = 1;
     }
     actor C4 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7300;
+	cpu = 0;
     }
     actor D {
     	computation = MatMerge;
 	level = 2;
 	input_port = 7200;
 	host = 127.0.0.1;
+	cpu = 3;
     }
     actor E {
     	computation = ImageWrite;
 	input_port = 7100;
 	host = 127.0.0.1;
+	cpu = 3;
     }
     parameter {
 	distributed = false;

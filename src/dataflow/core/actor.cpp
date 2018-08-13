@@ -150,11 +150,16 @@ void Actor::startInit() {
 
 void Actor::startRun(int cpu) {
 
+  int cpuid = cpu;
+  if (!propEmpty("cpu")) {
+	  cpuid = getPropInt("cpu");
+  }
+  
   trun = thread(&Actor::runActor, this);
  
   cpu_set_t cpuset;
   CPU_ZERO(&cpuset);
-  CPU_SET(cpu, &cpuset);
+  CPU_SET(cpuid, &cpuset);
 
   int rc = pthread_setaffinity_np(trun.native_handle(), sizeof(cpu_set_t), &cpuset);
   if (rc != 0)
