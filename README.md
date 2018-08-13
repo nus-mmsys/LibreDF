@@ -110,11 +110,10 @@ New actors must be placed in the ```src/dataflow/actors``` folder. An actor inhe
 
 The followinf APIs are provided for actor developers :
 
-- createInputPort, createOutputPort : Create ports
-- propEmpty, getProp, getPropInt, getPropFloat : Initialize actors and get the properties
-- consume, release : Read from input ports
-- produce, release : Write on output ports
-- destroyPort : Destroy ports
+- Construction: create ports (createInputPort, createOutputPort, createInputPortVector, createOutputPortVector)
+- Initiliazation: get actor' properties (propEmpty, getProp, getPropInt, getPropFloat)
+- Execution: read from input ports (consume), write on output ports (produce), and release resources (release)
+- Destruction: destroy ports (destroyPort) 
 
 ### Example 
 
