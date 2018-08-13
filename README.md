@@ -306,6 +306,13 @@ The repository contains the following libraries :
   ./tmf <df file> (e.g., ../test/opencv/pedestrian_detection.df)
 ```
 
+##### Commands
+
+	graph		        display the graph.
+	h		        display help menu.
+	run		        run the graph on shared memory.
+	runtcp		        run the graph on tcp.
+
 #### tmf-server
 
 ```tmf-server``` runs part of the graph deployed on a server.
@@ -321,14 +328,6 @@ The repository contains the following libraries :
 ```bash
   ./tmf-deploy <df file> (e.g., ../test/opencv/canny.df)
 ```
-
-
-### Commands (tmf)
-
-	graph		        display the graph.
-	h		        display help menu.
-	run		        run the graph on shared memory.
-	runtcp		        run the graph on tcp.
 
 ### Folder structure
 
