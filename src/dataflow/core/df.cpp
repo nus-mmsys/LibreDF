@@ -313,6 +313,9 @@ void Dataflow::run() {
 
   int cpunb = std::thread::hardware_concurrency();
   int cpuid = 0; 
+
+  tstart = clock();
+
   for (auto f : actors) {
     f.second->startRun(cpuid);
     cpuid = (cpuid + 1) % cpunb;
@@ -323,6 +326,9 @@ void Dataflow::run() {
   for (auto f : actors) {
     f.second->waitRun();
   }
+  
+  tend = clock();
+  std::cout << "Execution time = " << double(tend-tstart)/CLOCKS_PER_SEC << "\n";
  
   status = DataflowStatus::STOPPED;
 

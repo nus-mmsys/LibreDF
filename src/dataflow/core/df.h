@@ -68,6 +68,8 @@ namespace df {
     
     void discovery();
 
+    clock_t tstart, tend;
+
   public:
 
     using actor_iter = std::map<std::string, Actor *>::const_iterator;	
