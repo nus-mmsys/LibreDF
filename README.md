@@ -119,60 +119,60 @@ The followinf APIs are provided for actor developers :
 ### Example 
 
 ```c++
-// add.h
+// cvtcolor.h
 
 #include "core/df.h"
 #include "tokens/opencv/mat.h"
 #include <opencv2/core/core.hpp>
+#include <opencv2/core/imgproc.hpp>
 
-class Add: public df::Actor {
+class CvtColor: public df::Actor {
 private:
   cv::Mat frame;
-  df::InputPort<df::Mat> * input1;
-  df::InputPort<df::Mat> * input2;
+  df::InputPort<df::Mat> * input;
   df::OutputPort<df::Mat> * output;
-  static df::ActorRegister<Add> reg;
+  int cvt;
+  static df::ActorRegister<CvtColor> reg;
 public:
-  Add(const string& name);
+  CvtColor(const string& name);
   virtual void init();
   virtual void run();
-  virtual ~Add();
+  virtual ~CvtColor();
 };
 ```
 
 ```c++
-// add.cpp
+// cvtcolor.cpp
 
-#include "add.h"
+#include "cvtcolor.h"
 
 using namespace df;
 
-ActorRegister<Add> Add::reg("Add");
+ActorRegister<CvtColor> CvtColor::reg("CvtColor");
 
-Add::Add(const string& name) : Actor(name) {
-  input1 = createInputPort<df::Mat>("input1");
-  input2 = createInputPort<df::Mat>("input2");
+CvtColor::CvtColor(const string& name) : Actor(name) {
+  input = createInputPort<df::Mat>("input");
   output = createOutputPort<df::Mat>("output");
 }
 
-void Add::init() {
-  // Initializations
+void CvtColor::init() {
+  if (!propEmpty("cvt"))
+        cvt = getPropInt("cvt");
+  else
+        cvt = CV_BGR2GRAY;
 }
 
-void Add::run() {
-  auto in1 = consume(input1);	
-  auto in2 = consume(input2);	
+void CvtColor::run() {
+  auto in = consume(input);
   auto out = produce(output);
-  out->set(*in1->get() + *in2->get());
-  log("sending "+to_string(stepno));
-  release(input1);
-  release(input2);
+  cv::cvtColor(*in->get(), *out->get(), cvt);
+  log("sending frame "+to_string(stepno));
+  release(input);
   release(output);
 }
 
-Add::~Add() {
-  destroyPort(input1);
-  destroyPort(input2);
+CvtColor::~CvtColor() {
+  destroyPort(input);
   destroyPort(output);
 }
 ```
