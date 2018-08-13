@@ -306,7 +306,7 @@ The repository contains the following libraries :
   ./tmf <df file> (e.g., ../test/opencv/pedestrian_detection.df)
 ```
 
-```tmf commands```
+The following commands can be used.
 
 	graph		        display the graph.
 	h		        display help menu.
