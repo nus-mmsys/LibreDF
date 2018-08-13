@@ -205,6 +205,8 @@ Add::~Add() {
                               sends the idct of the input.
         Idft                 % output:Mat = idft(input1:Mat) ;
                               sends the idft of the input.
+	MatMerge            % splits a frame into tiles
+	MatSplit            % merges the tiles frames into one frame.
         Multiply            % output:Mat = multiply(input1:Mat, input2:Mat, scale) ;
                               sends the per-element scaled multiplication between
                               intput1 and input2.
