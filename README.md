@@ -98,7 +98,7 @@ df canny {
 
 TMF provides APIs for actor developers. An actor inherits from the Actor class and defines a set of ports and their data type while construction. During the initialization, the actor can read the properties set in the DIF. During the execution, the actor reads from the input ports and write to the output ports. Finally the actor destroys its ports. An actor implements ```init()``` and ```run()``` functions and is placed in the ```src/dataflow/actors``` folder. 
 
-The followinf APIs are provided for actor developers :
+The following functions are provided for actor developers :
 
 - Construction: create ports (createInputPort, createOutputPort, createInputPortVector, createOutputPortVector)
 - Initiliazation: get actor' properties (propEmpty, getProp, getPropInt, getPropFloat)
