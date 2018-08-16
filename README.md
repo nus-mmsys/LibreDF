@@ -9,9 +9,7 @@ TMF is a framework for modeling system programs with a dataflow model. A dataflo
 Application developers specify the application graph in Dataflow Interchange Format (DIF). DIF is a general specification format for arbitrary dataflow models. TMF implements a subset of DIF explained below.
 
 - Topology: The topology of the graph including the nodes and edges is specified in the ```topology``` module.
-
 - Actors: Each actor has a number of properties that can be specified in the ```actor``` module. These properties are metadata that the actor needs during its execution (e.g. its computational behavior).
-
 - Parameters: Parameters of the dataflow can be specified in the ```parameter``` module. 
 
 ```
