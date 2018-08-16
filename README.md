@@ -2,7 +2,7 @@
 
 ## Introduction
 
-TMF is a framework for modeling system programs with a dataflow model. A dataflow model is a directed graph in which nodes represent computation tasks (called actors) and edges represent communication between a pair of actors. Modeling system programs with dataflow allows programs to be parallelized and distributed. TMF implements some OpenCV actors.
+TMF is a framework for modeling stream processing system programs with a dataflow model. A dataflow model is a directed graph in which nodes represent computation tasks (called actors) and edges represent communication between a pair of actors. Modeling stream processing system programs with dataflow allows programs to be parallelized and distributed. TMF implements some OpenCV actors.
 
 ## Application development
 
