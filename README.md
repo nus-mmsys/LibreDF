@@ -285,22 +285,6 @@ TMF provides support for such actor distribution using two tools.
 
 The application developer specifies on which machine and which port each actor should run. Then the specification (in DIF format) is passed to the tmf-deploy. The dataflow must also specify the host on which the actor discovery service is running, so that the actors can find the machine addresses and port number of the machine they need to connect to.
 
-```
-df canny {
-    topology ...
-    actor C {
-        computation = Canny;
-        host = 192.168.1.9;
-        input_port = 7007;
-    }
-    parameter {
-        distributed = true;
-        discovery_host = 192.168.1.7;
-        discovery_port = 7000;
-    }
-}
-```
-
 ## Libraries
 
 The repository contains the following libraries :
