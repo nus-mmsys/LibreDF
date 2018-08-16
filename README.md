@@ -100,14 +100,12 @@ df canny {
 
 ## Actor developement
 
-TMF provides APIs for actor developers. An actor inherits from the Actor class and defines a set of ports and their data type while construction. During the initialization, the actor can read the properties set in the DIF. During the execution, the actor reads from the input ports and write to the output ports. Finally the actor destroys its ports. An actor implements ```init()``` and ```run()``` functions and is placed in the ```src/dataflow/actors``` folder. 
+TMF provides functions for actor developers. An actor inherits from the ```Actor``` class and defines a set of ports and their data type while construction. During the initialization, the actor can read the properties set in the dataflow specification in DIF. During the execution, the actor reads from the input ports and write to the output ports. Finally the actor destroys its ports.
 
-The following functions are provided for actor developers :
-
-- Construction: create ports (createInputPort, createOutputPort, createInputPortVector, createOutputPortVector)
-- Initiliazation: get actor' properties (propEmpty, getProp, getPropInt, getPropFloat)
-- Execution: read from input ports (consume), write on output ports (produce), and release resources (release)
-- Destruction: destroy ports (destroyPort) 
+- Construction: An actor can create input and output ports using ```createInputPort``` and ```createOutputPort```. For ports with variable number of inputs and outputs ```createInputPortVector``` and ```createOutputPortVector``` are used.
+- Initialization: During the initialization phase, the actor can read its properties. ```propEmpty``` checks if a property value is empty. To retrieve the value of a property ```getProp```, ```getPropInt```, and ```getPropFloat``` are used (for string, integer, and float).
+- Execution: During the execution, the actor needs to read from its inputs and to write to its outputs. ```consume``` is called for reading from input ports and ```produce``` for writing on output ports. The ```release``` function is called for releasing the buffers of the ports.
+- Destruction: To destroy a port, ```destroyPort``` function is called.
 
 ### Example 
 
