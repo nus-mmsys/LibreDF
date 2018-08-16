@@ -268,9 +268,11 @@ The following actor types are already implemented.
 
 ## Parallelization
 
-Data parallelization is a mean to improve the latency and throughput of a dataflow. In data parallelization a token is split into several tokens to be processed by different actors in parallel.
+Data parallelization is a mean to improve the latency and throughput of a dataflow. In data parallelization, a token is split into several tokens to be processed by different actors in parallel.
 
-Two special actors called ```MatMerge``` and ```MatSplit``` are provided in TMF for splitting and merging OpenCV ```Mat``` structure. These actors create ports of variable arity using ```createInputPortVector``` and ```createOutputPortVector```.
+Data parallelization is possible only if the smaller tokens after splitting do not have dependencies. For example, in the Canny edge detection, after capturing a video frame, it is possible to split a token into multiple tokens and perform Canny edge detection on smaller parts.
+
+Two special actors called ```MatSplit``` and ```MatMerge``` are provided in TMF for splitting and merging OpenCV ```Mat``` structure. These actors use the ports of variable arity (```createInputPortVector``` and ```createOutputPortVector```).
 
 ## Distribution
 
