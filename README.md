@@ -170,6 +170,8 @@ CvtColor::~CvtColor() {
 
 ### Actor types
 
+The following actor types are already implemented.
+
     machine-learning
         Convolution         % output:Mat = filter2D(input:Mat) ;
                               /* with modified kernel and anchor */
