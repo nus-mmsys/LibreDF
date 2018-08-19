@@ -1,4 +1,4 @@
-df canny {
+df canny4 {
     topology {
         nodes = A,B,C1,C2,C3,C4,D1,D2,D3,D4,E,F;
         edges = e1(A,B), e21(B,C1), e22(B,C2), e23(B,C3), e24(B,C4), e31(C1,D1), e32(C2,D2), e33(C3,D3), e34(C4,D4), e41(D1,E), e42(D2,E), e43(D3,E), e44(D4,E), e4(E,F);
