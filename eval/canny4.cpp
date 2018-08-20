@@ -32,6 +32,7 @@ public:
 			cons.wait(locker);
 	}
 	void consumerUnlock() {
+		lock_guard<mutex> locker(mux);
 		consumed = true;
 		prod.notify_all();
 	}
@@ -41,6 +42,7 @@ public:
 			prod.wait(locker);
 	}
 	void producerUnlock() {
+		lock_guard<mutex> locker(mux);
 		consumed = false;
 		cons.notify_all();
 	}
