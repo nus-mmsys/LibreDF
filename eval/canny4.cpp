@@ -10,16 +10,37 @@
 using namespace std;
 using namespace cv;
 
+int cvt = CV_BGR2GRAY;
+int thrshold = 100;
+int rtio = 2;
+int kernel_size = 3;
+int stepno = 0;
+
 struct PMat {
 	Mat mat;
+	Mat gray;
+	Mat canny;
+	bool consumed;
 	condition_variable cons;
 	condition_variable prod;
 	mutex mux;
 };
 
 void canny_detection(PMat * pmat) {
+	
+	while(1) {
 
-	cout << "canny\n";
+		unique_lock<mutex> locker(pmat->mux);
+		if (pmat->consumed) {
+			pmat->cons.wait(locker);
+		}
+		
+		cv::cvtColor(pmat->mat, pmat->gray, cvt);
+		cv::blur(pmat->gray, pmat->gray, Size(3,3));  
+		cv::Canny(pmat->gray, pmat->canny, thrshold, thrshold*rtio, kernel_size);
+		pmat->consumed = true;
+		pmat->prod.notify_all();
+	}	
 }
 
 int main(int argc, char ** argv) {
@@ -28,12 +49,7 @@ int main(int argc, char ** argv) {
 	if (argc >= 2) {
 		file_name = argv[1];
 	}
-	Mat frame, gray, canny;
-	int cvt = CV_BGR2GRAY;
-	int threshold = 100;
-	int ratio = 2;
-	int kernel_size = 3;
-	int stepno = 0;
+	Mat frame;
 	int level = 2;
 	PMat * out[level];
 	thread * th[level];
@@ -66,17 +82,18 @@ int main(int argc, char ** argv) {
 		for (int j=0; j<level ; j++) {
 			for (int i=0; i<level ; i++) {
 				Rect tile(i*tilew, j*tileh, tilew, tileh);
-				//out[j*level+i].mux.lock();
-				//out[j*level+i].mat = (frame(tile)).clone();
-				//out[j*level+i].mux.unlock();
+				int idx = j*level+i;
+				unique_lock<mutex> locker(out[idx]->mux);
+				if (!out[idx]->consumed) {
+					out[idx]->prod.wait(locker);
+				}
+				out[idx]->mat = (frame(tile)).clone();
+				out[idx]->consumed = false;
+				out[idx]->cons.notify_all();
 			}
 		}
-							
-		cv::cvtColor(frame, gray, cvt);
-		cv::blur(gray, gray, Size(3,3));  
-		cv::Canny(gray, canny, threshold, threshold*ratio, kernel_size);
 		file_out = dfout_path + to_string(stepno) + ".png";
-		cv::imwrite(file_out, canny); 
+		//cv::imwrite(file_out, canny); 
 		*cap >> frame;
 		cout << "[" << stepno << "]" << " processing frame " << "\n";
 		stepno++;
