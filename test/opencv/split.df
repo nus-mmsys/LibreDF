@@ -14,32 +14,32 @@ df split {
 	level = 1;
 	host = 127.0.0.1;
 	input_port = 7500;
-	cpu = 0;
+	cpu = 1;
     }
     actor C {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7400;
-	cpu = 1;
+	cpu = 2;
     }
     actor D {
     	computation = Canny;
 	host = 127.0.0.1;
 	input_port = 7300;
-	cpu = 2;
+	cpu = 3;
     }
     actor E {
     	computation = MatMerge;
 	level = 1;
 	input_port = 7200;
 	host = 127.0.0.1;
-	cpu = 3;
+	cpu = 4;
     }
     actor F {
     	computation = ImageWrite;
 	input_port = 7100;
 	host = 127.0.0.1;
-	cpu = 3;
+	cpu = 5;
     }
     parameter {
 	distributed = false;
