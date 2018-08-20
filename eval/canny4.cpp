@@ -10,41 +10,59 @@
 using namespace std;
 using namespace cv;
 
-struct PMat {
-	Mat mat;
-	Mat gray;
-	Mat canny;
-	bool consumed;
-	bool last;
+class PMat {
+private:
 	condition_variable cons;
 	condition_variable prod;
 	mutex mux;
+	bool consumed;
+public:
+	Mat mat;
+	Mat gray;
+	Mat canny;
+	bool last;
+
+	PMat() {
+		last = false;
+		consumed = true;
+	}
+	void consumerLock() {
+		unique_lock<mutex> locker(mux);
+		while (consumed)
+			cons.wait(locker);
+	}
+	void consumerUnlock() {
+		consumed = true;
+		prod.notify_all();
+	}
+	void producerLock() {
+		unique_lock<mutex> locker(mux);
+		while (!consumed)
+			prod.wait(locker);
+	}
+	void producerUnlock() {
+		consumed = false;
+		cons.notify_all();
+	}
 };
 
 void canny_detection(PMat * pmat) {
-	
+	bool finished = false;
 	int cvt = CV_BGR2GRAY;
 	int thrshold = 100;
 	int rtio = 2;
 	int kernel_size = 3;
 
-	while(1) {
-
-		unique_lock<mutex> locker(pmat->mux);
-		if (pmat->consumed)
-			pmat->cons.wait(locker);
-		
+	while(!finished) {
+		pmat->consumerLock();
 		if (!pmat->last) {
 			cv::cvtColor(pmat->mat, pmat->gray, cvt);
 			cv::blur(pmat->gray, pmat->gray, Size(3,3));  
 			cv::Canny(pmat->gray, pmat->canny, thrshold, thrshold*rtio, kernel_size);
 		}
 
-		pmat->consumed = true;
-		pmat->prod.notify_all();
-
-		if (pmat->last)
-			break;
+		finished = pmat->last;
+		pmat->consumerUnlock();
 	}	
 }
 
@@ -69,8 +87,6 @@ int main(int argc, char ** argv) {
 
 	for (int i=0; i<level*level; i++) {
 		out[i] = new PMat();
-		out[i]->last = false;
-		out[i]->consumed = false;
 		th[i] = new thread(&canny_detection, out[i]);
 	}
 
@@ -91,12 +107,11 @@ int main(int argc, char ** argv) {
 			for (int i=0; i<level ; i++) {
 				Rect tile(i*tilew, j*tileh, tilew, tileh);
 				int idx = j*level+i;
-				unique_lock<mutex> locker(out[idx]->mux);
-				if (!out[idx]->consumed)
-					out[idx]->prod.wait(locker);
+			
+				out[idx]->producerLock();	
 				out[idx]->mat = (frame(tile)).clone();
-				out[idx]->consumed = false;
-				out[idx]->cons.notify_all();
+				cout << "channels " << out[idx]->mat.channels() << "\n";
+				out[idx]->producerUnlock();
 			}
 		}
 		file_out = dfout_path + to_string(stepno) + ".png";
@@ -107,12 +122,9 @@ int main(int argc, char ** argv) {
 	}
 
 	for (int i=0; i<level*level ; i++) {
-		unique_lock<mutex> locker(out[i]->mux);
-		if (!out[i]->consumed)
-			out[i]->prod.wait(locker);
+		out[i]->producerLock();
 		out[i]->last = true;
-		out[i]->consumed = false;
-		out[i]->cons.notify_all();
+		out[i]->producerUnlock();
 	}
 		
 	for (int i=0; i<level*level; i++) {
