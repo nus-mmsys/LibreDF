@@ -52,7 +52,6 @@ string dfout_path = home_path + "/Documents/df/outputs/";
 int level;
 int tilew;
 int tileh;
-int type;
 PMat ** pmat;
 PMat ** pcanny;
 
@@ -132,7 +131,6 @@ int main(int argc, char ** argv) {
 	
 	tilew = frame.cols / level;
         tileh = frame.rows / level;
-	type = frame.type();
 	
 	for (int i=0; i<level*level; i++) {
 		pmat[i] = new PMat();
