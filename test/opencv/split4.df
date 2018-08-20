@@ -14,68 +14,68 @@ df split4 {
 	level = 2;
 	host = 127.0.0.1;
 	input_port = 8100;
-	cpu = 0;
+	cpu = 1;
     }
     actor C1 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 8000;
-	cpu = 3;
+	cpu = 2;
     }
     actor C2 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7900;
-	cpu = 2;
+	cpu = 3;
     }
     actor C3 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7800;
-	cpu = 1;
+	cpu = 4;
     }
     actor C4 {
     	computation = CvtColor;
 	host = 127.0.0.1;
 	input_port = 7700;
-	cpu = 0;
+	cpu = 5;
     }
     actor D1 {
     	computation = Canny;
 	host = 127.0.0.1;
 	input_port = 7600;
-	cpu = 3;
+	cpu = 2;
     }
     actor D2 {
     	computation = Canny;
 	host = 127.0.0.1;
 	input_port = 7500;
-	cpu = 2;
+	cpu = 3;
     }
     actor D3 {
     	computation = Canny;
 	host = 127.0.0.1;
 	input_port = 7400;
-	cpu = 1;
+	cpu = 4;
     }
     actor D4 {
     	computation = Canny;
 	host = 127.0.0.1;
 	input_port = 7300;
-	cpu = 0;
+	cpu = 5;
     }
     actor E {
     	computation = MatMerge;
 	level = 2;
 	input_port = 7200;
 	host = 127.0.0.1;
-	cpu = 3;
+	cpu = 6;
     }
     actor F {
     	computation = ImageWrite;
 	input_port = 7100;
 	host = 127.0.0.1;
-	cpu = 3;
+	cpu = 7;
     }
     parameter {
 	distributed = false;
