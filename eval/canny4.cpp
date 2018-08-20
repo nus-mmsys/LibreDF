@@ -10,17 +10,12 @@
 using namespace std;
 using namespace cv;
 
-int cvt = CV_BGR2GRAY;
-int thrshold = 100;
-int rtio = 2;
-int kernel_size = 3;
-int stepno = 0;
-
 struct PMat {
 	Mat mat;
 	Mat gray;
 	Mat canny;
 	bool consumed;
+	bool last;
 	condition_variable cons;
 	condition_variable prod;
 	mutex mux;
@@ -28,18 +23,28 @@ struct PMat {
 
 void canny_detection(PMat * pmat) {
 	
+	int cvt = CV_BGR2GRAY;
+	int thrshold = 100;
+	int rtio = 2;
+	int kernel_size = 3;
+
 	while(1) {
 
 		unique_lock<mutex> locker(pmat->mux);
-		if (pmat->consumed) {
+		if (pmat->consumed)
 			pmat->cons.wait(locker);
-		}
 		
-		cv::cvtColor(pmat->mat, pmat->gray, cvt);
-		cv::blur(pmat->gray, pmat->gray, Size(3,3));  
-		cv::Canny(pmat->gray, pmat->canny, thrshold, thrshold*rtio, kernel_size);
+		if (!pmat->last) {
+			cv::cvtColor(pmat->mat, pmat->gray, cvt);
+			cv::blur(pmat->gray, pmat->gray, Size(3,3));  
+			cv::Canny(pmat->gray, pmat->canny, thrshold, thrshold*rtio, kernel_size);
+		}
+
 		pmat->consumed = true;
 		pmat->prod.notify_all();
+
+		if (pmat->last)
+			break;
 	}	
 }
 
@@ -50,6 +55,7 @@ int main(int argc, char ** argv) {
 		file_name = argv[1];
 	}
 	Mat frame;
+	int stepno = 0;
 	int level = 2;
 	PMat * out[level];
 	thread * th[level];
@@ -63,6 +69,8 @@ int main(int argc, char ** argv) {
 
 	for (int i=0; i<level*level; i++) {
 		out[i] = new PMat();
+		out[i]->last = false;
+		out[i]->consumed = false;
 		th[i] = new thread(&canny_detection, out[i]);
 	}
 
@@ -84,9 +92,8 @@ int main(int argc, char ** argv) {
 				Rect tile(i*tilew, j*tileh, tilew, tileh);
 				int idx = j*level+i;
 				unique_lock<mutex> locker(out[idx]->mux);
-				if (!out[idx]->consumed) {
+				if (!out[idx]->consumed)
 					out[idx]->prod.wait(locker);
-				}
 				out[idx]->mat = (frame(tile)).clone();
 				out[idx]->consumed = false;
 				out[idx]->cons.notify_all();
@@ -99,6 +106,15 @@ int main(int argc, char ** argv) {
 		stepno++;
 	}
 
+	for (int i=0; i<level*level ; i++) {
+		unique_lock<mutex> locker(out[i]->mux);
+		if (!out[i]->consumed)
+			out[i]->prod.wait(locker);
+		out[i]->last = true;
+		out[i]->consumed = false;
+		out[i]->cons.notify_all();
+	}
+		
 	for (int i=0; i<level*level; i++) {
 		th[i]->join();
 	}
