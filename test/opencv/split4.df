@@ -79,6 +79,7 @@ df split4 {
     }
     parameter {
 	distributed = false;
+	scheduling = true;
 	discovery_host = 127.0.0.1;
 	discovery_port = 7000;
     }
