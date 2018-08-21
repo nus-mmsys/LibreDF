@@ -59,7 +59,7 @@ namespace df {
     std::map<std::string, Actor *> actors; /**< The set of all actors in the dataflow. */
     std::map<std::string, Edge *> edges; /**< The set of all actors in the dataflow. */
     std::map<std::string, Actor *> remoteactors; /**< The set of all remote actors in the dataflow. */
-    bool realtime, distributed;
+    bool realtime, distributed, logging;
     std::string dischost;
     int discport;
     Property prop;

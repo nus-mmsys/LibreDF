@@ -187,6 +187,9 @@ void Actor::initActor() {
 
   init();
 
+  if (!propEmpty("logging"))
+	  logging = getPropBool("logging");
+
   if (!propEmpty("realtime"))
 	  realtime = getPropBool("realtime");
 

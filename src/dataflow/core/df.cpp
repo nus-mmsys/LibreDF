@@ -24,6 +24,7 @@ using namespace std;
 Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::NONE) {
 	realtime = false;
 	distributed = false;
+	logging = true;
 	srvsock = new ServerSocket("df-srv:"+name);
 	clnsock = new ClientSocket("df-cln:"+name);
 }
@@ -243,7 +244,10 @@ void Dataflow::discovery() {
 }
 
 void Dataflow::init() {
-	
+
+  if (!prop.propEmpty("logging"))
+	  logging = prop.getPropBool("logging");
+
   if (!prop.propEmpty("distributed"))
 	  distributed = prop.getPropBool("distributed");
 
@@ -257,6 +261,7 @@ void Dataflow::init() {
 	  discport = prop.getPropInt("discovery_port"); 
 
   for (auto f : actors) {
+    f.second->setProp<bool>("logging", logging);
     f.second->setProp<bool>("realtime", realtime);
     f.second->setProp<bool>("distributed", distributed);
   }
