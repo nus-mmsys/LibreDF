@@ -28,6 +28,7 @@ Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
   df_path = home_path + "/Documents/df/";  
   dfout_path = df_path + "outputs/";
   logging = true;
+  scheduling = true;
 }
 
 std::string Actor::getName() {
@@ -159,14 +160,16 @@ void Actor::startRun(int cpu) {
   }
   
   trun = thread(&Actor::runActor, this);
- 
-  cpu_set_t cpuset;
-  CPU_ZERO(&cpuset);
-  CPU_SET(cpuid, &cpuset);
 
-  int rc = pthread_setaffinity_np(trun.native_handle(), sizeof(cpu_set_t), &cpuset);
-  if (rc != 0)
-	  log("error calling pthread_setaffinity_np");
+  if (scheduling) { 
+  	cpu_set_t cpuset;
+  	CPU_ZERO(&cpuset);
+  	CPU_SET(cpuid, &cpuset);
+
+  	int rc = pthread_setaffinity_np(trun.native_handle(), sizeof(cpu_set_t), &cpuset);
+  	if (rc != 0)
+		log("error calling pthread_setaffinity_np");
+  }
 }
 
 void Actor::waitInit() {

@@ -60,7 +60,8 @@ namespace df {
     clock_t tend;
     
     int cpuid;
-    bool logging;  
+    bool logging;
+    bool scheduling;  
   protected:
 
     std::string name; /**< The name of the actor */
