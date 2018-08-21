@@ -25,6 +25,7 @@ Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::NONE)
 	realtime = false;
 	distributed = false;
 	logging = true;
+	scheduling = true;
 	srvsock = new ServerSocket("df-srv:"+name);
 	clnsock = new ClientSocket("df-cln:"+name);
 }
@@ -248,6 +249,9 @@ void Dataflow::init() {
   if (!prop.propEmpty("logging"))
 	  logging = prop.getPropBool("logging");
 
+  if (!prop.propEmpty("scheduling"))
+	  scheduling = prop.getPropBool("scheduling");
+
   if (!prop.propEmpty("distributed"))
 	  distributed = prop.getPropBool("distributed");
 
@@ -262,6 +266,7 @@ void Dataflow::init() {
 
   for (auto f : actors) {
     f.second->setProp<bool>("logging", logging);
+    f.second->setProp<bool>("scheduling", scheduling);
     f.second->setProp<bool>("realtime", realtime);
     f.second->setProp<bool>("distributed", distributed);
   }

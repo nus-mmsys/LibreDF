@@ -193,6 +193,9 @@ void Actor::initActor() {
   if (!propEmpty("logging"))
 	  logging = getPropBool("logging");
 
+  if (!propEmpty("scheduling"))
+	  scheduling = getPropBool("scheduling");
+
   if (!propEmpty("realtime"))
 	  realtime = getPropBool("realtime");
 
