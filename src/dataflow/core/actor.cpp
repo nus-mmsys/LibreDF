@@ -27,6 +27,7 @@ Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
   home_path = std::getenv("HOME");
   df_path = home_path + "/Documents/df/";  
   dfout_path = df_path + "outputs/";
+  logging = true;
 }
 
 std::string Actor::getName() {
@@ -34,11 +35,13 @@ std::string Actor::getName() {
 }
 
 void Actor::log(std::string msg) {
-  cpuid = sched_getcpu();
-  string s = name + ": [" + to_string(stepno) + "] [" + to_string(now()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
-  iolock->lock(); 
-  std::cout << s;
-  iolock->unlock();
+  if (logging) {
+    cpuid = sched_getcpu();
+    string s = name + ": [" + to_string(stepno) + "] [" + to_string(now()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
+    iolock->lock(); 
+    std::cout << s;
+    iolock->unlock();
+  }
 }
 void Actor::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
