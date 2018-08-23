@@ -339,7 +339,12 @@ void Dataflow::run() {
   
   tend = clock();
   std::cout << "Execution time = " << double(tend-tstart)/CLOCKS_PER_SEC << "\n";
- 
+  /*
+  for (auto f : actors) {
+	std::cout << f.second->getName() << " = " << f.second->getElapsed() << "\n";
+  }
+  */
+
   status = DataflowStatus::STOPPED;
 
   if (distributed) {

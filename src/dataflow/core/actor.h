@@ -58,6 +58,7 @@ namespace df {
     std::chrono::high_resolution_clock::time_point hrtend; 
     clock_t tstart;
     clock_t tend;
+    double elapsed;
     
     int cpuid;
     bool logging;
@@ -84,6 +85,7 @@ namespace df {
      */ 
     void hstart();
     void hend(std::string msg); 
+    void calcElapsed();
     void start();
     void end(std::string msg); 
     unsigned long now();
@@ -445,6 +447,8 @@ namespace df {
     void destroyPort(Port * port) {
       delete port;
     }
+
+    double getElapsed();
 
     /*!
      * Destructor of the actor.

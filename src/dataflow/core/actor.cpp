@@ -29,6 +29,7 @@ Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
   dfout_path = df_path + "outputs/";
   logging = true;
   scheduling = true;
+  elapsed = 0;
 }
 
 std::string Actor::getName() {
@@ -244,11 +245,13 @@ void Actor::runActor() {
     }
   }
   while(getStatus() != EOS) {
+    start();
     if (realtime) {
 	    runRT();
     } else {
 	    run();
     }
+    calcElapsed();
     stepno++;
   }
   
@@ -271,6 +274,15 @@ void Actor::start() {
 void Actor::end(std::string msg) { 
 	tend = clock();
 	log(msg+" exect = "+std::to_string(double(tend - tstart)/CLOCKS_PER_SEC)); 
+}
+
+void Actor::calcElapsed() { 
+	tend = clock();
+	elapsed += double(tend - tstart)/CLOCKS_PER_SEC;
+}
+
+double Actor::getElapsed() {
+	return elapsed;
 }
 
 unsigned long Actor::now() {
