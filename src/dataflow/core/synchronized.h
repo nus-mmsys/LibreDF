@@ -45,7 +45,7 @@ namespace df {
     void addConsumer();
    
     /*!
-     * Acquiring consumer lock
+     * Acquiring and releasing consumer lock
      *
      * the consumer can acqure the lock only if 
      * 		(1) no producer is in critical section (producing=false)
@@ -66,14 +66,45 @@ namespace df {
      * 		    in the critical section (con_num--)
      */
     void consumerLock();
-    
     void consumerUnlock();
     
+    /*!
+     * Acquiring and releasing producer lock
+     *
+     * the producer can acqure the lock only if 
+     * 		(1) no consumer is in critical section (con_num=0)
+     * 		(2) the section is flaged as ready to producer (produced=false)
+     * 
+     * once the producer acquires the lock, it
+     * 		(1) flags the section as ready to consumer (produced=true)
+     * 		(2) sets a flag to notify the presence of producer 
+     * 		    in the critical section (producing=true)
+     * 
+     * once the producer exits the critical section, it
+     * 		(1) sets the flag to notify the absence of producer
+     * 		    in the critical section (producing=false)
+     */
     void producerLock();
-    
-    bool producerRTLock();
-    
     void producerUnlock();
+
+    /*!
+     * Acquiring real-time producer lock
+     *
+     * the producer can acqure the lock only if 
+     * 		(1) no consumer is in critical section (con_num=0)
+     * 		    if the consumer is in the critical section it returns
+     * 		    false, which gives extra information to the user
+     * 		    of the critical section.
+     * 		    In a circular buffer, the user of the 
+     * 		    critical section can decide to advance 
+     * 		    in the buffer and re-write old values.
+     * 
+     * once the producer acquires the lock, it
+     * 		(1) flags the section as ready to consumer (produced=true)
+     * 		(2) sets a flag to notify the presence of producer 
+     * 		    in the critical section (producing=true)
+     */
+    bool producerRTLock();
     
   };
   
