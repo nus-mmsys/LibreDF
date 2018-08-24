@@ -1,7 +1,7 @@
 df split4 {
     topology {
-        nodes = A,B1,B2,B3,B4,C1,C2,C3,C4,D,E;
-	edges = e21(A,B1), e22(A,B2), e23(A,B3), e24(A,B4), e31(B1,C1), e32(B2,C2), e33(B3,C3), e34(B4,C4), e41(C1,D), e42(C2,D), e43(C3,D), e44(C4,D), e4(D,E);
+        nodes = A,B1,B2,B3,B4,C1,C2,C3,C4,D;
+	edges = e21(A,B1), e22(A,B2), e23(A,B3), e24(A,B4), e31(B1,C1), e32(B2,C2), e33(B3,C3), e34(B4,C4), e41(C1,D), e42(C2,D), e43(C3,D), e44(C4,D);
     }
     actor A {
     	computation = VideoCaptureSplit;
@@ -13,63 +13,57 @@ df split4 {
     actor B1 {
     	computation = CvtColor;
 	host = 127.0.0.1;
-	input_port = 8000;
+	input_port = 7900;
 	cpu = 1;
     }
     actor B2 {
     	computation = CvtColor;
 	host = 127.0.0.1;
-	input_port = 7900;
+	input_port = 7800;
 	cpu = 2;
     }
     actor B3 {
     	computation = CvtColor;
 	host = 127.0.0.1;
-	input_port = 7800;
+	input_port = 7700;
 	cpu = 3;
     }
     actor B4 {
     	computation = CvtColor;
 	host = 127.0.0.1;
-	input_port = 7700;
+	input_port = 7600;
 	cpu = 4;
     }
     actor C1 {
     	computation = Canny;
 	host = 127.0.0.1;
-	input_port = 7600;
+	input_port = 7500;
 	cpu = 1;
     }
     actor C2 {
     	computation = Canny;
 	host = 127.0.0.1;
-	input_port = 7500;
+	input_port = 7400;
 	cpu = 2;
     }
     actor C3 {
     	computation = Canny;
 	host = 127.0.0.1;
-	input_port = 7400;
+	input_port = 7300;
 	cpu = 3;
     }
     actor C4 {
     	computation = Canny;
 	host = 127.0.0.1;
-	input_port = 7300;
+	input_port = 7200;
 	cpu = 4;
     }
     actor D {
-    	computation = MatMerge;
+    	computation = ImageWriteMerge;
 	level = 2;
-	input_port = 7200;
-	host = 127.0.0.1;
-	cpu = 5;
-    }
-    actor E {
-    	computation = ImageWrite;
 	input_port = 7100;
 	host = 127.0.0.1;
-	cpu = 6;
+	cpu = 5;
     }
     parameter {
 	distributed = false;
