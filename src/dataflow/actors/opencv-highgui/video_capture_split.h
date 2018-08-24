@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_VIDEO_CAPTURE_DIVIDE_H_
-#define DF_VIDEO_CAPTURE_DIVIDE_H_
+#ifndef DF_VIDEO_CAPTURE_SPLIT_H_
+#define DF_VIDEO_CAPTURE_SPLIT_H_
 
 #include "core/df.h"
 #include "tokens/opencv/mat.h"
@@ -31,7 +31,7 @@
 
 using namespace std;
 
-class VideoCaptureDivide: public df::Actor {
+class VideoCaptureSplit: public df::Actor {
   
 private:
 
@@ -41,17 +41,17 @@ private:
 
   df::OutputPortVector<df::Mat> * output;
  
-  static  df::ActorRegister<VideoCaptureDivide> reg;
+  static  df::ActorRegister<VideoCaptureSplit> reg;
 public:
   
-  VideoCaptureDivide(const string& name);
+  VideoCaptureSplit(const string& name);
   
   virtual void init();
   
   virtual void run();
   
-  virtual ~VideoCaptureDivide();
+  virtual ~VideoCaptureSplit();
   
 };
 
-#endif /* DF_VIDEO_CAPTURE_DIVIDE_H_ */
+#endif /* DF_VIDEO_CAPTURE_SPLIT_H_ */

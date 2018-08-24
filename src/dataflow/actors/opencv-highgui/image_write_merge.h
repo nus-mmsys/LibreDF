@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_IMAGE_WRITE_UNITE_H_
-#define DF_IMAGE_WRITE_UNITE_H_
+#ifndef DF_IMAGE_WRITE_MERGE_H_
+#define DF_IMAGE_WRITE_MERGE_H_
 
 #include "core/df.h"
 #include "tokens/opencv/mat.h"
@@ -30,26 +30,26 @@
 
 using namespace std;
 
-class ImageWriteUnite: public df::Actor {
+class ImageWriteMerge: public df::Actor {
   
 private:
 
   cv::Mat frame;
   std::string file_name;
 
-  df::InputPort<df::Mat> * input;
+  df::InputPortVector<df::Mat> * input;
  
-  static  df::ActorRegister<ImageWriteUnite> reg;
+  static  df::ActorRegister<ImageWriteMerge> reg;
 public:
   
-  ImageWriteUnite(const string& name);
+  ImageWriteMerge(const string& name);
   
   virtual void init();
   
   virtual void run();
   
-  virtual ~ImageWriteUnite();
+  virtual ~ImageWriteMerge();
   
 };
 
-#endif /* DF_IMAGE_WRITE_UNITE_H_ */
+#endif /* DF_IMAGE_WRITE_MERGE_H_ */

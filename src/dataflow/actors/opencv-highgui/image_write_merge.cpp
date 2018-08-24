@@ -16,23 +16,24 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "image_write_unite.h"
+#include "image_write_merge.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<ImageWriteUnite> ImageWriteUnite::reg("ImageWriteUnite");
+ActorRegister<ImageWriteMerge> ImageWriteMerge::reg("ImageWriteMerge");
 
-ImageWriteUnite::ImageWriteUnite(const string& name) : Actor(name){
-  input = createInputPort<df::Mat>("input");
+ImageWriteMerge::ImageWriteMerge(const string& name) : Actor(name){
+  input = createInputPortVector<df::Mat>("input");
 }
 
-void ImageWriteUnite::init() {
+void ImageWriteMerge::init() {
 
 }
 
-void ImageWriteUnite::run() {
+void ImageWriteMerge::run() {
 
+  /*
   df::Mat * in = consume(input);	
   frame = in->clone();
   log("writing image "+to_string(stepno));
@@ -40,9 +41,9 @@ void ImageWriteUnite::run() {
 
   file_name = dfout_path + std::to_string(stepno) + ".png";
   cv::imwrite(file_name, frame); 
-  
+  */
 }
 
-ImageWriteUnite::~ImageWriteUnite() {
+ImageWriteMerge::~ImageWriteMerge() {
   destroyPort(input);
 }
