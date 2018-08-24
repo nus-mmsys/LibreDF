@@ -119,6 +119,7 @@ int main(int argc, char ** argv) {
 	std::chrono::high_resolution_clock::time_point start, end; 
 	string file_in =  home_path + "/Documents/df/" + file_name;
 
+	std::cout << "Processing...\n";
 	start = std::chrono::high_resolution_clock::now();
 
 	VideoCapture * cap = new VideoCapture(file_in);
@@ -154,7 +155,7 @@ int main(int argc, char ** argv) {
 		}
 
 		*cap >> frame;
-		cout << "[" << stepno << "]" << " processing frame " << "\n";
+		//cout << "[" << stepno << "]" << " processing frame " << "\n";
 		stepno++;
 	}
 
