@@ -116,10 +116,10 @@ int main(int argc, char ** argv) {
 	pcanny = new PMat*[level];
 	thread * th[level];
 	thread * thmerge;
-	clock_t start, end;
+	std::chrono::high_resolution_clock::time_point start, end; 
 	string file_in =  home_path + "/Documents/df/" + file_name;
 
-	start = clock();
+	start = std::chrono::high_resolution_clock::now();
 
 	VideoCapture * cap = new VideoCapture(file_in);
 
@@ -168,7 +168,7 @@ int main(int argc, char ** argv) {
 		th[i]->join();
 	}
 	thmerge->join();
-	end = clock();
-	cout << "Execution time = "+to_string(double(end - start)/CLOCKS_PER_SEC) << "\n"; 
+	end = std::chrono::high_resolution_clock::now();
+	cout << "Execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count()  << " ms\n"; 
 	return 0;
 }
