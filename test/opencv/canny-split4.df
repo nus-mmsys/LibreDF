@@ -1,12 +1,11 @@
-df split4 {
+df canny-split4 {
     topology {
         nodes = A,B1,B2,B3,B4,C1,C2,C3,C4,D;
 	edges = e21(A,B1), e22(A,B2), e23(A,B3), e24(A,B4), e31(B1,C1), e32(B2,C2), e33(B3,C3), e34(B4,C4), e41(C1,D), e42(C2,D), e43(C3,D), e44(C4,D);
     }
     actor A {
     	computation = VideoCaptureSplit;
-	levelw = 2;
-	levelh = 2;
+	level = 2;
 	file_name = pedestrian.mp4;
 	host = 127.0.0.1;
 	cpu = 0;
@@ -61,8 +60,7 @@ df split4 {
     }
     actor D {
     	computation = ImageWriteMerge;
-	levelw = 2;
-	levelh = 2;
+	level = 2;
 	input_port = 7100;
 	host = 127.0.0.1;
 	cpu = 5;

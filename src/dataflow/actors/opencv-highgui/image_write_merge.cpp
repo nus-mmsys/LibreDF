@@ -29,20 +29,15 @@ ImageWriteMerge::ImageWriteMerge(const string& name) : Actor(name){
 
 void ImageWriteMerge::init() {
 
-  if (propEmpty("levelw"))
-	  levelw = 1;
+  if (propEmpty("level"))
+	  level = 1;
   else
-	  levelw = getPropInt("levelw");
-
-  if (propEmpty("levelh"))
-	  levelh = 1;
-  else
-	  levelh = getPropInt("levelh");
+	  level = getPropInt("level");
 
   tilew = 0;
   tileh = 0;
 
-  input->setArity(levelw * levelh);
+  input->setArity(level * level);
 
 }
 
@@ -54,16 +49,16 @@ void ImageWriteMerge::run() {
   	tilew = in[0]->get()->cols;
   	tileh = in[0]->get()->rows;
 	type = in[0]->get()->type();
-	frame = cv::Mat(tileh*levelh, tilew*levelw, type);
+	frame = cv::Mat(tileh*level, tilew*level, type);
   }
 
-  for (int j=0; j < levelh ; j++) {
-  	for (int i=0; i < levelw ; i++) {
+  for (int j=0; j < level ; j++) {
+  	for (int i=0; i < level ; i++) {
 		cv::Rect tile(i * tilew,
 				j * tileh,
 				tilew, tileh);
 
-		in[j*levelh+i]->get()->copyTo(frame(tile));
+		in[j*level+i]->get()->copyTo(frame(tile));
 	}
   }
 

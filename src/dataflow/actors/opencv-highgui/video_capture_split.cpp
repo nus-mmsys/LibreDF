@@ -35,20 +35,15 @@ void VideoCaptureSplit::init() {
   else
         log("error: file_name is not specified.");
 
-  if (propEmpty("levelw"))
-	  levelw = 1;
+  if (propEmpty("level"))
+	  level = 1;
   else
-	  levelw = getPropInt("levelw");
-
-  if (propEmpty("levelh"))
-	  levelh = 1;
-  else
-	  levelh = getPropInt("levelh");
+	  level = getPropInt("level");
 
   tilew = 0;
   tileh = 0;
 
-  output->setArity(levelw * levelh);
+  output->setArity(level * level);
 
   cap = new cv::VideoCapture(file_name);
 
@@ -57,20 +52,20 @@ void VideoCaptureSplit::init() {
   }
   *cap >> frame;
 
-  tilew = frame.cols / levelw;
-  tileh = frame.rows / levelh;
+  tilew = frame.cols / level;
+  tileh = frame.rows / level;
 }
 
 void VideoCaptureSplit::run() {
 
   auto out = produce(output);
  
-  for (int j=0; j < levelh ; j++) {
-	  for (int i=0; i < levelw ; i++) {
+  for (int j=0; j < level ; j++) {
+	  for (int i=0; i < level ; i++) {
 	  	cv::Rect tile(i * tilew,
 				j * tileh,
 				tilew, tileh);
-  	  	out[j*levelh+i]->set(frame(tile));
+  	  	out[j*level+i]->set(frame(tile));
 	  }
   }
   
