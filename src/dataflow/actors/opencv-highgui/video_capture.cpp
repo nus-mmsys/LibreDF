@@ -54,8 +54,6 @@ void VideoCapture::run() {
     setEos(outputMat);
 
   release(outputMat);  
-
-  sleep(40);
 }
 VideoCapture::~VideoCapture() {
   if (cap != nullptr)

@@ -324,7 +324,8 @@ void Dataflow::run() {
   int cpunb = std::thread::hardware_concurrency();
   int cpuid = 0; 
 
-  tstart = clock();
+  std::cout << "Running the dataflow...\n";
+  start = std::chrono::high_resolution_clock::now();
 
   for (auto f : actors) {
     f.second->startRun(cpuid);
@@ -337,8 +338,8 @@ void Dataflow::run() {
     f.second->waitRun();
   }
   
-  tend = clock();
-  std::cout << "Execution time = " << double(tend-tstart)/CLOCKS_PER_SEC << "\n";
+  end = std::chrono::high_resolution_clock::now();
+  std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << " ms\n"; 
   /*
   for (auto f : actors) {
 	std::cout << f.second->getName() << " = " << f.second->getElapsed() << "\n";

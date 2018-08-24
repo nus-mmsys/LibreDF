@@ -68,7 +68,7 @@ namespace df {
     
     void discovery();
 
-    clock_t tstart, tend;
+    std::chrono::high_resolution_clock::time_point start, end; 
 
   public:
 
