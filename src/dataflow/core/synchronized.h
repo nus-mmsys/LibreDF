@@ -29,14 +29,14 @@ namespace df {
     std::mutex mux;
     
     std::condition_variable con_cond;
-    unsigned int con_num;
-    
     std::condition_variable pro_cond;
-    bool producing;
     
+    unsigned int consuming;
     unsigned int consumed;
-    bool produced;
     unsigned int total_consumer;
+    
+    bool producing;
+    bool produced;
     
   public:
     

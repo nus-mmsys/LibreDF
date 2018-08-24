@@ -21,7 +21,7 @@
 using namespace std;
 using namespace df;
 
-Synchronized::Synchronized(): con_num(0), producing(false), consumed(0), produced(false), total_consumer(0) {
+Synchronized::Synchronized(): consuming(0), producing(false), consumed(0), produced(false), total_consumer(0) {
 } 
 
 void Synchronized::addConsumer() {
@@ -33,7 +33,7 @@ void Synchronized::consumerLock() {
   while(producing || !produced)
     pro_cond.wait(locker);
   
-  con_num++;
+  consuming++;
   consumed++;
   
   if(consumed == total_consumer) {
@@ -44,13 +44,13 @@ void Synchronized::consumerLock() {
 
 void Synchronized::consumerUnlock() {
   lock_guard<mutex> locker(mux);
-  con_num--;
+  consuming--;
   con_cond.notify_one();
 }
 
 void Synchronized::producerLock() {
   unique_lock<mutex> locker(mux);
-  while(con_num > 0 || produced)
+  while(consuming > 0 || produced)
     con_cond.wait(locker);
   
   produced = true;
@@ -59,7 +59,7 @@ void Synchronized::producerLock() {
 
 bool Synchronized::producerRTLock() {
   lock_guard<mutex> locker(mux);
-  if(con_num > 0)
+  if(consuming > 0)
     return false;
   
   produced = true;
