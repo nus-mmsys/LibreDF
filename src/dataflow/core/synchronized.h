@@ -32,7 +32,7 @@ namespace df {
     unsigned int con_num;
     
     std::condition_variable pro_cond;
-    bool prod;
+    bool producing;
     
     unsigned int consumed;
     bool produced;
@@ -43,7 +43,28 @@ namespace df {
     Synchronized();
     
     void addConsumer();
-    
+   
+    /*!
+     * Acquiring consumer lock
+     *
+     * the consumer can acqure the lock only if 
+     * 		(1) no producer is in critical section (producing=false)
+     * 		(2) a producer has produced (produced=true)
+     *
+     * once the consumer acquires the lock, it
+     * 		(1) increases the number of consumers 
+     * 		    in the critical section (con_num++)
+     * 		(2) increases the number of consumers 
+     * 		    who have consumed (consumed++)
+     * 		(3) if he is the last consumer consuming,
+     * 		    it puts the number of consumers to zero (consumed=0), 
+     * 		    and flags the section as ready for 
+     * 		    the producer (produced=false)
+     * 
+     * once the consumer exits the critical section, it
+     * 		(1) reduces the number of consumers 
+     * 		    in the critical section (con_num--)
+     */
     void consumerLock();
     
     void consumerUnlock();
