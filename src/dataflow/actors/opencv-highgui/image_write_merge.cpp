@@ -29,19 +29,44 @@ ImageWriteMerge::ImageWriteMerge(const string& name) : Actor(name){
 
 void ImageWriteMerge::init() {
 
+  if (propEmpty("level"))
+	  level = 2;
+  else
+	  level = getPropInt("level");
+
+  tilew = 0;
+  tileh = 0;
+
+  input->setArity(level * level);
+
 }
 
 void ImageWriteMerge::run() {
 
-  /*
-  df::Mat * in = consume(input);	
-  frame = in->clone();
+  auto in = consume(input);	
+
+  if (tilew == 0 || tileh == 0) { 
+  	tilew = in[0]->get()->cols;
+  	tileh = in[0]->get()->rows;
+	type = in[0]->get()->type();
+	frame = cv::Mat(tileh*level, tilew*level, type);
+  }
+
+  for (int j=0; j < level ; j++) {
+  	for (int i=0; i < level ; i++) {
+		cv::Rect tile(i * tilew,
+				j * tileh,
+				tilew, tileh);
+
+		in[j*level+i]->get()->copyTo(frame(tile));
+	}
+  }
+
   log("writing image "+to_string(stepno));
   release(input);
-
+  
   file_name = dfout_path + std::to_string(stepno) + ".png";
   cv::imwrite(file_name, frame); 
-  */
 }
 
 ImageWriteMerge::~ImageWriteMerge() {

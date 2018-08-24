@@ -37,6 +37,8 @@ private:
   cv::Mat frame;
   std::string file_name;
 
+  int level, tileh, tilew, type;
+
   df::InputPortVector<df::Mat> * input;
  
   static  df::ActorRegister<ImageWriteMerge> reg;
