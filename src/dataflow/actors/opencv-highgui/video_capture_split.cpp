@@ -34,28 +34,49 @@ void VideoCaptureSplit::init() {
   	file_name = df_path + "/" + getProp("file_name");
   else
         log("error: file_name is not specified.");
-  
+
+  if (propEmpty("level"))
+	  level = 2;
+  else
+	  level = getPropInt("level");
+
+  tilew = 0;
+  tileh = 0;
+
+  output->setArity(level * level);
+
   cap = new cv::VideoCapture(file_name);
 
   if(!cap->isOpened()){
     cout << "Error opening video stream or file" << endl;
   }
   *cap >> frame;
+
+  tilew = frame.cols / level;
+  tileh = frame.rows / level;
 }
 
 void VideoCaptureSplit::run() {
 
-  /*
-  df::Mat * out = produce(outputMat);	
-  out->set(frame);
+  auto out = produce(output);
+ 
+  for (int j=0; j < level ; j++) {
+	  for (int i=0; i < level ; i++) {
+	  	cv::Rect tile(i * tilew,
+				j * tileh,
+				tilew, tileh);
+  	  	out[j*level+i]->set(frame(tile));
+	  }
+  }
+  
   log("capturing frame "+to_string(stepno));
 
   *cap >> frame;
   if(frame.empty())
-    setEos(outputMat);
+    setEos(output);
 
-  release(outputMat);
-  */  
+  release(output);
+ 
 }
 VideoCaptureSplit::~VideoCaptureSplit() {
   if (cap != nullptr)

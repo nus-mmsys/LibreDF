@@ -410,6 +410,17 @@ namespace df {
     }
     
     template<typename T>
+    void setEos(OutputPortVector<T> * port) {
+      setStatus(EOS);
+      for (int i=0; i<port->arity(); i++) {
+      	if (distributed)
+	      port->at(i)->setSocketStatus(getStatus());
+      	else
+	      port->at(i)->setStatus(getStatus());
+      }
+    }
+
+    template<typename T>
     void release(InputPort<T> * port) {
       if (!distributed)
 	    port->unlock();
