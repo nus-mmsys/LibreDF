@@ -5,7 +5,8 @@ df split4 {
     }
     actor A {
     	computation = VideoCaptureSplit;
-	level = 2;
+	levelw = 2;
+	levelh = 2;
 	file_name = pedestrian.mp4;
 	host = 127.0.0.1;
 	cpu = 0;
@@ -60,7 +61,8 @@ df split4 {
     }
     actor D {
     	computation = ImageWriteMerge;
-	level = 2;
+	levelw = 2;
+	levelh = 2;
 	input_port = 7100;
 	host = 127.0.0.1;
 	cpu = 5;
