@@ -7,33 +7,47 @@ df canny-split4 {
     	computation = VideoCaptureSplit;
 	level = 2;
 	file_name = pedestrian.mp4;
+	cpu = 0;
     }
     actor B1 {
     	computation = CvtColor;
+	cpu = 1;
     }
     actor B2 {
     	computation = CvtColor;
+	cpu = 2;
     }
     actor B3 {
     	computation = CvtColor;
+	cpu = 3;
     }
     actor B4 {
     	computation = CvtColor;
+	cpu = 4;
     }
     actor C1 {
     	computation = Canny;
+	cpu = 1;
     }
     actor C2 {
     	computation = Canny;
+	cpu = 2;
     }
     actor C3 {
     	computation = Canny;
+	cpu = 3;
     }
     actor C4 {
     	computation = Canny;
+	cpu = 4;
     }
     actor D {
     	computation = ImageWriteMerge;
 	level = 2;
+	cpu = 5;
+    }
+    parameter {
+	scheduling = true;
+	logging = false;
     }
 }

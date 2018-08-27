@@ -1,0 +1,29 @@
+df canny-split {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = VideoCaptureSplit;
+	file_name = pedestrian.mp4;
+	level = 1;
+	cpu = 0;
+    }
+    actor B {
+    	computation = CvtColor;
+	cpu = 1;
+    }
+    actor C {
+    	computation = Canny;
+	cpu = 2;
+    }
+    actor D {
+    	computation = ImageWriteMerge;
+	level = 1;
+	cpu = 3;
+    }
+    parameter {
+	scheduling = true;
+	logging = false;
+    }
+}
