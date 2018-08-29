@@ -340,9 +340,10 @@ void Dataflow::run() {
   
   end = std::chrono::high_resolution_clock::now();
   std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << " ms\n"; 
+  
   /*
   for (auto f : actors) {
-	std::cout << f.second->getName() << " = " << f.second->getElapsed() << "\n";
+	std::cout << f.second->getName() << " = " << f.second->getElapsed() << " ms\n";
   }
   */
 

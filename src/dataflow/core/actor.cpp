@@ -245,7 +245,7 @@ void Actor::runActor() {
     }
   }
   while(getStatus() != EOS) {
-    start();
+    hstart();
     if (realtime) {
 	    runRT();
     } else {
@@ -263,8 +263,7 @@ void Actor::hstart() {
 
 void Actor::hend(std::string msg) { 
 	hrtend = std::chrono::high_resolution_clock::now(); 
-	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(hrtend - hrtstart); 
-	log(msg+" exect = "+std::to_string(time_span.count())); 
+	log(msg+" exect = "+std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(hrtend - hrtstart).count())); 
 }
 
 void Actor::start() { 
@@ -277,8 +276,8 @@ void Actor::end(std::string msg) {
 }
 
 void Actor::calcElapsed() { 
-	tend = clock();
-	elapsed += double(tend - tstart)/CLOCKS_PER_SEC;
+	hrtend = std::chrono::high_resolution_clock::now(); 
+	elapsed += std::chrono::duration_cast<std::chrono::milliseconds>(hrtend - hrtstart).count(); 
 }
 
 double Actor::getElapsed() {
