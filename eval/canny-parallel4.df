@@ -7,69 +7,47 @@ df canny-parallel4 {
     	computation = VideoCaptureSplit;
 	level = 2;
 	file_name = pedestrian.mp4;
-	host = 127.0.0.1;
 	cpu = 0;
     }
     actor B1 {
     	computation = CvtColor;
-	host = 127.0.0.1;
-	input_port = 7900;
 	cpu = 1;
     }
     actor B2 {
     	computation = CvtColor;
-	host = 127.0.0.1;
-	input_port = 7800;
 	cpu = 2;
     }
     actor B3 {
     	computation = CvtColor;
-	host = 127.0.0.1;
-	input_port = 7700;
 	cpu = 3;
     }
     actor B4 {
     	computation = CvtColor;
-	host = 127.0.0.1;
-	input_port = 7600;
 	cpu = 4;
     }
     actor C1 {
     	computation = Canny;
-	host = 127.0.0.1;
-	input_port = 7500;
 	cpu = 1;
     }
     actor C2 {
     	computation = Canny;
-	host = 127.0.0.1;
-	input_port = 7400;
 	cpu = 2;
     }
     actor C3 {
     	computation = Canny;
-	host = 127.0.0.1;
-	input_port = 7300;
 	cpu = 3;
     }
     actor C4 {
     	computation = Canny;
-	host = 127.0.0.1;
-	input_port = 7200;
 	cpu = 4;
     }
     actor D {
     	computation = ImageWriteMerge;
 	level = 2;
-	input_port = 7100;
-	host = 127.0.0.1;
 	cpu = 5;
     }
     parameter {
-	distributed = false;
 	scheduling = true;
 	logging = false;
-	discovery_host = 127.0.0.1;
-	discovery_port = 7000;
     }
 }
