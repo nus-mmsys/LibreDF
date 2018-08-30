@@ -18,6 +18,7 @@ df canny-split {
     }
     actor C {
     	computation = Canny;
+	threshold = 1;
 	host = 127.0.0.1;
 	input_port = 7200;
 	cpu = 2;
