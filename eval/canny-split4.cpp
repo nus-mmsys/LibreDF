@@ -58,7 +58,7 @@ PMat ** pcanny;
 void canny_detection(int i) {
 	bool finished = false;
 	int cvt = CV_BGR2GRAY;
-	int thrshold = 100;
+	int thrshold = 1;
 	int rtio = 2;
 	int kernel_size = 3;
 	Mat gray;
