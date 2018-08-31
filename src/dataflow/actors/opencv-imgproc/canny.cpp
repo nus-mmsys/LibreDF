@@ -33,7 +33,7 @@ void Canny::init() {
   if (!propEmpty("threshold"))
     threshold = getPropInt("threshold");
   else
-    threshold = 1;
+    threshold = 100;
 
   if (!propEmpty("ratio"))
     ratio = getPropInt("ratio");
