@@ -57,7 +57,9 @@ namespace df {
     }
 
     virtual void accept() {
-	while (!portNumbers.empty()) {
+	//Fix this for dynamic port creation.
+	//Use getFreePort.
+    	 while (!portNumbers.empty()) {
 		sock->accept();
 		int p = portNumbers.back();
     		portNumbers.pop_back();
@@ -91,14 +93,24 @@ namespace df {
 	    taccept.join();
     }
 
-    void setBuffer(BufferInfc * b) {
-      for (auto in : inputs) {
+    InputPort<T> * getFreePort() {
+	    InputPort<T> * ip = nullptr;
+	    for (auto in : inputs) {
 	      if (in->getLinked() < 1) {
-		      increaseLinked();
-		      in->setBuffer(b);
+		      ip = in;
 		      break;
 	      }
-      }
+	    }
+	    if (ip == nullptr) {
+	      ip = new InputPort<T>(name+"."+std::to_string(inputs.size()));
+	      inputs.push_back(ip);
+	    }
+	    increaseLinked();
+	    return ip;
+    }
+
+    void setBuffer(BufferInfc * b) {
+	    getFreePort()->setBuffer(b);
     }
 
     virtual ~InputPortVector() {

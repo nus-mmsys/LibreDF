@@ -55,34 +55,32 @@ namespace df {
 	}
     }
 
-    virtual int connectPort(std::string host, int portnb) { 
-    	for (auto out : outputs) {
+    OutputPort<T> * getFreePort() {
+ 	OutputPort<T> * op = nullptr;
+	for (auto out : outputs) {
 		if (out->getLinked() < 1) {
-			increaseLinked();
-			return out->connectPort(host, portnb);
+			op = out;
+			break;
 		}
 	}
-	return -1;
+	if (op == nullptr) {
+		op = new OutputPort<T>(name+"."+std::to_string(outputs.size()));
+		outputs.push_back(op);
+	}
+	increaseLinked();
+	return op;
+    }
+
+    virtual int connectPort(std::string host, int portnb) { 
+	return getFreePort()->connectPort(host, portnb);
     }
 
     virtual int connectPort(IPort* n) {
-	for (auto out : outputs) {
-		if (out->getLinked() < 1) {
-			increaseLinked();
-			return out->connectPort(n);
-		}
-	}
-	return -1;
+	return getFreePort()->connectPort(n);
     }
 
     virtual int connectPort(IPort* n, int index) {
-	for (auto out : outputs) {
-		if (out->getLinked() < 1) {
-			increaseLinked();
-			return out->connectPort(n, index);
-		}
-	}
-	return -1;
+	return getFreePort()->connectPort(n, index);
     }
     
     virtual ~OutputPortVector<T>() {
