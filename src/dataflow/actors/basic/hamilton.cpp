@@ -66,7 +66,6 @@ void Hamilton::run() {
   	}
   }
   release(input); 
-  sleep(100);
 }
 
 Hamilton::~Hamilton() {
