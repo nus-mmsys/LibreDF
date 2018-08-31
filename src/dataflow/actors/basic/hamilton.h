@@ -27,8 +27,8 @@
 class Hamilton: public df::Actor {
   
 private:
-  df::InputPort<df::Str> * input;
-  df::OutputPort<df::Str> * output;
+  df::InputPortVector<df::Str> * input;
+  df::OutputPortVector<df::Str> * output;
 
   int nbnodes;
 

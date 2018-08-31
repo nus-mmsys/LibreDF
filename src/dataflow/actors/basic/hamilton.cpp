@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Hamilton> Hamilton::reg("Hamilton");
 
 Hamilton::Hamilton(const string & name) : Actor(name) {
-  input = createInputPort<Str>("input");
-  output = createOutputPort<Str>("output");
+  input = createInputPortVector<Str>("input");
+  output = createOutputPortVector<Str>("output");
 }
 
 void Hamilton::init() {
@@ -34,34 +34,34 @@ void Hamilton::init() {
   } else
     nbnodes = 0;
   
-  Str * out = produce(output);
-  out->set(name);
+  auto out = produce(output);
+  for (auto o : out)
+  	o->set(name);
   release(output);
 
 }
 void Hamilton::run() {
 
-  // Does not yet work.
-  // 1. Edges are not two ways.
-  // 2. Port numbers can be variable.
-	
   string msg;
-  Str * in = consume(input);
-  if (in->get()->find(name)==string::npos) {
-    msg = *in->get() + name;
-  } else
-    msg = "";
-  release(input);
+  auto in = consume(input);
+  auto out = produce(output);
+  for (auto i : in) {
+  	if (i->get()->find(name)==string::npos) {
+    		msg = *i->get() + name;
+  	} else
+    		msg = "";
 
-  if (msg.length() == nbnodes) {
-    log("hamiltonian path "+msg+"\n");
-  } else {
-    Str * out = produce(output);
-    log("sending "+*out->get());
-    release(output);
+  	if (msg.length() == nbnodes) {
+    		log("hamiltonian path "+msg+"\n");
+  	} else if (msg != "") {
+		for (auto o : out) {
+			o->set(msg);
+    			log("sending "+msg);
+		}
+	}
   }
-   
-  sleep(100);
+  release(input); 
+  release(output);
 }
 
 Hamilton::~Hamilton() {

@@ -1,0 +1,21 @@
+df hamilton1 {
+    topology {
+        nodes = A,B,C,D;
+        edges = e1(A,B), e2(B,C), e3(C,D), e4(D,B), e5(C,A);
+    }
+    actor A {
+        computation = Hamilton;
+    }
+    actor B {
+        computation = Hamilton;
+    }
+    actor C {
+        computation = Hamilton;
+    }
+    actor D {
+        computation = Hamilton;
+    }
+    parameter {
+    	logging = true;
+    }
+}
