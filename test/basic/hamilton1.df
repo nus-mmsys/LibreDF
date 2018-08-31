@@ -5,15 +5,19 @@ df hamilton1 {
     }
     actor A {
         computation = Hamilton;
+        nbnodes = 4;
     }
     actor B {
         computation = Hamilton;
+        nbnodes = 4;
     }
     actor C {
         computation = Hamilton;
+        nbnodes = 4;
     }
     actor D {
         computation = Hamilton;
+        nbnodes = 4;
     }
     parameter {
     	logging = true;

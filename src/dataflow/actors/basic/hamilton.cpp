@@ -33,16 +33,21 @@ void Hamilton::init() {
     nbnodes = getPropInt("nbnodes");
   } else
     nbnodes = 0;
-  
-  auto out = produce(output);
-  for (auto o : out)
-  	o->set(name);
-  release(output);
-
+  first = true;  
 }
 void Hamilton::run() {
 
-  string msg;
+  if (first) {
+	auto out = produce(output);
+  	for (auto o : out) {
+  		o->set(name);
+    		log("sending "+name);
+  	}
+  	release(output);
+	first = false;
+  }
+
+  string msg = "";
   auto in = consume(input);
   auto out = produce(output);
   for (auto i : in) {
@@ -52,7 +57,7 @@ void Hamilton::run() {
     		msg = "";
 
   	if (msg.length() == nbnodes) {
-    		log("hamiltonian path "+msg+"\n");
+    		log("hamiltonian path "+msg);
   	} else if (msg != "") {
 		for (auto o : out) {
 			o->set(msg);
@@ -62,6 +67,7 @@ void Hamilton::run() {
   }
   release(input); 
   release(output);
+  sleep(100);
 }
 
 Hamilton::~Hamilton() {

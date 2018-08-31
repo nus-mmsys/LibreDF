@@ -31,7 +31,7 @@ private:
   df::OutputPortVector<df::Str> * output;
 
   int nbnodes;
-
+  bool first;
   static df::ActorRegister<Hamilton> reg;
 public:
   
