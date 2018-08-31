@@ -48,7 +48,6 @@ void Hamilton::run() {
   }
 
   auto in = consume(input);
-  auto out = produce(output);
   for (auto i : in) {
 	string msg = *i->get();
   	if (msg.find(name)==string::npos) {
@@ -57,15 +56,16 @@ void Hamilton::run() {
 	  	if (msg.length() == nbnodes) {
     			log("hamiltonian path "+msg);
   		} else {
+  			auto out = produce(output);
 			for (auto o : out) {
 				o->set(msg);
     				log("sending "+msg);
 			}
+  			release(output);
 		}
   	}
   }
   release(input); 
-  release(output);
   sleep(100);
 }
 
