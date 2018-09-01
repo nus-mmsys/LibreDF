@@ -6,20 +6,25 @@ df hamilton1 {
     actor A {
         computation = Hamilton;
         nbnodes = 4;
+	cpu = 0;
     }
     actor B {
         computation = Hamilton;
         nbnodes = 4;
+	cpu = 1;
     }
     actor C {
         computation = Hamilton;
         nbnodes = 4;
+	cpu = 2;
     }
     actor D {
         computation = Hamilton;
         nbnodes = 4;
+	cpu = 3
     }
     parameter {
+	scheduling = true;
     	logging = true;
     }
 }
