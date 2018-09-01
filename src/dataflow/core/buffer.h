@@ -21,7 +21,7 @@
 
 namespace df {
   
-  const int DF_BUFFER_SIZE = 32;
+  const int DF_BUFFER_SIZE = 8;
 
   class BufferInfc {
   public:
