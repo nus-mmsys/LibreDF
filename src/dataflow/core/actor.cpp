@@ -39,7 +39,8 @@ std::string Actor::getName() {
 void Actor::log(std::string msg) {
   if (logging) {
     cpuid = sched_getcpu();
-    string s = name + ": [" + to_string(stepno) + "] [" + to_string(now()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
+    hrtend = std::chrono::high_resolution_clock::now(); 
+    string s = name + ": [" + to_string(stepno) + "] [" + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(hrtend - hrtstart).count()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
     iolock->lock(); 
     std::cout << s;
     iolock->unlock();
@@ -244,14 +245,14 @@ void Actor::runActor() {
 	    p.second->waitAccept();
     }
   }
+
+  hstart();
   while(getStatus() != EOS) {
-    hstart();
     if (realtime) {
 	    runRT();
     } else {
 	    run();
     }
-    calcElapsed();
     stepno++;
   }
   
