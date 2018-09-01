@@ -41,7 +41,6 @@ void Hamilton::run() {
 	auto out = produce(output);
   	for (auto o : out) {
   		o->set(name);
-    		log("sending "+name);
   	}
   	release(output);
 	first = false;
@@ -54,12 +53,11 @@ void Hamilton::run() {
     		msg += name;
 
 	  	if (msg.length() == nbnodes) {
-    			log("hamiltonian path "+msg);
+    			log("Hamiltonian path: "+msg);
   		} else {
   			auto out = produce(output);
 			for (auto o : out) {
 				o->set(msg);
-    				log("sending "+msg);
 			}
   			release(output);
 		}

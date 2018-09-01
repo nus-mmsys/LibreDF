@@ -6,6 +6,7 @@ find_package(OpenCV REQUIRED)
 option(BUILD_ML_ACTORS "Build machine-learning actors" ON)
 option(BUILD_OPENCV_ACTORS "Build opencv actors" ON)
 option(BUILD_BASIC_ACTORS "Build basic actors" ON)
+option(BUILD_COMBINATORICS_ACTORS "Build combinatorics actors" ON)
 
 include_directories(.)
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -31,12 +32,19 @@ if (BUILD_BASIC_ACTORS)
   aux_source_directory(actors/basic basic)
 endif()
 
+if (BUILD_COMBINATORICS_ACTORS)
+  aux_source_directory(tokens/basic basictoken)
+  aux_source_directory(actors/combinatorics comb)
+endif()
+
+
 add_library(${PROJECT_NAME} SHARED ${core}
 				${ml} 
 				${ocvcore} ${ocvimg}
 				${ocvgui} ${ocvobj}
 				${ocvvideo} ${ocvtoken}
-				${basic} ${basictoken}
+				${basic} ${basictoken} 
+				${comb}
 				)
 
 if (BUILD_OPENCV_ACTORS OR BUILD_ML_ACTORS)
