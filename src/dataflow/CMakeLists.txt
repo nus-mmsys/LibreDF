@@ -1,4 +1,4 @@
-project(dataflow)
+project(tmfdf)
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
