@@ -1,0 +1,60 @@
+df hamilton1 {
+    topology {
+        nodes = A,B,C,D,E,F,G,H,I,J;
+        edges = e1(A,D), e2(B,C), e3(B,E), e4(B,F), e5(C,E), e6(D,G), e7(D,J), e8(E,A), e9(E,F), e10(E,H), e11(F,C), e12(G,B), e13(H,G), e14(H,I), e15(I,F), e16(I,J), e17(J,H);
+    }
+    actor A {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 0;
+    }
+    actor B {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 1;
+    }
+    actor C {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 2;
+    }
+    actor D {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 3;
+    }
+    actor E {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 0;
+    }
+    actor F {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 1;
+    }
+    actor G {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 2;
+    }
+    actor H {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 3;
+    }
+    actor I {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 0;
+    }
+    actor J {
+        computation = Hamilton;
+        nbnodes = 10;
+	cpu = 1;
+    }
+    parameter {
+	scheduling = true;
+    	logging = true;
+    }
+}

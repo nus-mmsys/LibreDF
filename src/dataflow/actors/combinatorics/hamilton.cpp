@@ -58,6 +58,7 @@ void Hamilton::run() {
   			auto out = produce(output);
 			for (auto o : out) {
 				o->set(msg);
+				log("sending "+msg);
 			}
   			release(output);
 		}

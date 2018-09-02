@@ -21,7 +21,7 @@ df hamilton1 {
     actor D {
         computation = Hamilton;
         nbnodes = 4;
-	cpu = 3
+	cpu = 3;
     }
     parameter {
 	scheduling = true;
