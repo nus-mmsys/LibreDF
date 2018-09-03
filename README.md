@@ -13,7 +13,7 @@ Application developers specify the application graph in Dataflow Interchange For
 - Parameters: Parameters of the dataflow can be specified in the ```parameter``` module. 
 
 ```
-df <name> {
+tmf <name> {
     topology {
         nodes = <actor 1>, ..., <actor n>; 
 	    edges = <edge 1> (<source actor>, <sink actor>), ...., <edge m>(<source actor>, <sink actor>);
@@ -36,7 +36,7 @@ df <name> {
 This application reads a video from a file (pedestrian.mp4), detects the pedestrians (full bodies), draws a bounding box around them, and writes the resulting image on a file.
 
 ```
-df pedestrian_detection {
+tmf pedestrian_detection {
     topology {
         nodes = A,B,C,D;
         edges = e1(A,B), e2(B,C), e3(C,D), e4(A,D);
@@ -63,7 +63,7 @@ df pedestrian_detection {
 ### Example (distributed canny edge detection)
 This application reads a video from a file (pedestrian.mp4), sends the frames over TCP connections to a color convertor and a canny edge detector, and another actor to write the decoded frames to png files.
 ```
-df canny {
+tmf canny {
     topology {
         nodes = A,B,C,D;
 	edges = e1(A,B), e2(B,C), e3(C,D);
@@ -311,7 +311,7 @@ The repository contains the following libraries :
 ```tmf``` displays and analyses the graph and runs the graph on shared memory and on tcp locally.
 
 ```bash
-  ./tmf <df file> (e.g., ../test/opencv/pedestrian_detection.df)
+  ./tmf <tmf file> (e.g., ../test/opencv/pedestrian_detection.tmf)
 ```
 
 The following commands can be used.
@@ -334,7 +334,7 @@ The following commands can be used.
 ```tmf-deploy``` deploys a dataflow on multiple servers.
 
 ```bash
-  ./tmf-deploy <df file> (e.g., ../test/opencv/canny.df)
+  ./tmf-deploy <tmf file> (e.g., ../test/opencv/canny.tmf)
 ```
 
 ### Folder structure
