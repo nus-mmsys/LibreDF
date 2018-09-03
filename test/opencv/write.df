@@ -1,4 +1,4 @@
-df write {
+tmf write {
     topology {
         nodes = A,B;
 	edges = e1(A,B);

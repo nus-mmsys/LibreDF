@@ -48,7 +48,7 @@ int Parser::load_from_stream(stringstream& ss) {
 	int ret;
 	graph = new Graph();
 	string gname;
-        read_str(ss, "df");
+        read_str(ss, "tmf");
         ss >> gname;
 	graph->set_name(gname);
 	ret = read_graph(ss, graph);
@@ -66,7 +66,7 @@ std::string Parser::df_all() {
 }
 
 std::string Parser::df_byip(const std::string& ip) {
-	return "df " + graph->get_name() + " {\n" + topology + dfactor_byip(ip) + parameter + "\n}";
+	return "tmf " + graph->get_name() + " {\n" + topology + dfactor_byip(ip) + parameter + "\n}";
 }
 
 int Parser::read_str(stringstream & stream, string str) {

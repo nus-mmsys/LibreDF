@@ -26,7 +26,7 @@ int RDFParser::load_from_stream(std::stringstream & ss) {
 	int ret;
 	graph = new Graph();
 	string rdfname;
-        read_str(ss, "df");
+        read_str(ss, "tmf");
         ss >> rdfname;
         graph->set_name(rdfname);
 	ret = read_graph(ss, graph);
