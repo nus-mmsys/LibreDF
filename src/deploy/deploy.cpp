@@ -21,7 +21,7 @@
 Deploy::Deploy(int argc, char * argv[], Parser * p) {
 
 	if (argc != 2) {
-		cout << "usage: " << argv[0] << " <file.df>\n";
+		cout << "usage: " << argv[0] << " <file.tmf>\n";
 		exit(0);
 	}
 	parser = p;		
