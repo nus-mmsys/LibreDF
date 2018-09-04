@@ -188,29 +188,33 @@ vector<vector<string>> Graph::order() {
 vector<vector<string>> Graph::hamiltonians() {
 	vector<vector<string>> hpaths;
 	vector<string> stack;
-	vector<string> path;
+	vector<vector<string>> paths;
 	for (auto actor : actors) {
 		stack.clear();
-		path = dfs_hamiltonian(actor.second, stack);
-		if (path.size() == actors.size())
-			hpaths.push_back(path);
+		paths = dfs_hamiltonians(actor.second, stack);
+		for (auto p : paths)
+			hpaths.push_back(p);
 	}
 	return hpaths;
 }
 
-vector<string> Graph::dfs_hamiltonian(Actor * curr, vector<string> stack) {
-	vector<string> path;
+vector<vector<string>> Graph::dfs_hamiltonians(Actor * curr, vector<string> stack) {
+	vector<vector<string>> hpaths;
+	vector<vector<string>> paths;
 	if (find(stack.begin(), stack.end(), curr->get_name()) == stack.end()) {
 		stack.push_back(curr->get_name());
 	
+		if (stack.size() == actors.size())
+			hpaths.push_back(stack);
+
 		for (auto e : get_oedges(curr)) {
 			Actor * adj = e->get_sink_actor();
-			path = dfs_hamiltonian(adj, stack);
-			if (path.size() == actors.size())
-				return path;
+			paths = dfs_hamiltonians(adj, stack);
+			for (auto p : paths)
+				hpaths.push_back(p);
 		}
 	}
-	return stack;
+	return hpaths;
 }
 
 void Graph::dfs_visited_actors(Actor * curr, int & visited) {

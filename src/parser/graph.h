@@ -341,7 +341,7 @@ public:
 	 * Performs a DFS to find hamiltonian paths.
 	 * 
 	 */
-	vector<string> dfs_hamiltonian(Actor * curr, vector<string> stack);
+	vector<vector<string>> dfs_hamiltonians(Actor * curr, vector<string> stack);
 
 	/*!
 	 * Returns a list of SAS (Single Appearance Schedules) of the graph.
