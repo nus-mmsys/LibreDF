@@ -185,6 +185,34 @@ vector<vector<string>> Graph::order() {
 	return orderliststr;
 }
 
+vector<vector<string>> Graph::hamiltonians() {
+	vector<vector<string>> hpaths;
+	vector<string> stack;
+	vector<string> path;
+	for (auto actor : actors) {
+		stack.clear();
+		path = dfs_hamiltonian(actor.second, stack);
+		if (path.size() == actors.size())
+			hpaths.push_back(path);
+	}
+	return hpaths;
+}
+
+vector<string> Graph::dfs_hamiltonian(Actor * curr, vector<string> stack) {
+	vector<string> path;
+	if (find(stack.begin(), stack.end(), curr->get_name()) == stack.end()) {
+		stack.push_back(curr->get_name());
+	
+		for (auto e : get_oedges(curr)) {
+			Actor * adj = e->get_sink_actor();
+			path = dfs_hamiltonian(adj, stack);
+			if (path.size() == actors.size())
+				return path;
+		}
+	}
+	return stack;
+}
+
 void Graph::dfs_visited_actors(Actor * curr, int & visited) {
 
 	visited++;

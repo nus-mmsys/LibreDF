@@ -330,6 +330,20 @@ public:
 	vector<vector<string>> order();
 
 	/*!
+	 * Returns a list of hamiltonian paths of the graph.
+	 * 
+	 * \return
+	 *	List of hamiltonian paths.
+	 */
+	vector<vector<string>> hamiltonians();
+
+	/*!
+	 * Performs a DFS to find hamiltonian paths.
+	 * 
+	 */
+	vector<string> dfs_hamiltonian(Actor * curr, vector<string> stack);
+
+	/*!
 	 * Returns a list of SAS (Single Appearance Schedules) of the graph.
 	 * 
 	 * \return
