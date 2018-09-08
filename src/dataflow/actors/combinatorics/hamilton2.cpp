@@ -28,13 +28,20 @@ Hamilton2::Hamilton2(const string & name) : Actor(name) {
   output = createOutputPortVector<Str>("output");
 }
 
-int path_length(const string & msg) {
+int Hamilton2::path_length(const string & msg) {
 	return std::count(msg.begin(), msg.end(), ',')+1; 
 }
 
-bool hamiltonian(const string & msg) {
-	//TODO
-	return false;
+bool Hamilton2::hamiltonian(const string & msg) {
+	string node, partmsg=msg;
+  	std::stringstream ss(msg);
+  	while (partmsg!="") {
+		node=partmsg.substr(0,partmsg.find(","));
+		partmsg=partmsg.substr(partmsg.find(",")+1);
+		if (partmsg.find(node) != string::npos)
+			return false;
+	}
+	return true;
 }
 void Hamilton2::init() {
   if (!propEmpty("nbnodes")) {
