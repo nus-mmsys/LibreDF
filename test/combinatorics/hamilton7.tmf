@@ -1,7 +1,7 @@
 tmf hamilton1 {
     topology {
         nodes = A,B,C,D,E,F,G;
-        edges = e1(A,B), e2(B,C), e3(C,D), e4(D,B), e5(C,A), e6(E,B), e7(A,E), e8(F,C), e9(D,F), e10(B,F), e11(E,G), e12(G,C);
+        edges = e1(C,D), e2(D,B), e3(C,A), e4(A,E), e5(F,C), e6(B,F), e7(E,G), e8(G,C), e9(A,B), e10(D,F);
     }
     actor A {
         computation = Hamilton;

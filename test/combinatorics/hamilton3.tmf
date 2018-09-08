@@ -1,0 +1,25 @@
+tmf hamilton3 {
+    topology {
+        nodes = A,B,C;
+        edges = e1(A,B), e2(B,C), e3(C,A), e4(A,C), e5(C,B), e6(B,A);
+    }
+    actor A {
+        computation = Hamilton;
+        nbnodes = 3;
+	cpu = 0;
+    }
+    actor B {
+        computation = Hamilton;
+        nbnodes = 3;
+	cpu = 1;
+    }
+    actor C {
+        computation = Hamilton;
+        nbnodes = 3;
+	cpu = 2;
+    }
+    parameter {
+	scheduling = true;
+    	logging = true;
+    }
+}

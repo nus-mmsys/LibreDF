@@ -1,0 +1,181 @@
+tmf hamilton30 {
+    topology {
+        nodes = n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,
+		n11,n12,n13,n14,n15,n16,n17,n18,n19,n20,
+		n21,n22,n23,n24,n25,n26,n27,n28,n29,n30;
+        edges = e1(n1,n4), e2(n2,n3), e3(n2,n5), e4(n2,n6), 
+		e5(n3,n5), e6(n4,n7), e7(n4,n10), e8(n5,n1), 
+		e9(n5,n6), e10(n5,n8), e11(n6,n3), e12(n7,n2), 
+		e13(n8,n7), e14(n8,n9), e15(n9,n6), e16(n9,n10), 
+		e17(n10,n13), e18(n11,n18), e19(n20,n11), e20(n11,n5), 
+		e21(n12,n20), e22(n6,n12), e23(n13,n8), e24(n13,n15), 
+		e25(n17,n13), e26(n15,n14), e27(n14,n16), e28(n15,n20), 
+		e29(n9,n15), e30(n16,n17), e31(n8,n16), e32(n17,n19), 
+		e33(n7,n17), e34(n18,n12), e35(n12,n18), e36(n19,n11), 
+		e37(n5,n19), e38(n20,n9), e39(n13,n20), e40(n20,n21),
+		e41(n21,n22), e42(n7,n21), e43(n16,n22), e44(n22,n23),
+		e45(n23,n18), e46(n11,n23), e47(n24,n3), e48(n15,n24),
+		e49(n9,n24), e50(n25,n12), e51(n13,n25), e52(n25,n14),
+		e53(n22,n25), e54(n26,n16), e55(n17,n26), e56(n26,n18),
+		e57(n27,n19), e58(n20,n27), e59(n27,n21), e60(n27,n22),
+		e61(n28,n23), e62(n28,n24), e63(n25,n28), e64(n28, n26),
+		e65(n29,n27), e66(n28,n29), e67(n29,n1), e68(n2,n29),
+		e69(n30,n3), e70(n4,n30), e71(n30,n5), e72(n6,n30),
+		e73(n23,n30), e74(n30,n27), e75(n27,n29), e76(n29,n24),
+		e77(n24,n28), e78(n28,n25), e79(n25,n26);
+    }
+    actor n1 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n2 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n3 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 2;
+    }
+    actor n4 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 3;
+    }
+    actor n5 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n6 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n7 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 2;
+    }
+    actor n8 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 3;
+    }
+    actor n9 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n10 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n11 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n12 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n13 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 2;
+    }
+    actor n14 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 3;
+    }
+    actor n15 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n16 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n17 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 2;
+    }
+    actor n18 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 3;
+    }
+    actor n19 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n20 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n21 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n22 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n23 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 2;
+    }
+    actor n24 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 3;
+    }
+    actor n25 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n26 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    actor n27 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 2;
+    }
+    actor n28 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 3;
+    }
+    actor n29 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 0;
+    }
+    actor n30 {
+        computation = Hamilton;
+        nbnodes = 30;
+	cpu = 1;
+    }
+    parameter {
+	scheduling = true;
+    	logging = true;
+    }
+}
