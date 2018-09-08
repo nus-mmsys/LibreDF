@@ -30,6 +30,8 @@ private:
   df::InputPortVector<df::Str> * input;
   df::OutputPortVector<df::Str> * output;
 
+  std::vector<std::string> input_list;
+  std::vector<std::string> output_list;
   int nbnodes;
   bool first;
   static df::ActorRegister<Hamilton> reg;

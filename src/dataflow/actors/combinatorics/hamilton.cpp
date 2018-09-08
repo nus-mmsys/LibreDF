@@ -44,27 +44,40 @@ void Hamilton::run() {
   	}
   	release(output);
 	first = false;
+	return;
   }
 
+  input_list.clear();
   auto in = consume(input);
   for (auto i : in) {
-	string msg = *i->get();
+	  input_list.push_back(*i->get());
+  }
+  release(input);
+
+  output_list.clear();
+  for (auto msg : input_list) {
   	if (msg.find(name)==string::npos) {
-    		msg += name;
+    		
+		if (msg != "")
+			msg += name;
 
 	  	if (msg.length() == nbnodes) {
     			log("Hamiltonian path: "+msg);
-  		} else {
-  			auto out = produce(output);
-			for (auto o : out) {
-				o->set(msg);
-				log("sending "+msg);
-			}
-  			release(output);
+			msg = "";
 		}
+		output_list.push_back(msg);  		
   	}
   }
-  release(input); 
+
+  for (auto msg : output_list) {
+  	auto out = produce(output);
+  	for (auto o : out) {
+		o->set(msg);
+		log("sending "+msg);
+  	}
+  	release(output);
+  }
+
 }
 
 Hamilton::~Hamilton() {
