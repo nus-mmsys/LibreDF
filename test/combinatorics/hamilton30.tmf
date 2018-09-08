@@ -47,22 +47,22 @@ tmf hamilton30 {
     actor n5 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 0;
+	cpu = 4;
     }
     actor n6 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 1;
+	cpu = 5;
     }
     actor n7 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 2;
+	cpu = 6;
     }
     actor n8 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 3;
+	cpu = 7;
     }
     actor n9 {
         computation = Hamilton;
@@ -77,72 +77,72 @@ tmf hamilton30 {
     actor n11 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 0;
+	cpu = 2;
     }
     actor n12 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 1;
+	cpu = 3;
     }
     actor n13 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 2;
+	cpu = 4;
     }
     actor n14 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 3;
+	cpu = 5;
     }
     actor n15 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 0;
+	cpu = 6;
     }
     actor n16 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 1;
+	cpu = 7;
     }
     actor n17 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 2;
+	cpu = 0;
     }
     actor n18 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 3;
+	cpu = 1;
     }
     actor n19 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 0;
+	cpu = 2;
     }
     actor n20 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 1;
+	cpu = 3;
     }
     actor n21 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 0;
+	cpu = 4;
     }
     actor n22 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 1;
+	cpu = 5;
     }
     actor n23 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 2;
+	cpu = 6;
     }
     actor n24 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 3;
+	cpu = 7;
     }
     actor n25 {
         computation = Hamilton;
@@ -167,12 +167,12 @@ tmf hamilton30 {
     actor n29 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 0;
+	cpu = 4;
     }
     actor n30 {
         computation = Hamilton;
         nbnodes = 30;
-	cpu = 1;
+	cpu = 5;
     }
     parameter {
 	scheduling = true;
