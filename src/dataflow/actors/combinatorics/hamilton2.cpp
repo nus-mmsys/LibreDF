@@ -29,7 +29,7 @@ Hamilton2::Hamilton2(const string & name) : Actor(name) {
 }
 
 int path_length(const string & msg) {
-	return std::count(msg.begin(), msg.end(), ','); 
+	return std::count(msg.begin(), msg.end(), ',')+1; 
 }
 
 bool hamiltonian(const string & msg) {
@@ -79,7 +79,7 @@ void Hamilton2::run() {
 
 		msg = msg + "," + name;
 
-	  	if (path_length(msg) == nbnodes-1) {
+	  	if (path_length(msg) == nbnodes) {
     			log("Hamiltonian path: "+msg);
 		} else {
 			output_message = msg + ";" + output_message;

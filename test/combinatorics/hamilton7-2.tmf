@@ -1,0 +1,45 @@
+tmf hamilton7 {
+    topology {
+        nodes = A,B,C,D,E,F,G;
+        edges = e1(C,D), e2(D,B), e3(C,A), e4(A,E), e5(F,C), e6(B,F), e7(E,G), e8(G,C), e9(A,B), e10(D,F);
+    }
+    actor A {
+        computation = Hamilton2;
+        nbnodes = 7;
+	cpu = 0;
+    }
+    actor B {
+        computation = Hamilton2;
+        nbnodes = 7;
+	cpu = 1;
+    }
+    actor C {
+        computation = Hamilton2;
+        nbnodes = 7;
+	cpu = 2;
+    }
+    actor D {
+        computation = Hamilton2;
+        nbnodes = 7;
+	cpu = 3;
+    }
+    actor E {
+        computation = Hamilton2;
+        nbnodes = 7;
+	cpu = 0;
+    }
+    actor F {
+        computation = Hamilton2;
+        nbnodes = 7;
+	cpu = 1;
+    }
+    actor G {
+        computation = Hamilton2;
+        nbnodes = 7;
+	cpu = 2;
+    }
+    parameter {
+	scheduling = true;
+    	logging = true;
+    }
+}
