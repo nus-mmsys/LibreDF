@@ -34,6 +34,7 @@ void Hamilton2::init() {
   } else
     nbnodes = 0;
   first = true;  
+  loop_list = new vector<string>[nbnodes];
 }
 void Hamilton2::run() {
 
@@ -60,7 +61,7 @@ void Hamilton2::run() {
   while (std::getline(ss, msg, ';')) {
   	  
 	if (msg!="" && msg.find(name)==string::npos) {
-    		
+		    		
 		msg = msg + "," + name;
 
 	  	if (std::count(msg.begin(), msg.end(), ',') == nbnodes-1) {
@@ -68,7 +69,10 @@ void Hamilton2::run() {
 		} else {
 			output_message = msg + ";" + output_message;
 		}		
-  	}
+  	} else if (msg!="") {
+		loop = msg.substr(msg.find(name));
+		loop_list[loop.length()].push_back(loop);	
+	}
   }
 
   auto out = produce(output);

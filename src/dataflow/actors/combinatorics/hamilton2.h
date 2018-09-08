@@ -32,8 +32,10 @@ private:
   df::OutputPortVector<df::Str> * output;
 
   std::string msg;
+  std::string loop;
   std::string input_messages;
   std::string output_message;
+  std::vector<std::string> * loop_list;
   int nbnodes;
   bool first;
   static df::ActorRegister<Hamilton2> reg;
