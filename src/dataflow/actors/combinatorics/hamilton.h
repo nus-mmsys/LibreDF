@@ -22,6 +22,7 @@
 #include "core/df.h"
 #include "tokens/basic/str.h"
 
+#include <string>
 #include <iostream>
 
 class Hamilton: public df::Actor {
@@ -30,8 +31,9 @@ private:
   df::InputPortVector<df::Str> * input;
   df::OutputPortVector<df::Str> * output;
 
-  std::vector<std::string> input_list;
-  std::vector<std::string> output_list;
+  std::string msg;
+  std::string input_messages;
+  std::string output_message;
   int nbnodes;
   bool first;
   static df::ActorRegister<Hamilton> reg;

@@ -47,37 +47,35 @@ void Hamilton::run() {
 	return;
   }
 
-  input_list.clear();
+  input_messages = "";
   auto in = consume(input);
   for (auto i : in) {
-	  input_list.push_back(*i->get());
+	input_messages = *i->get() + ";" + input_messages;
   }
   release(input);
 
-  output_list.clear();
-  for (auto msg : input_list) {
-  	if (msg.find(name)==string::npos) {
+  std::stringstream ss(input_messages);
+
+  output_message = "";
+  while (std::getline(ss, msg, ';')) {
+  	  
+	if (msg!="" && msg.find(name)==string::npos) {
     		
-		if (msg != "")
-			msg += name;
+		msg = msg + "," + name;
 
-	  	if (msg.length() == nbnodes) {
+	  	if (std::count(msg.begin(), msg.end(), ',') == nbnodes-1) {
     			log("Hamiltonian path: "+msg);
-			msg = "";
-		}
-		output_list.push_back(msg);  		
+		} else {
+			output_message = msg + ";" + output_message;
+		}		
   	}
   }
 
-  for (auto msg : output_list) {
-  	auto out = produce(output);
-  	for (auto o : out) {
-		o->set(msg);
-		log("sending "+msg);
-  	}
-  	release(output);
+  auto out = produce(output);
+  for (auto o : out) {
+	o->set(output_message);
   }
-
+  release(output);
 }
 
 Hamilton::~Hamilton() {
