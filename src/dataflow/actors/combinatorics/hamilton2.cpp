@@ -28,6 +28,14 @@ Hamilton2::Hamilton2(const string & name) : Actor(name) {
   output = createOutputPortVector<Str>("output");
 }
 
+int path_length(const string & msg) {
+	return std::count(msg.begin(), msg.end(), ','); 
+}
+
+bool hamiltonian(const string & msg) {
+	//TODO
+	return false;
+}
 void Hamilton2::init() {
   if (!propEmpty("nbnodes")) {
     nbnodes = getPropInt("nbnodes");
@@ -61,17 +69,24 @@ void Hamilton2::run() {
   while (std::getline(ss, msg, ';')) {
   	  
 	if (msg!="" && msg.find(name)==string::npos) {
-		    		
+
+		for (auto l : loop_list[nbnodes-path_length(msg)]) {
+			if (hamiltonian(msg+","+l)) {
+    				log("Hamiltonian path: "+msg+","+l);
+				continue;
+			}
+		}
+
 		msg = msg + "," + name;
 
-	  	if (std::count(msg.begin(), msg.end(), ',') == nbnodes-1) {
+	  	if (path_length(msg) == nbnodes-1) {
     			log("Hamiltonian path: "+msg);
 		} else {
 			output_message = msg + ";" + output_message;
 		}		
   	} else if (msg!="") {
 		loop = msg.substr(msg.find(name));
-		loop_list[loop.length()].push_back(loop);	
+		loop_list[path_length(loop)].push_back(loop);	
 	}
   }
 
