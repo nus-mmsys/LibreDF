@@ -22,6 +22,7 @@
 #include "core/df.h"
 #include "tokens/basic/str.h"
 
+#include <algorithm>
 #include <string>
 #include <iostream>
 
