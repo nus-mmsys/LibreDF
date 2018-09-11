@@ -56,7 +56,7 @@ void Hamilton2::run() {
   if (first) {
 	auto out = produce(output);
   	for (auto o : out) {
-  		o->set(name);
+  		o->set(name+";");
   	}
   	release(output);
 	first = false;
@@ -66,33 +66,33 @@ void Hamilton2::run() {
   input_messages = "";
   auto in = consume(input);
   for (auto i : in) {
-	input_messages = *i->get() + ";" + input_messages;
+	input_messages = *i->get() + input_messages;
   }
   release(input);
 
   std::stringstream ss(input_messages);
 
   output_message = "";
-  while (std::getline(ss, msg, ';')) {
+  while (std::getline(ss, imsg, ';')) {
   	  
-	if (msg!="" && msg.find(name)==string::npos) {
+	if (imsg!="" && imsg.find(name)==string::npos) {
 
-		for (auto l : loop_list[nbnodes-path_length(msg)]) {
-			if (hamiltonian(msg+","+l)) {
-    				log("Hamiltonian path: "+msg+","+l);
+		for (auto l : loop_list[nbnodes-path_length(imsg)]) {
+			if (hamiltonian(imsg+","+l)) {
+    				log("Hamiltonian path: "+imsg+","+l);
 				continue;
 			}
 		}
 
-		msg = msg + "," + name;
+		omsg = imsg + "," + name;
 
-	  	if (path_length(msg) == nbnodes) {
-    			log("Hamiltonian path: "+msg);
+	  	if (path_length(omsg) == nbnodes) {
+    			log("Hamiltonian path: "+omsg);
 		} else {
-			output_message = msg + ";" + output_message;
+			output_message = omsg + ";" + output_message;
 		}		
-  	} else if (msg!="") {
-		loop = msg.substr(msg.find(name));
+  	} else if (imsg!="") {
+		loop = imsg.substr(imsg.find(name));
 		loop_list[path_length(loop)].push_back(loop);	
 	}
   }
@@ -101,6 +101,11 @@ void Hamilton2::run() {
   for (auto o : out) {
 	o->set(output_message);
   }
+
+  if (stepno >= nbnodes-1) {
+	  setEos(output);
+  }
+
   release(output);
 }
 

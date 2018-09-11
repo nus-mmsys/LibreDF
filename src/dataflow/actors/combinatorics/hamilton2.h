@@ -32,7 +32,7 @@ private:
   df::InputPortVector<df::Str> * input;
   df::OutputPortVector<df::Str> * output;
 
-  std::string msg;
+  std::string imsg, omsg;
   std::string loop;
   std::string input_messages;
   std::string output_message;
