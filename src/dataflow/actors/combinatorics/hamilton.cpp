@@ -74,6 +74,11 @@ void Hamilton::run() {
   for (auto o : out) {
 	o->set(output_message);
   }
+
+  if (stepno >= nbnodes-1) {
+	setEos(output);		
+  }
+
   release(output);
 }
 
