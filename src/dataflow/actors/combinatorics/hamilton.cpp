@@ -40,9 +40,9 @@ void Hamilton::run() {
   if (first) {
 	auto out = produce(output);
   	for (auto o : out) {
-  		o->set(name);
+  		o->set(name+";");
   	}
-  	release(output);
+	release(output);
 	first = false;
 	return;
   }
@@ -50,23 +50,22 @@ void Hamilton::run() {
   input_messages = "";
   auto in = consume(input);
   for (auto i : in) {
-	input_messages = *i->get() + ";" + input_messages;
+	input_messages = *i->get() + input_messages;
   }
   release(input);
-
   std::stringstream ss(input_messages);
 
   output_message = "";
-  while (std::getline(ss, msg, ';')) {
+  while (std::getline(ss, imsg, ';')) {
   	  
-	if (msg!="" && msg.find(name)==string::npos) {
+	if (imsg!="" && imsg.find(name)==string::npos) {
     		
-		msg = msg + "," + name;
+		omsg = imsg + "," + name;
 
-	  	if (std::count(msg.begin(), msg.end(), ',') == nbnodes-1) {
-    			log("Hamiltonian path: "+msg);
+	  	if (std::count(omsg.begin(), omsg.end(), ',') == nbnodes-1) {
+    			log("Hamiltonian path: "+omsg);
 		} else {
-			output_message = msg + ";" + output_message;
+			output_message = omsg + ";" + output_message;
 		}		
   	}
   }
