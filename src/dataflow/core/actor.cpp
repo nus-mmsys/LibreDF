@@ -204,6 +204,12 @@ void Actor::initActor() {
   if (!propEmpty("distributed"))
 	  distributed = getPropBool("distributed");
 
+  for (auto p : outputPorts) {
+	if (!propEmpty(p.first+"_size")) {
+		p.second->setBufferSize(getPropInt(p.first+"_size"));
+	}
+  }
+  
   if (distributed) {
     for (auto p : inputPorts) {
 	    listen(p.second);

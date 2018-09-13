@@ -40,6 +40,7 @@ namespace df {
   private:
     T * data;
     Buffer<T> * buf;
+    char * sendbuf;
     int index;
     std::vector<IPort *> nextPorts; /**< A list of the next ports. A subclass actor must add its actors to this list */
     
@@ -60,7 +61,11 @@ namespace df {
       data = new T();
       chsize = 1024;
     }
-    
+
+    virtual void setBufferSize(int s) {
+      delete buf;
+      buf = new Buffer<T>(s);
+    }    
     virtual int connectPort(std::string host, int portnb) {
 	int ret;
 	distributed = true;
@@ -96,11 +101,11 @@ namespace df {
     }
 
     int send() {
-	char * buf = data->serialize();
-	int size = data->getPktSize(buf);
+	sendbuf = data->serialize();
+	int size = data->getPktSize(sendbuf);
 	if (size != chsize)
 		chsize = size;
-	return sock->send(buf, chsize);
+	return sock->send(sendbuf, chsize);
     }
 
     int getPortNumber() {

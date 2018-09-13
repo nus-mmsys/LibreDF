@@ -125,6 +125,7 @@ namespace df {
     virtual int connectPort(std::string host, int portnb) = 0;
     virtual int connectPort(IPort* n) = 0;
     virtual int connectPort(IPort* n, int index) = 0;
+    virtual void setBufferSize(int s) = 0;
     virtual ~OPort() {}
   };
 

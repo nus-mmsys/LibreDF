@@ -71,6 +71,12 @@ namespace df {
 	return op;
     }
 
+    virtual void setBufferSize(int s) {
+	for (auto out : outputs) {
+		out->setBufferSize(s);
+	}
+    }
+
     virtual int connectPort(std::string host, int portnb) { 
 	return getFreePort()->connectPort(host, portnb);
     }
