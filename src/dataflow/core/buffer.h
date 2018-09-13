@@ -21,8 +21,6 @@
 
 namespace df {
   
-  const int DF_BUFFER_SIZE = 8;
-
   class BufferInfc {
   public:
     virtual void addConsumer() = 0;
@@ -38,7 +36,7 @@ namespace df {
   template <typename T>
   class Buffer : public BufferInfc {
   protected:
-    T * tokens[DF_BUFFER_SIZE];  /**< The array containing the tokens */
+    T ** tokens;  /**< The array containing the tokens */
     int size;  /**< The size of the buffer */
     
   public:
@@ -48,9 +46,11 @@ namespace df {
      *
      * \param size the size of the buffer
      */
-    Buffer<T>(): size(DF_BUFFER_SIZE) {
+    Buffer<T>(int s): size(s) {
       
-      for (int i=0; i<size; i++) {
+      tokens = new T*[s];
+
+      for (int i=0; i<s; i++) {
 	tokens[i] = new T();
       }
     }
