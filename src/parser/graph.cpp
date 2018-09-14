@@ -218,6 +218,14 @@ vector<vector<int>> Graph::adjacency() {
 	return adj;
 }
 
+vector<vector<int>> Graph::mxpower(int n) {
+	auto res = adjacency();
+	if (n == 1)
+		return res;
+	//TODO
+	return res;
+}
+
 vector<vector<string>> Graph::dfs_hamiltonians(Actor * curr, vector<string> stack) {
 	vector<vector<string>> hpaths;
 	vector<vector<string>> paths;

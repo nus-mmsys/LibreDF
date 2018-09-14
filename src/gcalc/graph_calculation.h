@@ -83,6 +83,13 @@ protected:
 	int adjacency();
 
 	/*!
+	 * Display the powers of adjacency matrix
+	 * in Max-Plus algebra
+	 * 
+	 */ 
+	int mxpower();
+
+	/*!
 	 * Process a command given by the user
 	 *
 	 *  \param command

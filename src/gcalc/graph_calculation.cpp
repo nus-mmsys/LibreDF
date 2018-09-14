@@ -28,11 +28,13 @@ GraphCalculation::GraphCalculation(int argc, char * argv[], Parser * p) {
 	cmd["graph"] = bind(&GraphCalculation::display_df_graph, this);
 	cmd["hamilton"] = bind(&GraphCalculation::hamilton, this);
 	cmd["adjacency"] = bind(&GraphCalculation::adjacency, this);
+	cmd["mxpower"] = bind(&GraphCalculation::mxpower, this);
 	cmd["h"] = bind(&GraphCalculation::display_help, this);
 
 	comment["graph"] = "\t\tdisplay the graph.";
 	comment["hamilton"] = "\tcalculate the hamiltonian paths.";
 	comment["adjacency"] = "\tdisplay the adjacency matrix.";
+	comment["mxpower"] = "\t\tcalculate the adjacency matrix to the power of N in Max-Plus algebra.";
 	comment["h"] = "\t\tdisplay help menu.";
 
 	parser = p;	
@@ -138,6 +140,26 @@ int GraphCalculation::adjacency() {
 	vector<vector<int>> adj = graph->adjacency();
 	end = std::chrono::high_resolution_clock::now();
 	for (auto row : adj) {
+		for (auto col : row)
+			cout << col << " ";
+		cout << "\n";
+	}
+	
+	std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
+ 
+	return 0;
+}
+
+int GraphCalculation::mxpower() {
+
+	int n;
+	cout << "mxpower> enter N: ";
+	cin >> n;
+    	std::chrono::high_resolution_clock::time_point start, end; 			
+	start = std::chrono::high_resolution_clock::now();
+	vector<vector<int>> pow = graph->mxpower(n);
+	end = std::chrono::high_resolution_clock::now();
+	for (auto row : pow) {
 		for (auto col : row)
 			cout << col << " ";
 		cout << "\n";

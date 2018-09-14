@@ -344,6 +344,16 @@ public:
 	 *	Adjacency matrix.
 	 */
 	vector<vector<int>> adjacency();
+
+	/*!
+	 * Returns the power N of matrix in Max-Plus algebra
+	 * 
+	 * \param n
+	 * 	Power n
+	 * \return
+	 *	Adjacency^n in Max-Plus algebra
+	 */
+	vector<vector<int>> mxpower(int n);
 	
 	/*!
 	 * Performs a DFS to find hamiltonian paths.
