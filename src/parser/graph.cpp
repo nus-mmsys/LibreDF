@@ -219,10 +219,27 @@ vector<vector<int>> Graph::adjacency() {
 }
 
 vector<vector<int>> Graph::mxpower(int n) {
-	auto res = adjacency();
+	auto adj = adjacency();
+	auto res = adj;
+	auto tmpmat = adj;
+	int size = actors.size();
+	int tmp, max;
 	if (n == 1)
 		return res;
-	//TODO
+	
+	for (int it=0; it<n-1; it++) {
+		for (int i=0; i<size; i++)
+			for (int j=0; j<size; j++) {
+				max = 0;
+				for (int k=0; k<size; k++) {
+					tmp = adj[i][k]+res[k][j];
+					if (tmp > max)
+						max = tmp;
+				}
+				tmpmat[i][j] = max;
+			}
+		res = tmpmat;
+	}	
 	return res;
 }
 
