@@ -198,6 +198,18 @@ vector<vector<string>> Graph::hamiltonians() {
 	return hpaths;
 }
 
+vector<vector<int>> Graph::adjacency() {
+	vector<vector<int>> adj;
+	int i=0, j=0;
+	auto begin = actors.begin();
+	for (auto ed : edges) {
+		i = std::distance(begin, actors.find(ed.second->get_source_actor()->get_name()));
+		j = std::distance(begin, actors.find(ed.second->get_sink_actor()->get_name()));
+		adj[i][j] = 1;
+	}
+	return adj;
+}
+
 vector<vector<string>> Graph::dfs_hamiltonians(Actor * curr, vector<string> stack) {
 	vector<vector<string>> hpaths;
 	vector<vector<string>> paths;

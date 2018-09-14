@@ -338,6 +338,14 @@ public:
 	vector<vector<string>> hamiltonians();
 
 	/*!
+	 * Returns the adjacency matrix
+	 * 
+	 * \return
+	 *	Adjacency matrix.
+	 */
+	vector<vector<int>> adjacency();
+	
+	/*!
 	 * Performs a DFS to find hamiltonian paths.
 	 * 
 	 */
