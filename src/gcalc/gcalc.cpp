@@ -16,32 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <string>
-#include "parser/parser.h"
-#include "dataflow/core/df.h"
-
-using namespace std;
+#include "gcalc/graph_calculation.h"
 
 int main(int argc, char * argv[]) {
 
-    if (argc != 2) {
-	cout << "usage: " << argv[0] << " <file.tmf>\n";
-	exit(0);
-    }
-    std::chrono::high_resolution_clock::time_point start, end; 			
     Parser * parser = new Parser();
-    parser->load_from_file(argv[1]);
-    Graph * g = parser->get_graph();
+    GraphCalculation * gcalc = new GraphCalculation(argc, argv, parser);
 
-    start = std::chrono::high_resolution_clock::now(); 
-    vector<vector<string>> paths = g->hamiltonians();
-    end = std::chrono::high_resolution_clock::now();
-    for (auto path : paths) {
-    	for (auto actor : path)
-    		cout << actor << " ";
-	cout << "\n";	
-    }
-    std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
+    gcalc->loop();
+
     return 0;
 }
