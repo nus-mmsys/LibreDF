@@ -71,14 +71,16 @@ protected:
 	int display_help();
 
 	/*!
-	 * Run the graph the help menu to the user
+	 * Display the Hamiltonian paths
 	 * 
-	 * \param dist
-	 * 	Run on TCP if true, and on shared memory otherwise 
-	 * \return
-	 *	0 if successful, -1 otherwise
 	 */ 
 	int hamilton();
+
+	/*!
+	 * Display the adjacency matrix
+	 * 
+	 */ 
+	int adjacency();
 
 	/*!
 	 * Process a command given by the user

@@ -200,11 +200,19 @@ vector<vector<string>> Graph::hamiltonians() {
 
 vector<vector<int>> Graph::adjacency() {
 	vector<vector<int>> adj;
+	for (int i=0; i<actors.size(); i++) {
+		vector<int> row;
+		for (int j=0; j<actors.size(); j++)
+			row.push_back(0);
+		adj.push_back(row);
+	}
+
 	int i=0, j=0;
 	auto begin = actors.begin();
 	for (auto ed : edges) {
 		i = std::distance(begin, actors.find(ed.second->get_source_actor()->get_name()));
 		j = std::distance(begin, actors.find(ed.second->get_sink_actor()->get_name()));
+		
 		adj[i][j] = 1;
 	}
 	return adj;

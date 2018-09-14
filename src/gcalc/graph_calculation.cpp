@@ -27,11 +27,13 @@ GraphCalculation::GraphCalculation(int argc, char * argv[], Parser * p) {
 
 	cmd["graph"] = bind(&GraphCalculation::display_df_graph, this);
 	cmd["hamilton"] = bind(&GraphCalculation::hamilton, this);
+	cmd["adjacency"] = bind(&GraphCalculation::adjacency, this);
 	cmd["h"] = bind(&GraphCalculation::display_help, this);
 
-	comment["graph"] = "\tdisplay the graph.";
+	comment["graph"] = "\t\tdisplay the graph.";
 	comment["hamilton"] = "\tcalculate the hamiltonian paths.";
-	comment["h"] = "\tdisplay help menu.";
+	comment["adjacency"] = "\tdisplay the adjacency matrix.";
+	comment["h"] = "\t\tdisplay help menu.";
 
 	parser = p;	
 	parser->load_from_file(argv[1]);
@@ -128,3 +130,21 @@ int GraphCalculation::hamilton() {
  
 	return 0;
 }
+
+int GraphCalculation::adjacency() {
+
+    	std::chrono::high_resolution_clock::time_point start, end; 			
+	start = std::chrono::high_resolution_clock::now();
+	vector<vector<int>> adj = graph->adjacency();
+	end = std::chrono::high_resolution_clock::now();
+	for (auto row : adj) {
+		for (auto col : row)
+			cout << col << " ";
+		cout << "\n";
+	}
+	
+	std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
+ 
+	return 0;
+}
+
