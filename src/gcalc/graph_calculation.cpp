@@ -155,6 +155,7 @@ int GraphCalculation::mxpower() {
 	int n;
 	cout << "mxpower> enter N: ";
 	cin >> n;
+	cout << "\n";
     	std::chrono::high_resolution_clock::time_point start, end; 			
 	start = std::chrono::high_resolution_clock::now();
 	vector<vector<int>> pow = graph->mxpower(n);
