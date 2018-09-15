@@ -89,6 +89,7 @@ protected:
 	 */ 
 	int mxpower();
 
+	int mxhamilton();
 	/*!
 	 * Process a command given by the user
 	 *

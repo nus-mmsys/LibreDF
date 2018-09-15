@@ -243,6 +243,35 @@ vector<vector<int>> Graph::mxpower(int n) {
 	return res;
 }
 
+vector<vector<int>> Graph::mxhamilton() {
+	auto adj = adjacency();
+	auto res = adj;
+	auto tmpmat = adj;
+	int size = actors.size();
+	int tmp, max;
+	int n = actors.size();
+	
+	for (int it=0; it<n-1; it++) {
+	  for (int i=0; i<size; i++)
+	    for (int j=0; j<size; j++) {
+	      max = 0;
+	      if (i!=j) {
+	        for (int k=0; k<size; k++) {
+		  tmp = adj[i][k]+res[k][j];
+		  if (tmp > max)
+		    max = tmp;
+	        }
+	      }
+	      if (max==it+2)
+	      	tmpmat[i][j] = max;
+	      else
+		tmpmat[i][j] = 0;
+	    }
+	  res = tmpmat;
+	}	
+	return res;
+}
+
 vector<vector<string>> Graph::dfs_hamiltonians(Actor * curr, vector<string> stack) {
 	vector<vector<string>> hpaths;
 	vector<vector<string>> paths;
