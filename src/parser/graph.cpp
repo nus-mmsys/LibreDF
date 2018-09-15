@@ -251,7 +251,7 @@ vector<vector<int>> Graph::mxhamilton() {
 	int tmp, max;
 	int n = actors.size();
 	
-	for (int it=0; it<n-1; it++) {
+	for (int it=1; it<n-1; it++) {
 	  for (int i=0; i<size; i++)
 	    for (int j=0; j<size; j++) {
 	      max = 0;
@@ -262,7 +262,7 @@ vector<vector<int>> Graph::mxhamilton() {
 		    max = tmp;
 	        }
 	      }
-	      if (max==it+2)
+	      if (max==it+1)
 	      	tmpmat[i][j] = max;
 	      else
 		tmpmat[i][j] = 0;
