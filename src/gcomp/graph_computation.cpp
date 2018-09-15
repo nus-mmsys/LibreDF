@@ -16,20 +16,20 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "graph_calculation.h"
+#include "graph_computation.h"
 
-GraphCalculation::GraphCalculation(int argc, char * argv[], Parser * p) {
+GraphComputation::GraphComputation(int argc, char * argv[], Parser * p) {
 
 	if (argc != 2) {
 		cout << "usage: " << argv[0] << " <file.tmf>\n";
 		exit(0);
 	}
 
-	cmd["graph"] = bind(&GraphCalculation::display_df_graph, this);
-	cmd["hamilton"] = bind(&GraphCalculation::hamilton, this);
-	cmd["adjacency"] = bind(&GraphCalculation::adjacency, this);
-	cmd["mxpower"] = bind(&GraphCalculation::mxpower, this);
-	cmd["h"] = bind(&GraphCalculation::display_help, this);
+	cmd["graph"] = bind(&GraphComputation::display_df_graph, this);
+	cmd["hamilton"] = bind(&GraphComputation::hamilton, this);
+	cmd["adjacency"] = bind(&GraphComputation::adjacency, this);
+	cmd["mxpower"] = bind(&GraphComputation::mxpower, this);
+	cmd["h"] = bind(&GraphComputation::display_help, this);
 
 	comment["graph"] = "\t\tdisplay the graph.";
 	comment["hamilton"] = "\tcalculate the hamiltonian paths.";
@@ -42,7 +42,7 @@ GraphCalculation::GraphCalculation(int argc, char * argv[], Parser * p) {
 	graph = parser->get_graph();
 }
 
-int GraphCalculation::display_df_graph() {
+int GraphComputation::display_df_graph() {
 	int ret;
 	cout << "=======\n";
 	cout << graph->get_name() << "\n";
@@ -54,7 +54,7 @@ int GraphCalculation::display_df_graph() {
 	return 0;
 }
 
-int GraphCalculation::display_graph(Graph * g) {
+int GraphComputation::display_graph(Graph * g) {
 	int ac_index = 0;
 	int ed_index = 0;
 	vector<string> actorlist = g->get_actors();
@@ -83,7 +83,7 @@ int GraphCalculation::display_graph(Graph * g) {
 	return 0;
 }
 
-int GraphCalculation::display_help() {
+int GraphComputation::display_help() {
 	cout << "press q to exit.\n";
 	cout << "commands:\n";
 	for (auto & command : cmd)
@@ -91,7 +91,7 @@ int GraphCalculation::display_help() {
 	return 0;
 }
 
-int GraphCalculation::process_command(string command) {
+int GraphComputation::process_command(string command) {
 
 	if (command == "q")
 		return -1;
@@ -104,7 +104,7 @@ int GraphCalculation::process_command(string command) {
 	return 0;
 }
 
-int GraphCalculation::loop() {
+int GraphComputation::loop() {
 
 	int ret = 0;	
 	string command = "";
@@ -116,7 +116,7 @@ int GraphCalculation::loop() {
 	return ret;
 }
 
-int GraphCalculation::hamilton() {
+int GraphComputation::hamilton() {
 
     	std::chrono::high_resolution_clock::time_point start, end; 			
 	start = std::chrono::high_resolution_clock::now();
@@ -133,7 +133,7 @@ int GraphCalculation::hamilton() {
 	return 0;
 }
 
-int GraphCalculation::adjacency() {
+int GraphComputation::adjacency() {
 
     	std::chrono::high_resolution_clock::time_point start, end; 			
 	start = std::chrono::high_resolution_clock::now();
@@ -150,7 +150,7 @@ int GraphCalculation::adjacency() {
 	return 0;
 }
 
-int GraphCalculation::mxpower() {
+int GraphComputation::mxpower() {
 
 	int n;
 	cout << "mxpower> enter N: ";

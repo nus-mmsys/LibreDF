@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_GRAPH_CALCULATION_H
-#define DF_GRAPH_CALCULATION_H
+#ifndef DF_GRAPH_COMPUTATION_H
+#define DF_GRAPH_COMPUTATION_H
 
 #include <iostream>
 #include <fstream>
@@ -30,11 +30,11 @@
 using namespace std;
 
 /*!
- * \class GraphCalculation
+ * \class GraphComputation
  * The user interface class for RDF.
  *
  */
-class GraphCalculation {
+class GraphComputation {
 
 protected:
 	
@@ -103,7 +103,7 @@ protected:
 public:
 
 	/*!
-	 * GraphCalculation constructor
+	 * GraphComputation constructor
 	 *
 	 *  \param argc
 	 * 	The number of arguments
@@ -112,10 +112,10 @@ public:
 	 *  	The list of strings containing the arguments
 	 *
 	 */ 
-	GraphCalculation(int argc, char * argv[], Parser * parser);
+	GraphComputation(int argc, char * argv[], Parser * parser);
 	
 	/*!
-	 * Main loop of the GraphCalculation
+	 * Main loop of the GraphComputation
 	 *
 	 * \return
 	 *

@@ -16,14 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "gcalc/graph_calculation.h"
+#include "gcomp/graph_computation.h"
 
 int main(int argc, char * argv[]) {
 
     Parser * parser = new Parser();
-    GraphCalculation * gcalc = new GraphCalculation(argc, argv, parser);
+    GraphComputation * gcomp = new GraphComputation(argc, argv, parser);
 
-    gcalc->loop();
+    gcomp->loop();
 
     return 0;
 }

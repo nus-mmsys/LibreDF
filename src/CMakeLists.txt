@@ -8,7 +8,7 @@ add_subdirectory(parser)
 add_subdirectory(server)
 add_subdirectory(deploy)
 add_subdirectory(analyse)
-add_subdirectory(gcalc)
+add_subdirectory(gcomp)
 
 option(BUILD_RDF_MODULE "Build RDF module" OFF)
 
