@@ -45,6 +45,8 @@ namespace df {
 	int src_rate;
 	int snk_rate;
 
+	int init_tokens;
+
      public:
 	/*!
 	 * Edge constructor
@@ -181,7 +183,26 @@ namespace df {
 	 *
 	 */
 	int getSinkRate();
-    };
+
+	/*!
+	 * Get initial tokens of the edge.
+	 *
+	 * \return
+	 * 	The initial tokens of the edge.
+	 *
+	 */
+	int getInitialTokens();
+
+	/*!
+	 * Set initial tokens of the edge.
+	 *
+	 * \param tokens
+	 * 	The initial tokens to set.
+	 *
+	 */
+	void setInitialTokens(int tokens);
+
+     };
 
 }
 

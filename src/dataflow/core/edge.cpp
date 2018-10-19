@@ -105,3 +105,9 @@ int Edge::getSourceRate() {
 int Edge::getSinkRate() {
 	return snk_rate;
 }
+void Edge::setInitialTokens(int tokens) {
+	init_tokens = tokens;
+}
+int Edge::getInitialTokens() {
+	return init_tokens;
+}
