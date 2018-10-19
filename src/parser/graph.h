@@ -488,6 +488,18 @@ public:
 	int set_initial_tokens(string edgename, int tokens);
 	
 	/*!
+	 * Get the initial tokens of a given edge.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \return
+	 *	Initial tokens of the edge.
+	 *
+	 */
+	int get_initial_tokens(string edgename); 
+	
+	/*!
 	 * Get the source port of a given edge.
 	 * 
 	 * \param edgename

@@ -587,6 +587,7 @@ df::Dataflow * Parser::get_dataflow() {
 		e->setSinkRate(graph->get_sink_rate(edname));
 		e->setSourcePort(graph->get_source_port(edname));
 		e->setSinkPort(graph->get_sink_port(edname));
+		e->setInitialTokens(graph->get_initial_tokens(edname));
 	}	
 
 	return res;
