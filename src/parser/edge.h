@@ -44,6 +44,7 @@ private:
 	int src_rate;
 	int snk_rate;
 
+	int init_tokens;
 public:
 	/*!
 	 * Edge constructor
@@ -165,6 +166,25 @@ public:
 	 *
 	 */
 	int get_sink_rate();
+
+	/*!
+	 * Set intial tokens of the edge.
+	 *
+	 * \param tokens
+	 * 	The initial tokens to set.
+	 *
+	 */
+	void set_init_tokens(int tokens);
+
+	/*!
+	 * Get initial tokens of the edge.
+	 *
+	 * \return
+	 * 	The initial tokens of the edge.
+	 *
+	 */
+	int get_init_tokens();
+
 };
 
 #endif

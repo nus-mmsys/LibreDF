@@ -91,3 +91,11 @@ int Edge::get_source_rate() {
 int Edge::get_sink_rate() {
 	return snk_rate;
 }
+
+void Edge::set_init_tokens(int tokens) {
+	init_tokens = tokens;
+}
+
+int Edge::get_init_tokens() {
+	return init_tokens;
+}
