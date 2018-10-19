@@ -161,6 +161,20 @@ protected:
         int read_consumptions(std::stringstream & stream, Graph * g);
 	
 	/*!
+	 * Read the intial tokens from a stream.
+	 *
+	 * \param stream
+	 * 	Reference of the stream.
+	 * 
+	 * \param g
+	 * 	Reference of graph containing the actor
+	 *
+	 * \return
+	 *
+	 */ 
+        int read_tokens(std::stringstream & stream, Graph * g);
+	
+	/*!
 	 * Read the list of parameters of the dataflow
 	 * from a stream.
 	 *
@@ -256,6 +270,22 @@ protected:
 	 *
 	 */ 
 	int add_consumption_rate(const string& rate, Graph * g);
+
+	/*!
+	 * Add initial tokens.
+	 *
+	 * \param tokens
+	 * 	A string containing the name of an edge and 
+	 * 	its specified initial tokens.
+	 * 	edge_name = edge_tokens
+	 *
+	 * \param g
+	 * 	Reference of graph to which the actor is added.
+	 *
+	 * \return
+	 *
+	 */ 
+	int add_tokens(const string& tokens, Graph * g);
 
 
 	/*!

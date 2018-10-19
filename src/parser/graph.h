@@ -474,6 +474,20 @@ public:
 	int set_sink_rate(string edgename, int rate);
 	
 	/*!
+	 * Set the initial tokens for an edge with specified name.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \param tokens
+	 * 	The initial tokens of the edge to set.
+	 *
+	 * \return
+	 *
+	 */
+	int set_initial_tokens(string edgename, int tokens);
+	
+	/*!
 	 * Get the source port of a given edge.
 	 * 
 	 * \param edgename

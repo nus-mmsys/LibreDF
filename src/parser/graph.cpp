@@ -580,6 +580,13 @@ int Graph::set_sink_rate(string edgename, int rate) {
 	return 0;
 }
 
+int Graph::set_initial_tokens(string edgename, int tokens) { 
+	if (edges.find(edgename) == edges.end())
+		return -1;
+	edges[edgename]->set_init_tokens(tokens);
+	return 0;
+}
+
 int Graph::get_sink_rate(string edgename) { 
 	if (edges.find(edgename) == edges.end())
 		return -1;

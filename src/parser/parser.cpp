@@ -147,6 +147,8 @@ int Parser::read_graph(stringstream & stream, Graph * g) {
 			ret = read_productions(stream, g);
 		else if (tmp == "consumption")
 			ret = read_consumptions(stream, g);
+		else if (tmp == "tokens")
+			ret = read_tokens(stream, g);
 		else {
 			cout << "cannot parse the graph.\n";
 			return -1;
@@ -207,6 +209,7 @@ int Parser::read_productions(stringstream & stream, Graph * g) {
 	return 0;
 }
 
+
 int Parser::read_consumptions(stringstream & stream, Graph * g) {
 
 	int ret;
@@ -221,6 +224,26 @@ int Parser::read_consumptions(stringstream & stream, Graph * g) {
 	istringstream ss(ratelist);
 	while (getline(ss, rate, ';')) {
 		ret = add_consumption_rate(rate,g);
+		if (ret < 0)
+			return ret;		
+	}
+	return 0;
+}
+
+int Parser::read_tokens(stringstream & stream, Graph * g) {
+
+	int ret;
+	string tokenslist, tokens;
+	read_str(stream, "{");	
+	getline(stream, tokenslist, '}');
+
+	topology = topology + "tokens {\n"+tokenslist+"\n}\n";
+	
+	trim_str(tokenslist);
+
+	istringstream ss(tokenslist);
+	while (getline(ss, tokens, ';')) {
+		ret = add_tokens(tokens,g);
 		if (ret < 0)
 			return ret;		
 	}
@@ -433,6 +456,29 @@ int Parser::add_consumption_rate(const string& rate, Graph * g) {
 		return -2;
 	}
 	int ret = g->set_sink_rate(edgename,edr);
+	if (ret == -1)
+		cout << "error: edge " << edgename << " is not found.\n";
+	return ret;
+}
+
+int Parser::add_tokens(const string& edtokens, Graph * g) {
+	int tokens=0;
+	string edgename="", edgetokens="";
+	std::istringstream ss(edtokens);
+  	getline(ss, edgename, '=');
+	getline(ss, edgetokens);
+        if (edgename=="" || edgetokens=="") {
+		cout << "error: edge's initial token is not well formatted.\n";
+		return -2;
+	}
+	try {
+		tokens = stoi(edgetokens);
+	}
+	catch(...) {
+		cout << "error: intial token of edge " << edgename << " is not correct.\n";
+		return -2;
+	}
+	int ret = g->set_initial_tokens(edgename,tokens);
 	if (ret == -1)
 		cout << "error: edge " << edgename << " is not found.\n";
 	return ret;
