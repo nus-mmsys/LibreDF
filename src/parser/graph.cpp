@@ -633,6 +633,12 @@ bool Graph::empty() {
 	return false;
 }
 
+map<string, vector<tuple<int,int>>> schedule() {
+	map<string, vector<tuple<int,int>>> res;
+
+	return res;
+}
+
 /*
 vector<vector<string>> Graph::path() {
 	vector<vector<string>> pathliststr;

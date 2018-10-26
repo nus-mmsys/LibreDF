@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <tuple>
 #include "actor.h"
 #include "edge.h"
 
@@ -675,8 +676,20 @@ public:
 	 */
 	bool empty();
 
+	/*!
+	 * Compute a schedule for the graph.
+	 *
+	 * \return
+	 * 	A map containing all actors.
+	 * 	Each actor has a vector of tuples 
+	 * 	for its start times and end times.  
+	 *
+	 */
+	map<string, vector<tuple<int, int>>> schedule();
+	
 	//vector<vector<string>> path();
 	//int solve2();
+
 
 };
 
