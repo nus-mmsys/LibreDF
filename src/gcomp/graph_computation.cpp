@@ -36,7 +36,7 @@ GraphComputation::GraphComputation(int argc, char * argv[], Parser * p) {
 	comment["hamilton"] = "\tcompute the hamiltonian paths.";
 	comment["adjacency"] = "\tdisplay the adjacency matrix.";
 	comment["mxpower"] = "\t\tcompute the adjacency matrix to the power of N in Max-Plus algebra.";
-	comment["latency"] = "\tcompute the lateny of the graph.";
+	comment["latency"] = "\t\tcompute the lateny of the graph.";
 	comment["h"] = "\t\tdisplay help menu.";
 
 	parser = p;	
