@@ -96,6 +96,12 @@ protected:
 	int latency();
 	
 	/*!
+	 * Compute an schedule for the graph
+	 * 
+	 */ 
+	int schedule();
+
+	/*!
 	 * Process a command given by the user
 	 *
 	 *  \param command

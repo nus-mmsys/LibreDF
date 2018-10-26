@@ -30,6 +30,7 @@ GraphComputation::GraphComputation(int argc, char * argv[], Parser * p) {
 	cmd["adjacency"] = bind(&GraphComputation::adjacency, this);
 	cmd["mxpower"] = bind(&GraphComputation::mxpower, this);
 	cmd["latency"] = bind(&GraphComputation::latency, this);
+	cmd["schedule"] = bind(&GraphComputation::schedule, this);
 	cmd["h"] = bind(&GraphComputation::display_help, this);
 
 	comment["graph"] = "\t\tdisplay the graph.";
@@ -37,6 +38,7 @@ GraphComputation::GraphComputation(int argc, char * argv[], Parser * p) {
 	comment["adjacency"] = "\tdisplay the adjacency matrix.";
 	comment["mxpower"] = "\t\tcompute the adjacency matrix to the power of N in Max-Plus algebra.";
 	comment["latency"] = "\t\tcompute the lateny of the graph.";
+	comment["schedule"] = "\tcompute an schedule for the graph.";
 	comment["h"] = "\t\tdisplay help menu.";
 
 	parser = p;	
@@ -174,6 +176,18 @@ int GraphComputation::mxpower() {
 }
 
 int GraphComputation::latency() {
+
+    	std::chrono::high_resolution_clock::time_point start, end; 			
+	start = std::chrono::high_resolution_clock::now();
+	//TODO
+	end = std::chrono::high_resolution_clock::now();
+	
+	std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
+ 
+	return 0;
+}
+
+int GraphComputation::schedule() {
 
     	std::chrono::high_resolution_clock::time_point start, end; 			
 	start = std::chrono::high_resolution_clock::now();
