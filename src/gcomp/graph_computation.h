@@ -89,7 +89,12 @@ protected:
 	 */ 
 	int mxpower();
 
-	int mxhamilton();
+	/*!
+	 * Compute the latency of the graph
+	 * 
+	 */ 
+	int latency();
+	
 	/*!
 	 * Process a command given by the user
 	 *

@@ -355,7 +355,6 @@ public:
 	 */
 	vector<vector<int>> mxpower(int n);
 	
-	vector<vector<int>> mxhamilton();
 	/*!
 	 * Performs a DFS to find hamiltonian paths.
 	 * 
