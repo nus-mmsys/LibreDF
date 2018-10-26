@@ -99,3 +99,11 @@ void Edge::set_init_tokens(int tokens) {
 int Edge::get_init_tokens() {
 	return init_tokens;
 }
+
+void Edge::set_tokens(int t) {
+	tokens = t;
+}
+
+int Edge::get_tokens() {
+	return tokens;
+}

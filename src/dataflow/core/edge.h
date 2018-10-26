@@ -46,6 +46,7 @@ namespace df {
 	int snk_rate;
 
 	int init_tokens;
+	int tokens;
 
      public:
 	/*!
@@ -201,6 +202,24 @@ namespace df {
 	 *
 	 */
 	void setInitialTokens(int tokens);
+
+	/*!
+	 * Get current tokens of the edge.
+	 *
+	 * \return
+	 * 	The current tokens of the edge.
+	 *
+	 */
+	int getTokens();
+
+	/*!
+	 * Set current tokens of the edge.
+	 *
+	 * \param t
+	 * 	The current tokens to set.
+	 *
+	 */
+	void setTokens(int t);
 
      };
 

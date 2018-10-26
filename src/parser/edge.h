@@ -45,6 +45,8 @@ private:
 	int snk_rate;
 
 	int init_tokens;
+	int tokens;
+
 public:
 	/*!
 	 * Edge constructor
@@ -184,6 +186,25 @@ public:
 	 *
 	 */
 	int get_init_tokens();
+
+	/*!
+	 * Set current tokens of the edge.
+	 *
+	 * \param t
+	 * 	The current tokens to set.
+	 *
+	 */
+	void set_tokens(int t);
+
+	/*!
+	 * Get current tokens of the edge.
+	 *
+	 * \return
+	 * 	The current tokens of the edge.
+	 *
+	 */
+	int get_tokens();
+
 
 };
 
