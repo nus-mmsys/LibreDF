@@ -25,7 +25,7 @@
 #include <vector>
 #include <map>
 #include <time.h>
-#include "parser/graph.h"
+#include "graph/graph.h"
 
 using namespace std;
 

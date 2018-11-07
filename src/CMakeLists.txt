@@ -3,6 +3,7 @@ project(tmf)
 include_directories(.)
 
 add_subdirectory(dataflow)
+add_subdirectory(graph)
 add_subdirectory(parser)
 
 add_subdirectory(server)
