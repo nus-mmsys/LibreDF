@@ -686,6 +686,16 @@ public:
 	 *
 	 */
 	map<string, vector<tuple<int, int>>> schedule();
+
+	/*!
+	 * Compute the latency of the graph.
+	 * Actors should have their exect property.
+	 *
+	 * \return
+	 * 	The latency of the graph
+	 *
+	 */
+	int latency();
 	
 	//vector<vector<string>> path();
 	//int solve2();

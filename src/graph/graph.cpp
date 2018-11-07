@@ -633,9 +633,14 @@ bool Graph::empty() {
 	return false;
 }
 
-map<string, vector<tuple<int,int>>> schedule() {
+map<string, vector<tuple<int,int>>> Graph::schedule() {
 	map<string, vector<tuple<int,int>>> res;
 
+	return res;
+}
+
+int Graph::latency() {
+	int res=0;
 	return res;
 }
 

@@ -177,11 +177,13 @@ int GraphComputation::mxpower() {
 
 int GraphComputation::latency() {
 
+	int latency = 0;
     	std::chrono::high_resolution_clock::time_point start, end; 			
 	start = std::chrono::high_resolution_clock::now();
-	//TODO
+	latency = graph->latency();
 	end = std::chrono::high_resolution_clock::now();
-	
+	std::cout << "Latency = " << latency << "\n";
+
 	std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
  
 	return 0;
