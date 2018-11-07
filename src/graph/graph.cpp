@@ -340,6 +340,7 @@ int Graph::resolve() {
 int Graph::solve() {
 	
 	int lcm;
+	int gcdnd;
 	int ret;
 	if (actors.size() == 0)
 		return 0;
@@ -357,10 +358,14 @@ int Graph::solve() {
 	if (ret >= 0) {
 		lcm = 0;
 		for (auto ac : actors) {
-			if (lcm == 0)
+			gcdnd = gcd(ac.second->get_num(), ac.second->get_den());	
+			ac.second->set_numden(ac.second->get_num()/gcdnd, 
+					ac.second->get_den()/gcdnd);
+			if (lcm == 0) {
 				lcm = ac.second->get_den();
-			else 
+			} else { 
 				lcm = lcm / gcd(lcm, ac.second->get_den()) * ac.second->get_den();
+			}
 		}
 		for (auto ac : actors) {
 			ac.second->set_firing(lcm * ac.second->get_num() / ac.second->get_den());
