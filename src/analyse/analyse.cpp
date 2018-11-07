@@ -161,9 +161,16 @@ int Analyse::schedule() {
 
     	std::chrono::high_resolution_clock::time_point start, end; 			
 	start = std::chrono::high_resolution_clock::now();
-	//TODO
+	map<string, vector<tuple<int,int>>> sch = graph->schedule();
 	end = std::chrono::high_resolution_clock::now();
-	
+
+	for (auto ac : sch) {
+		cout << ac.first << ": ";
+		for (auto t : ac.second) {
+			cout << "[" << get<0>(t) << " " << get<1>(t) << "] ";
+		}
+		cout << "\n";
+	}		
 	std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
  
 	return 0;

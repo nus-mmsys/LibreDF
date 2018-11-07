@@ -715,74 +715,11 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 }
 
 int Graph::latency() {
-	resolve();
-	int res=0;
-	int timeins = 0;
-	vector<Edge *> iedges;
-	vector<Edge *> oedges;
-	map<string, int> firings;
-	map<string, int> potfirings;
-	map<string, int> lastcons;
-	map<string, int> lastprod;
-	bool cont = true;
-	bool can_consume=true;
-	for (auto ac : actors) {
-		firings.insert(make_pair(ac.first,0));
-		lastcons.insert(make_pair(ac.first,0));
-		lastprod.insert(make_pair(ac.first,0));
-
-		iedges = get_iedges(ac.second);
-		if (iedges.empty())
-			potfirings.insert(make_pair(ac.first,1));
-		else
-			potfirings.insert(make_pair(ac.first,0));
-	}
-	while(cont) {
-		cont = false;
-		for (auto ac : actors) {
-			if (firings[ac.first] < ac.second->get_firing()) {
-				oedges = get_oedges(ac.second);
-				iedges = get_iedges(ac.second);
-				if((timeins >= lastprod[ac.first]+ac.second->get_exect()
-					&& timeins >= lastcons[ac.first]+ac.second->get_exect()
-				       	&& potfirings[ac.first]>0) ) {
-					for (auto oed : oedges) {
-						oed->set_tokens(oed->get_tokens()+
-							oed->get_source_rate());
-					}
-					potfirings[ac.first]--;
-					
-					lastprod[ac.first] = timeins;
-					
-					firings[ac.first]++;
-				}
-
-				can_consume=true;
-				for (auto ied : iedges) {
-					if (ied->get_tokens() < ied->get_sink_rate()) {
-						can_consume = false;
-						break;
-					}
-				}
-
-				if (timeins >= lastcons[ac.first]+ac.second->get_exect()
-					&& can_consume) {
-					for (auto ied : iedges) {
-						ied->set_tokens(ied->get_tokens()-
-							ied->get_sink_rate());	
-					}
-					potfirings[ac.first]++;
-					lastcons[ac.first] = timeins;
-				}
-				cont = true;
-			}			
-		}
-		timeins++;
-	}
-	for (auto ac : actors) {
-		cout << ac.first << " " << lastprod[ac.first] << "\n";
-		if (lastprod[ac.first]>res)
-			res = lastprod[ac.first];
+	int res = 0;
+	auto sch = schedule();
+	for (auto ac : sch) {
+		if (get<1>(ac.second.back()) > res)
+			res = get<1>(ac.second.back());
 	}
 	return res;
 }
