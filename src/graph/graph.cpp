@@ -641,6 +641,42 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 
 int Graph::latency() {
 	int res=0;
+	vector<Edge *> iedges;
+	vector<Edge *> oedges;
+	map<string, int> firings;
+	bool cont = true;
+	bool firable = true;
+	for (auto ac : actors) {
+		firings.insert(make_pair(ac.first,0));
+	}
+	while(cont) {
+		cont = false;
+		for (auto ac : actors) {
+			if (firings[ac.first] < ac.second->get_firing()) {
+				firable = true;
+				iedges = get_iedges(ac.second);
+				oedges = get_oedges(ac.second);
+				for (auto ied : iedges) {
+					if (ied->get_tokens() < ied->get_sink_rate()) {
+						firable = false;
+						break;
+					}
+				}
+				if (firable) {
+					for (auto ied : iedges) {
+						ied->set_tokens(ied->get_tokens()-
+							ied->get_sink_rate());	
+					}
+					for (auto oed : oedges) {
+						oed->set_tokens(oed->get_tokens()+
+							oed->get_source_rate());
+					}
+				}
+				cont = true;
+				firings[ac.first]++;
+			}			
+		}
+	}
 	return res;
 }
 

@@ -700,7 +700,6 @@ public:
 	//vector<vector<string>> path();
 	//int solve2();
 
-
 };
 
 #endif
