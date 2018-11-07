@@ -98,6 +98,16 @@ map<string, string> Actor::get_props() {
 	return properties;
 }
 
+int Actor::get_exect() {
+	int res = 0;
+	try {
+		res = std::stoi(get_prop("exect"));
+  	} catch( const std::exception& e ) {
+        	std::cerr << "error: " << e.what() << '\n' ;
+  	}
+	return res;
+}
+
 void Schedule::insert_order(vector<Actor *> order) 
 {
 	for (auto o : order) {

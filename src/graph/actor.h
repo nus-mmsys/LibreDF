@@ -208,6 +208,15 @@ public:
 	 * 	map of all properties
 	 */
 	std::map<std::string, std::string> get_props();
+	
+	/*!
+	 * Get execution time of the actor
+	 * The property exect should be specified
+	 *
+	 * \return
+	 * 	The execution time of an actor
+	 */
+	int get_exect();
 
 };
 
