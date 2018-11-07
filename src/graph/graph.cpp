@@ -719,6 +719,8 @@ int Graph::latency() {
 	}
 	for (auto ac : actors) {
 		cout << ac.first << " " << endtime[ac.first] << "\n";
+		if (endtime[ac.first]>res)
+			res = endtime[ac.first];
 	}
 	return res;
 }
