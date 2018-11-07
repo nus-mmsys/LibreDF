@@ -646,8 +646,72 @@ bool Graph::empty() {
 
 map<string, vector<tuple<int,int>>> Graph::schedule() {
 	map<string, vector<tuple<int,int>>> res;
+	resolve();
+	int timeins = 0;
+	vector<Edge *> iedges;
+	vector<Edge *> oedges;
+	map<string, int> firings;
+	map<string, int> potfirings;
+	map<string, int> lastcons;
+	map<string, int> lastprod;
+	bool cont = true;
+	bool can_consume=true;
+	for (auto ac : actors) {
+		firings.insert(make_pair(ac.first,0));
+		lastcons.insert(make_pair(ac.first,0));
+		lastprod.insert(make_pair(ac.first,0));
+		res.insert(make_pair(ac.first, vector<tuple<int,int>>()));
+		iedges = get_iedges(ac.second);
+		if (iedges.empty())
+			potfirings.insert(make_pair(ac.first,1));
+		else
+			potfirings.insert(make_pair(ac.first,0));
+	}
+	while(cont) {
+		cont = false;
+		for (auto ac : actors) {
+			if (firings[ac.first] < ac.second->get_firing()) {
+				oedges = get_oedges(ac.second);
+				iedges = get_iedges(ac.second);
+				if((timeins >= lastprod[ac.first]+ac.second->get_exect()
+					&& timeins >= lastcons[ac.first]+ac.second->get_exect()
+				       	&& potfirings[ac.first]>0) ) {
+					for (auto oed : oedges) {
+						oed->set_tokens(oed->get_tokens()+
+							oed->get_source_rate());
+					}
+					potfirings[ac.first]--;
+					
+					lastprod[ac.first] = timeins;
+					res[ac.first].push_back(make_tuple(lastcons[ac.first], 
+								lastprod[ac.first]));	
+					firings[ac.first]++;
+				}
 
+				can_consume=true;
+				for (auto ied : iedges) {
+					if (ied->get_tokens() < ied->get_sink_rate()) {
+						can_consume = false;
+						break;
+					}
+				}
+
+				if (timeins >= lastcons[ac.first]+ac.second->get_exect()
+					&& can_consume) {
+					for (auto ied : iedges) {
+						ied->set_tokens(ied->get_tokens()-
+							ied->get_sink_rate());	
+					}
+					potfirings[ac.first]++;
+					lastcons[ac.first] = timeins;
+				}
+				cont = true;
+			}			
+		}
+		timeins++;
+	}
 	return res;
+
 }
 
 int Graph::latency() {
@@ -687,9 +751,9 @@ int Graph::latency() {
 							oed->get_source_rate());
 					}
 					potfirings[ac.first]--;
-
+					
 					lastprod[ac.first] = timeins;
-			
+					
 					firings[ac.first]++;
 				}
 
