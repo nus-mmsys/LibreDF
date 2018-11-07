@@ -659,7 +659,8 @@ int Graph::latency() {
 	map<string, int> potfirings;
 	map<string, int> endtime;
 	bool cont = true;
-	bool firable = true;
+	int ficount=0;
+	int min_ficount=INT_MAX;
 	for (auto ac : actors) {
 		firings.insert(make_pair(ac.first,0));
 		potfirings.insert(make_pair(ac.first,0));
@@ -668,30 +669,37 @@ int Graph::latency() {
 	while(cont) {
 		cont = false;
 		for (auto ac : actors) {
+			oedges = get_oedges(ac.second);
+			while(potfirings[ac.first]>0) {
+				for (auto oed : oedges) {
+					oed->set_tokens(oed->get_tokens()+
+						oed->get_source_rate());
+				}
+				potfirings[ac.first]--;
+			}
 			if (firings[ac.first] < ac.second->get_firing()) {
-				firable = true;
+				ficount = 0;
+				min_ficount = INT_MAX;
 				iedges = get_iedges(ac.second);
-				oedges = get_oedges(ac.second);
 				for (auto ied : iedges) {
-					if (ied->get_tokens() < ied->get_sink_rate()) {
-						firable = false;
-						break;
+					ficount = ied->get_sink_rate()/ied->get_tokens();
+					if (ficount < min_ficount) {
+						min_ficount = ficount;
 					}
 				}
-				if (firable) {
+				while (min_ficount>0) {
 					for (auto ied : iedges) {
 						ied->set_tokens(ied->get_tokens()-
 							ied->get_sink_rate());	
 					}
-					for (auto oed : oedges) {
-						oed->set_tokens(oed->get_tokens()+
-							oed->get_source_rate());
-					}
+					potfirings[ac.first]++;
+					min_ficount--;
 				}
 				cont = true;
 				firings[ac.first]++;
 			}			
 		}
+		timeins++;
 	}
 	return res;
 }
