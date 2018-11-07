@@ -670,12 +670,14 @@ int Graph::latency() {
 		cont = false;
 		for (auto ac : actors) {
 			oedges = get_oedges(ac.second);
-			while(potfirings[ac.first]>0) {
+			if(timeins >= endtime[ac.first]+ac.second->get_exect()
+				       	&& potfirings[ac.first]>0) {
 				for (auto oed : oedges) {
 					oed->set_tokens(oed->get_tokens()+
 						oed->get_source_rate());
 				}
 				potfirings[ac.first]--;
+				endtime[ac.first] = timeins;
 			}
 			if (firings[ac.first] < ac.second->get_firing()) {
 				ficount = 0;
@@ -700,6 +702,9 @@ int Graph::latency() {
 			}			
 		}
 		timeins++;
+	}
+	for (auto ac : actors) {
+		cout << ac.first << " " << endtime[ac.first] << "\n";
 	}
 	return res;
 }
