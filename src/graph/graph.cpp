@@ -651,6 +651,7 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 }
 
 int Graph::latency() {
+	resolve();
 	int res=0;
 	int timeins = 0;
 	vector<Edge *> iedges;
@@ -659,46 +660,59 @@ int Graph::latency() {
 	map<string, int> potfirings;
 	map<string, int> endtime;
 	bool cont = true;
-	int ficount=0;
-	int min_ficount=INT_MAX;
+	bool can_consume=true;
 	for (auto ac : actors) {
 		firings.insert(make_pair(ac.first,0));
-		potfirings.insert(make_pair(ac.first,0));
 		endtime.insert(make_pair(ac.first,0));
+
+		iedges = get_iedges(ac.second);
+		if (iedges.empty())
+			potfirings.insert(make_pair(ac.first,1));
+		else
+			potfirings.insert(make_pair(ac.first,0));
 	}
 	while(cont) {
 		cont = false;
 		for (auto ac : actors) {
-			oedges = get_oedges(ac.second);
-			if(timeins >= endtime[ac.first]+ac.second->get_exect()
-				       	&& potfirings[ac.first]>0) {
-				for (auto oed : oedges) {
-					oed->set_tokens(oed->get_tokens()+
-						oed->get_source_rate());
-				}
-				potfirings[ac.first]--;
-				endtime[ac.first] = timeins;
-			}
 			if (firings[ac.first] < ac.second->get_firing()) {
-				ficount = 0;
-				min_ficount = INT_MAX;
+				oedges = get_oedges(ac.second);
 				iedges = get_iedges(ac.second);
+				if((timeins >= endtime[ac.first]+ac.second->get_exect()
+				       	&& potfirings[ac.first]>0) ) {
+					for (auto oed : oedges) {
+						oed->set_tokens(oed->get_tokens()+
+							oed->get_source_rate());
+					}
+					if(iedges.empty())
+						potfirings[ac.first]=1;
+					else
+						potfirings[ac.first]--;
+
+					endtime[ac.first] = timeins;
+			
+					firings[ac.first]++;
+					cout << ac.first << " producing at " << timeins << "\n";
+				}
+
+				can_consume=true;
 				for (auto ied : iedges) {
-					ficount = ied->get_sink_rate()/ied->get_tokens();
-					if (ficount < min_ficount) {
-						min_ficount = ficount;
+					if (ied->get_tokens() < ied->get_sink_rate()) {
+						can_consume = false;
+						break;
 					}
 				}
-				while (min_ficount>0) {
+				if (iedges.empty())
+					can_consume=false;
+
+				if (can_consume) {
 					for (auto ied : iedges) {
 						ied->set_tokens(ied->get_tokens()-
 							ied->get_sink_rate());	
 					}
 					potfirings[ac.first]++;
-					min_ficount--;
+					cout << ac.first << " consuming at " << timeins << "\n";
 				}
 				cont = true;
-				firings[ac.first]++;
 			}			
 		}
 		timeins++;
