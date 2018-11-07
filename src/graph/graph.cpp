@@ -658,12 +658,14 @@ int Graph::latency() {
 	vector<Edge *> oedges;
 	map<string, int> firings;
 	map<string, int> potfirings;
-	map<string, int> endtime;
+	map<string, int> lastcons;
+	map<string, int> lastprod;
 	bool cont = true;
 	bool can_consume=true;
 	for (auto ac : actors) {
 		firings.insert(make_pair(ac.first,0));
-		endtime.insert(make_pair(ac.first,0));
+		lastcons.insert(make_pair(ac.first,0));
+		lastprod.insert(make_pair(ac.first,0));
 
 		iedges = get_iedges(ac.second);
 		if (iedges.empty())
@@ -677,21 +679,18 @@ int Graph::latency() {
 			if (firings[ac.first] < ac.second->get_firing()) {
 				oedges = get_oedges(ac.second);
 				iedges = get_iedges(ac.second);
-				if((timeins >= endtime[ac.first]+ac.second->get_exect()
+				if((timeins >= lastprod[ac.first]+ac.second->get_exect()
+					&& timeins >= lastcons[ac.first]+ac.second->get_exect()
 				       	&& potfirings[ac.first]>0) ) {
 					for (auto oed : oedges) {
 						oed->set_tokens(oed->get_tokens()+
 							oed->get_source_rate());
 					}
-					if(iedges.empty())
-						potfirings[ac.first]=1;
-					else
-						potfirings[ac.first]--;
+					potfirings[ac.first]--;
 
-					endtime[ac.first] = timeins;
+					lastprod[ac.first] = timeins;
 			
 					firings[ac.first]++;
-					cout << ac.first << " producing at " << timeins << "\n";
 				}
 
 				can_consume=true;
@@ -701,16 +700,15 @@ int Graph::latency() {
 						break;
 					}
 				}
-				if (iedges.empty())
-					can_consume=false;
 
-				if (can_consume) {
+				if (timeins >= lastcons[ac.first]+ac.second->get_exect()
+					&& can_consume) {
 					for (auto ied : iedges) {
 						ied->set_tokens(ied->get_tokens()-
 							ied->get_sink_rate());	
 					}
 					potfirings[ac.first]++;
-					cout << ac.first << " consuming at " << timeins << "\n";
+					lastcons[ac.first] = timeins;
 				}
 				cont = true;
 			}			
@@ -718,9 +716,9 @@ int Graph::latency() {
 		timeins++;
 	}
 	for (auto ac : actors) {
-		cout << ac.first << " " << endtime[ac.first] << "\n";
-		if (endtime[ac.first]>res)
-			res = endtime[ac.first];
+		cout << ac.first << " " << lastprod[ac.first] << "\n";
+		if (lastprod[ac.first]>res)
+			res = lastprod[ac.first];
 	}
 	return res;
 }
