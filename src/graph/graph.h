@@ -396,6 +396,18 @@ public:
 	bool connected();
 
 	/*!
+	 * Returns the execution time of a given actor.
+	 * 
+	 * \param name
+	 * 	Name of the actor.
+	 * 
+	 * \return
+	 * 	Execution time of the given actor.
+	 *
+	 */
+	int get_exect(string name);
+
+	/*!
 	 * Returns the firing (solution) of a given actor.
 	 * 
 	 * \param name

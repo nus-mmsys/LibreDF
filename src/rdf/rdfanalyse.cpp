@@ -79,6 +79,14 @@ int RDFAnalyse::display_graph(Graph * g) {
 	}
 	
 	cout << "-------\n";
+
+	cout << "execution times \n\n";
+	for (auto & ac : actorlist) {
+		cout << ac << " : " << g->get_exect(ac) << "\n";
+	}
+	
+	cout << "-------\n";
+
 	return 0;
 }
 

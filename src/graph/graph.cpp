@@ -507,6 +507,12 @@ int Graph::set_firing(string name, int firing) {
 	return 0;
 }
 
+int Graph::get_exect(string name) {
+	if (actors.find(name) == actors.end())
+		return -1;
+	return actors[name]->get_exect();
+}
+
 int Graph::get_firing(string name) {
 	if (actors.find(name) == actors.end())
 		return -1;
