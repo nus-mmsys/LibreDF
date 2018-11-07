@@ -103,7 +103,7 @@ int Actor::get_exect() {
 	try {
 		res = std::stoi(get_prop("exect"));
   	} catch( const std::exception& e ) {
-        	std::cerr << "error: " << e.what() << '\n' ;
+        	res = 0;
   	}
 	return res;
 }
