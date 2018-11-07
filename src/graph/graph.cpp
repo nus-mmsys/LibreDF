@@ -652,13 +652,18 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 
 int Graph::latency() {
 	int res=0;
+	int timeins = 0;
 	vector<Edge *> iedges;
 	vector<Edge *> oedges;
 	map<string, int> firings;
+	map<string, int> potfirings;
+	map<string, int> endtime;
 	bool cont = true;
 	bool firable = true;
 	for (auto ac : actors) {
 		firings.insert(make_pair(ac.first,0));
+		potfirings.insert(make_pair(ac.first,0));
+		endtime.insert(make_pair(ac.first,0));
 	}
 	while(cont) {
 		cont = false;
