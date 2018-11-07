@@ -89,17 +89,6 @@ protected:
 	 */ 
 	int mxpower();
 
-	/*!
-	 * Compute the latency of the graph
-	 * 
-	 */ 
-	int latency();
-	
-	/*!
-	 * Compute an schedule for the graph
-	 * 
-	 */ 
-	int schedule();
 
 	/*!
 	 * Process a command given by the user

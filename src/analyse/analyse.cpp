@@ -29,11 +29,15 @@ Analyse::Analyse(int argc, char * argv[], Parser * p) {
 	cmd["run"] = bind(&Analyse::run, this, false);
 	cmd["runtcp"] = bind(&Analyse::run, this, true);
 	cmd["h"] = bind(&Analyse::display_help, this);
-
+	cmd["latency"] = bind(&Analyse::latency, this);
+	cmd["schedule"] = bind(&Analyse::schedule, this);
+	
 	comment["graph"] = "\tdisplay the graph.";
 	comment["run"] = "\trun the graph on shared memory.";
 	comment["runtcp"] = "\trun the graph on tcp.";
 	comment["h"] = "\tdisplay help menu.";
+	comment["latency"] = "\tcompute the lateny of the graph.";
+	comment["schedule"] = "compute an schedule for the graph.";
 
 	parser = p;	
 	parser->load_from_file(argv[1]);
@@ -138,3 +142,30 @@ int Analyse::run(bool dist) {
 
 	return 0;
 }
+
+int Analyse::latency() {
+
+	int latency = 0;
+    	std::chrono::high_resolution_clock::time_point start, end; 			
+	start = std::chrono::high_resolution_clock::now();
+	latency = graph->latency();
+	end = std::chrono::high_resolution_clock::now();
+	std::cout << "Latency = " << latency << "\n";
+
+	std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
+ 
+	return 0;
+}
+
+int Analyse::schedule() {
+
+    	std::chrono::high_resolution_clock::time_point start, end; 			
+	start = std::chrono::high_resolution_clock::now();
+	//TODO
+	end = std::chrono::high_resolution_clock::now();
+	
+	std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count()  << " us\n"; 
+ 
+	return 0;
+}
+
