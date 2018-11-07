@@ -672,7 +672,6 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 		for (auto ac : actors) {
 			if (firings[ac.first] < ac.second->get_firing()) {
 				oedges = get_oedges(ac.second);
-				iedges = get_iedges(ac.second);
 				if((timeins >= lastprod[ac.first]+ac.second->get_exect()
 					&& timeins >= lastcons[ac.first]+ac.second->get_exect()
 				       	&& potfirings[ac.first]>0) ) {
@@ -687,7 +686,12 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 								lastprod[ac.first]));	
 					firings[ac.first]++;
 				}
+			}
+		}
 
+		for (auto ac : actors) {
+			if (firings[ac.first] < ac.second->get_firing()) {
+				iedges = get_iedges(ac.second);
 				can_consume=true;
 				for (auto ied : iedges) {
 					if (ied->get_tokens() < ied->get_sink_rate()) {
