@@ -1,0 +1,21 @@
+tmf adder {
+    topology {
+        nodes = A,B;
+        edges = e1(A,B);
+    }
+    production {
+        e1 = 4;
+    }
+    consumption {
+        e1 = 6;
+    }
+    actor A {
+        computation = IntProducer;
+        last = 64;
+    	exect = 3;
+    }
+    actor B {
+        computation = IntConsumer;
+    	exect = 4;
+    }
+}
