@@ -130,6 +130,8 @@ int RDFAnalyse::display_rules() {
 		cout << "=======\n";
 		cout << "latency(lhs) = " << rules[rule_number]->left()->latency() << "\n";
 		cout << "latency(rhs) = " << rules[rule_number]->right()->latency() << "\n";
+		cout << "\u0394 lat = " << rules[rule_number]->right()->latency() -
+		       	rules[rule_number]->left()->latency() << "\n";
 		cout << "=======\n";
 		ret = rules[rule_number]->verify();
 		cout << "=======\n";
