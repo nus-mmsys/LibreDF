@@ -29,6 +29,8 @@ Edge::Edge() {
 	snk_port = "";
 	src_rate = 1;
 	snk_rate = 1;
+	init_tokens = 0;
+	tokens = 0;
 }
 
 Edge::Edge(std::string edgename) : Edge() {
