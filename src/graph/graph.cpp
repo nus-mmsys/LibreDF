@@ -661,31 +661,31 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 		lastcons.insert(make_pair(ac.first,0));
 		lastprod.insert(make_pair(ac.first,0));
 		res.insert(make_pair(ac.first, vector<tuple<int,int>>()));
+		potfirings.insert(make_pair(ac.first,0));
 		iedges = get_iedges(ac.second);
-		if (iedges.empty())
-			potfirings.insert(make_pair(ac.first,1));
-		else
-			potfirings.insert(make_pair(ac.first,0));
+		if(iedges.empty()) {
+			potfirings[ac.first]=1;
+		}
 	}
 	while(cont) {
 		cont = false;
 		for (auto ac : actors) {
-			if (firings[ac.first] < ac.second->get_firing()) {
+			if (firings[ac.first] < ac.second->get_firing() 
+				&& timeins >= lastprod[ac.first]+ac.second->get_exect()
+				&& timeins >= lastcons[ac.first]+ac.second->get_exect()
+				&& potfirings[ac.first]>0) {
+				
 				oedges = get_oedges(ac.second);
-				if((timeins >= lastprod[ac.first]+ac.second->get_exect()
-					&& timeins >= lastcons[ac.first]+ac.second->get_exect()
-				       	&& potfirings[ac.first]>0) ) {
-					for (auto oed : oedges) {
-						oed->set_tokens(oed->get_tokens()+
-							oed->get_source_rate());
-					}
-					potfirings[ac.first]--;
-					
-					lastprod[ac.first] = timeins;
-					res[ac.first].push_back(make_tuple(lastcons[ac.first], 
-								lastprod[ac.first]));	
-					firings[ac.first]++;
+				for (auto oed : oedges) {
+					oed->set_tokens(oed->get_tokens()+
+						oed->get_source_rate());
 				}
+				potfirings[ac.first]--;
+				lastprod[ac.first] = timeins;
+				res[ac.first].push_back(make_tuple(lastcons[ac.first], 
+							lastprod[ac.first]));	
+				firings[ac.first]++;
+				cont = true;
 			}
 		}
 
@@ -706,6 +706,7 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 						ied->set_tokens(ied->get_tokens()-
 							ied->get_sink_rate());	
 					}
+
 					potfirings[ac.first]++;
 					lastcons[ac.first] = timeins;
 				}
