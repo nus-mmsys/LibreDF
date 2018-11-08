@@ -658,8 +658,8 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 	bool can_consume=true;
 	for (auto ac : actors) {
 		firings.insert(make_pair(ac.first,0));
-		lastcons.insert(make_pair(ac.first,0));
 		lastprod.insert(make_pair(ac.first,0));
+		lastcons.insert(make_pair(ac.first,-1*ac.second->get_exect()));
 		res.insert(make_pair(ac.first, vector<tuple<int,int>>()));
 		potfirings.insert(make_pair(ac.first,0));
 		iedges = get_iedges(ac.second);
@@ -669,14 +669,14 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 	}
 	while(cont) {
 		cont = false;
-		for (auto ac : actors) {
+		for (auto& ac : actors) {
 			if (firings[ac.first] < ac.second->get_firing() 
 				&& timeins >= lastprod[ac.first]+ac.second->get_exect()
 				&& timeins >= lastcons[ac.first]+ac.second->get_exect()
 				&& potfirings[ac.first]>0) {
 				
 				oedges = get_oedges(ac.second);
-				for (auto oed : oedges) {
+				for (auto& oed : oedges) {
 					oed->set_tokens(oed->get_tokens()+
 						oed->get_source_rate());
 				}
@@ -689,11 +689,11 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 			}
 		}
 
-		for (auto ac : actors) {
+		for (auto& ac : actors) {
 			if (firings[ac.first] < ac.second->get_firing()) {
 				iedges = get_iedges(ac.second);
 				can_consume=true;
-				for (auto ied : iedges) {
+				for (auto& ied : iedges) {
 					if (ied->get_tokens() < ied->get_sink_rate()) {
 						can_consume = false;
 						break;
@@ -701,8 +701,9 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 				}
 
 				if (timeins >= lastcons[ac.first]+ac.second->get_exect()
+					&& timeins >= lastprod[ac.first]
 					&& can_consume) {
-					for (auto ied : iedges) {
+					for (auto& ied : iedges) {
 						ied->set_tokens(ied->get_tokens()-
 							ied->get_sink_rate());	
 					}
