@@ -21,9 +21,14 @@
 RDFAnalyse::RDFAnalyse(int argc, char * argv[], RDFParser * p) : Analyse(argc,argv,p) {
 	cmd["benchmark"] = bind(&RDFAnalyse::display_benchmark, this);
 	cmd["rules"] = bind(&RDFAnalyse::display_rules, this);
+	cmd["run"] = bind(&RDFAnalyse::run, this);
 
 	comment["benchmark"] = "display benchmark.";
 	comment["rules"] = "\tdisplay list of rules.";
+	comment["run"] = "\trun the RDF program.";
+
+	cmd.erase("runtcp");
+	comment.erase("runtcp");
 
 	rules = p->get_rules();
 }
@@ -144,6 +149,21 @@ int RDFAnalyse::display_rules() {
 			cout << "=======\n";
 		}
 	}
+	return 0;
+}
+
+int RDFAnalyse::run() {
+
+	df::Dataflow * dfg = parser->get_dataflow();
+
+	dfg->init();
+
+	dfg->connect();
+
+  	dfg->run();
+
+	delete dfg;
+
 	return 0;
 }
 

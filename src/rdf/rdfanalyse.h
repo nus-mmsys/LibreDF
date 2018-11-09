@@ -68,6 +68,13 @@ protected:
 	 */ 
 	int display_benchmark();
 
+	/*!
+	 * Run the RDF graph
+	 *
+	 * \return
+	 *
+	 */ 
+	int run();
 
 public:
 	/*!
