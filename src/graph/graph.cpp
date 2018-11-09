@@ -687,8 +687,8 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 				firings[ac.first]++;
 				cont = true;
 			}
-		}
 
+		}
 		for (auto& ac : actors) {
 			if (firings[ac.first] < ac.second->get_firing()) {
 				iedges = get_iedges(ac.second);
@@ -712,7 +712,7 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 					lastcons[ac.first] = timeins;
 				}
 				cont = true;
-			}			
+			}
 		}
 		timeins++;
 	}
@@ -724,7 +724,7 @@ int Graph::latency() {
 	int res = 0;
 	auto sch = schedule();
 	for (auto ac : sch) {
-		if (get<1>(ac.second.back()) > res)
+		if (!ac.second.empty() && get<1>(ac.second.back()) > res)
 			res = get<1>(ac.second.back());
 	}
 	return res;
