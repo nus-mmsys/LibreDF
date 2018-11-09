@@ -45,12 +45,26 @@ protected:
 	 *
 	 * \param stream
 	 * 	Reference of the stream.
+	 * \param g
+	 * 	Reference of the graph.
 	 *
 	 * \return
 	 *
 	 */ 
 	int read_rules(std::stringstream & stream, Graph * g);
 
+	/*!
+	 * Read the main.
+	 *
+	 * \param stream
+	 * 	Reference of the stream.
+	 * \param g
+	 * 	Reference of the graph.
+	 *
+	 * \return
+	 *
+	 */ 
+	int read_main(stringstream & stream, Graph * g);
 public:
 
 	/*!

@@ -33,11 +33,31 @@ int RDFParser::load_from_stream(std::stringstream & ss) {
 	if (ret < 0)
 		return ret;
 	ret = read_rules(ss, graph);
-	//ret = read_main(ss, graph)
-	if (ret == 0) {
-		cout << "graph is loaded successfully.\n";
-	}
+	//if (ret < 0)
+	//	return ret;
+	//ret = read_main(ss, graph);
+	if (ret == 0)
+		cout << "RDF is loaded successfully.\n";
+	else 
+		cout << "cannot load the RDF.\n";
 	return ret;
+}
+
+int RDFParser::read_main(stringstream & stream, Graph * g) {
+	int ret;
+	ret=read_str(stream, "main");
+       	if (ret < 0)
+		return ret;
+
+	ret=read_str(stream, "{");
+       	if (ret < 0)
+		return ret;
+
+	ret=read_str(stream, "}");
+       	if (ret < 0)
+		return ret;
+
+	return 0;
 }
 
 int RDFParser::read_rules(stringstream & stream, Graph * g) {
@@ -46,7 +66,12 @@ int RDFParser::read_rules(stringstream & stream, Graph * g) {
 	string rulestr;
 	Rule * rule;
 	g->resolve();
-	while (read_str(stream, "rule")==0) {
+	while (ret >= 0) {
+		ret = read_str(stream, "rule");
+		if (ret==-2)
+			break;
+		if (ret==-1)
+			return ret;
 		stream >> rulename;
 		rule = new Rule(rulename);
 		ret = read_str(stream, "{");
