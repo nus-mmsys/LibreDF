@@ -99,11 +99,11 @@ map<string, string> Actor::get_props() {
 }
 
 int Actor::get_exect() {
-	int res = 0;
+	int res = 1;
 	try {
 		res = std::stoi(get_prop("exect"));
   	} catch( const std::exception& e ) {
-        	res = 0;
+        	res = 1;
   	}
 	return res;
 }

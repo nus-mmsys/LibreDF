@@ -49,7 +49,7 @@ protected:
 	 * \return
 	 *
 	 */ 
-	int read_rules(std::stringstream & stream);
+	int read_rules(std::stringstream & stream, Graph * g);
 
 public:
 
