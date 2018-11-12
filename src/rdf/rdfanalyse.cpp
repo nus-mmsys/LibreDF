@@ -23,10 +23,12 @@ RDFAnalyse::RDFAnalyse(int argc, char * argv[], RDFParser * p) : Analyse(argc,ar
 
 	cmd["benchmark"] = bind(&RDFAnalyse::display_benchmark, this);
 	cmd["rules"] = bind(&RDFAnalyse::display_rules, this);
+	cmd["program"] = bind(&RDFAnalyse::display_prog, this);
 	cmd["run"] = bind(&RDFAnalyse::run, this);
 
 	comment["benchmark"] = "display benchmark.";
 	comment["rules"] = "\tdisplay list of rules.";
+	comment["program"] = "\tdisplay the RDF program.";
 	comment["run"] = "\trun the RDF program.";
 
 	cmd.erase("runtcp");
@@ -93,6 +95,17 @@ int RDFAnalyse::display_graph(Graph * g) {
 	
 	cout << "-------\n";
 
+	return 0;
+}
+
+int RDFAnalyse::display_prog() {
+	for (auto c : rdfg->prog) {
+		for (auto t : c.second) {
+			cout << c.first << " "
+				<< get<0>(t) << " " 
+				<< get<1>(t) << "\n";
+		}
+	}
 	return 0;
 }
 

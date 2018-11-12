@@ -84,7 +84,7 @@ int RDFParser::add_cond(const string& cond) {
 	int ret=0, value=0;
 	string var="", val="", rule="";
 	std::istringstream ss(cond);
-  	getline(ss, var, ' ');
+  	getline(ss, var, '=');
 	getline(ss, val, ':');
 	getline(ss, rule);
         if (var=="" || val=="" || rule=="") {

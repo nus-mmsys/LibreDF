@@ -71,4 +71,5 @@ right {
 }
 }
 main {
+	iter=32 : r1;
 }

@@ -59,6 +59,14 @@ protected:
 	 *
 	 */ 
 	int display_rules();
+	
+	/*!
+	 * Display the RDF program
+	 *
+	 * \return
+	 *
+	 */ 
+	int display_prog();
 
 	/*!
 	 * Display the benchmark to the user
