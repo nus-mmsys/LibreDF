@@ -31,10 +31,12 @@
 class RDFGraph {
 public:
 	Graph * graph;
-	vector<Rule *> rules; /**< RDF transformation rules. */
+	map<string, Rule *> rules; /**< RDF transformation rules. */
 	map<string, vector<tuple<int,string>>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
 
 	RDFGraph();
+	int add_rule(Rule * r);
+	int add_condition(string var, int val, string rule);
 };
 
 #endif

@@ -104,47 +104,43 @@ int RDFAnalyse::display_rules() {
 	}
 	int ret;
 	int rule_number=0;
-	while (rule_number >= 0 && rule_number<rdfg->rules.size()) {
+	string rule_name="";
+	while (true) {
 	
-		for (int i=0; i<rdfg->rules.size(); i++) {
-			cout << to_string(i) << ": " << rdfg->rules[i]->get_name() << "\n";
+		for (auto r : rdfg->rules) {
+			cout << r.first << "\n";
 		}
 		cout << "rules> press q to exit.\n";
-		cout << "rules> enter rule number:";
-		cin >> rule_number;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(256, '\n');
-			return -1;
-		}
-		if (rule_number <0 || rule_number>=rdfg->rules.size())
+		cout << "rules> enter rule name:";
+		cin >> rule_name;
+		if (rdfg->rules.find(rule_name)==rdfg->rules.end())
 			break;
 	
 		cout << "=======\n";
-		cout << rdfg->rules[rule_number]->get_name() << " left \n" ;
+		cout << rdfg->rules[rule_name]->get_name() << " left \n" ;
 		cout << "=======\n";
-		ret = display_graph(rdfg->rules[rule_number]->left());
+		ret = display_graph(rdfg->rules[rule_name]->left());
 		if (ret < 0)
 			return ret;
 	
 		cout << "=======\n";
-		cout << rdfg->rules[rule_number]->get_name() << " right \n" ;
+		cout << rdfg->rules[rule_name]->get_name() << " right \n" ;
 		cout << "=======\n";
-		ret = display_graph(rdfg->rules[rule_number]->right());
+		ret = display_graph(rdfg->rules[rule_name]->right());
 		if (ret < 0)
 			return ret;
 		cout << "=======\n";
-		cout << "latency(lhs) = " << rdfg->rules[rule_number]->left()->latency() << "\n";
-		cout << "latency(rhs) = " << rdfg->rules[rule_number]->right()->latency() << "\n";
-		cout << "\u0394 lat = " << rdfg->rules[rule_number]->right()->latency() -
-		       	rdfg->rules[rule_number]->left()->latency() << "\n";
+		cout << "latency(lhs) = " << rdfg->rules[rule_name]->left()->latency() << "\n";
+		cout << "latency(rhs) = " << rdfg->rules[rule_name]->right()->latency() << "\n";
+		cout << "\u0394 lat = " << rdfg->rules[rule_name]->right()->latency() -
+		       	rdfg->rules[rule_name]->left()->latency() << "\n";
 		cout << "=======\n";
-		ret = rdfg->rules[rule_number]->verify();
+		ret = rdfg->rules[rule_name]->verify();
 		cout << "=======\n";
 		if (ret == 0) {
-			cout << rdfg->rules[rule_number]->result()->get_name() << "\n";
+			cout << rdfg->rules[rule_name]->result()->get_name() << "\n";
 			cout << "=======\n";
-			ret = display_graph(rdfg->rules[rule_number]->result());
+			ret = display_graph(rdfg->rules[rule_name]->result());
 			if (ret < 0)
 				return ret;
 			cout << "=======\n";
@@ -175,7 +171,7 @@ int RDFAnalyse::display_benchmark() {
 	}
 	cout << "name, RDF connectivity, connectivity, RDF consistency, consistency, RDF liveness, liveness\n";
 	for (auto r : rdfg->rules) {
-		cout << r->benchmark() << endl;
+		cout << r.second->benchmark() << endl;
 	}
 	return 0;
 }

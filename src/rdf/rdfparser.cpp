@@ -98,8 +98,7 @@ int RDFParser::add_cond(const string& cond) {
 		cout << "error: value of a condition is not correct.\n";
 		return -2;
 	}
-	//TODO
-	//ret = g->add_condition(var,value, rule);
+	ret = rdfg->add_condition(var, value, rule);
 	if (ret == -1)
 		cout << "error: condition cannot be added.\n";
 	return ret;
@@ -136,9 +135,7 @@ int RDFParser::read_rules(stringstream & stream) {
 		if (ret < 0)
 			return ret;
 
-		rule->process(rdfg->graph);
-	
-		rdfg->rules.push_back(rule);		
+		rdfg->add_rule(rule);		
 	}
 	return 0;
 }

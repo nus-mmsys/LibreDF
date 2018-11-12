@@ -21,3 +21,25 @@
 RDFGraph::RDFGraph() {
 	graph = new Graph();
 }
+
+int RDFGraph::add_rule(Rule * r) {
+	r->process(graph);
+	rules.insert(make_pair(r->get_name(), r));
+	return 0;
+}
+int RDFGraph::add_condition(string var, int val, string rule) {
+	if (rules.find(rule) == rules.end()) {
+		cerr << "condition applies an unknown rule.\n";
+		return -1;
+	}
+
+	if (prog.find(var) == prog.end()) {
+		vector<tuple<int,string>> v;
+		v.push_back(tuple<int,string>(val,rule));
+		prog.insert(make_pair(var,v));	
+	} else {
+		prog[var].push_back(tuple<int,string>(val,rule));
+	}
+
+	return 0;
+}
