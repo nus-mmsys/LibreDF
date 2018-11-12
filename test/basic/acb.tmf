@@ -25,3 +25,5 @@ tmf acb {
     	exect = 5;
     }
 }
+main {
+}

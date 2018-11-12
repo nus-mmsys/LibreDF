@@ -49,15 +49,54 @@ int RDFParser::read_main(stringstream & stream, Graph * g) {
        	if (ret < 0)
 		return ret;
 
-	ret=read_str(stream, "{");
-       	if (ret < 0)
-		return ret;
-
-	ret=read_str(stream, "}");
-       	if (ret < 0)
+	ret=read_conditions(stream, g);
+	if (ret < 0)
 		return ret;
 
 	return 0;
+}
+
+int RDFParser::read_conditions(stringstream & stream, Graph * g) {
+
+	int ret=0;
+	string condlist, cond;
+	read_str(stream, "{");	
+	getline(stream, condlist, '}');
+	
+	trim_str(condlist);
+
+	istringstream ss(condlist);
+	while (getline(ss, cond, ';')) {
+		ret = add_cond(cond,g);
+		if (ret < 0)
+			return ret;		
+	}
+	return 0;
+}
+
+int RDFParser::add_cond(const string& cond, Graph * g) {
+	int ret=0, value=0;
+	string var="", val="", rule="";
+	std::istringstream ss(cond);
+  	getline(ss, var, ' ');
+	getline(ss, val, ':');
+	getline(ss, rule);
+        if (var=="" || val=="" || rule=="") {
+		cout << "error: condition is not well formatted.\n";
+		return -2;
+	}
+	try {
+		value = stoi(val);
+	}
+	catch(...) {
+		cout << "error: value of a condition is not correct.\n";
+		return -2;
+	}
+	//TODO
+	//ret = g->add_condition(var,value, rule);
+	if (ret == -1)
+		cout << "error: condition cannot be added.\n";
+	return ret;
 }
 
 int RDFParser::read_rules(stringstream & stream, Graph * g) {

@@ -66,6 +66,38 @@ protected:
 	 *
 	 */ 
 	int read_main(stringstream & stream, Graph * g);
+
+	/*!
+	 * Read the conditions of the main
+	 * in the format of
+	 * 	variable value : rule;
+	 * e.g.
+	 * 	iter 32 : r1;
+	 *
+	 * \param stream
+	 * 	Reference of the stream.
+	 * \param g
+	 * 	Reference of the graph.
+	 *
+	 * \return
+	 *
+	 */ 
+	int read_conditions(stringstream & stream, Graph * g);
+
+	/*!
+	 *
+	 * Add a condition of the main
+	 * to the RDF graph structure
+	 *
+	 * \param stream
+	 * 	Reference of the stream.
+	 * \param g
+	 * 	Reference of the graph.
+	 *
+	 * \return
+	 *
+	 */ 
+	int add_cond(const string& cond, Graph * g);
 public:
 
 	/*!

@@ -88,8 +88,10 @@ int Parser::check_str(stringstream & stream, string str) {
 	stream >> tmp;
 	if (tmp == str)
 		return 0;
-	else
-		stream << tmp;
+	else {
+		for(int i=0; i<tmp.size(); i++)
+			stream.unget();
+	}
 	return -1;
 }
 
