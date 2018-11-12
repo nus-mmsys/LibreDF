@@ -33,9 +33,9 @@ int RDFParser::load_from_stream(std::stringstream & ss) {
 	if (ret < 0)
 		return ret;
 	ret = read_rules(ss, graph);
-	//if (ret < 0)
-	//	return ret;
-	//ret = read_main(ss, graph);
+	if (ret < 0)
+		return ret;
+	ret = read_main(ss, graph);
 	if (ret == 0)
 		cout << "RDF is loaded successfully.\n";
 	else 
@@ -67,11 +67,9 @@ int RDFParser::read_rules(stringstream & stream, Graph * g) {
 	Rule * rule;
 	g->resolve();
 	while (ret >= 0) {
-		ret = read_str(stream, "rule");
-		if (ret==-2)
+		ret = check_str(stream, "rule");
+		if (ret<0)
 			break;
-		if (ret==-1)
-			return ret;
 		stream >> rulename;
 		rule = new Rule(rulename);
 		ret = read_str(stream, "{");

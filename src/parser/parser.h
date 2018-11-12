@@ -89,6 +89,24 @@ protected:
 	 *
 	 */ 
 	int read_str(std::stringstream & stream, string str);
+	
+	/*!
+	 * Check if a string is present in a stream.
+	 * 
+	 *
+	 * \param stream
+	 * 	Reference of the stream.
+	 *
+	 * \param str
+	 * 	String to check from the stream.
+	 *
+	 * \return
+	 *	returns 0 if the string is present
+	 *	and reads the string from the stream.
+	 *	returns -1 if the string is not present
+	 *	or it reaches the end of the line.
+	 */ 
+	int check_str(stringstream & stream, string str);
 
 	/*!
 	 * Read a topology from a stream.

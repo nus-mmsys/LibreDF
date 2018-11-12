@@ -83,6 +83,16 @@ int Parser::read_str(stringstream & stream, string str) {
 	}
 }
 
+int Parser::check_str(stringstream & stream, string str) {
+	string tmp;
+	stream >> tmp;
+	if (tmp == str)
+		return 0;
+	else
+		stream << tmp;
+	return -1;
+}
+
 
 void Parser::insert_lookup(std::string ip, std::string actname) {
 	if (iplookup.find(ip) == iplookup.end()) {
