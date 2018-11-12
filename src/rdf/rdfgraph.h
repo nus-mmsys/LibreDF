@@ -23,6 +23,16 @@
 #include "graph/graph.h"
 #include "rule.h"
 
+class Condition {
+public:
+	string var;
+	char sign;
+	int val;
+	string rule;
+
+	void set(string vr, char sn, int vl, string rl);
+};
+
 /*!
  * \class RDFGraph
  * The class for RDF graph.
@@ -32,11 +42,11 @@ class RDFGraph {
 public:
 	Graph * graph;
 	map<string, Rule *> rules; /**< RDF transformation rules. */
-	map<string, vector<tuple<int,string>>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
+	map<string, vector<Condition>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
 
 	RDFGraph();
 	int add_rule(Rule * r);
-	int add_condition(string var, int val, string rule);
+	int add_condition(string var, char sign, int val, string rule);
 };
 
 #endif

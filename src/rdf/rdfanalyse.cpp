@@ -102,8 +102,8 @@ int RDFAnalyse::display_prog() {
 	for (auto c : rdfg->prog) {
 		for (auto t : c.second) {
 			cout << c.first << " "
-				<< get<0>(t) << " " 
-				<< get<1>(t) << "\n";
+				<< t.sign << " " << t.val << " : "
+			        << t.rule << "\n";
 		}
 	}
 	return 0;

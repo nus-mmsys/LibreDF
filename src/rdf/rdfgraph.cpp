@@ -27,19 +27,29 @@ int RDFGraph::add_rule(Rule * r) {
 	rules.insert(make_pair(r->get_name(), r));
 	return 0;
 }
-int RDFGraph::add_condition(string var, int val, string rule) {
+int RDFGraph::add_condition(string var, char sign, int val, string rule) {
 	if (rules.find(rule) == rules.end()) {
 		cerr << "condition applies an unknown rule.\n";
 		return -1;
 	}
 
+	Condition cond;
+	cond.set(var, sign, val, rule);
+	
 	if (prog.find(var) == prog.end()) {
-		vector<tuple<int,string>> v;
-		v.push_back(tuple<int,string>(val,rule));
+		vector<Condition> v;
+		v.push_back(cond);
 		prog.insert(make_pair(var,v));	
 	} else {
-		prog[var].push_back(tuple<int,string>(val,rule));
+		prog[var].push_back(cond);
 	}
 
 	return 0;
+}
+
+void Condition::set(string vr, char sn, int vl, string rl) {
+		var = vr;
+		sign = sn;
+		val = vl;
+		rule = rl;
 }
