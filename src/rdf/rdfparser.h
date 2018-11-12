@@ -39,6 +39,7 @@ class RDFParser : public Parser {
 
 protected:
 	vector<Rule *> rules; /**< RDF transformation rules. */
+	map<string, vector<tuple<int,string>>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
 
 	/*!
 	 * Read a set of rules from a stream.
