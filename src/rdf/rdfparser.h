@@ -26,7 +26,7 @@
 #include <map>
 #include <functional>
 #include "parser/parser.h"
-#include "rule.h"
+#include "rdfgraph.h"
 
 using namespace std;
 
@@ -36,36 +36,30 @@ using namespace std;
  *
  */
 class RDFParser : public Parser {
-
+private:
+	RDFGraph * rdfg;
 protected:
-	vector<Rule *> rules; /**< RDF transformation rules. */
-	map<string, vector<tuple<int,string>>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
-
 	/*!
 	 * Read a set of rules from a stream.
 	 *
 	 * \param stream
 	 * 	Reference of the stream.
-	 * \param g
-	 * 	Reference of the graph.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_rules(std::stringstream & stream, Graph * g);
+	int read_rules(std::stringstream & stream);
 
 	/*!
 	 * Read the main.
 	 *
 	 * \param stream
 	 * 	Reference of the stream.
-	 * \param g
-	 * 	Reference of the graph.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_main(stringstream & stream, Graph * g);
+	int read_main(stringstream & stream);
 
 	/*!
 	 * Read the conditions of the main
@@ -76,13 +70,11 @@ protected:
 	 *
 	 * \param stream
 	 * 	Reference of the stream.
-	 * \param g
-	 * 	Reference of the graph.
 	 *
 	 * \return
 	 *
 	 */ 
-	int read_conditions(stringstream & stream, Graph * g);
+	int read_conditions(stringstream & stream);
 
 	/*!
 	 *
@@ -91,13 +83,11 @@ protected:
 	 *
 	 * \param stream
 	 * 	Reference of the stream.
-	 * \param g
-	 * 	Reference of the graph.
 	 *
 	 * \return
 	 *
 	 */ 
-	int add_cond(const string& cond, Graph * g);
+	int add_cond(const string& cond);
 public:
 
 	/*!
@@ -108,8 +98,7 @@ public:
 
 	virtual int load_from_stream(std::stringstream& ss);
 
-	vector<Rule *> get_rules();
-
+	RDFGraph * get_graph();
 };
 
 #endif

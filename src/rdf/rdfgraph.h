@@ -21,17 +21,20 @@
 
 #include <iostream>
 #include "graph/graph.h"
+#include "rule.h"
 
 /*!
  * \class RDFGraph
  * The class for RDF graph.
  *
  */
-class RDFGraph : public Graph {
-private:
-
+class RDFGraph {
 public:
+	Graph * graph;
+	vector<Rule *> rules; /**< RDF transformation rules. */
+	map<string, vector<tuple<int,string>>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
 
+	RDFGraph();
 };
 
 #endif

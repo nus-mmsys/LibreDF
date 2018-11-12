@@ -17,3 +17,7 @@
  */
 
 #include "rdfgraph.h"
+
+RDFGraph::RDFGraph() {
+	graph = new Graph();
+}

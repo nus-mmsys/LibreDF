@@ -22,20 +22,26 @@ RDFParser::RDFParser() {
 
 }
 
+RDFGraph * RDFParser::get_graph() {
+	return rdfg;
+}
+
 int RDFParser::load_from_stream(std::stringstream & ss) {
 	int ret;
-	graph = new Graph();
+	rdfg = new RDFGraph();
+	graph = rdfg->graph;
 	string rdfname;
         read_str(ss, "tmf");
         ss >> rdfname;
-        graph->set_name(rdfname);
-	ret = read_graph(ss, graph);
+        rdfg->graph->set_name(rdfname);
+	ret = read_graph(ss, rdfg->graph);
+	
 	if (ret < 0)
 		return ret;
-	ret = read_rules(ss, graph);
+	ret = read_rules(ss);
 	if (ret < 0)
 		return ret;
-	ret = read_main(ss, graph);
+	ret = read_main(ss);
 	if (ret == 0)
 		cout << "RDF is loaded successfully.\n";
 	else 
@@ -43,20 +49,20 @@ int RDFParser::load_from_stream(std::stringstream & ss) {
 	return ret;
 }
 
-int RDFParser::read_main(stringstream & stream, Graph * g) {
+int RDFParser::read_main(stringstream & stream) {
 	int ret;
 	ret=read_str(stream, "main");
        	if (ret < 0)
 		return ret;
 
-	ret=read_conditions(stream, g);
+	ret=read_conditions(stream);
 	if (ret < 0)
 		return ret;
 
 	return 0;
 }
 
-int RDFParser::read_conditions(stringstream & stream, Graph * g) {
+int RDFParser::read_conditions(stringstream & stream) {
 
 	int ret=0;
 	string condlist, cond;
@@ -67,14 +73,14 @@ int RDFParser::read_conditions(stringstream & stream, Graph * g) {
 
 	istringstream ss(condlist);
 	while (getline(ss, cond, ';')) {
-		ret = add_cond(cond,g);
+		ret = add_cond(cond);
 		if (ret < 0)
 			return ret;		
 	}
 	return 0;
 }
 
-int RDFParser::add_cond(const string& cond, Graph * g) {
+int RDFParser::add_cond(const string& cond) {
 	int ret=0, value=0;
 	string var="", val="", rule="";
 	std::istringstream ss(cond);
@@ -99,12 +105,12 @@ int RDFParser::add_cond(const string& cond, Graph * g) {
 	return ret;
 }
 
-int RDFParser::read_rules(stringstream & stream, Graph * g) {
+int RDFParser::read_rules(stringstream & stream) {
 	int ret=0;
 	string rulename;
 	string rulestr;
 	Rule * rule;
-	g->resolve();
+	rdfg->graph->resolve();
 	while (ret >= 0) {
 		ret = check_str(stream, "rule");
 		if (ret<0)
@@ -130,13 +136,9 @@ int RDFParser::read_rules(stringstream & stream, Graph * g) {
 		if (ret < 0)
 			return ret;
 
-		rule->process(g);
+		rule->process(rdfg->graph);
 	
-		rules.push_back(rule);		
+		rdfg->rules.push_back(rule);		
 	}
 	return 0;
-}
-
-vector<Rule *> RDFParser::get_rules() {
-	return rules;
 }

@@ -27,7 +27,7 @@ tmf double_int {
 	input_port = 7002;
     }
     parameter {
-	distributed = true;
+	distributed = false;
 	discovery_host = 127.0.0.1;
 	discovery_port = 7000;
     }

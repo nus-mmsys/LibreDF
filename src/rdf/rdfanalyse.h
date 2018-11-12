@@ -38,8 +38,7 @@ using namespace std;
 class RDFAnalyse : public Analyse {
 
 private:
-	vector<Rule *> rules; /**< RDF transformation rules. */
-	map<string, vector<tuple<int,string>>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
+	RDFGraph * rdfg;
 protected:
 
 	/*!
