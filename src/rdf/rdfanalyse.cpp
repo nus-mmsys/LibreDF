@@ -118,16 +118,21 @@ int RDFAnalyse::display_rules() {
 	int ret;
 	int rule_number=0;
 	string rule_name="";
-	while (true) {
+	while (rule_name != "q") {
 	
-		for (auto r : rdfg->rules) {
-			cout << r.first << "\n";
-		}
-		cout << "rules> press q to exit.\n";
+		cout << "rules> list of rules: ";
+		for (auto r : rdfg->rules)
+			cout << r.first << "  ";
+		cout << "\nrules> press q to exit.\n";
 		cout << "rules> enter rule name:";
 		cin >> rule_name;
-		if (rdfg->rules.find(rule_name)==rdfg->rules.end())
+		if (rule_name=="q")
 			break;
+
+		if (rdfg->rules.find(rule_name)==rdfg->rules.end()) {
+			cout << "rules> rule " << rule_name << " is not found.\n";
+			continue;
+		}
 	
 		cout << "=======\n";
 		cout << rdfg->rules[rule_name]->get_name() << " left \n" ;
@@ -158,6 +163,7 @@ int RDFAnalyse::display_rules() {
 				return ret;
 			cout << "=======\n";
 		}
+	
 	}
 	return 0;
 }
