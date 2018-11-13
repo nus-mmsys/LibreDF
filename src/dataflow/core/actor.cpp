@@ -62,6 +62,20 @@ std::string Actor::getSingleOutputPort() {
 	return "";
 }
 
+int Actor::setInputPortRate(const string& portname, int rate) {
+	if (inputPorts.find(portname) == inputPorts.end())
+		return -1;
+	inputPorts[portname]->setRate(rate);
+	return 0;
+}
+
+int Actor::setOutputPortRate(const string& portname, int rate) {
+	if (outputPorts.find(portname) == outputPorts.end())
+		return -1;
+	outputPorts[portname]->setRate(rate);
+	return 0;
+}
+
 int Actor::connectActor(Actor * snk) {
   return connectActor(snk,1,1);  
 }

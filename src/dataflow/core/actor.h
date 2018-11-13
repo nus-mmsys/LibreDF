@@ -208,6 +208,9 @@ namespace df {
     std::string getSingleInputPort();
     std::string getSingleOutputPort();
 
+    int setInputPortRate(const std::string& portname, int rate);
+    int setOutputPortRate(const std::string& portname, int rate);
+
     /*!
      * Connect the port with a specified port name of this actor 
      * to another actor listening on a port number on a host

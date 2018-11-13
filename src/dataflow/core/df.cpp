@@ -171,6 +171,8 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 		inp = edges[edge]->getSinkPort();
 		src->connectActor(snk, outp, inp, p, c);
 	}
+	src->setOutputPortRate(outp, p);
+	snk->setInputPortRate(inp, c);
 }
 
 void Dataflow::runDiscovery() {
