@@ -28,6 +28,7 @@
 #include "output_port_vector.h"
 
 #include <vector>
+#include <queue>
 #include <map>
 #include <thread>
 #include <iostream>
@@ -346,6 +347,37 @@ namespace df {
 	port->lock();
 	res = port->get();
 	setStatus(port->getStatus());
+      }
+      return res;      
+    }
+
+    /*!
+     * Consume multi-rate.
+     * It consumes from a port with a rate greater than one.
+     *
+     * \return
+     * 		A queue containing all tokens.
+     */
+    template<typename T>
+    std::queue<T *> consume_mr(InputPort<T> * port) {
+      std::queue<T *> res;
+      int i;
+      for(i=0; i<port->getRate(); i++) {
+      	  T * item = nullptr;
+	  if (distributed) {
+		item = port->recv();
+		if (item == nullptr) {
+			log("cannot recieve on port "+port->getName());
+			setStatus(item->getStatus());
+			break;
+		}
+	  }
+	  else {
+	  	port->lock();
+		item = port->get();
+      	  }
+	  res.insert(item);
+	  setStatus(item->getStatus());
       }
       return res;      
     }
