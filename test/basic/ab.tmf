@@ -3,20 +3,12 @@ tmf ab {
         nodes = A,B;
         edges = e1(A,B);
     }
-    production {
-        e1 = 4;
-    }
-    consumption {
-        e1 = 6;
-    }
     actor A {
         computation = IntProducer;
         last = 64;
-    	exect = 3;
     }
     actor B {
         computation = IntConsumer;
-    	exect = 4;
     }
 }
 rule r1 {
@@ -25,48 +17,28 @@ left {
         nodes = A,B;
         edges = e1(A,B);
     }
-    production {
-        e1 = 4;
-    }
-    consumption {
-        e1 = 6;
-    }
     actor A {
         computation = IntProducer;
         last = 64;
-    	exect = 3;
     }
     actor B {
         computation = IntConsumer;
-    	exect = 4;
     }
-
 }
 right {
     topology {
         nodes = A,C,B;
         edges = e1(A,C), e2(C,B);
     }
-    production {
-        e1 = 4;
-	e2 = 12;
-    }
-    consumption {
-	e1 = 12;
-        e2 = 6;
-    }
     actor A {
         computation = IntProducer;
         last = 64;
-    	exect = 3;
     }
     actor B {
         computation = IntConsumer;
-    	exect = 4;
     }
     actor C {
         computation = Doubling;
-    	exect = 5;
     }
 }
 }
