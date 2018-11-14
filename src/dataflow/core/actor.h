@@ -334,6 +334,10 @@ namespace df {
       return res;
     }
 
+    int rate(Port * port) {
+	    return port->getRate();
+    }
+
     template<typename T>
     T * consume(InputPort<T> * port) {
       T * res = nullptr;
@@ -351,37 +355,7 @@ namespace df {
       return res;      
     }
 
-    /*!
-     * Consume multi-rate.
-     * It consumes from a port with a rate greater than one.
-     *
-     * \return
-     * 		A queue containing all tokens.
-     */
-    template<typename T>
-    std::queue<T *> consume_mr(InputPort<T> * port) {
-      std::queue<T *> res;
-      int i;
-      for(i=0; i<port->getRate(); i++) {
-      	  T * item = nullptr;
-	  if (distributed) {
-		item = port->recv();
-		if (item == nullptr) {
-			log("cannot recieve on port "+port->getName());
-			setStatus(item->getStatus());
-			break;
-		}
-	  }
-	  else {
-	  	port->lock();
-		item = port->get();
-      	  }
-	  res.insert(item);
-	  setStatus(item->getStatus());
-      }
-      return res;      
-    }
-
+    
     template<typename T>
     std::vector<T *> consume(InputPortVector<T> * port) {
       std::vector<T *> res;
@@ -416,7 +390,7 @@ namespace df {
       }
       return res;
     }
-
+    
     template<typename T>
     std::vector<T *> produce(OutputPortVector<T> * port) {
 	std::vector<T *> res;
