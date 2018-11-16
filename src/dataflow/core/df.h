@@ -50,7 +50,7 @@ namespace df {
    * Actors have a many-to-many relation, with directed edges. Cycles are not allowed.
    */
   class Dataflow {
-  private:
+  protected:
 
     std::thread tdisc;
     std::mutex iolock;
@@ -166,7 +166,7 @@ namespace df {
     void connect();
 
     /*!
-     * Run one iteration of the dataflow.
+     * Run the dataflow.
      *
      */
     void run();

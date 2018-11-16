@@ -28,6 +28,13 @@
  *
  */
 class RDataflow : public df::Dataflow {
+public:
+    /*!
+     * Run the RDF.
+     *
+     */
+    void run();
+
 };
 
 #endif

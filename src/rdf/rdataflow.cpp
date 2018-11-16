@@ -17,3 +17,86 @@
  */
 
 #include "rdataflow.h"
+
+using namespace df;
+using namespace std;
+
+void RDataflow::run() {
+  
+  if (status != DataflowStatus::READY) {
+    std::cout << "Dataflow is not ready to run." << endl;
+    return;
+  }
+
+  int cpunb = std::thread::hardware_concurrency();
+  int cpuid = 0; 
+
+  std::cout << "Running the dataflow...\n";
+  start = std::chrono::high_resolution_clock::now();
+
+  /* 
+   * The controller starts all actors.
+   *
+   */
+  for (auto f : actors) {
+    f.second->startRun(cpuid);
+    cpuid = (cpuid + 1) % cpunb;
+  }
+  
+  /* 
+   * The controller measures some criteria
+   * These criteria are specified in the main
+   * of the RDF program.
+   *
+   * For a test, we can have a function throuput()
+   * which generates a random value. Based on the
+   * value, the controller decides whether to perform 
+   * the transformation or not.
+   *
+   * If it decides to perform the transformation,
+   * it has to notify all the actors to stop at 
+   * a given iteration. To know which iteration they 
+   * have to stop at, the controller asks the source
+   * to give its iteration number and stop.
+   *
+   * This number is given to all actors and actors eventually 
+   * stop at the given iteration. after getting the acknowledgement 
+   * from all actors, the controller knows that it can perform 
+   * the transformation. It performs the transformation and asks
+   * the sources to continue.
+   *
+   * This loop continues untill the program comes to an end, 
+   * and the contoller asks every actor to stop.
+   *
+   */
+
+  status = DataflowStatus::RUNNING;
+  
+  /*
+   * The controller wait for all actors to end.
+   *
+   */
+  for (auto f : actors) {
+    f.second->waitRun();
+  }
+  
+  end = std::chrono::high_resolution_clock::now();
+  std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << " ms\n"; 
+  
+  /*
+  for (auto f : actors) {
+	std::cout << f.second->getName() << " = " << f.second->getElapsed() << " ms\n";
+  }
+  */
+
+  status = DataflowStatus::STOPPED;
+
+  if (distributed) {
+	char msg[8];
+	strcpy(msg, "close");
+	clnsock->connect(dischost, discport);
+	clnsock->send(msg, 8);
+	clnsock->close();
+  } 
+}
+
