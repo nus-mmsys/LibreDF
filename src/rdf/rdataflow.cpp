@@ -89,9 +89,10 @@ void RDataflow::run() {
   		sleep(100);
   		continue;
   	}
+
+	start = std::chrono::high_resolution_clock::now(); 
 	*/
- 
-  //-	start = get_time();
+
   //-	vector<Actor *> sources = find_sources();
   //-	for (auto s : sources) {
   //-		ask_to_stop(sources);
@@ -107,10 +108,14 @@ void RDataflow::run() {
   //-	for (auto s : sources) {
   //-		ask_to_continue(sources);
   //-	}
-  //-	end = get_time();
-  //-	cout << "Reconfiguration delay: " << (end-start) << "\n";
 
-	
+  	/*
+	end = std::chrono::high_resolution_clock::now(); 
+	cout << "Reconfiguration delay: "
+		<< std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) 
+		<< "\n";
+	*/
+
   //}
 
   status = DataflowStatus::RUNNING;
