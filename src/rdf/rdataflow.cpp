@@ -47,7 +47,7 @@ void RDataflow::run() {
     cpuid = (cpuid + 1) % cpunb;
   }
 
-    
+  
   /* 
    * The controller measures some criteria
    * These criteria are specified in the main
@@ -74,6 +74,33 @@ void RDataflow::run() {
    * and the contoller asks every actor to stop.
    *
    */
+
+  // while(actors_status != EOS) {
+  // 	
+  //	Rule * r = get_rule();
+  //	if (r==nullptr) {
+  //		wait(1ms);
+  //		continue;
+  //	}
+  //	start = get_time();
+  //	vector<Actor *> sources = find_sources();
+  //	for (auto s : sources) {
+  //		ask_to_stop(sources);
+  //	}
+  //	vector<Actor *> sinks = find_sinks();
+  //	for (auto s : sinks) {
+  //		wait_for_ack(s);
+  //	}
+  //
+  //	apply(r);
+  //
+  //	vector<Actor *> sources = find_sources();
+  //	for (auto s : sources) {
+  //		ask_to_continue(sources);
+  //	}
+  //	end = get_time();
+  //	cout << "Reconfiguration delay: " << (end-start) << "\n";
+  // }
 
   status = DataflowStatus::RUNNING;
   
