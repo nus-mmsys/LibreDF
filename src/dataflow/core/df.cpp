@@ -368,6 +368,58 @@ bool Dataflow::check_eos() {
 	return false;
 }
 
+vector<df::Actor *> Dataflow::find_sources() {
+	vector<Actor *> res;
+	bool found = false;
+	for (auto& ac : actors) {
+		found = false;
+		for (auto & e : edges) {
+			if (e.second->getSink()->getName() == ac.second->getName()) {
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+			res.push_back(ac.second);		
+	}
+	return res;
+}
+
+vector<df::Actor *> Dataflow::find_sinks() {
+	vector<Actor *> res;
+	bool found = false;
+	for (auto& ac : actors) {
+		found = false;
+		for (auto & e : edges) {
+			if (e.second->getSource()->getName() == ac.second->getName()) {
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+			res.push_back(ac.second);		
+	}
+	return res;
+}
+
+vector<Edge *> Dataflow::get_iedges(df::Actor * ac) {
+	vector <df::Edge *> res;
+	for (auto & e : edges) {
+		if (e.second->getSink()->getName() == ac->getName())
+			res.push_back(e.second);
+	}
+	return res;
+}
+
+vector<Edge *> Dataflow::get_oedges(df::Actor * ac) {
+	vector <df::Edge *> res;
+	for (auto & e : edges) {
+		if (e.second->getSource()->getName() == ac->getName())
+			res.push_back(e.second);
+	}
+	return res;
+}
+
 void Dataflow::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
 }

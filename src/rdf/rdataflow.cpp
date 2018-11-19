@@ -81,9 +81,10 @@ void RDataflow::run() {
    *
    */
 
-  //while(!check_eos()) {
+  /*
+  while(!check_eos()) {
 
-	/*
+	
    	Rule * r = get_applicable_rule();
   	if (r==nullptr) {
   		sleep(100);
@@ -91,32 +92,35 @@ void RDataflow::run() {
   	}
 
 	start = std::chrono::high_resolution_clock::now(); 
-	*/
+	
 
-  //-	vector<Actor *> sources = find_sources();
+  	vector<df::Actor *> sources = find_sources();
+  	vector<df::Actor *> sinks = find_sinks();
+  */
+
+  //TODO
   //-	for (auto s : sources) {
   //-		ask_to_stop(sources);
   //-	}
-  //-	vector<Actor *> sinks = find_sinks();
   //-	for (auto s : sinks) {
   //-		wait_for_ack(s);
   //-	}
   //-
   //-	apply(r);
   //-
-  //-	vector<Actor *> sources = find_sources();
   //-	for (auto s : sources) {
   //-		ask_to_continue(sources);
   //-	}
 
-  	/*
+  /*	
 	end = std::chrono::high_resolution_clock::now(); 
 	cout << "Reconfiguration delay: "
 		<< std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) 
 		<< "\n";
-	*/
+	
 
-  //}
+  }
+  */
 
   status = DataflowStatus::RUNNING;
   

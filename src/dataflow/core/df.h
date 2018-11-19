@@ -179,7 +179,31 @@ namespace df {
      *
      */
     bool check_eos();
-    
+ 
+    /*!
+     * Get input edges of a given actor
+     *
+     */
+    std::vector<df::Edge *> get_iedges(df::Actor * ac);
+
+    /*!
+     * Get output edges of a given actor
+     *
+     */
+    std::vector<df::Edge *> get_oedges(df::Actor * ac);
+	
+    /*!
+     * Find the source actors.
+     *
+     */
+    std::vector<df::Actor *> find_sources();
+   
+    /*!
+     * Find the sink actors.
+     *
+     */
+    std::vector<df::Actor *> find_sinks();
+
     /*!
      * Dataflow destructor
      */
