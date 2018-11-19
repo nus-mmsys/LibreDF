@@ -151,3 +151,57 @@ int RDFParser::read_rules(stringstream & stream) {
 	}
 	return 0;
 }
+
+df::Dataflow * RDFParser::get_dataflow() {
+
+	df::Dataflow * res;
+
+	std::string srcname, snkname;
+
+	//Create dataflow
+	res = new RDataflow(graph->get_name());
+	
+	map<string, string> params = graph->get_graph_params();
+	for (auto p : params) {
+		res->setProp(p.first, p.second);
+	}
+
+
+	//Create actors
+	vector<string> actorlist = graph->get_actors();
+	for (auto & acname : actorlist) {
+		
+		map<string, string> props = graph->get_actor_props(acname);
+	        df::Actor * actor; 
+		if (props.empty()) {
+			cout << acname << " is deployed elsewhere.\n";
+			actor = res->createRemoteActor(acname);
+		} else {
+			string actype = graph->get_actor_type(acname);
+			if (actype == "") {
+				cout << "error: actor type cannot be unknown.\n";
+				cout << "set the property computation of actor " << acname << "\n";
+				return nullptr;
+			}
+			actor = res->createActor(actype, acname);
+			for (auto p : props) {
+				actor->setProp(p.first, p.second);
+			}
+		}
+	}
+
+	//Create edges
+	vector<string> edgelist = graph->get_edges();
+	for (auto & edname : edgelist) {
+		srcname = graph->get_source_name(edname);
+		snkname = graph->get_sink_name(edname); 
+		df::Edge * e = res->createEdge(edname, srcname, snkname);
+		e->setSourceRate(graph->get_source_rate(edname));
+		e->setSinkRate(graph->get_sink_rate(edname));
+		e->setSourcePort(graph->get_source_port(edname));
+		e->setSinkPort(graph->get_sink_port(edname));
+		e->setInitialTokens(graph->get_initial_tokens(edname));
+	}	
+
+	return res;
+}

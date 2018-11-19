@@ -27,6 +27,7 @@
 #include <functional>
 #include "parser/parser.h"
 #include "rdfgraph.h"
+#include "rdataflow.h"
 
 using namespace std;
 
@@ -99,6 +100,8 @@ public:
 	virtual int load_from_stream(std::stringstream& ss);
 
 	RDFGraph * get_graph();
+
+	virtual df::Dataflow * get_dataflow();
 };
 
 #endif

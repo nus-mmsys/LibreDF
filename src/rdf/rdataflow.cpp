@@ -21,17 +21,21 @@
 using namespace df;
 using namespace std;
 
+RDataflow::RDataflow(string name) : df::Dataflow(name) {
+
+}
+
 void RDataflow::run() {
   
   if (status != DataflowStatus::READY) {
-    std::cout << "Dataflow is not ready to run." << endl;
+    std::cout << "RDF is not ready to run." << endl;
     return;
   }
 
   int cpunb = std::thread::hardware_concurrency();
   int cpuid = 0; 
 
-  std::cout << "Running the dataflow...\n";
+  std::cout << "Running the RDF...\n";
   start = std::chrono::high_resolution_clock::now();
 
   /* 
@@ -42,7 +46,8 @@ void RDataflow::run() {
     f.second->startRun(cpuid);
     cpuid = (cpuid + 1) % cpunb;
   }
-  
+
+    
   /* 
    * The controller measures some criteria
    * These criteria are specified in the main

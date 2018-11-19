@@ -29,11 +29,14 @@
  */
 class RDataflow : public df::Dataflow {
 public:
+
+    RDataflow(std::string name);
+
     /*!
      * Run the RDF.
      *
      */
-    void run();
+    virtual void run();
 
 };
 

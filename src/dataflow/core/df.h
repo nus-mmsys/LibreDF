@@ -169,7 +169,7 @@ namespace df {
      * Run the dataflow.
      *
      */
-    void run();
+    virtual void run();
     
     /*!
      * Dataflow destructor

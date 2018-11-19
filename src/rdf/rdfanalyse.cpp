@@ -17,6 +17,7 @@
  */
 
 #include "rdfanalyse.h"
+#include "rdataflow.h"
 
 RDFAnalyse::RDFAnalyse(int argc, char * argv[], RDFParser * p) : Analyse(argc,argv,p) {
 	rdfg = p->get_graph();
@@ -170,15 +171,15 @@ int RDFAnalyse::display_rules() {
 
 int RDFAnalyse::run() {
 
-	df::Dataflow * dfg = parser->get_dataflow();
+	df::Dataflow * rdfg = parser->get_dataflow();
 
-	dfg->init();
+	rdfg->init();
 
-	dfg->connect();
+	rdfg->connect();
 
-  	dfg->run();
+  	rdfg->run();
 
-	delete dfg;
+	delete rdfg;
 
 	return 0;
 }

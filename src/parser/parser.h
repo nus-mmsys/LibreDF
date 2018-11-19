@@ -439,7 +439,7 @@ public:
 
 	Graph * get_graph();	
 
-	df::Dataflow * get_dataflow();
+	virtual df::Dataflow * get_dataflow();
 
 };
 
