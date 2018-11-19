@@ -70,6 +70,8 @@ namespace df {
 
     std::chrono::high_resolution_clock::time_point start, end; 
 
+    void sleep(int s);
+
   public:
 
     using actor_iter = std::map<std::string, Actor *>::const_iterator;	

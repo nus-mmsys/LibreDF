@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include "dataflow/core/df.h"
+#include "rule.h"
 
 /*!
  * \class RDataflow
@@ -28,6 +29,9 @@
  *
  */
 class RDataflow : public df::Dataflow {
+private:
+    Rule * get_applicable_rule();
+	
 public:
 
     RDataflow(std::string name);

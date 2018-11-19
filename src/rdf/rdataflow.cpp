@@ -25,6 +25,12 @@ RDataflow::RDataflow(string name) : df::Dataflow(name) {
 
 }
 
+Rule * RDataflow::get_applicable_rule() {
+	Rule * r = nullptr;
+	//TODO
+	return r;
+}
+
 void RDataflow::run() {
   
   if (status != DataflowStatus::READY) {
@@ -76,12 +82,15 @@ void RDataflow::run() {
    */
 
   //while(!check_eos()) {
-  // 	
-  //-	Rule * r = get_rule();
-  //-	if (r==nullptr) {
-  //-		wait(1ms);
-  //-		continue;
-  //-	}
+
+	/*
+   	Rule * r = get_applicable_rule();
+  	if (r==nullptr) {
+  		sleep(100);
+  		continue;
+  	}
+	*/
+ 
   //-	start = get_time();
   //-	vector<Actor *> sources = find_sources();
   //-	for (auto s : sources) {
@@ -100,7 +109,8 @@ void RDataflow::run() {
   //-	}
   //-	end = get_time();
   //-	cout << "Reconfiguration delay: " << (end-start) << "\n";
-  //
+
+	
   //}
 
   status = DataflowStatus::RUNNING;

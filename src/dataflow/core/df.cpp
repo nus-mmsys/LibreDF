@@ -368,6 +368,10 @@ bool Dataflow::check_eos() {
 	return false;
 }
 
+void Dataflow::sleep(int s) {
+  this_thread::sleep_for(chrono::milliseconds{rand()%s});
+}
+
 Dataflow::~Dataflow() {
   
   for (auto ac : actors)
