@@ -75,32 +75,33 @@ void RDataflow::run() {
    *
    */
 
-  // while(actors_status != EOS) {
+  //while(!check_eos()) {
   // 	
-  //	Rule * r = get_rule();
-  //	if (r==nullptr) {
-  //		wait(1ms);
-  //		continue;
-  //	}
-  //	start = get_time();
-  //	vector<Actor *> sources = find_sources();
-  //	for (auto s : sources) {
-  //		ask_to_stop(sources);
-  //	}
-  //	vector<Actor *> sinks = find_sinks();
-  //	for (auto s : sinks) {
-  //		wait_for_ack(s);
-  //	}
+  //-	Rule * r = get_rule();
+  //-	if (r==nullptr) {
+  //-		wait(1ms);
+  //-		continue;
+  //-	}
+  //-	start = get_time();
+  //-	vector<Actor *> sources = find_sources();
+  //-	for (auto s : sources) {
+  //-		ask_to_stop(sources);
+  //-	}
+  //-	vector<Actor *> sinks = find_sinks();
+  //-	for (auto s : sinks) {
+  //-		wait_for_ack(s);
+  //-	}
+  //-
+  //-	apply(r);
+  //-
+  //-	vector<Actor *> sources = find_sources();
+  //-	for (auto s : sources) {
+  //-		ask_to_continue(sources);
+  //-	}
+  //-	end = get_time();
+  //-	cout << "Reconfiguration delay: " << (end-start) << "\n";
   //
-  //	apply(r);
-  //
-  //	vector<Actor *> sources = find_sources();
-  //	for (auto s : sources) {
-  //		ask_to_continue(sources);
-  //	}
-  //	end = get_time();
-  //	cout << "Reconfiguration delay: " << (end-start) << "\n";
-  // }
+  //}
 
   status = DataflowStatus::RUNNING;
   
@@ -131,4 +132,5 @@ void RDataflow::run() {
 	clnsock->close();
   } 
 }
+
 

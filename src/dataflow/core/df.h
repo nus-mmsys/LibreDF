@@ -172,6 +172,13 @@ namespace df {
     virtual void run();
     
     /*!
+     * Check whether any of the actors
+     * reached the end of stream.
+     *
+     */
+    bool check_eos();
+    
+    /*!
      * Dataflow destructor
      */
     ~Dataflow();

@@ -360,6 +360,14 @@ void Dataflow::run() {
   } 
 }
 
+bool Dataflow::check_eos() {
+	for (auto& ac : actors) {
+		if (ac.second->getStatus() == EOS)
+			return true;
+	}
+	return false;
+}
+
 Dataflow::~Dataflow() {
   
   for (auto ac : actors)
