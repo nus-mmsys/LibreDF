@@ -210,7 +210,7 @@ The following actor types are already implemented.
 
     opencv-imgproc
         BoxFilter           % output:Mat = boxFilter(input:Mat) ;
-                              reads a frame, applies a dilate (mean) filter on it,
+                              reads a frame, applies a blur filter on it,
                               and sends the filtered frame.
         Canny               % output:Mat = Canny(input:Mat) ;
                               reads a frame, applies a Canny filter on it,
