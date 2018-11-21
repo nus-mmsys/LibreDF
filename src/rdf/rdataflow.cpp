@@ -55,29 +55,32 @@ void RDataflow::run() {
 
   
   /* 
-   * The controller measures some criteria
-   * These criteria are specified in the main
+   * The controller measures some non-functional metrics.
+   * These metrics define when a transformation needs to
+   * be applied and they are specified in the main
    * of the RDF program.
    *
-   * For a test, we can have a function throuput()
+   * For a test, we can use a dummy function 'metric()'
    * which generates a random value. Based on the
    * value, the controller decides whether to perform 
    * the transformation or not.
    *
    * If it decides to perform the transformation,
-   * it has to notify all the actors to stop at 
-   * a given iteration. To know which iteration they 
-   * have to stop at, the controller asks the source
-   * to give its iteration number and stop.
+   * it has to notify all the source actors to stop  
+   * and give their iteration numbers. It then take 
+   * the maximum value of all iteration numbers and 
+   * ask the source actors to continue until
+   * this max value. 
    *
-   * This number is given to all actors and actors eventually 
-   * stop at the given iteration. after getting the acknowledgement 
-   * from all actors, the controller knows that it can perform 
-   * the transformation. It performs the transformation and asks
-   * the sources to continue.
+   * This iteration number is sent to sink actors 
+   * and sink actors eventually stop at the given iteration
+   * and send an acknowledgement to the controller. 
+   * The controller then knows that it can perform 
+   * the transformation. It performs the transformation 
+   * and asks all the sources to continue.
    *
-   * This loop continues untill the program comes to an end, 
-   * and the contoller asks every actor to stop.
+   * This loop continues untill at least one actor
+   * reaches the end of stream.
    *
    */
 
