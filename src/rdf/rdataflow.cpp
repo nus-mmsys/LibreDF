@@ -31,6 +31,10 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
+void RDataflow::apply(Rule * r) {
+	//TODO
+}
+
 void RDataflow::run() {
  
   int iter;
@@ -88,7 +92,6 @@ void RDataflow::run() {
 
   /*  
   while(!check_eos()) {
-
 	
    	Rule * r = get_applicable_rule();
   	if (r==nullptr) {
@@ -105,14 +108,13 @@ void RDataflow::run() {
 		cout << "Pause failed.\n";
 		return;
 	}		
-  
 
   	//TODO
  	//	for (auto s : sinks) {
   	//		s->wait_for_ack(iter);
   	//	}
-  	//	apply(r);
-
+  	
+	apply(r);
   
    	resume();
 

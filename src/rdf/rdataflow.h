@@ -31,7 +31,7 @@
 class RDataflow : public df::Dataflow {
 private:
     Rule * get_applicable_rule();
-	
+    void apply(Rule * r);
 public:
 
     RDataflow(std::string name);
