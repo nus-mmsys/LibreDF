@@ -32,7 +32,9 @@ Rule * RDataflow::get_applicable_rule() {
 }
 
 void RDataflow::run() {
-  
+ 
+  int iter;
+
   if (status != DataflowStatus::READY) {
     std::cout << "RDF is not ready to run." << endl;
     return;
@@ -84,7 +86,7 @@ void RDataflow::run() {
    *
    */
 
-  /*
+  /*  
   while(!check_eos()) {
 
 	
@@ -96,32 +98,28 @@ void RDataflow::run() {
 
 	start = std::chrono::high_resolution_clock::now(); 
 	
-
-  	vector<df::Actor *> sources = find_sources();
   	vector<df::Actor *> sinks = find_sinks();
-  */
+  
+	iter = pause();
+	if (iter<0) {
+		cout << "Pause failed.\n";
+		return;
+	}		
+  
 
-  //TODO
-  //-	for (auto s : sources) {
-  //-		ask_to_stop(sources);
-  //-	}
-  //-	for (auto s : sinks) {
-  //-		wait_for_ack(s);
-  //-	}
-  //-
-  //-	apply(r);
-  //-
-  //-	for (auto s : sources) {
-  //-		ask_to_continue(sources);
-  //-	}
+  	//TODO
+ 	//	for (auto s : sinks) {
+  	//		s->wait_for_ack(iter);
+  	//	}
+  	//	apply(r);
 
-  /*	
+  
+   	resume();
+
 	end = std::chrono::high_resolution_clock::now(); 
 	cout << "Reconfiguration delay: "
 		<< std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) 
 		<< "\n";
-	
-
   }
   */
 

@@ -296,6 +296,27 @@ void Actor::resume() {
     pause_cond.notify_one();
 }
 
+int Actor::resume_till(int iter) {
+
+    if (iter < stepno) {
+	    log("resume_till: actor cannot resume until a smaller iteration.");
+	    return -1;
+    }
+
+    if (iter == stepno)
+    	return 0;
+
+    unique_lock<mutex> locker(pause_mux);
+    while(!paused)
+    	pause_cond.wait(locker);
+ 
+    while(stepno < iter) {
+	run();
+	stepno++;
+    }
+    return 0;
+}
+
 void Actor::hstart() { 
 	hrtstart = std::chrono::high_resolution_clock::now(); 
 }

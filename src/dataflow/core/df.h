@@ -181,6 +181,19 @@ namespace df {
     bool check_eos();
  
     /*!
+     * Pause the source actors and send 
+     * the maximum iteration number. 
+     *
+     */
+    int pause();
+
+    /*!
+     * Resume the source actors.
+     *
+     */
+    void resume();
+
+    /*!
      * Get input edges of a given actor
      *
      */

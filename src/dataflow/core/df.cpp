@@ -368,6 +368,31 @@ bool Dataflow::check_eos() {
 	return false;
 }
 
+int Dataflow::pause() {
+	int res = 0;
+	int ret;
+	int iter;
+	vector<df::Actor *> sources = find_sources();
+	for (auto& s : sources) {
+		iter = s->pause();
+		if (iter>res)
+			res = iter;
+	}
+	for (auto& s : sources) {
+		ret = s->resume_till(res);
+		if (ret<0)
+			return ret;
+	}
+	return res;
+}
+
+void Dataflow::resume() {
+	vector<df::Actor *> sources = find_sources();
+	for (auto& s : sources) {
+		s->resume();
+	}
+}
+
 vector<df::Actor *> Dataflow::find_sources() {
 	vector<Actor *> res;
 	bool found = false;

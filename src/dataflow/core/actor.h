@@ -483,6 +483,11 @@ namespace df {
      * Resume the actor execution.
      */
     void resume();
+ 
+    /*!
+     * Resume until an iteration number.
+     */
+    int resume_till(int iter);
     
     /*!
      * Destructor of the actor.
