@@ -64,6 +64,10 @@ namespace df {
     int cpuid;
     bool logging;
     bool scheduling;  
+
+    std::condition_variable pause_cond;
+    bool paused;
+    std::mutex pause_mux;
   protected:
 
     std::string name; /**< The name of the actor */
@@ -470,6 +474,16 @@ namespace df {
 
     double getElapsed();
 
+    /*!
+     * Pause the actor execution.
+     */
+    int pause();
+
+    /*!
+     * Resume the actor execution.
+     */
+    void resume();
+    
     /*!
      * Destructor of the actor.
      */

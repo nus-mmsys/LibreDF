@@ -30,6 +30,7 @@ Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
   logging = true;
   scheduling = true;
   elapsed = 0;
+  paused = false;
 }
 
 std::string Actor::getName() {
@@ -268,6 +269,11 @@ void Actor::runActor() {
 
   hstart();
   while(getStatus() != EOS) {
+    
+    unique_lock<mutex> locker(pause_mux);
+    while(paused)
+    	pause_cond.wait(locker);
+ 
     if (realtime) {
 	    runRT();
     } else {
@@ -276,6 +282,18 @@ void Actor::runActor() {
     stepno++;
   }
   
+}
+
+int Actor::pause() {
+    lock_guard<mutex> locker(pause_mux);
+    paused = true;
+    return stepno;
+}
+
+void Actor::resume() {
+    lock_guard<mutex> locker(pause_mux);
+    paused = false;
+    pause_cond.notify_one();
 }
 
 void Actor::hstart() { 
