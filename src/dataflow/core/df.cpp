@@ -386,6 +386,13 @@ int Dataflow::pause() {
 	return res;
 }
 
+void Dataflow::wait_acks(int iter) {
+	vector<df::Actor *> sinks = find_sinks();
+ 	for (auto& s : sinks) {
+  		s->wait_ack(iter);
+  	}
+}
+
 void Dataflow::resume() {
 	vector<df::Actor *> sources = find_sources();
 	for (auto& s : sources) {

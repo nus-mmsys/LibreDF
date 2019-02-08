@@ -126,14 +126,11 @@ void RDataflow::run() {
 		return;
 	}		
 	log("[RDF] Paused at iteration "+to_string(iter));
-	
+
+	wait_acks(iter);
+
 	/*
   	//TODO
-  	//vector<df::Actor *> sinks = find_sinks();
- 	//	for (auto s : sinks) {
-  	//		s->wait_for_ack(iter);
-  	//	}
-  	
 	apply(r);
   	*/
 	

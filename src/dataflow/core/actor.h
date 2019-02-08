@@ -480,6 +480,12 @@ namespace df {
     int pause();
 
     /*!
+     * Wait for the acknowledgement
+     * at iteration iter.
+     */
+    void wait_ack(int iter);
+
+    /*!
      * Resume the actor execution.
      */
     void resume();
