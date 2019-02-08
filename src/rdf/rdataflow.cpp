@@ -29,6 +29,12 @@ void RDataflow::set_graph(RDFGraph * r) {
 	rdfg = r;
 }
 
+void RDataflow::log(string msg) {
+	iolock.lock();
+	cout << msg << endl;
+	iolock.unlock();
+}
+
 Rule * RDataflow::get_applicable_rule() {
 	Rule * r = nullptr;
 	//The load is a dummy variable for the tests.
@@ -50,14 +56,14 @@ void RDataflow::run() {
   int iter;
 
   if (status != DataflowStatus::READY) {
-    std::cout << "RDF is not ready to run." << endl;
+    log("[RDF] Dataflow is not ready to run.");
     return;
   }
 
   int cpunb = std::thread::hardware_concurrency();
   int cpuid = 0; 
 
-  std::cout << "Running the RDF...\n";
+  log("[RDF] Running the dataflow...");
   start = std::chrono::high_resolution_clock::now();
 
   /* 
@@ -109,17 +115,17 @@ void RDataflow::run() {
   		continue;
   	}
 	else {
-		cout << r->get_name() << " is applicable.\n";
+		log("[RDF] Rule "+r->get_name()+" is applicable.");
 	}
   
 	start = std::chrono::high_resolution_clock::now(); 
   
 	iter = pause();
 	if (iter<0) {
-		cout << "Pause failed.\n";
+		log("[RDF] Pause failed.");
 		return;
 	}		
-
+	log("[RDF] Paused at iteration "+to_string(iter));
 	/*
   	//TODO
   	//vector<df::Actor *> sinks = find_sinks();
@@ -133,9 +139,8 @@ void RDataflow::run() {
 	resume();
 
 	end = std::chrono::high_resolution_clock::now(); 
-	cout << "Reconfiguration delay: "
-		<< std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) 
-		<< " ms \n";
+	log("[RDF] Reconfiguration delay: "+
+		std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count())+" ms");
   }
   
 
@@ -150,7 +155,7 @@ void RDataflow::run() {
   }
   
   end = std::chrono::high_resolution_clock::now();
-  std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << " ms\n"; 
+  log("Execution time = "+to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count())+" ms"); 
   
   /*
   for (auto f : actors) {
