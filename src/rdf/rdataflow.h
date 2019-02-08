@@ -22,6 +22,7 @@
 #include <iostream>
 #include "dataflow/core/df.h"
 #include "rule.h"
+#include "rdfgraph.h"
 
 /*!
  * \class RDataflow
@@ -30,13 +31,14 @@
  */
 class RDataflow : public df::Dataflow {
 private:
-    map<string, Rule *> rules; /**< RDF transformation rules. */
-    map<string, vector<Condition>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
+    RDFGraph * rdfg;
     Rule * get_applicable_rule();
     void apply(Rule * r);
 public:
 
     RDataflow(std::string name);
+
+    void set_graph(RDFGraph * r);
 
     /*!
      * Run the RDF.

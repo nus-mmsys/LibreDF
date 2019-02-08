@@ -25,6 +25,10 @@ RDataflow::RDataflow(string name) : df::Dataflow(name) {
 
 }
 
+void RDataflow::set_graph(RDFGraph * r) {
+	rdfg = r;
+}
+
 Rule * RDataflow::get_applicable_rule() {
 	Rule * r = nullptr;
 	//TODO

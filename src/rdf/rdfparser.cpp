@@ -202,8 +202,9 @@ RDataflow * RDFParser::get_rdataflow() {
 		e->setSinkPort(graph->get_sink_port(edname));
 		e->setInitialTokens(graph->get_initial_tokens(edname));
 	}	
-	//TODO
-	//Rules and programs
 	
+	//Rules and programs
+	res->set_graph(rdfg);
+
 	return res;
 }
