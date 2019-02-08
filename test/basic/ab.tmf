@@ -43,5 +43,5 @@ right {
 }
 }
 main {
-	iter=32 : r1;
+	load=10 : r1;
 }
