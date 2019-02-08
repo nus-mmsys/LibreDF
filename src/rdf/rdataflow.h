@@ -31,6 +31,7 @@
  */
 class RDataflow : public df::Dataflow {
 private:
+    int load;
     RDFGraph * rdfg;
     Rule * get_applicable_rule();
     void apply(Rule * r);

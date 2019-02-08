@@ -22,7 +22,7 @@ using namespace df;
 using namespace std;
 
 RDataflow::RDataflow(string name) : df::Dataflow(name) {
-
+	load = 0;
 }
 
 void RDataflow::set_graph(RDFGraph * r) {
@@ -31,7 +31,13 @@ void RDataflow::set_graph(RDFGraph * r) {
 
 Rule * RDataflow::get_applicable_rule() {
 	Rule * r = nullptr;
-	//TODO
+	//The load is a dummy variable for the tests.
+	//In real application, conditions such as latency and throughput can be used. 
+	load++;
+	for (auto c : rdfg->prog["load"]) {
+		if (c.val==load)
+			return rdfg->rules[c.rule];
+	}
 	return r;
 }
 
@@ -94,17 +100,21 @@ void RDataflow::run() {
    *
    */
 
-  /*  
+  Rule * r;
   while(!check_eos()) {
 	
-   	Rule * r = get_applicable_rule();
+   	r = get_applicable_rule();
   	if (r==nullptr) {
-  		sleep(100);
+  		sleep(1000);
   		continue;
   	}
-
+	else {
+		cout << r->get_name() << " is applicable.\n";
+	}
+  
 	start = std::chrono::high_resolution_clock::now(); 
-	
+
+     	/*	
   	vector<df::Actor *> sinks = find_sinks();
   
 	iter = pause();
@@ -122,12 +132,14 @@ void RDataflow::run() {
   
    	resume();
 
+   	*/
+
 	end = std::chrono::high_resolution_clock::now(); 
 	cout << "Reconfiguration delay: "
 		<< std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) 
 		<< "\n";
   }
-  */
+  
 
   status = DataflowStatus::RUNNING;
   
