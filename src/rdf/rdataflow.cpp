@@ -111,7 +111,7 @@ void RDataflow::run() {
 	
    	r = get_applicable_rule();
   	if (r==nullptr) {
-  		sleep(1000);
+  		sleep(500);
   		continue;
   	}
 	else {
@@ -126,6 +126,7 @@ void RDataflow::run() {
 		return;
 	}		
 	log("[RDF] Paused at iteration "+to_string(iter));
+	
 	/*
   	//TODO
   	//vector<df::Actor *> sinks = find_sinks();
@@ -135,7 +136,7 @@ void RDataflow::run() {
   	
 	apply(r);
   	*/
-   	
+	
 	resume();
 
 	end = std::chrono::high_resolution_clock::now(); 

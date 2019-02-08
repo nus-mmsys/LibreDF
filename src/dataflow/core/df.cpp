@@ -446,7 +446,7 @@ vector<Edge *> Dataflow::get_oedges(df::Actor * ac) {
 }
 
 void Dataflow::sleep(int s) {
-  this_thread::sleep_for(chrono::milliseconds{rand()%s});
+  this_thread::sleep_for(chrono::milliseconds{s});
 }
 
 Dataflow::~Dataflow() {
