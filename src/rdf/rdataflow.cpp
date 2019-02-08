@@ -113,9 +113,6 @@ void RDataflow::run() {
 	}
   
 	start = std::chrono::high_resolution_clock::now(); 
-
-     	/*	
-  	vector<df::Actor *> sinks = find_sinks();
   
 	iter = pause();
 	if (iter<0) {
@@ -123,21 +120,22 @@ void RDataflow::run() {
 		return;
 	}		
 
+	/*
   	//TODO
+  	//vector<df::Actor *> sinks = find_sinks();
  	//	for (auto s : sinks) {
   	//		s->wait_for_ack(iter);
   	//	}
   	
 	apply(r);
-  
-   	resume();
-
-   	*/
+  	*/
+   	
+	resume();
 
 	end = std::chrono::high_resolution_clock::now(); 
 	cout << "Reconfiguration delay: "
 		<< std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) 
-		<< "\n";
+		<< " ms \n";
   }
   
 
