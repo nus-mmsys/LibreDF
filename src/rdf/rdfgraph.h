@@ -23,16 +23,6 @@
 #include "graph/graph.h"
 #include "rule.h"
 
-class Condition {
-public:
-	string var;
-	char sign;
-	int val;
-	string rule;
-
-	void set(string vr, char sn, int vl, string rl);
-};
-
 /*!
  * \class RDFGraph
  * The class for RDF graph.

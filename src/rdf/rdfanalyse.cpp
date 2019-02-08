@@ -20,7 +20,8 @@
 #include "rdataflow.h"
 
 RDFAnalyse::RDFAnalyse(int argc, char * argv[], RDFParser * p) : Analyse(argc,argv,p) {
-	rdfg = p->get_graph();
+	rdfparser = p;
+	rdfg = rdfparser->get_graph();
 
 	cmd["benchmark"] = bind(&RDFAnalyse::display_benchmark, this);
 	cmd["rules"] = bind(&RDFAnalyse::display_rules, this);
@@ -171,7 +172,7 @@ int RDFAnalyse::display_rules() {
 
 int RDFAnalyse::run() {
 
-	df::Dataflow * rdfg = parser->get_dataflow();
+	RDataflow * rdfg = rdfparser->get_rdataflow();
 
 	rdfg->init();
 

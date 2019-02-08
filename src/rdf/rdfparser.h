@@ -101,7 +101,7 @@ public:
 
 	RDFGraph * get_graph();
 
-	virtual df::Dataflow * get_dataflow();
+	RDataflow * get_rdataflow();
 };
 
 #endif

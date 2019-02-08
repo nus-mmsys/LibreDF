@@ -39,6 +39,7 @@ class RDFAnalyse : public Analyse {
 
 private:
 	RDFGraph * rdfg;
+	RDFParser * rdfparser;
 protected:
 
 	/*!

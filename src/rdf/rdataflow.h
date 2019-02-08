@@ -30,6 +30,8 @@
  */
 class RDataflow : public df::Dataflow {
 private:
+    map<string, Rule *> rules; /**< RDF transformation rules. */
+    map<string, vector<Condition>> prog; /**< RDF program containing the values of variables for which the rules are applied. */
     Rule * get_applicable_rule();
     void apply(Rule * r);
 public:

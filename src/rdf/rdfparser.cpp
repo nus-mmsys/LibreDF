@@ -152,9 +152,9 @@ int RDFParser::read_rules(stringstream & stream) {
 	return 0;
 }
 
-df::Dataflow * RDFParser::get_dataflow() {
+RDataflow * RDFParser::get_rdataflow() {
 
-	df::Dataflow * res;
+	RDataflow * res;
 
 	std::string srcname, snkname;
 
@@ -202,6 +202,8 @@ df::Dataflow * RDFParser::get_dataflow() {
 		e->setSinkPort(graph->get_sink_port(edname));
 		e->setInitialTokens(graph->get_initial_tokens(edname));
 	}	
-
+	//TODO
+	//Rules and programs
+	
 	return res;
 }
