@@ -14,30 +14,30 @@ tmf ab {
 rule r1 {
 left {
     topology {
-        nodes = A,B;
-        edges = e1(A,B);
+        nodes = A,x;
+        edges = e1(A,x);
     }
     actor A {
         computation = IntProducer;
         last = 64;
     }
-    actor B {
+    actor x {
         computation = IntConsumer;
     }
 }
 right {
     topology {
-        nodes = A,C,B;
-        edges = e1(A,C), e2(C,B);
+        nodes = A,y,x;
+        edges = e1(A,y), e2(y,x);
     }
     actor A {
         computation = IntProducer;
         last = 64;
     }
-    actor B {
+    actor x {
         computation = IntConsumer;
     }
-    actor C {
+    actor y {
         computation = Doubling;
     }
 }
