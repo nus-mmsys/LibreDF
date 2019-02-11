@@ -62,6 +62,15 @@ bool RDataflow::pattern_matching(Rule * r) {
 	return false;
 }
 
+/* 
+ * 1) Find the appearing and disappearing
+ * actors of the rule.
+ * 2) Destroy the disappearing ones and 
+ * create the appearing ones.
+ * 3) Find the apearing and disspearing
+ * edges of the rule.
+ * 4) Establish the appearing edges.  
+ */
 void RDataflow::apply_rule(Rule * r) {
 	//TODO
 }
