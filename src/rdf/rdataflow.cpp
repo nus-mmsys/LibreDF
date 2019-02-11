@@ -47,7 +47,22 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
-void RDataflow::apply(Rule * r) {
+/* 1) Create an empty matched set.
+ * 2) Match the nodes of the pattern 
+ * which are specified by their name
+ * to their corresponding nodes in the graph.
+ * and add them to the set.
+ * 2) Match the neighbours of the nodes 
+ * of the set and add the matched nodes
+ * to the set.
+ * 3) Continue untill all the nodes are matched.
+ */
+bool RDataflow::pattern_matching(Rule * r) {
+	//TODO
+	return false;
+}
+
+void RDataflow::apply_rule(Rule * r) {
 	//TODO
 }
 
@@ -129,11 +144,12 @@ void RDataflow::run() {
 
 	wait_acks(iter);
 
-	/*
   	//TODO
-	apply(r);
-  	*/
-	
+	/*
+	if (pattern_matching(r))
+		apply_rule(r);
+	*/
+
 	resume();
 
 	end = std::chrono::high_resolution_clock::now(); 
