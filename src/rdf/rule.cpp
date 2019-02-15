@@ -79,8 +79,8 @@ void Rule::preprocess() {
 Graph * Rule::apply(Graph * graph) {
 	//TODO
 	g = graph;
-	disappearing_actor_check();
 	if (matching_check()) {
+		disappearing_actor_check();
 		apply();
 		return res;
 	} else
@@ -89,13 +89,10 @@ Graph * Rule::apply(Graph * graph) {
 }
 
 int Rule::process(Graph * graph) {
-	g = graph;
-	disappearing_actor_check();
-	matching_check();
 	connectivity_check();
 	consistency_check();
 	liveness_check();
-	apply();
+	apply(graph);	
 	return 0;
 }
 
