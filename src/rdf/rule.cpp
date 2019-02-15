@@ -79,6 +79,7 @@ void Rule::preprocess() {
 Graph * Rule::apply(Graph * graph) {
 	//TODO
 	g = graph;
+	disappearing_actor_check();
 	if (matching_check()) {
 		apply();
 		return res;
