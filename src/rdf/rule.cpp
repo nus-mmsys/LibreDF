@@ -46,6 +46,10 @@ string Rule::get_name() {
 	return name;
 }
 
+void Rule::preprocess() {
+	//TODO
+}
+
 int Rule::process(Graph * graph) {
 	g = graph;
 	disappearing_actor_check();

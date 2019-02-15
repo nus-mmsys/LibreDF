@@ -132,6 +132,7 @@ namespace df {
 
     std::string getName();
 
+    std::string getType();
     /*!
      * Set a property of the actor.
      *

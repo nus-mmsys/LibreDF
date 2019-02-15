@@ -36,6 +36,7 @@ private:
     Rule * get_applicable_rule();
     bool pattern_matching(Rule * r);
     void apply_rule(Rule * r);
+    void preprocess_rules();
 public:
 
     RDataflow(std::string name);

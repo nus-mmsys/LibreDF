@@ -52,6 +52,9 @@ private:
 	Graph * l; /**< Left-hand side (L) of the rule. */
 	Graph * r; /**< Right-hand side (R) of the rule. */
 	Graph * res; /**< Resulting graph after the application of the rule. */
+	map<string, string> namevar;
+	map<string, string> typevar;
+	map<string, int> ratevar;
 	vector<string> common_actors; /**< List of names of common actors between L and R. */  
 	vector<string> app_actors; /**< List of names of appearing actors. */
 	vector<string> disapp_actors; /**< List of names of disappearing actors. */
@@ -212,6 +215,12 @@ public:
 	 *
 	 */ 
 	int process(Graph * g);
+
+	/*!
+	 * Resolve variables in the left-hand side.
+	 *
+	 */ 
+	void preprocess();
 
 	/*!
 	 * Return benchmark for the rule

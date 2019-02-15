@@ -35,6 +35,12 @@ void RDataflow::log(string msg) {
 	iolock.unlock();
 }
 
+void RDataflow::preprocess_rules() {
+	for (auto c : rdfg->rules) {
+		c.second->preprocess();
+	}
+}
+
 Rule * RDataflow::get_applicable_rule() {
 	Rule * r = nullptr;
 	//The load is a dummy variable for the tests.
@@ -83,6 +89,8 @@ void RDataflow::run() {
     log("[RDF] Dataflow is not ready to run.");
     return;
   }
+
+  preprocess_rules();
 
   int cpunb = std::thread::hardware_concurrency();
   int cpuid = 0; 

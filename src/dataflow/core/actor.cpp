@@ -37,6 +37,10 @@ std::string Actor::getName() {
 	return name;
 }
 
+std::string Actor::getType() {
+	return getProp("computation");
+}
+
 void Actor::log(std::string msg) {
   if (logging) {
     cpuid = sched_getcpu();
