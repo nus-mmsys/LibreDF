@@ -35,12 +35,6 @@ void RDataflow::log(string msg) {
 	iolock.unlock();
 }
 
-void RDataflow::preprocess_rules() {
-	for (auto c : rdfg->rules) {
-		c.second->preprocess();
-	}
-}
-
 Rule * RDataflow::get_applicable_rule() {
 	Rule * r = nullptr;
 	//The load is a dummy variable for the tests.
@@ -90,8 +84,6 @@ void RDataflow::run() {
     return;
   }
 
-  preprocess_rules();
-
   int cpunb = std::thread::hardware_concurrency();
   int cpuid = 0; 
 
@@ -139,6 +131,7 @@ void RDataflow::run() {
    */
 
   Rule * r;
+  Graph * res;
   while(!check_eos()) {
 	
    	r = get_applicable_rule();
@@ -163,8 +156,10 @@ void RDataflow::run() {
 
   	//TODO
 	/*
-	if (pattern_matching(r))
-		apply_rule(r);
+	res = r->apply(rdfg->graph);
+	if (res!=nullptr)
+		res = rdfg->graph;
+	reconfigure();
 	*/
 
 	resume();

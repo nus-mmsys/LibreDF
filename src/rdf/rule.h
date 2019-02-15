@@ -217,6 +217,15 @@ public:
 	int process(Graph * g);
 
 	/*!
+	 * Find the pattern in the graph.
+	 * If the pattern is found, apply 
+	 * the pattern and return the result,
+	 * otherwise return null.
+	 *
+	 */ 
+	Graph * apply(Graph * graph);
+
+	/*!
 	 * Check whether a string is a valid name.
 	 *
 	 */ 

@@ -147,6 +147,7 @@ int RDFParser::read_rules(stringstream & stream) {
 		if (ret < 0)
 			return ret;
 
+		rule->preprocess();
 		rdfg->add_rule(rule);		
 	}
 	return 0;

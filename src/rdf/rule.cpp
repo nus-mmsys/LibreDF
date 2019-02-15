@@ -76,6 +76,16 @@ void Rule::preprocess() {
 	}
 }
 
+Graph * Rule::apply(Graph * graph) {
+	g = graph;
+	if (matching_check()) {
+		apply();
+		return res;
+	} else
+		cout << "Cannot find a matching.\n";
+	return nullptr;
+}
+
 int Rule::process(Graph * graph) {
 	g = graph;
 	disappearing_actor_check();
