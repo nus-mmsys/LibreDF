@@ -217,7 +217,19 @@ public:
 	int process(Graph * g);
 
 	/*!
-	 * Resolve variables in the left-hand side.
+	 * Check whether a string is a valid name.
+	 *
+	 */ 
+	bool is_name(const std::string& s);
+	
+	/*!
+	 * Check whether a string is a valid variable.
+	 *
+	 */ 
+	bool is_variable(const std::string& s);
+
+	/*!
+	 * Extract variables in the left-hand side.
 	 *
 	 */ 
 	void preprocess();

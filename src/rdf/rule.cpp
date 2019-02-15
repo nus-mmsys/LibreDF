@@ -46,8 +46,34 @@ string Rule::get_name() {
 	return name;
 }
 
+bool Rule::is_name(const std::string& s)
+{
+	return (s[0] >= 'A' && s[0] <= 'Z');
+}
+
+bool Rule::is_variable(const std::string& s)
+{
+	return (s[0] >= 'a' && s[0] <= 'z');
+}
+
 void Rule::preprocess() {
-	//TODO
+	vector<string> actors = l->get_actors();
+	string type;
+	for (auto ac : actors) {
+		type = l->get_actor_type(ac);
+
+		if (is_name(ac)) {
+			namevar[ac] = ac;
+		} else if (is_variable(ac)) {
+			namevar[ac] = "";
+		} else {
+			cout << "Invalid actor name " << ac << endl;
+		}	
+	
+		if (is_variable(type)) {
+			typevar[ac] = "";
+		} 
+	}
 }
 
 int Rule::process(Graph * graph) {
