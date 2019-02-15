@@ -77,6 +77,7 @@ void Rule::preprocess() {
 }
 
 Graph * Rule::apply(Graph * graph) {
+	//TODO
 	g = graph;
 	if (matching_check()) {
 		apply();
