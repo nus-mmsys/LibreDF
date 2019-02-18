@@ -267,19 +267,29 @@ bool Rule::node_match(string lnode, string gnode) {
 	       ||(is_variable(lnode) && is_name(ltype) && ltype==gtype));
 }
 
-//bool Rule::matching_from(string lnode, string gnode) {
-//	if (node_match(lnode, gnode)) {
-		//vector<string> lngh = get_neighbours(root);
-		//for (auto ln : lngh) {
-		//	for (auto gn : gngh) {
-		//		matching_from(ln,gn);
-		//	}
-		//}
-		//return true;
-//	} else {
-//		return false;
-//	}
-//}
+//TODO
+/*
+map<string, string> Rule::matching_from(string lnode, string gnode, map<string, string> matchmap) {
+	map<string,string> res;
+	if (node_match(lnode, gnode)) {
+		matchmap.insert(make_pair(lnode, gnode));
+		if (matchmap.size()==l.actor_size()) {
+			return matchmap;
+		vector<string> lngh = l->get_neighbours(lnode);
+		vector<string> gngh = g->get_neighbours(gnode);
+		for (auto ln : lngh) {
+			if (!find(ln, matchmap.begin(), matchmap.end())) {
+				for (auto gn : gngh) {
+					res = matching_from(ln,gn, matchmap);
+					if (res.size()!=0)
+						return res;
+				}
+			}
+		}
+	}
+	return res;
+}
+*/
 
 bool Rule::matching_check() {
 	//TODO
