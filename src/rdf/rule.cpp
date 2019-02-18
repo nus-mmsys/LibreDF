@@ -261,15 +261,15 @@ bool Rule::match(Graph * g, string edge) {
 
 bool Rule::matching_check() {
 	//TODO
-	g->set_visited(false);
-	l->set_visited(false);
-
-	for (auto c : nameconst) {
-		g->set_visited(c,true);
-		l->set_visited(c,true);
+	map<string, bool> matched;
+	map<string, vector<string>> candidates;
+	map<string, int> index;
+	for (auto it=l->actor_begin(); it!=l->actor_end(); it++ ) {
+		matched[it->first]=false;
+		index[it->first]=0;
+		candidates[it->first]=vector<string>();
 	}
 
-	
 	auto ledges = l->get_edges();
 	for (auto le : ledges) {
 		if (!match(g, le)) {
