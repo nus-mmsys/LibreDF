@@ -260,6 +260,9 @@ bool Rule::match(Graph * g, string edge) {
 }
 
 bool Rule::matching_check() {
+	//TODO
+	g->set_visited(false);
+	l->set_visited(false);
 	auto ledges = l->get_edges();
 	for (auto le : ledges) {
 		if (!match(g, le)) {

@@ -709,6 +709,8 @@ public:
 	 */
 	int latency();
 	
+	void set_visited(bool v);
+
 	//vector<vector<string>> path();
 	//int solve2();
 

@@ -730,6 +730,12 @@ int Graph::latency() {
 	return res;
 }
 
+void Graph::set_visited(bool v) {
+	for (auto ac : actors) {
+		ac.second->set_visited(v);
+	}
+}
+
 /*
 vector<vector<string>> Graph::path() {
 	vector<vector<string>> pathliststr;
