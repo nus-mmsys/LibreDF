@@ -88,6 +88,16 @@ private:
 	bool match(Graph * g, string edge);
 
 	/*!
+	 * Check if a node of left-hand side
+	 * matches a node of the graph.
+	 *
+	 * \return
+	 * 	true if it matches, false otherwise.
+	 *
+	 */ 
+	bool node_match(string lnode, string gnode);
+
+	/*!
 	 * Check if a matching of the rule is found in the data graph
 	 *
 	 * \return

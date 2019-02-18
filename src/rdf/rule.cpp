@@ -259,6 +259,28 @@ bool Rule::match(Graph * g, string edge) {
 	return true;
 }
 
+bool Rule::node_match(string lnode, string gnode) {
+	string ltype = l->get_actor_type(lnode);
+	string gtype = g->get_actor_type(gnode);
+	return ( (is_name(lnode) && lnode == gnode)
+	       ||(is_variable(lnode) && is_variable(ltype))
+	       ||(is_variable(lnode) && is_name(ltype) && ltype==gtype));
+}
+
+//bool Rule::matching_from(string lnode, string gnode) {
+//	if (node_match(lnode, gnode)) {
+		//vector<string> lngh = get_neighbours(root);
+		//for (auto ln : lngh) {
+		//	for (auto gn : gngh) {
+		//		matching_from(ln,gn);
+		//	}
+		//}
+		//return true;
+//	} else {
+//		return false;
+//	}
+//}
+
 bool Rule::matching_check() {
 	//TODO
 	map<string, bool> matched;
