@@ -63,15 +63,15 @@ void Rule::preprocess() {
 		type = l->get_actor_type(ac);
 
 		if (is_name(ac)) {
-			namevar[ac] = ac;
+			nameconst.push_back(ac);
 		} else if (is_variable(ac)) {
-			namevar[ac] = "";
+			namevar.insert(make_pair(ac,""));
 		} else {
 			cout << "Invalid actor name " << ac << endl;
 		}	
 	
 		if (is_variable(type)) {
-			typevar[ac] = "";
+			typevar.insert(make_pair(ac,""));
 		} 
 	}
 }
@@ -263,6 +263,13 @@ bool Rule::matching_check() {
 	//TODO
 	g->set_visited(false);
 	l->set_visited(false);
+
+	for (auto c : nameconst) {
+		g->set_visited(c,true);
+		l->set_visited(c,true);
+	}
+
+	
 	auto ledges = l->get_edges();
 	for (auto le : ledges) {
 		if (!match(g, le)) {

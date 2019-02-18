@@ -52,6 +52,7 @@ private:
 	Graph * l; /**< Left-hand side (L) of the rule. */
 	Graph * r; /**< Right-hand side (R) of the rule. */
 	Graph * res; /**< Resulting graph after the application of the rule. */
+	vector<string> nameconst;
 	map<string, string> namevar;
 	map<string, string> typevar;
 	map<string, int> ratevar;

@@ -736,6 +736,14 @@ void Graph::set_visited(bool v) {
 	}
 }
 
+void Graph::set_visited(string ac, bool v) {
+	actors[ac]->set_visited(v);
+}
+
+bool Graph::get_visited(string ac) {
+	return actors[ac]->get_visited();
+}
+
 /*
 vector<vector<string>> Graph::path() {
 	vector<vector<string>> pathliststr;

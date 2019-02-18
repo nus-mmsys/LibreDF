@@ -710,6 +710,8 @@ public:
 	int latency();
 	
 	void set_visited(bool v);
+	void set_visited(std::string ac, bool v);
+	bool get_visited(std::string ac);
 
 	//vector<vector<string>> path();
 	//int solve2();
