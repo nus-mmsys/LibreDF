@@ -267,20 +267,30 @@ bool Rule::node_match(string lnode, string gnode) {
 	       ||(is_variable(lnode) && is_name(ltype) && ltype==gtype));
 }
 
-//TODO
-/*
+//TODO complete
 map<string, string> Rule::matching_from(string lnode, string gnode, map<string, string> matchmap) {
 	map<string,string> res;
 	if (node_match(lnode, gnode)) {
 		matchmap.insert(make_pair(lnode, gnode));
-		if (matchmap.size()==l.actor_size()) {
+		if (matchmap.size()==l->actor_size())
 			return matchmap;
-		vector<string> lngh = l->get_neighbours(lnode);
-		vector<string> gngh = g->get_neighbours(gnode);
-		for (auto ln : lngh) {
-			if (!find(ln, matchmap.begin(), matchmap.end())) {
-				for (auto gn : gngh) {
-					res = matching_from(ln,gn, matchmap);
+		vector<string> lpred = l->get_pred(lnode);
+		vector<string> gpred = g->get_pred(gnode);
+		for (auto lp : lpred) {
+			if (matchmap.find(lp)!=matchmap.end()) {
+				for (auto gp : gpred) {
+					res = matching_from(lp,gp, matchmap);
+					if (res.size()!=0)
+						return res;
+				}
+			}
+		}
+		vector<string> lsucc = l->get_succ(lnode);
+		vector<string> gsucc = g->get_succ(gnode);
+		for (auto ls : lsucc) {
+			if (matchmap.find(ls)!=matchmap.end()) {
+				for (auto gs : gsucc) {
+					res = matching_from(ls,gs, matchmap);
 					if (res.size()!=0)
 						return res;
 				}
@@ -289,27 +299,29 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 	}
 	return res;
 }
-*/
 
 bool Rule::matching_check() {
 	//TODO
-	map<string, bool> matched;
-	map<string, vector<string>> candidates;
-	map<string, int> index;
-	for (auto it=l->actor_begin(); it!=l->actor_end(); it++ ) {
-		matched[it->first]=false;
-		index[it->first]=0;
-		candidates[it->first]=vector<string>();
-	}
+	//map<string, string> matchmap = 
+	//	matching_from(nameconst[0], nameconst[0], map<string,string>());
 
-	auto ledges = l->get_edges();
-	for (auto le : ledges) {
-		if (!match(g, le)) {
-			matching = false;
-			return matching;
-		}
-	}
-	matching = true;
+	//map<string, bool> matched;
+	//map<string, vector<string>> candidates;
+	//map<string, int> index;
+	//for (auto it=l->actor_begin(); it!=l->actor_end(); it++ ) {
+	//	matched[it->first]=false;
+	//	index[it->first]=0;
+	//	candidates[it->first]=vector<string>();
+	//}
+
+	//auto ledges = l->get_edges();
+	//for (auto le : ledges) {
+	//	if (!match(g, le)) {
+	//		matching = false;
+	//		return matching;
+	//	}
+	//}
+	matching = false;
 	return matching;
 }
 

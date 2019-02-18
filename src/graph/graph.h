@@ -713,6 +713,9 @@ public:
 	void set_visited(std::string ac, bool v);
 	bool get_visited(std::string ac);
 
+	vector<std::string> get_pred(std::string ac);
+	vector<std::string> get_succ(std::string ac);
+	
 	//vector<vector<string>> path();
 	//int solve2();
 

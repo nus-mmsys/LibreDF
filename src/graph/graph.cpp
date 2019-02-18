@@ -744,6 +744,30 @@ bool Graph::get_visited(string ac) {
 	return actors[ac]->get_visited();
 }
 
+vector<std::string> Graph::get_pred(std::string ac) {
+	vector<string> res;
+	if (actors.find(ac)==actors.end()) {
+		return res;	
+	}
+	Actor * actor = actors[ac];
+	for (auto ie : get_iedges(actor)) {
+		res.push_back(ie->get_source_actor()->get_name());
+	}
+	return res;
+}
+
+vector<std::string> Graph::get_succ(std::string ac) {
+	vector<string> res;
+	if (actors.find(ac)==actors.end()) {
+		return res;	
+	}
+	Actor * actor = actors[ac];
+	for (auto ie : get_oedges(actor)) {
+		res.push_back(ie->get_sink_actor()->get_name());
+	}
+	return res;
+}
+
 /*
 vector<vector<string>> Graph::path() {
 	vector<vector<string>> pathliststr;
