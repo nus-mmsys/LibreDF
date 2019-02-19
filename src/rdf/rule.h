@@ -85,7 +85,7 @@ private:
 	 * \return
 	 *
 	 */ 
-	bool match(Graph * g, string edge);
+	bool match(string edge);
 
 	/*!
 	 * Check if a node of left-hand side
