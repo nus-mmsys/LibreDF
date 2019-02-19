@@ -177,8 +177,8 @@ int Rule::apply() {
 				gtype = typevar[type];
 			string newname;
 			do {
-				newname = to_string(toupper(a[0])) 
-					+ to_string(rand()%100);
+				newname = toupper(a[0]); 
+				newname += to_string(rand()%100);
 			} while (g->contains_actor(newname));
 			namevar[a] = newname;
 			res->add_actor(newname,gtype);
@@ -235,7 +235,8 @@ int Rule::apply() {
 				res->set_sink_rate(edge, snk_rate);
 			}
 		}
-		
+	
+		cout << "res has " << res->actor_size() << "\n";	
 		return 0;
 	}
 	
@@ -339,7 +340,7 @@ bool Rule::matching_check() {
 
 	for (auto m : matchmap) {
 		if (is_variable(m.first)) {
-			namevar.insert(make_pair(m.first, m.second));
+			namevar[m.first] = m.second;
 			if (is_variable(l->get_actor_type(m.first))) {
 				typevar.insert(make_pair(
 					l->get_actor_type(m.first),
