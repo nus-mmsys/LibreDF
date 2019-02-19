@@ -80,7 +80,7 @@ Graph * Rule::apply(Graph * graph) {
 	//TODO
 	g = graph;
 	if (matching_check()) {
-		//disappearing_actor_check();
+		disappearing_actor_check();
 		//apply();
 		//return res;
 	} else
@@ -224,38 +224,28 @@ void Rule::extract_common_actors() {
 }
 
 bool Rule::disappearing_actor_check() {
-	//TODO
 	extract_common_actors();
 	auto edges = g->get_edges();
-	for (auto ed : edges) {
-		if (!match(ed)) {
+	for (auto d : disapp_actors) {
+		auto dg = d;
+		if (is_variable(d)) {
+			dg = namevar[d];
+		}
+
+		auto lpred = l->get_pred(d);
+		auto lsucc = l->get_succ(d);
+	
+		auto gpred = g->get_pred(d);
+		auto gsucc = g->get_succ(d);
+
+		if (lpred.size() != gpred.size()
+			&& lsucc.size() != lsucc.size()) {
 			disappearing_actor = false;
 			return disappearing_actor;
-		}	
+		}
 	}
 	disappearing_actor = true;
 	return disappearing_actor;
-}
-
-bool Rule::match(string edge) {
-	//TODO
-	auto source_actor = g->get_source_name(edge);
-	auto sink_actor = g->get_sink_name(edge);
-	if (
-		(find(disapp_actors.begin(), disapp_actors.end(), source_actor) 
-		!= disapp_actors.end()) ||
-	    	(find(disapp_actors.begin(), disapp_actors.end(), sink_actor) 
-		!= disapp_actors.end())  
-	   ) {
-
-		if ((g->get_source_rate(edge) != l->get_source_rate(edge)) ||
-	     	(g->get_sink_rate(edge) != l->get_sink_rate(edge)) ||
-	     	(g->get_source_type(edge) != l->get_source_type(edge)) || 
-	     	(g->get_sink_type(edge) != l->get_sink_type(edge)) ) {
-			return false;
-		}
-	}
-	return true;
 }
 
 bool Rule::node_match(string lnode, string gnode) {
@@ -323,13 +313,6 @@ bool Rule::matching_check() {
 		}
 	}
 
-	//auto ledges = l->get_edges();
-	//for (auto le : ledges) {
-	//	if (!match(g, le)) {
-	//		matching = false;
-	//		return matching;
-	//	}
-	//}
 	matching = true;
 	return matching;
 }

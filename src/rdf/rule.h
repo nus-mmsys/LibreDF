@@ -74,20 +74,6 @@ private:
 	bool disappearing_actor_check();
 
 	/*!
-	 * Check if an edge can match in a graph
-	 *
-	 * \param g
-	 * 	The graph to match
-	 *
-	 * \param edge
-	 * 	The edge to match in the graph
-	 *
-	 * \return
-	 *
-	 */ 
-	bool match(string edge);
-
-	/*!
 	 * Check if a node of left-hand side
 	 * matches a node of the graph.
 	 *
