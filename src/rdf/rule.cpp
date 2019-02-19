@@ -80,9 +80,9 @@ Graph * Rule::apply(Graph * graph) {
 	//TODO
 	g = graph;
 	if (matching_check()) {
-	//	disappearing_actor_check();
-	//	apply();
-	//	return res;
+		disappearing_actor_check();
+		//apply();
+		//return res;
 	} else
 		cout << "Cannot find a matching.\n";
 	return nullptr;
@@ -151,6 +151,7 @@ int Rule::verify() {
 }
 
 int Rule::apply() {
+	//TODO
 	int ret;
 	res->set_name(g->get_name()+"."+name);
 	
@@ -300,7 +301,6 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 }
 
 bool Rule::matching_check() {
-	//TODO
 	if (nameconst.size()==0) {
 		matching = false;
 		return matching;
