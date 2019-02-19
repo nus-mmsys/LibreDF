@@ -179,6 +179,7 @@ int Rule::apply() {
 				gtype = typevar[type];
 			string newname;
 			do {
+				srand(time(NULL));
 				newname = toupper(a[0]); 
 				newname += to_string(rand()%100);
 			} while (g->contains_actor(newname));
