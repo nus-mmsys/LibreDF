@@ -82,7 +82,7 @@ Graph * Rule::apply(Graph * graph) {
 	if (matching_check()) {
 		disappearing_actor_check();
 		//apply();
-		//return res;
+		return res;
 	} else
 		cout << "Cannot find a matching.\n";
 	return nullptr;
@@ -159,24 +159,53 @@ int Rule::apply() {
 		
 		auto gactors = g->get_actors();
 		//Add common actors and appearing actors to the result.
-		for (auto c : gactors) {
-			if (find(disapp_actors.begin(), disapp_actors.end(), c) == disapp_actors.end()) {
-				auto type = g->get_actor_type(c);
-				res->add_actor(c, type);
+		for (auto c : disapp_actors) {
+			auto gc = c;
+			if (is_variable(c))
+				gc = namevar[c];
+			if (find(gactors.begin(), gactors.end(), gc) == gactors.end()) {
+				auto type = g->get_actor_type(gc);
+				res->add_actor(gc, type);
 			}
 		}
 		for (auto a : app_actors) {
+			if (is_name(a))
+				cout << "Appearing actor cannot be named.\n";
 			auto type = r->get_actor_type(a);
-			res->add_actor(a,type);
+			auto gtype = type;
+			if (is_variable(type))
+				gtype = typevar[type];
+			string newname;
+			do {
+				newname = to_string(toupper(a[0])) 
+					+ to_string(rand()%100);
+			} while (g->contains_actor(newname));
+			namevar[a] = newname;
+			res->add_actor(newname,gtype);
 		}
 		
-		//Remove left edges.
+		//Add original edges.
 		auto edges = g->get_edges();
 		auto leftedges = l->get_edges();
+		bool found = false;
 		for (auto edge : edges) {
-			if (find(leftedges.begin(), leftedges.end(), edge) == leftedges.end()) {
-				auto src = g->get_source_name(edge);
-				auto snk = g->get_sink_name(edge);
+			auto src = g->get_source_name(edge);
+			auto snk = g->get_sink_name(edge);
+			found = false;
+			for (auto ledge : leftedges) {
+				auto lsrc = l->get_source_name(ledge);
+				auto lsnk = l->get_sink_name(ledge);
+				if (is_variable(lsrc))
+					lsrc = namevar[lsrc];
+				if (is_variable(lsnk))
+					lsnk = namevar[lsnk];
+				if (src==lsrc && snk==lsnk) {
+					found = true;
+					break;
+				}
+
+			}
+			if (found==false) {
 				auto src_rate = g->get_source_rate(edge);
 				auto snk_rate = g->get_sink_rate(edge);
 				ret = res->add_edge(src, snk);
@@ -191,13 +220,20 @@ int Rule::apply() {
 		for (auto edge : rightedges) {
 			auto src = r->get_source_name(edge);
 			auto snk = r->get_sink_name(edge);
+			if (is_variable(src))
+				src = namevar[src];
+			if (is_variable(snk))
+				snk = namevar[snk];
+
 			auto src_rate = r->get_source_rate(edge);
 			auto snk_rate = r->get_sink_rate(edge);
 			resedges = res->get_edges();
 			if (find(resedges.begin(), resedges.end(), edge) == resedges.end())	
+			{
 				res->add_edge(src, snk);
-			res->set_source_rate(edge, src_rate);
-			res->set_sink_rate(edge, snk_rate);
+				res->set_source_rate(edge, src_rate);
+				res->set_sink_rate(edge, snk_rate);
+			}
 		}
 		
 		return 0;
