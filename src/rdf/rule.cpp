@@ -80,9 +80,9 @@ Graph * Rule::apply(Graph * graph) {
 	//TODO
 	g = graph;
 	if (matching_check()) {
-		disappearing_actor_check();
-		apply();
-		return res;
+	//	disappearing_actor_check();
+	//	apply();
+	//	return res;
 	} else
 		cout << "Cannot find a matching.\n";
 	return nullptr;
@@ -302,8 +302,22 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 
 bool Rule::matching_check() {
 	//TODO
-	//map<string, string> matchmap = 
-	//	matching_from(nameconst[0], nameconst[0], map<string,string>());
+	if (nameconst.size()==0) {
+		matching = false;
+		return matching;
+	}
+
+	map<string, string> matchmap = 
+		matching_from(nameconst[0], nameconst[0], map<string,string>());
+	
+	if (matchmap.size()==0) {
+		matching = false;
+		return matching;
+	}
+
+	for (auto m : matchmap) {
+		cout << m.first << " " << m.second << "\n";
+	}
 
 	//map<string, bool> matched;
 	//map<string, vector<string>> candidates;
@@ -321,7 +335,7 @@ bool Rule::matching_check() {
 	//		return matching;
 	//	}
 	//}
-	matching = false;
+	matching = true;
 	return matching;
 }
 
@@ -343,9 +357,9 @@ bool Rule::result_connectivity() {
 bool Rule::consistency_check() {
 	int ret;
 	//Set firings belonging to the RDF data graph.
-	for(auto ac : g->get_actors()) {
+	for(auto ac : l->get_actors()) {
 		//l->set_firing(ac, g->get_firing(ac));
-		r->set_firing(ac, g->get_firing(ac));
+		r->set_firing(ac, l->get_firing(ac));
 	}
 	//ret = l->solve();
 	//if (ret < 0) {
