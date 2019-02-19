@@ -628,6 +628,20 @@ public:
 	string get_actor_type(string name);
 
 	/*!
+	 * Determines if the graph
+	 * contains a given actor.
+	 *
+	 * \param name
+	 * 	The name of the actor.
+	 *
+	 * \return
+	 *	true if the graph contains
+	 *	the actor, false otherwise.
+	 *
+	 */
+	bool contains_actor(string name);
+	
+	/*!
 	 * Get a property of a given actor.
 	 *
 	 * \param actname

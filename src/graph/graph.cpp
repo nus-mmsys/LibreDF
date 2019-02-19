@@ -114,6 +114,11 @@ string Graph::get_actor_type(string name) {
 	return "";
 }
 
+bool Graph::contains_actor(string name) {
+	Actor * ac = get_actor(name);
+	return (ac != nullptr);
+}
+
 int Graph::add_edge(string edgename, string edge_source, string edge_sink) {
 
 	if (edges.find(edgename) != edges.end())
