@@ -267,7 +267,6 @@ bool Rule::node_match(string lnode, string gnode) {
 	       ||(is_variable(lnode) && is_name(ltype) && ltype==gtype));
 }
 
-//TODO complete
 map<string, string> Rule::matching_from(string lnode, string gnode, map<string, string> matchmap) {
 	map<string,string> res;
 	if (node_match(lnode, gnode)) {
@@ -277,7 +276,7 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 		vector<string> lpred = l->get_pred(lnode);
 		vector<string> gpred = g->get_pred(gnode);
 		for (auto lp : lpred) {
-			if (matchmap.find(lp)!=matchmap.end()) {
+			if (matchmap.find(lp)==matchmap.end()) {
 				for (auto gp : gpred) {
 					res = matching_from(lp,gp, matchmap);
 					if (res.size()!=0)
@@ -288,7 +287,7 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 		vector<string> lsucc = l->get_succ(lnode);
 		vector<string> gsucc = g->get_succ(gnode);
 		for (auto ls : lsucc) {
-			if (matchmap.find(ls)!=matchmap.end()) {
+			if (matchmap.find(ls)==matchmap.end()) {
 				for (auto gs : gsucc) {
 					res = matching_from(ls,gs, matchmap);
 					if (res.size()!=0)
@@ -306,7 +305,6 @@ bool Rule::matching_check() {
 		matching = false;
 		return matching;
 	}
-
 	map<string, string> matchmap = 
 		matching_from(nameconst[0], nameconst[0], map<string,string>());
 	
@@ -316,17 +314,16 @@ bool Rule::matching_check() {
 	}
 
 	for (auto m : matchmap) {
-		cout << m.first << " " << m.second << "\n";
-	}
+		if (is_variable(m.first)) {
+			namevar.insert(make_pair(m.first, m.second));
+			if (is_variable(l->get_actor_type(m.first))) {
+				typevar.insert(make_pair(
+					l->get_actor_type(m.first),
+					g->get_actor_type(m.second)));
+			}
 
-	//map<string, bool> matched;
-	//map<string, vector<string>> candidates;
-	//map<string, int> index;
-	//for (auto it=l->actor_begin(); it!=l->actor_end(); it++ ) {
-	//	matched[it->first]=false;
-	//	index[it->first]=0;
-	//	candidates[it->first]=vector<string>();
-	//}
+		}
+	}
 
 	//auto ledges = l->get_edges();
 	//for (auto le : ledges) {
