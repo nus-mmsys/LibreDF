@@ -47,31 +47,7 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
-/* 1) Create an empty matched set.
- * 2) Match the nodes of the pattern 
- * which are specified by their name
- * to their corresponding nodes in the graph.
- * and add them to the set.
- * 2) Match the neighbours of the nodes 
- * of the set and add the matched nodes
- * to the set.
- * 3) Continue untill all the nodes are matched.
- */
-bool RDataflow::pattern_matching(Rule * r) {
-	//TODO
-	return false;
-}
-
-/* 
- * 1) Find the appearing and disappearing
- * actors of the rule.
- * 2) Destroy the disappearing ones and 
- * create the appearing ones.
- * 3) Find the apearing and disspearing
- * edges of the rule.
- * 4) Establish the appearing edges.  
- */
-void RDataflow::apply_rule(Rule * r) {
+void RDataflow::reconfigure() {
 	//TODO
 }
 

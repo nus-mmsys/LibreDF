@@ -34,8 +34,7 @@ private:
     int load;
     RDFGraph * rdfg;
     Rule * get_applicable_rule();
-    bool pattern_matching(Rule * r);
-    void apply_rule(Rule * r);
+    void reconfigure();
 public:
 
     RDataflow(std::string name);
