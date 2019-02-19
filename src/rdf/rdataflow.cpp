@@ -130,11 +130,11 @@ void RDataflow::run() {
 
 	wait_acks(iter);
 
-  	//TODO
-	/*
 	res = r->apply(rdfg->graph);
 	if (res!=nullptr)
-		res = rdfg->graph;
+		rdfg->graph = res;
+  	//TODO
+	/*
 	reconfigure();
 	*/
 
