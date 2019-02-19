@@ -77,11 +77,10 @@ void Rule::preprocess() {
 }
 
 Graph * Rule::apply(Graph * graph) {
-	//TODO
 	g = graph;
 	if (matching_check()) {
 		disappearing_actor_check();
-		//apply();
+		apply();
 		return res;
 	} else
 		cout << "Cannot find a matching.\n";
@@ -151,7 +150,6 @@ int Rule::verify() {
 }
 
 int Rule::apply() {
-	//TODO
 	int ret;
 	res->set_name(g->get_name()+"."+name);
 	
@@ -159,13 +157,17 @@ int Rule::apply() {
 		
 		auto gactors = g->get_actors();
 		//Add common actors and appearing actors to the result.
+		vector<string> disact;
 		for (auto c : disapp_actors) {
 			auto gc = c;
 			if (is_variable(c))
 				gc = namevar[c];
-			if (find(gactors.begin(), gactors.end(), gc) == gactors.end()) {
-				auto type = g->get_actor_type(gc);
-				res->add_actor(gc, type);
+			disact.push_back(gc);
+		}
+		for (auto c : gactors) {
+			if (find(disact.begin(), disact.end(), c) == disact.end()) {
+				auto type = g->get_actor_type(c);
+				res->add_actor(c, type);
 			}
 		}
 		for (auto a : app_actors) {
@@ -236,7 +238,6 @@ int Rule::apply() {
 			}
 		}
 	
-		cout << "res has " << res->actor_size() << "\n";	
 		return 0;
 	}
 	
