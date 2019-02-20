@@ -263,6 +263,13 @@ void Dataflow::discovery() {
   srvsock->srvclose();    
 }
 
+void Dataflow::setDataflowProp(Actor * ac) {
+    ac->setProp<bool>("logging", logging);
+    ac->setProp<bool>("scheduling", scheduling);
+    ac->setProp<bool>("realtime", realtime);
+    ac->setProp<bool>("distributed", distributed);
+}
+
 void Dataflow::init() {
 
   if (!prop.propEmpty("logging"))
@@ -283,13 +290,6 @@ void Dataflow::init() {
   if (!prop.propEmpty("discovery_port"))
 	  discport = prop.getPropInt("discovery_port"); 
 
-  for (auto f : actors) {
-    f.second->setProp<bool>("logging", logging);
-    f.second->setProp<bool>("scheduling", scheduling);
-    f.second->setProp<bool>("realtime", realtime);
-    f.second->setProp<bool>("distributed", distributed);
-  }
-
   if (distributed) {
 
   	if (dischost == "") {
@@ -304,11 +304,12 @@ void Dataflow::init() {
   }
 
   for (auto f: actors) {
+    setDataflowProp(f.second);
     f.second->startInit();
   }
   
-  for (auto f : actors) {
-    f.second->waitInit();
+  for (auto it = actors.begin(); it != actors.end();it++) {
+    it->second->waitInit();
   }
   
   status = DataflowStatus::READY;

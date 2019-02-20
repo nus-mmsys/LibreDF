@@ -57,7 +57,7 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	/*
+	/*	
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -84,13 +84,15 @@ void RDataflow::reconfigure() {
 
 	//Create appearing actors.
 	string type;
+	df::Actor * ac;
+	vector<df::Actor *> appac;
 	for (auto c : g->get_actors()) {
 		if (actors.find(c) == actors.end()) {
 			type = g->get_actor_type(c); 
-			createActor(type, c);
+			ac = createActor(type, c);
+			appac.push_back(ac);
 		}
 	}
-	
 
 	//Create appearing edges.
 	for (auto e : g->get_edges()) {
@@ -102,9 +104,12 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	/*
+	/*	
 	//TODO
-	//init appearing actors.
+	for (auto c : appac) {
+		setDataflowProp(c);
+		c->startInit();
+	}
 	//connect new connections.
 	//run appearing actors.
 	*/

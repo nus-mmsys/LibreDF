@@ -162,6 +162,7 @@ namespace df {
     void runDiscovery();
     void waitDiscovery();
     
+    void setDataflowProp(Actor * ac);
     /*!
      * Initialize the dataflow.
      *
