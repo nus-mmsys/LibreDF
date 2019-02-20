@@ -63,16 +63,16 @@ void RDataflow::reconfigure() {
 		srcname = e.second->getSource()->getName();
 	        snkname = e.second->getSink()->getName();
 		if (!g->contains_edge(srcname, snkname)) {
-			removeEdge(e);
+			removeEdge(e.second);
 		}
 	}
 	*/
 
-	/*
+	/*	
 	//Remove dissappearing actors.
 	for (auto c : actors) {
-		if (c is not in the list of rdfg actors) {
-			removeActor(c);
+		if (!g->contains_actor(c.first)) {
+			removeActor(c.second);
 		}
 	}
 	*/
@@ -92,8 +92,8 @@ void RDataflow::reconfigure() {
 	//Create appearing edges.
 	for (auto e : g->get_edges()) {
 		if (e is not in the list of edges) {
-			auto src = g->get_source_name();
-			auto snk = g->get_sink_name();
+			src = g->get_source_name();
+			snk = g->get_sink_name();
 			createEdge(e, src, snk);
 		}
 	}
