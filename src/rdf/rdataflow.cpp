@@ -56,14 +56,12 @@ void RDataflow::reconfigure() {
 		cout << c << " : " << g->get_actor_type(c) << "\n";
 	}
 	*/
-	
-	//Create appearing actors.
+
 	/*
-	string type;
-	for (auto c : g->get_actors()) {
-		if (actors.find(c) == actors.end()) {
-			type = g->get_actor_type(c); 
-			createActor(type, c);
+	//Remove dissappearing edges.
+	for (auto e : edges) {
+		if (e is not in the list of rdfg edges) {
+			removeEdge(e);
 		}
 	}
 	*/
@@ -73,6 +71,17 @@ void RDataflow::reconfigure() {
 	for (auto c : actors) {
 		if (c is not in the list of rdfg actors) {
 			removeActor(c);
+		}
+	}
+	*/
+
+	//Create appearing actors.
+	/*
+	string type;
+	for (auto c : g->get_actors()) {
+		if (actors.find(c) == actors.end()) {
+			type = g->get_actor_type(c); 
+			createActor(type, c);
 		}
 	}
 	*/
@@ -88,14 +97,6 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	/*
-	//Remove dissappearing edges.
-	for (auto e : edges) {
-		if (e is not in the list of rdfg edges) {
-			removeEdge(e);
-		}
-	}
-	*/
 }
 
 void RDataflow::run() {
