@@ -57,7 +57,10 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	/*		
+	/*
+	//TODO
+	//disconnect actors.
+		
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -120,8 +123,7 @@ void RDataflow::reconfigure() {
     		c->startRun(cpuid);
     		cpuid = (cpuid + 1) % cpunb;
   	}
-	*/
-	
+	*/	
 }
 
 void RDataflow::run() {
