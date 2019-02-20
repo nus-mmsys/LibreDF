@@ -47,20 +47,21 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
+//TODO
 void RDataflow::reconfigure() {
-	//TODO
-	/*
 	auto g = rdfg->graph;
+	
+	/*
 	for (auto c : g->get_actors()) {
 		cout << c << " : " << g->get_actor_type(c) << "\n";
 	}
 	*/
 	
-	/*
 	//Create appearing actors.
+	/*
 	string type;
 	for (auto c : g->get_actors()) {
-		if (c is not in the list of actors) {
+		if (actors.find(c) == actors.end()) {
 			type = g->get_actor_type(c); 
 			createActor(type, c);
 		}
