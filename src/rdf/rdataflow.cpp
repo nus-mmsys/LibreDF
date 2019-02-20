@@ -47,7 +47,6 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
-//TODO
 void RDataflow::reconfigure() {
 	auto g = rdfg->graph;
 	string srcname, snkname;
@@ -56,11 +55,11 @@ void RDataflow::reconfigure() {
 		cout << c << " : " << g->get_actor_type(c) << "\n";
 	}
 	*/
-
-	/*
+	
 	//TODO
 	//disconnect actors.
-		
+
+	/*		
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -87,35 +86,37 @@ void RDataflow::reconfigure() {
 
 	//Create appearing actors.
 	string type;
-	df::Actor * ac;
 	vector<df::Actor *> appac;
 	for (auto c : g->get_actors()) {
 		if (actors.find(c) == actors.end()) {
 			type = g->get_actor_type(c); 
-			ac = createActor(type, c);
-			appac.push_back(ac);
+			appac.push_back(createActor(type,c));
 		}
 	}
 
 	//Create appearing edges.
+	vector<df::Edge *> apped;
 	for (auto e : g->get_edges()) {
 		srcname = g->get_source_name(e);
 		snkname = g->get_sink_name(e);
 		if (!containsEdge(srcname, snkname)) {
-			createEdge(e, srcname, snkname);
+			apped.push_back(createEdge(e, srcname, snkname));
 		}
 	}
-	*/
-
-	/*	
+		
 	for (auto c : appac) {
 		setDataflowProp(c);
 		c->startInit();
 	}
 	
-	//TODO
-	//connect new connections.
-	
+	for (auto & ed : apped) {
+		connectActors(ed->getSource(), 
+			      ed->getSink(), 
+			      ed->getName(), 
+			      ed->getSourceRate(), 
+			      ed->getSinkRate());
+	}
+
 	int cpunb = std::thread::hardware_concurrency();
   	int cpuid = 0; 
 
@@ -123,7 +124,7 @@ void RDataflow::reconfigure() {
     		c->startRun(cpuid);
     		cpuid = (cpuid + 1) % cpunb;
   	}
-	*/	
+	*/
 }
 
 void RDataflow::run() {
