@@ -773,6 +773,13 @@ vector<std::string> Graph::get_succ(std::string ac) {
 	return res;
 }
 
+void Graph::clear() {
+	actors.clear();
+	edges.clear();
+	params.clear();
+	name = "";
+}
+
 /*
 vector<vector<string>> Graph::path() {
 	vector<vector<string>> pathliststr;

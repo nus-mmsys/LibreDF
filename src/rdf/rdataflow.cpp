@@ -49,6 +49,10 @@ Rule * RDataflow::get_applicable_rule() {
 
 void RDataflow::reconfigure() {
 	//TODO
+	//auto g = rdfg->graph;
+	//for (auto c : g->get_actors()) {
+	//	cout << c << " : " << g->get_actor_type(c) << "\n";
+	//}
 }
 
 void RDataflow::run() {
@@ -133,10 +137,9 @@ void RDataflow::run() {
 	res = r->apply(rdfg->graph);
 	if (res!=nullptr)
 		rdfg->graph = res;
-  	//TODO
-	/*
+	
 	reconfigure();
-	*/
+	
 
 	resume();
 

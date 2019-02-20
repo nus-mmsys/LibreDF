@@ -729,7 +729,8 @@ public:
 
 	vector<std::string> get_pred(std::string ac);
 	vector<std::string> get_succ(std::string ac);
-	
+
+	void clear();	
 	//vector<vector<string>> path();
 	//int solve2();
 

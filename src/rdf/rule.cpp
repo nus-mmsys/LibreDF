@@ -78,6 +78,7 @@ void Rule::preprocess() {
 
 Graph * Rule::apply(Graph * graph) {
 	g = graph;
+	res->clear();	
 	if (matching_check()) {
 		disappearing_actor_check();
 		apply();
