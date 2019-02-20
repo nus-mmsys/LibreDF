@@ -57,7 +57,7 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	/*	
+	/*		
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -105,14 +105,23 @@ void RDataflow::reconfigure() {
 	*/
 
 	/*	
-	//TODO
 	for (auto c : appac) {
 		setDataflowProp(c);
 		c->startInit();
 	}
+	
+	//TODO
 	//connect new connections.
-	//run appearing actors.
+	
+	int cpunb = std::thread::hardware_concurrency();
+  	int cpuid = 0; 
+
+  	for (auto c : appac) {
+    		c->startRun(cpuid);
+    		cpuid = (cpuid + 1) % cpunb;
+  	}
 	*/
+	
 }
 
 void RDataflow::run() {

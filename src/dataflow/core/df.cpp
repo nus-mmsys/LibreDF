@@ -354,8 +354,8 @@ void Dataflow::run() {
   
   status = DataflowStatus::RUNNING;
   
-  for (auto f : actors) {
-    f.second->waitRun();
+  for (auto it = actors.begin(); it != actors.end();it++) {
+    it->second->waitRun();
   }
   
   end = std::chrono::high_resolution_clock::now();
