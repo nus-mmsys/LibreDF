@@ -56,7 +56,16 @@ Dataflow::edge_iter Dataflow::edgeEnd() {
 
 int Dataflow::edgeSize() { 
 	return edges.size(); 
-} 
+}
+
+bool Dataflow::containsEdge(const std::string& src, const std::string &snk) {
+	for (auto& e : edges) {
+		if (e.second->getSource()->getName()==src &&
+		    e.second->getSink()->getName()==snk)
+			return true;
+	}
+	return false;
+}
 
 Edge * Dataflow::createEdge(const std::string& name, const std::string& src,
 		      const std::string& snk) {

@@ -88,16 +88,16 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	/*
 	//Create appearing edges.
+	/*
 	for (auto e : g->get_edges()) {
-		if (e is not in the list of edges) {
-			src = g->get_source_name();
-			snk = g->get_sink_name();
-			createEdge(e, src, snk);
+		srcname = g->get_source_name(e);
+		snkname = g->get_sink_name(e);
+		if (!containsEdge(srcname, snkname)) {
+			createEdge(e, srcname, snkname);
 		}
 	}
-	*/
+	*/	
 
 	/*
 	//init appearing actors.
