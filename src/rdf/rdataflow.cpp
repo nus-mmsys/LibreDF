@@ -49,10 +49,52 @@ Rule * RDataflow::get_applicable_rule() {
 
 void RDataflow::reconfigure() {
 	//TODO
-	//auto g = rdfg->graph;
-	//for (auto c : g->get_actors()) {
-	//	cout << c << " : " << g->get_actor_type(c) << "\n";
-	//}
+	/*
+	auto g = rdfg->graph;
+	for (auto c : g->get_actors()) {
+		cout << c << " : " << g->get_actor_type(c) << "\n";
+	}
+	*/
+	
+	/*
+	//Create appearing actors.
+	string type;
+	for (auto c : g->get_actors()) {
+		if (c is not in the list of actors) {
+			type = g->get_actor_type(c); 
+			createActor(type, c);
+		}
+	}
+	*/
+
+	/*
+	//Remove dissappearing actors.
+	for (auto c : actors) {
+		if (c is not in the list of rdfg actors) {
+			removeActor(c);
+		}
+	}
+	*/
+
+	/*
+	//Create appearing edges.
+	for (auto e : g->get_edges()) {
+		if (e is not in the list of edges) {
+			auto src = g->get_source_name();
+			auto snk = g->get_sink_name();
+			createEdge(e, src, snk);
+		}
+	}
+	*/
+
+	/*
+	//Remove dissappearing edges.
+	for (auto e : edges) {
+		if (e is not in the list of rdfg edges) {
+			removeEdge(e);
+		}
+	}
+	*/
 }
 
 void RDataflow::run() {
