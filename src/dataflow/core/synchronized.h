@@ -44,6 +44,8 @@ namespace df {
     
     void addConsumer();
    
+    void clearConsumer();
+
     /*!
      * Acquiring and releasing consumer lock
      *

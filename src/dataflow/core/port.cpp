@@ -53,3 +53,7 @@ bool Port::isConnected() {
 void Port::increaseLinked() {
   linked++;
 }
+
+void Port::clearLinked() {
+  linked=0;
+}

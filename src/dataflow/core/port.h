@@ -93,7 +93,14 @@ namespace df {
      *
      */
     void increaseLinked();
-   
+  
+    /*!
+     * Make the number of the ports linked to the port equal zero.
+     * (It is used when disconnecting the port)
+     *
+     */
+    void clearLinked();
+
     /*!
      * Port descructor
      *
@@ -114,6 +121,7 @@ namespace df {
     virtual void waitAccept() = 0;
     virtual void listen(int portnb) = 0;
     virtual void setBuffer(BufferInfc * buf) = 0;
+    virtual void clearBuffer() = 0;
     virtual ~IPort() {
 	delete sock;
     }

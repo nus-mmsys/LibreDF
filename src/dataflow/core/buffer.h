@@ -60,7 +60,13 @@ namespace df {
 	tokens[i]->addConsumer();
       }
     }
-    
+     
+    void clearConsumer()  {
+      for (int i=0; i<size; i++) {
+	tokens[i]->clearConsumer();
+      }
+    }
+
     /*!
      * Get the size of the buffer
      *

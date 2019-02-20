@@ -183,6 +183,19 @@ namespace df {
     } 
 
     /*!
+     * Disconnect next port from this port
+     *
+     * \param n next port to disconnect from
+     *
+     */
+    virtual int disconnectPort(IPort* n) {
+      nextPorts.clear();
+      clearLinked();
+      n->clearBuffer();
+      return 0;
+    } 
+
+    /*!
      * OutputPort desctructor
      *
      */

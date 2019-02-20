@@ -28,6 +28,10 @@ void Synchronized::addConsumer() {
   total_consumer++;
 }
 
+void Synchronized::clearConsumer() {
+  total_consumer=0;
+}
+
 void Synchronized::consumerLock() {
   unique_lock<mutex> locker(mux);
   while(producing || !produced)

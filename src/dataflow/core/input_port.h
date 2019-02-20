@@ -100,6 +100,12 @@ namespace df {
       increaseLinked();	
     }
     
+    virtual void clearBuffer() {
+      buf->clearConsumer();
+      buf = nullptr;
+      clearLinked();	
+    }
+
     void lock() {
       buf->at(index)->consumerLock();
     }

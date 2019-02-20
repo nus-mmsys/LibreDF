@@ -113,6 +113,11 @@ namespace df {
 	    getFreePort()->setBuffer(b);
     }
 
+    virtual void clearBuffer() {
+	for (auto c : inputs)
+		c->clearBuffer();
+    }
+
     virtual ~InputPortVector() {
     }
     
