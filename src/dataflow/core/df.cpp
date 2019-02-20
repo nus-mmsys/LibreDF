@@ -107,6 +107,14 @@ Edge * Dataflow::createEdge(const std::string& name, const std::string& src,
 	return e;
 }
 
+void Dataflow::destroyEdge(Edge * e) {
+	delete e;
+}
+
+void Dataflow::destroyActor(Actor * ac) {
+	delete ac;
+}
+
 Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
   Actor * res = ActorFactory::createActor(s, name);
   addActor(res);

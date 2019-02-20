@@ -57,28 +57,32 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	//Remove dissappearing edges.
 	/*
-	for (auto e : edges) {
-		srcname = e.second->getSource()->getName();
-	        snkname = e.second->getSink()->getName();
+	//Remove dissappearing edges.
+	for (auto it = edges.cbegin(); it != edges.cend();)
+	{
+		srcname = it->second->getSource()->getName();
+	        snkname = it->second->getSink()->getName();
 		if (!g->contains_edge(srcname, snkname)) {
-			removeEdge(e.second);
-		}
+    			edges.erase(it);
+			destroyEdge(it->second);
+  		} else {
+			++it;
+  		}
 	}
-	*/
-
-	/*	
+		
 	//Remove dissappearing actors.
 	for (auto c : actors) {
-		if (!g->contains_actor(c.first)) {
-			removeActor(c.second);
+	for (auto it = actors.cbegin(); it != actors.cend();)
+		if (!g->contains_actor(it->first)) {
+			actors.erase(it);
+			destroyActor(it->second);
+		} else {
+			++it;
 		}
 	}
-	*/
 
 	//Create appearing actors.
-	/*
 	string type;
 	for (auto c : g->get_actors()) {
 		if (actors.find(c) == actors.end()) {
@@ -86,10 +90,9 @@ void RDataflow::reconfigure() {
 			createActor(type, c);
 		}
 	}
-	*/
+	
 
 	//Create appearing edges.
-	/*
 	for (auto e : g->get_edges()) {
 		srcname = g->get_source_name(e);
 		snkname = g->get_sink_name(e);
@@ -97,9 +100,10 @@ void RDataflow::reconfigure() {
 			createEdge(e, srcname, snkname);
 		}
 	}
-	*/	
+	*/
 
 	/*
+	//TODO
 	//init appearing actors.
 	//connect new connections.
 	//run appearing actors.
