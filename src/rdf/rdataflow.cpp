@@ -50,17 +50,19 @@ Rule * RDataflow::get_applicable_rule() {
 //TODO
 void RDataflow::reconfigure() {
 	auto g = rdfg->graph;
-	
+	string srcname, snkname;
 	/*
 	for (auto c : g->get_actors()) {
 		cout << c << " : " << g->get_actor_type(c) << "\n";
 	}
 	*/
 
-	/*
 	//Remove dissappearing edges.
+	/*
 	for (auto e : edges) {
-		if (e is not in the list of rdfg edges) {
+		srcname = e.second->getSource()->getName();
+	        snkname = e.second->getSink()->getName();
+		if (!g->contains_edge(srcname, snkname)) {
 			removeEdge(e);
 		}
 	}

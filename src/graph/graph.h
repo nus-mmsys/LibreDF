@@ -642,6 +642,22 @@ public:
 	bool contains_actor(string name);
 	
 	/*!
+	 * Determines if the graph
+	 * contains a given edge.
+	 *
+	 * \param src
+	 * 	The name of the source actor of the edge
+	 * \param snk
+	 * 	The name of the sink actor of the edge
+	 *
+	 * \return
+	 *	true if the graph contains
+	 *	the edge, false otherwise.
+	 *
+	 */
+	bool contains_edge(string src, string snk);
+
+	/*!
 	 * Get a property of a given actor.
 	 *
 	 * \param actname

@@ -119,6 +119,15 @@ bool Graph::contains_actor(string name) {
 	return (ac != nullptr);
 }
 
+bool Graph::contains_edge(string src, string snk) {
+	for (auto e : edges) {
+		if (e.second->get_source_actor()->get_name()==src &&
+		    e.second->get_sink_actor()->get_name()==snk)
+			return true;
+	}
+	return false;
+}
+
 int Graph::add_edge(string edgename, string edge_source, string edge_sink) {
 
 	if (edges.find(edgename) != edges.end())
