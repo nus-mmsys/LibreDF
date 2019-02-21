@@ -260,8 +260,10 @@ namespace df {
      *
      * \param snk
      *   The actor to connect to.
-     * \param edge
-     * 	 The edge on which acotr will be connected.
+     * \param outp
+     * 	 The output port on which actor will be connected.
+     * \param inp
+     *   The input port on which the sink actor will be connected.
      * \param p
      *   The production rate of the actor.
      * \param c
@@ -269,6 +271,18 @@ namespace df {
      */
     int connectActor(Actor * snk, std::string outp, std::string inp, int p, int c);
 
+    /*!
+     * Disconnect this actor from another actor in the dataflow.
+     *
+     * \param snk
+     *   The actor to disconnect from.
+     * \param outp
+     * 	 The output port on which actor is connected.
+     * \param inp
+     *   The input port on which the sink actor is connected.
+     */
+    int disconnectActor(Actor * snk, std::string outp, std::string inp);
+    
     /*!
      * Execute the init of this actor.
      * The actors are connected by a link list and each actor calls initActor of the next actor.

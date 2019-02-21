@@ -192,6 +192,17 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 	snk->setInputPortRate(inp, c);
 }
 
+void Dataflow::disconnectActors(Actor * src, Actor * snk, std::string edge) {
+	string inp, outp;
+	if (distributed) {
+		cerr << "disconnectActors for distributed actors is not implemented yet.\n"; 
+	} else {
+		outp = edges[edge]->getSourcePort();
+		inp = edges[edge]->getSinkPort();
+		src->disconnectActor(snk, outp, inp);
+	}
+}
+
 void Dataflow::runDiscovery() {
 
   if (!prop.propEmpty("distributed"))

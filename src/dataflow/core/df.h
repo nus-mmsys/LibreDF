@@ -159,6 +159,15 @@ namespace df {
      */
     void connectActors(Actor * src, Actor * snk, std::string edge, int p, int c);
 
+    /*!
+     * Disconnect two actors already present in the dataflow.
+     *
+     * \param src The source actor.
+     * \param snk The sink actor.
+     * \param edge The edge on which two actors will be disconnected.
+     */
+    void disconnectActors(Actor * src, Actor * snk, std::string edge);
+
     void runDiscovery();
     void waitDiscovery();
     

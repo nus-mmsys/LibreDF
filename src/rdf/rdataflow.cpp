@@ -47,6 +47,8 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
+//TODO
+//test the function
 void RDataflow::reconfigure() {
 	auto g = rdfg->graph;
 	string srcname, snkname;
@@ -56,17 +58,16 @@ void RDataflow::reconfigure() {
 	}
 	*/
 	
-	/*		
+	/*	
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
 		srcname = it->second->getSource()->getName();
 	        snkname = it->second->getSink()->getName();
 		if (!g->contains_edge(srcname, snkname)) {
-    			//TODO
-			//disconnectActors(it->second->getSource(),
-			//		   it->second->getSink()
-			//		   it->first);
+			disconnectActors(it->second->getSource(),
+					   it->second->getSink(),
+					   it->first);
 			edges.erase(it);
 			destroyEdge(it->second);
   		} else {
@@ -126,6 +127,7 @@ void RDataflow::reconfigure() {
     		cpuid = (cpuid + 1) % cpunb;
   	}
 	*/
+	
 }
 
 void RDataflow::run() {

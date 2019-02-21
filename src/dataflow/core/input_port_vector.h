@@ -114,6 +114,7 @@ namespace df {
     }
 
     virtual void clearBuffer() {
+	//Not tested.
 	for (auto c : inputs)
 		c->clearBuffer();
     }

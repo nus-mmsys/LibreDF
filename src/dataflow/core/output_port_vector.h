@@ -85,6 +85,13 @@ namespace df {
 	return getFreePort()->connectPort(n);
     }
 
+    virtual int disconnectPort(IPort* n) {
+	//Not tested.
+    	for (auto p : outputs)
+		p->disconnectPort(n);
+	return 0;
+    }
+
     virtual int connectPort(IPort* n, int index) {
 	return getFreePort()->connectPort(n, index);
     }

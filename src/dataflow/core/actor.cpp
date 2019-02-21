@@ -168,7 +168,27 @@ int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, i
   return ret;
 
 }
-	
+
+int Actor::disconnectActor(Actor * snk, std::string outp, std::string inp) {
+  IPort * in;
+  OPort * out;
+
+  if (outputPorts.find(outp) == outputPorts.end()) {
+	  log("port "+outp+" is not found.");
+ 	  return -1; 
+  } else
+	out = outputPorts[outp];
+
+  if (snk->inputPorts.find(inp) == snk->inputPorts.end()) {
+	  log("port "+inp+" of actor "+snk->getName()+" is not found.");
+	  return -1;
+  } else
+	in = snk->inputPorts[inp];
+
+  int ret = out->disconnectPort(in);
+  return ret;
+}
+
 void Actor::startInit() {
   tinit = thread(&Actor::initActor, this);
 }
