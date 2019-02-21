@@ -41,6 +41,7 @@ void Doubling::run() {
   
   Int * out = produce(output);
   out->set(outval);
+  log("producing "+to_string(outval));
   release(output);
 }
 

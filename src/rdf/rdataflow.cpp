@@ -63,9 +63,7 @@ void RDataflow::reconfigure() {
 		       << " -> " << g->get_sink_name(e)	<< "\n";
 	}
 	*/
-
-
-	/*	
+		
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -114,7 +112,7 @@ void RDataflow::reconfigure() {
 		}
 	}	
 	
-	
+	/*	
 	for (auto c : actors) {
 		cout << c.first << " : " << c.second->getType() << "\n";
 	}
@@ -123,13 +121,14 @@ void RDataflow::reconfigure() {
 		cout << e.first << " : " << e.second->getSource()->getName()
 		       << " -> " << e.second->getSink()->getName() << "\n";
 	}
-
+	*/
 
 	for (auto c : appac) {
 		setDataflowProp(c);
 		c->startInit();
 	}
 	
+
 	for (auto & ed : apped) {
 		connectActors(ed->getSource(), 
 			      ed->getSink(), 
@@ -145,7 +144,6 @@ void RDataflow::reconfigure() {
     		c->startRun(cpuid);
     		cpuid = (cpuid + 1) % cpunb;
   	}
-	*/	
 	
 }
 
@@ -231,9 +229,9 @@ void RDataflow::run() {
 	res = r->apply(rdfg->graph);
 	if (res!=nullptr)
 		rdfg->graph = res;
-	
-	reconfigure();
-	
+
+	//TODO	
+	//reconfigure();
 
 	resume();
 
