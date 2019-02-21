@@ -182,7 +182,7 @@ int Rule::apply() {
 			do {
 				srand(time(NULL));
 				newname = toupper(a[0]); 
-				newname += to_string(rand()%100);
+				newname += to_string(rand()%32);
 			} while (g->contains_actor(newname));
 			namevar[a] = newname;
 			res->add_actor(newname,gtype);
