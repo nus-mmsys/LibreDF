@@ -486,6 +486,15 @@ void Dataflow::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{s});
 }
 
+void Dataflow::print() {
+	cout << name << "\n";
+	for (auto e : edges) {
+		cout <<	e.second->getSource()->getName() 
+		     << " -> "
+	     	     << e.second->getSink()->getName() << "\n";	     
+	}
+}
+
 Dataflow::~Dataflow() {
   
   for (auto ac : actors)

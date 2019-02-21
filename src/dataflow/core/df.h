@@ -238,6 +238,12 @@ namespace df {
     std::vector<df::Actor *> find_sinks();
 
     /*!
+     * Print the graph.
+     *
+     */
+    void print();
+
+    /*!
      * Dataflow destructor
      */
     ~Dataflow();

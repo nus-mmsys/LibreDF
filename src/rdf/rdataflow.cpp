@@ -63,7 +63,8 @@ void RDataflow::reconfigure() {
 		       << " -> " << g->get_sink_name(e)	<< "\n";
 	}
 	*/
-		
+
+
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -112,22 +113,12 @@ void RDataflow::reconfigure() {
 		}
 	}	
 	
-	/*	
-	for (auto c : actors) {
-		cout << c.first << " : " << c.second->getType() << "\n";
-	}
-
-	for (auto e : edges) {
-		cout << e.first << " : " << e.second->getSource()->getName()
-		       << " -> " << e.second->getSink()->getName() << "\n";
-	}
-	*/
+	print();
 
 	for (auto c : appac) {
 		setDataflowProp(c);
 		c->startInit();
-	}
-	
+	}	
 
 	for (auto & ed : apped) {
 		connectActors(ed->getSource(), 
@@ -161,6 +152,8 @@ void RDataflow::run() {
 
   log("[RDF] Running the dataflow...");
   start = std::chrono::high_resolution_clock::now();
+
+  print();
 
   /* 
    * The controller starts all actors.
