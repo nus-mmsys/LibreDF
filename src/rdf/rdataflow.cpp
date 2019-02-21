@@ -209,7 +209,10 @@ void RDataflow::run() {
 	}
   
 	start = std::chrono::high_resolution_clock::now(); 
-  
+
+        //TODO
+	//better to pause all actors and resume 
+	//those which have still token to consume.	
 	iter = pause();
 	if (iter<0) {
 		log("[RDF] Pause failed.");
@@ -217,6 +220,8 @@ void RDataflow::run() {
 	}		
 	log("[RDF] Paused at iteration "+to_string(iter));
 
+	//TODO
+	//In the new method, this is not necessary.
 	wait_acks(iter);
 
 	res = r->apply(rdfg->graph);
@@ -226,6 +231,8 @@ void RDataflow::run() {
 	//TODO	
 	//reconfigure();
 
+	//TODO
+	//resume all actors and not just sources.
 	resume();
 
 	end = std::chrono::high_resolution_clock::now(); 
