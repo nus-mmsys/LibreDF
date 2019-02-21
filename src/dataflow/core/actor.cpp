@@ -319,10 +319,6 @@ int Actor::pause() {
     return stepno;
 }
 
-void Actor::wait_ack(int iter) {
-    while(stepno<iter);
-}
-
 void Actor::resume() {
     lock_guard<mutex> locker(pause_mux);
     paused = false;

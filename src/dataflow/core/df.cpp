@@ -402,31 +402,22 @@ int Dataflow::pause() {
 	int res = 0;
 	int ret;
 	int iter;
-	vector<df::Actor *> sources = find_sources();
-	for (auto& s : sources) {
-		iter = s->pause();
+	for (auto& s : actors) {
+		iter = s.second->pause();
 		if (iter>res)
 			res = iter;
 	}
-	for (auto& s : sources) {
-		ret = s->resume_till(res);
+	for (auto& s : actors) {
+		ret = s.second->resume_till(res);
 		if (ret<0)
 			return ret;
 	}
 	return res;
 }
 
-void Dataflow::wait_acks(int iter) {
-	vector<df::Actor *> sinks = find_sinks();
- 	for (auto& s : sinks) {
-  		s->wait_ack(iter);
-  	}
-}
-
 void Dataflow::resume() {
-	vector<df::Actor *> sources = find_sources();
-	for (auto& s : sources) {
-		s->resume();
+	for (auto& s : actors) {
+		s.second->resume();
 	}
 }
 

@@ -201,13 +201,6 @@ namespace df {
     int pause();
     
     /*!
-     * Wait for acknowledgements from
-     * sinks at iteration iter
-     *
-     */
-    void wait_acks(int iter);
-
-    /*!
      * Resume the source actors.
      *
      */
