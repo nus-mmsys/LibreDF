@@ -325,7 +325,11 @@ void Actor::resume() {
     pause_cond.notify_one();
 }
 
-int Actor::resume_till(int iter) {
+void Actor::setIteration(int iter) {
+	stepno = iter;
+}
+
+int Actor::resumeTill(int iter) {
 
     if (iter < stepno) {
 	    log("resume_till: actor cannot resume until a smaller iteration.");

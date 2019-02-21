@@ -49,7 +49,7 @@ Rule * RDataflow::get_applicable_rule() {
 
 //TODO
 //test the function
-void RDataflow::reconfigure() {
+void RDataflow::reconfigure(int iter) {
 	auto g = rdfg->graph;
 	string srcname, snkname;
 
@@ -118,6 +118,11 @@ void RDataflow::reconfigure() {
 	for (auto c : appac) {
 		setDataflowProp(c);
 		c->startInit();
+	}	
+
+	for (auto c : appac) {
+		c->waitInit();
+		c->setIteration(iter);
 	}	
 
 	for (auto & ed : apped) {
@@ -221,7 +226,7 @@ void RDataflow::run() {
 	if (res!=nullptr)
 		rdfg->graph = res;
 
-	reconfigure();
+	reconfigure(iter);
 
 	resume();
 

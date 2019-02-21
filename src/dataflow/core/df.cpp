@@ -320,8 +320,8 @@ void Dataflow::init() {
     f.second->startInit();
   }
   
-  for (auto it = actors.begin(); it != actors.end();it++) {
-    it->second->waitInit();
+  for (auto f : actors) {
+    f.second->waitInit();
   }
   
   status = DataflowStatus::READY;
@@ -366,8 +366,8 @@ void Dataflow::run() {
   
   status = DataflowStatus::RUNNING;
   
-  for (auto it = actors.begin(); it != actors.end();it++) {
-    it->second->waitRun();
+  for (auto f : actors) {
+    f.second->waitRun();
   }
   
   end = std::chrono::high_resolution_clock::now();
@@ -408,7 +408,7 @@ int Dataflow::pause() {
 			res = iter;
 	}
 	for (auto& s : actors) {
-		ret = s.second->resume_till(res);
+		ret = s.second->resumeTill(res);
 		if (ret<0)
 			return ret;
 	}

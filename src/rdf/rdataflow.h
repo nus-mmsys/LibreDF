@@ -34,7 +34,7 @@ private:
     int load;
     RDFGraph * rdfg;
     Rule * get_applicable_rule();
-    void reconfigure();
+    void reconfigure(int iter);
 public:
 
     RDataflow(std::string name);
