@@ -52,13 +52,19 @@ Rule * RDataflow::get_applicable_rule() {
 void RDataflow::reconfigure() {
 	auto g = rdfg->graph;
 	string srcname, snkname;
+
 	/*
 	for (auto c : g->get_actors()) {
 		cout << c << " : " << g->get_actor_type(c) << "\n";
 	}
+
+	for (auto e : g->get_edges()) {
+		cout << e << " : " << g->get_source_name(e)
+		       << " -> " << g->get_sink_name(e)	<< "\n";
+	}
 	*/
-	
-	/*	
+
+	/*
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -68,8 +74,9 @@ void RDataflow::reconfigure() {
 			disconnectActors(it->second->getSource(),
 					   it->second->getSink(),
 					   it->first);
-			edges.erase(it);
+			
 			destroyEdge(it->second);
+			edges.erase(it++);
   		} else {
 			++it;
   		}
@@ -79,8 +86,8 @@ void RDataflow::reconfigure() {
 	for (auto c : actors) {
 	for (auto it = actors.cbegin(); it != actors.cend();)
 		if (!g->contains_actor(it->first)) {
-			actors.erase(it);
 			destroyActor(it->second);
+			actors.erase(it++);
 		} else {
 			++it;
 		}
@@ -105,7 +112,20 @@ void RDataflow::reconfigure() {
 			apped.push_back(createEdge(e, srcname, snkname));
 		}
 	}
-		
+	*/	
+	
+	/*
+	for (auto c : actors) {
+		cout << c.first << " : " << c.second->getType() << "\n";
+	}
+
+	for (auto e : edges) {
+		cout << e.first << " : " << e.second->getSource()->getName()
+		       << " -> " << e.second->getSink()->getName() << "\n";
+	}
+	*/
+
+	/*
 	for (auto c : appac) {
 		setDataflowProp(c);
 		c->startInit();
@@ -127,6 +147,7 @@ void RDataflow::reconfigure() {
     		cpuid = (cpuid + 1) % cpunb;
   	}
 	*/
+	
 	
 }
 
