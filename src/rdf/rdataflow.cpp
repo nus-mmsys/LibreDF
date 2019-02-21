@@ -64,7 +64,8 @@ void RDataflow::reconfigure() {
 	}
 	*/
 
-	/*
+
+	/*	
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -111,10 +112,9 @@ void RDataflow::reconfigure() {
 		if (!containsEdge(srcname, snkname)) {
 			apped.push_back(createEdge(e, srcname, snkname));
 		}
-	}
-	*/	
+	}	
 	
-	/*
+	
 	for (auto c : actors) {
 		cout << c.first << " : " << c.second->getType() << "\n";
 	}
@@ -123,9 +123,8 @@ void RDataflow::reconfigure() {
 		cout << e.first << " : " << e.second->getSource()->getName()
 		       << " -> " << e.second->getSink()->getName() << "\n";
 	}
-	*/
 
-	/*
+
 	for (auto c : appac) {
 		setDataflowProp(c);
 		c->startInit();
@@ -146,8 +145,7 @@ void RDataflow::reconfigure() {
     		c->startRun(cpuid);
     		cpuid = (cpuid + 1) % cpunb;
   	}
-	*/
-	
+	*/	
 	
 }
 

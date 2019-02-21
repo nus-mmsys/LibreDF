@@ -41,6 +41,11 @@ std::string Actor::getType() {
 	return getProp("computation");
 }
 
+void Actor::setType(std::string t) {
+	type = t;
+	setProp("computation", t);
+}
+
 void Actor::log(std::string msg) {
   if (logging) {
     cpuid = sched_getcpu();

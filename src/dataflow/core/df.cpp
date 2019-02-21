@@ -117,6 +117,7 @@ void Dataflow::destroyActor(Actor * ac) {
 
 Actor * Dataflow::createActor(std::string const& s, const std::string& name) {
   Actor * res = ActorFactory::createActor(s, name);
+  res->setType(s);
   addActor(res);
   return res;
 }
