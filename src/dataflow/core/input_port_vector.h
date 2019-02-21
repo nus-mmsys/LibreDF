@@ -109,8 +109,8 @@ namespace df {
 	    return ip;
     }
 
-    void setBuffer(BufferInfc * b) {
-	    getFreePort()->setBuffer(b);
+    void setBuffer(BufferInfc * b, int i) {
+	    getFreePort()->setBuffer(b,i);
     }
 
     virtual void clearBuffer() {

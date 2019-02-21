@@ -172,13 +172,13 @@ namespace df {
      * \param i index of next port 
      */
     virtual int connectPort(IPort* n, int i) {
-      int index = i;
+      int idx = i;
       if ( i < 0 || i > nextPorts.size() ) {
-	index = nextPorts.size();
+	idx = nextPorts.size();
       }
-      nextPorts.insert(nextPorts.begin()+index, n);
+      nextPorts.insert(nextPorts.begin()+idx, n);
       increaseLinked();
-      n->setBuffer(buf);
+      n->setBuffer(buf, index);
       return 0;
     } 
 
