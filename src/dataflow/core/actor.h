@@ -49,6 +49,7 @@ namespace df {
 
     std::thread tinit;
     std::thread trun;
+    std::thread tresumetill;
     std::mutex * iolock;
 
     Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
@@ -307,9 +308,13 @@ namespace df {
     
     void startRun(int cpu);
     
+    void startResumeTill(int iter);
+    
     void waitInit();
     
     void waitRun();
+    
+    void waitResumeTill();
     
     void setIOLock(std::mutex * mux);
     

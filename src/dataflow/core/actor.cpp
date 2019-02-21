@@ -218,6 +218,14 @@ void Actor::startRun(int cpu) {
   }
 }
 
+void Actor::startResumeTill(int iter) {
+  tresumetill = thread(&Actor::resumeTill, this, iter);
+}
+
+void Actor::waitResumeTill() {
+  tresumetill.join();
+}
+
 void Actor::waitInit() {
   tinit.join();
 

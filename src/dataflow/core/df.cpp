@@ -407,13 +407,19 @@ int Dataflow::pause() {
 		if (iter>res)
 			res = iter;
 	}
+
 	for (auto& s : actors) {
 		//TODO
-		//spawn thread for resumeTill
+		//s.second->startResumeTill(res);
 		ret = s.second->resumeTill(res);
 		if (ret<0)
 			return ret;
 	}
+
+	//for (auto& s : actors) {
+	//	s.second->waitResumeTill();
+	//}
+
 	return res;
 }
 
