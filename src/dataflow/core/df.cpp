@@ -408,6 +408,8 @@ int Dataflow::pause() {
 			res = iter;
 	}
 	for (auto& s : actors) {
+		//TODO
+		//spawn thread for resumeTill
 		ret = s.second->resumeTill(res);
 		if (ret<0)
 			return ret;
