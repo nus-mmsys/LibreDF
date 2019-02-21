@@ -47,8 +47,6 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
-//TODO
-//test the function
 void RDataflow::reconfigure(int iter) {
 	auto g = rdfg->graph;
 	string srcname, snkname;
