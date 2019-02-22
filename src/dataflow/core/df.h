@@ -237,6 +237,8 @@ namespace df {
      */
     void print();
 
+    void log(std::string msg);
+    
     void startTiming();
 
     void endTiming(std::string msg);

@@ -39,7 +39,6 @@ public:
 
     RDataflow(std::string name);
 
-    void log(std::string msg);
 
     void set_graph(RDFGraph * r);
 

@@ -482,12 +482,17 @@ void Dataflow::sleep(int s) {
 }
 
 void Dataflow::print() {
-	cout << name << "\n";
+	log(name);
 	for (auto e : edges) {
-		cout <<	e.second->getSource()->getName() 
-		     << " -> "
-	     	     << e.second->getSink()->getName() << "\n";	     
+		log(e.second->getSource()->getName()+ 
+		    " -> "+e.second->getSink()->getName());	     
 	}
+}
+
+void Dataflow::log(string msg) {
+	iolock.lock();
+	cout << msg << endl;
+	iolock.unlock();
 }
 
 void Dataflow::startTiming() {
@@ -496,7 +501,7 @@ void Dataflow::startTiming() {
 
 void Dataflow::endTiming(string msg) {
 	et = std::chrono::high_resolution_clock::now(); 
-	cout << msg+std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(et - st).count())+" ms\n";
+	log(msg+std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(et - st).count())+" ms");
 }
 
 Dataflow::~Dataflow() {

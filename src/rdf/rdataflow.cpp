@@ -29,12 +29,6 @@ void RDataflow::set_graph(RDFGraph * r) {
 	rdfg = r;
 }
 
-void RDataflow::log(string msg) {
-	iolock.lock();
-	cout << msg << endl;
-	iolock.unlock();
-}
-
 Rule * RDataflow::get_applicable_rule() {
 	Rule * r = nullptr;
 	//The load is a dummy variable for the tests.
