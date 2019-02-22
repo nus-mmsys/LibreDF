@@ -56,7 +56,6 @@ void RDataflow::reconfigure(int iter) {
 	}
 	*/
 
-
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
@@ -132,13 +131,11 @@ void RDataflow::reconfigure(int iter) {
     		c->startRun(cpuid);
     		cpuid = (cpuid + 1) % cpunb;
   	}
-	
 }
 
 void RDataflow::run() {
  
   int iter;
-
   
   if (status != DataflowStatus::READY) {
     log("[RDF] Dataflow is not ready to run.");
@@ -161,7 +158,6 @@ void RDataflow::run() {
     f.second->startRun(cpuid);
     cpuid = (cpuid + 1) % cpunb;
   }
-
   
   /* 
    * The controller measures some non-functional metrics.
@@ -205,7 +201,6 @@ void RDataflow::run() {
 	else {
 		log("[RDF] Rule "+r->get_name()+" is applicable.");
 	}
-  
 
 	//startTiming();
 	iter = pause();
@@ -261,6 +256,3 @@ void RDataflow::run() {
 	clnsock->close();
   } 
 }
-
-
-
