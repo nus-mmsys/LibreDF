@@ -409,16 +409,12 @@ int Dataflow::pause() {
 	}
 
 	for (auto& s : actors) {
-		//TODO
-		//s.second->startResumeTill(res);
-		ret = s.second->resumeTill(res);
-		if (ret<0)
-			return ret;
+		s.second->startResumeTill(res);
 	}
 
-	//for (auto& s : actors) {
-	//	s.second->waitResumeTill();
-	//}
+	for (auto& s : actors) {
+		s.second->waitResumeTill();
+	}
 
 	return res;
 }
