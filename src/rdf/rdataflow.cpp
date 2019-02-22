@@ -145,6 +145,7 @@ void RDataflow::run() {
  
   int iter;
 
+  
   if (status != DataflowStatus::READY) {
     log("[RDF] Dataflow is not ready to run.");
     return;
@@ -211,28 +212,31 @@ void RDataflow::run() {
 		log("[RDF] Rule "+r->get_name()+" is applicable.");
 	}
   
-	start = std::chrono::high_resolution_clock::now(); 
 
+	//startTiming();
 	iter = pause();
 	if (iter<0) {
 		log("[RDF] Pause failed.");
 		return;
 	}		
 	log("[RDF] Paused at iteration "+to_string(iter));
+	//endTiming("[RDF] Pausing delay: ");
 
+	//startTiming();
 	res = r->apply(rdfg->graph);
 	if (res!=nullptr)
 		rdfg->graph = res;
+	//endTiming("[RDF] Matching delay: ");
 
+	//startTiming();
 	reconfigure(iter);
+	//endTiming("[RDF] Replace graph delay: ");
 
+	//startTiming();
 	resume();
+	//endTiming("[RDF] Resuming delay: ");
 
-	end = std::chrono::high_resolution_clock::now(); 
-	log("[RDF] Reconfiguration delay: "+
-		std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count())+" ms");
   }
-  
 
   status = DataflowStatus::RUNNING;
   
@@ -263,5 +267,6 @@ void RDataflow::run() {
 	clnsock->close();
   } 
 }
+
 
 

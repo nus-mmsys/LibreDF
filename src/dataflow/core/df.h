@@ -69,7 +69,8 @@ namespace df {
     void discovery();
 
     std::chrono::high_resolution_clock::time_point start, end; 
-
+    std::chrono::high_resolution_clock::time_point st, et; 
+    
     void sleep(int s);
 
   public:
@@ -235,6 +236,10 @@ namespace df {
      *
      */
     void print();
+
+    void startTiming();
+
+    void endTiming(std::string msg);
 
     /*!
      * Dataflow destructor

@@ -490,6 +490,15 @@ void Dataflow::print() {
 	}
 }
 
+void Dataflow::startTiming() {
+	st = std::chrono::high_resolution_clock::now(); 
+}
+
+void Dataflow::endTiming(string msg) {
+	et = std::chrono::high_resolution_clock::now(); 
+	cout << msg+std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(et - st).count())+" ms\n";
+}
+
 Dataflow::~Dataflow() {
   
   for (auto ac : actors)
