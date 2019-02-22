@@ -339,6 +339,7 @@ void Actor::setIteration(int iter) {
 
 int Actor::resumeTill(int iter) {
 
+    unique_lock<mutex> locker(pause_mux);
     if (iter < stepno) {
 	    log("resume_till: actor cannot resume until a smaller iteration.");
 	    return -1;
@@ -347,7 +348,6 @@ int Actor::resumeTill(int iter) {
     if (iter == stepno)
     	return 0;
 
-    unique_lock<mutex> locker(pause_mux);
     while(!paused)
     	pause_cond.wait(locker);
  
