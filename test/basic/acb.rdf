@@ -1,4 +1,4 @@
-tmf acb {
+rdf acb {
     topology {
         nodes = A,C,B;
         edges = e1(A,C), e2(C,B);

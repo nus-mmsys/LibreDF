@@ -1,4 +1,4 @@
-tmf ab {
+rdf ab {
     topology {
         nodes = A,B;
         edges = e1(A,B);
