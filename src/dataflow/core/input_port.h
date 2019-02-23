@@ -111,11 +111,30 @@ namespace df {
       buf->at(index)->consumerLock();
     }
     
+    int lockMR() {
+	if (rate >= buf->getSize())
+		return -1;
+      	for (int i=0; i<rate; i++) {
+      		buf->at((index+i)%buf->getSize())->consumerLock();
+      	}
+	return 0;
+    }
+
     void unlock() {
       buf->at(index)->consumerUnlock();
       index = (index+1) % buf->getSize();
     }
-    
+     
+    int unlockMR() {
+	if (rate >= buf->getSize())
+		return -1;
+      	for (int i=0; i<rate; i++) {
+      		buf->at((index+i)%buf->getSize())->consumerUnlock();
+      	}
+	index = (index+rate+1)%buf->getSize();
+	return 0;
+    }
+
     T * get() {
     	return buf->at(index);
     }
