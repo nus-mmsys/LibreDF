@@ -306,31 +306,40 @@ void Actor::runActor() {
 
   hstart();
   while(getStatus() != EOS) {
-    
-    unique_lock<mutex> locker(pause_mux);
-    while(paused)
-    	pause_cond.wait(locker);
- 
-    if (realtime) {
-	    runRT();
-    } else {
-	    run();
+
+    { 
+    	unique_lock<mutex> locker(pause_mux);
+	while(paused)
+    		pause_cond.wait(locker);
     }
-    stepno++;
+
+    {
+    	unique_lock<mutex> locker(pause_mux);
+    	if (realtime) {
+		    runRT();
+    	} else {
+		    run();
+    	}
+
+        stepno++;
+    }
+
   }
   
 }
 
 int Actor::pause() {
     lock_guard<mutex> locker(pause_mux);
+    int res = stepno;
     paused = true;
-    return stepno;
+    pause_cond.notify_all();
+    return res;
 }
 
 void Actor::resume() {
     lock_guard<mutex> locker(pause_mux);
     paused = false;
-    pause_cond.notify_one();
+    pause_cond.notify_all();
 }
 
 void Actor::setIteration(int iter) {
