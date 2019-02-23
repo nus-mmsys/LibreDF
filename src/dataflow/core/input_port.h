@@ -154,7 +154,23 @@ namespace df {
 
     Status getStatus() {
       return buf->at(index)->getStatus();
-    }  
+    }
+
+    int setStatusMR(Status st) {
+      	if (rate >= buf->getSize())
+		return -1;;
+      	for (int i=0; i<rate; i++) {
+      		buf->at((index+i)%buf->getSize())->setStatus(st);
+      	}
+	return 0;
+    }
+
+    Status getStatusMR() {
+      if (rate >= buf->getSize())
+	      return ERROR; 
+      return buf->at((index+rate-1)%buf->getSize())->getStatus();
+    }
+
     void setSocketStatus(Status st) {
       data->setStatus(st);
     }
