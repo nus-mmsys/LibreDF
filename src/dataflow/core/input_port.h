@@ -138,7 +138,16 @@ namespace df {
     T * get() {
     	return buf->at(index);
     }
-    
+ 
+    std::vector<T *> getMR() {
+	std::vector<T *> res;
+	if (rate >= buf->getSize())
+		return res;
+	for (int i=0; i<rate; i++)
+		res.push_back(buf->at((index+i)%buf->getSize()));
+    	return res;
+    }
+   
     void setStatus(Status st) {
       buf->at(index)->setStatus(st);
     }

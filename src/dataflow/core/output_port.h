@@ -150,6 +150,15 @@ namespace df {
     T * get() {
       return buf->at(index);
     }
+ 
+    std::vector<T *> getMR() {
+	std::vector<T *> res;
+	if (rate >= buf->getSize())
+		return res;
+	for (int i=0; i<rate; i++)
+		res.push_back(buf->at((index+i)%buf->getSize()));
+    	return res;
+    }
 
     T * get(int i) {
 	    return buf->at(i);
