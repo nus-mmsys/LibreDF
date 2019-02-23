@@ -39,6 +39,7 @@ namespace df {
     
   private:
     T * data;
+    std::vector<T *> datavec;
     Buffer<T> * buf;
     char * sendbuf;
     int index;
@@ -59,6 +60,8 @@ namespace df {
       buf = new Buffer<T>(8);
       port_cap = std::string(typeid(T).name());
       data = new T();
+      for (int i=0; i<rate; i++)
+	      datavec.push_back(new T());
       chsize = 1024;
     }
 
@@ -108,12 +111,30 @@ namespace df {
 	return sock->send(sendbuf, chsize);
     }
 
+    int sendMR() {
+	int res=0;
+	for(int i=0; i<rate; i++) {
+	   sendbuf = datavec[i]->serialize();
+	   int size = data->getPktSize(sendbuf);
+	   if (size != chsize)
+		    chsize = size;
+	   res = sock->send(sendbuf, chsize);
+	   if (res<0)
+		   return res;
+	}
+	return res;
+    }
+
     int getPortNumber() {
 	    return sock->getport();
     }
 
     T * getSocketData() {
 	return data;
+    }
+
+    std::vector<T *> getSocketDataMR() {
+	return datavec;
     }
 
     void lock() {
@@ -193,6 +214,11 @@ namespace df {
     void setSocketStatus(Status st) {
       data->setStatus(st);
     }
+
+    void setSocketStatusMR(Status st) {
+      datavec[datavec.size()-1]->setStatus(st);
+    }
+
     Status getSocketStatus() {
       return data->getStatus();
     }

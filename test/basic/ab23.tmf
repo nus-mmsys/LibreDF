@@ -10,10 +10,10 @@ tmf ab23 {
 	e1 = 3;
     }
     actor A {
-        computation = IntProducer;
+        computation = IntProducerMR;
         last = 64;
     }
     actor B {
-        computation = IntConsumer;
+        computation = IntConsumerMR;
     }
 }

@@ -437,6 +437,21 @@ namespace df {
     }
     
     template<typename T>
+    std::vector<T *> produceMR(OutputPort<T> * port) {
+      std::vector<T *> res;
+      if (distributed) {
+	res = port->getSocketDataMR();
+	res[res.size()-1]->setStatus(getStatus());
+      }
+      else {
+        port->lockMR();
+        res = port->getMR();
+        port->setStatusMR(getStatus());
+      }
+      return res;
+    }
+
+    template<typename T>
     std::vector<T *> produce(OutputPortVector<T> * port) {
 	std::vector<T *> res;
 	T * token = nullptr;
@@ -462,7 +477,16 @@ namespace df {
       else
 	      port->setStatus(getStatus());
     }
-    
+ 
+    template<typename T>
+    void setEosMR(OutputPort<T> * port) {
+      setStatus(EOS);
+      if (distributed)
+	      port->setSocketStatusMR(getStatus());
+      else
+	      port->setStatusMR(getStatus());
+    }
+   
     template<typename T>
     void setEos(OutputPortVector<T> * port) {
       setStatus(EOS);
@@ -500,6 +524,14 @@ namespace df {
 	    port->send();
       else
 	    port->unlock();
+    }
+ 
+    template<typename T>
+    void releaseMR(OutputPort<T> * port) {
+      if (distributed)
+	    port->sendMR();
+      else
+	    port->unlockMR();
     }
 
     template<typename T>
