@@ -308,13 +308,9 @@ void Actor::runActor() {
   while(getStatus() != EOS) {
 
     { 
-    	unique_lock<mutex> locker(pause_mux);
+    	unique_lock<mutex> lockpause(pause_mux);
 	while(paused)
-    		pause_cond.wait(locker);
-    }
-
-    {
-    	unique_lock<mutex> locker(pause_mux);
+    		pause_cond.wait(lockpause);
     	if (realtime) {
 		    runRT();
     	} else {
@@ -323,13 +319,17 @@ void Actor::runActor() {
 
         stepno++;
     }
-
+    
+    {
+        lock_guard<mutex> lockrun(runend_mux);
+    }
   }
   
 }
 
 int Actor::pause() {
-    lock_guard<mutex> locker(pause_mux);
+    lock_guard<mutex> lockrun(runend_mux);
+    lock_guard<mutex> lockpause(pause_mux);
     int res = stepno;
     paused = true;
     pause_cond.notify_all();
@@ -337,7 +337,7 @@ int Actor::pause() {
 }
 
 void Actor::resume() {
-    lock_guard<mutex> locker(pause_mux);
+    lock_guard<mutex> lockpause(pause_mux);
     paused = false;
     pause_cond.notify_all();
 }
@@ -348,7 +348,7 @@ void Actor::setIteration(int iter) {
 
 int Actor::resumeTill(int iter) {
 
-    unique_lock<mutex> locker(pause_mux);
+    unique_lock<mutex> lockpause(pause_mux);
     if (iter < stepno) {
 	    log("resume_till: actor cannot resume until a smaller iteration.");
 	    return -1;
@@ -358,7 +358,7 @@ int Actor::resumeTill(int iter) {
     	return 0;
 
     while(!paused)
-    	pause_cond.wait(locker);
+    	pause_cond.wait(lockpause);
  
     while(stepno < iter) {
 	run();

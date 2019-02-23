@@ -69,6 +69,7 @@ namespace df {
     std::condition_variable pause_cond;
     bool paused;
     std::mutex pause_mux;
+    std::mutex runend_mux;
   protected:
 
     std::string name; /**< The name of the actor */
