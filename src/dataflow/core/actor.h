@@ -384,6 +384,22 @@ namespace df {
       return res;      
     }
 
+    template<typename T>
+    std::vector<T *> consumeMR(InputPort<T> * port) {
+      std::vector<T *> res;
+      if (distributed) {
+	res = port->recvMR();
+	if (res.empty())
+		log("cannot recieve on port "+port->getName());
+	setStatus(res[res.size()-1]->getStatus());
+      }
+      else {
+	port->lockMR();
+	res = port->getMR();
+	setStatus(port->getStatusMR());
+      }
+      return res;      
+    }
     
     template<typename T>
     std::vector<T *> consume(InputPortVector<T> * port) {
@@ -464,6 +480,12 @@ namespace df {
 	    port->unlock();
     }
  
+    template<typename T>
+    void releaseMR(InputPort<T> * port) {
+      if (!distributed)
+	    port->unlockMR();
+    }
+
     template<typename T>
     void release(InputPortVector<T> * port) {
       for (int i=0; i<port->arity(); i++) {

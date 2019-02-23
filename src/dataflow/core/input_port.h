@@ -36,6 +36,7 @@ namespace df {
     
   private:
     T * data;
+    std::vector<T *> datavec;
     Buffer<T> * buf;
     int index;
     char * chdata;
@@ -52,6 +53,8 @@ namespace df {
     InputPort<T>(std::string name) : IPort(name), buf(nullptr), index(0) {
         port_cap = std::string(typeid(T).name());
 	data = new T();
+	for (int i=0; i<rate; i++)
+		datavec.push_back(new T());
 	chsize = 1024;
 	chdata = new char[chsize];
     }
@@ -88,6 +91,23 @@ namespace df {
 		return nullptr;
 	data->deserialize(chdata);
 	return data;
+    }
+ 
+    std::vector<T *> recvMR() {
+	for (int i=0; i<rate; i++) {
+    	    while (sock->recvpeek(chdata, sizeof(int)) < 0);
+
+	    int size = datavec[i]->getPktSize(chdata);
+	    if (size != chsize) {
+	  	    chsize = size;
+		    delete chdata;
+		    chdata = new char[size];
+	    }
+    	    if (sock->recvwait(chdata, chsize) < 0)
+		    return std::vector<T *>();
+	    datavec[i]->deserialize(chdata);
+	}
+	return datavec;
     }
 
     int getPortNumber() {
