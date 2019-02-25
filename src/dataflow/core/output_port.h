@@ -208,11 +208,16 @@ namespace df {
     }
 
     Status getStatusMR() {
+      Status res = getStatus();
       if (rate >= buf->getSize())
-	      return ERROR; 
-      return buf->at((index+rate-1)%buf->getSize())->getStatus();
+	      return ERROR;
+      for (int i=0; i<rate; i++) {
+      	      if (buf->at((index+i)%buf->getSize())->getStatus() != res)
+		      return ERROR;
+      }
+      return res;
     }
-    
+
     void setSocketStatus(Status st) {
       data->setStatus(st);
     }

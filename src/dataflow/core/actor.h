@@ -396,7 +396,6 @@ namespace df {
       else {
 	port->lockMR();
 	res = port->getMR();
-	setStatus(port->getStatusMR());
       }
       return res;      
     }
@@ -446,7 +445,6 @@ namespace df {
       else {
         port->lockMR();
         res = port->getMR();
-        port->setStatusMR(getStatus());
       }
       return res;
     }
@@ -506,8 +504,10 @@ namespace df {
  
     template<typename T>
     void releaseMR(InputPort<T> * port) {
-      if (!distributed)
+      if (!distributed) {
+	    setStatus(port->getStatusMR());
 	    port->unlockMR();
+      }
     }
 
     template<typename T>
@@ -530,8 +530,10 @@ namespace df {
     void releaseMR(OutputPort<T> * port) {
       if (distributed)
 	    port->sendMR();
-      else
+      else {
+            port->setStatusMR(getStatus());
 	    port->unlockMR();
+      }
     }
 
     template<typename T>
