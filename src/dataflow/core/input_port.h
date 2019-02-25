@@ -135,7 +135,7 @@ namespace df {
 	if (rate >= buf->getSize())
 		return -1;
       	for (int i=0; i<rate; i++) {
-      		buf->at((index+i)%buf->getSize())->consumerLock();
+		buf->at((index+i)%buf->getSize())->consumerLock();
       	}
 	return 0;
     }
@@ -151,7 +151,7 @@ namespace df {
       	for (int i=0; i<rate; i++) {
       		buf->at((index+i)%buf->getSize())->consumerUnlock();
       	}
-	index = (index+rate+1)%buf->getSize();
+	index = (index+rate)%buf->getSize();
 	return 0;
     }
 

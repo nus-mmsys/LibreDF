@@ -144,8 +144,9 @@ namespace df {
     int lockMR() {
       if (rate >= buf->getSize())
 	      return -1;
-      for (int i=0; i<rate; i++)
+      for (int i=0; i<rate; i++) {
 	      buf->at((index+i)%buf->getSize())->producerLock();
+      }
       return 0;
     }
 
@@ -162,9 +163,10 @@ namespace df {
     int unlockMR() {
       if (rate >= buf->getSize())
 	      return -1;
-      for (int i=0; i<rate; i++)
+      for (int i=0; i<rate; i++) {
 	      buf->at((index+i)%buf->getSize())->producerUnlock();
-      index = (index+rate+1) % buf->getSize();
+      }
+      index = (index+rate) % buf->getSize();
       return 0;
     }
 
