@@ -190,8 +190,9 @@ namespace df {
       if (rate >= buf->getSize())
 	      return ERROR;
       for (int i=0; i<rate; i++) {
-      	      if (buf->at((index+i)%buf->getSize())->getStatus() != res)
-		      return ERROR;
+	      res = buf->at((index+i)%buf->getSize())->getStatus();
+	      if (res != OK)
+		      return res;
       }
       return res;
     }
