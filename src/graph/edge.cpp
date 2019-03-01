@@ -102,8 +102,16 @@ void Edge::set_source_rate(int r) {
 	src_rate.set_value(r);
 }
 
+void Edge::set_source_param_rate(string r) {
+	src_rate.set_symbol(r);
+}
+
 void Edge::set_sink_rate(int r) {
 	snk_rate.set_value(r);
+}
+
+void Edge::set_sink_param_rate(string r) {
+	snk_rate.set_symbol(r);
 }
 
 int Edge::get_source_rate() {

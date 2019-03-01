@@ -460,6 +460,20 @@ public:
 	int set_source_rate(string edgename, int rate);
 
 	/*!
+	 * Set the parametric source rate for an edge with specified name.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \param rate
+	 * 	The parametric source rate of the edge to set.
+	 *
+	 * \return
+	 *
+	 */
+	int set_source_param_rate(string edgename, string rate);
+
+	/*!
 	 * Get the sink rate of a given edge.
 	 * 
 	 * \param edgename
@@ -484,6 +498,20 @@ public:
 	 *
 	 */
 	int set_sink_rate(string edgename, int rate);
+
+	/*!
+	 * Set the sink rate for an edge with specified name.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \param rate
+	 * 	The parametric sink rate of the edge to set.
+	 *
+	 * \return
+	 *
+	 */
+        int set_sink_param_rate(string edgename, string rate);
 	
 	/*!
 	 * Set the initial tokens for an edge with specified name.

@@ -163,6 +163,15 @@ public:
 	void set_source_rate(int rate);
 	
 	/*!
+	 * Set parametric source rate of the edge.
+	 *
+	 * \param rate
+	 * 	The parametric source rate to set.
+	 *
+	 */
+	void set_source_param_rate(string rate);
+
+	/*!
 	 * Set sink rate of the edge.
 	 *
 	 * \param rate
@@ -171,6 +180,15 @@ public:
 	 */
 	void set_sink_rate(int rate);
 	
+	/*!
+	 * Set parametric sink rate of the edge.
+	 *
+	 * \param rate
+	 * 	The parametric sink rate to set.
+	 *
+	 */
+	void set_sink_param_rate(string rate);
+
 	/*!
 	 * Get source rate of the edge.
 	 *

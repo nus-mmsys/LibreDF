@@ -429,6 +429,7 @@ int Parser::read_edges(stringstream & stream, Graph * g) {
 
 int Parser::add_production_rate(const string& rate, Graph * g) {
 	int edr=1;
+	int ret;
 	string edgename="", edgerate="";
 	std::istringstream ss(rate);
   	getline(ss, edgename, '=');
@@ -437,14 +438,18 @@ int Parser::add_production_rate(const string& rate, Graph * g) {
 		cout << "error: edge production rate is not well formatted.\n";
 		return -2;
 	}
-	try {
+	if (edgerate[0] >= 'a' && edgerate[0] <= 'z') {
+		ret = g->set_source_param_rate(edgename, edgerate);	
+	} else {
+	    try {
 		edr = stoi(edgerate);
-	}
-	catch(...) {
+	    }
+	    catch(...) {
 		cout << "error: production rate of edge " << edgename << " is not correct.\n";
 		return -2;
+	    }
+	    ret = g->set_source_rate(edgename,edr);
 	}
-	int ret = g->set_source_rate(edgename,edr);
 	if (ret == -1)
 		cout << "error: edge " << edgename << " is not found.\n";
 	return ret;
@@ -452,6 +457,7 @@ int Parser::add_production_rate(const string& rate, Graph * g) {
 
 int Parser::add_consumption_rate(const string& rate, Graph * g) {
 	int edr=1;
+	int ret;
 	string edgename="", edgerate="";
 	std::istringstream ss(rate);
   	getline(ss, edgename, '=');
@@ -460,14 +466,18 @@ int Parser::add_consumption_rate(const string& rate, Graph * g) {
 		cout << "error: edge consumption rate is not well formatted.\n";
 		return -2;
 	}
-	try {
+	if (edgerate[0] >= 'a' && edgerate[0] <= 'z') {
+		ret = g->set_sink_param_rate(edgename, edgerate);	
+	} else {
+	    try {
 		edr = stoi(edgerate);
-	}
-	catch(...) {
+	    }
+	    catch(...) {
 		cout << "error: consumption rate of edge " << edgename << " is not correct.\n";
 		return -2;
+	    }
+	    ret = g->set_sink_rate(edgename,edr);
 	}
-	int ret = g->set_sink_rate(edgename,edr);
 	if (ret == -1)
 		cout << "error: edge " << edgename << " is not found.\n";
 	return ret;

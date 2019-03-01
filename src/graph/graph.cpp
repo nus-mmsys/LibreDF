@@ -545,6 +545,13 @@ int Graph::set_source_rate(string edgename, int rate) {
 	return 0;
 }
 
+int Graph::set_source_param_rate(string edgename, string rate) { 
+	if (edges.find(edgename) == edges.end())
+		return -1;
+	edges[edgename]->set_source_param_rate(rate);
+	return 0;
+}
+
 int Graph::get_source_rate(string edgename) { 
 	if (edges.find(edgename) == edges.end())
 		return -1;
@@ -573,6 +580,13 @@ int Graph::set_sink_rate(string edgename, int rate) {
 	if (edges.find(edgename) == edges.end())
 		return -1;
 	edges[edgename]->set_sink_rate(rate);
+	return 0;
+}
+
+int Graph::set_sink_param_rate(string edgename, string rate) { 
+	if (edges.find(edgename) == edges.end())
+		return -1;
+	edges[edgename]->set_sink_param_rate(rate);
 	return 0;
 }
 
