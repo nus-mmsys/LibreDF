@@ -223,6 +223,7 @@ int Rule::apply() {
 		//Add right edges.
 		auto rightedges = r->get_edges();
 		vector<string> resedges;
+		int src_rate, snk_rate;
 		for (auto edge : rightedges) {
 			auto src = r->get_source_name(edge);
 			auto snk = r->get_sink_name(edge);
@@ -231,8 +232,19 @@ int Rule::apply() {
 			if (is_variable(snk))
 				snk = namevar[snk];
 
-			auto src_rate = r->get_source_rate(edge);
-			auto snk_rate = r->get_sink_rate(edge);
+			auto src_rate_p = r->get_source_rate_p(edge);
+			auto snk_rate_p = r->get_sink_rate_p(edge);
+			
+			if (is_variable(src_rate_p)) {
+				src_rate = ratevar[src_rate_p];
+			} else
+				src_rate = r->get_source_rate(edge);
+
+			if (is_variable(snk_rate_p)) {
+				snk_rate = ratevar[snk_rate_p];
+			} else
+				snk_rate = r->get_sink_rate(edge);
+
 			resedges = res->get_edges();
 			if (find(resedges.begin(), resedges.end(), edge) == resedges.end())	
 			{
@@ -369,6 +381,44 @@ bool Rule::matching_check() {
 					g->get_actor_type(m.second)));
 			}
 
+		}
+	}
+
+	string lcr, lkr, srconame, snkoname, srcname, snkname, ged;
+	int gcr, gkr;
+	auto ledges = l->get_edges();
+	for (auto led : ledges) {
+		lcr = l->get_source_rate_p(led);
+		lkr = l->get_sink_rate_p(led);
+		srconame = l->get_source_name(led);
+		snkoname = l->get_sink_name(led);
+		if (is_variable(srconame))
+			srcname = namevar[srconame];
+		else if (is_name(srconame))
+			srcname = srconame;
+		if (is_variable(snkoname))
+			snkname = namevar[snkoname];
+		else if (is_name(snkoname))
+			snkname = snkoname;
+
+		ged = g->get_edge_name(srcname, snkname);
+		if (is_variable(lcr)) {
+			gcr = g->get_source_rate(ged);
+			if (ratevar.find(lcr) == ratevar.end())
+				ratevar.insert(make_pair(lcr,gcr));
+			else if (ratevar[lcr] != gcr) {
+				matching = false;
+				return matching;
+			}
+		}
+		if (is_variable(lkr)) {
+			gkr = g->get_sink_rate(ged);
+			if (ratevar.find(lkr) == ratevar.end())
+				ratevar.insert(make_pair(lkr,gkr));
+			else if (ratevar[lkr] != gkr) {
+				matching = false;
+				return matching;
+			}
 		}
 	}
 
