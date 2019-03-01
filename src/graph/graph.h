@@ -323,6 +323,41 @@ public:
 	int add_edge(string source, string sink);
 
 	/*!
+	 * Create a new edge name.
+	 * 
+	 * \param source
+	 * 	Name of the source of the edge.
+	 *
+	 * \param sink
+	 * 	Name of the sink of the edge.
+	 *
+	 * \return
+	 * 	New name = source + sink;
+	 *
+	 */
+	string new_edge_name(string src, string snk);
+
+	/*!
+	 * Add an edge to the graph.
+	 * 
+	 * \param source
+	 * 	Name of the source of the edge.
+	 *
+	 * \param sink
+	 * 	Name of the sink of the edge.
+	 *
+	 * \param src_rate
+	 * 	Rate of the source of the edge.
+	 *
+	 * \param snk_rate
+	 * 	Rate of the sink of the edge.
+	 *
+	 * \return
+	 *
+	 */
+	int add_edge(string edge_source, string edge_sink, int src_rate, int snk_rate);
+	
+	/*!
 	 * Returns a list of topological orders of the graph.
 	 * 
 	 * \return

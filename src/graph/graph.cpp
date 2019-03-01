@@ -148,11 +148,22 @@ int Graph::add_edge(string edgename, string edge_source, string edge_sink) {
 	return 0;
 }
 
+string Graph::new_edge_name(string src, string snk) {
+	return src + snk;
+}
 
 int Graph::add_edge(string edge_source, string edge_sink) {
 
-	string edgename = edge_source + edge_sink;
+	string edgename = new_edge_name(edge_source, edge_sink);
         return add_edge(edgename, edge_source, edge_sink);
+}
+
+int Graph::add_edge(string edge_source, string edge_sink, int src_rate, int snk_rate) {
+	string edgename = new_edge_name(edge_source, edge_sink);
+	int ret = add_edge(edgename, edge_source, edge_sink);
+	set_source_rate(edgename, src_rate);
+	set_sink_rate(edgename, snk_rate);
+        return ret;
 }
 
 vector<Edge *> Graph::get_iedges(Actor * ac) {

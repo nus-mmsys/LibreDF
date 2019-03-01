@@ -76,8 +76,6 @@ void Rule::preprocess() {
 	}
 }
 
-//TODO
-//consider the rates
 Graph * Rule::apply(Graph * graph) {
 	g = graph;
 	res->clear();	
@@ -248,13 +246,8 @@ int Rule::apply() {
 			resedges = res->get_edges();
 			if (find(resedges.begin(), resedges.end(), edge) == resedges.end())	
 			{
-				res->add_edge(src, snk);
-				res->set_source_rate(edge, src_rate);
-				res->set_sink_rate(edge, snk_rate);
+				res->add_edge(src, snk, src_rate, snk_rate);
 			}
-			//TODO
-			//check why the result does not 
-			//reflect correct rates.
 		}
 	
 		return 0;

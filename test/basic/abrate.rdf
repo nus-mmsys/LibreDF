@@ -10,11 +10,11 @@ rdf abrate {
 	e1 = 3;
     } 
     actor A {
-        computation = IntProducer;
+        computation = IntProducerMR;
         last = 64;
     }
     actor B {
-        computation = IntConsumer;
+        computation = IntConsumerMR;
     }
 }
 rule r1 {
@@ -30,7 +30,7 @@ left {
 	e1 = p;
     } 
     actor A {
-        computation = IntProducer;
+        computation = IntProducerMR;
         last = 64;
     }
     actor x {
@@ -51,14 +51,14 @@ right {
 	e2 = p;
     } 
     actor A {
-        computation = IntProducer;
+        computation = IntProducerMR;
         last = 64;
     }
     actor x {
         computation = z;
     }
     actor y {
-        computation = Doubling;
+        computation = DoublingMR;
     }
 }
 }
