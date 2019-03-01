@@ -118,8 +118,20 @@ int Edge::get_source_rate() {
 	return src_rate.get_value();
 }
 
+string Edge::get_source_rate_p() {
+	if (src_rate.get_symbol()!="")
+		return src_rate.get_symbol();
+	return to_string(src_rate.get_value());
+}
+
 int Edge::get_sink_rate() {
 	return snk_rate.get_value();
+}
+
+string Edge::get_sink_rate_p() {
+	if (snk_rate.get_symbol()!="")
+		return snk_rate.get_symbol();
+	return to_string(snk_rate.get_value());
 }
 
 void Edge::set_init_tokens(int tokens) {

@@ -58,8 +58,8 @@ int RDFAnalyse::display_graph(Graph * g) {
 	for (auto & ed : edgelist) {
 		cout << to_string(ed_index) << ": " 
 			<< g->get_source_name(ed) << " (" 
-			<< g->get_source_rate(ed)  << ") -> (" 
-			<< g->get_sink_rate(ed) << ") "
+			<< g->get_source_rate_p(ed)  << ") -> (" 
+			<< g->get_sink_rate_p(ed) << ") "
 		       	<< g->get_sink_name(ed) << "\n";
 			ed_index++;
 	}

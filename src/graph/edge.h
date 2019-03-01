@@ -199,6 +199,15 @@ public:
 	int get_source_rate();
 
 	/*!
+	 * Get source rate (or parameter) of the edge.
+	 *
+	 * \return
+	 * 	The source rate (or parameter) of the edge.
+	 *
+	 */
+	string get_source_rate_p();
+
+	/*!
 	 * Get sink rate of the edge.
 	 *
 	 * \return
@@ -206,6 +215,15 @@ public:
 	 *
 	 */
 	int get_sink_rate();
+
+	/*!
+	 * Get sink rate (or parameter) of the edge.
+	 *
+	 * \return
+	 * 	The sink rate (or parameter) of the edge.
+	 *
+	 */
+	string get_sink_rate_p();
 
 	/*!
 	 * Set intial tokens of the edge.

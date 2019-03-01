@@ -446,6 +446,21 @@ public:
 	int get_source_rate(string edgename);
 
 	/*!
+	 * Get the source rate 
+	 * (or parameter if it is parametric)
+	 * of a given edge.
+	 *
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \return
+	 *	Source rate (or parameter) of the edge.
+	 *
+	 */
+	string get_source_rate_p(string edgename);
+
+
+	/*!
 	 * Set the source rate for an edge with specified name.
 	 * 
 	 * \param edgename
@@ -484,6 +499,20 @@ public:
 	 *
 	 */
 	int get_sink_rate(string edgename);	
+
+	/*!
+	 * Get the sink rate 
+	 * (or parameter if rate is parametric)
+	 * of a given edge.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \return
+	 *	Sink rate (or parameter) of the edge.
+	 *
+	 */
+	string get_sink_rate_p(string edgename);	
 
 	/*!
 	 * Set the sink rate for an edge with specified name.
