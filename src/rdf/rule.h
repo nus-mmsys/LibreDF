@@ -84,6 +84,16 @@ private:
 	bool node_match(string lnode, string gnode);
 
 	/*!
+	 * Check if an edge of left-hand side
+	 * matches an edge of the graph.
+	 *
+	 * \return
+	 * 	true if it matches, false otherwise.
+	 *
+	 */ 
+        bool edge_match(string lc, string lk, string gc, string gk);
+
+	/*!
 	 * Return a map of matched nodes in a map.
 	 *
 	 */ 

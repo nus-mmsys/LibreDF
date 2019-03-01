@@ -298,6 +298,19 @@ bool Rule::node_match(string lnode, string gnode) {
 	       ||(is_variable(lnode) && is_name(ltype) && ltype==gtype));
 }
 
+bool Rule::edge_match(string lc, string lk, string gc, string gk) {
+	string led = l->get_edge_name(lc, lk);
+	string ged = g->get_edge_name(gc, gk);
+	string lcr = l->get_source_rate_p(led);
+	string lkr = l->get_sink_rate_p(led);
+	string gcr = g->get_source_rate_p(ged);
+	string gkr = g->get_sink_rate_p(ged);
+	return ( (is_variable(lcr) && is_variable(lkr))
+	       ||(is_variable(lcr) && lkr == gkr)
+	       ||(is_variable(lkr) && lcr == gcr)
+	       ||(lkr == gkr && lcr == gcr));
+}
+
 map<string, string> Rule::matching_from(string lnode, string gnode, map<string, string> matchmap) {
 	map<string,string> res;
 	if (node_match(lnode, gnode)) {
@@ -309,9 +322,11 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 		for (auto lp : lpred) {
 			if (matchmap.find(lp)==matchmap.end()) {
 				for (auto gp : gpred) {
-					res = matching_from(lp,gp, matchmap);
-					if (res.size()!=0)
+					if (edge_match(lp, lnode, gp, gnode)) {
+					    res = matching_from(lp,gp, matchmap);
+					    if (res.size()!=0)
 						return res;
+					}
 				}
 			}
 		}
@@ -320,9 +335,11 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 		for (auto ls : lsucc) {
 			if (matchmap.find(ls)==matchmap.end()) {
 				for (auto gs : gsucc) {
-					res = matching_from(ls,gs, matchmap);
-					if (res.size()!=0)
+					if (edge_match(lnode, ls, gnode, gs)) {
+					    res = matching_from(ls,gs, matchmap);
+					    if (res.size()!=0)
 						return res;
+					}
 				}
 			}
 		}

@@ -564,6 +564,15 @@ string Graph::get_source_rate_p(string edgename) {
 	return edges[edgename]->get_source_rate_p();
 }
 
+string Graph::get_edge_name(string c, string k) {
+	for (auto e : edges) {
+		if (e.second->get_source_actor()->get_name() == c 
+		    && e.second->get_sink_actor()->get_name() == k)
+			return e.first;
+	}
+	return "";
+}
+
 string Graph::get_source_port(string edgename) { 
 	if (edges.find(edgename) == edges.end())
 		return "";

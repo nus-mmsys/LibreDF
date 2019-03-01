@@ -459,6 +459,20 @@ public:
 	 */
 	string get_source_rate_p(string edgename);
 
+	/*!
+	 * Get an edge name by the name
+	 * of its source and sink actors.
+	 *
+	 * \param c
+	 * 	Name of the source.
+	 * \param k
+	 *	Name of the sink.
+	 *
+	 * \return
+	 *	Name of the edge.
+	 *
+	 */
+	string get_edge_name(string c, string k);
 
 	/*!
 	 * Set the source rate for an edge with specified name.
