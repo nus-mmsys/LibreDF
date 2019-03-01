@@ -252,6 +252,9 @@ int Rule::apply() {
 				res->set_source_rate(edge, src_rate);
 				res->set_sink_rate(edge, snk_rate);
 			}
+			//TODO
+			//check why the result does not 
+			//reflect correct rates.
 		}
 	
 		return 0;
