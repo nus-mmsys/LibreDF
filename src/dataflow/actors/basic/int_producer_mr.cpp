@@ -43,9 +43,9 @@ void IntProducerMR::run() {
   
   log("producing ");
   for (auto t : out) {
+        log(" "+to_string(stepno*index));
   	t->set(stepno*index);
 	index = index * 10;
-        log(" "+to_string(stepno*index));
   }
 
   sleep(500);
