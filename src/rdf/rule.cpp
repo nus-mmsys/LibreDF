@@ -76,6 +76,8 @@ void Rule::preprocess() {
 	}
 }
 
+//TODO
+//consider the rates
 Graph * Rule::apply(Graph * graph) {
 	g = graph;
 	res->clear();	

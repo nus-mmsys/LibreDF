@@ -1,0 +1,67 @@
+rdf abrate {
+    topology {
+        nodes = A,B;
+        edges = e1(A,B);
+    }
+    production {
+	e1 = 2;
+    }
+    consumption {
+	e1 = 3;
+    } 
+    actor A {
+        computation = IntProducer;
+        last = 64;
+    }
+    actor B {
+        computation = IntConsumer;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = A,x;
+        edges = e1(A,x);
+    }
+    production {
+	e1 = 2;
+    }
+    consumption {
+	e1 = p;
+    } 
+    actor A {
+        computation = IntProducer;
+        last = 64;
+    }
+    actor x {
+        computation = IntConsumer;
+    }
+}
+right {
+    topology {
+        nodes = A,y,x;
+        edges = e1(A,y), e2(y,x);
+    }
+    production {
+	e1 = 2;
+	e2 = p;
+    }
+    consumption {
+	e1 = p;
+	e2 = p;
+    } 
+    actor A {
+        computation = IntProducer;
+        last = 64;
+    }
+    actor x {
+        computation = IntConsumer;
+    }
+    actor y {
+        computation = Doubling;
+    }
+}
+}
+main {
+	load=10 : r1;
+}
