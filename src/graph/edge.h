@@ -61,8 +61,8 @@ private:
 	string src_port; /**< Source port of the edge */
 	string snk_port; /**< Sink port of the edge */
 
-	int src_rate;
-	int snk_rate;
+	Rate src_rate;
+	Rate snk_rate;
 
 	int init_tokens;
 	int tokens;

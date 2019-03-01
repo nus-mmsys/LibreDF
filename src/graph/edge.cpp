@@ -45,8 +45,8 @@ Edge::Edge() {
 	snk_port = "";
 	src_actor = nullptr;
 	snk_actor = nullptr;
-	src_rate = 1;
-	snk_rate = 1;
+	src_rate.set_value(1);
+	snk_rate.set_value(1);
 	init_tokens = 0;
 	tokens = 0;
 }
@@ -99,19 +99,19 @@ void Edge::set_sink_actor(Actor * snk) {
 }
 
 void Edge::set_source_rate(int r) {
-	src_rate = r;
+	src_rate.set_value(r);
 }
 
 void Edge::set_sink_rate(int r) {
-	snk_rate = r;
+	snk_rate.set_value(r);
 }
 
 int Edge::get_source_rate() {
-	return src_rate;
+	return src_rate.get_value();
 }
 
 int Edge::get_sink_rate() {
-	return snk_rate;
+	return snk_rate.get_value();
 }
 
 void Edge::set_init_tokens(int tokens) {
