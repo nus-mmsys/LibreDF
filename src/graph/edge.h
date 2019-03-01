@@ -27,6 +27,26 @@
 using namespace std;
 
 /*!
+ * Rate class
+ *  A rate keeps its symbol (if necessary) and an
+ *  integer value.
+ *
+ */
+class Rate {
+private:
+	string symbol;
+	int val;
+public:
+	Rate();
+	Rate(int v);
+	Rate(string s, int v);
+	void set_symbol(string s);
+	string get_symbol();
+	void set_value(int v);
+	int get_value();
+};
+
+/*!
  * Edge class
  *  A edge has reference to its source and sink ports.
  *

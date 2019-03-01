@@ -18,6 +18,26 @@
 
 #include "edge.h"
 
+Rate::Rate(string s, int v) {
+	symbol = s;
+	val = v;
+}
+Rate::Rate(int v) : Rate("", v) { }
+Rate::Rate() : Rate("", 1) { }
+
+void Rate::set_symbol(string s) {
+	symbol = s;
+}
+string Rate::get_symbol() {
+	return symbol;
+}
+void Rate::set_value(int v) {
+	val = v;
+}
+int Rate::get_value() {
+	return val;
+}
+
 Edge::Edge() {
 	name = "";
 	visited = false;
