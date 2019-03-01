@@ -34,7 +34,7 @@ left {
         last = 64;
     }
     actor x {
-        computation = IntConsumer;
+        computation = z;
     }
 }
 right {
@@ -55,7 +55,7 @@ right {
         last = 64;
     }
     actor x {
-        computation = IntConsumer;
+        computation = z;
     }
     actor y {
         computation = Doubling;
