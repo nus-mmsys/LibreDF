@@ -67,8 +67,10 @@ namespace df {
     bool scheduling;  
 
     std::condition_variable pause_cond;
+    std::condition_variable sol_cond;
     bool paused;
     std::mutex pause_mux;
+    std::mutex sol_mux;
     std::mutex runend_mux;
   protected:
 

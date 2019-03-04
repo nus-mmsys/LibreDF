@@ -315,33 +315,35 @@ void Actor::runActor() {
 
   hstart();
   while(getStatus() != EOS) {
+      {
+	  unique_lock<mutex> lockpause(pause_mux);
+	  while(paused)
+		  pause_cond.wait(lockpause);
+	  if (realtime) {
+		  runRT();
+    	  } else {
+		  run();
+    	  }
+          stepno++;
+      }
 
-    { 
-    	unique_lock<mutex> lockpause(pause_mux);
-	while(paused)
-    		pause_cond.wait(lockpause);
-    	if (realtime) {
-		    runRT();
-    	} else {
-		    run();
-    	}
-
-        stepno++;
-    }
-    
-    {
-        lock_guard<mutex> lockrun(runend_mux);
-	//TODO
-	//signal pause to wake up.
-    }
+      {
+	  //TODO
+          //lock_guard<mutex> locksol(sol_mux);
+          //if ((stepno+1)%solution==0) {
+	  //    sol_cond.notify_all();
+	        lock_guard<mutex> lockrun(runend_mux);
+          //}
+      }
   }
-  
 }
 
 int Actor::pause() {
     lock_guard<mutex> lockrun(runend_mux);
     //TODO
-    //wait untill solution divides stepno.
+    //unique_lock<mutex> locksol(sol_mux);
+    //while((stepno+1)%solution!=0)
+    //	    sol_cond.wait(locksol);
     lock_guard<mutex> lockpause(pause_mux);
     int res = stepno;
     paused = true;
