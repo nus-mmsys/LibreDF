@@ -135,9 +135,9 @@ void RDataflow::reconfigure(int iter) {
 
 //TODO
 //Fix multi-rate example
-//For multi-rate, the tokens need 
-//iteration number to stop at 
-//correct iteration.
+//For multi-rate, the actors need 
+//to pause at the paused tokens.
+//Sinks need to acknowledge.
 void RDataflow::run() {
  
   int iter;
@@ -170,24 +170,25 @@ void RDataflow::run() {
    * be applied and they are specified in the main
    * of the RDF program.
    *
-   * For a test, we can use a dummy function 'metric()'
-   * which generates a random value. Based on the
-   * value, the controller decides whether to perform 
-   * the transformation or not.
+   * Here get_applicable_rule is a function which returns 
+   * the rules that can be applied. (the currect implementation 
+   * is only for the test purposes)
    *
-   * If it decides to perform the transformation,
-   * it has to notify all the source actors to stop  
+   * If an applicable rule exists, the controller 
+   * has to notify all the source actors to puase  
    * and give their iteration numbers. It then take 
    * the maximum value of all iteration numbers and 
    * ask the source actors to continue until
    * this max value. 
    *
-   * This iteration number is sent to sink actors 
-   * and sink actors eventually stop at the given iteration
-   * and send an acknowledgement to the controller. 
+   * The sources set a pause flag in the tokens, so 
+   * all actors pause at the same iteration.
+   * Then the sink actors send an acknowledgement 
+   * to the controller. 
+   * 
    * The controller then knows that it can perform 
    * the transformation. It performs the transformation 
-   * and asks all the sources to continue.
+   * and asks all the sources to resume.
    *
    * This loop continues untill at least one actor
    * reaches the end of stream.
