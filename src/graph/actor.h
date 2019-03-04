@@ -106,13 +106,13 @@ public:
 	string get_type();
 
 	/*!
-	 * Set the number of firings of the actor
+	 * Set the solution of the actor
 	 *
-	 * \param firingcount
-	 * 	The number of firing of the actor to set
+	 * \param sol
+	 * 	The solution of the actor to set
 	 *
 	 */
-	void set_firing(int firingcount);
+	void set_solution(int sol);
 
 	/*!
 	 * Set the numinator and denuminator of the fractional number of firingis of the actor
@@ -127,13 +127,13 @@ public:
 	void set_numden(int num, int den);
 
 	/*!
-	 * Get the number of firings of the actor
+	 * Get the solution of the actor
 	 *
 	 * \return
-	 * 	The number of firing of the actor
+	 * 	The solution of the actor
 	 *
 	 */
-	int get_firing();
+	int get_solution();
 
 	/*!
 	 * Get the numinator of the fractional number of firingis of the actor

@@ -159,6 +159,8 @@ RDataflow * RDFParser::get_rdataflow() {
 
 	std::string srcname, snkname;
 
+	graph->resolve();
+
 	//Create dataflow
 	res = new RDataflow(graph->get_name());
 	
@@ -188,6 +190,7 @@ RDataflow * RDFParser::get_rdataflow() {
 			for (auto p : props) {
 				actor->setProp(p.first, p.second);
 			}
+			actor->setSolution(graph->get_solution(acname));
 		}
 	}
 

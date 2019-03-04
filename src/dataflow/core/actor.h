@@ -140,6 +140,9 @@ namespace df {
     
     void setType(std::string t);
 
+    void setSolution(int sol);
+    int getSolution();
+
     /*!
      * Set a property of the actor.
      *

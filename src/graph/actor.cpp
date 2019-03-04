@@ -41,13 +41,13 @@ string Actor::get_name() {
 string Actor::get_type() {
 	return type;
 }
-void Actor::set_firing(int firingcount) {
-	firing = firingcount;
-	num = firingcount;
+void Actor::set_solution(int sol) {
+	firing = sol;
+	num = sol;
 	den = 1;
 }
 
-int Actor::get_firing() {
+int Actor::get_solution() {
 	return firing;
 }
 
@@ -127,7 +127,7 @@ string Schedule::to_string()
 }
 
 string ScheduledActor::to_string() {
-	return actor->get_name() + "^" + std::to_string(actor->get_firing());
+	return actor->get_name() + "^" + std::to_string(actor->get_solution());
 }
 
 ScheduledActor::ScheduledActor(Actor * ac) { 

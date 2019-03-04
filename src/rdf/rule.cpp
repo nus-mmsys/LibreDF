@@ -441,8 +441,8 @@ bool Rule::consistency_check() {
 	int ret;
 	//Set firings belonging to the RDF data graph.
 	for(auto ac : l->get_actors()) {
-		//l->set_firing(ac, g->get_firing(ac));
-		r->set_firing(ac, l->get_firing(ac));
+		//l->set_solution(ac, g->get_solution(ac));
+		r->set_solution(ac, l->get_solution(ac));
 	}
 	//ret = l->solve();
 	//if (ret < 0) {

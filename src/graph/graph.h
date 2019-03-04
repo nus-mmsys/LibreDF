@@ -236,7 +236,7 @@ public:
 	 *
 	 */
 	string get_name();
- 
+
 	/*!
 	 * Returns the number of the edges of the graph.
 	 *
@@ -443,7 +443,7 @@ public:
 	int get_exect(string name);
 
 	/*!
-	 * Returns the firing (solution) of a given actor.
+	 * Returns the solution of a given actor.
 	 * 
 	 * \param name
 	 * 	Name of the actor.
@@ -452,21 +452,21 @@ public:
 	 * 	Solution of the given actor.
 	 *
 	 */
-	int get_firing(string name);
+	int get_solution(string name);
 
 	/*!
-	 * Set the firing (solution) for an actor with specified name.
+	 * Set the solution for an actor with specified name.
 	 * 
 	 * \param name
 	 * 	Name of the actor.
 	 *
-	 * \param firing
+	 * \param sol
 	 * 	The solution of actor to set.
 	 * 
 	 * \return
 	 *
 	 */
-	int set_firing(string name, int firing);
+	int set_solution(string name, int sol);
 
 	/*!
 	 * Get the source rate of a given edge.

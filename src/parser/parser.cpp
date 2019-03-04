@@ -567,6 +567,8 @@ df::Dataflow * Parser::get_dataflow() {
 
 	std::string srcname, snkname;
 
+	graph->resolve();
+
 	//Create dataflow
 	res = new df::Dataflow(graph->get_name());
 	
@@ -574,7 +576,6 @@ df::Dataflow * Parser::get_dataflow() {
 	for (auto p : params) {
 		res->setProp(p.first, p.second);
 	}
-
 
 	//Create actors
 	vector<string> actorlist = graph->get_actors();
@@ -596,6 +597,7 @@ df::Dataflow * Parser::get_dataflow() {
 			for (auto p : props) {
 				actor->setProp(p.first, p.second);
 			}
+			actor->setSolution(graph->get_solution(acname));
 		}
 	}
 

@@ -358,7 +358,7 @@ int Graph::dfs(Actor * curr, int num, int den) {
 
 int Graph::resolve() {
 	for (auto ac : actors)
- 		ac.second->set_firing(0);
+ 		ac.second->set_solution(0);
 	return solve();
 }
 
@@ -374,8 +374,8 @@ int Graph::solve() {
 		e.second->set_visited(false);
 
 	Actor * curr = actors.begin()->second;
-	if (curr->get_firing() == 0) {
-		curr->set_firing(1);
+	if (curr->get_solution() == 0) {
+		curr->set_solution(1);
 		ret = dfs(curr, 1, 1);
 	} else {
 		ret = dfs(curr, curr->get_num(), curr->get_den());
@@ -393,7 +393,7 @@ int Graph::solve() {
 			}
 		}
 		for (auto ac : actors) {
-			ac.second->set_firing(lcm * ac.second->get_num() / ac.second->get_den());
+			ac.second->set_solution(lcm * ac.second->get_num() / ac.second->get_den());
 		}
 	}
 	return ret;
@@ -530,10 +530,10 @@ vector<string> Graph::sas() {
 	return sasliststr;
 }
 
-int Graph::set_firing(string name, int firing) { 
+int Graph::set_solution(string name, int firing) { 
 	if (actors.find(name) == actors.end())
 		return -1;
-	actors[name]->set_firing(firing);
+	actors[name]->set_solution(firing);
 	return 0;
 }
 
@@ -543,10 +543,10 @@ int Graph::get_exect(string name) {
 	return actors[name]->get_exect();
 }
 
-int Graph::get_firing(string name) {
+int Graph::get_solution(string name) {
 	if (actors.find(name) == actors.end())
 		return -1;
-	return actors[name]->get_firing();
+	return actors[name]->get_solution();
 }
 
 int Graph::set_source_rate(string edgename, int rate) { 
@@ -730,7 +730,7 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 	while(cont) {
 		cont = false;
 		for (auto& ac : actors) {
-			if (firings[ac.first] < ac.second->get_firing() 
+			if (firings[ac.first] < ac.second->get_solution() 
 				&& timeins >= lastprod[ac.first]+ac.second->get_exect()
 				&& timeins >= lastcons[ac.first]+ac.second->get_exect()
 				&& potfirings[ac.first]>0) {
@@ -750,7 +750,7 @@ map<string, vector<tuple<int,int>>> Graph::schedule() {
 
 		}
 		for (auto& ac : actors) {
-			if (firings[ac.first] < ac.second->get_firing()) {
+			if (firings[ac.first] < ac.second->get_solution()) {
 				iedges = get_iedges(ac.second);
 				can_consume=true;
 				for (auto& ied : iedges) {
@@ -968,28 +968,28 @@ int Graph::solve2() {
 	int num, den, g;
 	findpaths();
 	for (auto ac : actors)
- 		ac.second->set_firing(0);
+ 		ac.second->set_solution(0);
 	for (auto path : pathlist) {
-		if (path[0]->get_firing() == 0)
-			path[0]->set_firing(1);
+		if (path[0]->get_solution() == 0)
+			path[0]->set_solution(1);
 		for (int i=1; i<path.size(); i++) {
 			Edge * edge = get_edge(path[i-1], path[i]);
-			num = path[i-1]->get_firing() * edge->get_source_rate();
+			num = path[i-1]->get_solution() * edge->get_source_rate();
 			den = edge->get_sink_rate();
 			g = gcd(num,den);
 			num = num/g;
 			den = den/g;
 			
 			if ((path[i]->get_name() == path[0]->get_name()) 
-					&& (num != path[0]->get_firing()))
+					&& (num != path[0]->get_solution()))
 				return -1;
 	
-			if (path[i]->get_firing() == 0)
-				path[i]->set_firing(num);
-			else if (num * den != path[i]->get_firing())
+			if (path[i]->get_solution() == 0)
+				path[i]->set_solution(num);
+			else if (num * den != path[i]->get_solution())
 				return -1;
 			for (int j=0; j<i; j++)
-				path[j]->set_firing(den * path[j]->get_firing());
+				path[j]->set_solution(den * path[j]->get_solution());
 			
 		}
 	}

@@ -84,7 +84,7 @@ int RDFAnalyse::display_graph(Graph * g) {
 		cout << "error: graph is not consistent.\n";
 	else {
 		for (auto & ac : actorlist) {
-			cout << ac << " : " << g->get_firing(ac) << "\n";
+			cout << ac << " : " << g->get_solution(ac) << "\n";
 		}
 	}
 	

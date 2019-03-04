@@ -47,6 +47,14 @@ void Actor::setType(std::string t) {
 	setProp("computation", t);
 }
 
+void Actor::setSolution(int sol) {
+	solution = sol;
+}
+
+int Actor::getSolution() {
+	return solution;
+}
+
 void Actor::log(std::string msg) {
   if (logging) {
     cpuid = sched_getcpu();
