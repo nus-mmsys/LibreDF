@@ -31,6 +31,7 @@ Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
   scheduling = true;
   elapsed = 0;
   paused = false;
+  solution = 1;
 }
 
 std::string Actor::getName() {
@@ -322,6 +323,8 @@ void Actor::runActor() {
     
     {
         lock_guard<mutex> lockrun(runend_mux);
+	//TODO
+	//signal pause to wake up.
     }
   }
   
@@ -329,6 +332,8 @@ void Actor::runActor() {
 
 int Actor::pause() {
     lock_guard<mutex> lockrun(runend_mux);
+    //TODO
+    //wait untill solution divides stepno.
     lock_guard<mutex> lockpause(pause_mux);
     int res = stepno;
     paused = true;

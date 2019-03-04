@@ -74,7 +74,8 @@ namespace df {
 
     std::string name; /**< The name of the actor */
     std::string type; /**< The type of the actor */
-    int stepno; /**< The number of step in which the actor is in */ 
+    int stepno; /**< The number of step in which the actor is in */
+    int solution; /**< The actor's solution */ 
     std::string home_path; /**< The path for home folder */    
     std::string df_path; /**< The path for actors to use */
     std::string dfout_path; /**< The path for actors to use as output */
