@@ -382,6 +382,20 @@ int Actor::resumeTill(int iter) {
     return 0;
 }
 
+int Actor::resumeTillPause() {
+
+    unique_lock<mutex> lockpause(pause_mux);
+
+    while(!paused)
+    	pause_cond.wait(lockpause);
+ 
+    while(getStatus() != PAUSED) {
+	run();
+	stepno++;
+    }
+    return 0;
+}
+
 void Actor::hstart() { 
 	hrtstart = std::chrono::high_resolution_clock::now(); 
 }

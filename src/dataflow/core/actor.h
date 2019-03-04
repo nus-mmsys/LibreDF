@@ -582,6 +582,11 @@ namespace df {
     int resumeTill(int iter);
     
     /*!
+     * Resume until the pause status.
+     */
+    int resumeTillPause();
+
+    /*!
      * Destructor of the actor.
      */
     virtual ~Actor();

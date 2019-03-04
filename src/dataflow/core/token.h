@@ -33,6 +33,7 @@ namespace df {
   enum Status {
     OK, /**< Processed successfully. */
     ERROR, /**< An error occurred while processing. */
+    PAUSED, /**< An actor is paused after producing this token. */
     EOS, /**< End of stream occured. */
   };
 
