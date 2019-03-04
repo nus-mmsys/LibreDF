@@ -179,22 +179,14 @@ namespace df {
     int setStatusMR(Status st) {
       	if (rate >= buf->getSize())
 		return -1;;
-      	for (int i=0; i<rate; i++) {
-      		buf->at((index+i)%buf->getSize())->setStatus(st);
-      	}
+      	buf->at((index+rate-1)%buf->getSize())->setStatus(st);
 	return 0;
     }
 
     Status getStatusMR() {
-      Status res = getStatus();
       if (rate >= buf->getSize())
 	      return ERROR;
-      for (int i=0; i<rate; i++) {
-	      res = buf->at((index+i)%buf->getSize())->getStatus();
-	      if (res != OK)
-		      return res;
-      }
-      return res;
+      return buf->at((index+rate-1)%buf->getSize())->getStatus();
     }
 
     void setSocketStatus(Status st) {
