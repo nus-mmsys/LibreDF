@@ -135,6 +135,9 @@ void RDataflow::reconfigure(int iter) {
 
 //TODO
 //Fix multi-rate example
+//For multi-rate, the tokens need 
+//iteration number to stop at 
+//correct iteration.
 void RDataflow::run() {
  
   int iter;
