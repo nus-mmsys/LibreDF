@@ -87,20 +87,28 @@ void RDataflow::reconfigure(int iter) {
 	//Create appearing actors.
 	string type;
 	vector<df::Actor *> appac;
+	df::Actor * actmp;
 	for (auto c : g->get_actors()) {
 		if (actors.find(c) == actors.end()) {
 			type = g->get_actor_type(c); 
-			appac.push_back(createActor(type,c));
+			actmp = createActor(type,c);
+			actmp->setSolution(g->get_solution(c));
+			appac.push_back(actmp);
 		}
 	}
 
 	//Create appearing edges.
 	vector<df::Edge *> apped;
+	df::Edge * edtmp;
 	for (auto e : g->get_edges()) {
 		srcname = g->get_source_name(e);
 		snkname = g->get_sink_name(e);
 		if (!containsEdge(srcname, snkname)) {
-			apped.push_back(createEdge(e, srcname, snkname));
+			edtmp = createEdge(e, srcname, snkname);
+			edtmp->setSourceRate(g->get_source_rate(e));
+			edtmp->setSinkRate(g->get_sink_rate(e));
+			apped.push_back(edtmp);
+			
 		}
 	}	
 	
@@ -135,9 +143,6 @@ void RDataflow::reconfigure(int iter) {
 
 //TODO
 //Fix multi-rate example
-//For multi-rate, the actors need 
-//to pause at the paused tokens.
-//Sinks need to acknowledge.
 void RDataflow::run() {
  
   int iter;

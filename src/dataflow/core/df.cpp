@@ -484,8 +484,10 @@ void Dataflow::sleep(int s) {
 void Dataflow::print() {
 	log(name);
 	for (auto e : edges) {
-		log(e.second->getSource()->getName()+ 
-		    " -> "+e.second->getSink()->getName());	     
+		log(e.second->getSource()->getName()
+		+ "(" + to_string(e.second->getSourceRate()) 
+		+ ") -> ("+ to_string(e.second->getSinkRate()) 
+		+ ")"+ e.second->getSink()->getName());	     
 	}
 }
 

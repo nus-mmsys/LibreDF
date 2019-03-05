@@ -21,7 +21,7 @@
 using namespace df;
 using namespace std;
 
-Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
+Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   realtime = false;
   distributed = false;
   home_path = std::getenv("HOME");
@@ -32,6 +32,8 @@ Actor::Actor(const string &name) : status(OK), stepno(0), name(name) {
   elapsed = 0;
   paused = false;
   solution = 1;
+  iterno = 1;
+  fireno = 1;
 }
 
 std::string Actor::getName() {
@@ -59,7 +61,7 @@ void Actor::log(std::string msg) {
   if (logging) {
     cpuid = sched_getcpu();
     hrtend = std::chrono::high_resolution_clock::now(); 
-    string s = name + ": [" + to_string(stepno) + "] [" + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(hrtend - hrtstart).count()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
+    string s = name + ": [" + to_string(iterno) + ", " + to_string(fireno) + "] [" + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(hrtend - hrtstart).count()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
     iolock->lock(); 
     std::cout << s;
     iolock->unlock();
@@ -314,38 +316,34 @@ void Actor::runActor() {
   }
 
   hstart();
+  int i;
   while(getStatus() != EOS) {
       {
 	  unique_lock<mutex> lockpause(pause_mux);
 	  while(paused)
 		  pause_cond.wait(lockpause);
-	  if (realtime) {
-		  runRT();
-    	  } else {
+	  for (i=0; i<solution; i++) {
+	      fireno = i+1;
+	      if (realtime) {
+	 	  runRT();
+    	      } else {
 		  run();
-    	  }
-          stepno++;
+    	      }
+              stepno++;
+	  }
+	  iterno++;
       }
 
       {
-	  //TODO
-          //lock_guard<mutex> locksol(sol_mux);
-          //if ((stepno+1)%solution==0) {
-	  //    sol_cond.notify_all();
-	        lock_guard<mutex> lockrun(runend_mux);
-          //}
+	  lock_guard<mutex> lockrun(runend_mux);
       }
   }
 }
 
 int Actor::pause() {
     lock_guard<mutex> lockrun(runend_mux);
-    //TODO
-    //unique_lock<mutex> locksol(sol_mux);
-    //while((stepno+1)%solution!=0)
-    //	    sol_cond.wait(locksol);
     lock_guard<mutex> lockpause(pause_mux);
-    int res = stepno;
+    int res = iterno;
     paused = true;
     pause_cond.notify_all();
     return res;
@@ -358,40 +356,29 @@ void Actor::resume() {
 }
 
 void Actor::setIteration(int iter) {
-	stepno = iter;
+	iterno = iter;
 }
 
 int Actor::resumeTill(int iter) {
 
     unique_lock<mutex> lockpause(pause_mux);
-    if (iter < stepno) {
+    if (iter < iterno) {
 	    log("resume_till: actor cannot resume until a smaller iteration.");
 	    return -1;
     }
 
-    if (iter == stepno)
+    if (iter == iterno)
     	return 0;
 
     while(!paused)
     	pause_cond.wait(lockpause);
- 
-    while(stepno < iter) {
-	run();
-	stepno++;
-    }
-    return 0;
-}
-
-int Actor::resumeTillPause() {
-
-    unique_lock<mutex> lockpause(pause_mux);
-
-    while(!paused)
-    	pause_cond.wait(lockpause);
- 
-    while(getStatus() != PAUSED) {
-	run();
-	stepno++;
+    int i;
+    while(iterno < iter) {
+	for (i=0; i<solution; i++) {
+	    run();
+	    stepno++;
+	}
+	iterno++;
     }
     return 0;
 }
