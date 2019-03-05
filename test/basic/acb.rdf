@@ -12,16 +12,16 @@ rdf acb {
         e2 = 6;
     }
     actor A {
-        computation = IntProducer;
+        computation = IntProducerMR;
         last = 64;
     	exect = 3;
     }
     actor B {
-        computation = IntConsumer;
+        computation = IntConsumerMR;
     	exect = 4;
     }
     actor C {
-        computation = Doubling;
+        computation = DoublingMR;
     	exect = 5;
     }
 }
