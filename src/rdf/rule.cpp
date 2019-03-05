@@ -249,9 +249,7 @@ int Rule::apply() {
 				res->add_edge(src, snk, src_rate, snk_rate);
 			}
 		}
-		//TODO
-		//better way?
-		res->resolve();	
+		res->solve();	
 		return 0;
 	}
 	

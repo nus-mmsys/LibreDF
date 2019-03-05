@@ -174,27 +174,18 @@ void RDataflow::run() {
    * of the RDF program.
    *
    * Here get_applicable_rule is a function which returns 
-   * the rules that can be applied. (the currect implementation 
+   * the rules that can be applied. (the current implementation 
    * is only for the test purposes)
    *
    * If an applicable rule exists, the controller 
-   * has to notify all the source actors to puase  
+   * has to notify all the actors to puase  
    * and give their iteration numbers. It then take 
    * the maximum value of all iteration numbers and 
-   * ask the source actors to continue until
+   * ask the the actors to continue until
    * this max value. 
    *
-   * The sources set a pause flag in the tokens, so 
-   * all actors pause at the same iteration.
-   * Then the sink actors send an acknowledgement 
-   * to the controller. 
-   * 
-   * The controller then knows that it can perform 
-   * the transformation. It performs the transformation 
-   * and asks all the sources to resume.
-   *
-   * This loop continues untill at least one actor
-   * reaches the end of stream.
+   * The controller then performs the transformation 
+   * and asks all the actors to resume.
    *
    */
 
