@@ -141,8 +141,6 @@ void RDataflow::reconfigure(int iter) {
   	}
 }
 
-//TODO
-//Fix multi-rate example
 void RDataflow::run() {
  
   int iter;

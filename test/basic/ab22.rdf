@@ -1,4 +1,4 @@
-rdf ab32 {
+rdf ab22 {
     topology {
         nodes = A,B;
         edges = e1(A,B);
@@ -11,7 +11,7 @@ rdf ab32 {
     } 
     actor A {
         computation = IntProducerMR;
-        last = 63;
+        last = 64;
     }
     actor B {
         computation = IntConsumerMR;
@@ -31,7 +31,7 @@ left {
     } 
     actor A {
         computation = IntProducerMR;
-        last = 63;
+        last = 64;
     }
     actor x {
         computation = z;
@@ -52,7 +52,7 @@ right {
     } 
     actor A {
         computation = IntProducerMR;
-        last = 63;
+        last = 64;
     }
     actor x {
         computation = z;
