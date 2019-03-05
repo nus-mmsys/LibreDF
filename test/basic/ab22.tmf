@@ -1,10 +1,10 @@
-tmf ab32 {
+tmf ab22 {
     topology {
         nodes = A,B;
         edges = e1(A,B);
     }
     production {
-	e1 = 3;
+	e1 = 2;
     }
     consumption {
 	e1 = 2;

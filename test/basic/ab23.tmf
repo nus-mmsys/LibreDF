@@ -11,7 +11,7 @@ tmf ab23 {
     }
     actor A {
         computation = IntProducerMR;
-        last = 62;
+        last = 64;
     }
     actor B {
         computation = IntConsumerMR;
