@@ -20,6 +20,7 @@
 #define DF_ACTORFACTORY_H_
 
 #include "actor.h"
+#include <functional>
 
 namespace df {
   
