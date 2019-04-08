@@ -33,6 +33,7 @@ class RDataflow : public df::Dataflow {
 private:
     int load;
     RDFGraph * rdfg;
+    Graph * curr_graph;
     Rule * get_applicable_rule();
     void reconfigure(int iter);
 public:

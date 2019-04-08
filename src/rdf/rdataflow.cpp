@@ -23,10 +23,12 @@ using namespace std;
 
 RDataflow::RDataflow(string name) : df::Dataflow(name) {
 	load = 0;
+	curr_graph = new Graph();
 }
 
 void RDataflow::set_graph(RDFGraph * r) {
 	rdfg = r;
+	curr_graph->reconfigure_from(r->graph);
 }
 
 Rule * RDataflow::get_applicable_rule() {
@@ -42,7 +44,7 @@ Rule * RDataflow::get_applicable_rule() {
 }
 
 void RDataflow::reconfigure(int iter) {
-	auto g = rdfg->graph;
+	auto g = curr_graph;
 	string srcname, snkname;
 
 	/*
@@ -212,15 +214,15 @@ void RDataflow::run() {
 	//endTiming("[RDF] Pausing delay: ");
 
 	//startTiming();
-	res = r->apply(rdfg->graph);
-	if (res!=nullptr)
-		rdfg->graph = res;
-	//endTiming("[RDF] Matching delay: ");
+	res = r->apply(curr_graph);
+	if (res!=nullptr) {
+		curr_graph->reconfigure_from(res);
+		//endTiming("[RDF] Matching delay: ");
 
-	//startTiming();
-	reconfigure(iter);
-	//endTiming("[RDF] Replace graph delay: ");
-
+		//startTiming();
+		reconfigure(iter);
+		//endTiming("[RDF] Replace graph delay: ");
+	}
 	//startTiming();
 	resume();
 	//endTiming("[RDF] Resuming delay: ");

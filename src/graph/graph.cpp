@@ -30,6 +30,7 @@ Actor * Graph::create_actor(string name, string type) {
 	if (actors.find(name) == actors.end()) {
 		Actor * ac = new Actor(name, type);
 		actors[name] = ac;
+		
 	}
 	return actors[name];
 }
@@ -121,7 +122,7 @@ bool Graph::contains_actor(string name) {
 
 bool Graph::contains_edge(string src, string snk) {
 	for (auto e : edges) {
-		if (e.second->get_source_actor()->get_name()==src &&
+		if (e.second->get_source_actor()!=nullptr && e.second->get_sink_actor()!=nullptr && e.second->get_source_actor()->get_name()==src &&
 		    e.second->get_sink_actor()->get_name()==snk)
 			return true;
 	}
@@ -826,6 +827,62 @@ vector<std::string> Graph::get_succ(std::string ac) {
 		res.push_back(ie->get_sink_actor()->get_name());
 	}
 	return res;
+}
+
+void Graph::reconfigure_from(Graph * g) {
+	string srcname, snkname;
+	//Remove dissappearing edges.
+	for (auto it = edges.cbegin(); it != edges.cend();)
+	{
+		srcname = it->second->get_source_actor()->get_name();
+	        snkname = it->second->get_sink_actor()->get_name();
+		if (!g->contains_edge(srcname, snkname)) {
+			delete it->second;
+			edges.erase(it++);
+  		} else {
+			++it;
+  		}
+	}
+		
+	//Remove dissappearing actors.
+	for (auto c : actors) {
+	for (auto it = actors.cbegin(); it != actors.cend();)
+		if (!g->contains_actor(it->first)) {
+			delete it->second;
+			actors.erase(it++);
+		} else {
+			++it;
+		}
+	}
+
+	//Create appearing actors.
+	string type;
+	Actor * actmp;
+	for (auto c : g->get_actors()) {
+		if (actors.find(c) == actors.end()) {
+			type = g->get_actor_type(c); 
+			actmp = create_actor(c, type);
+			add_actor_prop(c, "computation", type);
+			actmp->set_solution(g->get_solution(c));
+			for (auto p : g->get_actor_props(c)) {
+				actmp->set_prop(p.first, p.second);
+			}
+		}
+	}
+
+	//Create appearing edges.
+	for (auto e : g->get_edges()) {
+		srcname = g->get_source_name(e);
+		snkname = g->get_sink_name(e);
+	
+		if (!contains_edge(srcname, snkname)) {
+			
+			add_edge(e, srcname, snkname);
+		
+			set_source_rate(e, g->get_source_rate(e));
+			set_sink_rate(e, g->get_sink_rate(e));
+		}
+	}
 }
 
 void Graph::clear() {
