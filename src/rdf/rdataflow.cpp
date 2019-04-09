@@ -70,7 +70,7 @@ void RDataflow::reconfigure(int iter) {
 	for (auto c : actors) {
 	for (auto it = actors.cbegin(); it != actors.cend();)
 		if (!g->contains_actor(it->first)) {
-			destroyActor(it->second);
+			//destroyActor(it->second);
 			actors.erase(it++);
 		} else {
 			++it;
