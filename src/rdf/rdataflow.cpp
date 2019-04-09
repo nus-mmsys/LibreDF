@@ -47,16 +47,7 @@ void RDataflow::reconfigure(int iter) {
 	auto g = curr_graph;
 	string srcname, snkname;
 
-	/*
-	for (auto c : g->get_actors()) {
-		cout << c << " : " << g->get_actor_type(c) << "\n";
-	}
-
-	for (auto e : g->get_edges()) {
-		cout << e << " : " << g->get_source_name(e)
-		       << " -> " << g->get_sink_name(e)	<< "\n";
-	}
-	*/
+	//g->print();
 
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
@@ -218,7 +209,7 @@ void RDataflow::run() {
 	if (res!=nullptr) {
 		curr_graph->reconfigure_from(res);
 		//endTiming("[RDF] Matching delay: ");
-
+		
 		//startTiming();
 		reconfigure(iter);
 		//endTiming("[RDF] Replace graph delay: ");

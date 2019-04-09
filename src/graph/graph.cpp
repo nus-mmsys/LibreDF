@@ -892,6 +892,20 @@ void Graph::clear() {
 	name = "";
 }
 
+void Graph::print() {
+	for (auto c : actors) {
+		cout << c.first << " : " << c.second->get_type() << "\n";
+	}
+
+	for (auto e : edges) {
+		cout << e.first << " : " 
+		     << e.second->get_source_actor()->get_name()
+		     << " -> " 
+		     << e.second->get_sink_actor()->get_name()
+		     << "\n";
+	}
+}
+
 /*
 vector<vector<string>> Graph::path() {
 	vector<vector<string>> pathliststr;

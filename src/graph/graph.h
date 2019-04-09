@@ -854,6 +854,7 @@ public:
 
 	void reconfigure_from(Graph * g);
 	void clear();	
+        void print();
 	//vector<vector<string>> path();
 	//int solve2();
 
