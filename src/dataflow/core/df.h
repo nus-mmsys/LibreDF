@@ -224,7 +224,13 @@ namespace df {
      *
      */
     std::vector<df::Actor *> find_sources();
-   
+   	
+    /*!
+     * Find the non-source actors.
+     *
+     */
+    std::vector<df::Actor *> find_nonsources();
+    
     /*!
      * Find the sink actors.
      *

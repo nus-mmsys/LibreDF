@@ -408,24 +408,35 @@ bool Dataflow::check_eos() {
  *    iteration.
  */
 int Dataflow::pause() {
-	int res = 0;
+	int max = 0;
 	int ret;
 	int iter;
-	for (auto& s : actors) {
-		iter = s.second->pause();
-		if (iter>res)
-			res = iter;
+	vector<df::Actor *> sources = find_sources();
+	vector<df::Actor *> nonsources = find_nonsources();
+
+	for (auto& s : nonsources) {
+		s->startPause();
+	}
+
+	for (auto& s : sources) {
+		iter = s->pause();
+		if (iter > max)
+			max = iter;
+	}
+
+	for (auto& s : nonsources) {
+		s->waitPause();
 	}
 
 	for (auto& s : actors) {
-		s.second->startResumeTill(res);
+		s.second->startResumeTill(max);
 	}
 
 	for (auto& s : actors) {
 		s.second->waitResumeTill();
 	}
 
-	return res;
+	return max;
 }
 
 void Dataflow::resume() {
@@ -447,6 +458,19 @@ vector<df::Actor *> Dataflow::find_sources() {
 		}
 		if (!found)
 			res.push_back(ac.second);		
+	}
+	return res;
+}
+
+vector<df::Actor *> Dataflow::find_nonsources() {
+	vector<Actor *> res;
+	for (auto& ac : actors) {
+		for (auto & e : edges) {
+			if (e.second->getSink()->getName() == ac.second->getName()) {
+			        res.push_back(ac.second);		
+				break;
+			}
+		}
 	}
 	return res;
 }

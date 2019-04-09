@@ -237,6 +237,14 @@ void Actor::waitResumeTill() {
   tresumetill.join();
 }
 
+void Actor::startPause() {
+  tpause = thread(&Actor::pause, this);
+}
+
+void Actor::waitPause() {
+  tpause.join();
+}
+
 void Actor::waitInit() {
   tinit.join();
 
