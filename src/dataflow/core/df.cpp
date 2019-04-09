@@ -398,6 +398,15 @@ bool Dataflow::check_eos() {
 	return false;
 }
 
+/*
+ * TODO
+ * 1) Pause all the sources and keep 
+ *    the max iteration.
+ * 2) Ask every actor except the sources
+ *    to continue until max+1 iteration.
+ * 3) Continue the sources untill max+1 
+ *    iteration.
+ */
 int Dataflow::pause() {
 	int res = 0;
 	int ret;
