@@ -23,12 +23,12 @@ RDFAnalyse::RDFAnalyse(int argc, char * argv[], RDFParser * p) : Analyse(argc,ar
 	rdfparser = p;
 	rdfg = rdfparser->get_graph();
 
-	cmd["benchmark"] = bind(&RDFAnalyse::display_benchmark, this);
+	//cmd["benchmark"] = bind(&RDFAnalyse::display_benchmark, this);
 	cmd["rules"] = bind(&RDFAnalyse::display_rules, this);
 	cmd["program"] = bind(&RDFAnalyse::display_prog, this);
 	cmd["run"] = bind(&RDFAnalyse::run, this);
 
-	comment["benchmark"] = "display benchmark.";
+	//comment["benchmark"] = "display benchmark.";
 	comment["rules"] = "\tdisplay list of rules.";
 	comment["program"] = "\tdisplay the RDF program.";
 	comment["run"] = "\trun the RDF program.";

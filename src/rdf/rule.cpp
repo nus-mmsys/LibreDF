@@ -92,7 +92,7 @@ int Rule::process(Graph * graph) {
 	connectivity_check();
 	consistency_check();
 	liveness_check();
-	apply(graph);	
+	g = graph;
 	return 0;
 }
 
@@ -126,8 +126,8 @@ string Rule::benchmark() {
 }
 
 int Rule::verify() {
+	apply(g);
 	if (!matching) {
-		cout << "Matching is not found.\n";
 		return -1;
 	}
 	if (!disappearing_actor) {
