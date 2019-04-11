@@ -48,7 +48,7 @@ void VideoCapture::run() {
   df::Mat * out = produce(outputMat);	
   out->set(frame);
   log("capturing frame "+to_string(stepno));
-  sleep(40);
+  //sleep(40);
   *cap >> frame;
   if(frame.empty())
     setEos(outputMat);

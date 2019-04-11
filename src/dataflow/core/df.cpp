@@ -399,12 +399,9 @@ bool Dataflow::check_eos() {
 }
 
 /*
- * TODO
  * 1) Pause all the sources and keep 
  *    the max iteration.
- * 2) Ask every actor except the sources
- *    to continue until max+1 iteration.
- * 3) Continue the sources untill max+1 
+ * 3) Continue the actors untill max+1 
  *    iteration.
  */
 int Dataflow::pause() {
@@ -414,22 +411,24 @@ int Dataflow::pause() {
 	vector<df::Actor *> sources = find_sources();
 	vector<df::Actor *> nonsources = find_nonsources();
 
-	for (auto& s : nonsources) {
-		s->startPause();
-	}
-
 	for (auto& s : sources) {
 		iter = s->pause();
 		if (iter > max)
 			max = iter;
 	}
 
+	max++;
+	
 	for (auto& s : nonsources) {
-		s->waitPause();
+		s->startPause();
 	}
 
 	for (auto& s : actors) {
 		s.second->startResumeTill(max);
+	}
+
+	for (auto& s : nonsources) {
+		s->waitPause();
 	}
 
 	for (auto& s : actors) {
