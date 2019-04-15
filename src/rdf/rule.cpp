@@ -263,7 +263,9 @@ int Rule::apply() {
 void Rule::extract_common_actors() {
 	vector<string> lactors = l->get_actors();
 	vector<string> ractors = r->get_actors();
-
+	common_actors.clear();
+	app_actors.clear();
+	disapp_actors.clear();
 	for (auto ract : ractors) {
 		if (find(lactors.begin(), lactors.end(), ract) != lactors.end())
 			common_actors.push_back(ract);
