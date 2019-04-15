@@ -175,12 +175,19 @@ namespace df {
     }
 
     /*!
+     * Get the list of all actor property.
+     *
+     */ 
+    std::map<std::string, std::string> getProps() {
+      return prop.getProps();
+    } 
+
+    /*!
      * Get the value of a actor property.
      *
      * \param key
      *   The property name.
-     */
-    
+     */ 
     std::string getProp(const std::string & key) {
       return prop.getProp(key);
     } 
