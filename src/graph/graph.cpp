@@ -99,6 +99,18 @@ int Graph::add_actor_prop(string actname, string key, string val) {
 	return 0;
 }
 
+int Graph::set_actor_props(string actname, map<string,string> props) {
+	Actor * ac;
+	if (actors.find(actname) == actors.end()) {
+		return -1;
+	}
+	ac = actors[actname];
+	for (auto p : props) {
+		ac->set_prop(p.first, p.second);
+	}
+	return 0;
+}
+
 int Graph::set_actor_type(string name, string type) {
 	Actor * ac = get_actor(name);
 	if (ac != nullptr) {
