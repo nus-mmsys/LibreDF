@@ -6,29 +6,23 @@ rdf canny-parallel {
     actor A {
     	computation = VideoCapture;
 	file_name = pedestrian.mp4;
-	cpu = 0;
     }
     actor B {
     	computation = MatSplit;
 	level = 1;
-	cpu = 1;
     }
     actor C {
     	computation = CvtColor;
-	cpu = 2;
     }
     actor D {
     	computation = Canny;
-	cpu = 3;
     }
     actor E {
     	computation = MatMerge;
 	level = 1;
-	cpu = 4;
     }
     actor F {
     	computation = ImageWrite;
-	cpu = 5;
     }
 }
 rule r1 {
@@ -40,20 +34,16 @@ left {
     actor B {
     	computation = MatSplit;
 	level = 1;
-	cpu = 1;
     }
     actor x1 {
     	computation = CvtColor;
-	cpu = 2;
     }
     actor y1 {
     	computation = Canny;
-	cpu = 3;
     }
     actor z {
     	computation = MatMerge;
 	level = 1;
-	cpu = 4;
     }
 }
 right {
@@ -64,44 +54,34 @@ right {
     actor B {
     	computation = MatSplit;
 	level = 2;
-	cpu = 1;
     }
     actor x1 {
     	computation = CvtColor;
-	cpu = 2;
     }
     actor y1 {
     	computation = Canny;
-	cpu = 3;
     }
     actor x2 {
     	computation = CvtColor;
-	cpu = 2;
     }
     actor y2 {
     	computation = Canny;
-	cpu = 3;
     }
     actor x3 {
     	computation = CvtColor;
-	cpu = 2;
     }
     actor y3 {
     	computation = Canny;
-	cpu = 3;
     }
     actor x4 {
     	computation = CvtColor;
-	cpu = 2;
     }
     actor y4 {
     	computation = Canny;
-	cpu = 3;
     }
     actor z {
     	computation = MatMerge;
 	level = 2;
-	cpu = 4;
     }
 }
 }
