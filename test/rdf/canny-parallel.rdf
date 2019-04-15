@@ -1,0 +1,110 @@
+rdf canny-parallel {
+    topology {
+        nodes = A,B,C,D,E,F;
+	edges = e1(A,B), e2(B,C), e3(C,D), e4(D,E), e5(E,F);
+    }
+    actor A {
+    	computation = VideoCapture;
+	file_name = pedestrian.mp4;
+	cpu = 0;
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 1;
+	cpu = 1;
+    }
+    actor C {
+    	computation = CvtColor;
+	cpu = 2;
+    }
+    actor D {
+    	computation = Canny;
+	cpu = 3;
+    }
+    actor E {
+    	computation = MatMerge;
+	level = 1;
+	cpu = 4;
+    }
+    actor F {
+    	computation = ImageWrite;
+	cpu = 5;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = B,x1,y1,z;
+	edges = e2(B,x1), e3(x1,y1), e4(y1,z);
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 1;
+	cpu = 1;
+    }
+    actor x1 {
+    	computation = CvtColor;
+	cpu = 2;
+    }
+    actor y1 {
+    	computation = Canny;
+	cpu = 3;
+    }
+    actor z {
+    	computation = MatMerge;
+	level = 1;
+	cpu = 4;
+    }
+}
+right {
+    topology {
+        nodes = B,x1,y1,x2,y2,x3,y3,x4,y4,z;
+	edges = e2(B,x1), e3(x1,y1), e4(y1,z), e6(B,x2), e7(x2,y2), e8(y2,z), e9(B,x3), e10(x3,y3), e11(y3,z), e12(B,x4), e13(x4,y4), e14(y4,z) ;
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 2;
+	cpu = 1;
+    }
+    actor x1 {
+    	computation = CvtColor;
+	cpu = 2;
+    }
+    actor y1 {
+    	computation = Canny;
+	cpu = 3;
+    }
+    actor x2 {
+    	computation = CvtColor;
+	cpu = 2;
+    }
+    actor y2 {
+    	computation = Canny;
+	cpu = 3;
+    }
+    actor x3 {
+    	computation = CvtColor;
+	cpu = 2;
+    }
+    actor y3 {
+    	computation = Canny;
+	cpu = 3;
+    }
+    actor x4 {
+    	computation = CvtColor;
+	cpu = 2;
+    }
+    actor y4 {
+    	computation = Canny;
+	cpu = 3;
+    }
+    actor z {
+    	computation = MatMerge;
+	level = 2;
+	cpu = 4;
+    }
+}
+}
+main {
+	load=3 : r1;
+}
