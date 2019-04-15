@@ -106,7 +106,8 @@ int Graph::set_actor_props(string actname, map<string,string> props) {
 	}
 	ac = actors[actname];
 	for (auto p : props) {
-		ac->set_prop(p.first, p.second);
+		if (p.first!="computation")
+			ac->set_prop(p.first, p.second);
 	}
 	return 0;
 }
