@@ -169,6 +169,7 @@ int Rule::apply() {
 			if (find(disact.begin(), disact.end(), c) == disact.end()) {
 				auto type = g->get_actor_type(c);
 				res->add_actor(c, type);
+				res->set_actor_props(c, g->get_actor_props(c));
 			}
 		}
 		int idx=1;
@@ -188,6 +189,7 @@ int Rule::apply() {
 			} while (g->contains_actor(newname));
 			namevar[a] = newname;
 			res->add_actor(newname,gtype);
+			res->set_actor_props(newname, r->get_actor_props(a));
 		}
 		
 		//Add original edges.
