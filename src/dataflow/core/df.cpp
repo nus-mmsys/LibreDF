@@ -515,6 +515,16 @@ void Dataflow::sleep(int s) {
 
 void Dataflow::print() {
 	log(name);
+	vector<string> noprint = {"computation", "scheduling", 
+		"distributed", "realtime", "logging"};
+	for (auto a : actors) {
+		log(a.first + " : " + a.second->getType());
+		for (auto && p : a.second->getProps())
+			if (find(noprint.begin(),noprint.end(), p.first) 
+					==  noprint.end())
+				log("  " + p.first + " = " + p.second);
+	}
+
 	for (auto e : edges) {
 		log(e.second->getSource()->getName()
 		+ "(" + to_string(e.second->getSourceRate()) 
