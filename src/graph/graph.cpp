@@ -121,7 +121,6 @@ int Graph::replace_actor_props(string actname, map<string,string> props) {
 	ac = actors[actname];
 	for (auto p : props) {
 		if (p.first!="computation") {
-			cout << "rep prop " << p.first << " " << p.second << "\n";
 			ac->replace_prop(p.first, p.second);
 		}
 	}
