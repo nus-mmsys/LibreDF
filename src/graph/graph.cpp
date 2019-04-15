@@ -912,6 +912,10 @@ void Graph::clear() {
 void Graph::print() {
 	for (auto c : actors) {
 		cout << c.first << " : " << c.second->get_type() << "\n";
+		for (auto p : get_actor_props(c.first)) {
+			if (p.first!="computation")
+				cout << "  " << p.first << " = " << p.second << "\n";
+		}
 	}
 
 	for (auto e : edges) {
@@ -921,6 +925,7 @@ void Graph::print() {
 		     << e.second->get_sink_actor()->get_name()
 		     << "\n";
 	}
+
 }
 
 /*
