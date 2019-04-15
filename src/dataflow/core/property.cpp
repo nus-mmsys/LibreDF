@@ -20,6 +20,10 @@
 
 using namespace df;
 
+std::map<std::string, std::string> Property::getProps() {
+  return props;
+}
+
 std::string Property::getProp(const std::string & key) {
   auto k = props.find(key);
   

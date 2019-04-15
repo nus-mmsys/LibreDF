@@ -36,6 +36,13 @@ namespace df {
     std::map<std::string, std::string>  props; /**< The map containing the message (key, value). */
     
   public:
+
+    /*!
+     * Get list of all properties.
+     *
+     */
+    std::map<std::string, std::string> getProps();
+    
     /*!
      * Get the message value by passing the key
      *
