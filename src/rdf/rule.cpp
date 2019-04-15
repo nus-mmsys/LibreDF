@@ -172,6 +172,12 @@ int Rule::apply() {
 				res->set_actor_props(c, g->get_actor_props(c));
 			}
 		}
+		for (auto c : common_actors) {
+			auto gc = c;
+			if (is_variable(c))
+				gc = namevar[c];
+			res->replace_actor_props(gc, r->get_actor_props(c));
+		}
 		int idx=1;
 		for (auto a : app_actors) {
 			if (is_name(a))
