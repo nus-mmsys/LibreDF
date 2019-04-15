@@ -76,6 +76,15 @@ void Actor::set_prop(const string & p, const string & v) {
 	properties.insert(std::make_pair(p,v));
 }
 
+void Actor::replace_prop(const string & p, const string & v) {
+	auto key = properties.find(p);
+  
+  	if (key == properties.end())
+    		return;
+  
+  	properties[p] = v ;
+}
+
 string Actor::get_prop(const string & p) {
 	auto key = properties.find(p);
   

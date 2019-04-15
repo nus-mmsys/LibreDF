@@ -182,6 +182,16 @@ public:
 	void set_prop(const std::string & p, const std::string & v);
 
 	/*!
+	 * Replace a property of the actor
+	 *
+	 * \param p
+	 * 	property name to replace
+	 * \param v
+	 * 	property value to replace
+	 */
+        void replace_prop(const string & p, const string & v);
+
+	/*!
 	 * Get a property of the actor
 	 *
 	 * \param p
