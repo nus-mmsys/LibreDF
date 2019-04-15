@@ -290,9 +290,11 @@ vector<vector<string>> Graph::dfs_hamiltonians(Actor * curr, vector<string> stac
 
 void Graph::dfs_visited_actors(Actor * curr, int & visited) {
 
-	visited++;
 	Actor * adj;
-
+	if (curr->get_visited())
+		return;
+	visited++;
+	curr->set_visited(true);
 	for (auto e : get_oedges(curr)) {
 		if (!e->get_visited()) {
 			adj = e->get_sink_actor();
@@ -404,6 +406,8 @@ bool Graph::connected() {
 	int visited=0;
 	for (auto  e : edges)
 		e.second->set_visited(false);
+	for (auto  a : actors)
+		a.second->set_visited(false);
 	dfs_visited_actors(actors.begin()->second, visited);
 	if (visited == actors.size())
 		return true;
