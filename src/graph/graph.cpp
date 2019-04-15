@@ -106,8 +106,24 @@ int Graph::set_actor_props(string actname, map<string,string> props) {
 	}
 	ac = actors[actname];
 	for (auto p : props) {
-		if (p.first!="computation")
+		if (p.first!="computation") {
 			ac->set_prop(p.first, p.second);
+		}
+	}
+	return 0;
+}
+
+int Graph::replace_actor_props(string actname, map<string,string> props) {
+	Actor * ac;
+	if (actors.find(actname) == actors.end()) {
+		return -1;
+	}
+	ac = actors[actname];
+	for (auto p : props) {
+		if (p.first!="computation") {
+			cout << "rep prop " << p.first << " " << p.second << "\n";
+			ac->replace_prop(p.first, p.second);
+		}
 	}
 	return 0;
 }
@@ -884,6 +900,8 @@ void Graph::reconfigure_from(Graph * g) {
 			for (auto p : g->get_actor_props(c)) {
 				actmp->set_prop(p.first, p.second);
 			}
+		} else {
+			replace_actor_props(c, g->get_actor_props(c));
 		}
 	}
 

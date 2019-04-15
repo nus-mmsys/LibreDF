@@ -306,6 +306,20 @@ public:
 	int set_actor_props(string actname, std::map<string,string> props);
 
 	/*!
+	 * Replace properties of an actor of the graph.
+	 * 
+	 * \param actname
+	 * 	Name of the actor.
+	 *
+	 * \param props
+	 * 	The list of all properties.
+	 *
+	 * \return
+	 *
+	 */
+        int replace_actor_props(string actname, map<string,string> props);
+
+	/*!
 	 * Add an edge to the graph.
 	 * 
 	 * \param edgename
