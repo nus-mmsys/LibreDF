@@ -93,7 +93,10 @@ void RDataflow::reconfigure(int iter) {
 			type = g->get_actor_type(c); 
 			actmp = createActor(type,c);
 			actmp->setSolution(g->get_solution(c));
+			actmp->setProps(g->get_actor_props(c));
 			appac.push_back(actmp);
+		} else {
+			actors[c]->setProps(g->get_actor_props(c));
 		}
 	}
 

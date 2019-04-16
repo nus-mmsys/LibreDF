@@ -162,6 +162,15 @@ namespace df {
     }
 
     /*!
+     * Set all properties of the actor.
+     * If a property already exists, it replace its value.
+     *
+     * \param p
+     *   The list of all property names and values.
+     */
+    void setProps(std::map<std::string, std::string> p);
+    
+    /*!
      * Replace a property of the actor.
      *
      * \param key

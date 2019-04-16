@@ -57,6 +57,16 @@ int Actor::getSolution() {
 	return solution;
 }
 
+void Actor::setProps(std::map<std::string, std::string> p) {
+	for (auto && v : p) {
+		if (p.find(v.first) == p.end()) {
+			prop.setProp(v.first, v.second);
+		} else {
+			prop.replaceProp(v.first, v.second);
+		}
+	}
+}
+
 void Actor::log(std::string msg) {
   if (logging) {
     cpuid = sched_getcpu();
