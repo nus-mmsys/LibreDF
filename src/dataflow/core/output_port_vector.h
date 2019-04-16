@@ -55,6 +55,14 @@ namespace df {
 	}
     }
 
+    void addArity(int r) {
+	int outsize = outputs.size();
+	for (int i=0; i<r; i++) {
+		OutputPort<T> * out = new OutputPort<T>(name+"."+std::to_string(i+outsize));
+		outputs.push_back(out);
+	}
+    }
+
     OutputPort<T> * getFreePort() {
  	OutputPort<T> * op = nullptr;
 	for (auto out : outputs) {

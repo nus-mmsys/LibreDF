@@ -42,6 +42,24 @@ void MatMerge::init() {
 
 }
 
+void MatMerge::reinit() {
+
+  auto newlevel = getPropInt("level");
+
+  if (newlevel > level) {
+  	input->addArity((newlevel*newlevel) - (level*level));
+  	level = newlevel;
+  }
+
+  if (newlevel < level) {
+	  //TODO
+  }
+
+  tilew = 0;
+  tileh = 0;
+
+}
+
 void MatMerge::run() {
 
   auto in = consume(input);	

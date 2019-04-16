@@ -42,6 +42,23 @@ void MatSplit::init() {
 
 }
 
+void MatSplit::reinit() {
+
+  auto newlevel = getPropInt("level");
+  
+  if (newlevel > level) {
+  	output->addArity((newlevel*newlevel) - (level*level));
+	level = newlevel;
+  }
+
+  if (newlevel < level) {
+	//TODO
+  }
+
+  tilew = 0;
+  tileh = 0;
+}
+
 void MatSplit::run() {
 
   auto in = consume(input);	

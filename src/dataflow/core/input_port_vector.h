@@ -56,6 +56,14 @@ namespace df {
 	}
     }
 
+    void addArity(int r) {
+	auto insize = inputs.size();
+	for (int i=0; i<r; i++) {
+		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i+insize));
+		inputs.push_back(in);
+	}
+    }
+
     virtual void accept() {
 	//Fix this for dynamic port creation.
 	//Use getFreePort.

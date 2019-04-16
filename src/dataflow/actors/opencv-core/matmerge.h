@@ -46,6 +46,8 @@ public:
   
   virtual void init();
   
+  virtual void reinit();
+  
   virtual void run();
   
   virtual ~MatMerge();
