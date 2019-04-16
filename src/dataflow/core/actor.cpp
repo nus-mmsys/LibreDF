@@ -223,6 +223,10 @@ void Actor::startInit() {
   tinit = thread(&Actor::initActor, this);
 }
 
+void Actor::startReInit() {
+  treinit = thread(&Actor::reInitActor, this);
+}
+
 void Actor::startRun(int cpu) {
 
   int cpuid = cpu;
@@ -261,7 +265,10 @@ void Actor::waitPause() {
 
 void Actor::waitInit() {
   tinit.join();
+}
 
+void Actor::waitReInit() {
+  treinit.join();
 }
 
 void Actor::waitRun() {
@@ -301,6 +308,29 @@ void Actor::initActor() {
 	    p.second->startAccept();
     }
   }
+   
+}
+
+void Actor::reInitActor() {
+
+  reinit();
+
+  /*
+  for (auto p : outputPorts) {
+	if (!propEmpty(p.first+"_size")) {
+		p.second->setBufferSize(getPropInt(p.first+"_size"));
+	}
+  }
+  */
+  
+  /*
+  if (distributed) {
+    for (auto p : inputPorts) {
+	    listen(p.second);
+	    p.second->startAccept();
+    }
+  }
+  */
    
 }
 

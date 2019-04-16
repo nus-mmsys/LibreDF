@@ -48,6 +48,7 @@ namespace df {
   private:
 
     std::thread tinit;
+    std::thread treinit;
     std::thread trun;
     std::thread tresumetill;
     std::thread tpause;
@@ -118,6 +119,9 @@ namespace df {
      * Read data from input actor, process the data, and write the result to the output port.
      */
     virtual void init() = 0;
+    virtual void reinit() {
+	    init();
+    }
     virtual void run() = 0;
     virtual void runRT() {
       run();
@@ -325,7 +329,14 @@ namespace df {
      * \return The new status of the actor.
      */
     void initActor(); 
-    
+     
+    /*!
+     * Execute the reinit of this actor.
+     * (Used in reinitialization)
+     *
+     */
+    void reInitActor(); 
+
     /*!
      * Execute the processing of this actor.
      * The actors are connected by a link list and each actor calls executeActor of the next actor.
@@ -336,6 +347,8 @@ namespace df {
     
     void startInit();
     
+    void startReInit();
+    
     void startRun(int cpu);
     
     void startResumeTill(int iter);
@@ -345,6 +358,8 @@ namespace df {
     void waitPause();
 
     void waitInit();
+    
+    void waitReInit();
     
     void waitRun();
     

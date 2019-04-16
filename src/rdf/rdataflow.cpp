@@ -103,6 +103,14 @@ void RDataflow::reconfigure(int iter) {
 		}
 	}
 
+	for (auto c : repac) {
+		c->startReInit();
+	}
+
+	for (auto c : repac) {
+		c->waitReInit();
+	}
+
 	//Create appearing edges.
 	vector<df::Edge *> apped;
 	df::Edge * edtmp;
@@ -119,6 +127,7 @@ void RDataflow::reconfigure(int iter) {
 	}	
 	
 	print();
+
 
 	for (auto c : appac) {
 		setDataflowProp(c);
