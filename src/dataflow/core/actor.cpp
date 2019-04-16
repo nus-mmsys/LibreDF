@@ -57,14 +57,18 @@ int Actor::getSolution() {
 	return solution;
 }
 
-void Actor::setProps(std::map<std::string, std::string> p) {
+bool Actor::setProps(std::map<std::string, std::string> p) {
+	bool rep = false;
 	for (auto && v : p) {
 		if (p.find(v.first) == p.end()) {
 			prop.setProp(v.first, v.second);
-		} else {
+			rep = true;
+		} else if (getProp(v.first) != v.second) {
 			prop.replaceProp(v.first, v.second);
+			rep = true;
 		}
 	}
+	return rep;
 }
 
 void Actor::log(std::string msg) {

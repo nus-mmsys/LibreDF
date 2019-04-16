@@ -167,8 +167,12 @@ namespace df {
      *
      * \param p
      *   The list of all property names and values.
+     *
+     * \return
+     *   Returns true if a new entry is added or an 
+     *   old value is replaced by a new one.
      */
-    void setProps(std::map<std::string, std::string> p);
+    bool setProps(std::map<std::string, std::string> p);
     
     /*!
      * Replace a property of the actor.

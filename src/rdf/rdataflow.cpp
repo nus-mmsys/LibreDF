@@ -45,7 +45,7 @@ Rule * RDataflow::get_applicable_rule() {
 
 //TODO
 /*
- * 1) Copy all the properties.
+ * 1) Copy all the properties. (done)
  * 2) Reinit actors if their properties have changed.
  * 3) Test it with canny-parallel.rdf
  * 4) Mesure the costs.
@@ -87,6 +87,7 @@ void RDataflow::reconfigure(int iter) {
 	//Create appearing actors.
 	string type;
 	vector<df::Actor *> appac;
+	vector<df::Actor *> repac;
 	df::Actor * actmp;
 	for (auto c : g->get_actors()) {
 		if (actors.find(c) == actors.end()) {
@@ -96,7 +97,9 @@ void RDataflow::reconfigure(int iter) {
 			actmp->setProps(g->get_actor_props(c));
 			appac.push_back(actmp);
 		} else {
-			actors[c]->setProps(g->get_actor_props(c));
+			auto rep = actors[c]->setProps(g->get_actor_props(c));
+			if (rep)
+				repac.push_back(actors[c]);
 		}
 	}
 
