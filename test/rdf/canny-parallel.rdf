@@ -57,10 +57,10 @@ right {
     }
     actor B {
     	computation = MatSplit;
-	output[0] = e1;
-	output[1] = e2;
-	output[2] = e3;
-	output[3] = e4;
+	output.0 = e1;
+	output.1 = e2;
+	output.2 = e3;
+	output.3 = e4;
 	level = 2;
     }
     actor x1 {
@@ -97,10 +97,10 @@ right {
     }
     actor z {
     	computation = MatMerge;
-	input[0] = e9;
-	input[1] = e10;
-	input[2] = e11;
-	input[3] = e12;
+	input.0 = e9;
+	input.1 = e10;
+	input.2 = e11;
+	input.3 = e12;
 	level = 2;
     }
 }
