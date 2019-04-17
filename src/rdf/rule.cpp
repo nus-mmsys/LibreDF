@@ -222,9 +222,11 @@ int Rule::apply() {
 			if (found==false) {
 				auto src_rate = g->get_source_rate(edge);
 				auto snk_rate = g->get_sink_rate(edge);
-				ret = res->add_edge(src, snk);
-				res->set_source_rate(edge, src_rate);
-				res->set_sink_rate(edge, snk_rate);
+				auto src_port = g->get_source_port(edge);
+				auto snk_port = g->get_sink_port(edge);
+				ret = res->add_edge(src, snk, 
+						src_rate, snk_rate, 
+						src_port, snk_port);
 			}
 		}
 		
@@ -242,6 +244,8 @@ int Rule::apply() {
 
 			auto src_rate_p = r->get_source_rate_p(edge);
 			auto snk_rate_p = r->get_sink_rate_p(edge);
+			auto src_port = r->get_source_port(edge);
+			auto snk_port = r->get_sink_port(edge);
 			
 			if (is_variable(src_rate_p)) {
 				src_rate = ratevar[src_rate_p];
@@ -256,7 +260,9 @@ int Rule::apply() {
 			resedges = res->get_edges();
 			if (find(resedges.begin(), resedges.end(), edge) == resedges.end())	
 			{
-				res->add_edge(src, snk, src_rate, snk_rate);
+				res->add_edge(src, snk,
+						src_rate, snk_rate,
+						src_port, snk_port);
 			}
 		}
 		res->solve();	
