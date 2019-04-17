@@ -931,6 +931,8 @@ void Graph::reconfigure_from(Graph * g) {
 		
 			set_source_rate(e, g->get_source_rate(e));
 			set_sink_rate(e, g->get_sink_rate(e));
+			set_source_port(e, g->get_source_port(e));
+			set_sink_port(e, g->get_sink_port(e));
 		}
 	}
 }
