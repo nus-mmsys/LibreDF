@@ -154,13 +154,10 @@ int Actor::connectActor(Actor * snk, int p, int c) {
   return 0;
 }
 
-int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, int c) {
+int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int outpidx, int inpidx, int p, int c) {
 	
   IPort * in;
   OPort * out;
-
-  //retrieve index from outp
-  int index = -1;
 
   if (outp == "" && inp == "")
 	  return connectActor(snk, p, c);
@@ -192,7 +189,7 @@ int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int p, i
 	return -1;
   }	
 
-  int ret = out->connectPort(in, index);
+  int ret = out->connectPort(in, outpidx, inpidx);
   out->setRate(p);
   in->setRate(c);
   return ret;

@@ -101,24 +101,28 @@ namespace df {
 	    taccept.join();
     }
 
-    InputPort<T> * getFreePort() {
+    InputPort<T> * getFreePort(int idx) {
 	    InputPort<T> * ip = nullptr;
-	    for (auto in : inputs) {
-	      if (in->getLinked() < 1) {
+	    if (idx >= 0 && idx < inputs.size())
+		    ip = inputs[idx];
+	    else {
+	      for (auto in : inputs) {
+	        if (in->getLinked() < 1) {
 		      ip = in;
 		      break;
+	        }
 	      }
-	    }
-	    if (ip == nullptr) {
-	      ip = new InputPort<T>(name+"."+std::to_string(inputs.size()));
-	      inputs.push_back(ip);
+	      if (ip == nullptr) {
+	        ip = new InputPort<T>(name+"."+std::to_string(inputs.size()));
+	        inputs.push_back(ip);
+	      }
 	    }
 	    increaseLinked();
 	    return ip;
     }
 
-    void setBuffer(BufferInfc * b, int i) {
-	    getFreePort()->setBuffer(b,i);
+    void setBuffer(BufferInfc * b, int inpidx, int i) {
+	    getFreePort(inpidx)->setBuffer(b,inpidx,i);
     }
 
     virtual void clearBuffer() {

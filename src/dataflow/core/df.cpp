@@ -167,6 +167,7 @@ void Dataflow::connectActors(Actor * src, Actor * snk, int p, int c) {
 void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, int c) {
 	int snkport;
 	string snkhost, snkportstr, inp, outp;
+	int outpidx, inpidx;
 	if (distributed) {
 
 		if (remoteactors.find(src->getName()) != remoteactors.end())
@@ -187,7 +188,9 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 	} else {
 		outp = edges[edge]->getSourcePort();
 		inp = edges[edge]->getSinkPort();
-		src->connectActor(snk, outp, inp, p, c);
+		outpidx = edges[edge]->getSourcePortIndex();
+		inpidx = edges[edge]->getSinkPortIndex();
+		src->connectActor(snk, outp, inp, outpidx, inpidx, p, c);
 	}
 	src->setOutputPortRate(outp, p);
 	snk->setInputPortRate(inp, c);

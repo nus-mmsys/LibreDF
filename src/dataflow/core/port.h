@@ -120,7 +120,7 @@ namespace df {
     virtual void startAccept() = 0;
     virtual void waitAccept() = 0;
     virtual void listen(int portnb) = 0;
-    virtual void setBuffer(BufferInfc * buf, int i) = 0;
+    virtual void setBuffer(BufferInfc * buf, int inpidx, int i) = 0;
     virtual void clearBuffer() = 0;
     virtual ~IPort() {
 	delete sock;
@@ -133,7 +133,7 @@ namespace df {
     virtual int connectPort(std::string host, int portnb) = 0;
     virtual int connectPort(IPort* n) = 0;
     virtual int disconnectPort(IPort* n) = 0;
-    virtual int connectPort(IPort* n, int index) = 0;
+    virtual int connectPort(IPort* n, int outpix, int inpidx) = 0;
     virtual void setBufferSize(int s) = 0;
     virtual ~OPort() {}
   };

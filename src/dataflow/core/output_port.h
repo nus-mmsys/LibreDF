@@ -229,7 +229,7 @@ namespace df {
      * \param n next port to connect to
      */
     virtual int connectPort(IPort* n) {
-      return connectPort(n, nextPorts.size());
+      return connectPort(n, nextPorts.size(), -1);
     } 
 
     /*!
@@ -239,14 +239,14 @@ namespace df {
      *
      * \param i index of next port 
      */
-    virtual int connectPort(IPort* n, int i) {
-      int idx = i;
-      if ( i < 0 || i > nextPorts.size() ) {
+    virtual int connectPort(IPort* n, int outpidx, int inpidx) {
+      int idx = outpidx;
+      if ( outpidx < 0 || outpidx > nextPorts.size() ) {
 	idx = nextPorts.size();
       }
       nextPorts.insert(nextPorts.begin()+idx, n);
       increaseLinked();
-      n->setBuffer(buf, index);
+      n->setBuffer(buf, inpidx, index);
       return 0;
     } 
 

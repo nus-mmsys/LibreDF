@@ -49,7 +49,6 @@ Rule * RDataflow::get_applicable_rule() {
  * 2) Reinit actors if their properties have changed.
  * (done only for increase)
  * 3) Test it with canny-parallel.rdf
- * (works but tiles are not in order)
  * 4) Mesure the costs.
  */
 void RDataflow::reconfigure(int iter) {
@@ -123,6 +122,8 @@ void RDataflow::reconfigure(int iter) {
 			edtmp = createEdge(e, srcname, snkname);
 			edtmp->setSourceRate(g->get_source_rate(e));
 			edtmp->setSinkRate(g->get_sink_rate(e));
+			edtmp->setSourcePort(g->get_source_port(e));
+			edtmp->setSinkPort(g->get_sink_port(e));
 			apped.push_back(edtmp);
 			
 		}
