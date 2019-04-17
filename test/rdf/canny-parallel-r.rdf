@@ -1,0 +1,181 @@
+rdf canny-parallel-r {
+    topology {
+        nodes = A,B,C,D,E,F;
+	edges = e1(A,B), e2(B,C), e3(C,D), e4(D,E), e5(E,F);
+    }
+    actor A {
+    	computation = VideoCapture;
+	file_name = pedestrian.mp4;
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 1;
+    }
+    actor C {
+    	computation = CvtColor;
+    }
+    actor D {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor E {
+    	computation = MatMerge;
+	level = 1;
+    }
+    actor F {
+    	computation = ImageWrite;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = B,x1,y1,z;
+	edges = e1(B,x1), e2(x1,y1), e3(y1,z);
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 1;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y1 {
+    	computation = Canny;
+    	threshold = 100;
+	ratio = 2;
+    }
+    actor z {
+    	computation = MatMerge;
+	level = 1;
+    }
+}
+right {
+    topology {
+        nodes = B,x1,x2,x3,x4,y1,y2,y3,y4,z;
+	edges = e1(B,x1), e2(B,x2), e3(B,x3), e4(B,x4), e5(x1,y1), e6(x2,y2), e7(x3,y3), e8(x4,y4), e9(y1,z), e10(y2,z), e11(y3,z), e12(y4,z);
+    }
+    actor B {
+    	computation = MatSplit;
+	output.0 = e1;
+	output.1 = e2;
+	output.2 = e3;
+	output.3 = e4;
+	level = 2;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor x2 {
+    	computation = CvtColor;
+    }
+    actor x3 {
+    	computation = CvtColor;
+    }
+    actor x4 {
+    	computation = CvtColor;
+    }
+    actor y1 {
+    	computation = Canny;
+ 	threshold = 100;
+	ratio = 2; 
+    }
+    actor y2 {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor y3 {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor y4 {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor z {
+    	computation = MatMerge;
+	input.0 = e9;
+	input.1 = e10;
+	input.2 = e11;
+	input.3 = e12;
+	level = 2;
+    }
+}
+}
+rule r2 {
+left {
+    topology {
+        nodes = B,x1,x2,x3,x4,y1,y2,y3,y4,z;
+	edges = e1(B,x1), e2(B,x2), e3(B,x3), e4(B,x4), e5(x1,y1), e6(x2,y2), e7(x3,y3), e8(x4,y4), e9(y1,z), e10(y2,z), e11(y3,z), e12(y4,z);
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 2;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor x2 {
+    	computation = CvtColor;
+    }
+    actor x3 {
+    	computation = CvtColor;
+    }
+    actor x4 {
+    	computation = CvtColor;
+    }
+    actor y1 {
+    	computation = Canny;
+ 	threshold = 100;
+	ratio = 2; 
+    }
+    actor y2 {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor y3 {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor y4 {
+    	computation = Canny;
+	threshold = 100;
+	ratio = 2;
+    }
+    actor z {
+    	computation = MatMerge;
+	level = 2;
+    }
+}
+right {
+    topology {
+        nodes = B,x1,y1,z;
+	edges = e1(B,x1), e2(x1,y1), e3(y1,z);
+    }
+    actor B {
+    	computation = MatSplit;
+	level = 1;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y1 {
+    	computation = Canny;
+    	threshold = 100;
+	ratio = 2;
+    }
+    actor z {
+    	computation = MatMerge;
+	level = 1;
+    }
+}
+}
+main {
+	load=2 : r1;
+	load=2 : r2;
+}
