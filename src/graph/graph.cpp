@@ -187,11 +187,13 @@ int Graph::add_edge(string edge_source, string edge_sink) {
         return add_edge(edgename, edge_source, edge_sink);
 }
 
-int Graph::add_edge(string edge_source, string edge_sink, int src_rate, int snk_rate) {
+int Graph::add_edge(string edge_source, string edge_sink, int src_rate, int snk_rate, string src_port, string snk_port) {
 	string edgename = new_edge_name(edge_source, edge_sink);
 	int ret = add_edge(edgename, edge_source, edge_sink);
 	set_source_rate(edgename, src_rate);
 	set_sink_rate(edgename, snk_rate);
+	set_source_port(edgename, src_port);
+	set_sink_port(edgename, snk_port);
         return ret;
 }
 
@@ -586,6 +588,20 @@ int Graph::set_source_rate(string edgename, int rate) {
 	if (edges.find(edgename) == edges.end())
 		return -1;
 	edges[edgename]->set_source_rate(rate);
+	return 0;
+}
+
+int Graph::set_source_port(string edgename, string src_port) { 
+	if (edges.find(edgename) == edges.end())
+		return -1;
+	edges[edgename]->set_source_port(src_port);
+	return 0;
+}
+
+int Graph::set_sink_port(string edgename, string snk_port) { 
+	if (edges.find(edgename) == edges.end())
+		return -1;
+	edges[edgename]->set_sink_port(snk_port);
 	return 0;
 }
 

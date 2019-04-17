@@ -383,7 +383,7 @@ public:
 	 * \return
 	 *
 	 */
-	int add_edge(string edge_source, string edge_sink, int src_rate, int snk_rate);
+	int add_edge(string edge_source, string edge_sink, int src_rate, int snk_rate, string src_port, string snk_port);
 	
 	/*!
 	 * Returns a list of topological orders of the graph.
@@ -550,6 +550,34 @@ public:
 	 *
 	 */
 	int set_source_rate(string edgename, int rate);
+
+	/*!
+	 * Set the source port for an edge with specified name.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \param src_port
+	 * 	The source port name of the edge to set.
+	 *
+	 * \return
+	 *
+	 */
+        int set_source_port(string edgename, string src_port);
+ 
+	/*!
+	 * Set the sink port for an edge with specified name.
+	 * 
+	 * \param edgename
+	 * 	Name of the edge.
+	 *
+	 * \param snk_port
+	 * 	The sink port name of the edge to set.
+	 *
+	 * \return
+	 *
+	 */       
+	int set_sink_port(string edgename, string snk_port);
 
 	/*!
 	 * Set the parametric source rate for an edge with specified name.
