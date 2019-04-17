@@ -156,6 +156,7 @@ namespace df {
 	 */
 	void setSourcePort(std::string p);
 	std::string getSourcePort();
+	int getSourcePortIndex();
 	
 	/*!
 	 * Set sink port of the edge.
@@ -166,6 +167,7 @@ namespace df {
 	 */
 	void setSinkPort(std::string p);
 	std::string getSinkPort();
+	int getSinkPortIndex();
 
 	/*!
 	 * Get source rate of the edge.

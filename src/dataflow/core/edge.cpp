@@ -101,6 +101,13 @@ std::string Edge::getSinkPort() {
 	return snk_port;
 }
 
+int Edge::getSourcePortIndex() {
+	return src_port_idx;
+}
+int Edge::getSinkPortIndex() {
+	return snk_port_idx;
+}
+
 int Edge::getSourceRate() {
 	return src_rate;
 }
