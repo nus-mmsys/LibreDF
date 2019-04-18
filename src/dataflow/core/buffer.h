@@ -91,8 +91,8 @@ namespace df {
       for (int i=0; i<size; i++) {
 	delete tokens[i];
 	tokens[i] = nullptr;
-	size = 0;
       }
+      size = 0;
     }
     
   };
