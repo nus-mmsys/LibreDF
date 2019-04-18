@@ -289,8 +289,9 @@ void Rule::extract_common_actors() {
 	}
 
 	for (auto lact : lactors) {
-		if (find(ractors.begin(), ractors.end(), lact) == ractors.end())
+		if (find(ractors.begin(), ractors.end(), lact) == ractors.end()) {
 			disapp_actors.push_back(lact);
+		}
 	}
 }
 
@@ -347,11 +348,11 @@ bool Rule::find_value(map<string, string> matchmap, string val) {
 	return false;
 }
 
-map<string, string> Rule::matching_from(string lnode, string gnode, map<string, string> matchmap) {
+void Rule::matching_from(string lnode, string gnode, map<string, string>&  matchmap) {
 	if (node_match(lnode, gnode)) {
 		matchmap.insert(make_pair(lnode, gnode));
 		if (matchmap.size()==l->actor_size())
-			return matchmap;
+			return;
 		vector<string> lpred = l->get_pred(lnode);
 		vector<string> gpred = g->get_pred(gnode);
 		for (auto lp : lpred) {
@@ -359,9 +360,7 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 				for (auto gp : gpred) {
 					if (!find_value(matchmap, gp) &&
 					      edge_match(lp, lnode, gp, gnode)) {
-					    matchmap = matching_from(lp,gp, matchmap);
-					    if (matchmap.size()!=0)
-						return matchmap;
+					    matching_from(lp,gp, matchmap);
 					}
 				}
 			}
@@ -373,15 +372,12 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 				for (auto gs : gsucc) {
 					if (!find_value(matchmap, gs) &&
 					      edge_match(lnode, ls, gnode, gs)) {
-					    matchmap = matching_from(ls,gs, matchmap);
-					    if (matchmap.size()!=0)
-						return matchmap;
+					    matching_from(ls,gs, matchmap);
 					}
 				}
 			}
 		}
 	}
-	return matchmap;
 }
 
 bool Rule::matching_check() {
@@ -389,8 +385,8 @@ bool Rule::matching_check() {
 		matching = false;
 		return matching;
 	}
-	map<string, string> matchmap = 
-		matching_from(nameconst[0], nameconst[0], map<string,string>());
+	map<string, string> matchmap; 
+	matching_from(nameconst[0], nameconst[0], matchmap);
 	
 	if (matchmap.size()==0) {
 		matching = false;

@@ -99,7 +99,7 @@ private:
 	 * Return a map of matched nodes in a map.
 	 *
 	 */ 
-	map<string, string> matching_from(string lnode, string gnode, map<string, string> matchmap);
+	void matching_from(string lnode, string gnode, map<string, string>& matchmap);
 
 	/*!
 	 * Check if a matching of the rule is found in the data graph
