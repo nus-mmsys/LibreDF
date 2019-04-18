@@ -101,11 +101,15 @@ namespace df {
 	    taccept.join();
     }
 
-    InputPort<T> * getFreePort(int idx) {
+    InputPort<T> * getFreePort(int inpidx) {
 	    InputPort<T> * ip = nullptr;
-	    if (inputs.find(idx) != inputs.end())
-		    ip = inputs[idx];
+	    if (inputs.find(inpidx) != inputs.end())
+		    ip = inputs[inpidx];
 	    else {
+		    int idx;
+		    for (int i=0; i<=inputs.size(); i++)
+			if (inputs.find(i) != inputs.end())
+				idx = i;
 		    ip = new InputPort<T>(name+"."+std::to_string(idx));
 		    inputs.insert(std::make_pair(idx, ip));
 	    }

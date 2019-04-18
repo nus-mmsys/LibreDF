@@ -68,8 +68,12 @@ namespace df {
 	if (outputs.find(outpidx) != outputs.end()) {
 		op = outputs[outpidx];
 	} else {
-		op = new OutputPort<T>(name+"."+std::to_string(outpidx));
-		outputs.insert(std::make_pair(outpidx, op));
+		int idx;
+		for (int i=0; i<=outputs.size(); i++)
+			if (outputs.find(i) != outputs.end())
+				idx = i;
+		op = new OutputPort<T>(name+"."+std::to_string(idx));
+		outputs.insert(std::make_pair(idx, op));
 	}
 	increaseLinked();
 	return op;
