@@ -337,12 +337,17 @@ bool Rule::edge_match(string lc, string lk, string gc, string gk) {
 	       ||(lkr == gkr && lcr == gcr));
 }
 
+bool Rule::find_value(map<string, string> matchmap, string val) {
+	for (auto m : matchmap) {
+		if(m.second==val)
+			return true;
+	}
+	return false;
+}
+
 map<string, string> Rule::matching_from(string lnode, string gnode, map<string, string> matchmap) {
-	map<string,string> res;
 	if (node_match(lnode, gnode)) {
 		matchmap.insert(make_pair(lnode, gnode));
-		//std::cout << lnode << " matches " << gnode << " , size=" 
-		//	<< matchmap.size() << " \n";  
 		if (matchmap.size()==l->actor_size())
 			return matchmap;
 		vector<string> lpred = l->get_pred(lnode);
@@ -350,11 +355,11 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 		for (auto lp : lpred) {
 			if (matchmap.find(lp)==matchmap.end()) {
 				for (auto gp : gpred) {
-					if (/*gp is not in matchmap second val &&*/
+					if (!find_value(matchmap, gp) &&
 					      edge_match(lp, lnode, gp, gnode)) {
-					    res = matching_from(lp,gp, matchmap);
-					    if (res.size()!=0)
-						return res;
+					    matchmap = matching_from(lp,gp, matchmap);
+					    if (matchmap.size()!=0)
+						return matchmap;
 					}
 				}
 			}
@@ -364,17 +369,17 @@ map<string, string> Rule::matching_from(string lnode, string gnode, map<string, 
 		for (auto ls : lsucc) {
 			if (matchmap.find(ls)==matchmap.end()) {
 				for (auto gs : gsucc) {
-					if (/*gs is not in matchmap second val &&*/
+					if (!find_value(matchmap, gs) &&
 					      edge_match(lnode, ls, gnode, gs)) {
-					    res = matching_from(ls,gs, matchmap);
-					    if (res.size()!=0)
-						return res;
+					    matchmap = matching_from(ls,gs, matchmap);
+					    if (matchmap.size()!=0)
+						return matchmap;
 					}
 				}
 			}
 		}
 	}
-	return res;
+	return matchmap;
 }
 
 bool Rule::matching_check() {

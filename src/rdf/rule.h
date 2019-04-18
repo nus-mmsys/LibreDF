@@ -93,6 +93,8 @@ private:
 	 */ 
         bool edge_match(string lc, string lk, string gc, string gk);
 
+        bool find_value(map<string, string> matchmap, string val);
+	
 	/*!
 	 * Return a map of matched nodes in a map.
 	 *
