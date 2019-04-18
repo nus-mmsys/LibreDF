@@ -103,7 +103,7 @@ namespace df {
 	if (outputs.size()==0)
 		return -1;
 
-	if (outpidx < 0 || outpidx >= outputs.size())
+	if (outpidx < 0)
 		idx = outputs.size()-1;
 
 	OutputPort<T> * op = nullptr;
