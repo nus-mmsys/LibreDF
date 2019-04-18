@@ -10,6 +10,7 @@ rdf canny-parallel-mix {
     actor B {
     	computation = MatSplit;
 	level = 1;
+	output.0 = e2;
     }
     actor C {
     	computation = CvtColor;
@@ -22,6 +23,7 @@ rdf canny-parallel-mix {
     actor E {
     	computation = MatMerge;
 	level = 1;
+	input.0 = e4;
     }
     actor F {
     	computation = ImageWrite;
@@ -36,6 +38,7 @@ left {
     actor B {
     	computation = MatSplit;
 	level = 1;
+	output.0 = e1;
     }
     actor x1 {
     	computation = CvtColor;
@@ -48,6 +51,7 @@ left {
     actor z {
     	computation = MatMerge;
 	level = 1;
+	input.0 = e3;
     }
 }
 right {
@@ -168,6 +172,7 @@ right {
     actor B {
     	computation = MatSplit;
 	level = 1;
+	output.0 = e1;
     }
     actor x1 {
     	computation = CvtColor;
@@ -180,6 +185,7 @@ right {
     actor z {
     	computation = MatMerge;
 	level = 1;
+	input.0 = e3;
     }
 }
 }
