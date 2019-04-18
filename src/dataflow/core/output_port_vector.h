@@ -98,10 +98,18 @@ namespace df {
     }
 
     virtual int disconnectPort(IPort* n, int outpidx, int inpidx) {
-     	OutputPort<T> * op = nullptr;
+     	int idx = outpidx;
+	
+	if (outputs.size()==0)
+		return -1;
+
+	if (outpidx < 0 || outpidx >= outputs.size())
+		idx = outputs.size()-1;
+
+	OutputPort<T> * op = nullptr;
 	auto it = outputs.begin();
 	for (; it!= outputs.end(); it++) {
-		if ((*it)->getName() == name+"."+std::to_string(outpidx)) {
+		if ((*it)->getName() == name+"."+std::to_string(idx)) {
 			op = *it;
 			break;
 		}

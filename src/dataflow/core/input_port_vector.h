@@ -126,16 +126,24 @@ namespace df {
     }
 
     void unsetBuffer(int inpidx) {
+	
+	if (inputs.size()==0)
+		return;
+	
+	int idx;
+	if (inpidx < 0 || inpidx >= inputs.size())
+		idx = inputs.size()-1;
+	
 	InputPort<T> * in = nullptr;
 	auto it = inputs.begin();
  	for (; it != inputs.end(); it++) {
-	    if ((*it)->getName() == name+"."+std::to_string(inpidx)) {
+	    if ((*it)->getName() == name+"."+std::to_string(idx)) {
  		in = *it;
 		break;
 	    }
 	}
 	if (in != nullptr) {
- 		in->unsetBuffer(inpidx);
+ 		in->unsetBuffer(idx);
  		inputs.erase(it);
  		delete in;
 	}
