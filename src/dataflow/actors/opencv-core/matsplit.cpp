@@ -48,13 +48,14 @@ void MatSplit::reinit() {
   
   if (newlevel > level) {
   	output->addArity((newlevel*newlevel) - (level*level));
-	level = newlevel;
   }
 
   if (newlevel < level) {
 	//TODO
+	//output->removeArity((level*level) - (newlevel*newlevel));
   }
 
+  level = newlevel;
   tilew = 0;
   tileh = 0;
 }
