@@ -80,7 +80,6 @@ Graph * Rule::apply(Graph * graph) {
 	g = graph;
 	res->clear();	
 	if (matching_check()) {
-		disappearing_actor_check();
 		apply();
 		return res;
 	} else
@@ -152,6 +151,10 @@ int Rule::verify() {
 
 int Rule::apply() {
 	int ret;
+
+	extract_common_actors();
+	disappearing_actor_check();
+	
 	res->set_name(g->get_name()+"."+name);
 	
 	if (matching && disappearing_actor && connectivity && consistency && liveness) {
@@ -292,7 +295,6 @@ void Rule::extract_common_actors() {
 }
 
 bool Rule::disappearing_actor_check() {
-	extract_common_actors();
 	auto edges = g->get_edges();
 	for (auto d : disapp_actors) {
 		auto dg = d;
