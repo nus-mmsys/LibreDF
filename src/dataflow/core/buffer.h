@@ -63,7 +63,8 @@ namespace df {
      
     void clearConsumer()  {
       for (int i=0; i<size; i++) {
-	tokens[i]->clearConsumer();
+	      if (tokens[i] != nullptr) 
+		     tokens[i]->clearConsumer();
       }
     }
 
@@ -89,6 +90,8 @@ namespace df {
     ~Buffer<T>() {
       for (int i=0; i<size; i++) {
 	delete tokens[i];
+	tokens[i] = nullptr;
+	size = 0;
       }
     }
     

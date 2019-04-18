@@ -321,7 +321,7 @@ namespace df {
      * \param inp
      *   The input port on which the sink actor is connected.
      */
-    int disconnectActor(Actor * snk, std::string outp, std::string inp);
+    int disconnectActor(Actor * snk, std::string outp, std::string inp, int outpidx, int inpidx);
     
     /*!
      * Execute the init of this actor.

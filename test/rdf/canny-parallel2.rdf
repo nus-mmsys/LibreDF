@@ -10,6 +10,10 @@ rdf canny-parallel2 {
     actor B {
     	computation = MatSplit;
 	level = 2;
+	output.0 = e2;
+	output.1 = e3;
+	output.2 = e4;
+	output.3 = e5;
     }
     actor C1 {
     	computation = CvtColor;
@@ -46,6 +50,10 @@ rdf canny-parallel2 {
     actor E {
     	computation = MatMerge;
 	level = 2;
+	input.0 = e10;
+	input.1 = e11;
+	input.2 = e12;
+	input.3 = e13;
     }
     actor F {
     	computation = ImageWrite;

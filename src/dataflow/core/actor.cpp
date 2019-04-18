@@ -196,7 +196,7 @@ int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int outp
 
 }
 
-int Actor::disconnectActor(Actor * snk, std::string outp, std::string inp) {
+int Actor::disconnectActor(Actor * snk, std::string outp, std::string inp, int outpidx, int inpidx) {
   IPort * in;
   OPort * out;
 
@@ -211,8 +211,7 @@ int Actor::disconnectActor(Actor * snk, std::string outp, std::string inp) {
 	  return -1;
   } else
 	in = snk->inputPorts[inp];
-
-  int ret = out->disconnectPort(in);
+  int ret = out->disconnectPort(in, outpidx, inpidx);
   return ret;
 }
 

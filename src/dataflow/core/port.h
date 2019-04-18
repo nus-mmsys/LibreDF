@@ -95,6 +95,13 @@ namespace df {
     void increaseLinked();
   
     /*!
+     * Decrease the number of the ports linked to the port.
+     * (The actor uses this function when it disconnects two actors)
+     *
+     */
+    void decreaseLinked();
+
+    /*!
      * Make the number of the ports linked to the port equal zero.
      * (It is used when disconnecting the port)
      *
@@ -121,6 +128,7 @@ namespace df {
     virtual void waitAccept() = 0;
     virtual void listen(int portnb) = 0;
     virtual void setBuffer(BufferInfc * buf, int inpidx, int i) = 0;
+    virtual void unsetBuffer(int inpidx) = 0;
     virtual void clearBuffer() = 0;
     virtual ~IPort() {
 	delete sock;
@@ -132,7 +140,7 @@ namespace df {
     OPort(std::string name) : Port(name) {}
     virtual int connectPort(std::string host, int portnb) = 0;
     virtual int connectPort(IPort* n) = 0;
-    virtual int disconnectPort(IPort* n) = 0;
+    virtual int disconnectPort(IPort* n, int outpidx, int inpidx) = 0;
     virtual int connectPort(IPort* n, int outpix, int inpidx) = 0;
     virtual void setBufferSize(int s) = 0;
     virtual ~OPort() {}

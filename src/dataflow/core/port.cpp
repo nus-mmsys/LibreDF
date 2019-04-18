@@ -54,6 +54,10 @@ void Port::increaseLinked() {
   linked++;
 }
 
+void Port::decreaseLinked() {
+  linked--;
+}
+
 void Port::clearLinked() {
   linked=0;
 }

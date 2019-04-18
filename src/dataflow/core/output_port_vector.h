@@ -32,7 +32,7 @@ namespace df {
   class OutputPortVector : public OPort {
     
   private:
-    std::vector<OutputPort<T> *> outputs;
+    std::map<int, OutputPort<T> *> outputs;
 
   public:
     
@@ -51,7 +51,7 @@ namespace df {
     void setArity(int r) {
 	for (int i=0; i<r; i++) {
 		OutputPort<T> * out = new OutputPort<T>(name+"."+std::to_string(i));
-		outputs.push_back(out);
+		outputs.insert(std::make_pair(i, out));
 	}
     }
 
@@ -59,25 +59,17 @@ namespace df {
 	int outsize = outputs.size();
 	for (int i=0; i<r; i++) {
 		OutputPort<T> * out = new OutputPort<T>(name+"."+std::to_string(i+outsize));
-		outputs.push_back(out);
+		outputs.insert(std::make_pair(i+outsize, out));
 	}
     }
 
     OutputPort<T> * getFreePort(int outpidx) {
  	OutputPort<T> * op = nullptr;
-	if (outpidx >=0 && outpidx < outputs.size()) {
+	if (outputs.find(outpidx) != outputs.end()) {
 		op = outputs[outpidx];
 	} else {
-	  for (auto out : outputs) {
-		if (out->getLinked() < 1) {
-			op = out;
-			break;
-		}
-	  } 
-	  if (op == nullptr) {
-		op = new OutputPort<T>(name+"."+std::to_string(outputs.size()));
-		outputs.push_back(op);
-	  }
+		op = new OutputPort<T>(name+"."+std::to_string(outpidx));
+		outputs.insert(std::make_pair(outpidx, op));
 	}
 	increaseLinked();
 	return op;
@@ -85,7 +77,7 @@ namespace df {
 
     virtual void setBufferSize(int s) {
 	for (auto out : outputs) {
-		out->setBufferSize(s);
+		out.second->setBufferSize(s);
 	}
     }
 
@@ -97,10 +89,14 @@ namespace df {
 	return getFreePort(-1)->connectPort(n);
     }
 
-    virtual int disconnectPort(IPort* n) {
-	//Not tested.
-    	for (auto p : outputs)
-		p->disconnectPort(n);
+    virtual int disconnectPort(IPort* n, int outpidx, int inpidx) {
+    	if (outputs.find(outpidx) != outputs.end()) {
+ 		OutputPort<T> * op = outputs[outpidx];
+		outputs.erase(outpidx);
+		n->unsetBuffer(inpidx);
+		decreaseLinked();
+		delete op;
+	}
 	return 0;
     }
 

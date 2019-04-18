@@ -120,9 +120,14 @@ namespace df {
       increaseLinked();	
       index = i;
     }
-    
+ 
+    void unsetBuffer(int inpidx) {
+    	clearBuffer();
+    }
+   
     virtual void clearBuffer() {
-      buf->clearConsumer();
+      if (buf != nullptr)
+	      buf->clearConsumer();
       buf = nullptr;
       clearLinked();	
     }

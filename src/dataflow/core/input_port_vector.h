@@ -32,7 +32,7 @@ namespace df {
   class InputPortVector: public IPort {
     
   private:
-    std::vector<InputPort<T> *> inputs;
+    std::map<int, InputPort<T> *> inputs;
     std::vector<int> portNumbers;
 
   public:
@@ -52,7 +52,7 @@ namespace df {
     void setArity(int r) {
 	for (int i=0; i<r; i++) {
 		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i));
-		inputs.push_back(in);
+		inputs.insert(std::make_pair(i,in));
 	}
     }
 
@@ -60,7 +60,7 @@ namespace df {
 	auto insize = inputs.size();
 	for (int i=0; i<r; i++) {
 		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i+insize));
-		inputs.push_back(in);
+		inputs.insert(std::make_pair(i+insize, in));
 	}
     }
 
@@ -84,38 +84,30 @@ namespace df {
        	for (auto in : inputs) {
 		int p = portnb + i;
 		portNumbers.insert(portNumbers.begin(), p);
-		in->listen(p);
+		in.second->listen(p);
 	    	i++;
 	}
     }
 
     virtual void startAccept() {
 	    for (auto in : inputs)
-		    in->startAccept();
+		    in.second->startAccept();
             taccept = std::thread(&InputPortVector<T>::accept, this);
     }
 
     virtual void waitAccept() {
 	    for (auto in : inputs)
-		    in->waitAccept();
+		    in.second->waitAccept();
 	    taccept.join();
     }
 
     InputPort<T> * getFreePort(int idx) {
 	    InputPort<T> * ip = nullptr;
-	    if (idx >= 0 && idx < inputs.size())
+	    if (inputs.find(idx) != inputs.end())
 		    ip = inputs[idx];
 	    else {
-	      for (auto in : inputs) {
-	        if (in->getLinked() < 1) {
-		      ip = in;
-		      break;
-	        }
-	      }
-	      if (ip == nullptr) {
-	        ip = new InputPort<T>(name+"."+std::to_string(inputs.size()));
-	        inputs.push_back(ip);
-	      }
+		    ip = new InputPort<T>(name+"."+std::to_string(idx));
+		    inputs.insert(std::make_pair(idx, ip));
 	    }
 	    increaseLinked();
 	    return ip;
@@ -125,10 +117,19 @@ namespace df {
 	    getFreePort(inpidx)->setBuffer(b,inpidx,i);
     }
 
+    void unsetBuffer(int inpidx) {
+	    if (inputs.find(inpidx) != inputs.end()) {
+		InputPort<T> * in = inputs[inpidx];
+	    	in->unsetBuffer(inpidx);
+		inputs.erase(inpidx);
+		delete in;
+	    }
+    }
+
     virtual void clearBuffer() {
 	//Not tested.
 	for (auto c : inputs)
-		c->clearBuffer();
+		c.second->clearBuffer();
     }
 
     virtual ~InputPortVector() {

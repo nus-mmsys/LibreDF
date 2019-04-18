@@ -256,10 +256,15 @@ namespace df {
      * \param n next port to disconnect from
      *
      */
-    virtual int disconnectPort(IPort* n) {
-      nextPorts.clear();
-      clearLinked();
-      n->clearBuffer();
+    virtual int disconnectPort(IPort* n, int outpidx, int inpidx) {
+      if (outpidx >=0 && inpidx < nextPorts.size()) {
+	nextPorts.erase(nextPorts.begin()+outpidx);
+	decreaseLinked();	
+      } else {
+      	nextPorts.clear();
+      	clearLinked();
+      }
+      n->unsetBuffer(inpidx);
       return 0;
     } 
 
