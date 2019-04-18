@@ -32,7 +32,7 @@ namespace df {
   class InputPortVector: public IPort {
     
   private:
-    std::map<int, InputPort<T> *> inputs;
+    std::vector<InputPort<T> *> inputs;
     std::vector<int> portNumbers;
 
   public:
@@ -52,7 +52,7 @@ namespace df {
     void setArity(int r) {
 	for (int i=0; i<r; i++) {
 		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i));
-		inputs.insert(std::make_pair(i,in));
+		inputs.push_back(in);
 	}
     }
 
@@ -60,7 +60,7 @@ namespace df {
 	auto insize = inputs.size();
 	for (int i=0; i<r; i++) {
 		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i+insize));
-		inputs.insert(std::make_pair(i+insize, in));
+		inputs.push_back(in);
 	}
     }
 
@@ -84,34 +84,38 @@ namespace df {
        	for (auto in : inputs) {
 		int p = portnb + i;
 		portNumbers.insert(portNumbers.begin(), p);
-		in.second->listen(p);
+		in->listen(p);
 	    	i++;
 	}
     }
 
     virtual void startAccept() {
 	    for (auto in : inputs)
-		    in.second->startAccept();
+		    in->startAccept();
             taccept = std::thread(&InputPortVector<T>::accept, this);
     }
 
     virtual void waitAccept() {
 	    for (auto in : inputs)
-		    in.second->waitAccept();
+		    in->waitAccept();
 	    taccept.join();
     }
 
-    InputPort<T> * getFreePort(int inpidx) {
+    InputPort<T> * getFreePort(int idx) {
 	    InputPort<T> * ip = nullptr;
-	    if (inputs.find(inpidx) != inputs.end())
-		    ip = inputs[inpidx];
+	    if (idx >= 0 && idx < inputs.size())
+		    ip = inputs[idx];
 	    else {
-		    int idx;
-		    for (int i=0; i<=inputs.size(); i++)
-			if (inputs.find(i) != inputs.end())
-				idx = i;
-		    ip = new InputPort<T>(name+"."+std::to_string(idx));
-		    inputs.insert(std::make_pair(idx, ip));
+	      for (auto in : inputs) {
+	        if (in->getLinked() < 1) {
+		      ip = in;
+		      break;
+	        }
+	      }
+	      if (ip == nullptr) {
+	        ip = new InputPort<T>(name+"."+std::to_string(inputs.size()));
+	        inputs.push_back(ip);
+	      }
 	    }
 	    increaseLinked();
 	    return ip;
@@ -122,18 +126,25 @@ namespace df {
     }
 
     void unsetBuffer(int inpidx) {
-	    if (inputs.find(inpidx) != inputs.end()) {
-		InputPort<T> * in = inputs[inpidx];
-	    	in->unsetBuffer(inpidx);
-		inputs.erase(inpidx);
-		delete in;
+	InputPort<T> * in = nullptr;
+	auto it = inputs.begin();
+ 	for (; it != inputs.end(); it++) {
+	    if ((*it)->getName() == name+"."+std::to_string(inpidx)) {
+ 		in = *it;
+		break;
 	    }
+	}
+	if (in != nullptr) {
+ 		in->unsetBuffer(inpidx);
+ 		inputs.erase(it);
+ 		delete in;
+	}
     }
 
     virtual void clearBuffer() {
 	//Not tested.
 	for (auto c : inputs)
-		c.second->clearBuffer();
+		c->clearBuffer();
     }
 
     virtual ~InputPortVector() {

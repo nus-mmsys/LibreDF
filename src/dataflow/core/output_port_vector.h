@@ -32,7 +32,7 @@ namespace df {
   class OutputPortVector : public OPort {
     
   private:
-    std::map<int, OutputPort<T> *> outputs;
+    std::vector<OutputPort<T> *> outputs;
 
   public:
     
@@ -51,7 +51,7 @@ namespace df {
     void setArity(int r) {
 	for (int i=0; i<r; i++) {
 		OutputPort<T> * out = new OutputPort<T>(name+"."+std::to_string(i));
-		outputs.insert(std::make_pair(i, out));
+		outputs.push_back(out);
 	}
     }
 
@@ -59,21 +59,25 @@ namespace df {
 	int outsize = outputs.size();
 	for (int i=0; i<r; i++) {
 		OutputPort<T> * out = new OutputPort<T>(name+"."+std::to_string(i+outsize));
-		outputs.insert(std::make_pair(i+outsize, out));
+		outputs.push_back(out);
 	}
     }
 
     OutputPort<T> * getFreePort(int outpidx) {
  	OutputPort<T> * op = nullptr;
-	if (outputs.find(outpidx) != outputs.end()) {
+	if (outpidx >=0 && outpidx < outputs.size()) {
 		op = outputs[outpidx];
 	} else {
-		int idx;
-		for (int i=0; i<=outputs.size(); i++)
-			if (outputs.find(i) != outputs.end())
-				idx = i;
-		op = new OutputPort<T>(name+"."+std::to_string(idx));
-		outputs.insert(std::make_pair(idx, op));
+	  for (auto out : outputs) {
+		if (out->getLinked() < 1) {
+			op = out;
+			break;
+		}
+	  } 
+	  if (op == nullptr) {
+		op = new OutputPort<T>(name+"."+std::to_string(outputs.size()));
+		outputs.push_back(op);
+	  }
 	}
 	increaseLinked();
 	return op;
@@ -81,7 +85,7 @@ namespace df {
 
     virtual void setBufferSize(int s) {
 	for (auto out : outputs) {
-		out.second->setBufferSize(s);
+		out->setBufferSize(s);
 	}
     }
 
@@ -94,12 +98,19 @@ namespace df {
     }
 
     virtual int disconnectPort(IPort* n, int outpidx, int inpidx) {
-    	if (outputs.find(outpidx) != outputs.end()) {
- 		OutputPort<T> * op = outputs[outpidx];
-		outputs.erase(outpidx);
-		n->unsetBuffer(inpidx);
-		decreaseLinked();
-		delete op;
+     	OutputPort<T> * op = nullptr;
+	auto it = outputs.begin();
+	for (; it!= outputs.end(); it++) {
+		if ((*it)->getName() == name+"."+std::to_string(outpidx)) {
+			op = *it;
+			break;
+		}
+	}
+	if (op != nullptr) {
+ 		n->unsetBuffer(inpidx);
+		outputs.erase(it);
+ 		decreaseLinked();
+ 		delete op;
 	}
 	return 0;
     }
