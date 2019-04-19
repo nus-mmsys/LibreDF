@@ -41,7 +41,7 @@ void IntProducer::run() {
   Int * out = produce(output);	
   out->set(stepno);
   log("producing "+to_string(stepno));
-  sleep(500);
+  sleep(200);
 
   if(stepno == last)
     setEos(output);
@@ -58,7 +58,7 @@ void IntProducer::runDist() {
   strcpy(buf,(to_string(stepno)).c_str());
   send(output, buf);
   log("producing "+to_string(stepno));
-  sleep(500);
+  sleep(200);
 
 }
 */
@@ -71,7 +71,7 @@ void IntProducer::runRT() {
   
   if (!canlock) {
     log("droping "+data);
-    sleep(500);
+    sleep(200);
     return;
   }
   
@@ -79,7 +79,7 @@ void IntProducer::runRT() {
   out->set(stepno);
   
   log("producing "+to_string(stepno));
-  sleep(500);
+  sleep(200);
   
   if(stepno == last)
     setEos(output);

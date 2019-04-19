@@ -35,7 +35,7 @@ void IntConsumer::run() {
   Int * in = consume(input);
   
   log("consuming "+in->to_string());
-  sleep(500);
+  sleep(200);
   
   release(input);
 }

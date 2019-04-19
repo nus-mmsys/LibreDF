@@ -213,7 +213,7 @@ void RDataflow::run() {
 	
    	r = get_applicable_rule();
   	if (r==nullptr) {
-  		sleep(500);
+  		sleep(200);
   		continue;
   	}
 	else {

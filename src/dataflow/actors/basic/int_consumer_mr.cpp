@@ -36,7 +36,7 @@ void IntConsumerMR::run() {
   log("consuming ");
   for (auto t : in)
   	log(" "+t->to_string());
-  sleep(500);
+  sleep(200);
   
   releaseMR(input);
 }

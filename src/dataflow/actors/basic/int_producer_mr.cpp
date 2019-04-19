@@ -48,7 +48,7 @@ void IntProducerMR::run() {
 	index = index * 10;
   }
 
-  sleep(500);
+  sleep(200);
 
   if(stepno == last)
     setEos(output);
@@ -65,7 +65,7 @@ void IntProducerMR::runDist() {
   strcpy(buf,(to_string(stepno)).c_str());
   send(output, buf);
   log("producing "+to_string(stepno));
-  sleep(500);
+  sleep(200);
 
 }
 */
@@ -78,7 +78,7 @@ void IntProducerMR::runRT() {
   
   if (!canlock) {
     log("droping "+data);
-    sleep(500);
+    sleep(200);
     return;
   }
   
@@ -86,7 +86,7 @@ void IntProducerMR::runRT() {
   out->set(stepno);
   
   log("producing "+to_string(stepno));
-  sleep(500);
+  sleep(200);
   
   if(stepno == last)
     setEos(output);
