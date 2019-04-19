@@ -36,14 +36,17 @@ namespace df {
 	Actor * src_actor; /**< Source actor of the edge */
 	Actor * snk_actor; /**< Sink actor of the edge */
 
-	int src_port_idx;
-	int snk_port_idx;
+	IPort * iport; /**< Source port of the edge */
+	OPort * oport; /**< Sink port of the edge */
 
-	std::string src_port; /**< Source port of the edge */
-	std::string snk_port; /**< Sink port of the edge */
+	int src_port_idx; /**< Source port index (to be replaced by iport) */
+	int snk_port_idx; /**< Sink port index (to be replaced by oport) */
+
+	std::string src_port; /**< Source port of the edge (t.b.r. by iport) */
+	std::string snk_port; /**< Sink port of the edge (t.b.r. by oport) */
 	
-	int src_rate;
-	int snk_rate;
+	int src_rate; /**< Source rate of the edge (t.b.r. by iport) */
+	int snk_rate; /**< Sink rate of the edge (t.b.r. by oport) */
 
 	int init_tokens;
 	int tokens;
