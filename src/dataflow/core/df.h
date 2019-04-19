@@ -24,6 +24,7 @@
 #include <map>
 #include <cstdarg>
 #include <sstream>
+#include <algorithm>
 
 #include "actor_factory.h"
 #include "actor.h"
