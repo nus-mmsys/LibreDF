@@ -44,9 +44,19 @@ std::string Edge::getName() {
 void Edge::setSource(Actor * src) {
 	src_actor = src;
 }
+
 void Edge::setSink(Actor * snk) {
 	snk_actor = snk;
 }
+
+void Edge::setInPort(IPort * ip) {
+	iport = ip;
+}
+
+void Edge::setOutPort(OPort * op) {
+	oport = op;
+}
+
 void Edge::setVisited(bool v) {
 	visited = v;
 }
@@ -58,6 +68,12 @@ Actor * Edge::getSource() {
 }
 Actor * Edge::getSink() {
 	return snk_actor;
+}
+IPort * Edge::getInPort() {
+	return iport;
+}
+OPort * Edge::getOutPort() {
+	return oport;
 }
 void Edge::setSourceRate(int r) {
 	src_rate = r;

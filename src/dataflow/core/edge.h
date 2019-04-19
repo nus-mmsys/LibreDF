@@ -93,7 +93,25 @@ namespace df {
 	 *
 	 */
 	void setSink(Actor * snk);
-	
+
+	/*!
+	 * Set the input port of the edge
+	 *
+	 * \param ip
+	 * 	The input port to set.
+	 *
+	 */
+	void setInPort(IPort * ip);
+
+	/*!
+	 * Set the output port of the edge
+	 *
+	 * \param op
+	 * 	The outputs to set.
+	 *
+	 */
+	void setOutPort(OPort * op);
+
 	/*!
 	 * Set the visited boolean.
 	 *
@@ -101,6 +119,7 @@ namespace df {
 	 * 	The boolean value to assign to the visited.
 	 *
 	 */
+
 	void setVisited(bool v);
 	
 	/*!
@@ -129,6 +148,24 @@ namespace df {
 	 *
 	 */
 	Actor * getSink();
+
+	/*!
+	 * Get input port of the edge.
+	 *
+	 * \return
+	 * 	Input port of the edge.
+	 *
+	 */
+	IPort * getInPort();
+	
+	/*!
+	 * Get output port of the edge.
+	 *
+	 * \return
+	 * 	Output port of the edge.
+	 *
+	 */
+	OPort * getOutPort();
 	
 	/*!
 	 * Set source rate of the edge.
