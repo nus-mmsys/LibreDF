@@ -43,14 +43,6 @@ Rule * RDataflow::get_applicable_rule() {
 	return r;
 }
 
-//TODO
-/*
- * 1) Copy all the properties. (done)
- * 2) Reinit actors if their properties have changed.
- * (done only for increase)
- * 3) Test it with canny-parallel.rdf
- * 4) Mesure the costs.
- */
 void RDataflow::reconfigure(int iter) {
 	auto g = curr_graph;
 	string srcname, snkname;

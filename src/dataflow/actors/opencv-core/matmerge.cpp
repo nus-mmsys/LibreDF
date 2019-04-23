@@ -50,11 +50,6 @@ void MatMerge::reinit() {
   	input->addArity((newlevel*newlevel) - (level*level));
   }
 
-  if (newlevel < level) {
-	//TODO
-	//input->removeArity((level*level) - (newlevel*newlevel));
-  }
-
   level = newlevel;
   tilew = 0;
   tileh = 0;
