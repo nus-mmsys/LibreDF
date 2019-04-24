@@ -47,6 +47,9 @@ void RDataflow::reconfigure(int iter) {
 	auto g = curr_graph;
 	string srcname, snkname;
 
+	int cpunb = std::thread::hardware_concurrency();
+  	int cpuid = actors.size(); 
+
 	//g->print();
 
 	//Remove dissappearing edges.
@@ -141,9 +144,6 @@ void RDataflow::reconfigure(int iter) {
 			      ed->getSourceRate(), 
 			      ed->getSinkRate());
 	}
-
-	int cpunb = std::thread::hardware_concurrency();
-  	int cpuid = 0; 
 
   	for (auto c : appac) {
     		c->startRun(cpuid);
