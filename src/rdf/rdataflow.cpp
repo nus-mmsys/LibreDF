@@ -48,7 +48,7 @@ void RDataflow::reconfigure(int iter) {
 	string srcname, snkname;
 
 	int cpunb = std::thread::hardware_concurrency();
-  	int cpuid = actors.size(); 
+  	int cpuid = actors.size() % cpunb; 
 
 	//g->print();
 
