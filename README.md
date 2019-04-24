@@ -297,6 +297,7 @@ The repository contains the following libraries :
 ### Build
 
 ```bash
+  sudo apt install libopencv-dev
   cd build
   ./build.sh
   # or
