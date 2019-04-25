@@ -36,13 +36,12 @@
 #include <sys/stat.h>
 
 namespace df {
-  
  
   /*!
    * \class Actor
-   * Abstraction of a actor in a dataflow.
-   * Every concrete actor inherits from actor and can be connected to multiple actors,
-   * and receive various data from predecessor actors and send data to accessor actor.
+   * Abstraction of an actor in a dataflow.
+   * Every concrete actor inherits from actor and can be connected to multiple actors.
+   * An actor reads from an input ports (waits if the buffers is empty), and writes to its output ports (waits if the buffers are full).
    */
   
   class Actor  {
@@ -118,6 +117,18 @@ namespace df {
 
   public:
 
+    std::string getName();
+
+    std::string getType();
+    
+    void setType(std::string t);
+
+    void setSolution(int sol);
+
+    int getSolution();
+
+    void setCpuId(int cpu);
+
     Status getStatus() {
 	Status res;
 	status_mux.lock();
@@ -131,17 +142,6 @@ namespace df {
 	status = st;
 	status_mux.unlock();
     }
-
-    std::string getName();
-
-    std::string getType();
-    
-    void setType(std::string t);
-
-    void setSolution(int sol);
-    int getSolution();
-
-    void setCpuId(int cpu);
 
     /*!
      * Set a property of the actor.
