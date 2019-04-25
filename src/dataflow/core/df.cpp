@@ -359,15 +359,14 @@ void Dataflow::run() {
     return;
   }
 
-  int cpunb = std::thread::hardware_concurrency();
-  int cpuid = 0; 
 
   std::cout << "Running the dataflow...\n";
   start = std::chrono::high_resolution_clock::now();
 
+  placement.place(actors, ROUND_ROBIN, 0);
+
   for (auto f : actors) {
-    f.second->startRun(cpuid);
-    cpuid = (cpuid + 1) % cpunb;
+    f.second->startRun();
   }
   
   status = DataflowStatus::RUNNING;

@@ -152,6 +152,8 @@ namespace df {
     void setSolution(int sol);
     int getSolution();
 
+    void setCpuId(int cpu);
+
     /*!
      * Set a property of the actor.
      *
@@ -350,7 +352,7 @@ namespace df {
     
     void startReInit();
     
-    void startRun(int cpu);
+    void startRun();
     
     void startResumeTill(int iter);
     

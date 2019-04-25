@@ -31,6 +31,7 @@
 #include "edge.h"
 #include "server_socket.h"
 #include "client_socket.h"
+#include "placement.h"
 
 namespace df {
   
@@ -53,13 +54,16 @@ namespace df {
   class Dataflow {
   protected:
 
-    std::thread tdisc;
-    std::mutex iolock;
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
+
     std::map<std::string, Actor *> actors; /**< The set of all actors in the dataflow. */
     std::map<std::string, Edge *> edges; /**< The set of all actors in the dataflow. */
     std::map<std::string, Actor *> remoteactors; /**< The set of all remote actors in the dataflow. */
+
+    Placement placement; 
+    std::thread tdisc;
+    std::mutex iolock;
     bool realtime, distributed, logging, scheduling;
     std::string dischost;
     int discport;

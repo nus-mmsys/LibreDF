@@ -34,6 +34,7 @@ Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   solution = 1;
   iterno = 1;
   fireno = 1;
+  cpuid = 0;
 }
 
 std::string Actor::getName() {
@@ -47,6 +48,10 @@ std::string Actor::getType() {
 void Actor::setType(std::string t) {
 	type = t;
 	setProp("computation", t);
+}
+
+void Actor::setCpuId(int cpu) {
+	cpuid = cpu;
 }
 
 void Actor::setSolution(int sol) {
@@ -73,9 +78,8 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 
 void Actor::log(std::string msg) {
   if (logging) {
-    cpuid = sched_getcpu();
     hrtend = std::chrono::high_resolution_clock::now(); 
-    string s = name + ": [" + to_string(iterno) + ", " + to_string(fireno) + "] [" + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(hrtend - hrtstart).count()) + "] [" + to_string(cpuid) + "] " + msg + "\n";
+    string s = name + ": [" + to_string(iterno) + ", " + to_string(fireno) + "] [" + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(hrtend - hrtstart).count()) + "] [" + to_string(sched_getcpu()) + "] " + msg + "\n";
     iolock->lock(); 
     std::cout << s;
     iolock->unlock();
@@ -223,9 +227,8 @@ void Actor::startReInit() {
   treinit = thread(&Actor::reInitActor, this);
 }
 
-void Actor::startRun(int cpu) {
+void Actor::startRun() {
 
-  int cpuid = cpu;
   if (!propEmpty("cpu")) {
 	  cpuid = getPropInt("cpu");
   }

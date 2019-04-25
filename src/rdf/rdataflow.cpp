@@ -46,9 +46,7 @@ Rule * RDataflow::get_applicable_rule() {
 void RDataflow::reconfigure(int iter) {
 	auto g = curr_graph;
 	string srcname, snkname;
-
-	int cpunb = std::thread::hardware_concurrency();
-  	int cpuid = actors.size() % cpunb; 
+	int place_init = actors.size();
 
 	//g->print();
 
@@ -145,9 +143,10 @@ void RDataflow::reconfigure(int iter) {
 			      ed->getSinkRate());
 	}
 
+	placement.place(appac, ROUND_ROBIN, place_init);
+
   	for (auto c : appac) {
-    		c->startRun(cpuid);
-    		cpuid = (cpuid + 1) % cpunb;
+    		c->startRun();
   	}
 }
 
@@ -160,21 +159,18 @@ void RDataflow::run() {
     return;
   }
 
-  int cpunb = std::thread::hardware_concurrency();
-  int cpuid = 0; 
-
   log("[RDF] Running the dataflow...");
   start = std::chrono::high_resolution_clock::now();
 
   print();
 
+  placement.place(actors, ROUND_ROBIN, 0);
   /* 
    * The controller starts all actors.
    *
    */
   for (auto f : actors) {
-    f.second->startRun(cpuid);
-    cpuid = (cpuid + 1) % cpunb;
+    f.second->startRun();
   }
   
   /* 
