@@ -59,16 +59,13 @@ namespace df {
     int solution; /**< The actor's solution */ 
     int iterno; /**< The number of iteration in which the actor is in */
     int fireno; /**< The number of firing in one iteration */
-
+    
     Timer timer;
 
     std::string home_path; /**< The path for home folder */    
     std::string df_path; /**< The path for actors to use */
     std::string dfout_path; /**< The path for actors to use as output */
     
-    bool distributed, realtime;
-    std::mutex status_mux;
-
     /*!
      * Actor constructor
      * \param name
@@ -93,27 +90,29 @@ namespace df {
    
   private:
 
+    Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
+    
+    int cpuid;
+    bool logging;
+    bool scheduling;  
+    bool distributed;
+    bool realtime;
+
     std::thread tinit;
     std::thread treinit;
     std::thread trun;
     std::thread tresumetill;
     std::thread tpause;
-    std::mutex * iolock;
 
-    Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
-    
-    struct stat stat_info; /**< It is to ckeck if the rdf_path exists */
-
-    int cpuid;
-    bool logging;
-    bool scheduling;  
-
+    bool paused;
     std::condition_variable pause_cond;
     std::condition_variable sol_cond;
-    bool paused;
     std::mutex pause_mux;
     std::mutex sol_mux;
     std::mutex runend_mux;
+
+    std::mutex * iolock;
+    std::mutex status_mux;
 
   public:
 
