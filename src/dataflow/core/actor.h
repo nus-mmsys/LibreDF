@@ -45,52 +45,26 @@ namespace df {
    */
   
   class Actor  {
-  private:
 
-    std::thread tinit;
-    std::thread treinit;
-    std::thread trun;
-    std::thread tresumetill;
-    std::thread tpause;
-    std::mutex * iolock;
-
-    Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
-    
-    struct stat stat_info; /**< It is to ckeck if the rdf_path exists */
-
-    std::chrono::high_resolution_clock::time_point hrtstart; 
-    std::chrono::high_resolution_clock::time_point hrtend; 
-    clock_t tstart;
-    clock_t tend;
-    double elapsed;
-    
-    int cpuid;
-    bool logging;
-    bool scheduling;  
-
-    std::condition_variable pause_cond;
-    std::condition_variable sol_cond;
-    bool paused;
-    std::mutex pause_mux;
-    std::mutex sol_mux;
-    std::mutex runend_mux;
   protected:
 
     std::string name; /**< The name of the actor */
     std::string type; /**< The type of the actor */
+    Status status; 
+
+    std::map<std::string, IPort*> inputPorts; /**< Map of input ports referenced by their name  */
+    std::map<std::string, OPort*> outputPorts; /**< Map of output ports referenced by their name */
+
     int stepno; /**< The number of firing (step) in which the actor is in */
     int solution; /**< The actor's solution */ 
     int iterno; /**< The number of iteration in which the actor is in */
     int fireno; /**< The number of firing in one iteration */
+
     std::string home_path; /**< The path for home folder */    
     std::string df_path; /**< The path for actors to use */
     std::string dfout_path; /**< The path for actors to use as output */
     
-    std::map<std::string, IPort*> inputPorts; /**< Map of input ports referenced by their name  */
-    std::map<std::string, OPort*> outputPorts; /**< Map of output ports referenced by their name */
-
     bool distributed, realtime;
-    Status status; 
     std::mutex status_mux;
 
     /*!
@@ -126,6 +100,37 @@ namespace df {
     virtual void runRT() {
       run();
     }
+
+
+  private:
+
+    std::thread tinit;
+    std::thread treinit;
+    std::thread trun;
+    std::thread tresumetill;
+    std::thread tpause;
+    std::mutex * iolock;
+
+    Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
+    
+    struct stat stat_info; /**< It is to ckeck if the rdf_path exists */
+
+    std::chrono::high_resolution_clock::time_point hrtstart; 
+    std::chrono::high_resolution_clock::time_point hrtend; 
+    clock_t tstart;
+    clock_t tend;
+    double elapsed;
+    
+    int cpuid;
+    bool logging;
+    bool scheduling;  
+
+    std::condition_variable pause_cond;
+    std::condition_variable sol_cond;
+    bool paused;
+    std::mutex pause_mux;
+    std::mutex sol_mux;
+    std::mutex runend_mux;
 
   public:
 
