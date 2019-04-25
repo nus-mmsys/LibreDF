@@ -26,6 +26,7 @@
 #include "output_port.h"
 #include "input_port_vector.h"
 #include "output_port_vector.h"
+#include "timer.h"
 
 #include <vector>
 #include <queue>
@@ -60,6 +61,8 @@ namespace df {
     int iterno; /**< The number of iteration in which the actor is in */
     int fireno; /**< The number of firing in one iteration */
 
+    Timer timer;
+
     std::string home_path; /**< The path for home folder */    
     std::string df_path; /**< The path for actors to use */
     std::string dfout_path; /**< The path for actors to use as output */
@@ -68,26 +71,12 @@ namespace df {
     std::mutex status_mux;
 
     /*!
-     * Timing measurement
-     * hstart, hend : high_resolution_clock
-     * start, end   : clock_t
-     */ 
-    void hstart();
-    void hend(std::string msg); 
-    void calcElapsed();
-    void start();
-    void end(std::string msg); 
-    unsigned long now();
-    /*!
      * Actor constructor
      * \param name
      *   The name of the actor.
      */
     Actor(const std::string & name);
-    
-    void log(std::string msg);
-    void sleep(int s); 
-    
+   
     /*!
      * Virtual function, to be implemented in the subclass actors.
      * Read data from input actor, process the data, and write the result to the output port.
@@ -101,7 +90,8 @@ namespace df {
       run();
     }
 
-
+    void log(std::string msg);
+   
   private:
 
     std::thread tinit;
@@ -115,12 +105,6 @@ namespace df {
     
     struct stat stat_info; /**< It is to ckeck if the rdf_path exists */
 
-    std::chrono::high_resolution_clock::time_point hrtstart; 
-    std::chrono::high_resolution_clock::time_point hrtend; 
-    clock_t tstart;
-    clock_t tend;
-    double elapsed;
-    
     int cpuid;
     bool logging;
     bool scheduling;  
@@ -608,8 +592,6 @@ namespace df {
     void destroyPort(Port * port) {
       delete port;
     }
-
-    double getElapsed();
 
     /*!
      * Pause the actor execution.
