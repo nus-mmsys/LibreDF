@@ -62,6 +62,7 @@ namespace df {
     std::map<std::string, Actor *> remoteactors; /**< The set of all remote actors in the dataflow. */
 
     Placement placement; 
+    Timer timer;
     std::thread tdisc;
     std::mutex iolock;
     bool realtime, distributed, logging, scheduling;
@@ -72,11 +73,6 @@ namespace df {
     ClientSocket * clnsock;
     
     void discovery();
-
-    std::chrono::high_resolution_clock::time_point start, end; 
-    std::chrono::high_resolution_clock::time_point st, et; 
-    
-    void sleep(int s);
 
   public:
 
@@ -250,10 +246,6 @@ namespace df {
 
     void log(std::string msg);
     
-    void startTiming();
-
-    void endTiming(std::string msg);
-
     /*!
      * Dataflow destructor
      */

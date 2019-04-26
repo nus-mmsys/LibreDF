@@ -361,7 +361,7 @@ void Dataflow::run() {
 
 
   std::cout << "Running the dataflow...\n";
-  start = std::chrono::high_resolution_clock::now();
+  timer.start();
 
   placement.place(actors, ROUND_ROBIN, 0);
 
@@ -375,8 +375,7 @@ void Dataflow::run() {
     f.second->waitRun();
   }
   
-  end = std::chrono::high_resolution_clock::now();
-  std::cout << "Execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << " ms\n"; 
+  std::cout << "Execution time = " << timer.end() << " ms\n"; 
   
   /*
   for (auto f : actors) {
@@ -514,10 +513,6 @@ vector<Edge *> Dataflow::get_oedges(df::Actor * ac) {
 	return res;
 }
 
-void Dataflow::sleep(int s) {
-  this_thread::sleep_for(chrono::milliseconds{s});
-}
-
 void Dataflow::print() {
 	log(name);
 	vector<string> noprint = {"computation", "scheduling", 
@@ -542,15 +537,6 @@ void Dataflow::log(string msg) {
 	iolock.lock();
 	cout << msg << endl;
 	iolock.unlock();
-}
-
-void Dataflow::startTiming() {
-	st = std::chrono::high_resolution_clock::now(); 
-}
-
-void Dataflow::endTiming(string msg) {
-	et = std::chrono::high_resolution_clock::now(); 
-	log(msg+std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(et - st).count())+" ms");
 }
 
 Dataflow::~Dataflow() {

@@ -39,7 +39,7 @@ void StringProducer::run() {
   Str * out = produce(output);
   out->set(to_string(stepno));
   log("producing "+*out->get());
-  sleep(200);
+  timer.randSleep(200);
 
   if(stepno == last)
     setEos(output);
@@ -56,7 +56,7 @@ void StringProducer::runRT() {
   
   if (!canlock) {
     log("droping "+data);
-    sleep(200);
+    timer.randSleep(200);
     return;
   }
   
@@ -64,7 +64,7 @@ void StringProducer::runRT() {
   outStr->set(data);
   
   log("producing "+*outStr->get());
-  sleep(200);
+  timer.randSleep(200);
   
   if(stepno == last)
     setEos(output);

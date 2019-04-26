@@ -160,7 +160,7 @@ void RDataflow::run() {
   }
 
   log("[RDF] Running the dataflow...");
-  start = std::chrono::high_resolution_clock::now();
+  timer.start();
 
   print();
 
@@ -201,7 +201,7 @@ void RDataflow::run() {
 	
    	r = get_applicable_rule();
   	if (r==nullptr) {
-  		sleep(200);
+  		timer.sleep(200);
   		continue;
   	}
 	else {
@@ -243,8 +243,7 @@ void RDataflow::run() {
     f.second->waitRun();
   }
   
-  end = std::chrono::high_resolution_clock::now();
-  log("Execution time = "+to_string(std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count())+" ms"); 
+  log("Execution time = "+timer.end()+" ms"); 
   
   /*
   for (auto f : actors) {

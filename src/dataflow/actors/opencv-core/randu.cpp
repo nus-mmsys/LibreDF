@@ -54,7 +54,7 @@ void Randu::run() {
   auto out = produce(output);
   out->set(*frame);
   log("sending "+to_string(stepno));
-  sleep(100);
+  timer.randSleep(100);
 
   if (stepno == last)
     setEos(output);

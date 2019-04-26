@@ -51,7 +51,11 @@ unsigned long Timer::now() {
   return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-void Timer::sleep(int s) {
+void Timer::randSleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{rand()%s});
+}
+
+void Timer::sleep(int s) {
+  this_thread::sleep_for(chrono::milliseconds{s});
 }
 
