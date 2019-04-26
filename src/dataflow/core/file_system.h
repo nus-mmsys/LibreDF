@@ -16,33 +16,26 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "image_write.h"
+#ifndef DF_FILE_SYSTEM_H_
+#define DF_FILE_SYSTEM_H_
 
-using namespace df;
-using namespace std;
+#include <string>
 
-ActorRegister<ImageWrite> ImageWrite::reg("ImageWrite");
+namespace df {
+	
+  class FileSystem {
 
-ImageWrite::ImageWrite(const string& name) : Actor(name){
-  input = createInputPort<df::Mat>("input");
+    private:
+      std::string home_path; /**< The path for home folder */    
+      std::string df_path; /**< The path for actors to use */
+      std::string dfout_path; /**< The path for actors to use as output */
+    
+    public:
+      FileSystem();
+      std::string inPath();
+      std::string outPath();
+  };
+
 }
 
-void ImageWrite::init() {
-
-}
-
-void ImageWrite::run() {
-
-  df::Mat * in = consume(input);	
-  frame = in->clone();
-  log("writing image "+to_string(stepno));
-  release(input);
-
-  file_name = fsys.outPath() + std::to_string(stepno) + ".png";
-  cv::imwrite(file_name, frame); 
-  
-}
-
-ImageWrite::~ImageWrite() {
-  destroyPort(input);
-}
+#endif /* DF_FILE_SYSTEM_H_ */

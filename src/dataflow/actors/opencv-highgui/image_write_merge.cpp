@@ -65,7 +65,7 @@ void ImageWriteMerge::run() {
   log("writing image "+to_string(stepno));
   release(input);
   
-  file_name = dfout_path + std::to_string(stepno) + ".png";
+  file_name = fsys.outPath() + std::to_string(stepno) + ".png";
   cv::imwrite(file_name, frame); 
 }
 

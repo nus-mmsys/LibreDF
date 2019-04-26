@@ -27,6 +27,7 @@
 #include "input_port_vector.h"
 #include "output_port_vector.h"
 #include "timer.h"
+#include "file_system.h"
 
 #include <vector>
 #include <queue>
@@ -61,11 +62,8 @@ namespace df {
     int fireno; /**< The number of firing in one iteration */
     
     Timer timer;
-
-    std::string home_path; /**< The path for home folder */    
-    std::string df_path; /**< The path for actors to use */
-    std::string dfout_path; /**< The path for actors to use as output */
-    
+    FileSystem fsys; /**< The actors can retrieve the path to use */
+   
     /*!
      * Actor constructor
      * \param name

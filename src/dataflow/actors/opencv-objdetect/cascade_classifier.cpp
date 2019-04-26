@@ -31,7 +31,7 @@ CascadeClassifier::CascadeClassifier(const string& name) : Actor(name) {
 void CascadeClassifier::init() {
 
   string cascadename;
-  string cascadepath = df_path + "/haarcascades/";
+  string cascadepath = fsys.inPath() + "/haarcascades/";
   if (getProp("classifier") != "")  	
   	cascadename = cascadepath + getProp("classifier");
   else
@@ -52,7 +52,7 @@ void CascadeClassifier::run() {
     log("detecting rect in "+to_string(stepno)+" ("+to_string(r.x)+", "+to_string(r.y)+", "+to_string(r.width)+", "+to_string(r.height)+")");
     cv::rectangle(frame, r, cv::Scalar(0, 255, 0));
   }
-  file_name = dfout_path + std::to_string(stepno) + ".png";
+  file_name = fsys.outPath() + std::to_string(stepno) + ".png";
   cv::imwrite(file_name, frame); 
 
   release(inputGray);

@@ -29,9 +29,9 @@ ImageRead::ImageRead(const string& name) : Actor(name){
 
 void ImageRead::init() {
   if (!propEmpty("dataset"))
-    dataset = df_path + "/" + getProp("dataset");
+    dataset = fsys.inPath() + "/" + getProp("dataset");
   else
-    dataset = df_path + "/ImageNet/";
+    dataset = fsys.inPath() + "/ImageNet/";
   
   DIR* dirp = opendir(dataset.c_str());
   struct dirent * dp;

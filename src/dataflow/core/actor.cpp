@@ -24,9 +24,6 @@ using namespace std;
 Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   realtime = false;
   distributed = false;
-  home_path = std::getenv("HOME");
-  df_path = home_path + "/Documents/df/";  
-  dfout_path = df_path + "outputs/";
   logging = true;
   scheduling = true;
   paused = false;

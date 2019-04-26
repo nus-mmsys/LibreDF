@@ -31,7 +31,7 @@ VideoCapture::VideoCapture(const string& name) : Actor(name){
 void VideoCapture::init() {
 
   if (getProp("file_name") != "")  	
-  	file_name = df_path + "/" + getProp("file_name");
+  	file_name = fsys.inPath() + "/" + getProp("file_name");
   else
         log("error: file_name is not specified.");
   

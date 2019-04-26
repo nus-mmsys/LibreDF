@@ -16,39 +16,23 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "video_writer.h"
+#include "file_system.h"
 
-using namespace df;
 using namespace std;
+using namespace df;
 
-ActorRegister<VideoWriter> VideoWriter::reg("VideoWriter");
-
-VideoWriter::VideoWriter(const string& name) : Actor(name) {
-  input = createInputPort<df::Mat>("input");
+FileSystem::FileSystem() {
+  home_path = std::getenv("HOME");
+  df_path = home_path + "/Documents/df/";  
+  dfout_path = df_path + "outputs/";
 }
 
-void VideoWriter::init() {
-
-  if (getProp("file_name") != "")  	
-  	file_name = fsys.outPath() + "/" + getProp("file_name");
-  else
-	file_name = fsys.outPath() + "/result.mp4";
-
-  video = new cv::VideoWriter(file_name,CV_FOURCC('M','J','P','G'),10, cv::Size(640,480));	
+string FileSystem::inPath() {
+	return df_path;
 }
 
-void VideoWriter::run() {
-
-  auto in = consume(input);	
-  frame = in->clone();
-  log("writing frame "+to_string(stepno));
-  release(input);
-
-  video->write(frame); 
-
+string FileSystem::outPath() {
+	return dfout_path;
 }
 
-VideoWriter::~VideoWriter() {
-  destroyPort(input);
-  video->release();
-}
+

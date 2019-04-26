@@ -67,7 +67,7 @@ void MeanShift::run() {
   
   cv::rectangle(frame, track_window, cv::Scalar(0, 255, 0), 2);
   
-  file_name = dfout_path + std::to_string(stepno) + ".png";
+  file_name = fsys.outPath() + std::to_string(stepno) + ".png";
   cv::imwrite(file_name, frame); 
  
   auto in = consume(input);
