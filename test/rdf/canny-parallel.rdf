@@ -25,7 +25,7 @@ rdf canny-parallel {
 	level = 1;
     }
     actor F {
-    	computation = VideoWriter;
+    	computation = ImageWrite;
     }
     parameter {
 	logging = true;
