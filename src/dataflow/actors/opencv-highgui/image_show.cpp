@@ -40,7 +40,7 @@ void ImageShow::run() {
   release(inputMat);
  
   cv::imshow("ImageShow", frame);
-  cv::waitKey(1000);
+  cv::waitKey(50);
 
 }
 
