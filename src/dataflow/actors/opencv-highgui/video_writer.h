@@ -37,7 +37,7 @@ private:
   std::string file_name;
   cv::Mat frame;
   df::InputPort<df::Mat> * input;
- 
+  int width, height; 
   cv::VideoWriter * video;
 
   static  df::ActorRegister<VideoWriter> reg;

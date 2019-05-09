@@ -16,15 +16,19 @@ rdf canny-parallel {
     }
     actor D {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+        cvt = gray2bgr;
     }
     actor E {
     	computation = MatMerge;
 	level = 1;
     }
     actor F {
-    	computation = ImageWrite;
+    	computation = VideoWriter;
+    }
+    parameter {
+	logging = true;
     }
 }
 rule r1 {
@@ -42,8 +46,9 @@ left {
     }
     actor y1 {
     	computation = Canny;
-    	threshold = 100;
-	ratio = 2;
+    	threshold = 1;
+	ratio = 1;
+        cvt = gray2bgr;
     }
     actor z {
     	computation = MatMerge;
@@ -77,23 +82,27 @@ right {
     }
     actor y1 {
     	computation = Canny;
- 	threshold = 100;
-	ratio = 2; 
+ 	threshold = 1;
+	ratio = 1; 
+        cvt = gray2bgr;
     }
     actor y2 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+        cvt = gray2bgr;
     }
     actor y3 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+        cvt = gray2bgr;
     }
     actor y4 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+        cvt = gray2bgr;
     }
     actor z {
     	computation = MatMerge;
@@ -106,5 +115,5 @@ right {
 }
 }
 main {
-	load=3 : r1;
+	load=2 : r1;
 }

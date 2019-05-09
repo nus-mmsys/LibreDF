@@ -38,6 +38,8 @@ private:
   df::InputPort<df::Mat> * input;
   df::OutputPort<df::Mat> * output;
  
+  int cvt;
+  
   static  df::ActorRegister<Canny> reg;
 public:
   

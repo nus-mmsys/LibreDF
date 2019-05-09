@@ -32,9 +32,9 @@ void VideoWriter::init() {
   if (getProp("file_name") != "")  	
   	file_name = fsys.outPath() + "/" + getProp("file_name");
   else
-	file_name = fsys.outPath() + "/result.mp4";
-
-  video = new cv::VideoWriter(file_name,CV_FOURCC('M','J','P','G'),10, cv::Size(640,480));	
+	file_name = fsys.outPath() + "/result.avi";
+  width = 0;
+  height = 0;
 }
 
 void VideoWriter::run() {
@@ -43,6 +43,12 @@ void VideoWriter::run() {
   frame = in->clone();
   log("writing frame "+to_string(stepno));
   release(input);
+
+  if (width == 0 || height == 0) {
+	width = frame.cols;
+  	height = frame.rows;
+        video = new cv::VideoWriter(file_name,CV_FOURCC('M','J','P','G'),10, cv::Size(width,height));	
+  }
 
   video->write(frame); 
 

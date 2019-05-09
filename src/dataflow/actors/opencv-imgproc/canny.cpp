@@ -45,6 +45,16 @@ void Canny::init() {
   else
     kernel_size = 3;
 
+  if (!propEmpty("cvt")) {
+	string cvtstr = getProp("cvt");
+	if (cvtstr == "bgr2gray")
+		cvt = CV_BGR2GRAY;
+	if (cvtstr == "gray2bgr")
+		cvt = CV_GRAY2BGR;
+  } else {
+	  cvt = -1;
+  }
+
 }
 
 void Canny::run() {
@@ -53,6 +63,8 @@ void Canny::run() {
   auto out = produce(output);
   cv::blur(*in->get(), *out->get(), cv::Size(3,3));  
   cv::Canny(*out->get(), *out->get(), threshold, threshold*ratio, kernel_size);
+  if (cvt != -1)
+  	cv::cvtColor(*out->get(), *out->get(), cvt);
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);
