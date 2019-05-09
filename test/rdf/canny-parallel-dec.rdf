@@ -29,23 +29,27 @@ rdf canny-parallel-dec {
     }
     actor D1 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor D2 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor D3 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor D4 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor E {
     	computation = MatMerge;
@@ -83,23 +87,27 @@ left {
     }
     actor y1 {
     	computation = Canny;
- 	threshold = 100;
-	ratio = 2; 
+ 	threshold = 1;
+	ratio = 1; 
+	cvt = gray2bgr;
     }
     actor y2 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor y3 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor y4 {
     	computation = Canny;
-	threshold = 100;
-	ratio = 2;
+	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor z {
     	computation = MatMerge;
@@ -120,8 +128,9 @@ right {
     }
     actor y1 {
     	computation = Canny;
-    	threshold = 100;
-	ratio = 2;
+    	threshold = 1;
+	ratio = 1;
+	cvt = gray2bgr;
     }
     actor z {
     	computation = MatMerge;
