@@ -197,6 +197,8 @@ void RDataflow::run() {
 
   Rule * r;
   Graph * res;
+  Timer rdftimer;
+  vector<string> delays;
   while(!check_eos()) {
 	
    	r = get_applicable_rule();
@@ -208,6 +210,7 @@ void RDataflow::run() {
 		log("[RDF] Rule "+r->get_name()+" is applicable.");
 	}
 
+
 	//startTiming();
 	iter = pause();
 	if (iter<0) {
@@ -217,6 +220,8 @@ void RDataflow::run() {
 	log("[RDF] Paused at iteration "+to_string(iter));
 	//endTiming("[RDF] Pausing delay: ");
 
+	rdftimer.start();
+	
 	//startTiming();
 	res = r->apply(curr_graph);
 	if (res!=nullptr) {
@@ -227,10 +232,12 @@ void RDataflow::run() {
 		reconfigure(iter);
 		//endTiming("[RDF] Replace graph delay: ");
 	}
+
+	delays.push_back(rdftimer.end());
+	
 	//startTiming();
 	resume();
 	//endTiming("[RDF] Resuming delay: ");
-
   }
 
   status = DataflowStatus::RUNNING;
@@ -242,7 +249,10 @@ void RDataflow::run() {
   for (auto f : actors) {
     f.second->waitRun();
   }
-  
+ 
+  for (auto d : delays)
+	 log("RDF reconfiguration delay = "+d+" ms");
+
   log("Execution time = "+timer.end()+" ms"); 
   
   /*
