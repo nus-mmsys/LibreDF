@@ -30,14 +30,17 @@ DrawLine::DrawLine(const string& name) : Actor(name) {
 }
 
 void DrawLine::init() {
-  
+  img = cv::Mat(600, 800, CV_8UC3, cv::Scalar::all(0));  
 }
 
 void DrawLine::run() {
 
   Complex3D * in = consume(input);
   Mat * out = produce(output);
-
+  auto c = in->get();
+  line(img, cv::Point(c->x.real(), c->x.imag()),
+       cv::Point(c->y.real(), c->y.imag()), cv::Scalar(0,0,255));
+  out->set(img);
   log("producing "+to_string(stepno));
   
   release(output);  
