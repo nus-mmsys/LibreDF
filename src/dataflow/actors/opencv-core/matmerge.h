@@ -38,7 +38,7 @@ private:
   df::OutputPort<df::Mat> * output;
 
   int level, tileh, tilew, type, size;
-
+  bool text;
   static  df::ActorRegister<MatMerge> reg;
 public:
   

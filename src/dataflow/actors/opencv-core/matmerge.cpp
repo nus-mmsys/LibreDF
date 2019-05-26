@@ -30,6 +30,11 @@ MatMerge::MatMerge(const string& name) : Actor(name) {
 
 void MatMerge::init() {
 
+  if (propEmpty("text"))
+	  text = true;
+  else
+	  text = getPropBool("text");
+
   if (propEmpty("level"))
 	  level = 2;
   else
@@ -76,8 +81,11 @@ void MatMerge::run() {
 		cv::Rect tile(i * tilew,
 				j * tileh,
 				tilew, tileh);
-
 		out->set_view(tile, in[j*level+i]->get());
+		if (text)
+ 			putText(*out->get(), to_string(i+j*level), 
+			cv::Point(i*tilew+tilew/2, j*tileh+tileh/2),
+			cv::FONT_HERSHEY_DUPLEX, 3, (255,255,255), 2, 8, false);
 	}
   }
 
