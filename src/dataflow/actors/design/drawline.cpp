@@ -16,37 +16,35 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_BOAT_H_
-#define DF_BOAT_H_
+#include "drawline.h"
 
-#include "core/df.h"
-#include "tokens/basic/int.h"
-#include "tokens/basic/complex3d.h"
-
-#include <iostream>
-#include <string>
-#include <unistd.h>
-
+using namespace df;
 using namespace std;
 
-class Boat: public df::Actor {
-  
-private:
-  
-  df::InputPort<df::Int> * input;
-  df::OutputPort<df::Complex3D> * output;
- 
-  static  df::ActorRegister<Boat> reg;
-public:
-  
-  Boat(const string& name);
-  
-  virtual void init();
-  
-  virtual void run();
-  
-  virtual ~Boat();
-  
-};
+ActorRegister<DrawLine> DrawLine::reg("DrawLine");
 
-#endif /* DF_BOAT_H_ */
+DrawLine::DrawLine(const string& name) : Actor(name) {
+  input = createInputPort<df::Complex3D>("input");
+  output = createOutputPort<df::Mat>("output");
+
+}
+
+void DrawLine::init() {
+  
+}
+
+void DrawLine::run() {
+
+  Complex3D * in = consume(input);
+  Mat * out = produce(output);
+
+  log("producing "+to_string(stepno));
+  
+  release(output);  
+  release(input);
+}
+
+
+DrawLine::~DrawLine() {
+  destroyPort(output);
+}

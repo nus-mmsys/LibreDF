@@ -16,11 +16,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_BOAT_H_
-#define DF_BOAT_H_
+#ifndef DF_DRAWLINE_H_
+#define DF_DRAWLINE_H_
 
 #include "core/df.h"
-#include "tokens/basic/int.h"
+#include "tokens/opencv/mat.h"
 #include "tokens/basic/complex3d.h"
 
 #include <iostream>
@@ -29,24 +29,24 @@
 
 using namespace std;
 
-class Boat: public df::Actor {
+class DrawLine: public df::Actor {
   
 private:
   
-  df::InputPort<df::Int> * input;
-  df::OutputPort<df::Complex3D> * output;
+  df::InputPort<df::Complex3D> * input;
+  df::OutputPort<df::Mat> * output;
  
-  static  df::ActorRegister<Boat> reg;
+  static  df::ActorRegister<DrawLine> reg;
 public:
   
-  Boat(const string& name);
+  DrawLine(const string& name);
   
   virtual void init();
   
   virtual void run();
   
-  virtual ~Boat();
+  virtual ~DrawLine();
   
 };
 
-#endif /* DF_BOAT_H_ */
+#endif /* DF_DRAWLINE_H_ */

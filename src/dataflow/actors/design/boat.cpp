@@ -31,11 +31,6 @@ Boat::Boat(const string& name) : Actor(name) {
 
 void Boat::init() {
  
-  if (!propEmpty("last"))  	
-  	last = getPropInt("last");
-  else
-        last = 100;
-  
 }
 
 void Boat::run() {
