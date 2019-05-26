@@ -1,0 +1,20 @@
+tmf boat {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = IntProducer;
+	last = 2000;
+    }
+    actor B {
+    	computation = Boat;
+    }
+    actor C {
+    	computation = DrawLine;
+    }
+    actor D {
+    	computation = ImageShow;
+    }
+}
+
