@@ -24,7 +24,8 @@
 #include <complex>
 #include <cmath>
 
-constexpr double pi() { return std::atan(1)*4; }
+const double pi = std::acos(-1);
+const std::complex<double> i(0,1);
 
 namespace df {
 

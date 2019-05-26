@@ -34,6 +34,7 @@ class DrawLine: public df::Actor {
 private:
   
   cv::Mat img;
+  cv::Point center;
  
   df::InputPort<df::Complex3D> * input;
   df::OutputPort<df::Mat> * output;

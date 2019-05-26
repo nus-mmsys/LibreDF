@@ -30,7 +30,8 @@ DrawLine::DrawLine(const string& name) : Actor(name) {
 }
 
 void DrawLine::init() {
-  img = cv::Mat(600, 800, CV_8UC3, cv::Scalar::all(0));  
+  img = cv::Mat(600, 800, CV_8UC3, cv::Scalar(255,255,255));  
+  center = cv::Point(300,400);
 }
 
 void DrawLine::run() {
@@ -38,10 +39,11 @@ void DrawLine::run() {
   Complex3D * in = consume(input);
   Mat * out = produce(output);
   auto c = in->get();
-  line(img, cv::Point(c->x.real(), c->x.imag()),
-       cv::Point(c->y.real(), c->y.imag()), cv::Scalar(0,0,255));
+  line(img, center+cv::Point(c->x.real()*100, c->x.imag()*100),
+       center+cv::Point(c->y.real()*100, c->y.imag()*100), cv::Scalar(0,0,0));
   out->set(img);
-  log("producing "+to_string(stepno));
+  log("line "+to_string(c->x.real())+","+to_string(c->x.imag()) +
+      " to "+to_string(c->y.real())+","+to_string(c->y.imag())) ;
   
   release(output);  
   release(input);

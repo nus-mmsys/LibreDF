@@ -38,13 +38,13 @@ void Boat::run() {
   Int * in = consume(input);
   Complex3D * out = produce(output);
   int k = *in->get();
-  out->get()->x = exp((0,pi()/4)) * 
-           (sin(6*pi()*k/2000 + pi()/4), 
-            sin(12*pi()*k/2000));
+  out->get()->x = exp(i * (pi/4)) * 
+           (sin(6*pi*k/2000 + pi/4) + 
+            i * sin(12*pi*k/2000));
 
-  out->get()->y = exp((0,pi()/4)) * 
-           (sin(4*pi()*k/2000 + pi()/6),
-            sin(2*pi()*k/2000 + pi()/3)) ;    
+  out->get()->y = exp(i * (pi/4)) * 
+           (sin(4*pi*k/2000 + pi/6) +
+            i * sin(2*pi*k/2000 + pi/3)) ;    
 
   log("producing "+to_string(stepno));
   
