@@ -5,6 +5,7 @@ tmf boat {
     }
     actor A {
     	computation = IntProducer;
+	step = 5;
 	last = 2000;
     }
     actor B {
