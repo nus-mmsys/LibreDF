@@ -22,6 +22,9 @@
 #include "core/token.h"
 #include <cstdio>
 #include <complex>
+#include <cmath>
+
+constexpr double pi() { return std::atan(1)*4; }
 
 namespace df {
 
