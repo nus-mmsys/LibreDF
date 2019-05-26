@@ -29,6 +29,12 @@ IntProducer::IntProducer(const string& name) : Actor(name) {
 
 void IntProducer::init() {
  
+  number = 0; 
+  if (!propEmpty("step"))  	
+  	step = getPropInt("step");
+  else
+        step = 1;
+
   if (!propEmpty("last"))  	
   	last = getPropInt("last");
   else
@@ -39,13 +45,14 @@ void IntProducer::init() {
 void IntProducer::run() {
 
   Int * out = produce(output);	
-  out->set(stepno);
-  log("producing "+to_string(stepno));
+  out->set(number);
+  log("producing "+to_string(number));
   timer.randSleep(200);
 
-  if(stepno == last)
+  if(number >= last)
     setEos(output);
 
+  number += step;
   release(output);  
 
 }

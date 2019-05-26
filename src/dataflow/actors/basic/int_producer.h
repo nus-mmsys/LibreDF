@@ -31,7 +31,9 @@ using namespace std;
 class IntProducer: public df::Actor {
   
 private:
-  
+
+  int step;
+  int number;  
   int last;
   
   df::OutputPort<df::Int> * output;
