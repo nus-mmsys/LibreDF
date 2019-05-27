@@ -1,0 +1,21 @@
+tmf flower {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = IntProducer;
+	step = 5;
+	last = 7000;
+    }
+    actor B {
+    	computation = Flower;
+    }
+    actor C {
+    	computation = DrawCircle;
+    }
+    actor D {
+    	computation = ImageShow;
+    }
+}
+

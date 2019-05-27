@@ -16,40 +16,39 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "drawline.h"
+#include "drawcircle.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<DrawLine> DrawLine::reg("DrawLine");
+ActorRegister<DrawCircle> DrawCircle::reg("DrawCircle");
 
-DrawLine::DrawLine(const string& name) : Actor(name) {
-  input = createInputPort<df::Complex3D>("input");
+DrawCircle::DrawCircle(const string& name) : Actor(name) {
+  input = createInputPort<df::Float3D>("input");
   output = createOutputPort<df::Mat>("output");
 
 }
 
-void DrawLine::init() {
+void DrawCircle::init() {
   img = cv::Mat(600, 800, CV_8UC3, cv::Scalar(255,255,255));  
   center = cv::Point(400,300);
 }
 
-void DrawLine::run() {
+void DrawCircle::run() {
 
-  Complex3D * in = consume(input);
+  Float3D * in = consume(input);
   Mat * out = produce(output);
   auto c = in->get();
-  cv::line(img, center+cv::Point(c->x.real()*200, c->x.imag()*-200),
-       center+cv::Point(c->y.real()*200, c->y.imag()*-200), cv::Scalar(0,0,0));
+  cv::circle(img, center+cv::Point(c->x*200, c->y*-200),
+       c->z*200, cv::Scalar(0,0,0));
   out->set(img);
-  log("line "+to_string(c->x.real())+","+to_string(c->x.imag()) +
-      " to "+to_string(c->y.real())+","+to_string(c->y.imag())) ;
+  log("circle "+to_string(c->x)+","+to_string(c->y)) ;
   
   release(output);  
   release(input);
 }
 
 
-DrawLine::~DrawLine() {
+DrawCircle::~DrawCircle() {
   destroyPort(output);
 }
