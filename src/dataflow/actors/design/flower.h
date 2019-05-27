@@ -16,42 +16,40 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_BOAT_H_
-#define DF_BOAT_H_
+#ifndef DF_FLOWER_H_
+#define DF_FLOWER_H_
 
 #include "core/df.h"
 #include "tokens/basic/int.h"
-#include "tokens/basic/complex3d.h"
+#include "tokens/basic/float3d.h"
 
 #include <iostream>
 #include <string>
 #include <unistd.h>
 #include <cmath>
-#include <complex>
 
 using namespace std;
 
 const double pi = std::acos(-1);
-const std::complex<double> i(0,1);
 
-class Boat: public df::Actor {
+class Flower: public df::Actor {
   
 private:
   
   df::InputPort<df::Int> * input;
-  df::OutputPort<df::Complex3D> * output;
+  df::OutputPort<df::Float3D> * output;
  
-  static  df::ActorRegister<Boat> reg;
+  static  df::ActorRegister<Flower> reg;
 public:
   
-  Boat(const string& name);
+  Flower(const string& name);
   
   virtual void init();
   
   virtual void run();
   
-  virtual ~Boat();
+  virtual ~Flower();
   
 };
 
-#endif /* DF_BOAT_H_ */
+#endif /* DF_FLOWER_H_ */
