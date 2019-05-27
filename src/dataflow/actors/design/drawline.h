@@ -22,6 +22,8 @@
 #include "core/df.h"
 #include "tokens/opencv/mat.h"
 #include "tokens/basic/complex3d.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <iostream>
 #include <string>

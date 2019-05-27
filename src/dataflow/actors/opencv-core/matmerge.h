@@ -23,11 +23,11 @@
 #include "tokens/opencv/mat.h"
 
 #include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 #include <iostream>
 #include <string>
 
-using namespace std;
 
 class MatMerge: public df::Actor {
   
@@ -42,7 +42,7 @@ private:
   static  df::ActorRegister<MatMerge> reg;
 public:
   
-  MatMerge(const string& name);
+  MatMerge(const std::string& name);
   
   virtual void init();
   

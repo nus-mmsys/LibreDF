@@ -39,7 +39,7 @@ void DrawLine::run() {
   Complex3D * in = consume(input);
   Mat * out = produce(output);
   auto c = in->get();
-  line(img, center+cv::Point(c->x.real()*200, c->x.imag()*-200),
+  cv::line(img, center+cv::Point(c->x.real()*200, c->x.imag()*-200),
        center+cv::Point(c->y.real()*200, c->y.imag()*-200), cv::Scalar(0,0,0));
   out->set(img);
   log("line "+to_string(c->x.real())+","+to_string(c->x.imag()) +
