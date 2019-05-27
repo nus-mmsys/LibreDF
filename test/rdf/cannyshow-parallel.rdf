@@ -23,6 +23,7 @@ rdf cannyshow-parallel {
     actor E {
     	computation = MatMerge;
 	level = 1;
+	text = false;
     }
     actor F {
     	computation = ImageShow;
@@ -53,6 +54,7 @@ left {
     actor z {
     	computation = MatMerge;
 	level = 1;
+	text = false;
     }
 }
 right {
@@ -111,6 +113,7 @@ right {
 	input.2 = e11;
 	input.3 = e12;
 	level = 2;
+	text = false;
     }
 }
 }
