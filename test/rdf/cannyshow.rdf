@@ -1,4 +1,4 @@
-rdf canny {
+rdf cannyshow {
     topology {
         nodes = A,D;
 	edges = e1(A,D);
@@ -9,6 +9,9 @@ rdf canny {
     }
     actor D {
     	computation = ImageShow;
+    }
+    parameter {
+	logging = true;
     }
 }
 rule r1 {
