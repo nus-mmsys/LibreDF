@@ -16,43 +16,40 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_DRAWCIRCLE_H_
-#define DF_DRAWCIRCLE_H_
+#ifndef DF_CIRCLEPACKING_H_
+#define DF_CIRCLEPACKING_H_
 
 #include "core/df.h"
-#include "tokens/opencv/mat.h"
+#include "tokens/basic/int.h"
 #include "tokens/basic/float3d.h"
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
 
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include <cmath>
 
 using namespace std;
 
-class DrawCircle: public df::Actor {
+const double pi = std::acos(-1);
+
+class CirclePacking: public df::Actor {
   
 private:
   
-  cv::Mat img;
-  cv::Point center;
-  int scale;
-
-  df::InputPort<df::Float3D> * input;
-  df::OutputPort<df::Mat> * output;
+  df::InputPort<df::Int> * input;
+  df::OutputPort<df::Float3D> * output;
  
-  static  df::ActorRegister<DrawCircle> reg;
+  static  df::ActorRegister<CirclePacking> reg;
 public:
   
-  DrawCircle(const string& name);
+  CirclePacking(const string& name);
   
   virtual void init();
   
   virtual void run();
   
-  virtual ~DrawCircle();
+  virtual ~CirclePacking();
   
 };
 
-#endif /* DF_DRAWCIRCLE_H_ */
+#endif /* DF_CIRCLEPACKING_H_ */

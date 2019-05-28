@@ -1,0 +1,23 @@
+tmf circlepacking {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = IntProducer;
+	step = 5;
+	last = 1500;
+    }
+    actor B {
+    	computation = CirclePacking;
+	pack = 2;
+    }
+    actor C {
+    	computation = DrawCircle;
+	scale = 50;
+    }
+    actor D {
+    	computation = ImageShow;
+    }
+}
+

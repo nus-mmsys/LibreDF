@@ -16,43 +16,40 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "drawcircle.h"
+#include "circlepacking.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<DrawCircle> DrawCircle::reg("DrawCircle");
+ActorRegister<CirclePacking> CirclePacking::reg("CirclePacking");
 
-DrawCircle::DrawCircle(const string& name) : Actor(name) {
-  input = createInputPort<df::Float3D>("input");
-  output = createOutputPort<df::Mat>("output");
-
+CirclePacking::CirclePacking(const string& name) : Actor(name) {
+  input = createInputPort<Int>("input");
+  output = createOutputPort<Float3D>("output");
 }
 
-void DrawCircle::init() {
-  if (!propEmpty("scale"))
-	 scale = getPropInt("scale");
-  else 
-	 scale = 200; 
-  img = cv::Mat(600, 800, CV_8UC3, cv::Scalar(255,255,255));  
-  center = cv::Point(400,300);
+void CirclePacking::init() {
+ 
 }
 
-void DrawCircle::run() {
+void CirclePacking::run() {
 
-  Float3D * in = consume(input);
-  Mat * out = produce(output);
-  auto c = in->get();
-  cv::circle(img, center+cv::Point(c->x*scale, c->y*-1*scale),
-       c->z*scale, cv::Scalar(0,0,0));
-  out->set(img);
-  log("circle "+to_string(c->x)+","+to_string(c->y)) ;
+  Int * in = consume(input);
+  Float3D * out = produce(output);
+  int k = *in->get();
+  out->get()->x = cos(k*pi);
+
+  out->get()->y = sin(k*pi); 
+
+  out->get()->z = 1;
+
+  log("producing "+to_string(stepno));
   
   release(output);  
   release(input);
 }
 
 
-DrawCircle::~DrawCircle() {
+CirclePacking::~CirclePacking() {
   destroyPort(output);
 }
