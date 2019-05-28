@@ -39,7 +39,7 @@ void DrawCircle::run() {
   Float3D * in = consume(input);
   Mat * out = produce(output);
   auto c = in->get();
-  cv::circle(img, center+cv::Point(c->x*200, c->y*-200),
+  cv::circle(img, center+cv::Point(c->x*200, c->y*(-200)),
        c->z*200, cv::Scalar(0,0,0));
   out->set(img);
   log("circle "+to_string(c->x)+","+to_string(c->y)) ;

@@ -6,7 +6,7 @@ tmf sketchboard {
     actor A {
     	computation = IntProducer;
 	step = 5;
-	last = 7000;
+	last = 1500;
     }
     actor B {
     	computation = SketchBoard;
