@@ -5,12 +5,12 @@ tmf circlepacking {
     }
     actor A {
     	computation = IntProducer;
-	step = 5;
-	last = 1500;
+	step = 1;
+	last = 500;
     }
     actor B {
     	computation = CirclePacking;
-	pack = 2;
+	number = 12;
     }
     actor C {
     	computation = DrawCircle;

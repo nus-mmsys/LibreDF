@@ -35,7 +35,8 @@ const double pi = std::acos(-1);
 class CirclePacking: public df::Actor {
   
 private:
-  
+  int number;
+
   df::InputPort<df::Int> * input;
   df::OutputPort<df::Float3D> * output;
  

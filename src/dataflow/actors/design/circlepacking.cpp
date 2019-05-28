@@ -29,7 +29,10 @@ CirclePacking::CirclePacking(const string& name) : Actor(name) {
 }
 
 void CirclePacking::init() {
- 
+   if (!propEmpty("number"))
+	 number = getPropInt("number");
+  else 
+	 number = 6; 
 }
 
 void CirclePacking::run() {
@@ -37,9 +40,9 @@ void CirclePacking::run() {
   Int * in = consume(input);
   Float3D * out = produce(output);
   int k = *in->get();
-  out->get()->x = cos(k*pi);
+  out->get()->x = cos(2*k*pi/number);
 
-  out->get()->y = sin(k*pi); 
+  out->get()->y = sin(2*k*pi/number); 
 
   out->get()->z = 1;
 
