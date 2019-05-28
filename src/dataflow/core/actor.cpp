@@ -73,7 +73,7 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 }
 
 void Actor::iterlog(std::string itermsg) {
-  string s = name + ": iter " + to_string(iterno) + " " + itermsg + "\n";
+  string s = name + " : " + to_string(iterno) + " " + itermsg + "\n";
   if (logging) {
      iolock->lock();
      std::cout << s;
@@ -84,7 +84,7 @@ void Actor::iterlog(std::string itermsg) {
 }
 void Actor::log(std::string msg) {
   if (logging) {
-    string s = name + ": [" + to_string(iterno) + ", " + to_string(fireno) + "] [" + timer.endUs() + "] [" + to_string(sched_getcpu()) + "] " + msg + "\n";
+    string s = name + " : [" + to_string(iterno) + ", " + to_string(fireno) + "] [" + timer.endUs() + "] [" + to_string(sched_getcpu()) + "] " + msg + "\n";
     iolock->lock(); 
     std::cout << s;
     iolock->unlock();
