@@ -10,11 +10,11 @@ tmf circlepacking {
     }
     actor B {
     	computation = CirclePacking;
-	number = 12;
+	number = 36;
     }
     actor C {
     	computation = DrawCircle;
-	scale = 50;
+	scale = 100;
     }
     actor D {
     	computation = ImageShow;
