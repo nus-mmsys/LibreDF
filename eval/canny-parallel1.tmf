@@ -4,7 +4,7 @@ tmf canny-parallel1 {
 	edges = e1(A,B), e2(B,C), e3(C,D);
     }
     actor A {
-    	computation = VideoCaptureSplit;
+    	computation = VideoCaptureSlice;
 	file_name = pedestrian.mp4;
 	level = 1;
 	cpu = 0;

@@ -8,7 +8,7 @@ rdf canny-parallel-mix {
 	file_name = pedestrian.mp4;
     }
     actor B {
-    	computation = MatSplit;
+    	computation = MatSlice;
 	level = 1;
 	output.0 = e2;
     }
@@ -37,7 +37,7 @@ left {
 	edges = e1(B,x1), e2(x1,y1), e3(y1,z);
     }
     actor B {
-    	computation = MatSplit;
+    	computation = MatSlice;
 	level = 1;
 	output.0 = e1;
     }
@@ -62,7 +62,7 @@ right {
 	edges = e1(B,x1), e2(B,x2), e3(B,x3), e4(B,x4), e5(x1,y1), e6(x2,y2), e7(x3,y3), e8(x4,y4), e9(y1,z), e10(y2,z), e11(y3,z), e12(y4,z);
     }
     actor B {
-    	computation = MatSplit;
+    	computation = MatSlice;
 	output.0 = e1;
 	output.1 = e2;
 	output.2 = e3;
@@ -122,7 +122,7 @@ left {
 	edges = e1(B,x1), e2(B,x2), e3(B,x3), e4(B,x4), e5(x1,y1), e6(x2,y2), e7(x3,y3), e8(x4,y4), e9(y1,z), e10(y2,z), e11(y3,z), e12(y4,z);
     }
     actor B {
-    	computation = MatSplit;
+    	computation = MatSlice;
 	output.0 = e1;
 	output.1 = e2;
 	output.2 = e3;
@@ -180,7 +180,7 @@ right {
 	edges = e1(B,x1), e2(x1,y1), e3(y1,z);
     }
     actor B {
-    	computation = MatSplit;
+    	computation = MatSlice;
 	level = 1;
 	output.0 = e1;
     }

@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_MATSPLIT_H_
-#define DF_MATSPLIT_H_
+#ifndef DF_MATSLICE_H_
+#define DF_MATSLICE_H_
 
 #include "core/df.h"
 #include "tokens/opencv/mat.h"
@@ -29,7 +29,7 @@
 
 using namespace std;
 
-class MatSplit: public df::Actor {
+class MatSlice: public df::Actor {
   
 private:
 
@@ -40,10 +40,10 @@ private:
   int level;
   int tilew, tileh;
 
-  static  df::ActorRegister<MatSplit> reg;
+  static  df::ActorRegister<MatSlice> reg;
 public:
   
-  MatSplit(const string& name);
+  MatSlice(const string& name);
   
   virtual void init();
   
@@ -51,8 +51,8 @@ public:
   
   virtual void run();
   
-  virtual ~MatSplit();
+  virtual ~MatSlice();
   
 };
 
-#endif /* DF_MATSPLIT_H_ */
+#endif /* DF_MATSLICE_H_ */

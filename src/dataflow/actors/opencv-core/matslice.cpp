@@ -16,19 +16,19 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "matsplit.h"
+#include "matslice.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<MatSplit> MatSplit::reg("MatSplit");
+ActorRegister<MatSlice> MatSlice::reg("MatSlice");
 
-MatSplit::MatSplit(const string& name) : Actor(name) {
+MatSlice::MatSlice(const string& name) : Actor(name) {
   input = createInputPort<df::Mat>("input");
   output = createOutputPortVector<df::Mat>("output");
 }
 
-void MatSplit::init() {
+void MatSlice::init() {
 
   if (propEmpty("level"))
 	  level = 2;
@@ -42,7 +42,7 @@ void MatSplit::init() {
 
 }
 
-void MatSplit::reinit() {
+void MatSlice::reinit() {
 
   auto newlevel = getPropInt("level");
   
@@ -55,7 +55,7 @@ void MatSplit::reinit() {
   tileh = 0;
 }
 
-void MatSplit::run() {
+void MatSlice::run() {
 
   auto in = consume(input);	
   auto out = produce(output);
@@ -80,7 +80,7 @@ void MatSplit::run() {
 
 }
 
-MatSplit::~MatSplit() {
+MatSlice::~MatSlice() {
   destroyPort(input);
   destroyPort(output);
 }

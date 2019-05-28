@@ -1,4 +1,4 @@
-tmf split {
+tmf slice {
     topology {
         nodes = A,B,C,D,E,F;
 	edges = e1(A,B), e2(B,C), e3(C,D), e4(D,E), e5(E,F);
@@ -10,7 +10,7 @@ tmf split {
 	cpu = 0;
     }
     actor B {
-    	computation = MatSplit;
+    	computation = MatSlice;
 	level = 1;
 	host = 127.0.0.1;
 	input_port = 7500;

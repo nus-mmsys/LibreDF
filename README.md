@@ -198,7 +198,7 @@ The following actor types are already implemented.
                               sends the idct of the input.
         Idft                 % output:Mat = idft(input1:Mat) ;
                               sends the idft of the input.
-        MatSplit            % splits a frame into tiles
+        MatSlice            % slices a frame into tiles
         MatMerge            % merges the tiles frames into one frame.
         Multiply            % output:Mat = multiply(input1:Mat, input2:Mat, scale) ;
                               sends the per-element scaled multiplication between
@@ -268,11 +268,11 @@ The following actor types are already implemented.
 
 ## Parallelization
 
-Data parallelization is a mean to improve the latency and throughput of a dataflow. In data parallelization, a token is split into several tokens to be processed by different actors in parallel.
+Data parallelization is a mean to improve the latency and throughput of a dataflow. In data parallelization, a token is slice into several tokens to be processed by different actors in parallel.
 
-Data parallelization is possible only if the smaller tokens after splitting do not have dependencies. For example, in the Canny edge detection, after capturing a video frame, it is possible to split a token into multiple tokens and perform Canny edge detection on smaller parts.
+Data parallelization is possible only if the smaller tokens after slicing do not have dependencies. For example, in the Canny edge detection, after capturing a video frame, it is possible to slice a token into multiple tokens and perform Canny edge detection on smaller parts.
 
-Two special actors called ```MatSplit``` and ```MatMerge``` are provided in TMF for splitting and merging OpenCV ```Mat``` structure. These actors use the ports of variable arity (```createInputPortVector``` and ```createOutputPortVector```).
+Two special actors called ```MatSlice``` and ```MatMerge``` are provided in TMF for slicing and merging OpenCV ```Mat``` structure. These actors use the ports of variable arity (```createInputPortVector``` and ```createOutputPortVector```).
 
 ## Distribution
 

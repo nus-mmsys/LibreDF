@@ -16,19 +16,19 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "video_capture_split.h"
+#include "video_capture_slice.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<VideoCaptureSplit> VideoCaptureSplit::reg("VideoCaptureSplit");
+ActorRegister<VideoCaptureSlice> VideoCaptureSlice::reg("VideoCaptureSlice");
 
-VideoCaptureSplit::VideoCaptureSplit(const string& name) : Actor(name){
+VideoCaptureSlice::VideoCaptureSlice(const string& name) : Actor(name){
   output = createOutputPortVector<df::Mat>("output");
   cap = nullptr;
 }
 
-void VideoCaptureSplit::init() {
+void VideoCaptureSlice::init() {
 
   if (getProp("file_name") != "")  	
   	file_name = fsys.inPath() + "/" + getProp("file_name");
@@ -56,7 +56,7 @@ void VideoCaptureSplit::init() {
   tileh = frame.rows / level;
 }
 
-void VideoCaptureSplit::run() {
+void VideoCaptureSlice::run() {
 
   auto out = produce(output);
  
@@ -78,7 +78,7 @@ void VideoCaptureSplit::run() {
   release(output);
  
 }
-VideoCaptureSplit::~VideoCaptureSplit() {
+VideoCaptureSlice::~VideoCaptureSlice() {
   if (cap != nullptr)
 	  cap->release();
   destroyPort(output);

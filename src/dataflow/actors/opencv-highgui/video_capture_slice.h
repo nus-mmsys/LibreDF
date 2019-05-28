@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_VIDEO_CAPTURE_SPLIT_H_
-#define DF_VIDEO_CAPTURE_SPLIT_H_
+#ifndef DF_VIDEO_CAPTURE_SLICE_H_
+#define DF_VIDEO_CAPTURE_SLICE_H_
 
 #include "core/df.h"
 #include "tokens/opencv/mat.h"
@@ -31,7 +31,7 @@
 
 using namespace std;
 
-class VideoCaptureSplit: public df::Actor {
+class VideoCaptureSlice: public df::Actor {
   
 private:
 
@@ -41,17 +41,17 @@ private:
   int level, tilew, tileh;
   df::OutputPortVector<df::Mat> * output;
  
-  static  df::ActorRegister<VideoCaptureSplit> reg;
+  static  df::ActorRegister<VideoCaptureSlice> reg;
 public:
   
-  VideoCaptureSplit(const string& name);
+  VideoCaptureSlice(const string& name);
   
   virtual void init();
   
   virtual void run();
   
-  virtual ~VideoCaptureSplit();
+  virtual ~VideoCaptureSlice();
   
 };
 
-#endif /* DF_VIDEO_CAPTURE_SPLIT_H_ */
+#endif /* DF_VIDEO_CAPTURE_SLICE_H_ */
