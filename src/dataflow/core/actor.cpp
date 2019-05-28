@@ -435,11 +435,15 @@ int Actor::resumeTill(int iter) {
     while(!paused)
     	pause_cond.wait(lockpause);
     int i;
+    string itermsg;
     while(iterno < iter) {
+	itermsg = "starts "+timer.endUs();
 	for (i=0; i<solution; i++) {
 	    run();
 	    stepno++;
 	}
+	itermsg += " ends "+timer.endUs();
+	iterlog(itermsg);
 	iterno++;
     }
     return 0;
