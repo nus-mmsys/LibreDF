@@ -73,11 +73,13 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 }
 
 void Actor::iterlog(std::string itermsg) {
+  string s = name + ": iter " + to_string(iterno) + " " + itermsg + "\n";
   if (logging) {
-     string s = name + ": iter " + to_string(iterno) + " " + itermsg + "\n";
      iolock->lock();
      std::cout << s;
      iolock->unlock();
+  } else {
+     logfile << s;     
   }
 }
 void Actor::log(std::string msg) {
@@ -307,7 +309,11 @@ void Actor::initActor() {
 	    p.second->startAccept();
     }
   }
-   
+
+  if (!logging) {
+  	logfile.open(fsys.logPath()+name);
+  }
+
 }
 
 void Actor::reInitActor() {
@@ -440,4 +446,6 @@ int Actor::resumeTill(int iter) {
 }
 
 Actor::~Actor() { 
+    if (!logging)
+        logfile.close();
 }

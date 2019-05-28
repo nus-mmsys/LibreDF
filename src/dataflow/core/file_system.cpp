@@ -25,6 +25,7 @@ FileSystem::FileSystem() {
   home_path = std::getenv("HOME");
   df_path = home_path + "/Documents/df/";  
   dfout_path = df_path + "outputs/";
+  dflog_path = df_path + "logs/";
 }
 
 string FileSystem::inPath() {
@@ -35,4 +36,6 @@ string FileSystem::outPath() {
 	return dfout_path;
 }
 
-
+string FileSystem::logPath() {
+	return dflog_path;
+}

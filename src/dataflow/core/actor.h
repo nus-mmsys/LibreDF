@@ -34,6 +34,7 @@
 #include <map>
 #include <thread>
 #include <iostream>
+#include <fstream>
 #include <sys/stat.h>
 
 namespace df {
@@ -96,6 +97,8 @@ namespace df {
     bool scheduling;  
     bool distributed;
     bool realtime;
+
+    std::ofstream logfile;
 
     std::thread tinit;
     std::thread treinit;

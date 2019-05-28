@@ -28,12 +28,14 @@ namespace df {
     private:
       std::string home_path; /**< The path for home folder */    
       std::string df_path; /**< The path for actors to use */
-      std::string dfout_path; /**< The path for actors to use as output */
+      std::string dfout_path; /**< The path for actors to use for outputs */
+      std::string dflog_path; /**< The path for actors to use for logs */
     
     public:
       FileSystem();
       std::string inPath();
       std::string outPath();
+      std::string logPath();
   };
 
 }

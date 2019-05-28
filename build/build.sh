@@ -34,6 +34,11 @@ if [ ! -d $OUTPUTS ]
 then
 	mkdir $OUTPUTS
 fi
+LOGS="${DF_HOME}/logs"
+if [ ! -d $LOGS ]
+then
+	mkdir $LOGS
+fi
 cp -n ${OCV}/share/opencv/haarcascades/*.xml ${CASCADE}/
 if [ $# == 0 ]
 then
