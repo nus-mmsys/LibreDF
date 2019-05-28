@@ -72,9 +72,9 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 	return rep;
 }
 
-void Actor::iterlog() {
+void Actor::iterlog(std::string itermsg) {
   if (logging) {
-     string s = name + ": iter " + to_string(iterno) + " latency " + itertimer.endUs() + "\n";
+     string s = name + ": iter " + to_string(iterno) + " " + itermsg + "\n";
      iolock->lock();
      std::cout << s;
      iolock->unlock();
@@ -367,15 +367,15 @@ void Actor::runActor() {
   }
 
   timer.start();
-
+  string itermsg;
   int i;
   while(getStatus() != EOS) {
 	  
-      itertimer.start(); 
       {
 	  unique_lock<mutex> lockpause(pause_mux);
 	  while(paused)
 		  pause_cond.wait(lockpause);
+	  itermsg = "starts "+timer.endUs();
 	  for (i=0; i<solution; i++) {
 	      fireno = i+1;
 	      if (realtime) {
@@ -385,7 +385,8 @@ void Actor::runActor() {
     	      }
               stepno++;
 	  }
-	  iterlog();
+	  itermsg += " ends "+timer.endUs();
+	  iterlog(itermsg);
           iterno++;
       }
 
