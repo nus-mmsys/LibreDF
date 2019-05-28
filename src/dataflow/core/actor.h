@@ -62,6 +62,7 @@ namespace df {
     int fireno; /**< The number of firing in one iteration */
     
     Timer timer;
+    Timer itertimer;
     FileSystem fsys; /**< The actors can retrieve the path to use */
    
     /*!
@@ -85,6 +86,7 @@ namespace df {
     }
 
     void log(std::string msg);
+    void iterlog();
    
   private:
 

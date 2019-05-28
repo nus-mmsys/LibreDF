@@ -233,7 +233,7 @@ void RDataflow::run() {
 		//endTiming("[RDF] Replace graph delay: ");
 	}
 
-	delays.push_back(rdftimer.end());
+	delays.push_back(rdftimer.endUs());
 	
 	//startTiming();
 	resume();
@@ -251,9 +251,9 @@ void RDataflow::run() {
   }
  
   for (auto d : delays)
-	 log("RDF reconfiguration delay = "+d+" ms");
+	 log("RDF reconfiguration delay = "+d+" us");
 
-  log("Execution time = "+timer.end()+" ms"); 
+  log("Execution time = "+timer.endUs()+" us"); 
   
   /*
   for (auto f : actors) {

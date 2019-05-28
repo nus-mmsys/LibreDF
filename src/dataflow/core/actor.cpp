@@ -72,6 +72,14 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 	return rep;
 }
 
+void Actor::iterlog() {
+  if (logging) {
+     string s = name + ": iter " + to_string(iterno) + " latency " + itertimer.endUs() + "\n";
+     iolock->lock();
+     std::cout << s;
+     iolock->unlock();
+  }
+}
 void Actor::log(std::string msg) {
   if (logging) {
     string s = name + ": [" + to_string(iterno) + ", " + to_string(fireno) + "] [" + timer.endUs() + "] [" + to_string(sched_getcpu()) + "] " + msg + "\n";
@@ -362,6 +370,8 @@ void Actor::runActor() {
 
   int i;
   while(getStatus() != EOS) {
+	  
+      itertimer.start(); 
       {
 	  unique_lock<mutex> lockpause(pause_mux);
 	  while(paused)
@@ -375,7 +385,8 @@ void Actor::runActor() {
     	      }
               stepno++;
 	  }
-	  iterno++;
+	  iterlog();
+          iterno++;
       }
 
       {

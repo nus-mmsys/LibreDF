@@ -375,7 +375,7 @@ void Dataflow::run() {
     f.second->waitRun();
   }
   
-  std::cout << "Execution time = " << timer.end() << " ms\n"; 
+  std::cout << "Execution time = " << timer.endUs() << " us\n"; 
   
   /*
   for (auto f : actors) {
