@@ -437,12 +437,12 @@ int Actor::resumeTill(int iter) {
     int i;
     string itermsg;
     while(iterno < iter) {
-	itermsg = "starts "+timer.endUs();
+	itermsg = "starts "+to_string(timer.nowUs());
 	for (i=0; i<solution; i++) {
 	    run();
 	    stepno++;
 	}
-	itermsg += " ends "+timer.endUs();
+	itermsg += " ends "+to_string(timer.nowUs());
 	iterlog(itermsg);
 	iterno++;
     }
