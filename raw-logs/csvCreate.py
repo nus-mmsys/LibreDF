@@ -26,9 +26,9 @@ for line in f:
         csv[it] = [start, end]
 
 res.write("iteration,start,end\n")
-
+starttime = csv[1][0]
 for it in dict(sorted(csv.items())):
-    res.write(str(it)+","+str(csv[it][0])+","+str(csv[it][1])+"\n")
+    res.write(str(it)+","+str(csv[it][0]-starttime)+","+str(csv[it][1]-starttime)+"\n")
 
 f.close()
 print(resname+" is created.")
