@@ -381,7 +381,7 @@ void Actor::runActor() {
 	  unique_lock<mutex> lockpause(pause_mux);
 	  while(paused)
 		  pause_cond.wait(lockpause);
-	  itermsg = "starts "+timer.endUs();
+	  itermsg = "starts "+to_string(timer.now());
 	  for (i=0; i<solution; i++) {
 	      fireno = i+1;
 	      if (realtime) {
@@ -391,7 +391,7 @@ void Actor::runActor() {
     	      }
               stepno++;
 	  }
-	  itermsg += " ends "+timer.endUs();
+	  itermsg += " ends "+to_string(timer.now());
 	  iterlog(itermsg);
           iterno++;
       }
