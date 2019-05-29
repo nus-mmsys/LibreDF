@@ -9,5 +9,9 @@ if (length(args)==0) {
 
 data <- read.csv(args[1])
 
-print(data)
+#print(data)
+
+plot(data$iteration, data$end-data$start, 
+     main="Iteration latency", ylab="latency(x)",
+     type="l", col="blue")
 
