@@ -9,9 +9,14 @@ if (length(args)==0) {
 
 data <- read.csv(args[1])
 
+name <- unlist(strsplit(args[1],"[.]"))[1]
+
 #print(data)
 
+pdf(paste(name,".pdf", sep=""))
+
 plot(data$iteration, data$end-data$start, 
-     main="Iteration latency", ylab="latency(x)",
+     main="Iteration latency", 
+     xlab="iteration", ylab="latency(iteration)",
      type="l", col="blue")
 
