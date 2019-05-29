@@ -49,6 +49,7 @@ namespace df {
       void startClock();
       std::string endClock();
       unsigned long now();
+      unsigned long nowUs();
       void sleep(int s); 
       void randSleep(int s); 
   };

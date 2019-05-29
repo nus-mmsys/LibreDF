@@ -7,7 +7,8 @@ if len(sys.argv) < 2 :
     exit(0)
 
 f = open(sys.argv[1])
-res = open("results.csv", "w")
+resname = sys.argv[1].split(".")[0]+".csv"
+res = open(resname, "w")
 
 csv = {}
 
@@ -30,3 +31,4 @@ for it in dict(sorted(csv.items())):
     res.write(str(it)+","+str(csv[it][0])+","+str(csv[it][1])+"\n")
 
 f.close()
+print(resname+" is created.")
