@@ -10,6 +10,9 @@ rdf canny {
     actor D {
     	computation = ImageWrite;
     }
+    parameter {
+	logging = true;
+    }
 }
 rule r1 {
 left {

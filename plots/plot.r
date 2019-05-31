@@ -16,7 +16,7 @@ name <- unlist(strsplit(args[1],"[.]"))[1]
 pdf(paste(name,".pdf", sep=""))
 
 plot(data$iteration, data$end-data$start, 
-     main="Iteration latency", 
+     main=name, 
      xlab="iteration", ylab="latency(iteration)",
      type="l", col="blue")
 
