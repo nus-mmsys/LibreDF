@@ -28,7 +28,7 @@ rdf cannysink-parallel {
     	computation = ImageSink;
     }
     parameter {
-	logging = false;
+	logging = true;
     }
 }
 rule r1 {
