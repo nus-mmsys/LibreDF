@@ -46,8 +46,8 @@ void FFT2::run() {
             const std::complex<double> wp = cos(p*theta0)-i*sin(p*theta0);
             const std::complex<double> a = in->get_item(p + 0);
             const std::complex<double> b = in->get_item(p + m);
-            out->put_item((a - b) * wp);
             out->put_item(a + b);
+            out->put_item((a - b) * wp);
         }
 
   release(output);  
