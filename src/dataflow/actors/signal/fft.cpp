@@ -51,7 +51,7 @@ void FFT::run() {
             const std::complex<double> b = in->get_item(p + m);
             out2->put_item(a + b);
             out1->put_item((a - b) * wp);
-        }
+  }
 
   release(output1);  
   release(output2);  

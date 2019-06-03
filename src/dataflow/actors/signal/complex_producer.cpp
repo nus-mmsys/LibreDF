@@ -52,7 +52,8 @@ void ComplexProducer::run() {
   out->clear_items();
 
   for (int k=0; k<16; k++) {
-	std::complex<double> c = cos(2*k*pi/16)+i*sin(2*k*pi/16);
+	std::complex<double> c = exp(2*k*pi/16);
+	//std::complex<double> c = cos(2*k*pi/16)+i*sin(2*k*pi/16);
   	out->put_item(c);
   }
 
