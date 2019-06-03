@@ -108,7 +108,7 @@ tmf fft {
         computation = ComplexProducer;
     }
     actor C {
-        computation = ComplexConsumer;
+        computation = BitReverse;
     }
     parameter {
     	logging = true;

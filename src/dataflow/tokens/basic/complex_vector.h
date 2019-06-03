@@ -58,6 +58,10 @@ namespace df {
 	    data->clear();
     }
 
+    void swap_item(int ii, int jj) {
+	    std::swap((*data)[ii], (*data)[jj]);
+    }
+
     virtual int data_size() {
 	    return data->size()*sizeof(std::complex<double>)+sizeof(int);
     }
