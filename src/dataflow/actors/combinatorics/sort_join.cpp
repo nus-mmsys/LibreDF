@@ -41,12 +41,25 @@ void SortJoin::run() {
 
   out->clear_items();
 
-  for (int p = 0; p < in1->vector_size(); p++) {
-            out->put_item(in1->get_item(p));
+  int ii=0,jj=0;
+  while (ii < in1->vector_size() && jj < in2->vector_size()) {
+          if (in1->get_item(ii) < in2->get_item(jj)) {
+	  	out->put_item(in1->get_item(ii));
+		ii++;
+	  } else {
+	  	out->put_item(in2->get_item(jj));
+		jj++;
+	  }
   }
- 
-  for (int p = 0; p < in2->vector_size(); p++) {
-            out->put_item(in2->get_item(p));
+
+  while(ii<in1->vector_size()) {
+	  out->put_item(in1->get_item(ii));
+  	  ii++;
+  }
+
+  while(jj<in2->vector_size()) {
+	  out->put_item(in2->get_item(jj));
+  	  jj++;
   }
 
   release(input1);  
