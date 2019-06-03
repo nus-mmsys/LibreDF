@@ -41,7 +41,7 @@ void ComplexConsumer::run() {
   }
   log(msg);
   
-  timer.randSleep(200);
+  //timer.randSleep(200);
   
   release(input);
 }

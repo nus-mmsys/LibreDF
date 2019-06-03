@@ -106,6 +106,7 @@ tmf fft {
     }
     actor P {
         computation = ComplexProducer;
+	last = 1000;
     }
     actor C {
         computation = BitReverse;

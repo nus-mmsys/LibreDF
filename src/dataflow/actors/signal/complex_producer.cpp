@@ -61,7 +61,7 @@ void ComplexProducer::run() {
 
   log(msg);
 
-  timer.randSleep(200);
+  //timer.randSleep(200);
 
   if(number >= last)
     setEos(output);
