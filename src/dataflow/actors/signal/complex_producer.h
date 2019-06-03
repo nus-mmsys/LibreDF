@@ -25,12 +25,16 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include <complex>
+#include <cmath>
 
 using namespace std;
 
 class ComplexProducer: public df::Actor {
   
 private:
+
+  std::string msg;
 
   int step;
   int number;  

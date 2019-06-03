@@ -37,7 +37,7 @@ void ComplexConsumer::run() {
   msg = "consuming \n";
   for (int k=0; k<in->vector_size(); k++) {
 	  item = in->get_item(k);
-	  msg += to_string(item.real())+","+to_string(item.imag())+"i\n";
+	  msg += to_string(item.real())+","+to_string(item.imag())+"i  ";
   }
   log(msg);
   

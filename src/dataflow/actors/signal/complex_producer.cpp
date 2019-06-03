@@ -51,11 +51,15 @@ void ComplexProducer::run() {
   
   out->clear_items();
 
+  msg = "producing ";
   for (int k=0; k<16; k++) {
-	std::complex<double> c = exp(2*k*M_PI/16);
-	//std::complex<double> c = cos(2*k*M_PI/16)+i*sin(2*k*M_PI/16);
+	//std::complex<double> c = exp(i*2*k*M_PI/16.0);
+	std::complex<double> c = cos(2*k*M_PI/16)+i*sin(2*k*M_PI/16);
   	out->put_item(c);
+	msg += to_string(c.real()) + "," + to_string(c.imag()) + "i  "; 
   }
+
+  log(msg);
 
   timer.randSleep(200);
 
