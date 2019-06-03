@@ -33,9 +33,13 @@ void ComplexConsumer::init() {
 
 void ComplexConsumer::run() {
   ComplexVector * in = consume(input);
-  
-  //TODO
-  //log("consuming "+in->to_string());
+
+  msg = "consuming ";
+  for (int k=0; k<in->vector_size(); k++) {
+	  item = in->get_item(k);
+	  msg += to_string(item.real())+","+to_string(item.imag())+"i";
+  }
+  log(msg);
   
   timer.randSleep(200);
   

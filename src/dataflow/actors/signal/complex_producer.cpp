@@ -21,6 +21,9 @@
 using namespace df;
 using namespace std;
 
+const double pi = std::acos(-1);
+const std::complex<double> i(0,1);
+
 ActorRegister<ComplexProducer> ComplexProducer::reg("ComplexProducer");
 
 ComplexProducer::ComplexProducer(const string& name) : Actor(name) {
@@ -45,11 +48,12 @@ void ComplexProducer::init() {
 void ComplexProducer::run() {
 
   ComplexVector * out = produce(output);	
-  
-  //TODO
-  //out->set(number);
-  //log("producing "+to_string(number));
-  
+ 
+  for (int k=0; k<16; k++) {
+	std::complex<double> c = cos(2*k*pi/16)+i*sin(2*k*pi/16);
+  	out->put_item(c);
+  }
+
   timer.randSleep(200);
 
   if(number >= last)

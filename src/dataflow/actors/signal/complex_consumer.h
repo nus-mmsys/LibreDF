@@ -27,6 +27,8 @@
 class ComplexConsumer: public df::Actor {
   
 private:
+  std::string msg;
+  std::complex<double> item;
   df::InputPort<df::ComplexVector> * input;
 
   static df::ActorRegister<ComplexConsumer> reg;
