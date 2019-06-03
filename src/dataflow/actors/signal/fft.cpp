@@ -46,7 +46,7 @@ void FFT::run() {
   const double theta0 = 2*M_PI/in->vector_size();
 
   for (int p = 0; p < m; p++) {
-            const std::complex<double> wp = cos(p*theta0)+i*(-sin(p*theta0));
+            const std::complex<double> wp = cos(p*theta0)-i*sin(p*theta0);
             const std::complex<double> a = in->get_item(p + 0);
             const std::complex<double> b = in->get_item(p + m);
             out2->put_item(a + b);
