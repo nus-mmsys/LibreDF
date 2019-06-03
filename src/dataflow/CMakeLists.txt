@@ -8,6 +8,7 @@ option(BUILD_OPENCV_ACTORS "Build opencv actors" ON)
 option(BUILD_BASIC_ACTORS "Build basic actors" ON)
 option(BUILD_COMBINATORICS_ACTORS "Build combinatorics actors" ON)
 option(BUILD_DESIGN_ACTORS "Build design actors" ON)
+option(BUILD_SIGNAL_ACTORS "Build signal actors" ON)
 
 include_directories(.)
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -43,13 +44,18 @@ if (BUILD_DESIGN_ACTORS)
   aux_source_directory(actors/design design)
 endif()
 
+if (BUILD_SIGNAL_ACTORS)
+  aux_source_directory(tokens/basic basictoken)
+  aux_source_directory(actors/signal signal)
+endif()
+
 add_library(${PROJECT_NAME} SHARED ${core}
 				${ml} 
 				${ocvcore} ${ocvimg}
 				${ocvgui} ${ocvobj}
 				${ocvvideo} ${ocvtoken}
 				${basic} ${basictoken} 
-				${comb} ${design}
+				${comb} ${design} ${signal}
 				)
 
 if (BUILD_OPENCV_ACTORS OR BUILD_ML_ACTORS)
