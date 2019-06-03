@@ -443,8 +443,15 @@ int Dataflow::pause() {
 }
 
 void Dataflow::resume() {
-	for (auto& s : actors) {
-		s.second->resume();
+	vector<df::Actor *> sources = find_sources();
+	vector<df::Actor *> nonsources = find_nonsources();
+
+	for (auto& s : sources) {
+		s->resume();
+	}
+
+	for (auto& s : nonsources) {
+		s->resume();
 	}
 }
 
