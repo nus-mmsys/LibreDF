@@ -48,7 +48,9 @@ void ComplexProducer::init() {
 void ComplexProducer::run() {
 
   ComplexVector * out = produce(output);	
- 
+  
+  out->clear_items();
+
   for (int k=0; k<16; k++) {
 	std::complex<double> c = cos(2*k*pi/16)+i*sin(2*k*pi/16);
   	out->put_item(c);

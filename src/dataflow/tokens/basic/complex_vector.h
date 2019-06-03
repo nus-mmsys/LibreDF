@@ -54,6 +54,10 @@ namespace df {
 	    data->push_back(item);
     }
 
+    void clear_items() {
+	    data->clear();
+    }
+
     virtual int data_size() {
 	    return data->size()*sizeof(std::complex<double>)+sizeof(int);
     }

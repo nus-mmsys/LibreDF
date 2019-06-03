@@ -36,7 +36,9 @@ void FFT2::run() {
 
   ComplexVector * in = consume(input);
   ComplexVector * out = produce(output);
- 
+
+  out->clear_items();
+
   const int m = in->vector_size()/2;
   const double theta0 = 2*M_PI/in->vector_size();
 
@@ -51,7 +53,6 @@ void FFT2::run() {
   release(output);  
   release(input);
 }
-
 
 FFT2::~FFT2() {
   destroyPort(input);

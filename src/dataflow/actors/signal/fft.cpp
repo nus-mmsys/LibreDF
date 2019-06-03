@@ -38,7 +38,10 @@ void FFT::run() {
   ComplexVector * in = consume(input);
   ComplexVector * out1 = produce(output1);
   ComplexVector * out2 = produce(output2);
- 
+
+  out1->clear_items();
+  out2->clear_items();
+
   const int m = in->vector_size()/2;
   const double theta0 = 2*M_PI/in->vector_size();
 

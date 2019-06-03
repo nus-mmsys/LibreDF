@@ -38,7 +38,9 @@ void FFTJoin::run() {
   ComplexVector * in1 = consume(input1);
   ComplexVector * in2 = consume(input2);
   ComplexVector * out = produce(output);
- 
+
+  out->clear_items();
+
   for (int p = 0; p < in1->vector_size(); p++) {
             out->put_item(in1->get_item(p));
   }

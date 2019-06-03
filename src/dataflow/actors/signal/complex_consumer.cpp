@@ -34,10 +34,10 @@ void ComplexConsumer::init() {
 void ComplexConsumer::run() {
   ComplexVector * in = consume(input);
 
-  msg = "consuming ";
+  msg = "consuming \n";
   for (int k=0; k<in->vector_size(); k++) {
 	  item = in->get_item(k);
-	  msg += to_string(item.real())+","+to_string(item.imag())+"i";
+	  msg += to_string(item.real())+","+to_string(item.imag())+"i\n";
   }
   log(msg);
   
