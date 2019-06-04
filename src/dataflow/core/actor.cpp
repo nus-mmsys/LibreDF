@@ -407,14 +407,16 @@ int Actor::pause() {
     lock_guard<mutex> lockpause(pause_mux);
     int res = iterno;
     paused = true;
-    pause_cond.notify_all();
+    //pause_cond.notify_all();
     return res;
 }
 
 void Actor::resume() {
-    lock_guard<mutex> lockpause(pause_mux);
-    paused = false;
-    pause_cond.notify_all();
+    {
+    	lock_guard<mutex> lockpause(pause_mux);
+    	paused = false;
+    }
+    pause_cond.notify_one();
 }
 
 void Actor::setIteration(int iter) {
@@ -423,7 +425,7 @@ void Actor::setIteration(int iter) {
 
 int Actor::resumeTill(int iter) {
 
-    unique_lock<mutex> lockpause(pause_mux);
+    lock_guard<mutex> lockpause(pause_mux);
     if (iter < iterno) {
 	    log("resume_till: actor cannot resume until a smaller iteration.");
 	    return -1;
@@ -432,8 +434,8 @@ int Actor::resumeTill(int iter) {
     if (iter == iterno)
     	return 0;
 
-    while(!paused)
-    	pause_cond.wait(lockpause);
+    //while(!paused)
+    //	pause_cond.wait(lockpause);
     int i;
     string itermsg;
     while(iterno < iter) {
