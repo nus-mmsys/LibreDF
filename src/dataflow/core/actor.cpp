@@ -378,9 +378,8 @@ void Actor::runActor() {
   while(getStatus() != EOS) {
 	  
       {
-	  unique_lock<mutex> lockpause(pause_mux);
-	  while(paused)
-		  pause_cond.wait(lockpause);
+	  lock_guard<mutex> lockrun(runend_mux);
+
 	  itermsg = "starts "+to_string(timer.nowUs());
 	  for (i=0; i<solution; i++) {
 	      fireno = i+1;
@@ -397,14 +396,16 @@ void Actor::runActor() {
       }
 
       {
-	  lock_guard<mutex> lockrun(runend_mux);
+	  unique_lock<mutex> lockpause(pause_mux);
+	  while(paused)
+		  pause_cond.wait(lockpause);
       }
   }
 }
 
 int Actor::pause() {
-    lock_guard<mutex> lockrun(runend_mux);
     lock_guard<mutex> lockpause(pause_mux);
+    lock_guard<mutex> lockrun(runend_mux);
     int res = iterno;
     paused = true;
     //pause_cond.notify_all();
