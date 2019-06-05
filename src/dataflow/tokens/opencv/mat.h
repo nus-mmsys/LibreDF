@@ -21,6 +21,7 @@
 
 #include "core/token.h"
 #include "opencv2/core/core.hpp"
+#include "opencv2/core/utility.hpp"
 
 namespace df {
 
@@ -37,6 +38,7 @@ namespace df {
     	cols = 0;
     	type = 0;
 	matsize = 0;
+	cv::setNumThreads(0);
     }
 
     int calcMatSize() {
