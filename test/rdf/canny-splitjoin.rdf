@@ -15,7 +15,7 @@ rdf canny-splitjoin {
     	computation = Canny;
     }
     actor D {
-    	computation = ImageShowJoin;
+    	computation = ImageWriteJoin;
 	level = 1;
     }
     parameter {
@@ -40,7 +40,7 @@ left {
     	computation = Canny;
     }
     actor z {
-    	computation = ImageShowJoin;
+    	computation = ImageWriteJoin;
 	level = 1;
     }
 }
@@ -67,11 +67,11 @@ right {
     	computation = Canny;
     }
     actor z {
-    	computation = ImageShowJoin;
+    	computation = ImageWriteJoin;
 	level = 2;
     }
 }
 }
 main {
-    load=10 : r1;
+    load=4 : r1;
 }

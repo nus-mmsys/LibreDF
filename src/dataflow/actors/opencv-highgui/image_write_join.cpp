@@ -16,27 +16,29 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "image_show_join.h"
+#include "image_write_join.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<ImageShowJoin> ImageShowJoin::reg("ImageShowJoin");
+ActorRegister<ImageWriteJoin> ImageWriteJoin::reg("ImageWriteJoin");
 
-ImageShowJoin::ImageShowJoin(const string& name) : Actor(name) {
-  input = createInputPortVector<df::Mat>("opencv input");
+ImageWriteJoin::ImageWriteJoin(const string& name) : Actor(name){
+  input = createInputPortVector<df::Mat>("input");
 }
 
-void ImageShowJoin::init() {
+void ImageWriteJoin::init() {
+
   if (propEmpty("level"))
 	  level = 1;
   else
 	  level = getPropInt("level");
 
   input->setArity(level);
+
 }
 
-void ImageShowJoin::reinit() {
+void ImageWriteJoin::reinit() {
 
   auto newlevel = getPropInt("level");
 
@@ -48,21 +50,23 @@ void ImageShowJoin::reinit() {
 
 }
 
-void ImageShowJoin::run() {
+void ImageWriteJoin::run() {
 
-  auto in = consume(input);
+  auto in = consume(input);	
+
   for (int i=0; i<in.size(); i++) {
+
       frame = in[i]->clone();
- 
-      log("showing frame "+to_string(stepno));
-      
-      cv::imshow("ImageShowJoin", frame);
-      cv::waitKey(50);
+      log("writing image "+to_string(stepno));
+      file_name = fsys.outPath() + std::to_string(stepno) + 
+	      + "-" + std::to_string(i) + ".png";
+      cv::imwrite(file_name, frame); 
   }
+
   release(input);
+  
 }
 
-ImageShowJoin::~ImageShowJoin() {
+ImageWriteJoin::~ImageWriteJoin() {
   destroyPort(input);
-  cv::destroyAllWindows();
 }
