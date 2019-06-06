@@ -16,35 +16,42 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "image_show.h"
+#ifndef DF_VIDEO_CAPTURE_SPLIT_H_
+#define DF_VIDEO_CAPTURE_SPLIT_H_
 
-using namespace df;
+#include "core/df.h"
+#include "tokens/opencv/mat.h"
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#include <iostream>
+#include <string>
+#include <unistd.h>
+
 using namespace std;
 
-ActorRegister<ImageShow> ImageShow::reg("ImageShow");
+class VideoCaptureSplit: public df::Actor {
+  
+private:
 
-ImageShow::ImageShow(const string& name) : Actor(name) {
-  inputMat = createInputPort<df::Mat>("opencv input");
-}
-
-void ImageShow::init() {
+  std::string file_name;	
+  cv::VideoCapture * cap;
+  cv::Mat frame;
+  int level, tilew, tileh;
+  df::OutputPortVector<df::Mat> * output;
  
+  static  df::ActorRegister<VideoCaptureSplit> reg;
+public:
+  
+  VideoCaptureSplit(const string& name);
+  
+  virtual void init();
+  
+  virtual void run();
+  
+  virtual ~VideoCaptureSplit();
+  
+};
 
-}
-
-void ImageShow::run() {
-
-  auto in = consume(inputMat);	
-  frame = in->clone();
-  log("showing frame "+to_string(stepno));
-  release(inputMat);
- 
-  cv::imshow("ImageShow", frame);
-  cv::waitKey(50);
-
-}
-
-ImageShow::~ImageShow() {
-  destroyPort(inputMat);
-  cv::destroyAllWindows();
-}
+#endif /* DF_VIDEO_CAPTURE_SPLIT_H_ */

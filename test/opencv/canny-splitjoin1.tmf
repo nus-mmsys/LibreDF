@@ -1,28 +1,22 @@
 tmf canny-splitjoin1 {
     topology {
-        nodes = A,B,C,D,E,F;
-	edges = e01(A,B), e02(B,C), e03(C,D), e04(D,E), e05(E,F);
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
     }
     actor A {
-    	computation = VideoCapture;
+    	computation = VideoCaptureSplit;
 	file_name = pedestrian.mp4;
+	level = 1;
     }
     actor B {
-    	computation = MatSplit;
-	level = 1;
-    }
-    actor C {
     	computation = CvtColor;
     }
-    actor D {
+    actor C {
     	computation = Canny;
     }
-    actor E {
-    	computation = MatJoin;
+    actor D {
+    	computation = ImageShowJoin;
 	level = 1;
-    }
-    actor F {
-    	computation = ImageShow;
     }
     parameter {
 	logging = true;

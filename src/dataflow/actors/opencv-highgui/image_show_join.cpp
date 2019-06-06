@@ -16,35 +16,37 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "image_show.h"
+#include "image_show_join.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<ImageShow> ImageShow::reg("ImageShow");
+ActorRegister<ImageShowJoin> ImageShowJoin::reg("ImageShowJoin");
 
-ImageShow::ImageShow(const string& name) : Actor(name) {
-  inputMat = createInputPort<df::Mat>("opencv input");
+ImageShowJoin::ImageShowJoin(const string& name) : Actor(name) {
+  inputMat = createInputPortVector<df::Mat>("opencv input");
 }
 
-void ImageShow::init() {
+void ImageShowJoin::init() {
  
 
 }
 
-void ImageShow::run() {
+void ImageShowJoin::run() {
 
-  auto in = consume(inputMat);	
-  frame = in->clone();
-  log("showing frame "+to_string(stepno));
+  auto in = consume(inputMat);
+  for (int i=0; i<in.size(); i++) {
+      frame = in[i]->clone();
+ 
+      log("showing frame "+to_string(stepno));
+      
+      cv::imshow("ImageShowJoin", frame);
+      cv::waitKey(50);
+  }
   release(inputMat);
- 
-  cv::imshow("ImageShow", frame);
-  cv::waitKey(50);
-
 }
 
-ImageShow::~ImageShow() {
+ImageShowJoin::~ImageShowJoin() {
   destroyPort(inputMat);
   cv::destroyAllWindows();
 }
