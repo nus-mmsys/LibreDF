@@ -61,10 +61,8 @@ void MatSplit::run() {
   auto in = consumeMR(input);	
   auto out = produce(output);
 
-  int j=0;
-  for (auto t : in) {
-	out[j]->set(*t->get());
-	j++;
+  for (int j=0; j < in.size(); j++) {
+	out[j]->set(*in[j]->get());
   }
 
   log("sending "+to_string(stepno));

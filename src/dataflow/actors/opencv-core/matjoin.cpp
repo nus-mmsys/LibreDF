@@ -62,10 +62,8 @@ void MatJoin::run() {
   auto in = consume(input);	
   auto out = produceMR(output);
 
-  int j=0;
-  for (auto t : out) {
-	  t->set(*in[j]->get());
-	  j++;
+  for (int j=0; j<out.size(); j++) {
+	  out[j]->set(*in[j]->get());
   }
 
   log("sending "+to_string(stepno));

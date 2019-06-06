@@ -1,7 +1,7 @@
-tmf canny-splitjoin {
+tmf canny-splitjoin1 {
     topology {
-        nodes = A,B,C1,C2,D1,D2,E,F;
-	edges = e01(A,B), e02(B,C1), e03(B,C2), e04(C1,D1), e05(C2,D2), e06(D1,E), e07(D2,E), e08(E,F);
+        nodes = A,B,C,D,E,F;
+	edges = e01(A,B), e02(B,C), e03(C,D), e04(D,E), e05(E,F);
     }
     actor A {
     	computation = VideoCapture;
@@ -9,23 +9,17 @@ tmf canny-splitjoin {
     }
     actor B {
     	computation = MatSplit;
-	level = 2;
+	level = 1;
     }
-    actor C1 {
+    actor C {
     	computation = CvtColor;
     }
-    actor C2 {
-    	computation = CvtColor;
-    }
-    actor D1 {
-    	computation = Canny;
-    }
-    actor D2 {
+    actor D {
     	computation = Canny;
     }
     actor E {
     	computation = MatJoin;
-	level = 2;
+	level = 1;
     }
     actor F {
     	computation = ImageShow;
