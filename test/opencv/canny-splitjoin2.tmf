@@ -1,7 +1,13 @@
 tmf canny-splitjoin2 {
     topology {
         nodes = A,B,C1,C2,D1,D2,E,F;
-	edges = e01(A,B), e02(B,C1), e03(B,C2), e04(C1,D1), e05(C2,D2), e06(D1,E), e07(D2,E), e08(E,F);
+	edges = e1(A,B), e2(B,C1), e3(B,C2), e4(C1,D1), e5(C2,D2), e6(D1,E), e7(D2,E), e8(E,F);
+    }
+    consumption {
+	e2 = 3;
+    }
+    production {
+	e8 = 2;
     }
     actor A {
     	computation = VideoCapture;
