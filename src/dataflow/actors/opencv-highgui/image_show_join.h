@@ -34,8 +34,10 @@ class ImageShowJoin: public df::Actor {
   
 private:
 
+  int level;
+
   cv::Mat frame;
-  df::InputPortVector<df::Mat> * inputMat;
+  df::InputPortVector<df::Mat> * input;
  
   static  df::ActorRegister<ImageShowJoin> reg;
 public:
@@ -43,6 +45,8 @@ public:
   ImageShowJoin(const string& name);
   
   virtual void init();
+  
+  virtual void reinit();
   
   virtual void run();
   

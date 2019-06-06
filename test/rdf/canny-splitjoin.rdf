@@ -1,0 +1,77 @@
+rdf canny-splitjoin {
+    topology {
+        nodes = A,B,C,D;
+	edges = e1(A,B), e2(B,C), e3(C,D);
+    }
+    actor A {
+    	computation = VideoCaptureSplit;
+	file_name = pedestrian.mp4;
+	level = 1;
+    }
+    actor B {
+    	computation = CvtColor;
+    }
+    actor C {
+    	computation = Canny;
+    }
+    actor D {
+    	computation = ImageShowJoin;
+	level = 1;
+    }
+    parameter {
+	logging = true;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = A,x,y,z;
+	edges = e1(A,x), e2(x,y), e3(y,z);
+    }
+    actor A {
+    	computation = VideoCaptureSplit;
+	file_name = pedestrian.mp4;
+	level = 1;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor z {
+    	computation = ImageShowJoin;
+	level = 1;
+    }
+}
+right {
+    topology {
+        nodes = A,x,x1,y,y1,z;
+	edges = e1(A,x), e2(A,x1), e3(x,y), e4(x1,y1), e5(y,z), e6(y1,z);
+    }
+    actor A {
+    	computation = VideoCaptureSplit;
+	file_name = pedestrian.mp4;
+	level = 2;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor y1 {
+    	computation = Canny;
+    }
+    actor z {
+    	computation = ImageShowJoin;
+	level = 2;
+    }
+}
+}
+main {
+    load=10 : r1;
+}

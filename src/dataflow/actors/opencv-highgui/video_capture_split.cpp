@@ -51,6 +51,17 @@ void VideoCaptureSplit::init() {
 
 }
 
+void VideoCaptureSplit::reinit() {
+
+  auto newlevel = getPropInt("level");
+  
+  if (newlevel > level) {
+  	output->addArity(newlevel - level);
+  }
+
+  level = newlevel;
+}
+
 void VideoCaptureSplit::run() {
 
   auto out = produce(output);

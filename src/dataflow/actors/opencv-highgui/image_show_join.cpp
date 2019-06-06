@@ -24,17 +24,34 @@ using namespace std;
 ActorRegister<ImageShowJoin> ImageShowJoin::reg("ImageShowJoin");
 
 ImageShowJoin::ImageShowJoin(const string& name) : Actor(name) {
-  inputMat = createInputPortVector<df::Mat>("opencv input");
+  input = createInputPortVector<df::Mat>("opencv input");
 }
 
 void ImageShowJoin::init() {
- 
+  if (propEmpty("level"))
+	  level = 1;
+  else
+	  level = getPropInt("level");
+
+  input->setArity(level);
+}
+
+void ImageShowJoin::reinit() {
+
+  auto newlevel = getPropInt("level");
+
+  if (newlevel > level) {
+  	input->addArity(newlevel - level);
+  }
+
+  level = newlevel;
 
 }
 
+
 void ImageShowJoin::run() {
 
-  auto in = consume(inputMat);
+  auto in = consume(input);
   for (int i=0; i<in.size(); i++) {
       frame = in[i]->clone();
  
@@ -43,10 +60,10 @@ void ImageShowJoin::run() {
       cv::imshow("ImageShowJoin", frame);
       cv::waitKey(50);
   }
-  release(inputMat);
+  release(input);
 }
 
 ImageShowJoin::~ImageShowJoin() {
-  destroyPort(inputMat);
+  destroyPort(input);
   cv::destroyAllWindows();
 }
