@@ -1,4 +1,4 @@
-tmf canny-splitjoin2 {
+tmf cannysink-splitjoin2 {
     topology {
         nodes = A,B1,B2,C1,C2,D;
 	edges = e1(A,B1), e2(A,B2), e3(B1,C1), e4(B2,C2), e5(C1,D), e6(C2,D);
@@ -21,7 +21,7 @@ tmf canny-splitjoin2 {
     	computation = Canny;
     }
     actor D {
-    	computation = ImageWriteJoin;
+    	computation = ImageSinkJoin;
 	level = 2;
     }
     parameter {
