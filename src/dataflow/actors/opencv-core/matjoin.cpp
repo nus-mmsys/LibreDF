@@ -68,8 +68,8 @@ void MatJoin::run() {
 
   log("sending "+to_string(stepno));
   
-  release(input);
   releaseMR(output);
+  release(input);
 
 }
 

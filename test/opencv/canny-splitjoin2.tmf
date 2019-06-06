@@ -4,7 +4,7 @@ tmf canny-splitjoin2 {
 	edges = e1(A,B), e2(B,C1), e3(B,C2), e4(C1,D1), e5(C2,D2), e6(D1,E), e7(D2,E), e8(E,F);
     }
     consumption {
-	e2 = 3;
+	e2 = 2;
     }
     production {
 	e8 = 2;
@@ -16,6 +16,8 @@ tmf canny-splitjoin2 {
     actor B {
     	computation = MatSplit;
 	level = 2;
+    	output.0 = e2;
+	output.1 = e3;
     }
     actor C1 {
     	computation = CvtColor;
@@ -32,6 +34,8 @@ tmf canny-splitjoin2 {
     actor E {
     	computation = MatJoin;
 	level = 2;
+	input.0 = e6;
+	input.1 = e7;
     }
     actor F {
     	computation = ImageShow;
