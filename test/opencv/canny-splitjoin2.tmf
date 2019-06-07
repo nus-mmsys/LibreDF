@@ -1,7 +1,7 @@
 tmf canny-splitjoin2 {
     topology {
-        nodes = A,AS,B1,B2,C1,C2,DJ,D;
-	edges = e0(A,AS),e1(AS,B1), e2(AS,B2), e3(B1,C1), e4(B2,C2), e5(C1,DJ), e6(C2,DJ), e7(DJ,D);
+        nodes = A,S,B1,B2,C1,C2,J,D;
+	edges = e0(A,S),e1(S,B1), e2(S,B2), e3(B1,C1), e4(B2,C2), e5(C1,J), e6(C2,J), e7(J,D);
     }
     consumption {
 	e0 = 2;
@@ -13,7 +13,7 @@ tmf canny-splitjoin2 {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
     }
-    actor AS {
+    actor S {
     	computation = MatSplit;
 	level = 2;
     }
@@ -29,7 +29,7 @@ tmf canny-splitjoin2 {
     actor C2 {
     	computation = Canny;
     }
-    actor DJ {
+    actor J {
     	computation = MatJoin;
 	level = 2;
     }
