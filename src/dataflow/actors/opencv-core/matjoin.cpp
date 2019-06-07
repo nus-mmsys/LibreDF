@@ -38,8 +38,12 @@ void MatJoin::init() {
   tilew = 0;
   tileh = 0;
 
-  output->setRate(level);
   input->setArity(level);
+
+  if (output->getRate()!=level) {
+	log("Join output rate is not equal its input edges.");
+	exit(0);
+  }
 
 }
 

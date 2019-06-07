@@ -38,8 +38,12 @@ void MatSplit::init() {
   tilew = 0;
   tileh = 0;
 
-  input->setRate(level);
   output->setArity(level);
+
+  if (input->getRate()!=level) {
+	log("Split input rate is not equal its output edges.");
+	exit(0);
+  }
 
 }
 

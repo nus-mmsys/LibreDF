@@ -51,8 +51,10 @@ void VideoCaptureMR::run() {
       out[j]->set(frame);
       
       *cap >> frame;
-      if(frame.empty())
+      if(frame.empty()) {
           setEos(outputMat);
+	  break;
+      }
   }
 
   log("capturing frame "+to_string(stepno));
