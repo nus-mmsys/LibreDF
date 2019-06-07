@@ -38,6 +38,7 @@ void MatJoin::init() {
   tilew = 0;
   tileh = 0;
 
+  output->setRate(level);
   input->setArity(level);
 
   if (output->getRate()!=level) {
@@ -72,8 +73,8 @@ void MatJoin::run() {
 
   log("sending "+to_string(stepno));
   
-  releaseMR(output);
   release(input);
+  releaseMR(output);
 
 }
 

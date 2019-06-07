@@ -437,6 +437,7 @@ namespace df {
       else {
 	port->lockMR();
 	res = port->getMR();
+	setStatus(port->getStatusMR());
       }
       return res;      
     }
@@ -486,6 +487,7 @@ namespace df {
       else {
         port->lockMR();
         res = port->getMR();
+        port->setStatusMR(getStatus());
       }
       return res;
     }

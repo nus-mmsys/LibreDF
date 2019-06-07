@@ -38,6 +38,7 @@ void MatSplit::init() {
   tilew = 0;
   tileh = 0;
 
+  input->setRate(level);
   output->setArity(level);
 
   if (input->getRate()!=level) {
@@ -70,8 +71,8 @@ void MatSplit::run() {
   }
 
   log("sending "+to_string(stepno));
-  release(output);
   releaseMR(input);
+  release(output);
 
 }
 
