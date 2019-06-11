@@ -20,13 +20,14 @@
 #define DF_ARITHMATIC_H_
 
 #include <string>
+#include <map>
 
 namespace df {
 	
   class Arithmatic {
 
     private:
-
+      std::map<int, long int> nth;
     public:
       Arithmatic();
 

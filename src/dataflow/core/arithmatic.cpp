@@ -22,10 +22,14 @@ using namespace std;
 using namespace df;
 
 Arithmatic::Arithmatic() {
+	nth[1] = 2;
+	nth[2] = 3;
+	nth[3] = 5;
 }
 
 long int Arithmatic::nThPrime(int n) {
-	long int res = 1;
-
-	return res;
+	if (nth.find(n) == nth.end())
+		return 0;
+	else
+		return nth[n];
 }
