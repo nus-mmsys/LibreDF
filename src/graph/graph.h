@@ -275,6 +275,20 @@ public:
 	int add_graph_param(string key, string val);
 
 	/*!
+	 * Add a property to all actors of the graph.
+	 * 
+	 * \param key
+	 * 	The key of the property.
+	 *
+	 * \param val
+	 *      The value of the property.
+	 *
+	 * \return
+	 *
+	 */
+	int add_all_actor_prop(string key, string val);
+
+	/*!
 	 * Add a property of an actor of the graph.
 	 * 
 	 * \param actname

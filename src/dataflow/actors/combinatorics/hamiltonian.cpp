@@ -43,6 +43,7 @@ void Hamiltonian::run() {
   		o->setHeader(1);
 		o->setMessage(name+";");
   	}
+	setEos(output);
 	release(output);
 	first = false;
 	log("First execution terminated.");

@@ -516,6 +516,7 @@ int Parser::add_graph_param(const string& prop, Graph * g) {
 		return -2;
 	}
 	int ret = g->add_graph_param(key, val);
+	g->add_all_actor_prop(key,val);
 	return ret;
 }
 
