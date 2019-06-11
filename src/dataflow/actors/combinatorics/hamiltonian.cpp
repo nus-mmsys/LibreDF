@@ -34,6 +34,15 @@ void Hamiltonian::init() {
   } else
     nbnodes = 0;
   first = true;  
+  int iname=0;
+  
+  try {
+	iname = stoi(name);
+	prime = arith.nThPrime(iname);
+  } catch(...) {
+	prime = 1;
+	log("Hamiltonian init: name cannot be converted to integer.");
+  }
 }
 void Hamiltonian::run() {
 
@@ -46,7 +55,7 @@ void Hamiltonian::run() {
 	setEos(output);
 	release(output);
 	first = false;
-	log("First execution terminated.");
+	log("First execution terminated. prime = "+to_string(prime));
 	return;
   }
 /*

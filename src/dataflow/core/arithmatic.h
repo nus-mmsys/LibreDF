@@ -16,38 +16,24 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_HAMILTONIAN_H_
-#define DF_HAMILTONIAN_H_
+#ifndef DF_ARITHMATIC_H_
+#define DF_ARITHMATIC_H_
 
-#include "core/df.h"
-#include "tokens/basic/msg.h"
-
-#include <algorithm>
 #include <string>
-#include <iostream>
 
-class Hamiltonian: public df::Actor {
-  
-private:
-  df::InputPortVector<df::Msg> * input;
-  df::OutputPortVector<df::Msg> * output;
+namespace df {
+	
+  class Arithmatic {
 
-  std::string imsg, omsg;
-  std::string input_messages;
-  std::string output_message;
-  int nbnodes;
-  int prime;
-  bool first;
-  static df::ActorRegister<Hamiltonian> reg;
-public:
-  
-  Hamiltonian(const std::string & name);
-  
-  virtual void init();
-  virtual void run();
-  
-  virtual ~Hamiltonian();
-  
-};
+    private:
 
-#endif /* DF_HAMILTONIAN_H_ */
+    public:
+      Arithmatic();
+
+      long int nThPrime(int n);
+
+  };
+
+}
+
+#endif /* DF_ARITHMATIC_H_ */

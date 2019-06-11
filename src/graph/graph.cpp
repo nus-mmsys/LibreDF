@@ -90,9 +90,14 @@ int Graph::add_graph_param(string key, string val) {
 }
 
 int Graph::add_all_actor_prop(string key, string val) {
+	int ret = 0;
 	for (auto ac : actors) {
-		add_actor_prop(ac.first, key, val);
+		ret = add_actor_prop(ac.first, key, val);
+		if (ret < 0)
+			return ret;
+	
 	}
+	return ret;
 }
 
 int Graph::add_actor_prop(string actname, string key, string val) {
