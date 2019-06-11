@@ -33,7 +33,15 @@ namespace df {
   
     Msg():Token<MsgStruct>() {
     }
-    
+   
+    void setHeader(int h) {
+	   data->header = h;
+    }
+
+    void setMessage(std::string m) {
+	   data->message = m;
+    }
+
     virtual std::string to_string() { 
 	    return std::to_string(data->header)+" "+(data->message); 
     }
