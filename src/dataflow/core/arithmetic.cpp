@@ -42,6 +42,14 @@ bool Arithmetic::isPrime(int n) {
 	return true;
 }
 
+int Arithmetic::factor(int n) {
+	for (int i=floor(sqrt(n)); i>0; i--) {
+		if (n%i==0)
+			return i;
+	}
+	return 1;
+}
+
 long int Arithmetic::nThPrime(int n) {
 	if (nth.find(n) == nth.end())
 		return 0;

@@ -20,6 +20,7 @@
 #define DF_MATSLICE_H_
 
 #include "core/df.h"
+#include "core/arithmetic.h"
 #include "tokens/opencv/mat.h"
 
 #include <opencv2/core/core.hpp>
@@ -37,8 +38,11 @@ private:
   df::InputPort<df::Mat> * input;
   df::OutputPortVector<df::Mat> * output;
 
+  df::Arithmetic arith;
+
   int level;
   int tilew, tileh;
+  int nh, nw;
 
   static  df::ActorRegister<MatSlice> reg;
 public:

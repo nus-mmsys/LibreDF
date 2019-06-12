@@ -32,6 +32,7 @@ namespace df {
     public:
       Arithmetic();
 
+      int factor(int n);
       bool isPrime(int n);
       long int nThPrime(int n);
 

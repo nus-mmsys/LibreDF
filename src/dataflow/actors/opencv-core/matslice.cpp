@@ -37,7 +37,10 @@ void MatSlice::init() {
 
   tilew = 0;
   tileh = 0;
-
+  
+  nh = arith.factor(level);
+  nw = level/nh;
+  
   output->setArity(level * level);
 
 }
