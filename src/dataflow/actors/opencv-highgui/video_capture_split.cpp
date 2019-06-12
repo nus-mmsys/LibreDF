@@ -69,8 +69,14 @@ void VideoCaptureSplit::run() {
   for (int j=0; j < level ; j++) {
 	  out[j]->set(frame);
           *cap >> frame;
-          if(frame.empty())
+          if(frame.empty()) {
+		  while (j<level) {
+			  out[j]->set(*out[0]->get());
+			  j++;
+		  }
 		  setEos(output);
+		  break;
+	  }
   }
   
   log("capturing frame "+to_string(stepno));
