@@ -1,0 +1,16 @@
+tmf duplicate {
+    topology {
+        nodes = A,B,C;
+        edges = e1(A,B), e2(A,C);
+    }
+    actor A {
+        computation = IntProducer;
+        last = 64;
+    }
+    actor B {
+        computation = IntConsumer;
+    }
+    actor C {
+        computation = IntConsumer;
+    }
+}
