@@ -27,7 +27,6 @@
 #include "input_port_vector.h"
 #include "output_port_vector.h"
 #include "timer.h"
-#include "arithmatic.h"
 #include "file_system.h"
 
 #include <vector>
@@ -65,7 +64,6 @@ namespace df {
     
     Timer timer;
     FileSystem fsys; /**< The actors can retrieve the path to use */
-    Arithmatic arith;
 
     /*!
      * Actor constructor
