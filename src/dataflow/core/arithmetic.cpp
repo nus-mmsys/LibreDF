@@ -22,11 +22,24 @@ using namespace std;
 using namespace df;
 
 Arithmetic::Arithmetic() {
-	//TODO
-	//algorithm
-	nth[1] = 2;
-	nth[2] = 3;
-	nth[3] = 5;
+	int j = 1;
+	for (int i=2; i<550; i++) {
+		if (isPrime(i)) {
+			nth[j] = i;
+			j++;
+		}	
+	}
+}
+
+bool Arithmetic::isPrime(int n) {
+	if (n==2) return true;
+	if (n%2==0) return false;
+
+	for (int i=3; i<= sqrt(n); i=i+2) {
+		if (n%i==0)
+			return false;
+	}
+	return true;
 }
 
 long int Arithmetic::nThPrime(int n) {

@@ -21,6 +21,7 @@
 
 #include <string>
 #include <map>
+#include <cmath>
 
 namespace df {
 	
@@ -31,6 +32,7 @@ namespace df {
     public:
       Arithmetic();
 
+      bool isPrime(int n);
       long int nThPrime(int n);
 
   };
