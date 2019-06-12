@@ -16,20 +16,20 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_ARITHMATIC_H_
-#define DF_ARITHMATIC_H_
+#ifndef DF_ARITHMETIC_H_
+#define DF_ARITHMETIC_H_
 
 #include <string>
 #include <map>
 
 namespace df {
 	
-  class Arithmatic {
+  class Arithmetic {
 
     private:
       std::map<int, long int> nth;
     public:
-      Arithmatic();
+      Arithmetic();
 
       long int nThPrime(int n);
 
@@ -37,4 +37,4 @@ namespace df {
 
 }
 
-#endif /* DF_ARITHMATIC_H_ */
+#endif /* DF_ARITHMETIC_H_ */

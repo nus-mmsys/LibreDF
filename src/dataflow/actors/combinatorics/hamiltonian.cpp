@@ -46,6 +46,7 @@ void Hamiltonian::init() {
 }
 void Hamiltonian::run() {
 
+  //TODO
   if (first) {
 	auto out = produce(output);
   	for (auto o : out) {

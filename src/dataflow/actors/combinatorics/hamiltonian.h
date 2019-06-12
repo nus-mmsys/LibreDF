@@ -20,7 +20,7 @@
 #define DF_HAMILTONIAN_H_
 
 #include "core/df.h"
-#include "core/arithmatic.h"
+#include "core/arithmetic.h"
 #include "tokens/basic/msg.h"
 
 #include <algorithm>
@@ -33,7 +33,7 @@ private:
   df::InputPortVector<df::Msg> * input;
   df::OutputPortVector<df::Msg> * output;
 
-  df::Arithmatic arith;
+  df::Arithmetic arith;
   
   std::string imsg, omsg;
   std::string input_messages;

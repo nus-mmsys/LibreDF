@@ -16,18 +16,20 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "arithmatic.h"
+#include "arithmetic.h"
 
 using namespace std;
 using namespace df;
 
-Arithmatic::Arithmatic() {
+Arithmetic::Arithmetic() {
+	//TODO
+	//algorithm
 	nth[1] = 2;
 	nth[2] = 3;
 	nth[3] = 5;
 }
 
-long int Arithmatic::nThPrime(int n) {
+long int Arithmetic::nThPrime(int n) {
 	if (nth.find(n) == nth.end())
 		return 0;
 	else
