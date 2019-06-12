@@ -66,7 +66,7 @@ right {
 	output.1 = e2;
 	output.2 = e3;
 	output.3 = e4;
-	level = 2;
+	level = 4;
     }
     actor x1 {
     	computation = CvtColor;
@@ -110,7 +110,7 @@ right {
 	input.1 = e10;
 	input.2 = e11;
 	input.3 = e12;
-	level = 2;
+	level = 4;
     }
 }
 }

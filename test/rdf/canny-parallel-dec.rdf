@@ -9,7 +9,7 @@ rdf canny-parallel-dec {
     }
     actor B {
     	computation = MatSlice;
-	level = 2;
+	level = 4;
 	output.0 = e2;
 	output.1 = e3;
 	output.2 = e4;
@@ -53,7 +53,7 @@ rdf canny-parallel-dec {
     }
     actor E {
     	computation = MatMerge;
-	level = 2;
+	level = 4;
 	input.0 = e10;
 	input.1 = e11;
 	input.2 = e12;
@@ -71,7 +71,7 @@ left {
     }
     actor B {
     	computation = MatSlice;
-	level = 2;
+	level = 4;
     }
     actor x1 {
     	computation = CvtColor;
@@ -111,7 +111,7 @@ left {
     }
     actor z {
     	computation = MatMerge;
-	level = 2;
+	level = 4;
     }
 }
 right {
