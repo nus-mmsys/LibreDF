@@ -43,7 +43,10 @@ void MatMerge::init() {
   tilew = 0;
   tileh = 0;
 
-  input->setArity(level * level);
+  nh = arith.factor(level);
+  nw = level/nh;
+ 
+  input->setArity(level);
 
 }
 
@@ -52,13 +55,16 @@ void MatMerge::reinit() {
   auto newlevel = getPropInt("level");
 
   if (newlevel > level) {
-  	input->addArity((newlevel*newlevel) - (level*level));
+  	input->addArity(newlevel - level);
   }
 
   level = newlevel;
   tilew = 0;
   tileh = 0;
 
+  nh = arith.factor(level);
+  nw = level/nh;
+ 
 }
 
 void MatMerge::run() {
@@ -71,19 +77,19 @@ void MatMerge::run() {
   	tileh = in[0]->get()->rows;
 	type = in[0]->get()->type();
 	size = in[0]->get()->total()*in[0]->get()->elemSize();
-	out->mat_init(tilew*level, tileh*level, type, size*level*level);
+	out->mat_init(tilew*nw, tileh*nh, type, size*level);
   	for (int i=0; i<output->getBufferSize();i++)
-		output->get(i)->mat_init(tilew*level, tileh*level, type, size*level*level);
+		output->get(i)->mat_init(tilew*nw, tileh*nh, type, size*level);
   }
 
-  for (int j=0; j < level ; j++) {
-  	for (int i=0; i < level ; i++) {
+  for (int j=0; j < nh ; j++) {
+  	for (int i=0; i < nw ; i++) {
 		cv::Rect tile(i * tilew,
 				j * tileh,
 				tilew, tileh);
-		out->set_view(tile, in[j*level+i]->get());
+		out->set_view(tile, in[j*nh+i]->get());
 		if (text)
- 			cv::putText(*out->get(), to_string(i+j*level), cv::Point(i*tilew+tilew/2, j*tileh+tileh/2), cv::FONT_HERSHEY_DUPLEX, 3, (255,255,255), 2, 8, false);
+ 			cv::putText(*out->get(), to_string(i+j*nh), cv::Point(i*tilew+tilew/2, j*tileh+tileh/2), cv::FONT_HERSHEY_DUPLEX, 3, (255,255,255), 2, 8, false);
 	}
   }
 

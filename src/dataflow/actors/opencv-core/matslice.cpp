@@ -41,7 +41,7 @@ void MatSlice::init() {
   nh = arith.factor(level);
   nw = level/nh;
   
-  output->setArity(level * level);
+  output->setArity(level);
 
 }
 
@@ -50,12 +50,16 @@ void MatSlice::reinit() {
   auto newlevel = getPropInt("level");
   
   if (newlevel > level) {
-  	output->addArity((newlevel*newlevel) - (level*level));
+  	output->addArity(newlevel - level);
   }
 
   level = newlevel;
   tilew = 0;
   tileh = 0;
+
+  nh = arith.factor(level);
+  nw = level/nh;
+ 
 }
 
 void MatSlice::run() {
@@ -64,16 +68,16 @@ void MatSlice::run() {
   auto out = produce(output);
  
   if (tilew == 0 || tileh == 0) { 
-  	tilew = in->get()->cols / level;
-  	tileh = in->get()->rows / level;
+  	tilew = in->get()->cols / nw;
+  	tileh = in->get()->rows / nh;
   }
 
-  for (int j=0; j < level ; j++) {
-	  for (int i=0; i < level ; i++) {
+  for (int j=0; j < nh ; j++) {
+	  for (int i=0; i < nw ; i++) {
 	  	cv::Rect tile(i * tilew,
 				j * tileh,
 				tilew, tileh);
-  	  	out[j*level+i]->set(in->crop(tile));
+  	  	out[j*nh+i]->set(in->crop(tile));
 	  }
   }
 

@@ -20,6 +20,7 @@
 #define DF_MATMERGE_H_
 
 #include "core/df.h"
+#include "core/arithmetic.h"
 #include "tokens/opencv/mat.h"
 
 #include <opencv2/core/core.hpp>
@@ -36,6 +37,9 @@ private:
   cv::Mat frame;
   df::InputPortVector<df::Mat> * input;
   df::OutputPort<df::Mat> * output;
+
+  df::Arithmetic arith;
+  int nh, nw;
 
   int level, tileh, tilew, type, size;
   bool text;
