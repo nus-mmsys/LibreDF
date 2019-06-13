@@ -49,12 +49,17 @@ void VideoCaptureMR::run() {
   for (int j=0 ; j<out.size(); j++) {
 
       out[j]->set(frame);
-      
       *cap >> frame;
+	  
       if(frame.empty()) {
-          setEos(outputMat);
+	  while (j<out.size()) {
+		  out[j]->set(*out[0]->get());
+		  j++;
+	  }
+	  setEos(outputMat);
 	  break;
       }
+
   }
 
   log("capturing frame "+to_string(stepno));
