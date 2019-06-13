@@ -89,7 +89,7 @@ void MatMerge::run() {
 				tilew, tileh);
 		out->set_view(tile, in[j*nh+i]->get());
 		if (text)
- 			cv::putText(*out->get(), to_string(i+j*nh), cv::Point(i*tilew+tilew/2, j*tileh+tileh/2), cv::FONT_HERSHEY_DUPLEX, 3, (255,255,255), 2, 8, false);
+ 			cv::putText(*out->get(), to_string(i+j*nh), cv::Point(i*tilew+tilew/2, j*tileh+tileh/2), cv::FONT_HERSHEY_DUPLEX, 3, cv::Scalar(255,0,0), 2, 8, false);
 	}
   }
 
