@@ -112,7 +112,7 @@ namespace df {
 	    	ac.second->replaceProp(key,val);
     }
 
-    bool containsEdge(const std::string& src, const std::string &snk);
+    Edge * containsEdge(const std::string& src, const std::string &snk);
     Edge * createEdge(const std::string& name, const std::string& src,
 		      const std::string& snk);
     void destroyEdge(Edge * e);

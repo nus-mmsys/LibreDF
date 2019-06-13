@@ -208,6 +208,15 @@ int Graph::add_edge(string edge_source, string edge_sink, int src_rate, int snk_
         return ret;
 }
 
+int Graph::modify_edge(string edge_source, string edge_sink, int src_rate, int snk_rate, string src_port, string snk_port) {
+	string edgename = new_edge_name(edge_source, edge_sink);
+	set_source_rate(edgename, src_rate);
+	set_sink_rate(edgename, snk_rate);
+	set_source_port(edgename, src_port);
+	set_sink_port(edgename, snk_port);
+        return 0;
+}
+
 vector<Edge *> Graph::get_iedges(Actor * ac) {
 	vector <Edge *> res;
 	for (auto & e : edges) {
@@ -935,16 +944,21 @@ void Graph::reconfigure_from(Graph * g) {
 	for (auto e : g->get_edges()) {
 		srcname = g->get_source_name(e);
 		snkname = g->get_sink_name(e);
-	
+
 		if (!contains_edge(srcname, snkname)) {
-			
 			add_edge(e, srcname, snkname);
-		
 			set_source_rate(e, g->get_source_rate(e));
 			set_sink_rate(e, g->get_sink_rate(e));
 			set_source_port(e, g->get_source_port(e));
 			set_sink_port(e, g->get_sink_port(e));
+		} else {
+			auto en = get_edge_name(srcname, snkname);
+			set_source_rate(en, g->get_source_rate(e));
+			set_sink_rate(en, g->get_sink_rate(e));
+			set_source_port(en, g->get_source_port(e));
+			set_sink_port(en, g->get_sink_port(e));
 		}
+		
 	}
 }
 

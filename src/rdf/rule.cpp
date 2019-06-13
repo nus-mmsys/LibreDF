@@ -267,6 +267,11 @@ int Rule::apply() {
 						src_rate, snk_rate,
 						src_port, snk_port);
 			}
+			else {
+				res->modify_edge(src, snk,
+						src_rate, snk_rate,
+						src_port, snk_port);
+			}
 		}
 		res->solve();	
 		return 0;

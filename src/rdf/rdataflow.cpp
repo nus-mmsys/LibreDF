@@ -111,19 +111,19 @@ void RDataflow::reconfigure(int iter) {
 	for (auto e : g->get_edges()) {
 		srcname = g->get_source_name(e);
 		snkname = g->get_sink_name(e);
-		if (!containsEdge(srcname, snkname)) {
+		edtmp = containsEdge(srcname, snkname);
+	       	if (edtmp == nullptr) {
 			edtmp = createEdge(e, srcname, snkname);
-			edtmp->setSourceRate(g->get_source_rate(e));
-			edtmp->setSinkRate(g->get_sink_rate(e));
-			edtmp->setSourcePort(g->get_source_port(e));
-			edtmp->setSinkPort(g->get_sink_port(e));
 			apped.push_back(edtmp);
-			
 		}
+	
+		edtmp->setSourceRate(g->get_source_rate(e));
+		edtmp->setSinkRate(g->get_sink_rate(e));
+		edtmp->setSourcePort(g->get_source_port(e));
+		edtmp->setSinkPort(g->get_sink_port(e));
 	}	
 	
 	print();
-
 
 	for (auto c : appac) {
 		setDataflowProp(c);
