@@ -116,11 +116,10 @@ void RDataflow::reconfigure(int iter) {
 			edtmp = createEdge(e, srcname, snkname);
 			apped.push_back(edtmp);
 		}
-	
-		edtmp->setSourceRate(g->get_source_rate(e));
-		edtmp->setSinkRate(g->get_sink_rate(e));
-		edtmp->setSourcePort(g->get_source_port(e));
-		edtmp->setSinkPort(g->get_sink_port(e));
+		
+		setPortRates(srcname, snkname, 
+			g->get_source_port(e), g->get_sink_port(e),
+			g->get_source_rate(e), g->get_sink_rate(e));
 	}	
 	
 	print();

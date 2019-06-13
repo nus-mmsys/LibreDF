@@ -170,6 +170,15 @@ namespace df {
      */
     void disconnectActors(Actor * src, Actor * snk, std::string edge);
 
+    /*!
+     * Set rates of edges and rate of ports.
+     *
+     */
+    void setPortRates(std::string srcname, std::string snkname,
+		std::string outport, std::string inport,
+		int srcrate, int snkrate);
+
+
     void runDiscovery();
     void waitDiscovery();
     

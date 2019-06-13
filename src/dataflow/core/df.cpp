@@ -196,6 +196,26 @@ void Dataflow::connectActors(Actor * src, Actor * snk, std::string edge, int p, 
 	snk->setInputPortRate(inp, c);
 }
 
+void Dataflow::setPortRates(std::string srcname, std::string snkname,
+		std::string outport, std::string inport,
+		int srcrate, int snkrate) {
+
+	auto edge = containsEdge(srcname, snkname);
+	if (edge != nullptr) {
+		edge->setSourceRate(srcrate);
+		edge->setSinkRate(snkrate);
+		edge->setSourcePort(outport);
+		edge->setSinkPort(inport);
+	}
+	
+	if (actors.find(srcname) != actors.end()) {
+		actors[srcname]->setOutputPortRate(outport,srcrate);
+	}
+	if (actors.find(snkname) != actors.end()) {
+		actors[snkname]->setInputPortRate(inport, snkrate);
+	}
+}
+
 void Dataflow::disconnectActors(Actor * src, Actor * snk, std::string edge) {
 	string inp, outp;
 	int inpidx, outpidx;

@@ -200,11 +200,13 @@ RDataflow * RDFParser::get_rdataflow() {
 		srcname = graph->get_source_name(edname);
 		snkname = graph->get_sink_name(edname); 
 		df::Edge * e = res->createEdge(edname, srcname, snkname);
-		e->setSourceRate(graph->get_source_rate(edname));
-		e->setSinkRate(graph->get_sink_rate(edname));
-		e->setSourcePort(graph->get_source_port(edname));
-		e->setSinkPort(graph->get_sink_port(edname));
 		e->setInitialTokens(graph->get_initial_tokens(edname));
+
+		res->setPortRates(srcname, snkname,
+			graph->get_source_port(edname),
+			graph->get_sink_port(edname),
+			graph->get_source_rate(edname),
+			graph->get_sink_rate(edname));
 	}	
 	
 	//Rules and programs
