@@ -960,6 +960,7 @@ void Graph::reconfigure_from(Graph * g) {
 		}
 		
 	}
+	resolve();
 }
 
 void Graph::clear() {
