@@ -57,7 +57,7 @@ void ImageShowJoin::run() {
       log("showing frame "+to_string(stepno));
       
       cv::imshow("ImageShowJoin", frame);
-      cv::waitKey(50);
+      cv::waitKey(50/in.size());
   }
   release(input);
 }
