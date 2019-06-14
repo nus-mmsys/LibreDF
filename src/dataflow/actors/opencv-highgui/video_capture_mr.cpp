@@ -41,6 +41,7 @@ void VideoCaptureMR::init() {
     cout << "Error opening video stream or file" << endl;
   }
   *cap >> frame;
+  padframe = cv::Mat(frame.rows, frame.cols, frame.type());
 }
 
 void VideoCaptureMR::run() {
@@ -48,12 +49,21 @@ void VideoCaptureMR::run() {
   auto out = produceMR(outputMat);	
   for (int j=0 ; j<out.size(); j++) {
 
+      if(frame.empty()) {
+	  while (j<out.size()) {
+		  out[j]->set(padframe);
+		  j++;
+	  }
+	  setEos(outputMat);
+	  break;
+      }
+
       out[j]->set(frame);
       *cap >> frame;
 	  
       if(frame.empty()) {
 	  while (j<out.size()) {
-		  out[j]->set(*out[0]->get());
+		  out[j]->set(padframe);
 		  j++;
 	  }
 	  setEos(outputMat);

@@ -37,7 +37,9 @@ private:
 
   std::string file_name;	
   cv::VideoCapture * cap;
+  
   cv::Mat frame;
+  cv::Mat padframe;
 
   df::OutputPort<df::Mat> * outputMat;
  
