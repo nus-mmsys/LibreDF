@@ -42,7 +42,7 @@ void ImageShowMR::run() {
       log("showing image "+to_string(stepno));
       
       cv::imshow("ImageShow", frame);
-      cv::waitKey(1);
+      cv::waitKey(50/(in.size()*getSolution()));
   }
  
   releaseMR(input);
@@ -50,4 +50,5 @@ void ImageShowMR::run() {
 
 ImageShowMR::~ImageShowMR() {
   destroyPort(input);
+  cv::destroyAllWindows();
 }
