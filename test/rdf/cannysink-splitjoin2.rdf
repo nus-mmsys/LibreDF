@@ -1,4 +1,4 @@
-rdf canny-splitjoin2 {
+rdf cannysink-splitjoin2 {
     topology {
         nodes = A,S,B,C,J,D;
 	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,D);

@@ -1,11 +1,14 @@
-rdf cannyshow-splitjoin {
+rdf cannyshow-splitjoin2 {
     topology {
-        nodes = A,B,C,D;
-	edges = e1(A,B), e2(B,C), e3(C,D);
+        nodes = A,S,B,C,J,D;
+	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,D);
     }
     actor A {
-    	computation = VideoCaptureSplit;
+    	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
+    }
+    actor S {
+	computation = MatSplit;
 	level = 1;
     }
     actor B {
@@ -14,9 +17,12 @@ rdf cannyshow-splitjoin {
     actor C {
     	computation = Canny;
     }
-    actor D {
-    	computation = ImageShowJoin;
+    actor J {
+	computation = MatJoin;
 	level = 1;
+    }
+    actor D {
+    	computation = ImageShowMR;
     }
     parameter {
 	logging = true;
@@ -25,12 +31,15 @@ rdf cannyshow-splitjoin {
 rule r1 {
 left {
     topology {
-        nodes = A,x,y,z;
-	edges = e1(A,x), e2(x,y), e3(y,z);
+        nodes = A,S,x,y,J,D;
+	edges = e1(A,S), e2(S,x), e3(x,y), e4(y,J), e5(J,D);
     }
     actor A {
-    	computation = VideoCaptureSplit;
+    	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
+    }
+    actor S {
+    	computation = MatSplit;
 	level = 1;
     }
     actor x {
@@ -39,19 +48,32 @@ left {
     actor y {
     	computation = Canny;
     }
-    actor z {
-    	computation = ImageShowJoin;
+    actor J {
+    	computation = MatJoin;
 	level = 1;
+    }
+    actor D {
+    	computation = ImageShowMR;
     }
 }
 right {
     topology {
-        nodes = A,x,x1,y,y1,z;
-	edges = e1(A,x), e2(A,x1), e3(x,y), e4(x1,y1), e5(y,z), e6(y1,z);
+        nodes = A,S,x,x1,y,y1,J,D;
+	edges = e1(A,S), e2(S,x), e3(S,x1), e4(x,y), 
+		e5(x1,y1), e6(y,J), e7(y1,J), e8(J,D);
+    }
+    production {
+	e8 = 2;
+    }
+    consumption {
+	e1 = 2;
     }
     actor A {
-    	computation = VideoCaptureSplit;
+    	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
+    }
+    actor S {
+    	computation = MatSplit;
 	level = 2;
     }
     actor x {
@@ -66,9 +88,12 @@ right {
     actor y1 {
     	computation = Canny;
     }
-    actor z {
-    	computation = ImageShowJoin;
+    actor J {
+    	computation = MatJoin;
 	level = 2;
+    }
+    actor D {
+    	computation = ImageShowMR;
     }
 }
 }
