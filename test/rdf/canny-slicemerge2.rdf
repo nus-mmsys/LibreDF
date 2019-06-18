@@ -1,4 +1,4 @@
-rdf cannyshow-slicemerge2 {
+rdf canny-slicemerge2 {
     topology {
         nodes = A,B,C,D,E,F;
 	edges = e1(A,B), e2(B,C), e3(C,D), e4(D,E), e5(E,F);
@@ -23,10 +23,9 @@ rdf cannyshow-slicemerge2 {
     actor E {
     	computation = MatMerge;
 	level = 1;
-	text = true;
     }
     actor F {
-    	computation = ImageShow;
+    	computation = ImageWrite;
     }
     parameter {
 	logging = true;
@@ -54,7 +53,6 @@ left {
     actor z {
     	computation = MatMerge;
 	level = 1;
-	text = true;
     }
 }
 right {
@@ -91,10 +89,9 @@ right {
 	input.0 = e5;
 	input.1 = e6;
 	level = 2;
-	text = text;
     }
 }
 }
 main {
-	load=50 : r1;
+	load=10 : r1;
 }
