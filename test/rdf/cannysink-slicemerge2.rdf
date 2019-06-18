@@ -96,5 +96,5 @@ right {
 }
 }
 main {
-	load=7 : r1;
+	load=4 : r1;
 }
