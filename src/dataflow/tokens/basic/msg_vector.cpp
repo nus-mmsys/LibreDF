@@ -16,41 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_HAMILTONIAN_H_
-#define DF_HAMILTONIAN_H_
+#include "int_vector.h"
 
-#include "core/df.h"
-#include "core/arithmetic.h"
-#include "tokens/basic/msg_vector.h"
-
-#include <algorithm>
-#include <string>
-#include <iostream>
-
-class Hamiltonian: public df::Actor {
-  
-private:
-  df::InputPortVector<df::MsgVector> * input;
-  df::OutputPortVector<df::MsgVector> * output;
-
-  df::Arithmetic arith;
-  
-  std::string imsg, omsg;
-  std::string input_messages;
-  std::string output_message;
-  int nbnodes;
-  int prime;
-  bool first;
-  static df::ActorRegister<Hamiltonian> reg;
-public:
-  
-  Hamiltonian(const std::string & name);
-  
-  virtual void init();
-  virtual void run();
-  
-  virtual ~Hamiltonian();
-  
-};
-
-#endif /* DF_HAMILTONIAN_H_ */
+using namespace df;

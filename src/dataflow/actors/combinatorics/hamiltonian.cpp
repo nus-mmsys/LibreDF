@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<Hamiltonian> Hamiltonian::reg("Hamiltonian");
 
 Hamiltonian::Hamiltonian(const string & name) : Actor(name) {
-  input = createInputPortVector<Msg>("input");
-  output = createOutputPortVector<Msg>("output");
+  input = createInputPortVector<MsgVector>("input");
+  output = createOutputPortVector<MsgVector>("output");
 }
 
 void Hamiltonian::init() {
@@ -40,25 +40,28 @@ void Hamiltonian::init() {
 	iname = stoi(name);
 	prime = arith.nThPrime(iname);
   } catch(...) {
-	prime = 1;
+	prime = 2;
 	log("Hamiltonian init: name cannot be converted to integer.");
   }
 }
 void Hamiltonian::run() {
 
-  //TODO
-  if (first) {
+  if (first && prime == 2) {
 	auto out = produce(output);
   	for (auto o : out) {
-  		o->setHeader(1);
-		o->setMessage(name+";");
+  		o->put_item(2, name);
   	}
-	setEos(output);
 	release(output);
 	first = false;
 	log("First execution terminated. prime = "+to_string(prime));
+	exit(0);
 	return;
   }
+  else {
+  	//TODO
+	exit(0);
+  }
+
 /*
   input_messages = "";
   auto in = consume(input);
