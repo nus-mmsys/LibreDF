@@ -46,10 +46,10 @@ void Hamiltonian::init() {
 }
 void Hamiltonian::run() {
 
-  if (first && prime == 2) {
+  if (first) {
 	auto out = produce(output);
   	for (auto o : out) {
-  		o->put_item(2, name);
+  		o->put_item(prime, name);
   	}
 	release(output);
 	first = false;
@@ -82,7 +82,7 @@ void Hamiltonian::run() {
   
   release(input);
   
-  if (stepno >= nbnodes-1) {
+  if (stepno >= nbnodes) {
 	setEos(output);		
   }
 

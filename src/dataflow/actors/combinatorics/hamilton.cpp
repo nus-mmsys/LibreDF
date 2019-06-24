@@ -75,7 +75,7 @@ void Hamilton::run() {
 	o->set(output_message);
   }
 
-  if (stepno >= nbnodes-1) {
+  if (stepno >= nbnodes) {
 	setEos(output);		
   }
 

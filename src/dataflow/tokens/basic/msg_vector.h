@@ -27,7 +27,7 @@
 namespace df {
 
   struct MsgStruct {
-	  int header;
+	  unsigned long long header;
 	  std::string message;
   };
 
@@ -50,7 +50,7 @@ namespace df {
 	    return data->size();
     }
 
-    int get_item_header(int i) {
+    unsigned long long get_item_header(int i) {
 	    return (*data)[i].header;
     }
 
@@ -58,7 +58,7 @@ namespace df {
 	    return (*data)[i].message;
     }
 
-    void put_item(int h, std::string m) {
+    void put_item(unsigned long long h, std::string m) {
 	    MsgStruct msg;
 	    msg.header = h;
 	    msg.message = m;
@@ -74,14 +74,14 @@ namespace df {
     }
 
     virtual int data_size() {
-	    return 1024+sizeof(int);
+	    return 1024+sizeof(unsigned long long);
     }
 
     virtual void serialize_data(char * buf) { 
 	    int s = data->size();
 	    std::memcpy(buf, &s, sizeof(int));
 	    for (auto c : *data) {
-	    	std::memcpy(buf, &c.header, sizeof(int));
+	    	std::memcpy(buf, &c.header, sizeof(unsigned long long));
 		std::memcpy(buf, &c.message, 1024);
 	    }
     }
@@ -91,7 +91,7 @@ namespace df {
 	    MsgStruct c;
 	    std::memcpy(&s, buf, sizeof(int));
 	    for (int i=0; i<s; i++) {
-	    	std::memcpy(&c.header, buf, sizeof(int));
+	    	std::memcpy(&c.header, buf, sizeof(unsigned long long));
 	    	std::memcpy(&c.message, buf, 1024);
 		data->push_back(c);
 	    }
