@@ -34,10 +34,9 @@ private:
   df::OutputPortVector<df::MsgVector> * output;
 
   df::Arithmetic arith;
-  
-  std::string imsg, omsg;
-  std::string input_messages;
-  std::string output_message;
+
+  std::string omsg;
+
   int nbnodes;
   int prime;
   bool first;

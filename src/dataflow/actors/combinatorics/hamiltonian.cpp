@@ -53,50 +53,41 @@ void Hamiltonian::run() {
   	}
 	release(output);
 	first = false;
-	log("First execution terminated. prime = "+to_string(prime));
-	exit(0);
 	return;
   }
-  else {
-  	//TODO
-	exit(0);
-  }
 
-/*
-  input_messages = "";
   auto in = consume(input);
-  for (auto i : in) {
-	input_messages = *i->get() + input_messages;
-  }
-  release(input);
-  std::stringstream ss(input_messages);
-
-  output_message = "";
-  while (std::getline(ss, imsg, ';')) {
-  	  
-	if (imsg!="" && imsg.find(name)==string::npos) {
-    		
-		omsg = imsg + "," + name;
-
-	  	if (std::count(omsg.begin(), omsg.end(), ',') == nbnodes-1) {
-    			log("Hamiltonianian path: "+omsg);
-		} else {
-			output_message = omsg + ";" + output_message;
-		}		
-  	}
-  }
-
   auto out = produce(output);
-  for (auto o : out) {
-	o->set(output_message);
-  }
 
+  for (auto items : in) {
+	  for (int i=0; i<items->vector_size();i++) {
+  	 	
+		auto h = items->get_item_header(i);
+		auto m = items->get_item_message(i);
+
+		if (h % prime != 0) {
+    		
+			omsg = m + "," + name;
+
+	  		if (std::count(omsg.begin(), omsg.end(), ',') == nbnodes-1) {
+    				log("Hamiltonianian path: "+omsg);
+			} else {
+				for (auto o : out) {
+					o->put_item(h*prime,omsg);
+  				}
+			}		
+  		}
+	  }
+  }
+  
+  release(input);
+  
   if (stepno >= nbnodes-1) {
 	setEos(output);		
   }
 
   release(output);
-  */
+ 
 }
 
 Hamiltonian::~Hamiltonian() {
