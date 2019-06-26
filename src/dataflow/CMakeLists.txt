@@ -1,9 +1,9 @@
 project(tmfdf)
 
+set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
+
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
-
-set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 
 option(BUILD_ML_ACTORS "Build machine-learning actors" ON)
 option(BUILD_OPENCV_ACTORS "Build opencv actors" ON)
