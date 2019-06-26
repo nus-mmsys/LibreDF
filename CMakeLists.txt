@@ -5,6 +5,8 @@ project (tmf)
 set (VERSION_MAJOR 1)
 set (VERSION_MINOR 0)
 
+set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
+
 if (APPLE)
 	set(CMAKE_MACOSX_RPATH ON)
 endif (APPLE)
