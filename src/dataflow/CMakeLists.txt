@@ -62,4 +62,6 @@ add_library(${PROJECT_NAME} SHARED ${core}
 
 if (BUILD_OPENCV_ACTORS OR BUILD_ML_ACTORS)
   target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+  add_library("opencv_dep_cudart" UNKNOWN IMPORTED)
+  set_target_properties("opencv_dep_cudart" PROPERTIES IMPORTED_LOCATION /usr/local/cuda-8.0/lib64/libcudart.so)
 endif()
