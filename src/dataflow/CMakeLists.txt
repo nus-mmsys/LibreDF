@@ -1,7 +1,7 @@
 project(tmfdf)
 
 set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
-find_library(CUDART NAMES cudart)
+find_library(CUDART NAMES cudart PATHS "/usr")
 
 message(${CUDART})
 
