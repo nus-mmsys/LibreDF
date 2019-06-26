@@ -1,7 +1,7 @@
 project(tmfdf)
 
 set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
-find_library(CUDA NAMES cudart)
+find_library(CUDART NAMES cudart)
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
@@ -61,8 +61,8 @@ add_library(${PROJECT_NAME} SHARED ${core}
 				${comb} ${design} ${signal}
 				)
 
-if (BUILD_OPENCV_ACTORS OR BUILD_ML_ACTORS)
+if (BUILD_OPENCV_ACTORS OR BUILD_ML_ACTORS OR BUILD_DESIGN_ACTORS)
   target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
   add_library("opencv_dep_cudart" UNKNOWN IMPORTED)
-  set_target_properties("opencv_dep_cudart" PROPERTIES IMPORTED_LOCATION ${CUDA})
+  set_target_properties("opencv_dep_cudart" PROPERTIES IMPORTED_LOCATION ${CUDART})
 endif()
