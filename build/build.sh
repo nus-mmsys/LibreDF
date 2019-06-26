@@ -50,7 +50,7 @@ else
 		echo "Debug Build"
 		cmake -DCMAKE_BUILD_TYPE=DEBUG ..
 	else
-		cmake $1 ..
+		cmake $1 -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF ..
 	fi
 fi
 make

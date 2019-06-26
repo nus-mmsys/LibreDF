@@ -3,6 +3,8 @@ project(tmfdf)
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
 
+set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
+
 option(BUILD_ML_ACTORS "Build machine-learning actors" ON)
 option(BUILD_OPENCV_ACTORS "Build opencv actors" ON)
 option(BUILD_BASIC_ACTORS "Build basic actors" ON)
@@ -12,7 +14,6 @@ option(BUILD_SIGNAL_ACTORS "Build signal actors" ON)
 
 include_directories(.)
 include_directories(${OpenCV_INCLUDE_DIRS})
-set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 
 aux_source_directory(core core)
 
