@@ -3,6 +3,8 @@ project(tmfdf)
 set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 find_library(CUDART NAMES cudart)
 
+message(${CUDART})
+
 find_package(PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
 
