@@ -1,4 +1,4 @@
-rdf cannyshow-splitjoin2 {
+rdf cannyshow-splitjoin4 {
     topology {
         nodes = A,S,B,C,J,D;
 	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,D);
@@ -58,15 +58,16 @@ left {
 }
 right {
     topology {
-        nodes = A,S,x,x1,y,y1,J,D;
-	edges = e1(A,S), e2(S,x), e3(S,x1), e4(x,y), 
-		e5(x1,y1), e6(y,J), e7(y1,J), e8(J,D);
+        nodes = A,S,x,x1,x2,x3,y,y1,y2,y3,J,D;
+	edges = e1(A,S), e2(S,x), e3(S,x1), e4(S,x2), e5(S,x3),
+		e6(x,y), e7(x1,y1), e8(x2,y2), e9(x3,y3), 
+		e10(y,J), e11(y1,J), e12(y2,J), e13(y3,J), e14(J,D);
     }
     production {
-	e8 = 2;
+	e14 = 4;
     }
     consumption {
-	e1 = 2;
+	e1 = 4;
     }
     actor A {
     	computation = VideoCaptureMR;
@@ -74,12 +75,18 @@ right {
     }
     actor S {
     	computation = MatSplit;
-	level = 2;
+	level = 4;
     }
     actor x {
     	computation = CvtColor;
     }
     actor x1 {
+    	computation = CvtColor;
+    }
+    actor x2 {
+    	computation = CvtColor;
+    }
+    actor x3 {
     	computation = CvtColor;
     }
     actor y {
@@ -88,9 +95,15 @@ right {
     actor y1 {
     	computation = Canny;
     }
+    actor y2 {
+    	computation = Canny;
+    }
+    actor y3 {
+    	computation = Canny;
+    }
     actor J {
     	computation = MatJoin;
-	level = 2;
+	level = 4;
     }
     actor D {
     	computation = ImageShowMR;
