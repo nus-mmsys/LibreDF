@@ -17,18 +17,23 @@ for line in f:
     it = int(linelist[2])
     start = int(linelist[3])
     end = int(linelist[4])
+    execution = int(linelist[5])
     if it in csv :
         if start < csv[it][0] :
             csv[it][0] = start
         if end > csv[it][1] :
             csv[it][1] = end
+        csv[it][2] += execution
     else:
-        csv[it] = [start, end]
+        csv[it] = [start, end, execution]
 
-res.write("iteration,start,end\n")
+res.write("iteration,start,end,latency,execution\n")
 starttime = csv[1][0]
 for it in dict(sorted(csv.items())):
-    res.write(str(it)+","+str(csv[it][0]-starttime)+","+str(csv[it][1]-starttime)+"\n")
+    res.write(str(it)+","+str(csv[it][0]-starttime)+","
+              +str(csv[it][1]-starttime)+","
+              +str(csv[it][1]-csv[it][0])+","
+              +str(csv[it][2])+"\n")
 
 f.close()
 print(resname+" is created.")
