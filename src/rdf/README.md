@@ -46,10 +46,9 @@ A controller decides when and how to apply a transformation rule. It is not impl
 
 ```
 main {
-   <condition_1> ? <rule_x>;
-   <condition_i> ? <rule_y> ; <rule_z>;
+   <condition_1> : <rule_x>;
    ...
-   <condition_n> ? <rule_t>*;
+   <condition_n> : <rule_y>;
 }
 ```
 
@@ -65,16 +64,17 @@ main {
 ### Run
 
 ```
-./rdf ../test/basic/double_int.df
+./rdf ../test/rdf/cannyshow.df
 ```
 
 ### Commands 
 
 ```
-benchmark           display benchmark.
 graph               display the graph.
 h                   display help menu.
+latency             compute the lateny of the graph.
+program             display the RDF program.
 rules               display list of rules.
-run                 run the data graph on shared memory.
-runtcp              run the data graph on tcp.
+run                 run the RDF program.
+schedule            compute an schedule for the graph.
 ```
