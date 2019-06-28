@@ -81,6 +81,6 @@ schedule            compute an schedule for the graph.
 
 ## Logging and plotting
 
-If the `logging` variable in the `parameter` section of the dataflow grapg is set to `true`, logs are directed to the console, otherwise logs are written on files in `~/Documents/df/logs`.
+If the `logging` variable in the `parameter` section of the dataflow graph is set to `true`, logs are directed to the console, otherwise logs are written into files in `~/Documents/df/logs`.
 
 Logs should be concatenated in a `.log` file and the file should be passed as argument to the `csvCreate.py` script. This script extracts the start time, end time, and latency of each iteration, in adition to the time that the actors have spent in total for execution. The result is written to a `.csv` file. These files should be passed to `plor.r` script in the `plots` directory to generate the resulting plots in `.pdf` format.
