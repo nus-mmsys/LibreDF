@@ -15,8 +15,8 @@ csv = {}
 for line in f:
     linelist = line.split()
     it = int(linelist[2])
-    start = int(linelist[4])
-    end = int(linelist[6])
+    start = int(linelist[3])
+    end = int(linelist[4])
     if it in csv :
         if start < csv[it][0] :
             csv[it][0] = start
