@@ -116,6 +116,8 @@ namespace df {
     std::mutex * iolock;
     std::mutex status_mux;
 
+    std::string msg_iter;
+    unsigned long start_iter, end_iter;
   public:
 
     std::string getName();
@@ -337,6 +339,8 @@ namespace df {
      * \return The new status of the actor.
      */
     void runActor();
+    
+    void runIter();
     
     void startInit();
     

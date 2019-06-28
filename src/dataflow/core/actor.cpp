@@ -365,6 +365,24 @@ void Actor::listen(IPort * port) {
       }
 }
 
+void Actor::runIter() {	
+	start_iter = timer.nowUs();
+  	msg_iter = to_string(start_iter);
+	for (int i=0; i<solution; i++) {
+	  fireno = i+1;
+	  if (realtime) {
+	  	runRT();
+    	  } else {
+		run();
+    	  }
+          stepno++;
+	}
+	end_iter = timer.nowUs();
+	msg_iter += " "+to_string(end_iter)+" "+to_string(end_iter-start_iter);
+	iterlog(msg_iter);
+	iterno++;
+}
+
 void Actor::runActor() {
   if (!distributed) {
     for (auto p : inputPorts) {
@@ -387,26 +405,11 @@ void Actor::runActor() {
   }
 
   timer.start();
-  string itermsg;
-  int i;
   while(getStatus() != EOS) {
 	  
       {
 	  lock_guard<mutex> lockrun(runend_mux);
-
-	  itermsg = "starts "+to_string(timer.nowUs());
-	  for (i=0; i<solution; i++) {
-	      fireno = i+1;
-	      if (realtime) {
-	 	  runRT();
-    	      } else {
-		  run();
-    	      }
-              stepno++;
-	  }
-	  itermsg += " ends "+to_string(timer.nowUs());
-	  iterlog(itermsg);
-          iterno++;
+	  runIter();
       }
 
       {
@@ -451,17 +454,8 @@ int Actor::resumeTill(int iter) {
 
     //while(!paused)
     //	pause_cond.wait(lockpause);
-    int i;
-    string itermsg;
     while(iterno < iter) {
-	itermsg = "starts "+to_string(timer.nowUs());
-	for (i=0; i<solution; i++) {
-	    run();
-	    stepno++;
-	}
-	itermsg += " ends "+to_string(timer.nowUs());
-	iterlog(itermsg);
-	iterno++;
+	runIter();
     }
     return 0;
 }
