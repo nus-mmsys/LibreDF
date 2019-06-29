@@ -127,6 +127,18 @@ namespace df {
 	return getFreePort(outpidx)->connectPort(n,outpidx,inpidx);
     }
     
+    virtual int getOccupancy(int idx) {
+	OutputPort<T> * out = nullptr;
+	auto it = outputs.begin();
+ 	for (; it != outputs.end(); it++) {
+	    if ((*it)->getName() == name+"."+std::to_string(idx)) {
+	    	out = *it;
+		break;
+	    }
+	}
+	return out->getOccupancy(0);
+    }
+
     virtual ~OutputPortVector<T>() {
     }
 

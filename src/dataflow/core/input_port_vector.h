@@ -156,6 +156,18 @@ namespace df {
 		c->clearBuffer();
     }
 
+    virtual int getOccupancy(int idx) {
+	InputPort<T> * in = nullptr;
+	auto it = inputs.begin();
+ 	for (; it != inputs.end(); it++) {
+	    if ((*it)->getName() == name+"."+std::to_string(idx)) {
+	    	in = *it;
+		break;
+	    }
+	}
+	return in->getOccupancy(0);
+    }
+
     virtual ~InputPortVector() {
     }
     

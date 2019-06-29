@@ -36,9 +36,16 @@ Rule * RDataflow::get_applicable_rule() {
 	//The load is a dummy variable for the tests.
 	//In real application, conditions such as latency and throughput can be used. 
 	load++;
-	for (auto c : rdfg->prog["load"]) {
-		if (c.val==load)
-			return rdfg->rules[c.rule];
+	for (auto c : rdfg->prog) {
+	    for (auto ac : rdfg->prog[c.first]) {
+		if (actors.find(c.first) != actors.end()) {
+			if (actors[c.first]->getInPortOcc("input",0) == ac.val)
+				return rdfg->rules[ac.rule];
+		} else {
+ 			if (ac.val == load)
+				return rdfg->rules[ac.rule];
+		}
+	    }
 	}
 	return r;
 }

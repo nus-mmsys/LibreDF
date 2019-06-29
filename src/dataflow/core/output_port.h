@@ -269,6 +269,14 @@ namespace df {
     } 
 
     /*!
+     * Get buffer occupancy
+     *
+     */
+    int getOccupancy(int idx) {
+	return index;
+    }
+
+    /*!
      * OutputPort desctructor
      *
      */

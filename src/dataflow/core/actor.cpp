@@ -460,6 +460,15 @@ int Actor::resumeTill(int iter) {
     return 0;
 }
 
+int Actor::getOutPortOcc(std::string port, int idx) {
+	return outputPorts[port]->getOccupancy(idx);
+
+}
+
+int Actor::getInPortOcc(std::string port, int idx) {
+	return inputPorts[port]->getOccupancy(idx);
+}
+
 Actor::~Actor() { 
     if (!logging)
         logfile.close();

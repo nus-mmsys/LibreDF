@@ -600,6 +600,9 @@ namespace df {
       delete port;
     }
 
+    int getOutPortOcc(std::string port, int idx);
+    int getInPortOcc(std::string port, int idx);
+
     /*!
      * Pause the actor execution.
      */
