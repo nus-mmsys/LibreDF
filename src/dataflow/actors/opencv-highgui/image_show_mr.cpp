@@ -29,6 +29,11 @@ ImageShowMR::ImageShowMR(const string& name) : Actor(name){
 
 void ImageShowMR::init() {
 
+  if (!propEmpty("sleep"))  	
+  	sleep = getPropBool("sleep");
+  else
+        sleep = true;
+  
 }
 
 void ImageShowMR::run() {
@@ -42,7 +47,10 @@ void ImageShowMR::run() {
       log("showing image "+to_string(stepno));
       
       cv::imshow("ImageShow", frame);
-      cv::waitKey(50/(in.size()*getSolution()));
+      if (sleep)
+      	cv::waitKey(50/(in.size()*getSolution()));
+      else
+	cv::waitKey(1);
   }
  
   releaseMR(input);

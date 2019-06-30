@@ -30,6 +30,11 @@ VideoCaptureMR::VideoCaptureMR(const string& name) : Actor(name){
 
 void VideoCaptureMR::init() {
 
+  if (!propEmpty("sleep"))  	
+  	sleep = getPropBool("sleep");
+  else
+        sleep = false;
+  
   if (getProp("file_name") != "")  	
   	file_name = fsys.inPath() + "/" + getProp("file_name");
   else
@@ -73,9 +78,13 @@ void VideoCaptureMR::run() {
   }
 
   log("capturing frame "+to_string(stepno));
-  //timer.randSleep(40);
-  releaseMR(outputMat);  
+  
+  releaseMR(outputMat); 
+  
+  if (sleep)
+  	timer.sleep(50);
 }
+
 VideoCaptureMR::~VideoCaptureMR() {
   if (cap != nullptr)
 	  cap->release();
