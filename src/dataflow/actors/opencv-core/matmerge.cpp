@@ -35,35 +35,35 @@ void MatMerge::init() {
   else
 	  text = getPropBool("text");
 
-  if (propEmpty("level"))
-	  level = 2;
+  if (propEmpty("arity"))
+	  arity = 2;
   else
-	  level = getPropInt("level");
+	  arity = getPropInt("arity");
 
   tilew = 0;
   tileh = 0;
 
-  nh = arith.factor(level);
-  nw = level/nh;
+  nh = arith.factor(arity);
+  nw = arity/nh;
  
-  input->setArity(level);
+  input->setArity(arity);
 
 }
 
 void MatMerge::reinit() {
 
-  auto newlevel = getPropInt("level");
+  auto newarity = getPropInt("arity");
 
-  if (newlevel > level) {
-  	input->addArity(newlevel - level);
+  if (newarity > arity) {
+  	input->addArity(newarity - arity);
   }
 
-  level = newlevel;
+  arity = newarity;
   tilew = 0;
   tileh = 0;
 
-  nh = arith.factor(level);
-  nw = level/nh;
+  nh = arith.factor(arity);
+  nw = arity/nh;
  
 }
 
@@ -77,9 +77,9 @@ void MatMerge::run() {
   	tileh = in[0]->get()->rows;
 	type = in[0]->get()->type();
 	size = in[0]->get()->total()*in[0]->get()->elemSize();
-	out->mat_init(tilew*nw, tileh*nh, type, size*level);
+	out->mat_init(tilew*nw, tileh*nh, type, size*arity);
   	for (int i=0; i<output->getBufferSize();i++)
-		output->get(i)->mat_init(tilew*nw, tileh*nh, type, size*level);
+		output->get(i)->mat_init(tilew*nw, tileh*nh, type, size*arity);
   }
 
   for (int j=0; j < nh ; j++) {

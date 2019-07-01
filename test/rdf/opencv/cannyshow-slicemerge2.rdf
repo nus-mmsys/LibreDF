@@ -9,7 +9,7 @@ rdf cannyshow-slicemerge2 {
     }
     actor B {
     	computation = MatSlice;
-	level = 1;
+	arity = 1;
     }
     actor C {
     	computation = CvtColor;
@@ -22,7 +22,7 @@ rdf cannyshow-slicemerge2 {
     }
     actor E {
     	computation = MatMerge;
-	level = 1;
+	arity = 1;
 	text = true;
     }
     actor F {
@@ -40,7 +40,7 @@ left {
     }
     actor B {
     	computation = MatSlice;
-	level = 1;
+	arity = 1;
     }
     actor x1 {
     	computation = CvtColor;
@@ -53,7 +53,7 @@ left {
     }
     actor z {
     	computation = MatMerge;
-	level = 1;
+	arity = 1;
 	text = true;
     }
 }
@@ -66,7 +66,7 @@ right {
     	computation = MatSlice;
 	output.0 = e1;
 	output.1 = e2;
-	level = 2;
+	arity = 2;
     }
     actor x1 {
     	computation = CvtColor;
@@ -90,7 +90,7 @@ right {
     	computation = MatMerge;
 	input.0 = e5;
 	input.1 = e6;
-	level = 2;
+	arity = 2;
 	text = true;
     }
 }

@@ -30,35 +30,35 @@ MatSlice::MatSlice(const string& name) : Actor(name) {
 
 void MatSlice::init() {
 
-  if (propEmpty("level"))
-	  level = 2;
+  if (propEmpty("arity"))
+	  arity = 2;
   else
-	  level = getPropInt("level");
+	  arity = getPropInt("arity");
 
   tilew = 0;
   tileh = 0;
   
-  nh = arith.factor(level);
-  nw = level/nh;
+  nh = arith.factor(arity);
+  nw = arity/nh;
   
-  output->setArity(level);
+  output->setArity(arity);
 
 }
 
 void MatSlice::reinit() {
 
-  auto newlevel = getPropInt("level");
+  auto newarity = getPropInt("arity");
   
-  if (newlevel > level) {
-  	output->addArity(newlevel - level);
+  if (newarity > arity) {
+  	output->addArity(newarity - arity);
   }
 
-  level = newlevel;
+  arity = newarity;
   tilew = 0;
   tileh = 0;
 
-  nh = arith.factor(level);
-  nw = level/nh;
+  nh = arith.factor(arity);
+  nw = arity/nh;
  
 }
 

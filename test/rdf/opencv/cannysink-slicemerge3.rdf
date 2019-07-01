@@ -9,7 +9,7 @@ rdf cannysink-slicemerge3 {
     }
     actor B {
     	computation = MatSlice;
-	level = 1;
+	arity = 1;
     }
     actor C {
     	computation = CvtColor;
@@ -22,7 +22,7 @@ rdf cannysink-slicemerge3 {
     }
     actor E {
     	computation = MatMerge;
-	level = 1;
+	arity = 1;
     }
     actor F {
     	computation = ImageSink;
@@ -39,7 +39,7 @@ left {
     }
     actor B {
     	computation = MatSlice;
-	level = 1;
+	arity = 1;
     }
     actor x1 {
     	computation = CvtColor;
@@ -52,7 +52,7 @@ left {
     }
     actor z {
     	computation = MatMerge;
-	level = 1;
+	arity = 1;
     }
 }
 right {
@@ -67,7 +67,7 @@ right {
 	output.0 = e1;
 	output.1 = e2;
 	output.2 = e3;
-	level = 3;
+	arity = 3;
     }
     actor x1 {
     	computation = CvtColor;
@@ -101,7 +101,7 @@ right {
 	input.0 = e7;
 	input.1 = e8;
 	input.2 = e9;
-	level = 3;
+	arity = 3;
     }
 }
 }

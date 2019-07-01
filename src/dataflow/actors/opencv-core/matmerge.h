@@ -41,7 +41,7 @@ private:
   df::Arithmetic arith;
   int nh, nw;
 
-  int level, tileh, tilew, type, size;
+  int arity, tileh, tilew, type, size;
   bool text;
   static  df::ActorRegister<MatMerge> reg;
 public:

@@ -40,7 +40,7 @@ private:
 
   df::Arithmetic arith;
 
-  int level;
+  int arity;
   int tilew, tileh;
   int nh, nw;
 
