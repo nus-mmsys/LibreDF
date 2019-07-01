@@ -30,18 +30,18 @@ MatSplit::MatSplit(const string& name) : Actor(name) {
 
 void MatSplit::init() {
 
-  if (propEmpty("level"))
-	  level = 1;
+  if (propEmpty("arity"))
+	  arity = 1;
   else
-	  level = getPropInt("level");
+	  arity = getPropInt("arity");
 
   tilew = 0;
   tileh = 0;
 
-  input->setRate(level);
-  output->setArity(level);
+  input->setRate(arity);
+  output->setArity(arity);
 
-  if (input->getRate()!=level) {
+  if (input->getRate()!=arity) {
 	log("Split input rate is not equal its output edges.");
 	exit(0);
   }
@@ -50,13 +50,13 @@ void MatSplit::init() {
 
 void MatSplit::reinit() {
 
-  auto newlevel = getPropInt("level");
+  auto newarity = getPropInt("arity");
   
-  if (newlevel > level) {
-  	output->addArity(newlevel - level);
+  if (newarity > arity) {
+  	output->addArity(newarity - arity);
   }
 
-  level = newlevel;
+  arity = newarity;
   tilew = 0;
   tileh = 0;
 }

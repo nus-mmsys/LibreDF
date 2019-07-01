@@ -9,7 +9,7 @@ rdf cannyshow-splitjoin3 {
     }
     actor S {
 	computation = MatSplit;
-	level = 1;
+	arity = 1;
     }
     actor B {
     	computation = CvtColor;
@@ -19,7 +19,7 @@ rdf cannyshow-splitjoin3 {
     }
     actor J {
 	computation = MatJoin;
-	level = 1;
+	arity = 1;
     }
     actor D {
     	computation = ImageShowMR;
@@ -40,7 +40,7 @@ left {
     }
     actor S {
     	computation = MatSplit;
-	level = 1;
+	arity = 1;
     }
     actor x {
     	computation = CvtColor;
@@ -50,7 +50,7 @@ left {
     }
     actor J {
     	computation = MatJoin;
-	level = 1;
+	arity = 1;
     }
     actor D {
     	computation = ImageShowMR;
@@ -75,7 +75,7 @@ right {
     }
     actor S {
     	computation = MatSplit;
-	level = 3;
+	arity = 3;
     }
     actor x {
     	computation = CvtColor;
@@ -97,7 +97,7 @@ right {
     }
     actor J {
     	computation = MatJoin;
-	level = 3;
+	arity = 3;
     }
     actor D {
     	computation = ImageShowMR;

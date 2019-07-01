@@ -30,18 +30,18 @@ MatJoin::MatJoin(const string& name) : Actor(name) {
 
 void MatJoin::init() {
 
-  if (propEmpty("level"))
-	  level = 1;
+  if (propEmpty("arity"))
+	  arity = 1;
   else
-	  level = getPropInt("level");
+	  arity = getPropInt("arity");
 
   tilew = 0;
   tileh = 0;
 
-  output->setRate(level);
-  input->setArity(level);
+  output->setRate(arity);
+  input->setArity(arity);
 
-  if (output->getRate()!=level) {
+  if (output->getRate()!=arity) {
 	log("Join output rate is not equal its input edges.");
 	exit(0);
   }
@@ -50,13 +50,13 @@ void MatJoin::init() {
 
 void MatJoin::reinit() {
 
-  auto newlevel = getPropInt("level");
+  auto newarity = getPropInt("arity");
 
-  if (newlevel > level) {
-  	input->addArity(newlevel - level);
+  if (newarity > arity) {
+  	input->addArity(newarity - arity);
   }
 
-  level = newlevel;
+  arity = newarity;
   tilew = 0;
   tileh = 0;
 

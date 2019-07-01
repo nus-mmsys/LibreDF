@@ -37,7 +37,7 @@ private:
   df::InputPort<df::Mat> * input;
   df::OutputPortVector<df::Mat> * output;
 
-  int level;
+  int arity;
   int tilew, tileh;
 
   static  df::ActorRegister<MatSplit> reg;
