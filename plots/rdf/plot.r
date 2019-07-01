@@ -15,20 +15,21 @@ name <- unlist(strsplit(args[1],"[.]"))[1]
 
 pdf(paste(name,".pdf", sep=""))
 
-latency = data$end[length(data$end)]
+scale = 1000000
+latency = data$end[length(data$end)]/scale
 
-plot(data$iteration, data$end-data$start, 
+plot(data$iteration, (data$end-data$start)/scale, 
      main=name, 
-     xlab="iteration", ylab="latency(iteration)",
+     xlab="iteration", ylab="latency = end(iteration) - start(iteration)",
      type="l", col="blue")
 
-mtext(paste("Total latency = ",toString(latency)))
+mtext(paste("Total latency = ",toString(latency)," second"))
 
-average = data$end[length(data$end)]/data$iteration[length(data$iteration)]
+average = data$iteration[length(data$iteration)]/(data$end[length(data$end)]/scale)
 
-plot(data$iteration, (data$end-average)/data$iteration, 
+plot(data$iteration, data$iteration/(data$end/scale), 
      main=name, 
-     xlab="iteration", ylab="throughput(0,iteration)",
+     xlab="iteration", ylab="throughput = iteration / end(iteration)",
      type="l", col="blue")
 
-mtext(paste("Average thoughput = ",toString(average)))
+mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
