@@ -195,7 +195,7 @@ int Rule::apply() {
 				idx++;
 				newname = toupper(a[0]); 
 				newname += to_string(rand()%32);
-			} while (res->contains_actor(newname));
+			} while (g->contains_actor(newname));
 			namevar[a] = newname;
 			res->add_actor(newname,gtype);
 			res->set_actor_props(newname, r->get_actor_props(a));
