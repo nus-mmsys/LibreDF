@@ -181,7 +181,6 @@ int Rule::apply() {
 				gc = namevar[c];
 			res->replace_actor_props(gc, r->get_actor_props(c));
 		}
-		int idx=1;
 		for (auto a : app_actors) {
 			if (is_name(a))
 				cout << "Appearing actor cannot be named.\n";
@@ -191,11 +190,10 @@ int Rule::apply() {
 				gtype = typevar[type];
 			string newname;
 			do {
-				srand((unsigned) time(0)+idx);
-				idx++;
+				srand((unsigned) time(0)+rand());
 				newname = toupper(a[0]); 
 				newname += to_string(rand()%32);
-			} while (g->contains_actor(newname));
+			} while (res->contains_actor(newname));
 			namevar[a] = newname;
 			res->add_actor(newname,gtype);
 			res->set_actor_props(newname, r->get_actor_props(a));
