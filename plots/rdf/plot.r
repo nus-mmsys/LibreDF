@@ -27,9 +27,12 @@ mtext(paste("Total latency = ",toString(latency)," second"))
 
 average = data$iteration[length(data$iteration)]/(data$end[length(data$end)]/scale)
 
-plot(data$iteration, data$iteration/(data$end/scale), 
+
+lastend = head(c(0,data$end),-1)
+
+plot(data$iteration, 1/((data$end-lastend)/scale), 
      main=name, 
-     xlab="iteration", ylab="throughput = iteration / end(iteration)",
+     xlab="iteration", ylab="throughput = 1 / (end(iteration) - end(iteration-1))",
      type="l", col="blue")
 
 mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
