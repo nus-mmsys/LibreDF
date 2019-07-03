@@ -20,7 +20,7 @@ rdf cannyshow-splitjoin2 {
     actor J {
 	computation = MatJoin;
 	arity = 1;
-	output_size = 4;
+	output_size = 6;
     }
     actor D {
     	computation = ImageShowMR;
