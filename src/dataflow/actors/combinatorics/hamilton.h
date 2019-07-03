@@ -36,13 +36,13 @@ private:
   std::string input_messages;
   std::string output_message;
   int nbnodes;
-  bool first;
   static df::ActorRegister<Hamilton> reg;
 public:
   
   Hamilton(const std::string & name);
   
   virtual void init();
+  virtual void start();
   virtual void run();
   
   virtual ~Hamilton();

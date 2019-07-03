@@ -80,6 +80,8 @@ namespace df {
     virtual void reinit() {
 	    init();
     }
+    virtual void start() {
+    }
     virtual void run() = 0;
     virtual void runRT() {
       run();

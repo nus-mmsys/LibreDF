@@ -33,19 +33,18 @@ void Hamilton::init() {
     nbnodes = getPropInt("nbnodes");
   } else
     nbnodes = 0;
-  first = true;  
 }
+
+void Hamilton::start() {
+  auto out = produce(output);
+  for (auto o : out) {
+	  o->set(name+";");
+  }
+  release(output);
+}
+
 void Hamilton::run() {
 
-  if (first) {
-	auto out = produce(output);
-  	for (auto o : out) {
-  		o->set(name+";");
-  	}
-	release(output);
-	first = false;
-	return;
-  }
 
   input_messages = "";
   auto in = consume(input);

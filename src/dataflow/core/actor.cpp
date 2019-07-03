@@ -404,6 +404,8 @@ void Actor::runActor() {
     }
   }
 
+  start();
+  
   timer.start();
   while(getStatus() != EOS) {
 	  
