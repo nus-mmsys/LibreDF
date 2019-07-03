@@ -48,20 +48,19 @@ void Hamilton2::init() {
     nbnodes = getPropInt("nbnodes");
   } else
     nbnodes = 0;
-  first = true;  
   loop_list = new vector<string>[nbnodes];
 }
-void Hamilton2::run() {
 
-  if (first) {
+void Hamilton2::start() {
+	
 	auto out = produce(output);
   	for (auto o : out) {
   		o->set(name+";");
   	}
   	release(output);
-	first = false;
-	return;
-  }
+}
+
+void Hamilton2::run() {
 
   input_messages = "";
   auto in = consume(input);

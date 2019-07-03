@@ -38,7 +38,6 @@ private:
   std::string output_message;
   std::vector<std::string> * loop_list;
   int nbnodes;
-  bool first;
   static df::ActorRegister<Hamilton2> reg;
   bool hamiltonian(const std::string & msg);
   int path_length(const std::string & msg);
@@ -47,6 +46,7 @@ public:
   Hamilton2(const std::string & name);
   
   virtual void init();
+  virtual void start();
   virtual void run();
   
   virtual ~Hamilton2();

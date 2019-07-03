@@ -39,13 +39,13 @@ private:
 
   int nbnodes;
   int prime;
-  bool first;
   static df::ActorRegister<Hamiltonian> reg;
 public:
   
   Hamiltonian(const std::string & name);
   
   virtual void init();
+  virtual void start();
   virtual void run();
   
   virtual ~Hamiltonian();

@@ -33,7 +33,6 @@ void Hamiltonian::init() {
     nbnodes = getPropInt("nbnodes");
   } else
     nbnodes = 0;
-  first = true;  
   int iname=0;
   
   try {
@@ -44,17 +43,16 @@ void Hamiltonian::init() {
 	log("Hamiltonian init: name cannot be converted to integer.");
   }
 }
-void Hamiltonian::run() {
 
-  if (first) {
+void Hamiltonian::start() {
 	auto out = produce(output);
   	for (auto o : out) {
   		o->put_item(prime, name);
   	}
 	release(output);
-	first = false;
-	return;
-  }
+}
+
+void Hamiltonian::run() {
 
   auto in = consume(input);
   auto out = produce(output);
