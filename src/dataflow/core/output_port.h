@@ -40,6 +40,7 @@ namespace df {
   private:
     T * data;
     std::vector<T *> datavec;
+    int buffsize;
     Buffer<T> * buf;
     char * sendbuf;
     int index;
@@ -57,7 +58,8 @@ namespace df {
      */
     OutputPort<T>(std::string name) : OPort(name), index(0) {
       sock = new ClientSocket("port:"+name);
-      buf = new Buffer<T>(32);
+      buffsize = 16;
+      buf = new Buffer<T>(buffsize);
       port_cap = std::string(typeid(T).name());
       data = new T();
       for (int i=0; i<rate; i++)
@@ -66,8 +68,11 @@ namespace df {
     }
 
     virtual void setBufferSize(int s) {
-      delete buf;
-      buf = new Buffer<T>(s);
+      if (buffsize != s) {
+	      buffsize = s;
+	      delete buf;
+	      buf = new Buffer<T>(buffsize);
+      }
     }    
     virtual int connectPort(std::string host, int portnb) {
 	int ret;
