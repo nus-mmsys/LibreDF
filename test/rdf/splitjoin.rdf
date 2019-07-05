@@ -6,7 +6,6 @@ rdf splitjoin {
     actor A {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
-	sleep = true;
     }
     actor S {
 	computation = MatSplit;
@@ -24,7 +23,6 @@ rdf splitjoin {
     }
     actor D {
     	computation = ImageShowMR;
-	sleep = false;
     }
     parameter {
 	logging = true;
@@ -39,7 +37,6 @@ left {
     actor A {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
-	sleep = true;
     }
     actor S {
     	computation = MatSplit;
@@ -57,7 +54,6 @@ left {
     }
     actor D {
     	computation = ImageShowMR;
-	sleep = false;
     }
 }
 right {
@@ -75,7 +71,6 @@ right {
     actor A {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
-	sleep = true;
     }
     actor S {
     	computation = MatSplit;
@@ -99,7 +94,6 @@ right {
     }
     actor D {
     	computation = ImageShowMR;
-	sleep = false;
     }
 }
 }
