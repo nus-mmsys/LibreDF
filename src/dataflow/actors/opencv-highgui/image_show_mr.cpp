@@ -50,7 +50,7 @@ void ImageShowMR::run() {
       if (sleep)
       	cv::waitKey(50/(in.size()*getSolution()));
       else
-	cv::waitKey(1);
+	cv::waitKey(50);
   }
  
   releaseMR(input);

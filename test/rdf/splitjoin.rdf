@@ -1,0 +1,108 @@
+rdf splitjoin {
+    topology {
+        nodes = A,S,B,C,J,D;
+	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,D);
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	sleep = true;
+    }
+    actor S {
+	computation = MatSplit;
+	arity = 1;
+    }
+    actor B {
+    	computation = CvtColor;
+    }
+    actor C {
+    	computation = Canny;
+    }
+    actor J {
+	computation = MatJoin;
+	arity = 1;
+    }
+    actor D {
+    	computation = ImageShowMR;
+	sleep = false;
+    }
+    parameter {
+	logging = true;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = A,S,x,y,J,D;
+	edges = e1(A,S), e2(S,x), e3(x,y), e4(y,J), e5(J,D);
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	sleep = true;
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 1;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 1;
+    }
+    actor D {
+    	computation = ImageShowMR;
+	sleep = false;
+    }
+}
+right {
+    topology {
+        nodes = A,S,x,x1,y,y1,J,D;
+	edges = e1(A,S), e2(S,x), e3(S,x1), e4(x,y), 
+		e5(x1,y1), e6(y,J), e7(y1,J), e8(J,D);
+    }
+    production {
+	e8 = 2;
+    }
+    consumption {
+	e1 = 2;
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	sleep = true;
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 2;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor y1 {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 2;
+    }
+    actor D {
+    	computation = ImageShowMR;
+	sleep = false;
+    }
+}
+}
+main {
+    load=32 : r1;
+}
