@@ -34,7 +34,8 @@ class ImageShowMR: public df::Actor {
   
 private:
 
-  bool sleep;
+  bool adjust_period;
+  int period;
 
   cv::Mat frame;
   std::string file_name;

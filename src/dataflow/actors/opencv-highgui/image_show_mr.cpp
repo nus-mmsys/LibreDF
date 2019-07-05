@@ -29,11 +29,16 @@ ImageShowMR::ImageShowMR(const string& name) : Actor(name){
 
 void ImageShowMR::init() {
 
-  if (!propEmpty("sleep"))  	
-  	sleep = getPropBool("sleep");
+  if (!propEmpty("adjust_period"))  	
+  	adjust_period = getPropBool("adjust_period");
   else
-        sleep = true;
-  
+        adjust_period = false;
+ 
+  if (!propEmpty("period"))  	
+  	period = getPropBool("period");
+  else
+        period = 40;
+ 
 }
 
 void ImageShowMR::run() {
@@ -47,10 +52,10 @@ void ImageShowMR::run() {
       log("showing image "+to_string(stepno));
       
       cv::imshow("ImageShow", frame);
-      if (sleep)
-      	cv::waitKey(50/(in.size()*getSolution()));
+      if (adjust_period)
+      	cv::waitKey(period/(in.size()*getSolution()));
       else
-	cv::waitKey(50);
+	cv::waitKey(period);
   }
  
   releaseMR(input);
