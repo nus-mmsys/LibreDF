@@ -33,6 +33,11 @@ void DummyLoad::init() {
   increase = true;
 }
 
+void DummyLoad::reinit() {
+  sleep_time = 1;
+  increase = true;
+}
+
 void DummyLoad::run() {
   auto in = consume(input);
   auto out = produce(output);

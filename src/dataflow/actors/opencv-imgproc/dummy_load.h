@@ -41,6 +41,7 @@ public:
   
   DummyLoad(const std::string & name);
   virtual void init();
+  virtual void reinit();
   virtual void run();
   virtual ~DummyLoad();
   
