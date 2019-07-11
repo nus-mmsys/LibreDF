@@ -31,7 +31,7 @@ VideoCaptureMR::VideoCaptureMR(const string& name) : Actor(name){
 void VideoCaptureMR::init() {
 
   if (!propEmpty("period"))  	
-  	period = getPropBool("period");
+  	period = getPropInt("period");
   else
         period = 10;
   

@@ -35,7 +35,7 @@ void ImageShowMR::init() {
         adjust_period = false;
  
   if (!propEmpty("period"))  	
-  	period = getPropBool("period");
+  	period = getPropInt("period");
   else
         period = 40;
  
