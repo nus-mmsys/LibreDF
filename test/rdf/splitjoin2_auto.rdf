@@ -1,0 +1,122 @@
+rdf splitjoin2_auto {
+    topology {
+        nodes = A,S,B,C,D,J,I;
+	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,D), e5(D,J), e6(J,I);
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	period = 40;
+    }
+    actor S {
+	computation = MatSplit;
+	arity = 1;
+    }
+    actor B {
+    	computation = CvtColor;
+    }
+    actor C {
+    	computation = Canny;
+    }
+    actor D {
+	computation = DummyLoad;
+    }
+    actor J {
+	computation = MatJoin;
+	arity = 1;
+    }
+    actor I {
+    	computation = ImageShowMR;
+	period = 40;
+    }
+    parameter {
+	logging = true;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = A,S,x,y,z,J,I;
+	edges = e1(A,S), e2(S,x), e3(x,y), 
+		e4(y,z), e5(z,J), e6(J,I);
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	period = 40;
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 1;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor z {
+	computation = DummyLoad;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 1;
+    }
+    actor I {
+    	computation = ImageShowMR;
+	period = 40;
+    }
+}
+right {
+    topology {
+        nodes = A,S,x,x1,y,y1,z,z1,J,I;
+	edges = e1(A,S), e2(S,x), e3(S,x1), e4(x,y), 
+		e5(x1,y1), e6(y,z), e7(y1,z1), 
+		e8(z,J), e9(z1,J), e10(J,I);
+    }
+    production {
+	e10 = 2;
+    }
+    consumption {
+	e1 = 2;
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	period = 40;
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 2;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor y1 {
+    	computation = Canny;
+    }
+    actor z {
+	computation = DummyLoad;
+    }
+    actor z1 {
+	computation = DummyLoad;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 2;
+    }
+    actor I {
+    	computation = ImageShowMR;
+	period = 40;
+    }
+}
+}
+main {
+   S = 100 : r1;
+}

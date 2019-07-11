@@ -1,0 +1,118 @@
+rdf splitjoin3 {
+    topology {
+        nodes = A,S,B,C,J,D;
+	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,D);
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	period = 40;
+    }
+    actor S {
+	computation = MatSplit;
+	arity = 1;
+    }
+    actor B {
+    	computation = CvtColor;
+    }
+    actor C {
+    	computation = Canny;
+    }
+    actor J {
+	computation = MatJoin;
+	arity = 1;
+	output_size = 12;
+    }
+    actor D {
+    	computation = ImageShowMR;
+	period = 40;
+    }
+    parameter {
+	logging = true;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = A,S,x,y,J,D;
+	edges = e1(A,S), e2(S,x), e3(x,y), e4(y,J), e5(J,D);
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	period = 40;
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 1;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 1;
+	output_size = 12;
+    }
+    actor D {
+    	computation = ImageShowMR;
+	period = 40;
+    }
+}
+right {
+    topology {
+        nodes = A,S,x,x1,x2,y,y1,y2,J,D;
+	edges = e1(A,S), e2(S,x), e3(S,x1), e4(S,x2),
+		e5(x,y), e6(x1,y1), e7(x2,y2), e8(y,J), 
+		e9(y1,J), e10(y2,J), e11(J,D);
+    }
+    production {
+	e11 = 3;
+    }
+    consumption {
+	e1 = 3;
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	period = 40;
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 3;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor x2 {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor y1 {
+    	computation = Canny;
+    }
+    actor y2 {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 3;
+	output_size = 12;
+    }
+    actor D {
+    	computation = ImageShowMR;
+	period = 40;
+    }
+}
+}
+main {
+    load=32 : r1;
+}
