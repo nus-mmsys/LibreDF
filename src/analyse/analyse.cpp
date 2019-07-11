@@ -21,7 +21,7 @@
 Analyse::Analyse(int argc, char * argv[], Parser * p) {
 
 	if (argc != 2) {
-		cout << "usage: " << argv[0] << " <file.tmf>\n";
+		cout << "usage: " << argv[0] << " <input file>\n";
 		exit(0);
 	}
 
