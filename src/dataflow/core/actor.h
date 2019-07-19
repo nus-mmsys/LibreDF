@@ -89,7 +89,10 @@ namespace df {
 
     void log(std::string msg);
     void iterlog(std::string itermsg);
-   
+ 
+    int average_period;
+    int instance_period;
+  
   private:
 
     Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
@@ -119,7 +122,7 @@ namespace df {
     std::mutex status_mux;
 
     std::string msg_iter;
-    unsigned long start_iter, end_iter;
+    unsigned long start_iter, end_iter, start_firing;
   public:
 
     std::string getName();
@@ -602,6 +605,7 @@ namespace df {
       delete port;
     }
 
+    int getPeriod();
     int getOutPortOcc(std::string port, int idx);
     int getInPortOcc(std::string port, int idx);
 

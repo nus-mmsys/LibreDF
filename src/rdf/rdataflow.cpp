@@ -39,7 +39,7 @@ Rule * RDataflow::get_applicable_rule() {
 	for (auto c : rdfg->prog) {
 	    for (auto ac : rdfg->prog[c.first]) {
 		if (actors.find(c.first) != actors.end()) {
-			if (actors[c.first]->getInPortOcc("input",0) == ac.val)
+			if (actors[c.first]->getPeriod() == ac.val)
 				return rdfg->rules[ac.rule];
 		} else {
  			if (ac.val == load)

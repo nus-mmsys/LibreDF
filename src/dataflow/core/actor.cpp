@@ -31,6 +31,11 @@ Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   iterno = 1;
   fireno = 1;
   cpuid = 0;
+  start_iter = 0;
+  end_iter = 0;
+  start_firing = 0;
+  average_period = 0;
+  instance_period = 0;
 }
 
 std::string Actor::getName() {
@@ -369,6 +374,9 @@ void Actor::runIter() {
 	start_iter = timer.nowUs();
   	msg_iter = to_string(start_iter);
 	for (int i=0; i<solution; i++) {
+	  instance_period = timer.nowUs() - start_firing;
+	  average_period = (average_period + instance_period)/2;
+	  start_firing = timer.nowUs();
 	  fireno = i+1;
 	  if (realtime) {
 	  	runRT();
@@ -460,6 +468,10 @@ int Actor::resumeTill(int iter) {
 	runIter();
     }
     return 0;
+}
+
+int Actor::getPeriod() {
+	return average_period/1000;
 }
 
 int Actor::getOutPortOcc(std::string port, int idx) {

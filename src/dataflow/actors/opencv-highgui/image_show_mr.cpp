@@ -49,7 +49,7 @@ void ImageShowMR::run() {
 
       frame = in[j]->clone();
   
-      log("showing image "+to_string(stepno));
+      log("showing image "+to_string(stepno)+" at period "+to_string(getPeriod()));
       
       cv::imshow("ImageShow", frame);
       if (adjust_period)
