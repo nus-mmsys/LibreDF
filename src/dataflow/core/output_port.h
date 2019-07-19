@@ -58,7 +58,7 @@ namespace df {
      */
     OutputPort<T>(std::string name) : OPort(name), index(0) {
       sock = new ClientSocket("port:"+name);
-      buffsize = 16;
+      buffsize = 8;
       buf = new Buffer<T>(buffsize);
       port_cap = std::string(typeid(T).name());
       data = new T();
