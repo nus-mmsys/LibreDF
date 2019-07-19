@@ -470,6 +470,10 @@ int Actor::resumeTill(int iter) {
     return 0;
 }
 
+void Actor::setPeriod(int p) {
+	average_period = p;
+}
+
 int Actor::getPeriod() {
 	return average_period/1000;
 }

@@ -605,6 +605,7 @@ namespace df {
       delete port;
     }
 
+    void setPeriod(int p);
     int getPeriod();
     int getOutPortOcc(std::string port, int idx);
     int getInPortOcc(std::string port, int idx);

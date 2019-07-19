@@ -39,8 +39,10 @@ Rule * RDataflow::get_applicable_rule() {
 	for (auto c : rdfg->prog) {
 	    for (auto ac : rdfg->prog[c.first]) {
 		if (actors.find(c.first) != actors.end()) {
-			if (actors[c.first]->getPeriod() == ac.val)
+			if (actors[c.first]->getPeriod() == ac.val) {
+				actors[c.first]->setPeriod(0); 
 				return rdfg->rules[ac.rule];
+			}
 		} else {
  			if (ac.val == load)
 				return rdfg->rules[ac.rule];
@@ -207,10 +209,9 @@ void RDataflow::run() {
   Timer rdftimer;
   vector<string> delays;
   while(!check_eos()) {
-	
+  	timer.sleep(200);
    	r = get_applicable_rule();
   	if (r==nullptr) {
-  		timer.sleep(200);
   		continue;
   	}
 	else {
