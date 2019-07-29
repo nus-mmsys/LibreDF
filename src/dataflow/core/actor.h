@@ -308,7 +308,7 @@ namespace df {
      *   The consumption rate of snk actor.
      */
     int connectActor(Actor * snk, std::string outp, std::string inp,
-		   int outpidx, int inpidx, int p, int c);
+		   int & outpidx, int & inpidx, int p, int c);
 
     /*!
      * Disconnect this actor from another actor in the dataflow.

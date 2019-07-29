@@ -124,6 +124,13 @@ int Edge::getSinkPortIndex() {
 	return snk_port_idx;
 }
 
+void Edge::setSourcePortIndex(int idx) {
+	src_port_idx = idx;
+}
+void Edge::setSinkPortIndex(int idx) {
+	snk_port_idx = idx;
+}
+
 int Edge::getSourceRate() {
 	return src_rate;
 }

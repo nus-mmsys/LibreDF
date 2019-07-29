@@ -179,7 +179,7 @@ int Actor::connectActor(Actor * snk, int p, int c) {
   return 0;
 }
 
-int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int outpidx, int inpidx, int p, int c) {
+int Actor::connectActor(Actor * snk, std::string outp, std::string inp, int & outpidx, int & inpidx, int p, int c) {
 	
   IPort * in;
   OPort * out;

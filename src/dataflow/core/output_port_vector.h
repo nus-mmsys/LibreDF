@@ -63,19 +63,20 @@ namespace df {
 	}
     }
 
-    OutputPort<T> * getFreePort(int outpidx) {
+    OutputPort<T> * getFreePort(int & outpidx) {
  	OutputPort<T> * op = nullptr;
 	if (outpidx >=0 && outpidx < outputs.size()) {
 		op = outputs[outpidx];
 	} else {
 	  for (auto out : outputs) {
-		if (out->getLinked() < 1) {
+	        if (out->getLinked() < 1) {
 			op = out;
 			break;
 		}
-	  } 
+	  }
 	  if (op == nullptr) {
-		op = new OutputPort<T>(name+"."+std::to_string(outputs.size()));
+		outpidx = outputs.size();
+		op = new OutputPort<T>(name+"."+std::to_string(outpidx));
 		outputs.push_back(op);
 	  }
 	}
@@ -90,11 +91,13 @@ namespace df {
     }
 
     virtual int connectPort(std::string host, int portnb) { 
-	return getFreePort(-1)->connectPort(host, portnb);
+	int idx = -1;
+	return getFreePort(idx)->connectPort(host, portnb);
     }
 
     virtual int connectPort(IPort* n) {
-	return getFreePort(-1)->connectPort(n);
+	int idx = -1;
+	return getFreePort(idx)->connectPort(n);
     }
 
     virtual int disconnectPort(IPort* n, int outpidx, int inpidx) {
@@ -123,7 +126,7 @@ namespace df {
 	return 0;
     }
 
-    virtual int connectPort(IPort* n, int outpidx, int inpidx) {
+    virtual int connectPort(IPort* n, int & outpidx, int & inpidx) {
 	return getFreePort(outpidx)->connectPort(n,outpidx,inpidx);
     }
     

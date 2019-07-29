@@ -1,0 +1,134 @@
+rdf splitjoin2r {
+    topology {
+        nodes = A,S,B,C,J,D;
+	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,D);
+    }
+    actor A {
+    	computation = VideoCaptureMR;
+	file_name = pedestrian.mp4;
+	period = 40;
+    }
+    actor S {
+	computation = MatSplit;
+	arity = 1;
+    }
+    actor B {
+    	computation = CvtColor;
+    }
+    actor C {
+    	computation = Canny;
+    }
+    actor J {
+	computation = MatJoin;
+	arity = 1;
+    }
+    actor D {
+    	computation = ImageShowMR;
+	period = 40;
+    }
+    parameter {
+	logging = true;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = S,x,y,J;
+	edges = e1(S,x), e2(x,y), e3(y,J);
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 1;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 1;
+    }
+}
+right {
+    topology {
+        nodes = S,x,x1,y,y1,J;
+	edges = e1(S,x), e2(S,x1), e3(x,y), 
+		e4(x1,y1), e5(y,J), e6(y1,J);
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 2;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor y1 {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 2;
+    }
+}
+}
+rule r2 {
+left {
+    topology {
+        nodes = S,x,x1,y,y1,J;
+	edges = e1(S,x), e2(S,x1), e3(x,y), 
+		e4(x1,y1), e5(y,J), e6(y1,J);
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 2;
+    }
+    actor x {
+    	computation = CvtColor;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y {
+    	computation = Canny;
+    }
+    actor y1 {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 2;
+    }
+}
+right {
+    topology {
+        nodes = S,x1,y1,J;
+	edges = e1(S,x1), e2(x1,y1), e3(y1,J);
+    }
+    actor S {
+    	computation = MatSplit;
+	arity = 1;
+    }
+    actor x1 {
+    	computation = CvtColor;
+    }
+    actor y1 {
+    	computation = Canny;
+    }
+    actor J {
+    	computation = MatJoin;
+	arity = 1;
+    }
+}
+}
+main {
+    load=32 : r1;
+    load=96 : r2;
+}

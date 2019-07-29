@@ -101,7 +101,7 @@ namespace df {
 	    taccept.join();
     }
 
-    InputPort<T> * getFreePort(int idx) {
+    InputPort<T> * getFreePort(int & idx) {
 	    InputPort<T> * ip = nullptr;
 	    if (idx >= 0 && idx < inputs.size())
 		    ip = inputs[idx];
@@ -115,13 +115,14 @@ namespace df {
 	      if (ip == nullptr) {
 	        ip = new InputPort<T>(name+"."+std::to_string(inputs.size()));
 	        inputs.push_back(ip);
+		idx = inputs.size()-1;
 	      }
 	    }
 	    increaseLinked();
 	    return ip;
     }
 
-    void setBuffer(BufferInfc * b, int inpidx, int i) {
+    void setBuffer(BufferInfc * b, int & inpidx, int i) {
 	    getFreePort(inpidx)->setBuffer(b,inpidx,i);
     }
 
