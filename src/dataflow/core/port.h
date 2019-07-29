@@ -129,7 +129,6 @@ namespace df {
     virtual void listen(int portnb) = 0;
     virtual void setBuffer(BufferInfc * buf, int & inpidx, int i) = 0;
     virtual void unsetBuffer(int inpidx) = 0;
-    virtual void clearBuffer() = 0;
     virtual int getOccupancy(int idx) = 0;
     virtual ~IPort() {
 	delete sock;

@@ -122,17 +122,13 @@ namespace df {
       index = i;
     }
  
-    void unsetBuffer(int inpidx) {
-    	clearBuffer();
-    }
-   
-    virtual void clearBuffer() {
+    virtual void unsetBuffer(int inpidx) {
       if (buf != nullptr)
 	      buf->clearConsumer();
       buf = nullptr;
       clearLinked();	
     }
-
+   
     void lock() {
       buf->at(index)->consumerLock();
     }

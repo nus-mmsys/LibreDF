@@ -113,7 +113,7 @@ namespace df {
 	    inpidx = idx;
     }
 
-    void unsetBuffer(int inpidx) {
+    virtual void unsetBuffer(int inpidx) {
 	
 	int idx = inpidx;
 	
@@ -137,12 +137,6 @@ namespace df {
  		delete in;
 	}
 	idx_stack.push(idx);
-    }
-
-    virtual void clearBuffer() {
-	//Not tested.
-	for (auto c : inputs)
-		c->clearBuffer();
     }
 
     virtual int getOccupancy(int idx) {
