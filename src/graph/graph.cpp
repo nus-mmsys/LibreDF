@@ -896,6 +896,26 @@ int Graph::get_output_size(std::string ac) {
 	return get_oedges(actor).size();
 }
 
+bool Graph::actor_is_split(std::string ac) {
+	auto type = get_actor_type(ac);
+	auto tsize = type.size();
+	if (tsize < 5)
+		return false;
+	if (type.substr(tsize-5, 5) == "Split")
+		return true;
+	return false;
+}
+
+bool Graph::actor_is_join(std::string ac) {
+	auto type = get_actor_type(ac);
+	auto tsize = type.size();
+	if (tsize < 4)
+		return false;
+	if (type.substr(tsize-4, 4) == "Join")
+		return true;
+	return false;
+}
+
 vector<std::string> Graph::get_pred(std::string ac) {
 	vector<string> res;
 	if (actors.find(ac)==actors.end()) {

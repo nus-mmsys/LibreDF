@@ -292,14 +292,13 @@ int Rule::apply() {
 		for (auto res_ed : res_edges) {
 			auto src = res->get_source_name(res_ed);
 			auto snk = res->get_sink_name(res_ed);
-			auto split_ar = res->get_actor_prop(snk, "arity");  
-			if (split_ar != "" && res->get_input_size(snk) == 1) {
-				res->set_sink_rate(res_ed, stoi(split_ar));
-				continue;
+			if (res->actor_is_split(snk)) {
+				auto s_arity = res->get_actor_prop(snk, "arity");  
+				res->set_sink_rate(res_ed, stoi(s_arity));
 			}
-			auto join_ar = res->get_actor_prop(src, "arity");  
-			if (join_ar != "" && res->get_output_size(src) == 1) {
-				res->set_source_rate(res_ed, stoi(join_ar));
+			else if (res->actor_is_join(src)) {
+				auto j_arity = res->get_actor_prop(src, "arity");  
+				res->set_source_rate(res_ed, stoi(j_arity));
 			}
 		}
 		res->solve();	

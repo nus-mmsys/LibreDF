@@ -962,6 +962,9 @@ public:
 	int get_input_size(std::string ac);
 	int get_output_size(std::string ac);
 
+	bool actor_is_split(std::string ac);
+	bool actor_is_join(std::string ac);
+	
 	vector<std::string> get_pred(std::string ac);
 	vector<std::string> get_succ(std::string ac);
 
