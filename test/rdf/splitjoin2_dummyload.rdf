@@ -36,14 +36,9 @@ rdf splitjoin2_dummyload {
 rule r1 {
 left {
     topology {
-        nodes = A,S,x,y,z,J,I;
-	edges = e1(A,S), e2(S,x), e3(x,y), 
-		e4(y,z), e5(z,J), e6(J,I);
-    }
-    actor A {
-    	computation = VideoCaptureMR;
-	file_name = pedestrian.mp4;
-	period = 40;
+        nodes = S,x,y,z,J;
+	edges = e1(S,x), e2(x,y), 
+		e3(y,z), e4(z,J);
     }
     actor S {
     	computation = MatSplit;
@@ -62,28 +57,13 @@ left {
     	computation = MatJoin;
 	arity = 1;
     }
-    actor I {
-    	computation = ImageShowMR;
-	period = 40;
-    }
 }
 right {
     topology {
-        nodes = A,S,x,x1,y,y1,z,z1,J,I;
-	edges = e1(A,S), e2(S,x), e3(S,x1), e4(x,y), 
-		e5(x1,y1), e6(y,z), e7(y1,z1), 
-		e8(z,J), e9(z1,J), e10(J,I);
-    }
-    production {
-	e10 = 2;
-    }
-    consumption {
-	e1 = 2;
-    }
-    actor A {
-    	computation = VideoCaptureMR;
-	file_name = pedestrian.mp4;
-	period = 40;
+        nodes = S,x,x1,y,y1,z,z1,J;
+	edges = e1(S,x), e2(S,x1), e3(x,y), 
+		e4(x1,y1), e5(y,z), e6(y1,z1), 
+		e7(z,J), e8(z1,J);
     }
     actor S {
     	computation = MatSplit;
@@ -110,10 +90,6 @@ right {
     actor J {
     	computation = MatJoin;
 	arity = 2;
-    }
-    actor I {
-    	computation = ImageShowMR;
-	period = 40;
     }
 }
 }
