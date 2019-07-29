@@ -20,6 +20,7 @@
 #define DF_INPUTPORT_VECTOR_H
 
 #include "input_port.h"
+#include <stack>
 
 namespace df {
   
@@ -34,6 +35,7 @@ namespace df {
   private:
     std::vector<InputPort<T> *> inputs;
     std::vector<int> portNumbers;
+    std::stack<int> idx_stack;
 
   public:
 	  
@@ -91,7 +93,12 @@ namespace df {
 	    if (idx >= 0 && idx < inputs.size())
 		    ip = inputs[idx];
 	    else {
-		idx = inputs.size();
+		if (idx_stack.empty())
+			idx = inputs.size();
+		else {
+			idx = idx_stack.top();
+			idx_stack.pop();
+		}
 	        ip = new InputPort<T>(name+"."+std::to_string(idx));
 	        inputs.push_back(ip);
 	    }
@@ -129,6 +136,7 @@ namespace df {
 		inputs.erase(it);
  		delete in;
 	}
+	idx_stack.push(idx);
     }
 
     virtual void clearBuffer() {

@@ -20,6 +20,7 @@
 #define DF_OUTPUTPORT_VECTOR_H
 
 #include "output_port.h"
+#include <stack>
 
 namespace df {
   
@@ -33,6 +34,7 @@ namespace df {
     
   private:
     std::vector<OutputPort<T> *> outputs;
+    std::stack<int> idx_stack;
 
   public:
     
@@ -53,7 +55,12 @@ namespace df {
 	if (outpidx >=0 && outpidx < outputs.size()) {
 		op = outputs[outpidx];
 	} else {
-		outpidx = outputs.size();
+		if (idx_stack.empty())
+			outpidx = outputs.size();
+		else {
+			outpidx = idx_stack.top();
+			idx_stack.pop();
+		}
 		op = new OutputPort<T>(name+"."+std::to_string(outpidx));
 		outputs.push_back(op);
 	}
@@ -100,6 +107,7 @@ namespace df {
  		decreaseLinked();
  		delete op;
 	}
+	idx_stack.push(idx);
 	return 0;
     }
 

@@ -109,17 +109,17 @@ left {
 }
 right {
     topology {
-        nodes = S,x1,y1,J;
-	edges = e1(S,x1), e2(x1,y1), e3(y1,J);
+        nodes = S,x,y,J;
+	edges = e1(S,x), e2(x,y), e3(y,J);
     }
     actor S {
     	computation = MatSplit;
 	arity = 1;
     }
-    actor x1 {
+    actor x {
     	computation = CvtColor;
     }
-    actor y1 {
+    actor y {
     	computation = Canny;
     }
     actor J {
@@ -130,5 +130,6 @@ right {
 }
 main {
     load=32 : r1;
-    load=96 : r2;
+    load=64 : r2;
+    load=96 : r1;
 }
