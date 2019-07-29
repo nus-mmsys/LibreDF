@@ -38,7 +38,7 @@ private:
   std::string file_name;	
   cv::VideoCapture * cap;
   cv::Mat frame;
-  int level, tilew, tileh;
+  int arity, tilew, tileh;
   df::OutputPortVector<df::Mat> * output;
  
   static  df::ActorRegister<VideoCaptureSplit> reg;

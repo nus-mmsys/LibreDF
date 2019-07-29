@@ -15,7 +15,7 @@ tmf canny-splitjoin2 {
     }
     actor S {
     	computation = MatSplit;
-	level = 2;
+	arity = 2;
     }
     actor B1 {
     	computation = CvtColor;
@@ -31,7 +31,7 @@ tmf canny-splitjoin2 {
     }
     actor J {
     	computation = MatJoin;
-	level = 2;
+	arity = 2;
     }
     actor D {
     	computation = ImageWriteMR;

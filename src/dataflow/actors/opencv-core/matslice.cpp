@@ -31,7 +31,7 @@ MatSlice::MatSlice(const string& name) : Actor(name) {
 void MatSlice::init() {
 
   if (propEmpty("arity"))
-	  arity = 2;
+	  arity = 1;
   else
 	  arity = getPropInt("arity");
 
@@ -41,19 +41,15 @@ void MatSlice::init() {
   nh = arith.factor(arity);
   nw = arity/nh;
   
-  output->setArity(arity);
-
 }
 
 void MatSlice::reinit() {
 
-  auto newarity = getPropInt("arity");
-  
-  if (newarity > arity) {
-  	output->addArity(newarity - arity);
-  }
+  if (propEmpty("arity"))
+	  arity = 1;
+  else
+	  arity = getPropInt("arity");
 
-  arity = newarity;
   tilew = 0;
   tileh = 0;
 

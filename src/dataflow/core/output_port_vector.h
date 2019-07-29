@@ -48,37 +48,14 @@ namespace df {
 	    return outputs[i];
     }
 
-    void setArity(int r) {
-	for (int i=0; i<r; i++) {
-		OutputPort<T> * out = new OutputPort<T>(name+"."+std::to_string(i));
-		outputs.push_back(out);
-	}
-    }
-
-    void addArity(int r) {
-	int outsize = outputs.size();
-	for (int i=0; i<r; i++) {
-		OutputPort<T> * out = new OutputPort<T>(name+"."+std::to_string(i+outsize));
-		outputs.push_back(out);
-	}
-    }
-
     OutputPort<T> * getFreePort(int & outpidx) {
  	OutputPort<T> * op = nullptr;
 	if (outpidx >=0 && outpidx < outputs.size()) {
 		op = outputs[outpidx];
 	} else {
-	  for (auto out : outputs) {
-	        if (out->getLinked() < 1) {
-			op = out;
-			break;
-		}
-	  }
-	  if (op == nullptr) {
 		outpidx = outputs.size();
 		op = new OutputPort<T>(name+"."+std::to_string(outpidx));
 		outputs.push_back(op);
-	  }
 	}
 	increaseLinked();
 	return op;

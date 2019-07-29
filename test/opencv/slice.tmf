@@ -11,7 +11,7 @@ tmf slice {
     }
     actor B {
     	computation = MatSlice;
-	level = 1;
+	arity = 1;
 	host = 127.0.0.1;
 	input_port = 7500;
 	cpu = 1;
@@ -30,7 +30,7 @@ tmf slice {
     }
     actor E {
     	computation = MatMerge;
-	level = 1;
+	arity = 1;
 	input_port = 7200;
 	host = 127.0.0.1;
 	cpu = 4;

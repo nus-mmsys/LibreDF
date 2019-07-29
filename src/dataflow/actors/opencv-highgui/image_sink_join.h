@@ -37,7 +37,7 @@ private:
   cv::Mat frame;
   std::string file_name;
 
-  int level, tileh, tilew, type;
+  int arity, tileh, tilew, type;
 
   df::InputPortVector<df::Mat> * input;
  

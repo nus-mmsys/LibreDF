@@ -28,26 +28,17 @@ ImageWriteJoin::ImageWriteJoin(const string& name) : Actor(name){
 }
 
 void ImageWriteJoin::init() {
-
-  if (propEmpty("level"))
-	  level = 1;
+  if (propEmpty("arity"))
+	  arity = 1;
   else
-	  level = getPropInt("level");
-
-  input->setArity(level);
-
+	  arity = getPropInt("arity");
 }
 
 void ImageWriteJoin::reinit() {
-
-  auto newlevel = getPropInt("level");
-
-  if (newlevel > level) {
-  	input->addArity(newlevel - level);
-  }
-
-  level = newlevel;
-
+  if (propEmpty("arity"))
+	  arity = 1;
+  else
+	  arity = getPropInt("arity");
 }
 
 void ImageWriteJoin::run() {

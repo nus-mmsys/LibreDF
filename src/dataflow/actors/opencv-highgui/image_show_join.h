@@ -34,7 +34,7 @@ class ImageShowJoin: public df::Actor {
   
 private:
 
-  int level;
+  int arity;
 
   cv::Mat frame;
   df::InputPortVector<df::Mat> * input;

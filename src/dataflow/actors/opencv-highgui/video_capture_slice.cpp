@@ -35,15 +35,13 @@ void VideoCaptureSlice::init() {
   else
         log("error: file_name is not specified.");
 
-  if (propEmpty("level"))
-	  level = 1;
+  if (propEmpty("arity"))
+	  arity = 1;
   else
-	  level = getPropInt("level");
+	  arity = getPropInt("arity");
 
   tilew = 0;
   tileh = 0;
-
-  output->setArity(level * level);
 
   cap = new cv::VideoCapture(file_name);
 
@@ -52,20 +50,20 @@ void VideoCaptureSlice::init() {
   }
   *cap >> frame;
 
-  tilew = frame.cols / level;
-  tileh = frame.rows / level;
+  tilew = frame.cols / arity;
+  tileh = frame.rows / arity;
 }
 
 void VideoCaptureSlice::run() {
 
   auto out = produce(output);
  
-  for (int j=0; j < level ; j++) {
-	  for (int i=0; i < level ; i++) {
+  for (int j=0; j < arity ; j++) {
+	  for (int i=0; i < arity ; i++) {
 	  	cv::Rect tile(i * tilew,
 				j * tileh,
 				tilew, tileh);
-  	  	out[j*level+i]->set(frame(tile));
+  	  	out[j*arity+i]->set(frame(tile));
 	  }
   }
   

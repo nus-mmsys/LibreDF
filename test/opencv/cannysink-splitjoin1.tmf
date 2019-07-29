@@ -6,7 +6,7 @@ tmf cannysink-splitjoin1 {
     actor A {
     	computation = VideoCaptureSplit;
 	file_name = pedestrian.mp4;
-	level = 1;
+	arity = 1;
     }
     actor B {
     	computation = CvtColor;
@@ -16,7 +16,7 @@ tmf cannysink-splitjoin1 {
     }
     actor D {
     	computation = ImageSinkJoin;
-	level = 1;
+	arity = 1;
     }
     parameter {
 	logging = true;

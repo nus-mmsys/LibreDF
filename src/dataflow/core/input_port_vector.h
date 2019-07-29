@@ -49,21 +49,6 @@ namespace df {
 	    return inputs[i];
     }
 
-    void setArity(int r) {
-	for (int i=0; i<r; i++) {
-		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i));
-		inputs.push_back(in);
-	}
-    }
-
-    void addArity(int r) {
-	auto insize = inputs.size();
-	for (int i=0; i<r; i++) {
-		InputPort<T> * in = new InputPort<T>(name+"."+std::to_string(i+insize));
-		inputs.push_back(in);
-	}
-    }
-
     virtual void accept() {
 	//Fix this for dynamic port creation.
 	//Use getFreePort.
@@ -106,17 +91,9 @@ namespace df {
 	    if (idx >= 0 && idx < inputs.size())
 		    ip = inputs[idx];
 	    else {
-	      for (auto in : inputs) {
-	        if (in->getLinked() < 1) {
-		      ip = in;
-		      break;
-	        }
-	      }
-	      if (ip == nullptr) {
-	        ip = new InputPort<T>(name+"."+std::to_string(inputs.size()));
+		idx = inputs.size();
+	        ip = new InputPort<T>(name+"."+std::to_string(idx));
 	        inputs.push_back(ip);
-		idx = inputs.size()-1;
-	      }
 	    }
 	    increaseLinked();
 	    return ip;

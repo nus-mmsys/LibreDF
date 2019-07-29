@@ -38,25 +38,15 @@ void MatJoin::init() {
   tilew = 0;
   tileh = 0;
 
-  output->setRate(arity);
-  input->setArity(arity);
-
-  if (output->getRate()!=arity) {
-	log("Join output rate is not equal its input edges.");
-	exit(0);
-  }
-
 }
 
 void MatJoin::reinit() {
 
-  auto newarity = getPropInt("arity");
+  if (propEmpty("arity"))
+	  arity = 1;
+  else
+	  arity = getPropInt("arity");
 
-  if (newarity > arity) {
-  	input->addArity(newarity - arity);
-  }
-
-  arity = newarity;
   tilew = 0;
   tileh = 0;
 

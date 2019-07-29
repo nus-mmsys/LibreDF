@@ -36,7 +36,7 @@ void MatMerge::init() {
 	  text = getPropBool("text");
 
   if (propEmpty("arity"))
-	  arity = 2;
+	  arity = 1;
   else
 	  arity = getPropInt("arity");
 
@@ -46,19 +46,15 @@ void MatMerge::init() {
   nh = arith.factor(arity);
   nw = arity/nh;
  
-  input->setArity(arity);
-
 }
 
 void MatMerge::reinit() {
 
-  auto newarity = getPropInt("arity");
+  if (propEmpty("arity"))
+	  arity = 1;
+  else
+	  arity = getPropInt("arity");
 
-  if (newarity > arity) {
-  	input->addArity(newarity - arity);
-  }
-
-  arity = newarity;
   tilew = 0;
   tileh = 0;
 

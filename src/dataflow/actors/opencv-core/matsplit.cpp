@@ -37,26 +37,15 @@ void MatSplit::init() {
 
   tilew = 0;
   tileh = 0;
-
-  input->setRate(arity);
-  output->setArity(arity);
-
-  if (input->getRate()!=arity) {
-	log("Split input rate is not equal its output edges.");
-	exit(0);
-  }
-
 }
 
 void MatSplit::reinit() {
 
-  auto newarity = getPropInt("arity");
+  if (propEmpty("arity"))
+	  arity = 1;
+  else
+	  arity = getPropInt("arity");
   
-  if (newarity > arity) {
-  	output->addArity(newarity - arity);
-  }
-
-  arity = newarity;
   tilew = 0;
   tileh = 0;
 }

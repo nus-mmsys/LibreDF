@@ -35,12 +35,10 @@ void VideoCaptureSplit::init() {
   else
         log("error: file_name is not specified.");
 
-  if (propEmpty("level"))
-	  level = 1;
+  if (propEmpty("arity"))
+	  arity = 1;
   else
-	  level = getPropInt("level");
-
-  output->setArity(level);
+	  arity = getPropInt("arity");
 
   cap = new cv::VideoCapture(file_name);
 
@@ -52,25 +50,21 @@ void VideoCaptureSplit::init() {
 }
 
 void VideoCaptureSplit::reinit() {
-
-  auto newlevel = getPropInt("level");
-  
-  if (newlevel > level) {
-  	output->addArity(newlevel - level);
-  }
-
-  level = newlevel;
+  if (propEmpty("arity"))
+	  arity = 1;
+  else
+	  arity = getPropInt("arity");
 }
 
 void VideoCaptureSplit::run() {
 
   auto out = produce(output);
  
-  for (int j=0; j < level ; j++) {
+  for (int j=0; j < arity ; j++) {
 	  out[j]->set(frame);
           *cap >> frame;
           if(frame.empty()) {
-		  while (j<level) {
+		  while (j<arity) {
 			  out[j]->set(*out[0]->get());
 			  j++;
 		  }
