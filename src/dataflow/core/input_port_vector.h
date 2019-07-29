@@ -100,7 +100,10 @@ namespace df {
     }
 
     void setBuffer(BufferInfc * b, int & inpidx, int i) {
-	    getFreePort(inpidx)->setBuffer(b,inpidx,i);
+	    auto p = getFreePort(inpidx);
+	    int idx = inpidx;
+	    p->setBuffer(b,inpidx,i);
+	    inpidx = idx;
     }
 
     void unsetBuffer(int inpidx) {

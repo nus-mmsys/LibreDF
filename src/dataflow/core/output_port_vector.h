@@ -104,7 +104,11 @@ namespace df {
     }
 
     virtual int connectPort(IPort* n, int & outpidx, int & inpidx) {
-	return getFreePort(outpidx)->connectPort(n,outpidx,inpidx);
+	auto p = getFreePort(outpidx);
+	int idx = outpidx;
+	int res = p->connectPort(n,outpidx,inpidx);
+	outpidx = idx;
+	return res;
     }
     
     virtual int getOccupancy(int idx) {

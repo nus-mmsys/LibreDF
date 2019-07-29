@@ -118,6 +118,7 @@ namespace df {
       buf = static_cast<Buffer<T> *>(b);
       buf->addConsumer();
       increaseLinked();	
+      inpidx = 0;
       index = i;
     }
  
