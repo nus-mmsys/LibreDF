@@ -854,6 +854,25 @@ public:
 	bool contains_edge(string src, string snk);
 
 	/*!
+	 * Replace a property of a given actor.
+	 *
+	 * \param actname
+	 * 	The name of the actor.
+	 *
+	 * \param prop
+	 * 	The property to set.
+	 *
+	 * \param key
+	 * 	The key to set
+	 *
+	 * \return
+	 * 	-1 if the actor is not found,
+	 * 	0 if the propert is set
+	 *
+	 */
+	int replace_actor_prop(string actname, string prop, string key);
+
+	/*!
 	 * Get a property of a given actor.
 	 *
 	 * \param actname
@@ -863,7 +882,8 @@ public:
 	 * 	The property to retrieve.
 	 *
 	 * \return
-	 *	The value of property of the actor.
+	 *	The value of property of the actor,
+	 *	empty string "" if prop is not found.
 	 *
 	 */
 	string get_actor_prop(string actname, string prop);

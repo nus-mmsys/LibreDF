@@ -180,6 +180,22 @@ int Rule::apply() {
 			if (is_variable(c))
 				gc = namevar[c];
 			res->replace_actor_props(gc, r->get_actor_props(c));
+			
+			//if gc has the propery "arity" then
+			//arity of gc in resulting graph is
+			//  arity of the gc in rhs
+			//  minus arity of the gc in lhs 
+			//  plus arity of the gc in the graph
+			if (res->get_actor_prop(gc, "arity") != "") {
+				string r_ar = r->get_actor_prop(c,"arity");
+				string l_ar = l->get_actor_prop(c,"arity");
+				string g_ar = g->get_actor_prop(gc,"arity");
+			        int res_ar = stoi(g_ar) 
+					     + stoi(r_ar) 
+					     - stoi(l_ar); 	
+				res->replace_actor_prop(gc, "arity", 
+				               		to_string(res_ar));
+			}
 		}
 		int idx = 1;
 		for (auto a : app_actors) {

@@ -742,6 +742,13 @@ vector<string> Graph::get_edges() {
 	return edgelist;
 }
 
+int Graph::replace_actor_prop(string actname, string prop, string key) {
+	if (actors.find(actname) == actors.end())
+		return -1;
+	actors[actname]->replace_prop(prop, key);
+	return 0;
+}
+
 string Graph::get_actor_prop(string actname, string prop) {
 	string res = "";
 	if (actors.find(actname) == actors.end())
