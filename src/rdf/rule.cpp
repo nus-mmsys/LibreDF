@@ -288,6 +288,20 @@ int Rule::apply() {
 						src_port, snk_port);
 			}
 		}
+		auto res_edges = res->get_edges();
+		for (auto res_ed : res_edges) {
+			auto src = res->get_source_name(res_ed);
+			auto snk = res->get_sink_name(res_ed);
+			auto split_ar = res->get_actor_prop(snk, "arity");  
+			if (split_ar != "" && res->get_input_size(snk) == 1) {
+				res->set_sink_rate(res_ed, stoi(split_ar));
+				continue;
+			}
+			auto join_ar = res->get_actor_prop(src, "arity");  
+			if (join_ar != "" && res->get_output_size(src) == 1) {
+				res->set_source_rate(res_ed, stoi(join_ar));
+			}
+		}
 		res->solve();	
 		return 0;
 	}

@@ -959,6 +959,9 @@ public:
 	void set_visited(std::string ac, bool v);
 	bool get_visited(std::string ac);
 
+	int get_input_size(std::string ac);
+	int get_output_size(std::string ac);
+
 	vector<std::string> get_pred(std::string ac);
 	vector<std::string> get_succ(std::string ac);
 

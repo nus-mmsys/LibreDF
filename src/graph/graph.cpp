@@ -880,6 +880,22 @@ bool Graph::get_visited(string ac) {
 	return actors[ac]->get_visited();
 }
 
+int Graph::get_input_size(std::string ac) {
+	if (actors.find(ac)==actors.end()) {
+		return -1;	
+	}
+	Actor * actor = actors[ac];
+	return get_iedges(actor).size();
+}
+
+int Graph::get_output_size(std::string ac) {
+	if (actors.find(ac)==actors.end()) {
+		return -1;	
+	}
+	Actor * actor = actors[ac];
+	return get_oedges(actor).size();
+}
+
 vector<std::string> Graph::get_pred(std::string ac) {
 	vector<string> res;
 	if (actors.find(ac)==actors.end()) {
