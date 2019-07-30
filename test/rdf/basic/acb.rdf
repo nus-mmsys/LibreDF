@@ -15,10 +15,12 @@ rdf acb {
         computation = IntProducerMR;
         last = 64;
     	exect = 3;
+	output_size = 24;
     }
     actor B {
         computation = IntConsumerMR;
     	exect = 4;
+	output_size = 24;
     }
     actor C {
         computation = DoublingMR;
