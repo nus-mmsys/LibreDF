@@ -288,19 +288,7 @@ int Rule::apply() {
 						src_port, snk_port);
 			}
 		}
-		auto res_edges = res->get_edges();
-		for (auto res_ed : res_edges) {
-			auto src = res->get_source_name(res_ed);
-			auto snk = res->get_sink_name(res_ed);
-			if (res->actor_is_split(snk)) {
-				auto s_arity = res->get_actor_prop(snk, "arity");  
-				res->set_sink_rate(res_ed, stoi(s_arity));
-			}
-			else if (res->actor_is_join(src)) {
-				auto j_arity = res->get_actor_prop(src, "arity");  
-				res->set_source_rate(res_ed, stoi(j_arity));
-			}
-		}
+		res->set_splitjoin_rates();
 		res->solve();	
 		return 0;
 	}

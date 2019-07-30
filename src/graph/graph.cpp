@@ -916,6 +916,22 @@ bool Graph::actor_is_join(std::string ac) {
 	return false;
 }
 
+void Graph::set_splitjoin_rates() {
+	auto res_edges = get_edges();
+	for (auto res_ed : res_edges) {
+		auto src = get_source_name(res_ed);
+		auto snk = get_sink_name(res_ed);
+		if (actor_is_split(snk)) {
+			auto s_arity = get_actor_prop(snk, "arity");  
+			set_sink_rate(res_ed, stoi(s_arity));
+		}
+		else if (actor_is_join(src)) {
+			auto j_arity = get_actor_prop(src, "arity");  
+			set_source_rate(res_ed, stoi(j_arity));
+		}
+	}
+}
+
 vector<std::string> Graph::get_pred(std::string ac) {
 	vector<string> res;
 	if (actors.find(ac)==actors.end()) {

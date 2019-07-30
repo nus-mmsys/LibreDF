@@ -46,6 +46,7 @@ int RDFParser::load_from_stream(std::stringstream & ss) {
 		cout << "RDF is loaded successfully.\n";
 	else 
 		cout << "cannot load the RDF.\n";
+	rdfg->graph->set_splitjoin_rates();
 	return ret;
 }
 

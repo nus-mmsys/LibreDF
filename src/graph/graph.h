@@ -965,6 +965,8 @@ public:
 	bool actor_is_split(std::string ac);
 	bool actor_is_join(std::string ac);
 	
+	void set_splitjoin_rates();
+	
 	vector<std::string> get_pred(std::string ac);
 	vector<std::string> get_succ(std::string ac);
 
