@@ -52,6 +52,7 @@ int Parser::load_from_stream(stringstream& ss) {
         ss >> gname;
 	graph->set_name(gname);
 	ret = read_graph(ss, graph);
+	graph->set_splitjoin_rates();
 	if (ret < 0)
 		return ret;
 	if (ret == 0) {
