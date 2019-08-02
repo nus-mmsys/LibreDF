@@ -49,14 +49,6 @@ void Edge::setSink(std::string snk) {
 	snk_actor = snk;
 }
 
-void Edge::setInPort(IPort * ip) {
-	iport = ip;
-}
-
-void Edge::setOutPort(OPort * op) {
-	oport = op;
-}
-
 void Edge::setVisited(bool v) {
 	visited = v;
 }
@@ -68,12 +60,6 @@ std::string Edge::getSource() {
 }
 std::string Edge::getSink() {
 	return snk_actor;
-}
-IPort * Edge::getInPort() {
-	return iport;
-}
-OPort * Edge::getOutPort() {
-	return oport;
 }
 void Edge::setSourceRate(int r) {
 	src_rate = r;

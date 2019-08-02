@@ -36,17 +36,14 @@ namespace df {
 	std::string src_actor; /**< Source actor of the edge */
 	std::string snk_actor; /**< Sink actor of the edge */
 
-	IPort * iport; /**< Source port of the edge */
-	OPort * oport; /**< Sink port of the edge */
+	int src_port_idx; /**< Source port index */
+	int snk_port_idx; /**< Sink port index */
 
-	int src_port_idx; /**< Source port index (to be replaced by iport) */
-	int snk_port_idx; /**< Sink port index (to be replaced by oport) */
-
-	std::string src_port; /**< Source port of the edge (t.b.r. by iport) */
-	std::string snk_port; /**< Sink port of the edge (t.b.r. by oport) */
+	std::string src_port; /**< Source port of the edge */
+	std::string snk_port; /**< Sink port of the edge */
 	
-	int src_rate; /**< Source rate of the edge (t.b.r. by iport) */
-	int snk_rate; /**< Sink rate of the edge (t.b.r. by oport) */
+	int src_rate; /**< Source rate of the edge  */
+	int snk_rate; /**< Sink rate of the edge  */
 
 	int init_tokens;
 	int tokens;
@@ -149,24 +146,6 @@ namespace df {
 	 */
 	std::string getSink();
 
-	/*!
-	 * Get input port of the edge.
-	 *
-	 * \return
-	 * 	Input port of the edge.
-	 *
-	 */
-	IPort * getInPort();
-	
-	/*!
-	 * Get output port of the edge.
-	 *
-	 * \return
-	 * 	Output port of the edge.
-	 *
-	 */
-	OPort * getOutPort();
-	
 	/*!
 	 * Set source rate of the edge.
 	 *
