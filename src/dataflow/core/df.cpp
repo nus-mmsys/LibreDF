@@ -60,8 +60,8 @@ int Dataflow::edgeSize() {
 
 Edge * Dataflow::containsEdge(const std::string& src, const std::string &snk) {
 	for (auto& e : edges) {
-		if (e.second->getSource()->getName()==src &&
-		    e.second->getSink()->getName()==snk)
+		if (e.second->getSource()==src &&
+		    e.second->getSink()==snk)
 			return e.second;
 	}
 	return nullptr;
@@ -97,8 +97,8 @@ Edge * Dataflow::createEdge(const std::string& name, const std::string& src,
 	
 	Edge * e = new Edge(name);
 	
-	e->setSource(src_actor);	
-	e->setSink(snk_actor);
+	e->setSource(src_actor->getName());	
+	e->setSink(snk_actor->getName());
 
 	e->setSourcePort(src_actor->getSingleOutputPort());
 	e->setSinkPort(snk_actor->getSingleInputPort());
@@ -368,8 +368,8 @@ void Dataflow::connect() {
 
 	for (auto & ed : edges) {
 		df::Edge * e = ed.second;
-		df::Actor * src = e->getSource();
-		df::Actor * snk = e->getSink(); 
+		df::Actor * src = actors[e->getSource()];
+		df::Actor * snk = actors[e->getSink()]; 
 		connectActors(src, snk, ed.first, e->getSourceRate(), e->getSinkRate());
 	}
 
@@ -483,7 +483,7 @@ vector<df::Actor *> Dataflow::find_sources() {
 	for (auto& ac : actors) {
 		found = false;
 		for (auto & e : edges) {
-			if (e.second->getSink()->getName() == ac.second->getName()) {
+			if (e.second->getSink() == ac.second->getName()) {
 				found = true;
 				break;
 			}
@@ -498,7 +498,7 @@ vector<df::Actor *> Dataflow::find_nonsources() {
 	vector<Actor *> res;
 	for (auto& ac : actors) {
 		for (auto & e : edges) {
-			if (e.second->getSink()->getName() == ac.second->getName()) {
+			if (e.second->getSink() == ac.second->getName()) {
 			        res.push_back(ac.second);		
 				break;
 			}
@@ -513,7 +513,7 @@ vector<df::Actor *> Dataflow::find_sinks() {
 	for (auto& ac : actors) {
 		found = false;
 		for (auto & e : edges) {
-			if (e.second->getSource()->getName() == ac.second->getName()) {
+			if (e.second->getSource() == ac.second->getName()) {
 				found = true;
 				break;
 			}
@@ -527,7 +527,7 @@ vector<df::Actor *> Dataflow::find_sinks() {
 vector<Edge *> Dataflow::get_iedges(df::Actor * ac) {
 	vector <df::Edge *> res;
 	for (auto & e : edges) {
-		if (e.second->getSink()->getName() == ac->getName())
+		if (e.second->getSink() == ac->getName())
 			res.push_back(e.second);
 	}
 	return res;
@@ -536,7 +536,7 @@ vector<Edge *> Dataflow::get_iedges(df::Actor * ac) {
 vector<Edge *> Dataflow::get_oedges(df::Actor * ac) {
 	vector <df::Edge *> res;
 	for (auto & e : edges) {
-		if (e.second->getSource()->getName() == ac->getName())
+		if (e.second->getSource() == ac->getName())
 			res.push_back(e.second);
 	}
 	return res;
@@ -555,10 +555,10 @@ void Dataflow::print() {
 	}
 
 	for (auto e : edges) {
-		log(e.second->getSource()->getName()
+		log(e.second->getSource()
 		+ "(" + to_string(e.second->getSourceRate()) 
 		+ ") -> ("+ to_string(e.second->getSinkRate()) 
-		+ ")"+ e.second->getSink()->getName());	     
+		+ ")"+ e.second->getSink());	     
 	}
 }
 

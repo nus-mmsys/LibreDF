@@ -19,7 +19,6 @@
 #ifndef DF_EDGE_H_
 #define DF_EDGE_H_
 
-#include "actor.h"
 #include "port.h"
 
 namespace df {
@@ -33,8 +32,9 @@ namespace df {
      private:
 	std::string name; /**< Edge name */
 	bool visited; /**< Boolean to check the edge is visited in dfs algorithm. */
-	Actor * src_actor; /**< Source actor of the edge */
-	Actor * snk_actor; /**< Sink actor of the edge */
+
+	std::string src_actor; /**< Source actor of the edge */
+	std::string snk_actor; /**< Sink actor of the edge */
 
 	IPort * iport; /**< Source port of the edge */
 	OPort * oport; /**< Sink port of the edge */
@@ -83,7 +83,7 @@ namespace df {
 	 * 	The source actor to set.
 	 *
 	 */
-	void setSource(Actor * src);
+	void setSource(std::string src);
 
 	/*!
 	 * Set the sink actor of the edge
@@ -92,7 +92,7 @@ namespace df {
 	 * 	The sink actor to set.
 	 *
 	 */
-	void setSink(Actor * snk);
+	void setSink(std::string snk);
 
 	/*!
 	 * Set the input port of the edge
@@ -138,7 +138,7 @@ namespace df {
 	 * 	Source actor of the edge.
 	 *
 	 */
-	Actor * getSource();
+	std::string getSource();
 	
 	/*!
 	 * Get sink actor of the edge.
@@ -147,7 +147,7 @@ namespace df {
 	 * 	Sink actor of the edge.
 	 *
 	 */
-	Actor * getSink();
+	std::string getSink();
 
 	/*!
 	 * Get input port of the edge.

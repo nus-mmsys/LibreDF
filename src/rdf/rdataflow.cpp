@@ -62,11 +62,11 @@ void RDataflow::reconfigure(int iter) {
 	//Remove dissappearing edges.
 	for (auto it = edges.cbegin(); it != edges.cend();)
 	{
-		srcname = it->second->getSource()->getName();
-	        snkname = it->second->getSink()->getName();
+		srcname = it->second->getSource();
+	        snkname = it->second->getSink();
 		if (!g->contains_edge(srcname, snkname)) {
-			disconnectActors(it->second->getSource(),
-					   it->second->getSink(),
+			disconnectActors(actors[it->second->getSource()],
+					   actors[it->second->getSink()],
 					   it->first);
 			
 			destroyEdge(it->second);
@@ -145,8 +145,8 @@ void RDataflow::reconfigure(int iter) {
 	}	
 
 	for (auto & ed : apped) {
-		connectActors(ed->getSource(), 
-			      ed->getSink(), 
+		connectActors(actors[ed->getSource()], 
+			      actors[ed->getSink()], 
 			      ed->getName(), 
 			      ed->getSourceRate(), 
 			      ed->getSinkRate());
