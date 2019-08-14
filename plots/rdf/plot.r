@@ -20,10 +20,11 @@ latency = data$end[length(data$end)]/scale
 
 plot(data$iteration, (data$end-data$start)/scale, 
      main=name, 
-     xlab="iteration", ylab="latency = end(iteration) - start(iteration)",
+#    xlab="iteration", ylab="latency = end(iteration) - start(iteration)",
+     xlab="token", ylab="latency [second]",
      type="l", col="blue")
 
-mtext(paste("Total latency = ",toString(latency)," second"))
+#mtext(paste("Total latency = ",toString(latency)," second"))
 
 average = data$iteration[length(data$iteration)]/(data$end[length(data$end)]/scale)
 
@@ -32,7 +33,9 @@ lastend = head(c(0,data$end),-1)
 
 plot(data$iteration, 1/((data$end-lastend)/scale), 
      main=name, 
-     xlab="iteration", ylab="throughput = 1 / (end(iteration) - end(iteration-1))",
+#    xlab="iteration", ylab="throughput = 1 / (end(iteration) - end(iteration-1))",
+     xlab="token", ylab="throughput [token/second]",
      type="l", col="blue")
 
-mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
+#mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
+mtext(paste("Average thoughput = ",toString(average)," token/second"))
