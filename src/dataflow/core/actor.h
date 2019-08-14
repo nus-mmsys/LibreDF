@@ -88,7 +88,7 @@ namespace df {
     }
 
     void log(std::string msg);
-    void iterlog(std::string itermsg);
+    void execlog(std::string msg, int no);
  
     int average_period;
     int instance_period;
@@ -121,8 +121,8 @@ namespace df {
     std::mutex * iolock;
     std::mutex status_mux;
 
-    std::string msg_iter;
-    unsigned long start_iter, end_iter, start_firing;
+    std::string msg_iter, msg_firing;
+    unsigned long start_iter, end_iter, start_firing, end_firing;
   public:
 
     std::string getName();
@@ -609,6 +609,8 @@ namespace df {
     int getPeriod();
     int getOutPortOcc(std::string port, int idx);
     int getInPortOcc(std::string port, int idx);
+    bool isSource();
+    bool isSink();
 
     /*!
      * Pause the actor execution.

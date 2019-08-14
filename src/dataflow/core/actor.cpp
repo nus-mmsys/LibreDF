@@ -77,8 +77,8 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 	return rep;
 }
 
-void Actor::iterlog(std::string itermsg) {
-  string s = name + " : " + to_string(iterno) + " " + itermsg + "\n";
+void Actor::execlog(std::string msg, int no) {
+  string s = name + " : " + to_string(no) + " " + msg + "\n";
   if (logging) {
      iolock->lock();
      std::cout << s;
@@ -371,23 +371,27 @@ void Actor::listen(IPort * port) {
 }
 
 void Actor::runIter() {	
-	start_iter = timer.nowUs();
-  	msg_iter = to_string(start_iter);
+	//start_iter = timer.nowUs();
+  	//msg_iter = to_string(start_iter);
 	for (int i=0; i<solution; i++) {
 	  instance_period = timer.nowUs() - start_firing;
 	  average_period = (average_period + instance_period)/2;
 	  start_firing = timer.nowUs();
+	  msg_firing = to_string(start_firing);
 	  fireno = i+1;
 	  if (realtime) {
 	  	runRT();
     	  } else {
 		run();
     	  }
+	  end_firing = timer.nowUs();
+	  msg_firing += " "+to_string(end_firing)+" "+to_string(end_firing-start_firing);
+	  execlog(msg_firing, stepno);
           stepno++;
 	}
-	end_iter = timer.nowUs();
-	msg_iter += " "+to_string(end_iter)+" "+to_string(end_iter-start_iter);
-	iterlog(msg_iter);
+	//end_iter = timer.nowUs();
+	//msg_iter += " "+to_string(end_iter)+" "+to_string(end_iter-start_iter);
+	//execlog(msg_iter, iterno);
 	iterno++;
 }
 
@@ -485,6 +489,14 @@ int Actor::getOutPortOcc(std::string port, int idx) {
 
 int Actor::getInPortOcc(std::string port, int idx) {
 	return inputPorts[port]->getOccupancy(idx);
+}
+
+bool Actor::isSource() {
+	return inputPorts.empty();
+}
+
+bool Actor::isSink() {
+	return outputPorts.empty();
 }
 
 Actor::~Actor() { 
