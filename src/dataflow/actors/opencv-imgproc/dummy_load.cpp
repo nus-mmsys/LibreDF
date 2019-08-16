@@ -43,9 +43,9 @@ void DummyLoad::run() {
   auto out = produce(output);
   out->set(*in->get());
   log("dummy load "+to_string(stepno));
-  timer.sleep(sleep_time/3);
+  timer.sleep(sleep_time/7);
 
-  if (sleep_time == 150)
+  if (sleep_time == 350)
 	 increase = false;
   if (sleep_time == 0)
 	 increase = true;
