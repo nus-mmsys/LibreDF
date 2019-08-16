@@ -18,7 +18,7 @@ pdf(paste(name,".pdf", sep=""))
 scale = 1000000
 latency = data$end[length(data$end)]/scale
 
-plot(data$iteration, (data$end-data$start)/scale, 
+plot(data$step, (data$end-data$start)/scale, 
      main=name, 
 #    xlab="iteration", ylab="latency = end(iteration) - start(iteration)",
      xlab="token", ylab="latency [second]",
@@ -26,12 +26,12 @@ plot(data$iteration, (data$end-data$start)/scale,
 
 #mtext(paste("Total latency = ",toString(latency)," second"))
 
-average = data$iteration[length(data$iteration)]/(data$end[length(data$end)]/scale)
+average = data$step[length(data$step)]/(data$end[length(data$end)]/scale)
 
 
 lastend = head(c(0,data$end),-1)
 
-plot(data$iteration, 1/((data$end-lastend)/scale), 
+plot(data$step, 1/((data$end-lastend)/scale), 
      main=name, 
 #    xlab="iteration", ylab="throughput = 1 / (end(iteration) - end(iteration-1))",
      xlab="token", ylab="throughput [token/second]",
