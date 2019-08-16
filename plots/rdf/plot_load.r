@@ -1,5 +1,7 @@
 #!/usr/bin/env Rscript
 
+library("ggplot2")
+
 args = commandArgs(trailingOnly=TRUE)
 
 if (length(args)==0) {
@@ -17,7 +19,12 @@ pdf(paste(name,".pdf", sep=""))
 
 scale = 1000000
 
-plot(data$iteration, data$exectime/scale, 
-     main=name, 
-     xlab="iteration", ylab="latency [second]",
-     type="l", col="blue")
+ggplot(data, aes(data$iteration, data$exectime/scale, color = data$actor)) +
+    geom_point() +
+    geom_path(aes(group = data$actor)) +
+    labs(title = name, x = "iteration", y = "latency [second]", color = "actor")
+
+#plot(data$iteration, data$exectime/scale, 
+#     main=name, 
+#     xlab="iteration", ylab="latency [second]",
+#     type="l", col="blue")
