@@ -370,12 +370,10 @@ void Actor::listen(IPort * port) {
       }
 }
 
-void Actor::runIter() {	
+void Actor::runIter() {
 	//start_iter = timer.nowUs();
   	//msg_iter = to_string(start_iter);
 	for (int i=0; i<solution; i++) {
-	  instance_period = timer.nowUs() - start_firing;
-	  average_period = (average_period + instance_period)/2;
 	  start_firing = timer.nowUs();
 	  msg_firing = to_string(start_firing);
 	  fireno = i+1;
@@ -387,6 +385,9 @@ void Actor::runIter() {
 	  end_firing = timer.nowUs();
 	  msg_firing += " "+to_string(end_firing)+" "+to_string(end_firing-start_firing);
 	  execlog(msg_firing, stepno);
+	  instance_period = end_firing - start_firing;
+	  average_period = 0.9*average_period + 0.1*instance_period;
+
           stepno++;
 	}
 	//end_iter = timer.nowUs();
@@ -419,6 +420,7 @@ void Actor::runActor() {
   start();
   
   timer.start();
+
   while(getStatus() != EOS) {
 	  
       {
@@ -468,6 +470,7 @@ int Actor::resumeTill(int iter) {
 
     //while(!paused)
     //	pause_cond.wait(lockpause);
+    
     while(iterno < iter) {
 	runIter();
     }
