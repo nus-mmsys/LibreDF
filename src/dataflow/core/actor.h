@@ -88,7 +88,7 @@ namespace df {
     }
 
     void log(std::string msg);
-    void execlog(std::string msg, int no);
+    void execlog();
  
     int average_period;
     int instance_period;

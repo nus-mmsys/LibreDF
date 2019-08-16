@@ -77,8 +77,12 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 	return rep;
 }
 
-void Actor::execlog(std::string msg, int no) {
-  string s = name + " : " + to_string(no) + " " + msg + "\n";
+void Actor::execlog() {
+  string s = name + " : "
+	  + to_string(stepno) + " " 
+	  + to_string(start_firing) + " "
+	  + to_string(end_firing) + " " 
+	  + to_string(end_firing-start_firing) + "\n";
   if (logging) {
      iolock->lock();
      std::cout << s;
@@ -372,10 +376,8 @@ void Actor::listen(IPort * port) {
 
 void Actor::runIter() {
 	//start_iter = timer.nowUs();
-  	//msg_iter = to_string(start_iter);
 	for (int i=0; i<solution; i++) {
 	  start_firing = timer.nowUs();
-	  msg_firing = to_string(start_firing);
 	  fireno = i+1;
 	  if (realtime) {
 	  	runRT();
@@ -383,16 +385,14 @@ void Actor::runIter() {
 		run();
     	  }
 	  end_firing = timer.nowUs();
-	  msg_firing += " "+to_string(end_firing)+" "+to_string(end_firing-start_firing);
-	  execlog(msg_firing, stepno);
+	  execlog();
 	  instance_period = end_firing - start_firing;
 	  average_period = 0.9*average_period + 0.1*instance_period;
 
           stepno++;
 	}
 	//end_iter = timer.nowUs();
-	//msg_iter += " "+to_string(end_iter)+" "+to_string(end_iter-start_iter);
-	//execlog(msg_iter, iterno);
+	//iterlog();
 	iterno++;
 }
 
