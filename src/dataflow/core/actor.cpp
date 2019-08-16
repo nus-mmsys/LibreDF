@@ -83,6 +83,7 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 void Actor::execlog() {
   string s = name + " : "
 	  + to_string(stepno) + " " 
+	  + to_string(iterno) + " "
 	  + to_string(start_firing) + " "
 	  + to_string(end_firing) + " " 
 	  + to_string(end_firing-start_firing);
