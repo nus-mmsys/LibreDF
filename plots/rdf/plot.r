@@ -20,6 +20,12 @@ pdf(paste(name,".pdf", sep=""))
 scale = 1000000
 latency = data$end[length(data$end)]/scale
 
+ggtheme = theme(plot.title = element_text(size=15),
+	axis.title.x = element_text(size=14),
+	axis.text.x = element_text(size=12),
+	axis.title.y = element_text(size=14),
+	axis.text.y = element_text(size=12))
+
 #plot(data$step, (data$end-data$start)/scale, 
 #     main=name, 
 #    xlab="iteration", ylab="latency = end(iteration) - start(iteration)",
@@ -28,7 +34,8 @@ latency = data$end[length(data$end)]/scale
 
 ggplot(data, aes(data$step, (data$end-data$start)/scale)) +
      geom_path(colour = "blue") +
-     labs(title = name, x="token", y="latency [second]", color="blue")
+     labs(x="token", y="latency [second]") +
+     ggtheme
 
 #mtext(paste("Total latency = ",toString(latency)," second"))
 
@@ -44,8 +51,8 @@ lastend = head(c(0,data$end),-1)
 
 ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
-     labs(title = name, x="token", y="throughput [second]")
-
+     labs(x="token", y="throughput [second]") +
+     ggtheme
 
 #mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
 #mtext(paste("Average thoughput = ",toString(average)," token/second"))
