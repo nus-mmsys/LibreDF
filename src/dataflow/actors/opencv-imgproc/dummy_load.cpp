@@ -41,17 +41,18 @@ void DummyLoad::reinit() {
 void DummyLoad::run() {
   auto in = consume(input);
   auto out = produce(output);
+  start_exec = timer.nowUs();
   out->set(*in->get());
   log("dummy load "+to_string(stepno));
-  timer.sleep(sleep_time/7);
+  timer.sleep(sleep_time/5);
 
-  if (sleep_time == 350)
+  if (sleep_time == 250)
 	 increase = false;
   if (sleep_time == 0)
 	 increase = true;
 
   if(increase) sleep_time++;
-
+  exec_dur = timer.nowUs() - start_exec;
   release(input);
   release(output);
 }

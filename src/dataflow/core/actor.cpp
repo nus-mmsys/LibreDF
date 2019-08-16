@@ -34,6 +34,9 @@ Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   start_iter = 0;
   end_iter = 0;
   start_firing = 0;
+  end_firing = 0;
+  start_exec = 0;
+  exec_dur = 0;
   average_period = 0;
   instance_period = 0;
 }
@@ -82,7 +85,10 @@ void Actor::execlog() {
 	  + to_string(stepno) + " " 
 	  + to_string(start_firing) + " "
 	  + to_string(end_firing) + " " 
-	  + to_string(end_firing-start_firing) + "\n";
+	  + to_string(end_firing-start_firing);
+  if (exec_dur != 0)
+	  s += " " + to_string(exec_dur);
+  s+= "\n";
   if (logging) {
      iolock->lock();
      std::cout << s;

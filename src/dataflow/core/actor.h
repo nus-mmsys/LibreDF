@@ -93,6 +93,7 @@ namespace df {
     int average_period;
     int instance_period;
   
+    unsigned long start_exec, exec_dur;
   private:
 
     Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
@@ -121,7 +122,6 @@ namespace df {
     std::mutex * iolock;
     std::mutex status_mux;
 
-    std::string msg_iter, msg_firing;
     unsigned long start_iter, end_iter, start_firing, end_firing;
   public:
 
