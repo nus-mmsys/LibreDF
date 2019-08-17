@@ -384,6 +384,10 @@ void Actor::listen(IPort * port) {
 void Actor::runIter() {
 	//start_iter = timer.nowUs();
 	for (int i=0; i<solution; i++) {
+
+	  instance_period = timer.nowUs() - start_firing;
+	  average_period = 0.9*average_period + 0.1*instance_period;
+
 	  start_firing = timer.nowUs();
 	  fireno = i+1;
 	  if (realtime) {
@@ -393,9 +397,6 @@ void Actor::runIter() {
     	  }
 	  end_firing = timer.nowUs();
 	  execlog();
-	  instance_period = end_firing - start_firing;
-	  average_period = 0.9*average_period + 0.1*instance_period;
-
           stepno++;
 	}
 	//end_iter = timer.nowUs();
