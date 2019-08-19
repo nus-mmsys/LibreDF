@@ -15,7 +15,6 @@ name <- unlist(strsplit(args[1],"[.]"))[1]
 
 #print(data)
 
-pdf(paste(name,".pdf", sep=""))
 
 scale = 1000000
 latency = data$end[length(data$end)]/scale
@@ -31,6 +30,8 @@ ggtheme = theme(plot.title = element_text(size=15),
 #    xlab="iteration", ylab="latency = end(iteration) - start(iteration)",
 #     xlab="token", ylab="latency [second]",
 #     type="l", col="blue")
+
+pdf(paste(name,"_latency.pdf", sep=""))
 
 ggplot(data, aes(data$step, (data$end-data$start)/scale)) +
      geom_path(colour = "blue") +
@@ -48,6 +49,8 @@ lastend = head(c(0,data$end),-1)
 #    xlab="iteration", ylab="throughput = 1 / (end(iteration) - end(iteration-1))",
 #     xlab="token", ylab="throughput [token/second]",
 #     type="l", col="blue")
+
+pdf(paste(name,"_throughput.pdf", sep=""))
 
 ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
