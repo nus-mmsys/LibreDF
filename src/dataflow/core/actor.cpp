@@ -381,9 +381,22 @@ void Actor::listen(IPort * port) {
       }
 }
 
+void Actor::cloneCreationTime() {
+	
+	for (auto p : outputPorts) {
+		if (inputPorts.empty())
+			p.second->assignCreation();
+		else
+			p.second->setCreation(
+				inputPorts.begin()->second->getCreation());
+	}
+
+}
 void Actor::runIter() {
 	//start_iter = timer.nowUs();
 	for (int i=0; i<solution; i++) {
+
+	  //cloneCreationTime();
 
 	  start_firing = timer.nowUs();
 	  fireno = i+1;

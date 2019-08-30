@@ -22,7 +22,7 @@ using namespace df;
 using namespace std;
 
 Port::Port(string name) :
-name(name), rate(1), linked(0), distributed(false) {
+name(name), rate(1), linked(0), distributed(false), creation(0) {
 }
 
 string Port::getName() {
@@ -35,6 +35,18 @@ void Port::setRate(int r) {
 
 int Port::getRate() {
   return rate;
+}
+
+void Port::setCreation(unsigned long t) {
+	creation = t;
+}
+
+unsigned long Port::getCreation() {
+	return creation;
+}
+
+void Port::assignCreation() {
+	creation = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
 const std::string & Port::getPortCap() const {

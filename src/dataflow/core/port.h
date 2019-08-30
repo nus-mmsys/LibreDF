@@ -52,6 +52,7 @@ namespace df {
     int rate; /**< The port rate */
     std::string port_cap;
     bool distributed;
+    unsigned long creation;
 
   public:
     
@@ -71,6 +72,10 @@ namespace df {
     
     void setRate(int r);
     int getRate();
+
+    void setCreation(unsigned long t);
+    unsigned long getCreation();
+    void assignCreation();
 
     const std::string & getPortCap() const;
     /*!
