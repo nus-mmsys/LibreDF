@@ -92,6 +92,7 @@ namespace df {
  
     int average_period;
     int instance_period;
+    unsigned long latency;
   
     unsigned long start_exec, exec_dur;
   private:
@@ -347,7 +348,8 @@ namespace df {
     
     void runIter();
     
-    void cloneCreationTime();
+    void setCreationTime();
+    unsigned long getCreationTime();
 
     void startInit();
     
@@ -609,6 +611,7 @@ namespace df {
 
     void setPeriod(int p);
     int getPeriod();
+    unsigned long getLatency();
     int getOutPortOcc(std::string port, int idx);
     int getInPortOcc(std::string port, int idx);
     bool isSource();

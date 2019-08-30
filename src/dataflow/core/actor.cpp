@@ -381,7 +381,7 @@ void Actor::listen(IPort * port) {
       }
 }
 
-void Actor::cloneCreationTime() {
+void Actor::setCreationTime() {
 	
 	for (auto p : outputPorts) {
 		if (inputPorts.empty())
@@ -392,11 +392,20 @@ void Actor::cloneCreationTime() {
 	}
 
 }
+
+unsigned long Actor::getCreationTime() {
+	if (!inputPorts.empty())
+		return inputPorts.begin()->second->getCreation();
+	if (!outputPorts.empty())
+		return outputPorts.begin()->second->getCreation();
+	return 0;
+}
+
 void Actor::runIter() {
 	//start_iter = timer.nowUs();
 	for (int i=0; i<solution; i++) {
 
-	  //cloneCreationTime();
+	  setCreationTime();
 
 	  start_firing = timer.nowUs();
 	  fireno = i+1;
@@ -409,8 +418,10 @@ void Actor::runIter() {
 	  instance_period = timer.nowUs() - end_firing;
 	  average_period = 0.9*average_period + 0.1*instance_period;
 
-
 	  end_firing = timer.nowUs();
+	  
+	  latency = end_firing - getCreationTime();
+
 	  execlog();
           stepno++;
 	}
@@ -506,6 +517,10 @@ void Actor::setPeriod(int p) {
 
 int Actor::getPeriod() {
 	return average_period/1000;
+}
+
+unsigned long Actor::getLatency() {
+	return latency;
 }
 
 int Actor::getOutPortOcc(std::string port, int idx) {
