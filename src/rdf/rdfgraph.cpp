@@ -27,14 +27,14 @@ int RDFGraph::add_rule(Rule * r) {
 	rules.insert(make_pair(r->get_name(), r));
 	return 0;
 }
-int RDFGraph::add_condition(string var, char sign, int val, string rule) {
+int RDFGraph::add_condition(string var, string actor, string metric, char sign, int val, string rule) {
 	if (rules.find(rule) == rules.end()) {
 		cerr << "condition applies an unknown rule.\n";
 		return -1;
 	}
 
 	Condition cond;
-	cond.set(var, sign, val, rule);
+	cond.set(var, actor, metric, sign, val, rule);
 	
 	if (prog.find(var) == prog.end()) {
 		vector<Condition> v;
@@ -47,8 +47,10 @@ int RDFGraph::add_condition(string var, char sign, int val, string rule) {
 	return 0;
 }
 
-void Condition::set(string vr, char sn, int vl, string rl) {
+void Condition::set(string vr, string ac, string mt, char sn, int vl, string rl) {
 		var = vr;
+	        actor = ac;
+		metric = mt;
 		sign = sn;
 		val = vl;
 		rule = rl;

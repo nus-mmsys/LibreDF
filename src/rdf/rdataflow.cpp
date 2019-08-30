@@ -38,12 +38,14 @@ Rule * RDataflow::get_applicable_rule() {
 	load++;
 	for (auto c : rdfg->prog) {
 	    for (auto ac : rdfg->prog[c.first]) {
-		if (actors.find(c.first) != actors.end()) {
-			if (actors[c.first]->getPeriod() == ac.val) {
-				actors[c.first]->setPeriod(0); 
+		if (ac.metric == "period") {
+		    if (actors.find(ac.actor) != actors.end()) {
+			if (actors[ac.actor]->getPeriod() == ac.val) {
+				actors[ac.actor]->setPeriod(0); 
 				return rdfg->rules[ac.rule];
 			}
-		} else {
+		    }
+		} else if (ac.var == "load") {
  			if (ac.val == load)
 				return rdfg->rules[ac.rule];
 		}

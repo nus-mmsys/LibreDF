@@ -83,7 +83,7 @@ int RDFParser::read_conditions(stringstream & stream) {
 
 int RDFParser::add_cond(const string& cond) {
 	int ret=0, value=0;
-	string var="", val="", rule="";
+	string var="", actor="", metric="", val="", rule="";
 	char sign=' ';
 	std::istringstream ss(cond);
   	if (cond.find('=') != string::npos) {
@@ -111,7 +111,12 @@ int RDFParser::add_cond(const string& cond) {
 		cout << "error: value of a condition is not correct.\n";
 		return -2;
 	}
-	ret = rdfg->add_condition(var, sign, value, rule);
+
+	std::istringstream ssvar(var);
+	getline(ssvar, actor, '.');
+	getline(ssvar, metric);
+
+	ret = rdfg->add_condition(var, actor, metric, sign, value, rule);
 	if (ret == -1)
 		cout << "error: condition cannot be added.\n";
 	return ret;
