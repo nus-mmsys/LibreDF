@@ -49,8 +49,9 @@ void ImageShowMR::run() {
 
       frame = in[j]->clone();
   
-      log("showing image "+to_string(stepno)+" at period "+to_string(getPeriod()));
+      log("showing image "+to_string(stepno)+" at period "+to_string(getPeriod())
       //+" with latency "+to_string(getLatency()));
+	);
       
       cv::imshow("ImageShow", frame);
       if (adjust_period)
