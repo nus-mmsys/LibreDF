@@ -45,7 +45,8 @@ namespace df {
     Status status;
     char * pkt;
     int pktsize;
- 
+    unsigned long creation_time;
+
   protected:
     T * data;
    
@@ -72,6 +73,9 @@ namespace df {
     
     void setStatus(Status st) {status = st;}
     Status getStatus() {return status;}
+
+    void setTime(unsigned long c) { creation_time = c; }
+    unsigned long getTime() { return creation_time; }
 
     int getPktSize(char * buf) {
 	    int size;

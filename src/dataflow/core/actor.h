@@ -53,6 +53,7 @@ namespace df {
     std::string name; /**< The name of the actor */
     std::string type; /**< The type of the actor */
     Status status; 
+    unsigned long creation_time;
 
     std::map<std::string, IPort*> inputPorts; /**< Map of input ports referenced by their name  */
     std::map<std::string, OPort*> outputPorts; /**< Map of output ports referenced by their name */
@@ -122,6 +123,7 @@ namespace df {
 
     std::mutex * iolock;
     std::mutex status_mux;
+    std::mutex time_mux;
 
     unsigned long start_iter, end_iter, start_firing, end_firing;
   public:
@@ -348,8 +350,9 @@ namespace df {
     
     void runIter();
     
-    void setCreationTime();
-    unsigned long getCreationTime();
+    void assignTime();
+    void setTime(unsigned long);
+    unsigned long getTime();
 
     void startInit();
     
@@ -433,6 +436,7 @@ namespace df {
       else {
 	port->lock();
 	res = port->get();
+	setTime(port->getTime());
 	setStatus(port->getStatus());
       }
       return res;      
@@ -450,6 +454,7 @@ namespace df {
       else {
 	port->lockMR();
 	res = port->getMR();
+	setTime(port->getTime());
 	setStatus(port->getStatusMR());
       }
       return res;      
@@ -468,6 +473,7 @@ namespace df {
         } else {
 	  port->at(i)->lock();
           token = port->at(i)->get();
+	  setTime(port->at(i)->getTime());
 	  setStatus(port->at(i)->getStatus());
         }
 	res.push_back(token);
@@ -485,6 +491,7 @@ namespace df {
       else {
         port->lock();
         res = port->get();
+	port->setTime(getTime());
         port->setStatus(getStatus());
       }
       return res;
@@ -500,6 +507,7 @@ namespace df {
       else {
         port->lockMR();
         res = port->getMR();
+	port->setTime(getTime());
         port->setStatusMR(getStatus());
       }
       return res;
@@ -516,6 +524,7 @@ namespace df {
 	    } else {
         	port->at(i)->lock();
         	token = port->at(i)->get();
+		port->at(i)->setTime(getTime());
         	port->at(i)->setStatus(getStatus());
       	    }
 	    res.push_back(token);

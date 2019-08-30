@@ -381,31 +381,30 @@ void Actor::listen(IPort * port) {
       }
 }
 
-void Actor::setCreationTime() {
-	
-	for (auto p : outputPorts) {
-		if (inputPorts.empty())
-			p.second->assignCreation();
-		else
-			p.second->setCreation(
-				inputPorts.begin()->second->getCreation());
-	}
-
+void Actor::assignTime() {
+	if (inputPorts.empty())
+		setTime(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
 }
 
-unsigned long Actor::getCreationTime() {
-	if (!inputPorts.empty())
-		return inputPorts.begin()->second->getCreation();
-	if (!outputPorts.empty())
-		return outputPorts.begin()->second->getCreation();
-	return 0;
+unsigned long Actor::getTime() {
+	unsigned long res;
+	time_mux.lock();
+	res = creation_time;
+	time_mux.unlock();
+	return res;
+}
+
+void Actor::setTime(unsigned long c) {
+	time_mux.lock();
+	creation_time = c;
+	time_mux.unlock();
 }
 
 void Actor::runIter() {
 	//start_iter = timer.nowUs();
 	for (int i=0; i<solution; i++) {
 
-	  setCreationTime();
+	  assignTime();
 
 	  start_firing = timer.nowUs();
 	  fireno = i+1;
@@ -420,7 +419,7 @@ void Actor::runIter() {
 
 	  end_firing = timer.nowUs();
 	  
-	  latency = end_firing - getCreationTime();
+	  latency = end_firing - getTime();
 
 	  execlog();
           stepno++;

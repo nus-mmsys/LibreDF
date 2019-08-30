@@ -203,6 +203,14 @@ namespace df {
       return buf->at(index)->getStatus();
     } 
     
+    void setTime(unsigned long c) {
+      buf->at(index)->setTime(c);
+    }
+
+    unsigned long getTime() {
+      return buf->at(index)->getTime();
+    }
+
     int setStatusMR(Status st) {
       	if (rate >= buf->getSize())
 		return -1;;
