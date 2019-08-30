@@ -45,6 +45,12 @@ Rule * RDataflow::get_applicable_rule() {
 				return rdfg->rules[ac.rule];
 			}
 		    }
+		} else if (ac.metric == "latency") {
+		    if (actors.find(ac.actor) != actors.end()) {
+			if (actors[ac.actor]->getLatency() == ac.val) {
+				return rdfg->rules[ac.rule];
+			}
+		    }
 		} else if (ac.var == "load") {
  			if (ac.val == load)
 				return rdfg->rules[ac.rule];
