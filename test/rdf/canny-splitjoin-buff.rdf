@@ -8,6 +8,7 @@ rdf canny-splitjoin-buff {
 	file_name = pedestrian.mp4;
 	period = 40;
 	var_period = true;
+	output_size = 200;
     }
     actor S {
 	computation = MatSplit;
