@@ -81,5 +81,5 @@ right {
 }
 }
 main {
-   A.buffer > 100  : r1;
+   A.buffer = 100  : r1;
 }

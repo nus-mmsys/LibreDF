@@ -45,9 +45,11 @@ Rule * RDataflow::get_applicable_rule() {
 				return rdfg->rules[ac.rule];
 			}
 		    }
-		} else if (ac.metric == "latency") {
+		} else if (ac.metric == "buffer") {
 		    if (actors.find(ac.actor) != actors.end()) {
-			if (actors[ac.actor]->getLatency() == ac.val) {
+			if (/*ac.sign == '>' &&*/ 
+			    actors[ac.actor]->getOutPortOcc("output",0) 
+					== ac.val) {
 				return rdfg->rules[ac.rule];
 			}
 		    }
