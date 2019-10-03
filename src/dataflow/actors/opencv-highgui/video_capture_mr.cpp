@@ -30,6 +30,11 @@ VideoCaptureMR::VideoCaptureMR(const string& name) : Actor(name){
 
 void VideoCaptureMR::init() {
 
+  if (!propEmpty("var_period"))  	
+  	var_period = getPropBool("var_period");
+  else
+        var_period = false;
+ 
   if (!propEmpty("period"))  	
   	period = getPropInt("period");
   else
@@ -39,7 +44,10 @@ void VideoCaptureMR::init() {
   	file_name = fsys.inPath() + "/" + getProp("file_name");
   else
         log("error: file_name is not specified.");
-  
+ 
+  sleep_time = 1;
+  increase = true;
+ 
   cap = new cv::VideoCapture(file_name);
 
   if(!cap->isOpened()){
@@ -80,8 +88,19 @@ void VideoCaptureMR::run() {
   log("capturing frame "+to_string(stepno));
   
   releaseMR(outputMat); 
-  
-  timer.sleep(period);
+ 
+  if (var_period)
+        timer.sleep(sleep_time/5);
+  else 
+  	timer.sleep(period);
+
+  if (sleep_time == 5*period)
+	 increase = false;
+  if (sleep_time == 1)
+	 increase = true;
+
+  if (increase) sleep_time++; else sleep_time--;
+
 }
 
 VideoCaptureMR::~VideoCaptureMR() {

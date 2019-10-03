@@ -1,4 +1,4 @@
-rdf canny-splitjoin {
+rdf canny-splitjoin-lat {
     topology {
         nodes = A,S,B,C,J,I;
 	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,I);
@@ -7,6 +7,7 @@ rdf canny-splitjoin {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
 	period = 40;
+	var_period = true;
     }
     actor S {
 	computation = MatSplit;
@@ -80,5 +81,5 @@ right {
 }
 }
 main {
-   I.latency = 0 : r1;
+   A.buffer > 100  : r1;
 }

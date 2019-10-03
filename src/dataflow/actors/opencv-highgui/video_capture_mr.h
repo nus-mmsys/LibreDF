@@ -35,7 +35,11 @@ class VideoCaptureMR: public df::Actor {
   
 private:
 
+  bool var_period;
   int period;
+
+  bool increase;
+  int sleep_time;
 
   std::string file_name;	
   cv::VideoCapture * cap;
