@@ -1,4 +1,4 @@
-rdf canny-splitjoin-lat {
+rdf canny-splitjoin-buff {
     topology {
         nodes = A,S,B,C,J,I;
 	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,J), e5(J,I);
