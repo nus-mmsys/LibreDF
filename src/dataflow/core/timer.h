@@ -51,6 +51,7 @@ namespace df {
       unsigned long now();
       unsigned long nowUs();
       void sleep(int s); 
+      void sleep(int smin, int smax); 
       void randSleep(int s); 
   };
 

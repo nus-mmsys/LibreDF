@@ -63,3 +63,7 @@ void Timer::sleep(int s) {
   this_thread::sleep_for(chrono::milliseconds{s});
 }
 
+void Timer::sleep(int smin, int smax) {
+  this_thread::sleep_for(chrono::milliseconds{smin+(rand()%(smax-smin))});
+}
+
