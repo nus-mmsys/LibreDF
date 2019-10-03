@@ -26,6 +26,7 @@ rdf canny-splitjoin-buff {
     }
     actor I {
     	computation = ImageShowMR;
+	adjust_period = true;
 	period = 40;
     }
     parameter {
