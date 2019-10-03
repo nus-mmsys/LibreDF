@@ -541,6 +541,10 @@ bool Actor::isNonSource() {
 			&& getPropBool("src") == false);
 }
 
+bool Actor::isEnv() {
+	return getPropBool("env");
+}
+
 bool Actor::isSink() {
 	return outputPorts.empty();
 }

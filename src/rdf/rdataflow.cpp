@@ -110,11 +110,15 @@ void RDataflow::reconfigure(int iter) {
 			actmp->setProps(g->get_actor_props(c));
 			appac.push_back(actmp);
 		} else {
+			//if (actors[c]->isEnv())
+			//	actors[c]->setSolution(1);
+			//else
 			actors[c]->setSolution(g->get_solution(c));
 			auto rep = actors[c]->setProps(g->get_actor_props(c));
 			if (rep)
 				repac.push_back(actors[c]);
 		}
+
 	}
 
 	for (auto c : repac) {
