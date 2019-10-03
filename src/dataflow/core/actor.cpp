@@ -532,7 +532,13 @@ int Actor::getInPortOcc(std::string port, int idx) {
 }
 
 bool Actor::isSource() {
-	return inputPorts.empty();
+	return (inputPorts.empty() && getPropBool("env") == false)
+		|| getPropBool("src") == true;
+}
+
+bool Actor::isNonSource() {
+	return (!inputPorts.empty() && getPropBool("env") == false
+			&& getPropBool("src") == false);
 }
 
 bool Actor::isSink() {

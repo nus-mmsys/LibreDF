@@ -624,6 +624,7 @@ namespace df {
     int getOutPortOcc(std::string port, int idx);
     int getInPortOcc(std::string port, int idx);
     bool isSource();
+    bool isNonSource();
     bool isSink();
 
     /*!

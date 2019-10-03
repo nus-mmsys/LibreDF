@@ -9,10 +9,12 @@ rdf canny-splitjoin-buff {
 	period = 40;
 	var_period = true;
 	output_size = 102;
+	env = true;
     }
     actor S {
 	computation = MatSplit;
 	arity = 1;
+	src = true;
     }
     actor B {
     	computation = CvtColor;

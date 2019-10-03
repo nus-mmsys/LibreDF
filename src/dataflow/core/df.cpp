@@ -481,8 +481,9 @@ vector<df::Actor *> Dataflow::find_sources() {
 	vector<Actor *> res;
 	bool found = false;
 	for (auto& ac : actors) {
-		if (ac.second->isSource())
-			res.push_back(ac.second);		
+		if (ac.second->isSource()) {
+			res.push_back(ac.second);
+		}		
 	}
 	return res;
 }
@@ -490,8 +491,9 @@ vector<df::Actor *> Dataflow::find_sources() {
 vector<df::Actor *> Dataflow::find_nonsources() {
 	vector<Actor *> res;
 	for (auto& ac : actors) {
-		if (!ac.second->isSource())
-			res.push_back(ac.second);		
+		if (ac.second->isNonSource()) {
+			res.push_back(ac.second);
+		}		
 	}
 	return res;
 }
