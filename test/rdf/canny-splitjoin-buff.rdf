@@ -8,13 +8,11 @@ rdf canny-splitjoin-buff {
 	file_name = pedestrian.mp4;
 	period = 40;
 	var_period = true;
-	output_size = 102;
-	env = true;
+	output_size = 60;
     }
     actor S {
 	computation = MatSplit;
 	arity = 1;
-	src = true;
     }
     actor B {
     	computation = CvtColor;
@@ -84,5 +82,5 @@ right {
 }
 }
 main {
-   A.buffer = 100  : r1;
+   A.buffer = 30  : r1;
 }

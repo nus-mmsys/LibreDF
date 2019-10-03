@@ -160,12 +160,13 @@ namespace df {
     }
     
     void unlock() {
-      
+      buf->increaseOcc(1);
       buf->at(index)->producerUnlock();
       index = (index+1) % buf->getSize();
     }
      
     int unlockMR() {
+      buf->increaseOcc(rate);
       if (rate >= buf->getSize())
 	      return -1;
       for (int i=0; i<rate; i++) {
@@ -289,7 +290,7 @@ namespace df {
      *
      */
     int getOccupancy(int idx) {
-	return index;
+	return buf->getOcc();
     }
 
     /*!

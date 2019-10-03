@@ -85,7 +85,8 @@ void VideoCaptureMR::run() {
 
   }
 
-  log("capturing frame "+to_string(stepno));
+  log("capturing frame "+to_string(stepno)+" buff "+
+		  to_string(getOutPortOcc("output",0)));
   
   releaseMR(outputMat); 
  
@@ -94,9 +95,9 @@ void VideoCaptureMR::run() {
   else 
   	timer.sleep(period);
 
-  if (sleep_time == 5*period)
+  if (sleep_time >= 5*period)
 	 increase = false;
-  if (sleep_time == 4.5*period)
+  if (sleep_time <= 4*period)
 	 increase = true;
 
   if (increase) sleep_time++; else sleep_time--;

@@ -38,7 +38,7 @@ namespace df {
   protected:
     T ** tokens;  /**< The array containing the tokens */
     int size;  /**< The size of the buffer */
-    
+    int occ;    
   public:
     
     /*!
@@ -53,6 +53,7 @@ namespace df {
       for (int i=0; i<s; i++) {
 	tokens[i] = new T();
       }
+      occ = 0;
     }
     
     void addConsumer()  {
@@ -83,6 +84,19 @@ namespace df {
      */
     T * at(int idx) const  { return tokens[idx]; }
     
+
+    void increaseOcc(int o) {
+	    occ+=o;
+    }
+
+    void decreaseOcc(int o) {
+	    occ-=o;
+    }
+
+    int getOcc() {
+	    return occ;
+    }
+
     /*!
      * Buffer destructor
      *
