@@ -49,7 +49,7 @@ Rule * RDataflow::get_applicable_rule() {
 		    if (actors.find(ac.actor) != actors.end()) {
 			if (/*ac.sign == '>' &&*/ 
 			    actors[ac.actor]->getOutPortOcc("output",0) 
-					== ac.val) {
+					> ac.val) {
 				return rdfg->rules[ac.rule];
 			}
 		    }

@@ -481,14 +481,7 @@ vector<df::Actor *> Dataflow::find_sources() {
 	vector<Actor *> res;
 	bool found = false;
 	for (auto& ac : actors) {
-		found = false;
-		for (auto & e : edges) {
-			if (e.second->getSink() == ac.second->getName()) {
-				found = true;
-				break;
-			}
-		}
-		if (!found)
+		if (ac.second->isSource())
 			res.push_back(ac.second);		
 	}
 	return res;
@@ -497,12 +490,8 @@ vector<df::Actor *> Dataflow::find_sources() {
 vector<df::Actor *> Dataflow::find_nonsources() {
 	vector<Actor *> res;
 	for (auto& ac : actors) {
-		for (auto & e : edges) {
-			if (e.second->getSink() == ac.second->getName()) {
-			        res.push_back(ac.second);		
-				break;
-			}
-		}
+		if (!ac.second->isSource())
+			res.push_back(ac.second);		
 	}
 	return res;
 }
