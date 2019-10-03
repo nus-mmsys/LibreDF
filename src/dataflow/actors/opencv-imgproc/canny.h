@@ -39,7 +39,8 @@ private:
   df::OutputPort<df::Mat> * output;
  
   int cvt;
-  
+  int delay;
+
   static  df::ActorRegister<Canny> reg;
 public:
   

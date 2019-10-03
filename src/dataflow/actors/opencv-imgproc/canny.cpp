@@ -30,6 +30,11 @@ Canny::Canny(const string& name) : Actor(name) {
 
 void Canny::init() {
 
+  if (!propEmpty("delay"))
+    delay = getPropInt("delay");
+  else
+    delay = 0;
+
   if (!propEmpty("threshold"))
     threshold = getPropInt("threshold");
   else
@@ -68,6 +73,9 @@ void Canny::run() {
   log("sending frame "+to_string(stepno));
   release(input);
   release(output);
+
+  if (delay != 0)
+	  timer.sleep(delay);
 
 }
 
