@@ -46,7 +46,7 @@ void VideoCaptureMR::init() {
         log("error: file_name is not specified.");
  
   sleep_time = 5*period;
-  increase = false;
+  state = 1;
  
   cap = new cv::VideoCapture(file_name);
 
@@ -95,12 +95,15 @@ void VideoCaptureMR::run() {
   else 
   	timer.sleep(period);
 
-  if (sleep_time >= 5*period)
-	 increase = false;
-  if (sleep_time <= 4*period)
-	 increase = true;
+  /*if (sleep_time >= 5*period && state == 1)
+	 state = 1;
+  if (sleep_time >= 5*period && state == 2)
+	 state = 3;
+  if (sleep_time <= 1*period)
+	 state = 2;
 
-  if (increase) sleep_time++; else sleep_time--;
+  if (state == 1) sleep_time--;
+  if (state == 2) sleep_time++;*/
 
 }
 

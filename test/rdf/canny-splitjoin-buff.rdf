@@ -6,8 +6,8 @@ rdf canny-splitjoin-buff {
     actor A {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
-	period = 40;
-	var_period = true;
+	period = 35;
+	var_period = false;
 	output_size = 60;
     }
     actor S {

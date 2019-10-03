@@ -38,7 +38,7 @@ private:
   bool var_period;
   int period;
 
-  bool increase;
+  int state;
   int sleep_time;
 
   std::string file_name;	
