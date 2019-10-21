@@ -43,7 +43,6 @@ ggplot(data, aes(data$step, (data$end-data$start)/scale)) +
 
 average = data$step[length(data$step)]/(data$end[length(data$end)]/scale)
 
-lastend = head(c(0,data$end),-1)
 
 #plot(data$step, 1/((data$end-lastend)/scale), 
 #     main=name, 
@@ -51,24 +50,39 @@ lastend = head(c(0,data$end),-1)
 #     xlab="token", ylab="throughput [token/second]",
 #     type="l", col="blue")
 
-#pdf(paste(name,"_throughput.pdf", sep=""))
+anim <- FALSE
 
-for (i in nrow(data):nrow(data)) {
-#for (i in 2:1000) {
-  
-  data <- read.csv(args[1], nrows=i)
+if (!anim) {
+
+  data <- read.csv(args[1])
   lastend = head(c(0,data$end),-1)
   
+
   p <- ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
      labs(x="token", y="throughput [second]") +
      ggtheme
 
-  oname = paste(sprintf("%04d",i), ".png", sep="")
-  ggsave(oname)
+  ggsave(paste(name,"_throughput.pdf", sep=""))
+
+} else {
+
+  for (i in 2:1000) {
   
-  #a <- animate(p, renderer = ffmpeg_renderer())
-  #anim_save("animation.mp4", a)
+    data <- read.csv(args[1], nrows=i)
+    lastend = head(c(0,data$end),-1)
+  
+    p <- ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
+       geom_path(colour = "blue") +
+       labs(x="token", y="throughput [second]") +
+       ggtheme
+
+    oname = paste(sprintf("%04d",i), ".png", sep="")
+    ggsave(oname, width=6, height=6)
+  
+    #a <- animate(p, renderer = ffmpeg_renderer())
+    #anim_save("animation.mp4", a)
+  }
 }
 
 #mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
