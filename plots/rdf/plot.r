@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 
 library("ggplot2")
+#library("gganimate")
 
 args = commandArgs(trailingOnly=TRUE)
 
@@ -50,12 +51,25 @@ lastend = head(c(0,data$end),-1)
 #     xlab="token", ylab="throughput [token/second]",
 #     type="l", col="blue")
 
-pdf(paste(name,"_throughput.pdf", sep=""))
+#pdf(paste(name,"_throughput.pdf", sep=""))
 
-ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
+for (i in nrow(data):nrow(data)) {
+#for (i in 2:1000) {
+  
+  data <- read.csv(args[1], nrows=i)
+  lastend = head(c(0,data$end),-1)
+  
+  p <- ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
      labs(x="token", y="throughput [second]") +
      ggtheme
+
+  oname = paste(sprintf("%04d",i), ".png", sep="")
+  ggsave(oname)
+  
+  #a <- animate(p, renderer = ffmpeg_renderer())
+  #anim_save("animation.mp4", a)
+}
 
 #mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
 #mtext(paste("Average thoughput = ",toString(average)," token/second"))
