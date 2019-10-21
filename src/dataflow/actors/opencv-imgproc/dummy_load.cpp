@@ -46,7 +46,7 @@ void DummyLoad::run() {
   log("dummy load "+to_string(stepno));
   timer.sleep(sleep_time/5);
 
-  if (sleep_time == 250)
+  if (sleep_time == 320)
 	 increase = false;
   if (sleep_time == 0)
 	 increase = true;

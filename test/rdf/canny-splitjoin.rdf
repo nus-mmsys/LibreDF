@@ -94,5 +94,5 @@ right {
 }
 }
 main {
-   I.period = 48 : r1;
+   I.period = 62 : r1;
 }
