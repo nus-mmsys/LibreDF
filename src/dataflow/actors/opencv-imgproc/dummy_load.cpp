@@ -37,7 +37,7 @@ void DummyLoad::init() {
   if (!propEmpty("highest_period"))
     highest_prd = getPropInt("highest_period");
   else
-    highest_prd = 60;
+    highest_prd = 100;
 
   if (!propEmpty("lowest_period"))
     lowest_prd = getPropInt("lowest_period");

@@ -41,7 +41,7 @@ Rule * RDataflow::get_applicable_rule() {
 		if (ac.metric == "period") {
 		    if (actors.find(ac.actor) != actors.end()) {
 			if (actors[ac.actor]->getPeriod() == ac.val) {
-				actors[ac.actor]->setPeriod(0); 
+				actors[ac.actor]->setPeriod(1); 
 				return rdfg->rules[ac.rule];
 			}
 		    }
