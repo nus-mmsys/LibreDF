@@ -49,24 +49,6 @@ void DummyLoad::init() {
 }
 
 void DummyLoad::reinit() {
-  if (!propEmpty("init_period"))
-    prd = getPropInt("init_period");
-  else
-    prd = 40;
-
-  if (!propEmpty("highest_period"))
-    highest_prd = getPropInt("highest_period");
-  else
-    highest_prd = 70;
-
-  if (!propEmpty("lowest_period"))
-    lowest_prd = getPropInt("lowest_period");
-  else
-    lowest_prd = 30;
-
-  counter = 1;
-  increase = true;
-
 }
 
 void DummyLoad::run() {
