@@ -6,7 +6,7 @@ rdf demo {
     actor A {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
-	period = 20;
+	period = 10;
     }
     actor S {
 	computation = MatSplit;
@@ -27,7 +27,7 @@ rdf demo {
     }
     actor I {
     	computation = ImageShowMR;
-	period = 20;
+	period = 10;
     }
     parameter {
 	logging = true;

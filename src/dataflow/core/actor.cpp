@@ -37,8 +37,8 @@ Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   end_firing = 0;
   start_exec = 0;
   exec_dur = 0;
-  average_period = 0;
-  instance_period = 0;
+  average_period = 1;
+  instance_period = 1;
 }
 
 std::string Actor::getName() {
@@ -415,6 +415,8 @@ void Actor::runIter() {
     	  }
 
 	  instance_period = timer.nowUs() - end_firing;
+	  if (instance_period < 1)
+		  instance_period = 1;
 	  average_period = 0.9*average_period + 0.1*instance_period;
 
 	  end_firing = timer.nowUs();

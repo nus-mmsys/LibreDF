@@ -30,19 +30,19 @@ DummyLoad::DummyLoad(const std::string & name): df::Actor(name) {
 
 void DummyLoad::init() {
   if (!propEmpty("init_period"))
-    period = getPropInt("init_period");
+    prd = getPropInt("init_period");
   else
-    period = 40;
+    prd = 40;
 
   if (!propEmpty("highest_period"))
-    highest_period = getPropInt("highest_period");
+    highest_prd = getPropInt("highest_period");
   else
-    highest_period = 50;
+    highest_prd = 60;
 
   if (!propEmpty("lowest_period"))
-    lowest_period = getPropInt("lowest_period");
+    lowest_prd = getPropInt("lowest_period");
   else
-    lowest_period = 30;
+    lowest_prd = 30;
 
   counter = 1;
   increase = true;
@@ -50,22 +50,23 @@ void DummyLoad::init() {
 
 void DummyLoad::reinit() {
   if (!propEmpty("init_period"))
-    period = getPropInt("init_period");
+    prd = getPropInt("init_period");
   else
-    period = 40;
+    prd = 40;
 
   if (!propEmpty("highest_period"))
-    highest_period = getPropInt("highest_period");
+    highest_prd = getPropInt("highest_period");
   else
-    highest_period = 60;
+    highest_prd = 70;
 
   if (!propEmpty("lowest_period"))
-    lowest_period = getPropInt("lowest_period");
+    lowest_prd = getPropInt("lowest_period");
   else
-    lowest_period = 30;
+    lowest_prd = 30;
 
   counter = 1;
   increase = true;
+
 }
 
 void DummyLoad::run() {
@@ -74,15 +75,15 @@ void DummyLoad::run() {
   start_exec = timer.nowUs();
   out->set(*in->get());
   log("dummy load "+to_string(stepno));
-  timer.sleep(period);
+  timer.sleep(prd);
 
-  if (period == highest_period)
+  if (prd == highest_prd)
 	 increase = false;
-  if (period == lowest_period)
+  if (prd == lowest_prd)
 	 increase = true;
 
   if(increase && counter%5==0) {
-	  period++;
+	  prd++;
 	  counter=1;
   }
   counter++;

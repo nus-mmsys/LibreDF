@@ -34,8 +34,8 @@ private:
   df::OutputPort<df::Mat> * output;
 
   int counter;
-  int period;
-  int lowest_period, highest_period;
+  int prd;
+  int lowest_prd, highest_prd;
   bool increase;
 
   static df::ActorRegister<DummyLoad> reg;
