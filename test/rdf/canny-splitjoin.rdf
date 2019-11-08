@@ -20,7 +20,9 @@ rdf canny-splitjoin {
     }
     actor D {
 	computation = DummyLoad;
-	init_load = 1;
+	init_period = 1;
+	highest_period = 64;
+	lowest_period = 1;
     }
     actor J {
 	computation = MatJoin;
@@ -87,7 +89,9 @@ right {
     }
     actor z1 {
 	computation = DummyLoad;
-	init_load = 1;
+	init_period = 1;
+	highest_period = 64;
+	lowest_period = 1;
     }
     actor J {
     	computation = MatJoin;

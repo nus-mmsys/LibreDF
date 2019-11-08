@@ -29,22 +29,42 @@ DummyLoad::DummyLoad(const std::string & name): df::Actor(name) {
 }
 
 void DummyLoad::init() {
-
-  if (!propEmpty("init_load"))
-    sleep_time = getPropInt("init_load");
+  if (!propEmpty("init_period"))
+    period = getPropInt("init_period");
   else
-    sleep_time = 200;
+    period = 40;
 
+  if (!propEmpty("highest_period"))
+    highest_period = getPropInt("highest_period");
+  else
+    highest_period = 50;
+
+  if (!propEmpty("lowest_period"))
+    lowest_period = getPropInt("lowest_period");
+  else
+    lowest_period = 30;
+
+  counter = 1;
   increase = true;
 }
 
 void DummyLoad::reinit() {
-
-  if (!propEmpty("init_load"))
-    sleep_time = getPropInt("init_load");
+  if (!propEmpty("init_period"))
+    period = getPropInt("init_period");
   else
-    sleep_time = 200;
+    period = 40;
 
+  if (!propEmpty("highest_period"))
+    highest_period = getPropInt("highest_period");
+  else
+    highest_period = 50;
+
+  if (!propEmpty("lowest_period"))
+    lowest_period = getPropInt("lowest_period");
+  else
+    lowest_period = 30;
+
+  counter = 1;
   increase = true;
 }
 
@@ -54,14 +74,19 @@ void DummyLoad::run() {
   start_exec = timer.nowUs();
   out->set(*in->get());
   log("dummy load "+to_string(stepno));
-  timer.sleep(sleep_time/5);
+  timer.sleep(period);
 
-  if (sleep_time == 320)
+  if (period == highest_period)
 	 increase = false;
-  if (sleep_time == 0)
+  if (period == lowest_period)
 	 increase = true;
 
-  if(increase) sleep_time++;
+  if(increase && counter%5==0) {
+	  period++;
+	  counter=1;
+  }
+  counter++;
+
   exec_dur = timer.nowUs() - start_exec;
   release(input);
   release(output);

@@ -33,7 +33,9 @@ private:
   df::InputPort<df::Mat> * input;
   df::OutputPort<df::Mat> * output;
 
-  int sleep_time;
+  int counter;
+  int period;
+  int lowest_period, highest_period;
   bool increase;
 
   static df::ActorRegister<DummyLoad> reg;
