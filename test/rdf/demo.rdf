@@ -1,4 +1,4 @@
-rdf canny-splitjoin {
+rdf demo {
     topology {
         nodes = A,S,B,C,D,J,I;
 	edges = e1(A,S), e2(S,B), e3(B,C), e4(C,D), e5(D,J), e6(J,I);
@@ -6,7 +6,7 @@ rdf canny-splitjoin {
     actor A {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
-	period = 40;
+	period = 20;
     }
     actor S {
 	computation = MatSplit;
@@ -20,7 +20,6 @@ rdf canny-splitjoin {
     }
     actor D {
 	computation = DummyLoad;
-	init_load = 1;
     }
     actor J {
 	computation = MatJoin;
@@ -28,7 +27,7 @@ rdf canny-splitjoin {
     }
     actor I {
     	computation = ImageShowMR;
-	period = 40;
+	period = 20;
     }
     parameter {
 	logging = true;
@@ -87,7 +86,6 @@ right {
     }
     actor z1 {
 	computation = DummyLoad;
-	init_load = 1;
     }
     actor J {
     	computation = MatJoin;

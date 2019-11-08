@@ -29,12 +29,22 @@ DummyLoad::DummyLoad(const std::string & name): df::Actor(name) {
 }
 
 void DummyLoad::init() {
-  sleep_time = 1;
+
+  if (!propEmpty("init_load"))
+    sleep_time = getPropInt("init_load");
+  else
+    sleep_time = 200;
+
   increase = true;
 }
 
 void DummyLoad::reinit() {
-  sleep_time = 1;
+
+  if (!propEmpty("init_load"))
+    sleep_time = getPropInt("init_load");
+  else
+    sleep_time = 200;
+
   increase = true;
 }
 
