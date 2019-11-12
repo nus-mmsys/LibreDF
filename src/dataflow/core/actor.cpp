@@ -417,7 +417,7 @@ void Actor::runIter() {
 	  instance_period = timer.nowUs() - end_firing;
 	  if (instance_period < 1000 || instance_period > 2500000)
 		  instance_period = 1000;
-	  average_period = 0.9*average_period + 0.1*instance_period;
+	  average_period = 0.95*average_period + 0.05*instance_period;
 
 	  end_firing = timer.nowUs();
 	  
