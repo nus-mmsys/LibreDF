@@ -61,7 +61,7 @@ if (!anim) {
 
   p <- ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
-     labs(x="token", y="throughput [second]") +
+     labs(x="token", y="throughput [token/second]") +
      ggtheme
 
   ggsave(paste(name,"_throughput.pdf", sep=""))
@@ -75,7 +75,7 @@ if (!anim) {
   
     p <- ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
        geom_path(colour = "blue") +
-       labs(x="token", y="throughput [second]") +
+       labs(x="token", y="throughput [token/second]") +
        ggtheme
 
     oname = paste(sprintf("%04d",i), ".png", sep="")
