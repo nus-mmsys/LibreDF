@@ -42,7 +42,7 @@ void StepLoad::init() {
   if (!propEmpty("step2_period"))
     step2 = getPropInt("step2_period");
   else
-    step2 = 100;
+    step2 = 120;
 
 }
 
