@@ -37,7 +37,7 @@ void StepLoad::init() {
   if (!propEmpty("step1_period"))
     step1 = getPropInt("step1_period");
   else
-    step1 = 64;
+    step1 = 60;
 
   if (!propEmpty("step2_period"))
     step2 = getPropInt("step2_period");
