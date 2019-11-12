@@ -26,6 +26,7 @@ ggtheme = theme(plot.title = element_text(size=15),
 scale = 1000000
 
 anim <- FALSE
+num <- 500
 
 if (!anim) {
 
@@ -38,7 +39,7 @@ if (!anim) {
 
 } else {
 
-  for (i in 2:1000) {
+  for (i in 2:num) {
   
     data <- read.csv(args[1], nrows=i)
  

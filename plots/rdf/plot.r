@@ -51,6 +51,7 @@ average = data$step[length(data$step)]/(data$end[length(data$end)]/scale)
 #     type="l", col="blue")
 
 anim <- FALSE
+num <- 500
 
 if (!anim) {
 
@@ -67,7 +68,7 @@ if (!anim) {
 
 } else {
 
-  for (i in 2:1000) {
+  for (i in 2:num) {
   
     data <- read.csv(args[1], nrows=i)
     lastend = head(c(0,data$end),-1)
