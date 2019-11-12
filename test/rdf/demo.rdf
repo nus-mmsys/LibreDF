@@ -6,7 +6,7 @@ rdf demo {
     actor A {
     	computation = VideoCaptureMR;
 	file_name = pedestrian.mp4;
-	period = 10;
+	period = 40;
     }
     actor S {
 	computation = MatSplit;
@@ -19,7 +19,7 @@ rdf demo {
     	computation = Canny;
     }
     actor D {
-	computation = DummyLoad;
+	computation = StepLoad;
     }
     actor J {
 	computation = MatJoin;
@@ -27,7 +27,7 @@ rdf demo {
     }
     actor I {
     	computation = ImageShowMR;
-	period = 10;
+	period = 40;
     }
     parameter {
 	logging = true;
@@ -51,7 +51,7 @@ left {
     	computation = Canny;
     }
     actor z {
-	computation = DummyLoad;
+	computation = StepLoad;
     }
     actor J {
     	computation = MatJoin;
@@ -82,10 +82,10 @@ right {
     	computation = Canny;
     }
     actor z {
-	computation = DummyLoad;
+	computation = StepLoad;
     }
     actor z1 {
-	computation = DummyLoad;
+	computation = StepLoad;
     }
     actor J {
     	computation = MatJoin;
