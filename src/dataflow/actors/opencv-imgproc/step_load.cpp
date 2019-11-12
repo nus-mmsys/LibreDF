@@ -32,17 +32,17 @@ void StepLoad::init() {
   if (!propEmpty("init_period"))
     prd = getPropInt("init_period");
   else
-    prd = 5;
+    prd = 8;
 
   if (!propEmpty("step1_period"))
     step1 = getPropInt("step1_period");
   else
-    step1 = 60;
+    step1 = 64;
 
   if (!propEmpty("step2_period"))
     step2 = getPropInt("step2_period");
   else
-    step2 = 90;
+    step2 = 100;
 
 }
 
@@ -58,7 +58,7 @@ void StepLoad::run() {
   timer.sleep(prd);
 
   if(iterno>300) prd = step1;
-  if(iterno>500) prd = step2;
+  //if(iterno>400) prd = step2;
 
   exec_dur = timer.nowUs() - start_exec;
   release(input);
