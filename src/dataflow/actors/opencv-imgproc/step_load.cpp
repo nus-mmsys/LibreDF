@@ -57,8 +57,8 @@ void StepLoad::run() {
   log("step load "+to_string(stepno));
   timer.sleep(prd);
 
-  if(iterno>300) prd = step1;
-  if(iterno>400) prd = step2;
+  if(iterno>200) prd = step1;
+  if(iterno>250) prd = step2;
 
   exec_dur = timer.nowUs() - start_exec;
   release(input);
