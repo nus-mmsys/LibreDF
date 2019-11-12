@@ -33,7 +33,6 @@ private:
   df::InputPort<df::Mat> * input;
   df::OutputPort<df::Mat> * output;
 
-  int counter;
   int prd;
   int step1, step2;
 
