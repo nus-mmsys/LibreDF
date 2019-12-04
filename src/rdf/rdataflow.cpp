@@ -23,6 +23,7 @@ using namespace std;
 
 RDataflow::RDataflow(string name) : df::Dataflow(name) {
 	load = 0;
+	vc = false;
 	curr_graph = new Graph();
 }
 
@@ -32,6 +33,9 @@ void RDataflow::set_graph(RDFGraph * r) {
 }
 
 Rule * RDataflow::get_applicable_rule() {
+	if (vc == true)
+		return nullptr;
+
 	Rule * r = nullptr;
 	//The load is a dummy variable for the tests.
 	//In real application, conditions such as latency and throughput can be used. 
@@ -42,6 +46,7 @@ Rule * RDataflow::get_applicable_rule() {
 		    if (actors.find(ac.actor) != actors.end()) {
 			if (actors[ac.actor]->getPeriod() == ac.val) {
 				actors[ac.actor]->setPeriod(1); 
+				vc = true;		
 				return rdfg->rules[ac.rule];
 			}
 		    }
@@ -50,12 +55,15 @@ Rule * RDataflow::get_applicable_rule() {
 			if (/*ac.sign == '>' &&*/ 
 			    actors[ac.actor]->getOutPortOcc("output",0) 
 					> ac.val) {
+				vc = true;
 				return rdfg->rules[ac.rule];
 			}
 		    }
 		} else if (ac.var == "load") {
- 			if (ac.val == load)
+ 			if (ac.val == load) {
+				vc = true;
 				return rdfg->rules[ac.rule];
+			}
 		}
 	    }
 	}
@@ -171,6 +179,7 @@ void RDataflow::reconfigure(int iter) {
   	for (auto c : appac) {
     		c->startRun();
   	}
+	vc = false;
 }
 
 void RDataflow::run() {

@@ -31,6 +31,7 @@
  */
 class RDataflow : public df::Dataflow {
 private:
+    bool vc;
     int load;
     RDFGraph * rdfg;
     Graph * curr_graph;
