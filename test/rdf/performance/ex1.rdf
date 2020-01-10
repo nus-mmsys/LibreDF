@@ -27,7 +27,7 @@ rdf ex1 {
 	delay = 3;
     }
     parameter {
-	logging = false;
+	logging = true;
     }
 }
 rule r1 {

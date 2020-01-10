@@ -32,6 +32,12 @@ void DelaySource::init() {
     delay = getPropInt("delay");
   else
     delay = 1;
+
+  if (!propEmpty("last"))  	
+  	last = getPropInt("last");
+  else
+        last = 1000;
+
 }
 
 void DelaySource::reinit() {
@@ -43,6 +49,9 @@ void DelaySource::run() {
   log("delay source "+to_string(stepno));
 
   timer.sleep(delay);
+
+  if(stepno >= last)
+    setEos(output);
 
   release(output);
 }
