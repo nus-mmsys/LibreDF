@@ -24,8 +24,8 @@ using namespace std;
 ActorRegister<DelayActor> DelayActor::reg("DelayActor");
 
 DelayActor::DelayActor(const std::string & name): df::Actor(name) {
-  input = createInputPort<df::Mat>("input");
-  output = createOutputPort<df::Mat>("output");
+  input = createInputPort<df::Int>("input");
+  output = createOutputPort<df::Int>("output");
 }
 
 void DelayActor::init() {

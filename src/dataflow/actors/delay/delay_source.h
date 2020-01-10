@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_DELAY_ACTOR_H_
-#define DF_DELAY_ACTOR_H_
+#ifndef DF_DELAY_SOURCE_H_
+#define DF_DELAY_SOURCE_H_
 
 #include "core/df.h"
 #include "tokens/basic/int.h"
@@ -25,24 +25,23 @@
 #include <iostream>
 #include <string>
 
-class DelayActor: public df::Actor {
+class DelaySource: public df::Actor {
   
 private:
 
-  df::InputPort<df::Int> * input;
   df::OutputPort<df::Int> * output;
 
   int delay;
 
-  static df::ActorRegister<DelayActor> reg;
+  static df::ActorRegister<DelaySource> reg;
 public:
   
-  DelayActor(const std::string & name);
+  DelaySource(const std::string & name);
   virtual void init();
   virtual void reinit();
   virtual void run();
-  virtual ~DelayActor();
+  virtual ~DelaySource();
   
 };
 
-#endif /* DF_DELAY_ACTOR_H_ */
+#endif /* DF_DELAY_SOURCE_H_ */

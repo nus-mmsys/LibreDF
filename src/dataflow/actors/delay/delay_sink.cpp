@@ -16,33 +16,37 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_DELAY_ACTOR_H_
-#define DF_DELAY_ACTOR_H_
+#include "delay_sink.h"
 
-#include "core/df.h"
-#include "tokens/basic/int.h"
+using namespace df;
+using namespace std;
 
-#include <iostream>
-#include <string>
+ActorRegister<DelaySink> DelaySink::reg("DelaySink");
 
-class DelayActor: public df::Actor {
-  
-private:
+DelaySink::DelaySink(const std::string & name): df::Actor(name) {
+  input = createInputPort<df::Int>("input");
+}
 
-  df::InputPort<df::Int> * input;
-  df::OutputPort<df::Int> * output;
+void DelaySink::init() {
+  if (!propEmpty("delay"))
+    delay = getPropInt("delay");
+  else
+    delay = 1;
+}
 
-  int delay;
+void DelaySink::reinit() {
+}
 
-  static df::ActorRegister<DelayActor> reg;
-public:
-  
-  DelayActor(const std::string & name);
-  virtual void init();
-  virtual void reinit();
-  virtual void run();
-  virtual ~DelayActor();
-  
-};
+void DelaySink::run() {
+  auto in = consume(input);
+  log("delay sink "+to_string(stepno));
 
-#endif /* DF_DELAY_ACTOR_H_ */
+  timer.sleep(delay);
+
+  release(input);
+}
+
+DelaySink::~DelaySink() {
+  destroyPort(input);
+}
+
