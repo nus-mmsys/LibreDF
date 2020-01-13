@@ -1,0 +1,77 @@
+rdf ex1-single {
+    topology {
+        nodes = Src,S,A1,J,Snk;
+	edges = e1(Src,S), e2(S,A1), e3(A1,J), e4(J,Snk);
+    }
+    actor Src {
+    	computation = DelaySource;
+	delay = 10;
+	last = 1000;
+    }
+    actor S {
+	computation = DelaySplit;
+	arity = 1;
+	delay = 2;
+    }
+    actor A1 {
+    	computation = DelayActor;
+	delay = 20;
+    }
+    actor J {
+	computation = DelayJoin;
+	arity = 1;
+	delay = 2;
+    }
+    actor Snk {
+    	computation = DelaySink;
+	delay = 10;
+    }
+    parameter {
+	logging = true;
+	scheduling = true;
+	policy = 1;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = S,A1,J;
+	edges = e1(S,A1), e2(A1,J);
+    }
+    actor S {
+    	computation = DelaySplit;
+	arity = 1;
+    }
+    actor A1 {
+    	computation = DelayActor;
+    }
+    actor J {
+    	computation = DelayJoin;
+	arity = 1;
+    }
+}
+right {
+    topology {
+        nodes = S,A1,a,J;
+	edges = e1(S,A1), e2(S,a), e3(A1,J), e4(a,J);
+    }
+    actor S {
+    	computation = DelaySplit;
+	arity = 2;
+    }
+    actor A1 {
+    	computation = DelayActor;
+    }
+    actor a {
+    	computation = DelayActor;
+	delay = 20;
+    }
+    actor J {
+    	computation = DelayJoin;
+	arity = 2;
+    }
+}
+}
+main {
+   load = 400 : r1;
+}
