@@ -32,6 +32,7 @@ private:
   df::InputPort<df::Int> * input;
   df::OutputPort<df::Int> * output;
 
+  long int counter, max;
   int delay;
 
   static df::ActorRegister<DelayActor> reg;

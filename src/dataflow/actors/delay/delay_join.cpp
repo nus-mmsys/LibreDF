@@ -34,6 +34,8 @@ void DelayJoin::init() {
   else
     delay = 1;
 
+  max = delay * 695000;
+  
   if (propEmpty("arity"))
 	  arity = 1;
   else
@@ -67,8 +69,9 @@ void DelayJoin::run() {
 
   log("delay join "+to_string(stepno));
   
-  timer.sleep(delay);
-  
+  counter = 0;
+  while(counter<max) counter++;
+
   release(input);
   releaseMR(output);
 

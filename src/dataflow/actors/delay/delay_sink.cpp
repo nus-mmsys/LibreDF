@@ -32,6 +32,8 @@ void DelaySink::init() {
     delay = getPropInt("delay");
   else
     delay = 1;
+  
+  max = delay * 695000;
 }
 
 void DelaySink::reinit() {
@@ -41,7 +43,8 @@ void DelaySink::run() {
   auto in = consume(input);
   log("delay sink "+to_string(stepno));
 
-  timer.sleep(delay);
+  counter = 0;
+  while(counter<max) counter++;
 
   release(input);
 }

@@ -36,6 +36,7 @@ private:
   int arity;
   int tileh, tilew;
  
+  long int counter, max;
   int delay;
   
   static  df::ActorRegister<DelayJoin> reg;
