@@ -38,6 +38,7 @@ void DelaySource::init() {
   else
         last = 1000;
 
+  max = delay * 695000;
 }
 
 void DelaySource::reinit() {
@@ -48,7 +49,8 @@ void DelaySource::run() {
   out->set(stepno);
   log("delay source "+to_string(stepno));
 
-  timer.sleep(delay);
+  counter = 0;
+  while(counter<max) counter++;
 
   if(stepno >= last)
     setEos(output);

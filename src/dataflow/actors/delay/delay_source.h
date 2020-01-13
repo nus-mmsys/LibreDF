@@ -31,6 +31,7 @@ private:
 
   df::OutputPort<df::Int> * output;
 
+  long int counter, max;
   int delay;
   int last;
 
