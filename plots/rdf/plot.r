@@ -39,7 +39,7 @@ ggplot(data, aes(data$step, (data$end-data$start)/scale)) +
      labs(x="token", y="latency [second]") +
      ggtheme
 
-#mtext(paste("Total latency = ",toString(latency)," second"))
+#print(paste("Total latency = ",toString(latency)," second"))
 
 average = data$step[length(data$step)]/(data$end[length(data$end)]/scale)
 
@@ -86,5 +86,5 @@ if (!anim) {
   }
 }
 
-#mtext(paste("Average thoughput = ",toString(average)," iteration/second"))
-#mtext(paste("Average thoughput = ",toString(average)," token/second"))
+#print(paste("Average thoughput = ",toString(average)," iteration/second"))
+#print(paste("Average thoughput = ",toString(average)," token/second"))
