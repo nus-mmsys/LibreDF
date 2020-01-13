@@ -27,6 +27,7 @@
 
 enum PlacementPolicy {
 	ROUND_ROBIN,
+	SINGLE_PROCESSOR,
 	DEFAULT
 };
 
@@ -40,6 +41,7 @@ namespace df {
 	  void place(const std::vector<df::Actor *> & actors, PlacementPolicy policy, int init);
 	  void place(const std::map<std::string, df::Actor *> & actors, PlacementPolicy policy, int init);
 	  void roundRobin(const std::vector<df::Actor *> & actors, int init);
+	  void singleProcessor(const std::vector<Actor *> & actors);
   };
 
 }
