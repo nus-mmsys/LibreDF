@@ -25,18 +25,18 @@ Placement::Placement() {
   cpunb = std::thread::hardware_concurrency();
 }
 
-void Placement::place(const std::map<std::string, Actor *> & actmap, PlacementPolicy policy, int init) {
+void Placement::place(const std::map<std::string, Actor *> & actmap, int policy, int init) {
 	std::vector<Actor *> actors;
 	for (auto ac : actmap)
 		actors.push_back(ac.second);
 	place(actors, policy, init);
 }
 
-void Placement::place(const std::vector<Actor *> & actors, PlacementPolicy policy, int init) {
+void Placement::place(const std::vector<Actor *> & actors, int policy, int init) {
 	switch (policy) {
-		case ROUND_ROBIN:
+		case 0:
 			roundRobin(actors, init);
-		case SINGLE_PROCESSOR:
+		case 1:
 			singleProcessor(actors);
 		default:
 			roundRobin(actors, init);

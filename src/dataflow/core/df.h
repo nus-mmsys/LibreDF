@@ -66,6 +66,7 @@ namespace df {
     std::thread tdisc;
     std::mutex iolock;
     bool realtime, distributed, logging, scheduling;
+    int policy;
     std::string dischost;
     int discport;
     Property prop;

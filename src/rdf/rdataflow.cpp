@@ -174,7 +174,7 @@ void RDataflow::reconfigure(int iter) {
 			      ed->getSinkRate());
 	}
 
-	placement.place(appac, ROUND_ROBIN, place_init);
+	placement.place(appac, policy, place_init);
 
   	for (auto c : appac) {
     		c->startRun();
@@ -196,7 +196,7 @@ void RDataflow::run() {
 
   print();
 
-  placement.place(actors, ROUND_ROBIN, 0);
+  placement.place(actors, policy, 0);
   /* 
    * The controller starts all actors.
    *

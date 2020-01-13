@@ -26,6 +26,7 @@ Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::NONE)
 	distributed = false;
 	logging = true;
 	scheduling = true;
+	policy = 0;
 	srvsock = new ServerSocket("df-srv:"+name);
 	clnsock = new ClientSocket("df-cln:"+name);
 }
@@ -318,6 +319,9 @@ void Dataflow::init() {
   if (!prop.propEmpty("scheduling"))
 	  scheduling = prop.getPropBool("scheduling");
 
+  if (!prop.propEmpty("policy"))
+	  policy = prop.getPropInt("policy");
+
   if (!prop.propEmpty("distributed"))
 	  distributed = prop.getPropBool("distributed");
 
@@ -385,7 +389,7 @@ void Dataflow::run() {
   std::cout << "Running the dataflow...\n";
   timer.start();
 
-  placement.place(actors, ROUND_ROBIN, 0);
+  placement.place(actors, policy, 0);
 
   for (auto f : actors) {
     f.second->startRun();
