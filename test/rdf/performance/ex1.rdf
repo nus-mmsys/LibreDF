@@ -5,26 +5,26 @@ rdf ex1 {
     }
     actor Src {
     	computation = DelaySource;
-	delay = 3;
+	delay = 10;
 	last = 1000;
     }
     actor S {
 	computation = DelaySplit;
 	arity = 1;
-	delay = 1;
+	delay = 2;
     }
     actor A1 {
     	computation = DelayActor;
-	delay = 6;
+	delay = 20;
     }
     actor J {
 	computation = DelayJoin;
 	arity = 1;
-	delay = 1;
+	delay = 2;
     }
     actor Snk {
     	computation = DelaySink;
-	delay = 3;
+	delay = 10;
     }
     parameter {
 	logging = true;
@@ -63,7 +63,7 @@ right {
     }
     actor a {
     	computation = DelayActor;
-	delay = 6;
+	delay = 20;
     }
     actor J {
     	computation = DelayJoin;
