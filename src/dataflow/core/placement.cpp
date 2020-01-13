@@ -59,7 +59,7 @@ void Placement::roundRobin(const std::vector<Actor *> & actors, int init) {
 
 void Placement::singleProcessor(const std::vector<Actor *> & actors) {
 
-  int cpuid = 1;
+  int cpuid = 0;
 
   for (auto ac : actors) {
     ac->setCpuId(cpuid);
