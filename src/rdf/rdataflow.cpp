@@ -232,7 +232,8 @@ void RDataflow::run() {
   Timer rdftimer;
   vector<string> delays;
   while(!check_eos()) {
-  	timer.sleep(20);
+	//For demo, this delay was 20 ms.
+  	timer.sleep(10);
    	r = get_applicable_rule();
   	if (r==nullptr) {
   		continue;
