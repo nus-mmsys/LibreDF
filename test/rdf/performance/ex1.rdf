@@ -15,7 +15,7 @@ rdf ex1 {
     }
     actor A1 {
     	computation = DelayActor;
-	delay = 20;
+	delay = 30;
     }
     actor J {
 	computation = DelayJoin;
@@ -63,7 +63,7 @@ right {
     }
     actor a {
     	computation = DelayActor;
-	delay = 20;
+	delay = 30;
     }
     actor J {
     	computation = DelayJoin;
