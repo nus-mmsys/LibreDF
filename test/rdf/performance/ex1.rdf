@@ -29,6 +29,7 @@ rdf ex1 {
     parameter {
 	logging = true;
 	scheduling = false;
+	policy = 0;
     }
 }
 rule r1 {
