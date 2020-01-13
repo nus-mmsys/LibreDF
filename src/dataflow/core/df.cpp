@@ -540,7 +540,7 @@ vector<Edge *> Dataflow::get_oedges(df::Actor * ac) {
 void Dataflow::print() {
 	log(name);
 	vector<string> noprint = {"computation", "scheduling", 
-		"distributed", "realtime", "logging"};
+		"distributed", "realtime", "logging", "policy"};
 	for (auto a : actors) {
 		log(a.first + " : " + a.second->getType());
 		for (auto && p : a.second->getProps())

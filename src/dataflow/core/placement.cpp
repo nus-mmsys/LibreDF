@@ -36,10 +36,13 @@ void Placement::place(const std::vector<Actor *> & actors, int policy, int init)
 	switch (policy) {
 		case 0:
 			roundRobin(actors, init);
+			break;
 		case 1:
 			singleProcessor(actors);
+			break;
 		default:
 			roundRobin(actors, init);
+			break;
 	}
 }
 
@@ -56,7 +59,7 @@ void Placement::roundRobin(const std::vector<Actor *> & actors, int init) {
 
 void Placement::singleProcessor(const std::vector<Actor *> & actors) {
 
-  int cpuid = 1 % cpunb;
+  int cpuid = 1;
 
   for (auto ac : actors) {
     ac->setCpuId(cpuid);
