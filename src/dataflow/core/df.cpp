@@ -26,6 +26,7 @@ Dataflow::Dataflow(const string& name): name(name), status(DataflowStatus::NONE)
 	distributed = false;
 	logging = true;
 	scheduling = true;
+	threading = true;
 	policy = 0;
 	srvsock = new ServerSocket("df-srv:"+name);
 	clnsock = new ClientSocket("df-cln:"+name);
@@ -319,6 +320,9 @@ void Dataflow::init() {
   if (!prop.propEmpty("scheduling"))
 	  scheduling = prop.getPropBool("scheduling");
 
+  if (!prop.propEmpty("threading"))
+	  threading = prop.getPropBool("threading");
+
   if (!prop.propEmpty("policy"))
 	  policy = prop.getPropInt("policy");
 
@@ -540,7 +544,8 @@ vector<Edge *> Dataflow::get_oedges(df::Actor * ac) {
 void Dataflow::print() {
 	log(name);
 	vector<string> noprint = {"computation", "scheduling", 
-		"distributed", "realtime", "logging", "policy"};
+		"distributed", "realtime", "logging", "policy",
+		"threading"};
 	for (auto a : actors) {
 		log(a.first + " : " + a.second->getType());
 		for (auto && p : a.second->getProps())

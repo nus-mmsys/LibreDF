@@ -68,7 +68,7 @@ namespace df {
     Timer timer;
     std::thread tdisc;
     std::mutex iolock;
-    bool realtime, distributed, logging, scheduling;
+    bool realtime, distributed, logging, scheduling, threading;
     int policy;
     std::string dischost;
     int discport;
