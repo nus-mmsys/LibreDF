@@ -175,8 +175,10 @@ void RDataflow::reconfigure(int iter) {
 	}
 
 	placement.place(appac, policy, place_init);
-
-  	for (auto c : appac) {
+	
+	setOrders(g->order());
+   
+	for (auto c : appac) {
     		c->startRun();
   	}
 	vc = false;
@@ -201,6 +203,7 @@ void RDataflow::run() {
    * The controller starts all actors.
    *
    */
+  
   for (auto f : actors) {
     f.second->startRun();
   }

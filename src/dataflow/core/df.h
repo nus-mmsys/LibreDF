@@ -57,9 +57,12 @@ namespace df {
     std::string name; /**< The name of the dataflow. */
     DataflowStatus status; /**< The current status of the dataflow. */
 
+    
     std::map<std::string, Actor *> actors; /**< The set of all actors in the dataflow. */
     std::map<std::string, Edge *> edges; /**< The set of all actors in the dataflow. */
     std::map<std::string, Actor *> remoteactors; /**< The set of all remote actors in the dataflow. */
+
+    std::vector<std::vector<std::string>> orders;
 
     Placement placement; 
     Timer timer;
@@ -255,6 +258,8 @@ namespace df {
     void print();
 
     void log(std::string msg);
+    
+    void setOrders(std::vector<std::vector<std::string>> ord);
     
     /*!
      * Dataflow destructor

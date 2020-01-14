@@ -429,9 +429,9 @@ bool Dataflow::check_eos() {
 }
 
 /*
- * 1) Pause all the sources and keep 
+ * - Pause all the sources and keep 
  *    the max iteration.
- * 3) Continue the actors untill max+1 
+ * - Continue the actors untill max+1 
  *    iteration.
  */
 int Dataflow::pause() {
@@ -561,6 +561,10 @@ void Dataflow::log(string msg) {
 	iolock.lock();
 	cout << msg << endl;
 	iolock.unlock();
+}
+
+void Dataflow::setOrders(vector<vector<string>> ord) {
+	orders = ord;
 }
 
 Dataflow::~Dataflow() {

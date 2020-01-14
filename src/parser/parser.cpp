@@ -570,7 +570,7 @@ df::Dataflow * Parser::get_dataflow() {
 	std::string srcname, snkname;
 
 	graph->resolve();
-
+	
 	//Create dataflow
 	res = new df::Dataflow(graph->get_name());
 	
@@ -618,5 +618,7 @@ df::Dataflow * Parser::get_dataflow() {
 			graph->get_sink_rate(edname));
 	}	
 
+	res->setOrders(graph->order());
+	
 	return res;
 }
