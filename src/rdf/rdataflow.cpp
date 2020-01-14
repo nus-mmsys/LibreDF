@@ -203,10 +203,8 @@ void RDataflow::run() {
    * The controller starts all actors.
    *
    */
-  
-  for (auto f : actors) {
-    f.second->startRun();
-  }
+ 
+  startRun();
   
   /* 
    * The controller measures some non-functional metrics.
@@ -281,10 +279,8 @@ void RDataflow::run() {
    * The controller wait for all actors to end.
    *
    */
-  for (auto f : actors) {
-    f.second->waitRun();
-  }
- 
+  waitRun();
+
   for (auto d : delays)
 	 log("RDF reconfiguration delay = "+d+" us");
 

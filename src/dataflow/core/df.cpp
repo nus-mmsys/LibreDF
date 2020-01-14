@@ -389,21 +389,16 @@ void Dataflow::run() {
     return;
   }
 
-
   std::cout << "Running the dataflow...\n";
   timer.start();
 
   placement.place(actors, policy, 0);
 
-  for (auto f : actors) {
-    f.second->startRun();
-  }
+  startRun();
   
   status = DataflowStatus::RUNNING;
   
-  for (auto f : actors) {
-    f.second->waitRun();
-  }
+  waitRun();
   
   std::cout << "Execution time = " << timer.endUs() << " us\n"; 
   
@@ -422,6 +417,22 @@ void Dataflow::run() {
 	clnsock->send(msg, 8);
 	clnsock->close();
   } 
+}
+
+void Dataflow::startRun(){
+
+  for (auto f : actors) {
+    f.second->startRun();
+  }
+
+}
+
+void Dataflow::waitRun(){
+
+  for (auto f : actors) {
+    f.second->waitRun();
+  }
+
 }
 
 bool Dataflow::check_eos() {

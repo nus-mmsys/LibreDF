@@ -200,6 +200,9 @@ namespace df {
      *
      */
     virtual void run();
+
+    void startRun();
+    void waitRun();
     
     /*!
      * Check whether any of the actors
