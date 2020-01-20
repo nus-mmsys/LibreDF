@@ -27,6 +27,7 @@ Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   logging = true;
   scheduling = true;
   paused = false;
+  iter_max = 0;
   solution = 1;
   iterno = 1;
   fireno = 1;
@@ -465,7 +466,7 @@ void Actor::runActor() {
 
       {
 	  unique_lock<mutex> lockpause(pause_mux);
-	  while(paused)
+	  while(paused && iterno==iter_max)
 		  pause_cond.wait(lockpause);
       }
   }
@@ -475,15 +476,36 @@ int Actor::pause() {
     lock_guard<mutex> lockpause(pause_mux);
     lock_guard<mutex> lockrun(runend_mux);
     int res = iterno;
+    iter_max = iterno;
     paused = true;
     //pause_cond.notify_all();
     return res;
+}
+
+void Actor::pauseAfter(int imax) {
+    {
+    	lock_guard<mutex> lockpause(pause_mux);
+    	paused = true;
+	iter_max = imax;
+    }
+    pause_cond.notify_one();
+}
+
+bool Actor::isPaused() {
+    while(true)
+    {
+    	lock_guard<mutex> lockpause(pause_mux);
+    	if (paused and iterno==iter_max)
+		return true;
+    }
+    return false;
 }
 
 void Actor::resume() {
     {
     	lock_guard<mutex> lockpause(pause_mux);
     	paused = false;
+	iter_max = 0;
     }
     pause_cond.notify_one();
 }

@@ -454,7 +454,7 @@ int Dataflow::pause() {
 	int ret;
 	int iter;
 	vector<df::Actor *> sources = find_sources();
-	vector<df::Actor *> nonsources = find_nonsources();
+	//vector<df::Actor *> nonsources = find_nonsources();
 
 	for (auto& s : sources) {
 		iter = s->pause();
@@ -463,7 +463,18 @@ int Dataflow::pause() {
 	}
 
 	max++;
-	
+
+	for (auto& ac : actors) {
+		ac.second->pauseAfter(max);
+	}
+
+	for (auto& ac : actors) {
+		ac.second->isPaused();
+	}
+
+	//This mechanism did not work on limited
+	// number of processors.
+	/*
 	for (auto& s : nonsources) {
 		s->startPause();
 	}
@@ -479,6 +490,7 @@ int Dataflow::pause() {
 	for (auto& s : actors) {
 		s.second->waitResumeTill();
 	}
+	*/
 
 	return max;
 }

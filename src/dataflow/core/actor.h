@@ -114,6 +114,7 @@ namespace df {
     std::thread tresumetill;
     std::thread tpause;
 
+    int iter_max;
     bool paused;
     std::condition_variable pause_cond;
     std::condition_variable sol_cond;
@@ -633,6 +634,9 @@ namespace df {
      */
     int pause();
 
+    void pauseAfter(int imax);
+    bool isPaused();
+    
     /*!
      * Resume the actor execution.
      */
