@@ -6,7 +6,7 @@ rdf ex1 {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 1600;
+	last = 1000;
     }
     actor S {
 	computation = DelaySplit;
@@ -15,7 +15,7 @@ rdf ex1 {
     }
     actor A1 {
     	computation = DelayActor;
-	delay = 30;
+	delay = 20;
     }
     actor J {
 	computation = DelayJoin;
@@ -64,7 +64,7 @@ right {
     }
     actor a {
     	computation = DelayActor;
-	delay = 30;
+	delay = 20;
     }
     actor J {
     	computation = DelayJoin;
@@ -113,7 +113,5 @@ right {
 }
 main {
    load = 500 : r1;
-   load = 1000 : r1;
-   load = 1500 : r2;
-   load = 2000 : r2;
+   load = 1000 : r2;
 }
