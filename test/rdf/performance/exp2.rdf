@@ -1,4 +1,4 @@
-rdf exp1 {
+rdf exp2 {
     topology {
         nodes = Src,S,A1,J,Snk;
 	edges = e1(Src,S), e2(S,A1), e3(A1,J), e4(J,Snk);
@@ -15,7 +15,7 @@ rdf exp1 {
     }
     actor A1 {
     	computation = DelayActor;
-	delay = 20;
+	delay = 30;
     }
     actor J {
 	computation = DelayJoin;
@@ -64,7 +64,7 @@ right {
     }
     actor a {
     	computation = DelayActor;
-	delay = 20;
+	delay = 30;
     }
     actor J {
     	computation = DelayJoin;
