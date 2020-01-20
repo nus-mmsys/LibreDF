@@ -6,7 +6,7 @@ rdf ex1 {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 1000;
+	last = 1500;
     }
     actor S {
 	computation = DelaySplit;
@@ -15,7 +15,7 @@ rdf ex1 {
     }
     actor A1 {
     	computation = DelayActor;
-	delay = 20;
+	delay = 40;
     }
     actor J {
 	computation = DelayJoin;
@@ -27,7 +27,7 @@ rdf ex1 {
 	delay = 10;
     }
     parameter {
-	logging = true;
+	logging = false;
 	scheduling = false;
 	policy = 0;
     }
@@ -64,7 +64,7 @@ right {
     }
     actor a {
     	computation = DelayActor;
-	delay = 20;
+	delay = 40;
     }
     actor J {
     	computation = DelayJoin;
@@ -72,6 +72,48 @@ right {
     }
 }
 }
+rule r2 {
+left {
+    topology {
+        nodes = S,A1,a,J;
+	edges = e1(S,A1), e2(S,a), e3(A1,J), e4(a,J);
+    }
+    actor S {
+    	computation = DelaySplit;
+    	arity = 2;
+    }
+    actor A1 {
+    	computation = DelayActor;
+    }
+    actor a {
+    	computation = DelayActor;
+    }
+    actor J {
+    	computation = DelayJoin;
+	arity = 2;
+    }
+}
+right {
+    topology {
+        nodes = S,A1,J;
+	edges = e1(S,A1), e2(A1,J);
+    }
+    actor S {
+    	computation = DelaySplit;
+	arity = 1;
+    }
+    actor A1 {
+    	computation = DelayActor;
+    }
+    actor J {
+    	computation = DelayJoin;
+	arity = 1;
+    }
+}
+}
 main {
-   load = 400 : r1;
+   load = 300 : r1;
+   load = 600 : r1;
+   load = 900 : r2;
+   load = 1200 : r2;
 }
