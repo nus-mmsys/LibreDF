@@ -7,7 +7,7 @@ if len(sys.argv) < 2 :
     exit(0)
 
 f = open(sys.argv[1])
-resname = sys.argv[1].split(".")[0]+".csv"
+resname = "../../plots/rdf/"+sys.argv[1].split(".")[0]+".csv"
 res = open(resname, "w")
 
 csv = {}
