@@ -176,7 +176,7 @@ void RDataflow::reconfigure(int iter) {
 
 	placement.place(appac, policy, place_init);
 	
-	setOrders(g->order());
+	//setOrders(g->order());
    
 	for (auto c : appac) {
     		c->startRun();

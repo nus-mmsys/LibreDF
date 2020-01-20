@@ -618,7 +618,7 @@ df::Dataflow * Parser::get_dataflow() {
 			graph->get_sink_rate(edname));
 	}	
 
-	res->setOrders(graph->order());
+	//res->setOrders(graph->order());
 	
 	return res;
 }

@@ -579,9 +579,9 @@ void Dataflow::log(string msg) {
 	iolock.unlock();
 }
 
-void Dataflow::setOrders(vector<vector<string>> ord) {
-	orders = ord;
-}
+//void Dataflow::setOrders(vector<vector<string>> ord) {
+//	orders = ord;
+//}
 
 Dataflow::~Dataflow() {
   

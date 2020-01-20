@@ -62,7 +62,7 @@ namespace df {
     std::map<std::string, Edge *> edges; /**< The set of all actors in the dataflow. */
     std::map<std::string, Actor *> remoteactors; /**< The set of all remote actors in the dataflow. */
 
-    std::vector<std::vector<std::string>> orders;
+    //std::vector<std::vector<std::string>> orders;
 
     Placement placement; 
     Timer timer;
@@ -262,7 +262,7 @@ namespace df {
 
     void log(std::string msg);
     
-    void setOrders(std::vector<std::vector<std::string>> ord);
+    //void setOrders(std::vector<std::vector<std::string>> ord);
     
     /*!
      * Dataflow destructor

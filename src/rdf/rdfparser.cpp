@@ -218,7 +218,7 @@ RDataflow * RDFParser::get_rdataflow() {
 	//Rules and programs
 	res->set_graph(rdfg);
 
-	res->setOrders(graph->order());
+	//res->setOrders(graph->order());
 
 	return res;
 }
