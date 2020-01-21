@@ -1,4 +1,4 @@
-rdf exp5 {
+rdf exp6 {
     topology {
         nodes = Src,S,A1,B1,J,Snk;
 	edges = e1(Src,S), e2(S,A1), e3(A1,B1), e4(B1,J), e5(J,Snk);
