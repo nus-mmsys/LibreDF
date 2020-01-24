@@ -26,7 +26,7 @@ ggtheme = theme(plot.title = element_text(size=15),
 	axis.title.y = element_text(size=14),
 	axis.text.y = element_text(size=12))
 
-#plot(data$it, (data$end-data$start)/scale, 
+#plot(data$step, (data$end-data$start)/scale, 
 #     main=name, 
 #    xlab="iteration", ylab="latency = end(iteration) - start(iteration)",
 #     xlab="token", ylab="latency [second]",
@@ -34,17 +34,17 @@ ggtheme = theme(plot.title = element_text(size=15),
 
 pdf(paste(name,"_latency.pdf", sep=""))
 
-ggplot(data, aes(data$it, (data$end-data$start)/scale)) +
+ggplot(data, aes(data$step, (data$end-data$start)/scale)) +
      geom_path(colour = "blue") +
      labs(x="token", y="latency [second]") +
      ggtheme
 
 #print(paste("Total latency = ",toString(latency)," second"))
 
-average = data$it[length(data$it)]/(data$end[length(data$end)]/scale)
+average = data$step[length(data$step)]/(data$end[length(data$end)]/scale)
 
 
-#plot(data$it, data$sol/((data$end-lastend)/scale), 
+#plot(data$step, 1/((data$end-lastend)/scale), 
 #     main=name, 
 #    xlab="iteration", ylab="throughput = 1 / (end(iteration) - end(iteration-1))",
 #     xlab="token", ylab="throughput [token/second]",
@@ -59,7 +59,7 @@ if (!anim) {
   lastend = head(c(0,data$end),-1)
   
 
-  p <- ggplot(data, aes(data$it,  data$sol/((data$end-lastend)/scale))) +
+  p <- ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
      labs(x="token", y="throughput [token/second]") +
      ggtheme
@@ -73,7 +73,7 @@ if (!anim) {
     data <- read.csv(args[1], nrows=i)
     lastend = head(c(0,data$end),-1)
   
-    p <- ggplot(data, aes(data$it, data$sol/((data$end-lastend)/scale))) +
+    p <- ggplot(data, aes(data$step,  1/((data$end-lastend)/scale))) +
        geom_path(colour = "blue") +
        labs(x="token", y="throughput [token/second]") +
        ggtheme
