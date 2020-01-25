@@ -32,17 +32,16 @@ ggtheme = theme(plot.title = element_text(size=15),
 #     xlab="token", ylab="latency [second]",
 #     type="l", col="blue")
 
-pdf(paste(name,"_latency.pdf", sep=""))
+pdf(paste(name,"_lat.pdf", sep=""))
 
 ggplot(data, aes(data$it, (data$end-data$start)/scale)) +
      geom_path(colour = "blue") +
-     labs(x="token", y="latency [second]") +
+     labs(x="iteration", y="latency [second]") +
      ggtheme
 
 #print(paste("Total latency = ",toString(latency)," second"))
 
 average = data$it[length(data$it)]/(data$end[length(data$end)]/scale)
-
 
 #plot(data$it, data$sol/((data$end-lastend)/scale), 
 #     main=name, 
@@ -58,13 +57,12 @@ if (!anim) {
   data <- read.csv(args[1])
   lastend = head(c(0,data$end),-1)
   
-
   p <- ggplot(data, aes(data$it,  data$sol/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
-     labs(x="token", y="throughput [token/second]") +
+     labs(x="iteration", y="throughput [token/second]") +
      ggtheme
 
-  ggsave(paste(name,"_throughput.pdf", sep=""))
+  ggsave(paste(name,"_thr.pdf", sep=""))
 
 } else {
 
@@ -75,7 +73,7 @@ if (!anim) {
   
     p <- ggplot(data, aes(data$it, data$sol/((data$end-lastend)/scale))) +
        geom_path(colour = "blue") +
-       labs(x="token", y="throughput [token/second]") +
+       labs(x="iteration", y="throughput [token/second]") +
        ggtheme
 
     oname = paste(sprintf("%04d",i), ".png", sep="")
