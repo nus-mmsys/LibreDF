@@ -42,6 +42,7 @@ namespace df {
 	  void place(const std::map<std::string, df::Actor *> & actors, int policy, int init);
 	  void roundRobin(const std::vector<df::Actor *> & actors, int init);
 	  void singleProcessor(const std::vector<Actor *> & actors);
+	  void manual(const std::vector<Actor *> & actors);
   };
 
 }
