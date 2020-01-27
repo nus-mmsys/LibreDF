@@ -20,7 +20,7 @@ for line in f:
     it = int(linelist[3])
     start = int(linelist[4])
     end = int(linelist[5])
-    execution = int(linelist[6])
+    #execution = int(linelist[6])
     #if step in csv :
     #    if start < csv[step][0] :
     #        csv[step][0] = start
@@ -41,10 +41,10 @@ for line in f:
             csv[it][0] = start
         if end > csv[it][1] :
             csv[it][1] = end
-            csv[it][3] = solutions[it][actname]
-        csv[it][2] += execution
+            csv[it][2] = solutions[it][actname]
+        #csv[it][2] += execution
     else:
-        csv[it] = [start, end, execution, 1]
+        csv[it] = [start, end, 1]
         solutions[it] = {actname : 1}
 
 #res.write("step,start,end,latency,execution\n")
@@ -56,15 +56,14 @@ for line in f:
 #              +str(csv[step][1]-csv[step][0])+","
 #              +str(csv[step][2])+"\n")
 
-res.write("it,start,end,latency,execution,sol\n")
+res.write("it,start,end,latency,sol\n")
 starttime = csv[1][0]
 for it in dict(sorted(csv.items())):
     res.write(str(it)+","
               +str(csv[it][0]-starttime)+","
               +str(csv[it][1]-starttime)+","
               +str(csv[it][1]-csv[it][0])+","
-              +str(csv[it][2])+","
-              +str(csv[it][3])+"\n")
+              +str(csv[it][2])+"\n")
 
 f.close()
 print(resname+" is created.")
