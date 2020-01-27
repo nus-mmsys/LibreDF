@@ -41,11 +41,16 @@ void DelaySink::reinit() {
 
 void DelaySink::run() {
   auto in = consume(input);
+  
+  start_exec = timer.nowUs();
+  
   log("delay sink "+to_string(stepno));
 
   counter = 0;
   while(counter<max) counter++;
 
+  end_exec = timer.nowUs();
+  
   release(input);
 }
 

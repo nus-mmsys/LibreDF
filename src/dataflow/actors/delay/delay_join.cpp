@@ -63,6 +63,8 @@ void DelayJoin::run() {
   auto in = consume(input);	
   auto out = produceMR(output);
 
+  start_exec = timer.nowUs();
+  
   for (int j=0; j<out.size(); j++) {
 	  out[j]->set(*in[j]->get());
   }
@@ -72,6 +74,8 @@ void DelayJoin::run() {
   counter = 0;
   while(counter<max) counter++;
 
+  end_exec = timer.nowUs();
+  
   release(input);
   releaseMR(output);
 

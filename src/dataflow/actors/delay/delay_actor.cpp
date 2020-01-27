@@ -43,12 +43,17 @@ void DelayActor::reinit() {
 void DelayActor::run() {
   auto in = consume(input);
   auto out = produce(output);
+
+  start_exec = timer.nowUs();
+
   out->set(*in->get());
   log("delay actor "+to_string(stepno));
 
   counter = 0;
   while(counter<max) counter++;
 
+  end_exec = timer.nowUs();
+  
   release(input);
   release(output);
 }

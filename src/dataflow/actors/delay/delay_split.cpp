@@ -61,6 +61,8 @@ void DelaySplit::run() {
   auto in = consumeMR(input);	
   auto out = produce(output);
 
+  start_exec = timer.nowUs();
+  
   for (int j=0; j < in.size(); j++) {
 	out[j]->set(*in[j]->get());
   }
@@ -70,6 +72,8 @@ void DelaySplit::run() {
   counter = 0;
   while(counter<max) counter++;
 
+  end_exec = timer.nowUs();
+  
   releaseMR(input);
   release(output);
 
