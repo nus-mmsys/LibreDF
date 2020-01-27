@@ -46,6 +46,9 @@ void DelaySource::reinit() {
 
 void DelaySource::run() {
   auto out = produce(output);
+
+  start_exec = timer.nowUs();
+
   out->set(stepno);
   log("delay source "+to_string(stepno));
 
@@ -54,6 +57,8 @@ void DelaySource::run() {
 
   if(stepno >= last)
     setEos(output);
+
+  end_exec = timer.nowUs();
 
   release(output);
 }

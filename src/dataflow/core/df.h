@@ -120,7 +120,7 @@ namespace df {
     Edge * createEdge(const std::string& name, const std::string& src,
 		      const std::string& snk);
     void destroyEdge(Edge * e);
-    void destroyActor(Actor * ac);
+    void terminateActor(Actor * ac);
 
     Actor * createActor(std::string const& s, const std::string& name);
     Actor * createRemoteActor(const std::string& name);

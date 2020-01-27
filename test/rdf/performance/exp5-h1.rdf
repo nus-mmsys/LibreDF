@@ -33,7 +33,7 @@ rdf exp5 {
     parameter {
 	logging = false;
 	scheduling = true;
-	policy = 2;
+	policy = 0;
     }
 }
 rule r1 {

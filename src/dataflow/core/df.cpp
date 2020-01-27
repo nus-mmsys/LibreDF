@@ -113,8 +113,9 @@ void Dataflow::destroyEdge(Edge * e) {
 	delete e;
 }
 
-void Dataflow::destroyActor(Actor * ac) {
-	delete ac;
+void Dataflow::terminateActor(Actor * ac) {
+	//delete ac;
+	ac->terminate();	
 }
 
 Actor * Dataflow::createActor(std::string const& s, const std::string& name) {

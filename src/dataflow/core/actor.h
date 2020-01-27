@@ -95,7 +95,7 @@ namespace df {
     int instance_period;
     unsigned long latency;
   
-    unsigned long start_exec, exec_dur;
+    unsigned long start_exec, end_exec, exec_dur;
   private:
 
     Property prop; /**< A map containing the message keys and values transfered to actor from a dataflow */
@@ -652,6 +652,8 @@ namespace df {
      */
     int resumeTill(int iter);
     
+    void terminate();
+
     /*!
      * Destructor of the actor.
      */

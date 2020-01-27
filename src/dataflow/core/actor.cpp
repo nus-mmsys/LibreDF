@@ -37,6 +37,7 @@ Actor::Actor(const string &name) : status(OK), stepno(1), name(name) {
   start_firing = 0;
   end_firing = 0;
   start_exec = 0;
+  end_exec = 0;
   exec_dur = 0;
   average_period = 1000;
   instance_period = 1000;
@@ -84,12 +85,15 @@ bool Actor::setProps(std::map<std::string, std::string> p) {
 void Actor::execlog() {
   string s = name + " : "
 	  + to_string(stepno) + " " 
-	  + to_string(iterno) + " "
-	  + to_string(start_firing) + " "
-	  + to_string(end_firing) + " " 
-	  + to_string(end_firing-start_firing);
-  if (exec_dur != 0)
-	  s += " " + to_string(exec_dur);
+	  + to_string(iterno) + " " ;
+	  //+ to_string(start_firing) + " "
+	  //+ to_string(end_firing) + " " 
+	  //+ to_string(end_firing-start_firing);
+  if (start_exec != 0) {
+	s = s + to_string(start_exec) + " "
+	      + to_string(end_exec) + " "
+	      + to_string(end_exec - start_exec);
+  }
   s+= "\n";
   if (logging) {
      iolock->lock();
@@ -579,7 +583,12 @@ bool Actor::isSink() {
 	return outputPorts.empty();
 }
 
-Actor::~Actor() { 
-    if (!logging)
+void Actor::terminate() {
+    if (!logging){
         logfile.close();
+    }
+}
+
+Actor::~Actor() { 
+    terminate();
 }
