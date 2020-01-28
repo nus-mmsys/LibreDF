@@ -67,10 +67,8 @@ void DelaySplit::run() {
 
   log("delay split "+to_string(stepno));
 
-  while(true) {
-	if (timer.nowUs() - start_exec >= delay * 1000)
-       		break;		
-  }
+  counter = 0;
+  while(counter<max) counter++;
 
   end_exec = timer.nowUs();
   

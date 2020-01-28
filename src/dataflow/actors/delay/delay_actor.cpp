@@ -33,6 +33,7 @@ void DelayActor::init() {
     delay = getPropInt("delay");
   else
     delay = 1;
+  max = delay * 720000;
 }
 
 void DelayActor::reinit() {
@@ -47,10 +48,8 @@ void DelayActor::run() {
   out->set(*in->get());
   log("delay actor "+to_string(stepno));
 
-  while(true) {
-	if (timer.nowUs() - start_exec >= delay * 1000)
-       		break;		
-  }
+  counter = 0;
+  while(counter < max) counter++;
 
   end_exec = timer.nowUs();
   
