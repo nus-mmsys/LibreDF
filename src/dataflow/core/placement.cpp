@@ -73,11 +73,13 @@ void Placement::singleProcessor(const std::vector<Actor *> & actors) {
 void Placement::manual(const std::vector<Actor *> & actors) {
 
   for (auto ac : actors) {
-    if (ac->getName() == "Src" || ac->getName() == "A1")
+    if (ac->getName() == "Src" 
+		    || ac->getName() == "Snk" 
+		    || ac->getName() == "S" )
     	ac->setCpuId(cpunb - 1);
-    else if (ac->getName() == "Snk" || ac->getName() == "B1")
+    else if (ac->getName() == "A1")
     	ac->setCpuId(cpunb - 2);
-    else if (ac->getName() == "S" || ac->getName() == "A2")
+    else if (ac->getName() == "A2")
     	ac->setCpuId(cpunb - 3);
     else
     	ac->setCpuId(cpunb - 4);

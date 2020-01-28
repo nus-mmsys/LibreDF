@@ -1,4 +1,4 @@
-rdf exp8 {
+rdf exp8-h1 {
     topology {
         nodes = Src,S,A1,B1,J,Snk;
 	edges = e1(Src,S), e2(S,A1), e3(A1,B1), e4(B1,J), e5(J,Snk);
@@ -15,11 +15,11 @@ rdf exp8 {
     }
     actor A1 {
     	computation = DelayActor;
-	delay = 50;
+	delay = 42;
     }
     actor B1 {
     	computation = DelayActor;
-	delay = 10;
+	delay = 20;
     }
     actor J {
 	computation = DelayJoin;
@@ -33,7 +33,7 @@ rdf exp8 {
     parameter {
 	logging = false;
 	scheduling = true;
-	policy = 0;
+	policy = 2;
     }
 }
 rule r1 {
@@ -75,11 +75,11 @@ right {
     }
     actor ax {
     	computation = DelayActor;
-	delay = 50;
+	delay = 42;
     }
     actor bx {
     	computation = DelayActor;
-	delay = 10;
+	delay = 20;
     }
     actor J {
     	computation = DelayJoin;
@@ -138,5 +138,5 @@ right {
 }
 main {
    load = 500 : r1;
-   load = 1000 : r2;
+   load = 1500 : r2;
 }
