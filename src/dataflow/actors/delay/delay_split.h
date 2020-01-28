@@ -37,7 +37,6 @@ private:
   int arity;
   int tilew, tileh;
 
-  long int counter, max;
   int delay;
   
   static  df::ActorRegister<DelaySplit> reg;

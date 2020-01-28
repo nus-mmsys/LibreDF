@@ -60,6 +60,10 @@ void Actor::setCpuId(int cpu) {
 	cpuid = cpu;
 }
 
+int Actor::getCpuId() {
+	return cpuid;
+}
+
 void Actor::setSolution(int sol) {
 	solution = sol;
 }

@@ -34,8 +34,6 @@ void DelaySplit::init() {
   else
     delay = 1;
 
-  max = delay * 695000;
-  
   if (propEmpty("arity"))
 	  arity = 1;
   else
@@ -69,8 +67,10 @@ void DelaySplit::run() {
 
   log("delay split "+to_string(stepno));
 
-  counter = 0;
-  while(counter<max) counter++;
+  while(true) {
+	if (timer.nowUs() - start_exec >= delay * 1000)
+       		break;		
+  }
 
   end_exec = timer.nowUs();
   

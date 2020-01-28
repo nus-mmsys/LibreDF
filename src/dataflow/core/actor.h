@@ -141,6 +141,8 @@ namespace df {
 
     void setCpuId(int cpu);
 
+    int getCpuId();
+    
     Status getStatus() {
 	Status res;
 	status_mux.lock();
