@@ -41,6 +41,7 @@ void DelaySplit::init() {
 
   tilew = 0;
   tileh = 0;
+  max = delay*720000;
 }
 
 void DelaySplit::reinit() {
@@ -52,6 +53,7 @@ void DelaySplit::reinit() {
   
   tilew = 0;
   tileh = 0;
+  max = delay*720000;
 }
 
 void DelaySplit::run() {
