@@ -77,7 +77,8 @@ void Placement::manual(const std::vector<Actor *> & actors) {
     	ac->setCpuId(cpunb - 1);
     else if (ac->getName() == "Snk" || ac->getName() == "J")
     	ac->setCpuId(cpunb - 2);
-    else if (ac->getName() == "A1" || ac->getName() == "B1")
+    else if (ac->getName() == "A1" || ac->getName() == "B1" 
+		    || ac->getName() == "C1")
     	ac->setCpuId(cpunb - 3);
     else
     	ac->setCpuId(cpunb - 4);
