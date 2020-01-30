@@ -46,6 +46,9 @@ void Placement::place(const std::vector<Actor *> & actors, int policy, int init)
 		case 3:
 			manual3(actors);
 			break;
+		case 4:
+			manual4(actors);
+			break;
 		default:
 			roundRobin(actors, init);
 			break;
@@ -99,6 +102,25 @@ void Placement::manual3(const std::vector<Actor *> & actors) {
     	ac->setCpuId(cpunb - 2);
     else if (ac->getName() == "A2" || ac->getName() == "B3" 
 		    || ac->getName() == "C4")
+    	ac->setCpuId(cpunb - 3);
+    else
+	ac->setCpuId(cpunb - 4);
+  }
+}
+
+void Placement::manual4(const std::vector<Actor *> & actors) {
+
+  for (auto ac : actors) {
+    if (ac->getName() == "Src" || ac->getName() == "S"
+        || ac->getName() == "A1" || ac->getName() == "B1"
+	|| ac->getName() == "C1")
+    	ac->setCpuId(cpunb - 1);
+    else if (ac->getName() == "Snk" || ac->getName() == "J" 
+	|| ac->getName() == "A2" || ac->getName() == "B3"
+        || ac->getName() == "C4") 	
+    	ac->setCpuId(cpunb - 2);
+    else if (ac->getName() == "A3" || ac->getName() == "B4" 
+		    || ac->getName() == "C5")
     	ac->setCpuId(cpunb - 3);
     else
 	ac->setCpuId(cpunb - 4);

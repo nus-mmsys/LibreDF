@@ -44,6 +44,7 @@ namespace df {
 	  void singleProcessor(const std::vector<Actor *> & actors);
 	  void manual(const std::vector<Actor *> & actors);
 	  void manual3(const std::vector<Actor *> & actors);
+	  void manual4(const std::vector<Actor *> & actors);
   };
 
 }
