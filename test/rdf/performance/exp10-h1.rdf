@@ -1,4 +1,4 @@
-rdf exp10 {
+rdf exp10-h1 {
     topology {
         nodes = Src,S,A1,B1,C1,J,Snk;
 	edges = e1(Src,S), e2(S,A1), e3(A1,B1),
@@ -37,8 +37,8 @@ rdf exp10 {
     }
     parameter {
 	logging = false;
-	scheduling = false;
-	policy = 0;
+	scheduling = true;
+	policy = 3;
     }
 }
 rule r1 {

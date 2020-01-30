@@ -1,0 +1,96 @@
+rdf exp11 {
+    topology {
+        nodes = Src,A1,B1,C1,D1,Snk;
+	edges = e1(Src,A1), e2(A1,B1), e3(B1,C1),
+		e4(C1,D1), e5(A1,D1), e6(D1,Snk);
+    }
+    actor Src {
+    	computation = DelaySource;
+	delay = 10;
+	last = 1000;
+    }
+    actor A1 {
+    	computation = DelayActor12;
+	delay = 40;
+	output1 = e2;
+	output2 = e5;
+    }
+    actor B1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor C1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor D1 {
+    	computation = DelayActor21;
+	delay = 40;
+	input1 = e4;
+	input2 = e5;
+    }
+    actor Snk {
+    	computation = DelaySink;
+	delay = 10;
+    }
+    parameter {
+	logging = true;
+	scheduling = false;
+	policy = 0;
+    }
+}
+rule r1 {
+left {
+    topology {
+        nodes = A1,B1,C1,D1;
+	edges = e2(A1,B1), e3(B1,C1),
+		e4(C1,D1), e5(A1,D1);
+    }
+    actor A1 {
+    	computation = DelayActor12;
+	delay = 40;
+    }
+    actor B1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor C1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor D1 {
+    	computation = DelayActor21;
+	delay = 40;
+    }
+}
+right {
+    topology {
+        nodes = A1,B1,C1,D1;
+	edges = e1(A1,B1), e2(A1,C1),
+		e3(B1,D1), e4(C1,D1);
+    }
+    actor A1 {
+    	computation = DelayActor12;
+	delay = 40;
+	output1 = e1;
+	output2 = e2;
+    }
+    actor B1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor C1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor D1 {
+    	computation = DelayActor21;
+	delay = 40;
+	input1 = e3;
+	input2 = e4;
+    }
+}
+}
+main {
+   load = 500 : r1;
+}

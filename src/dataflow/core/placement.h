@@ -43,6 +43,7 @@ namespace df {
 	  void roundRobin(const std::vector<df::Actor *> & actors, int init);
 	  void singleProcessor(const std::vector<Actor *> & actors);
 	  void manual(const std::vector<Actor *> & actors);
+	  void manual3(const std::vector<Actor *> & actors);
   };
 
 }
