@@ -1,4 +1,4 @@
-rdf exp11 {
+rdf exp12 {
     topology {
         nodes = Src,A1,B1,C1,D1,Snk;
 	edges = e1(Src,A1), e2(A1,B1), e3(B1,C1),
@@ -34,7 +34,7 @@ rdf exp11 {
 	delay = 10;
     }
     parameter {
-	logging = true;
+	logging = false;
 	scheduling = false;
 	policy = 0;
     }
@@ -92,5 +92,5 @@ right {
 }
 }
 main {
-   load = 500 : r1;
+   load = 2000 : r1;
 }
