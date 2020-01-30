@@ -157,7 +157,9 @@ int Rule::apply() {
 	
 	res->set_name(g->get_name()+"."+name);
 	
-	if (matching && disappearing_actor && connectivity && consistency && liveness) {
+	if (matching && disappearing_actor && connectivity && consistency 
+			/*//TODO:Fix liveness
+			 * && liveness*/) {
 		
 		auto gactors = g->get_actors();
 		//Add common actors and appearing actors to the result.
