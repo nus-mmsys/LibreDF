@@ -44,10 +44,10 @@ void DelayGeneric::run() {
   auto out = produce(output);
 
   start_exec = timer.nowUs();
-  
+
+  sum=0;  
   for (i=0; i<in.size(); i++) sum+= *in[i]->get();
-  for (i=0; i<out.size(); i++)
-  	out[i]->set(sum);
+  for (i=0; i<out.size(); i++) out[i]->set(sum);
 
   log("delay generic "+to_string(stepno));
 
