@@ -39,8 +39,8 @@ rule r1 {
 left {
     topology {
         nodes = A1,B1,C1,D1;
-	edges = e2(A1,B1), e3(B1,C1),
-		e4(C1,D1), e5(A1,D1);
+	edges = e1(A1,B1), e2(B1,C1),
+		e3(C1,D1), e4(A1,D1);
     }
     actor A1 {
     	computation = DelayGeneric;
@@ -62,8 +62,8 @@ left {
 right {
     topology {
         nodes = A1,B1,C1,D1;
-	edges = e2(A1,B1), e8(B1,D1), 
-		e4(C1,D1), e7(A1,C1);
+	edges = e1(A1,B1), e2(B1,D1), 
+		e3(C1,D1), e4(A1,C1);
     }
     actor A1 {
     	computation = DelayGeneric;
