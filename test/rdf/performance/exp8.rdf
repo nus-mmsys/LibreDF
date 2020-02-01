@@ -137,6 +137,6 @@ right {
 }
 }
 main {
-   load = 500 : r1;
-   load = 2000 : r2;
+   time = 5 : r1;
+   time = 20 : r2;
 }

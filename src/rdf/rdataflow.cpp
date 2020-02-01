@@ -22,7 +22,8 @@ using namespace df;
 using namespace std;
 
 RDataflow::RDataflow(string name) : df::Dataflow(name) {
-	load = 0;
+	time = 0;
+	ch_period = 10;
 	vc = false;
 	curr_graph = new Graph();
 }
@@ -39,7 +40,7 @@ Rule * RDataflow::get_applicable_rule() {
 	Rule * r = nullptr;
 	//The load is a dummy variable for the tests.
 	//In real application, conditions such as latency and throughput can be used. 
-	load++;
+	time++;
 	for (auto c : rdfg->prog) {
 	    for (auto ac : rdfg->prog[c.first]) {
 		if (ac.metric == "period") {
@@ -59,8 +60,8 @@ Rule * RDataflow::get_applicable_rule() {
 				return rdfg->rules[ac.rule];
 			}
 		    }
-		} else if (ac.var == "load") {
- 			if (ac.val == load) {
+		} else if (ac.var == "time") {
+ 			if (ac.val*1000/ch_period == time) {
 				vc = true;
 				return rdfg->rules[ac.rule];
 			}
@@ -234,7 +235,7 @@ void RDataflow::run() {
   vector<string> delays;
   while(!check_eos()) {
 	//For demo, this delay was 20 ms.
-  	timer.sleep(10);
+  	timer.sleep(ch_period);
    	r = get_applicable_rule();
   	if (r==nullptr) {
   		continue;

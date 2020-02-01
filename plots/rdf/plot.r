@@ -57,9 +57,9 @@ if (!anim) {
   data <- read.csv(args[1])
   lastend = head(c(0,data$end),-1)
   
-  p <- ggplot(data, aes(data$it,  data$sol/((data$end-lastend)/scale))) +
+  p <- ggplot(data, aes(data$end/scale,  data$sol/((data$end-lastend)/scale))) +
      geom_path(colour = "blue") +
-     labs(x="iteration", y="throughput [token/second]") +
+     labs(x="time [second]", y="throughput [token/second]") +
      ggtheme
 
   ggsave(paste(name,"_thr.pdf", sep=""))

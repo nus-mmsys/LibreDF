@@ -32,7 +32,8 @@
 class RDataflow : public df::Dataflow {
 private:
     bool vc;
-    int load;
+    int time;
+    int ch_period;
     RDFGraph * rdfg;
     Graph * curr_graph;
     Rule * get_applicable_rule();
