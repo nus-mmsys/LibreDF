@@ -52,45 +52,45 @@ left {
 }
 right {
     topology {
-        nodes = S,A1,bx,J;
-	edges = e1(S,A1), e2(A1,bx), e3(bx,J);
+        nodes = S,A1,a,J;
+	edges = e1(S,A1), e2(S,a), e3(A1,J), e4(a,J);
     }
     actor S {
     	computation = DelaySplit;
-	arity = 1;
+	arity = 2;
     }
     actor A1 {
     	computation = DelayActor;
     }
-    actor bx {
+    actor a {
     	computation = DelayActor;
-	delay = 15;
+	delay = 20;
     }
     actor J {
     	computation = DelayJoin;
-	arity = 1;
+	arity = 2;
     }
 }
 }
 rule r2 {
 left {
     topology {
-        nodes = S,A1,bx,J;
-	edges = e1(S,A1), e2(A1,bx), e3(bx,J);
+        nodes = S,A1,a,J;
+	edges = e1(S,A1), e2(S,a), e3(A1,J), e4(a,J);
     }
     actor S {
     	computation = DelaySplit;
-	arity = 1;
+    	arity = 2;
     }
     actor A1 {
     	computation = DelayActor;
     }
-    actor bx {
+    actor a {
     	computation = DelayActor;
     }
     actor J {
     	computation = DelayJoin;
-	arity = 1;
+	arity = 2;
     }
 }
 right {

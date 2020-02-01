@@ -1,7 +1,8 @@
 rdf exp2 {
     topology {
-        nodes = Src,S,A1,J,Snk;
-	edges = e1(Src,S), e2(S,A1), e3(A1,J), e4(J,Snk);
+        nodes = Src,S,A1,B1,C1,J,Snk;
+	edges = e1(Src,S), e2(S,A1), e3(A1,B1),
+		e4(B1,C1), e5(C1,J), e6(J,Snk);
     }
     actor Src {
     	computation = DelaySource;
@@ -15,7 +16,15 @@ rdf exp2 {
     }
     actor A1 {
     	computation = DelayActor;
-	delay = 30;
+	delay = 40;
+    }
+    actor B1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor C1 {
+    	computation = DelayActor;
+	delay = 40;
     }
     actor J {
 	computation = DelayJoin;
@@ -35,14 +44,20 @@ rdf exp2 {
 rule r1 {
 left {
     topology {
-        nodes = S,A1,J;
-	edges = e1(S,A1), e2(A1,J);
+        nodes = S,A1,B1,C1,J;
+	edges = e1(S,A1), e2(A1,B1), e3(B1,C1), e4(C1,J);
     }
     actor S {
     	computation = DelaySplit;
 	arity = 1;
     }
     actor A1 {
+    	computation = DelayActor;
+    }
+    actor B1 {
+    	computation = DelayActor;
+    }
+    actor C1 {
     	computation = DelayActor;
     }
     actor J {
@@ -52,8 +67,9 @@ left {
 }
 right {
     topology {
-        nodes = S,A1,a,J;
-	edges = e1(S,A1), e2(S,a), e3(A1,J), e4(a,J);
+        nodes = S,A1,B1,C1,ax,bx,cx,J;
+	edges = e1(S,A1), e2(S,ax), e3(A1,B1), e4(B1,C1), 
+		e5(ax,bx), e6(bx,cx), e7(C1,J), e8(cx,J);
     }
     actor S {
     	computation = DelaySplit;
@@ -62,9 +78,23 @@ right {
     actor A1 {
     	computation = DelayActor;
     }
-    actor a {
+    actor B1 {
     	computation = DelayActor;
-	delay = 30;
+    }
+    actor C1 {
+    	computation = DelayActor;
+    }
+    actor ax {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor bx {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor cx {
+    	computation = DelayActor;
+	delay = 40;
     }
     actor J {
     	computation = DelayJoin;
@@ -75,17 +105,30 @@ right {
 rule r2 {
 left {
     topology {
-        nodes = S,A1,a,J;
-	edges = e1(S,A1), e2(S,a), e3(A1,J), e4(a,J);
+        nodes = S,A1,B1,C1,ax,bx,cx,J;
+	edges = e1(S,A1), e2(S,ax), e3(A1,B1), e4(B1,C1),
+		e5(ax,bx), e6(bx,cx),e7(C1,J), e8(cx,J);
     }
     actor S {
     	computation = DelaySplit;
-    	arity = 2;
+	arity = 2;
     }
     actor A1 {
     	computation = DelayActor;
     }
-    actor a {
+    actor B1 {
+    	computation = DelayActor;
+    }
+    actor C1 {
+    	computation = DelayActor;
+    }
+    actor ax {
+    	computation = DelayActor;
+    }
+    actor bx {
+    	computation = DelayActor;
+    }
+    actor cx {
     	computation = DelayActor;
     }
     actor J {
@@ -95,14 +138,21 @@ left {
 }
 right {
     topology {
-        nodes = S,A1,J;
-	edges = e1(S,A1), e2(A1,J);
+        nodes = S,A1,B1,C1,J;
+	edges = e1(S,A1), e2(A1,B1), 
+		e3(B1,C1), e4(C1,J);
     }
     actor S {
     	computation = DelaySplit;
 	arity = 1;
     }
     actor A1 {
+    	computation = DelayActor;
+    }
+    actor B1 {
+    	computation = DelayActor;
+    }
+    actor C1 {
     	computation = DelayActor;
     }
     actor J {
@@ -113,5 +163,6 @@ right {
 }
 main {
    load = 500 : r1;
-   load = 1000 : r2;
+   load = 1000 : r1;
+   load = 1500 : r1;
 }
