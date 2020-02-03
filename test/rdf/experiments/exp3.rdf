@@ -7,7 +7,7 @@ rdf exp3 {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 1000;
+	last = 500;
     }
     actor A1 {
     	computation = DelayGeneric;
@@ -84,5 +84,5 @@ right {
 }
 }
 main {
-   load = 2000 : r1;
+   Src.timer = 10000 : r1;
 }
