@@ -71,7 +71,7 @@ for it in dict(sorted(csv.items())):
               +str(csv[it][1]-csv[it][0])+","
               +str(csv[it][2])+","
 	      +str(int(period))+"\n")
-    period = 0.6*period + 0.4*(csv[it][1]-csv[it-1][1])  
+    period = 0.8*period + 0.2*(csv[it][1]-csv[it-1][1])  
 
 f.close()
 print(resname+" is created.")
