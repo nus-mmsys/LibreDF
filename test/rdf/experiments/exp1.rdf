@@ -26,7 +26,7 @@ rdf exp1 {
 	policy = 0;
     }
 }
-rule r1 {
+rule tr1 {
 left {
     topology {
         nodes = ax,B1;
@@ -56,7 +56,7 @@ right {
     }
 }
 }
-rule r2 {
+rule tr2 {
 left {
     topology {
         nodes = ax,ay,B1;
@@ -86,8 +86,8 @@ right {
 }
 }
 main {
-   Src.timer = 5000 : r1;
-   Src.timer = 10000 : r1;
-   Src.timer = 20000 : r2;
-   Src.timer = 25000 : r2;
+   Src.timer = 5000 : tr1;
+   Src.timer = 10000 : tr1;
+   Src.timer = 20000 : tr2;
+   Src.timer = 25000 : tr2;
 }
