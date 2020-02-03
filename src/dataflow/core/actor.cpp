@@ -403,6 +403,10 @@ unsigned long Actor::getTime() {
 	return res;
 }
 
+unsigned long Actor::getStopWatch() {
+	return timer.now()-stime;
+}
+
 void Actor::setTime(unsigned long c) {
 	time_mux.lock();
 	creation_time = c;
@@ -464,7 +468,7 @@ void Actor::runActor() {
   start();
   
   timer.start();
-
+  stime = timer.now();
   while(getStatus() != EOS) {
 	  
       {

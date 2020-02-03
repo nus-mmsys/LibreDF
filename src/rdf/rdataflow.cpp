@@ -43,7 +43,17 @@ Rule * RDataflow::get_applicable_rule() {
 	time++;
 	for (auto c : rdfg->prog) {
 	    for (auto ac : rdfg->prog[c.first]) {
-		if (ac.metric == "period") {
+		if (ac.metric == "timer") {
+		    if (actors.find(ac.actor) != actors.end()) {
+			if (actors[ac.actor]->getStopWatch() 
+				>= ac.val-ch_period 
+			    && actors[ac.actor]->getStopWatch() 
+				<= ac.val+ch_period ) {
+				vc = true;		
+				return rdfg->rules[ac.rule];
+			}
+		    }
+		} else if (ac.metric == "period") {
 		    if (actors.find(ac.actor) != actors.end()) {
 			if (actors[ac.actor]->getPeriod() == ac.val) {
 				actors[ac.actor]->setPeriod(1); 

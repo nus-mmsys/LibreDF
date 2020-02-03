@@ -64,7 +64,7 @@ right {
     }
     actor bx {
     	computation = DelayActor;
-	delay = 15;
+	delay = 40;
     }
     actor J {
     	computation = DelayJoin;
@@ -112,6 +112,6 @@ right {
 }
 }
 main {
-   load = 500 : r1;
-   load = 1000 : r2;
+   Src.timer = 5000 : r1;
+   Src.timer = 10000 : r2;
 }

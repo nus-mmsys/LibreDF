@@ -54,7 +54,7 @@ namespace df {
     std::string type; /**< The type of the actor */
     Status status; 
     unsigned long creation_time;
-
+    unsigned long stime;
     std::map<std::string, IPort*> inputPorts; /**< Map of input ports referenced by their name  */
     std::map<std::string, OPort*> outputPorts; /**< Map of output ports referenced by their name */
 
@@ -356,6 +356,7 @@ namespace df {
     void assignTime();
     void setTime(unsigned long);
     unsigned long getTime();
+    unsigned long getStopWatch();
 
     void startInit();
     
