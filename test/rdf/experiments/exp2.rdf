@@ -7,7 +7,7 @@ rdf exp2 {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 1000;
+	last = 1200;
     }
     actor S {
 	computation = DelaySplit;
@@ -15,15 +15,15 @@ rdf exp2 {
 	delay = 2;
     }
     actor A1 {
-    	computation = DelayActor;
+    	computation = DelayActorA;
 	delay = 40;
     }
     actor B1 {
-    	computation = DelayActor;
+    	computation = DelayActorB;
 	delay = 40;
     }
     actor C1 {
-    	computation = DelayActor;
+    	computation = DelayActorC;
 	delay = 40;
     }
     actor J {
@@ -41,7 +41,7 @@ rdf exp2 {
 	policy = 0;
     }
 }
-rule r1 {
+rule tr1 {
 left {
     topology {
         nodes = S,A1,B1,C1,J;
@@ -52,13 +52,13 @@ left {
 	arity = 1;
     }
     actor A1 {
-    	computation = DelayActor;
+    	computation = DelayActorA;
     }
     actor B1 {
-    	computation = DelayActor;
+    	computation = DelayActorB;
     }
     actor C1 {
-    	computation = DelayActor;
+    	computation = DelayActorC;
     }
     actor J {
     	computation = DelayJoin;
@@ -76,24 +76,24 @@ right {
 	arity = 2;
     }
     actor A1 {
-    	computation = DelayActor;
+    	computation = DelayActorA;
     }
     actor B1 {
-    	computation = DelayActor;
+    	computation = DelayActorB;
     }
     actor C1 {
-    	computation = DelayActor;
+    	computation = DelayActorC;
     }
     actor ax {
-    	computation = DelayActor;
+    	computation = DelayActorA;
 	delay = 40;
     }
     actor bx {
-    	computation = DelayActor;
+    	computation = DelayActorB;
 	delay = 40;
     }
     actor cx {
-    	computation = DelayActor;
+    	computation = DelayActorC;
 	delay = 40;
     }
     actor J {
@@ -102,7 +102,7 @@ right {
     }
 }
 }
-rule r2 {
+rule tr2 {
 left {
     topology {
         nodes = S,A1,B1,C1,ax,bx,cx,J;
@@ -123,13 +123,13 @@ left {
     	computation = DelayActor;
     }
     actor ax {
-    	computation = DelayActor;
+    	computation = DelayActorA;
     }
     actor bx {
-    	computation = DelayActor;
+    	computation = DelayActorB;
     }
     actor cx {
-    	computation = DelayActor;
+    	computation = DelayActorC;
     }
     actor J {
     	computation = DelayJoin;
@@ -147,13 +147,13 @@ right {
 	arity = 1;
     }
     actor A1 {
-    	computation = DelayActor;
+    	computation = DelayActorA;
     }
     actor B1 {
-    	computation = DelayActor;
+    	computation = DelayActorB;
     }
     actor C1 {
-    	computation = DelayActor;
+    	computation = DelayActorC;
     }
     actor J {
     	computation = DelayJoin;
@@ -162,7 +162,8 @@ right {
 }
 }
 main {
-   load = 500 : r1;
-   load = 1000 : r1;
-   load = 1500 : r1;
+   Src.timer = 5000 : tr1;
+   Src.timer = 10000 : tr1;
+   Src.timer = 20000 : tr2;
+   Src.timer = 25000 : tr2;
 }
