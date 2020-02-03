@@ -255,33 +255,28 @@ void RDataflow::run() {
 	}
 
 
-	//startTiming();
+	rdftimer.start();
+
 	iter = pause();
 	if (iter<0) {
 		log("[RDF] Pause failed.");
 		return;
 	}		
 	log("[RDF] Paused at iteration "+to_string(iter));
-	//endTiming("[RDF] Pausing delay: ");
+	log("[RDF] Pause delay = "+rdftimer.endUs());
 
 	rdftimer.start();
 	
-	//startTiming();
 	res = r->apply(curr_graph);
 	if (res!=nullptr) {
 		curr_graph->reconfigure_from(res);
-		//endTiming("[RDF] Matching delay: ");
 		
-		//startTiming();
 		reconfigure(iter);
-		//endTiming("[RDF] Replace graph delay: ");
 	}
 
 	delays.push_back(rdftimer.endUs());
 	
-	//startTiming();
 	resume();
-	//endTiming("[RDF] Resuming delay: ");
   }
 
   status = DataflowStatus::RUNNING;
@@ -293,7 +288,7 @@ void RDataflow::run() {
   waitRun();
 
   for (auto d : delays)
-	 log("RDF reconfiguration delay = "+d+" us");
+  	 log("Reconfiguration delay = "+d+" us");
 
   log("Execution time = "+timer.endUs()+" us"); 
   
