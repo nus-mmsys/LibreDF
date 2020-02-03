@@ -56,14 +56,22 @@ for line in f:
 #              +str(csv[step][1]-csv[step][0])+","
 #              +str(csv[step][2])+"\n")
 
-res.write("it,start,end,latency,sol\n")
+res.write("it,start,end,latency,sol,period\n")
 starttime = csv[1][0]
+period = csv[2][1]-csv[1][1]
+lastsol = 0
 for it in dict(sorted(csv.items())):
+    if csv[it][2] != lastsol:
+	lastsol = csv[it][2]
+	period = csv[it+1][1] - csv[it][1]
+	continue
     res.write(str(it)+","
               +str(csv[it][0]-starttime)+","
               +str(csv[it][1]-starttime)+","
               +str(csv[it][1]-csv[it][0])+","
-              +str(csv[it][2])+"\n")
+              +str(csv[it][2])+","
+	      +str(int(period))+"\n")
+    period = 0.9*period + 0.1*(csv[it][1]-csv[it-1][1])  
 
 f.close()
 print(resname+" is created.")
