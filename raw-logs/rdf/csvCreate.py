@@ -64,14 +64,15 @@ for it in dict(sorted(csv.items())):
     if csv[it][2] != lastsol:
 	lastsol = csv[it][2]
 	period = csv[it+1][1] - csv[it][1]
-	continue
+    else:
+        period = 0.6*period + 0.4*(csv[it][1]-csv[it-1][1])  
+    
     res.write(str(it)+","
               +str(csv[it][0]-starttime)+","
               +str(csv[it][1]-starttime)+","
               +str(csv[it][1]-csv[it][0])+","
               +str(csv[it][2])+","
 	      +str(int(period))+"\n")
-    period = 0.8*period + 0.2*(csv[it][1]-csv[it-1][1])  
 
 f.close()
 print(resname+" is created.")
