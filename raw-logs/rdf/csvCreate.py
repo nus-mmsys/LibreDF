@@ -59,13 +59,11 @@ for line in f:
 res.write("it,start,end,latency,sol,period\n")
 starttime = csv[1][0]
 period = csv[2][1]-csv[1][1]
-lastsol = 0
 for it in dict(sorted(csv.items())):
-    if csv[it][2] != lastsol:
-	lastsol = csv[it][2]
-	period = csv[it+1][1] - csv[it][1]
-    else:
-        period = 0.6*period + 0.4*(csv[it][1]-csv[it-1][1])  
+    if it == 1:
+	period = csv[2][1] - csv[1][1]
+    else :
+    	period = 0.7*period + 0.3*(csv[it][1]-csv[it-1][1])  
     
     res.write(str(it)+","
               +str(csv[it][0]-starttime)+","
