@@ -11,19 +11,19 @@ rdf exp3 {
     }
     actor A1 {
     	computation = DelayGeneric;
-	delay = 40;
+	delay = 50;
     }
     actor B1 {
     	computation = DelayGeneric;
-	delay = 40;
+	delay = 10;
     }
     actor C1 {
     	computation = DelayGeneric;
-	delay = 40;
+	delay = 10;
     }
     actor D1 {
     	computation = DelayGeneric;
-	delay = 40;
+	delay = 50;
     }
     actor Snk {
     	computation = DelaySink;
@@ -44,19 +44,15 @@ left {
     }
     actor A1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
     actor B1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
     actor C1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
     actor D1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
 }
 right {
@@ -67,19 +63,15 @@ right {
     }
     actor A1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
     actor B1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
     actor C1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
     actor D1 {
     	computation = DelayGeneric;
-	delay = 40;
     }
 }
 }
