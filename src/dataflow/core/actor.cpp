@@ -270,11 +270,16 @@ void Actor::startReInit() {
 
 void Actor::startRun() {
 
+  struct sched_param sch_param;
+
   if (!propEmpty("cpu")) {
 	  cpuid = getPropInt("cpu");
   }
   
   trun = thread(&Actor::runActor, this);
+  sch_param.sched_priority = 0;
+  sched_setscheduler(trun.native_handle(), SCHED_FIFO, &sch_param);	
+
 
   if (scheduling) { 
   	cpu_set_t cpuset;
@@ -474,6 +479,7 @@ void Actor::runActor() {
       {
 	  lock_guard<mutex> lockrun(runend_mux);
 	  runIter();
+          std::this_thread::yield();	  
       }
 
       {
