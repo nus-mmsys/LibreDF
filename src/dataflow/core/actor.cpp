@@ -277,9 +277,8 @@ void Actor::startRun() {
   }
   
   trun = thread(&Actor::runActor, this);
-  sch_param.sched_priority = 0;
-  sched_setscheduler(trun.native_handle(), SCHED_FIFO, &sch_param);	
-
+  sch_param.sched_priority = sched_get_priority_max(SCHED_RR);
+  sched_setscheduler(trun.native_handle(), SCHED_RR, &sch_param);	
 
   if (scheduling) { 
   	cpu_set_t cpuset;
