@@ -44,104 +44,81 @@ rdf exp3 {
 rule tr1 {
 left {
     topology {
-        nodes = S,A1,B1,B2,J;
-	edges = e1(S,A1), e2(A1,B1), e3(B1,J),
-		e4(S,B2), e5(B2,J);
+        nodes = Src,S,A1,B1,B2,J,Snk;
+	edges = e1(Src,S), e2(S,A1), e3(A1,B1), e4(B1,J),
+		e5(S,B2), e6(B2,J), e7(J,Snk);
+    }
+    actor Src {
+    	computation = DelaySource;
+	delay = 10;
+	last = 500;
     }
     actor S {
     	computation = DelaySplit;
-	arity = 2;
+	arity = 1;
+	delay = 2;
     }
     actor A1 {
     	computation = DelayActorA;
+	delay = 50;
     }
     actor B1 {
     	computation = DelayActorB;
+	delay = 20;
     }
     actor B2 {
     	computation = DelayActorB;
+	delay = 20;
     }
     actor J {
     	computation = DelayJoin;
-	arity = 2;
+	arity = 1;
+	delay = 2;
+    }
+    actor Snk {
+    	computation = DelaySink;
+	delay = 10;
     }
 }
 right {
     topology {
-        nodes = S,A1,B1,B2,J;
-	edges = e1(S,A1), e2(A1,J), e3(S,B1),
-		e4(B1,B2), e5(B2,J);
+        nodes = Src,S,A1,B1,B2,J,Snk;
+	edges = e1(Src,S), e2(S,A1), e3(A1,B1), e4(B1,J),
+		e5(S,B2), e6(B2,J), e7(J,Snk);
+    }
+    actor Src {
+    	computation = DelaySource;
+	delay = 10;
+	last = 500;
     }
     actor S {
     	computation = DelaySplit;
-	arity = 2;
+	arity = 1;
+	delay = 2;
     }
     actor A1 {
     	computation = DelayActorA;
+	delay = 50;
     }
     actor B1 {
     	computation = DelayActorB;
+	delay = 20;
     }
     actor B2 {
     	computation = DelayActorB;
+	delay = 20;
     }
     actor J {
     	computation = DelayJoin;
-	arity = 2;
+	arity = 1;
+	delay = 2;
     }
-}
-}
-rule tr2 {
-left {
-    topology {
-        nodes = S,A1,B1,B2,J;
-	edges = e1(S,A1), e2(A1,J), e3(S,B1),
-		e4(B1,B2), e5(B2,J);
-    }
-    actor S {
-    	computation = DelaySplit;
-	arity = 2;
-    }
-    actor A1 {
-    	computation = DelayActorA;
-    }
-    actor B1 {
-    	computation = DelayActorB;
-    }
-    actor B2 {
-    	computation = DelayActorB;
-    }
-    actor J {
-    	computation = DelayJoin;
-	arity = 2;
-    }
-}
-right {
-    topology {
-        nodes = S,A1,B1,B2,J;
-	edges = e1(S,A1), e2(A1,B1), e3(B1,J),
-		e4(S,B2), e5(B2,J);
-    }
-    actor S {
-    	computation = DelaySplit;
-	arity = 2;
-    }
-    actor A1 {
-    	computation = DelayActorA;
-    }
-    actor B1 {
-    	computation = DelayActorB;
-    }
-    actor B2 {
-    	computation = DelayActorB;
-    }
-    actor J {
-    	computation = DelayJoin;
-	arity = 2;
+    actor Snk {
+    	computation = DelaySink;
+	delay = 10;
     }
 }
 }
 main {
-   Src.timer = 5000 : tr1;
-   Src.timer = 20000 : tr2;
+   Src.timer = 10000 : tr1;
 }
