@@ -84,10 +84,6 @@
 	  return 0;
   }
 
-  static int sched_yield() {
-	  return 0;
-  }
-
   static int pthread_setaffinity_np(pthread_t thread, size_t cpu_size, cpu_set_t *cpu_set) {
 	thread_port_t mach_thread = pthread_mach_thread_np(thread);
 	int core = 0;
