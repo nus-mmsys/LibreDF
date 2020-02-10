@@ -96,5 +96,5 @@ right {
 }
 }
 main {
-   Src.timer = 10000 : tr1;
+   Src.timer = 30000 : tr1;
 }
