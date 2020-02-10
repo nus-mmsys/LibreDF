@@ -1,0 +1,37 @@
+rdf exp2-no {
+    topology {
+        nodes = Src,S,A1,J,Snk;
+	edges = e1(Src,S), e2(S,A1),
+		e3(A1,J), e4(J,Snk);
+    }
+    actor Src {
+    	computation = DelaySource;
+	delay = 10;
+	last = 1200;
+    }
+    actor S {
+	computation = DelaySplit;
+	arity = 1;
+	delay = 2;
+    }
+    actor A1 {
+    	computation = DelayActorA;
+	delay = 50;
+    }
+    actor J {
+	computation = DelayJoin;
+	arity = 1;
+	delay = 2;
+    }
+    actor Snk {
+    	computation = DelaySink;
+	delay = 10;
+    }
+    parameter {
+	logging = false;
+	scheduling = false;
+	policy = 0;
+    }
+}
+main {
+}
