@@ -60,8 +60,7 @@ if (!anim) {
   p <- ggplot(data, aes(data$start/scale,  data$sol/((data$period)/scale))) +
      geom_path(colour = "blue") +
      labs(x="time [second]", y="throughput [token/second]") +
-     ggtheme
-
+     ggtheme + expand_limits(y = 0)
   ggsave(paste(name,"_thr.pdf", sep=""))
 
 } else {
