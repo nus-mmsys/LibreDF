@@ -7,7 +7,7 @@ rdf exp2-gg {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 1200;
+	last = 40;
     }
     actor S {
 	computation = DelaySplit;
@@ -36,65 +36,39 @@ rdf exp2-gg {
 rule tr1 {
 left {
     topology {
-        nodes = Src,S,A1,J,Snk;
-	edges = e1(Src,S), e2(S,A1),
-		e3(A1,J), e4(J,Snk);
-    }
-    actor Src {
-    	computation = DelaySource;
-	delay = 10;
-	last = 1200;
+        nodes = S,A1,J;
+	edges = e1(S,A1), e2(A1,J);
     }
     actor S {
-	computation = DelaySplit;
+    	computation = DelaySplit;
 	arity = 1;
-	delay = 2;
     }
     actor A1 {
     	computation = DelayActorA;
-	delay = 50;
     }
     actor J {
-	computation = DelayJoin;
+    	computation = DelayJoin;
 	arity = 1;
-	delay = 2;
-    }
-    actor Snk {
-    	computation = DelaySink;
-	delay = 10;
     }
 }
 right {
     topology {
-        nodes = Src,S,A1,J,Snk;
-	edges = e1(Src,S), e2(S,A1),
-		e3(A1,J), e4(J,Snk);
-    }
-    actor Src {
-    	computation = DelaySource;
-	delay = 10;
-	last = 1200;
+        nodes = S,A1,J;
+	edges = e1(S,A1), e2(A1,J);
     }
     actor S {
-	computation = DelaySplit;
+    	computation = DelaySplit;
 	arity = 1;
-	delay = 2;
     }
     actor A1 {
     	computation = DelayActorA;
-	delay = 50;
     }
     actor J {
-	computation = DelayJoin;
+    	computation = DelayJoin;
 	arity = 1;
-	delay = 2;
-    }
-    actor Snk {
-    	computation = DelaySink;
-	delay = 10;
     }
 }
 }
 main {
-   Src.timer = 30000 : tr1;
+   Src.timer = 1000 : tr1;
 }
