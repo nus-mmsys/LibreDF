@@ -7,7 +7,7 @@ rdf exp2-no {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 1200;
+	last = 40;
     }
     actor S {
 	computation = DelaySplit;
