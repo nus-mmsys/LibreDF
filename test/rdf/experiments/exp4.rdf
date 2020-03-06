@@ -1,0 +1,113 @@
+rdf exp4 {
+    topology {
+        nodes = Src,A1,Snk;
+	edges = e1(Src,A1),e2(A1,Snk);
+    }
+    actor Src {
+    	computation = DelaySourceSplit;
+	delay = 10;
+	last = 1200;
+	arity = 1;
+    }
+    actor A1 {
+    	computation = DelayActorA;
+	delay = 50;
+    }
+    actor Snk {
+    	computation = DelaySinkJoin;
+	delay = 10;
+	arity = 1;
+    }
+    parameter {
+	logging = false;
+	scheduling = false;
+	policy = 0;
+    }
+}
+rule tr1 {
+left {
+    topology {
+        nodes = Src,A1,Snk;
+	edges = e1(Src,A1), e2(A1,Snk);
+    }
+    actor Src {
+    	computation = DelaySourceSplit;
+	arity = 1;
+    }
+    actor A1 {
+    	computation = DelayActorA;
+    }
+    actor Snk {
+    	computation = DelaySinkJoin;
+	arity = 1;
+    }
+}
+right {
+    topology {
+        nodes = Src,A1,ax,Snk;
+	edges = e1(Src,A1), e2(Src,ax), 
+		e3(A1,Snk), e4(ax,Snk);
+    }
+    actor Src {
+    	computation = DelaySourceSplit;
+	arity = 2;
+    }
+    actor A1 {
+    	computation = DelayActorA;
+    }
+    actor ax {
+    	computation = DelayActorA;
+	delay = 50;
+    }
+    actor Snk {
+    	computation = DelaySinkJoin;
+	arity = 2;
+    }
+}
+}
+rule tr2 {
+left {
+    topology {
+        nodes = Src,A1,ax,Snk;
+	edges = e1(Src,A1), e2(Src,ax), 
+		e3(A1,Snk), e4(ax,Snk);
+    }
+    actor S {
+    	computation = DelaySourceSplit;
+	arity = 2;
+    }
+    actor A1 {
+    	computation = DelayActorA;
+    }
+    actor ax {
+    	computation = DelayActorA;
+    }
+    actor J {
+    	computation = DelaySinkJoin;
+	arity = 2;
+    }
+}
+right {
+    topology {
+        nodes = Src,A1,Snk;
+	edges = e1(Src,A1), e2(A1,Snk);
+    }
+    actor Src {
+    	computation = DelaySourceSplit;
+	arity = 1;
+    }
+    actor A1 {
+    	computation = DelayActorA;
+    }
+    actor Snk {
+    	computation = DelaySinkJoin;
+	arity = 1;
+    }
+}
+}
+main {
+   Src.timer = 5 : tr1;
+   Src.timer = 10 : tr1;
+   Src.timer = 20 : tr2;
+   Src.timer = 25 : tr2;
+}
