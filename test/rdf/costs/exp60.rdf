@@ -1,4 +1,4 @@
-rdf exp20 {
+rdf exp40 {
     topology {
         nodes = Src, 
 		A000, A001, A002, A003, A004, A005, A006, A007, A008, A009, 
@@ -153,11 +153,25 @@ rule tr1 {
 left {
     topology {
         nodes = A000, A001, A002, A003, A004, A005, A006, A007, A008, A009, 
-		A010, A011, A012, A013, A014, A015, A016, A017, A018, A019; 
+		A010, A011, A012, A013, A014, A015, A016, A017, A018, A019, 
+		A020, A021, A022, A023, A024, A025, A026, A027, A028, A029, 
+		A030, A031, A032, A033, A034, A035, A036, A037, A038, A039,
+		A040, A041, A042, A043, A044, A045, A046, A047, A048, A049, 
+		A050, A051, A052, A053, A054, A055, A056, A057, A058, A059; 
+
 	edges = e1(A000,A001), e2(A001,A002), e3(A002,A003), e4(A003,A004), 
 		e5(A004,A005), e6(A005,A006), e7(A006,A007), e8(A007,A008), e9(A008,A009), 
 		e10(A009,A010), e11(A010,A011), e12(A011,A012), e13(A012,A013), e14(A013,A014), 
-		e15(A014,A015), e16(A015,A016), e17(A016,A017), e18(A017,A018), e19(A018,A019);
+		e15(A014,A015), e16(A015,A016), e17(A016,A017), e18(A017,A018), e19(A018,A019),
+		e20(A019,A020), e21(A020,A021), e22(A021,A022), e23(A022,A023), e24(A023,A024), 
+		e25(A024,A025), e26(A025,A026), e27(A026,A027), e28(A027,A028), e29(A028,A029),
+		e30(A029,A030), e31(A030,A031), e32(A031,A032), e33(A032,A033), e34(A033,A034), 
+		e35(A034,A035), e36(A035,A036), e37(A036,A037), e38(A037,A038), e39(A038,A039),
+		e40(A039,A040), e41(A040,A041), e42(A041,A042), e43(A042,A043), e44(A043,A044), 
+		e45(A044,A045), e46(A045,A046), e47(A046,A047), e48(A047,A048), e49(A048,A049),
+		e50(A049,A050), e51(A050,A051), e52(A051,A052), e53(A052,A053), e54(A053,A054), 
+		e55(A054,A055), e56(A055,A056), e57(A056,A057), e58(A057,A058), e59(A058,A059);
+
     }
     actor A000 { computation = DelayActor; delay = 10; }
     actor A001 { computation = DelayActor; delay = 10; }
@@ -179,15 +193,68 @@ left {
     actor A017 { computation = DelayActor; delay = 10; }
     actor A018 { computation = DelayActor; delay = 10; }
     actor A019 { computation = DelayActor; delay = 10; }
+    actor A020 { computation = DelayActor; delay = 10; }
+    actor A021 { computation = DelayActor; delay = 10; }
+    actor A022 { computation = DelayActor; delay = 10; }
+    actor A023 { computation = DelayActor; delay = 10; }
+    actor A024 { computation = DelayActor; delay = 10; }
+    actor A025 { computation = DelayActor; delay = 10; }
+    actor A026 { computation = DelayActor; delay = 10; }
+    actor A027 { computation = DelayActor; delay = 10; }
+    actor A028 { computation = DelayActor; delay = 10; }
+    actor A029 { computation = DelayActor; delay = 10; }
+    actor A030 { computation = DelayActor; delay = 10; }
+    actor A031 { computation = DelayActor; delay = 10; }
+    actor A032 { computation = DelayActor; delay = 10; }
+    actor A033 { computation = DelayActor; delay = 10; }
+    actor A034 { computation = DelayActor; delay = 10; }
+    actor A035 { computation = DelayActor; delay = 10; }
+    actor A036 { computation = DelayActor; delay = 10; }
+    actor A037 { computation = DelayActor; delay = 10; }
+    actor A038 { computation = DelayActor; delay = 10; }
+    actor A039 { computation = DelayActor; delay = 10; }
+    actor A040 { computation = DelayActor; delay = 10; }
+    actor A041 { computation = DelayActor; delay = 10; }
+    actor A042 { computation = DelayActor; delay = 10; }
+    actor A043 { computation = DelayActor; delay = 10; }
+    actor A044 { computation = DelayActor; delay = 10; }
+    actor A045 { computation = DelayActor; delay = 10; }
+    actor A046 { computation = DelayActor; delay = 10; }
+    actor A047 { computation = DelayActor; delay = 10; }
+    actor A048 { computation = DelayActor; delay = 10; }
+    actor A049 { computation = DelayActor; delay = 10; }
+    actor A050 { computation = DelayActor; delay = 10; }
+    actor A051 { computation = DelayActor; delay = 10; }
+    actor A052 { computation = DelayActor; delay = 10; }
+    actor A053 { computation = DelayActor; delay = 10; }
+    actor A054 { computation = DelayActor; delay = 10; }
+    actor A055 { computation = DelayActor; delay = 10; }
+    actor A056 { computation = DelayActor; delay = 10; }
+    actor A057 { computation = DelayActor; delay = 10; }
+    actor A058 { computation = DelayActor; delay = 10; }
+    actor A059 { computation = DelayActor; delay = 10; }
 }
 right {
     topology {
         nodes = A000, A001, A002, A003, A004, A005, A006, A007, A008, A009, 
-		A010, A011, A012, A013, A014, A015, A016, A017, A018, A019; 
+		A010, A011, A012, A013, A014, A015, A016, A017, A018, A019, 
+		A020, A021, A022, A023, A024, A025, A026, A027, A028, A029, 
+		A030, A031, A032, A033, A034, A035, A036, A037, A038, A039,
+		A040, A041, A042, A043, A044, A045, A046, A047, A048, A049, 
+		A050, A051, A052, A053, A054, A055, A056, A057, A058, A059; 
+
 	edges = e1(A000,A001), e2(A001,A002), e3(A002,A003), e4(A003,A004), 
 		e5(A004,A005), e6(A005,A006), e7(A006,A007), e8(A007,A008), e9(A008,A009), 
 		e10(A009,A010), e11(A010,A011), e12(A011,A012), e13(A012,A013), e14(A013,A014), 
-		e15(A014,A015), e16(A015,A016), e17(A016,A017), e18(A017,A018), e19(A018,A019);
+		e15(A014,A015), e16(A015,A016), e17(A016,A017), e18(A017,A018), e19(A018,A019),
+		e20(A019,A020), e21(A020,A021), e22(A021,A022), e23(A022,A023), e24(A023,A024), 
+		e25(A024,A025), e26(A025,A026), e27(A026,A027), e28(A027,A028), e29(A028,A029),
+		e30(A029,A030), e31(A030,A031), e32(A031,A032), e33(A032,A033), e34(A033,A034), 
+ 		e35(A034,A035), e36(A035,A036), e37(A036,A037), e38(A037,A038), e39(A038,A039),
+		e40(A039,A040), e41(A040,A041), e42(A041,A042), e43(A042,A043), e44(A043,A044), 
+		e45(A044,A045), e46(A045,A046), e47(A046,A047), e48(A047,A048), e49(A048,A049),
+		e50(A049,A050), e51(A050,A051), e52(A051,A052), e53(A052,A053), e54(A053,A054), 
+		e55(A054,A055), e56(A055,A056), e57(A056,A057), e58(A057,A058), e59(A058,A059);
     }
     actor A000 { computation = DelayActor; delay = 10; }
     actor A001 { computation = DelayActor; delay = 10; }
@@ -209,6 +276,46 @@ right {
     actor A017 { computation = DelayActor; delay = 10; }
     actor A018 { computation = DelayActor; delay = 10; }
     actor A019 { computation = DelayActor; delay = 10; }
+    actor A020 { computation = DelayActor; delay = 10; }
+    actor A021 { computation = DelayActor; delay = 10; }
+    actor A022 { computation = DelayActor; delay = 10; }
+    actor A023 { computation = DelayActor; delay = 10; }
+    actor A024 { computation = DelayActor; delay = 10; }
+    actor A025 { computation = DelayActor; delay = 10; }
+    actor A026 { computation = DelayActor; delay = 10; }
+    actor A027 { computation = DelayActor; delay = 10; }
+    actor A028 { computation = DelayActor; delay = 10; }
+    actor A029 { computation = DelayActor; delay = 10; }
+    actor A030 { computation = DelayActor; delay = 10; }
+    actor A031 { computation = DelayActor; delay = 10; }
+    actor A032 { computation = DelayActor; delay = 10; }
+    actor A033 { computation = DelayActor; delay = 10; }
+    actor A034 { computation = DelayActor; delay = 10; }
+    actor A035 { computation = DelayActor; delay = 10; }
+    actor A036 { computation = DelayActor; delay = 10; }
+    actor A037 { computation = DelayActor; delay = 10; }
+    actor A038 { computation = DelayActor; delay = 10; }
+    actor A039 { computation = DelayActor; delay = 10; }
+    actor A040 { computation = DelayActor; delay = 10; }
+    actor A041 { computation = DelayActor; delay = 10; }
+    actor A042 { computation = DelayActor; delay = 10; }
+    actor A043 { computation = DelayActor; delay = 10; }
+    actor A044 { computation = DelayActor; delay = 10; }
+    actor A045 { computation = DelayActor; delay = 10; }
+    actor A046 { computation = DelayActor; delay = 10; }
+    actor A047 { computation = DelayActor; delay = 10; }
+    actor A048 { computation = DelayActor; delay = 10; }
+    actor A049 { computation = DelayActor; delay = 10; }
+    actor A050 { computation = DelayActor; delay = 10; }
+    actor A051 { computation = DelayActor; delay = 10; }
+    actor A052 { computation = DelayActor; delay = 10; }
+    actor A053 { computation = DelayActor; delay = 10; }
+    actor A054 { computation = DelayActor; delay = 10; }
+    actor A055 { computation = DelayActor; delay = 10; }
+    actor A056 { computation = DelayActor; delay = 10; }
+    actor A057 { computation = DelayActor; delay = 10; }
+    actor A058 { computation = DelayActor; delay = 10; }
+    actor A059 { computation = DelayActor; delay = 10; }
 }
 }
 main {
