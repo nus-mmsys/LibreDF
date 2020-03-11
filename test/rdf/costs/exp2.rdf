@@ -1,36 +1,144 @@
 rdf exp2 {
     topology {
-        nodes = Src,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,Snk;
-	edges = e1(Src,A), e2(A,B), e3(B,C), e4(C,D),
-		e5(D,E), e6(E,F), e7(F,G), e8(G,H),
-		e9(H,I), e10(I,J), e11(J,K), e12(K,L),
-		e13(L,M), e14(M,N), e15(N,O), e16(O,P),
-		e17(P,Q), e18(Q,R), e19(R,Snk);
+        nodes = Src, 
+		A000, A001, A002, A003, A004, A005, A006, A007, A008, A009, 
+		A010, A011, A012, A013, A014, A015, A016, A017, A018, A019, 
+		A020, A021, A022, A023, A024, A025, A026, A027, A028, A029, 
+		A030, A031, A032, A033, A034, A035, A036, A037, A038, A039, 
+		A040, A041, A042, A043, A044, A045, A046, A047, A048, A049, 
+		A050, A051, A052, A053, A054, A055, A056, A057, A058, A059, 
+		A060, A061, A062, A063, A064, A065, A066, A067, A068, A069, 
+		A070, A071, A072, A073, A074, A075, A076, A077, A078, A079, 
+		A080, A081, A082, A083, A084, A085, A086, A087, A088, A089, 
+		A090, A091, A092, A093, A094, A095, A096, A097, A098, A099,
+		Snk; 
+	edges = e0(Src,A000), e1(A000,A001), e2(A001,A002), e3(A002,A003), e4(A003,A004), 
+		e5(A004,A005), e6(A005,A006), e7(A006,A007), e8(A007,A008), e9(A008,A009), 
+		e10(A009,A010), e11(A010,A011), e12(A011,A012), e13(A012,A013), e14(A013,A014), 
+		e15(A014,A015), e16(A015,A016), e17(A016,A017), e18(A017,A018), e19(A018,A019),
+		e20(A019,A020), e21(A020,A021), e22(A021,A022), e23(A022,A023), e24(A023,A024), 
+		e25(A024,A025), e26(A025,A026), e27(A026,A027), e28(A027,A028), e29(A028,A029),
+		e30(A029,A030), e31(A030,A031), e32(A031,A032), e33(A032,A033), e34(A033,A034), 
+		e35(A034,A035), e36(A035,A036), e37(A036,A037), e38(A037,A038), e39(A038,A039),
+		e40(A039,A040), e41(A040,A041), e42(A041,A042), e43(A042,A043), e44(A043,A044), 
+		e45(A044,A045), e46(A045,A046), e47(A046,A047), e48(A047,A048), e49(A048,A049),
+		e50(A049,A050), e51(A050,A051), e52(A051,A052), e53(A052,A053), e54(A053,A054), 
+		e55(A054,A055), e56(A055,A056), e57(A056,A057), e58(A057,A058), e59(A058,A059),
+		e60(A059,A060), e61(A060,A061), e62(A061,A062), e63(A062,A063), e64(A063,A064), 
+		e65(A064,A065), e66(A065,A066), e67(A066,A067), e68(A067,A068), e69(A068,A069),
+		e70(A069,A070), e71(A070,A071), e72(A071,A072), e73(A072,A073), e74(A073,A074), 
+		e75(A074,A075), e76(A075,A076), e77(A076,A077), e78(A077,A078), e79(A078,A079),
+		e80(A079,A080), e81(A080,A081), e82(A081,A082), e83(A082,A083), e84(A083,A084), 
+		e85(A084,A085), e86(A085,A086), e87(A086,A087), e88(A087,A088), e89(A088,A089),
+		e90(A089,A090), e91(A090,A091), e92(A091,A092), e93(A092,A093), e94(A093,A094), 
+		e95(A094,A095), e96(A095,A096), e97(A096,A097), e98(A097,A098), e99(A098,A099),
+		e100(A099,Snk);
     }
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 100;
+	last = 70;
     }
-    actor A { computation = DelayActor; delay = 10; }
-    actor B { computation = DelayActor; delay = 10; }
-    actor C { computation = DelayActor; delay = 10; }
-    actor D { computation = DelayActor; delay = 10; } 
-    actor E { computation = DelayActor; delay = 10; }
-    actor F { computation = DelayActor; delay = 10; }
-    actor G { computation = DelayActor; delay = 10; }
-    actor H { computation = DelayActor; delay = 10; } 
-    actor I { computation = DelayActor; delay = 10; }
-    actor J { computation = DelayActor; delay = 10; }
-    actor K { computation = DelayActor; delay = 10; }
-    actor L { computation = DelayActor; delay = 10; }
-    actor M { computation = DelayActor; delay = 10; }
-    actor N { computation = DelayActor; delay = 10; }
-    actor O { computation = DelayActor; delay = 10; }
-    actor P { computation = DelayActor; delay = 10; }
-    actor Q { computation = DelayActor; delay = 10; }
-    actor R { computation = DelayActor; delay = 10; }
-
+    actor A000 { computation = DelayActor; delay = 10; }
+    actor A001 { computation = DelayActor; delay = 10; }
+    actor A002 { computation = DelayActor; delay = 10; }
+    actor A003 { computation = DelayActor; delay = 10; }
+    actor A004 { computation = DelayActor; delay = 10; }
+    actor A005 { computation = DelayActor; delay = 10; }
+    actor A006 { computation = DelayActor; delay = 10; }
+    actor A007 { computation = DelayActor; delay = 10; }
+    actor A008 { computation = DelayActor; delay = 10; }
+    actor A009 { computation = DelayActor; delay = 10; }
+    actor A010 { computation = DelayActor; delay = 10; }
+    actor A011 { computation = DelayActor; delay = 10; }
+    actor A012 { computation = DelayActor; delay = 10; }
+    actor A013 { computation = DelayActor; delay = 10; }
+    actor A014 { computation = DelayActor; delay = 10; }
+    actor A015 { computation = DelayActor; delay = 10; }
+    actor A016 { computation = DelayActor; delay = 10; }
+    actor A017 { computation = DelayActor; delay = 10; }
+    actor A018 { computation = DelayActor; delay = 10; }
+    actor A019 { computation = DelayActor; delay = 10; }
+    actor A020 { computation = DelayActor; delay = 10; }
+    actor A021 { computation = DelayActor; delay = 10; }
+    actor A022 { computation = DelayActor; delay = 10; }
+    actor A023 { computation = DelayActor; delay = 10; }
+    actor A024 { computation = DelayActor; delay = 10; }
+    actor A025 { computation = DelayActor; delay = 10; }
+    actor A026 { computation = DelayActor; delay = 10; }
+    actor A027 { computation = DelayActor; delay = 10; }
+    actor A028 { computation = DelayActor; delay = 10; }
+    actor A029 { computation = DelayActor; delay = 10; }
+    actor A030 { computation = DelayActor; delay = 10; }
+    actor A031 { computation = DelayActor; delay = 10; }
+    actor A032 { computation = DelayActor; delay = 10; }
+    actor A033 { computation = DelayActor; delay = 10; }
+    actor A034 { computation = DelayActor; delay = 10; }
+    actor A035 { computation = DelayActor; delay = 10; }
+    actor A036 { computation = DelayActor; delay = 10; }
+    actor A037 { computation = DelayActor; delay = 10; }
+    actor A038 { computation = DelayActor; delay = 10; }
+    actor A039 { computation = DelayActor; delay = 10; }
+    actor A040 { computation = DelayActor; delay = 10; }
+    actor A041 { computation = DelayActor; delay = 10; }
+    actor A042 { computation = DelayActor; delay = 10; }
+    actor A043 { computation = DelayActor; delay = 10; }
+    actor A044 { computation = DelayActor; delay = 10; }
+    actor A045 { computation = DelayActor; delay = 10; }
+    actor A046 { computation = DelayActor; delay = 10; }
+    actor A047 { computation = DelayActor; delay = 10; }
+    actor A048 { computation = DelayActor; delay = 10; }
+    actor A049 { computation = DelayActor; delay = 10; }
+    actor A050 { computation = DelayActor; delay = 10; }
+    actor A051 { computation = DelayActor; delay = 10; }
+    actor A052 { computation = DelayActor; delay = 10; }
+    actor A053 { computation = DelayActor; delay = 10; }
+    actor A054 { computation = DelayActor; delay = 10; }
+    actor A055 { computation = DelayActor; delay = 10; }
+    actor A056 { computation = DelayActor; delay = 10; }
+    actor A057 { computation = DelayActor; delay = 10; }
+    actor A058 { computation = DelayActor; delay = 10; }
+    actor A059 { computation = DelayActor; delay = 10; }
+    actor A060 { computation = DelayActor; delay = 10; }
+    actor A061 { computation = DelayActor; delay = 10; }
+    actor A062 { computation = DelayActor; delay = 10; }
+    actor A063 { computation = DelayActor; delay = 10; }
+    actor A064 { computation = DelayActor; delay = 10; }
+    actor A065 { computation = DelayActor; delay = 10; }
+    actor A066 { computation = DelayActor; delay = 10; }
+    actor A067 { computation = DelayActor; delay = 10; }
+    actor A068 { computation = DelayActor; delay = 10; }
+    actor A069 { computation = DelayActor; delay = 10; }
+    actor A070 { computation = DelayActor; delay = 10; }
+    actor A071 { computation = DelayActor; delay = 10; }
+    actor A072 { computation = DelayActor; delay = 10; }
+    actor A073 { computation = DelayActor; delay = 10; }
+    actor A074 { computation = DelayActor; delay = 10; }
+    actor A075 { computation = DelayActor; delay = 10; }
+    actor A076 { computation = DelayActor; delay = 10; }
+    actor A077 { computation = DelayActor; delay = 10; }
+    actor A078 { computation = DelayActor; delay = 10; }
+    actor A079 { computation = DelayActor; delay = 10; }
+    actor A080 { computation = DelayActor; delay = 10; }
+    actor A081 { computation = DelayActor; delay = 10; }
+    actor A082 { computation = DelayActor; delay = 10; }
+    actor A083 { computation = DelayActor; delay = 10; }
+    actor A084 { computation = DelayActor; delay = 10; }
+    actor A085 { computation = DelayActor; delay = 10; }
+    actor A086 { computation = DelayActor; delay = 10; }
+    actor A087 { computation = DelayActor; delay = 10; }
+    actor A088 { computation = DelayActor; delay = 10; }
+    actor A089 { computation = DelayActor; delay = 10; }
+    actor A090 { computation = DelayActor; delay = 10; }
+    actor A091 { computation = DelayActor; delay = 10; }
+    actor A092 { computation = DelayActor; delay = 10; }
+    actor A093 { computation = DelayActor; delay = 10; }
+    actor A094 { computation = DelayActor; delay = 10; }
+    actor A095 { computation = DelayActor; delay = 10; }
+    actor A096 { computation = DelayActor; delay = 10; }
+    actor A097 { computation = DelayActor; delay = 10; }
+    actor A098 { computation = DelayActor; delay = 10; }
+    actor A099 { computation = DelayActor; delay = 10; }
     actor Snk {
     	computation = DelaySink;
 	delay = 10;
@@ -44,19 +152,19 @@ rdf exp2 {
 rule tr1 {
 left {
     topology {
-        nodes = A,B;
-	edges = e1(A,B);
+        nodes = A000,A001;
+	edges = e1(A000,A001);
     }
-    actor A { computation = DelayActor; delay = 10; }
-    actor B { computation = DelayActor; delay = 10; }
+    actor A000 { computation = DelayActor; delay = 10; }
+    actor A001 { computation = DelayActor; delay = 10; }
 }
 right {
     topology {
-        nodes = A,B;
-	edges = e1(A,B);
+        nodes = A000,A001;
+	edges = e1(A000,A001);
     }
-    actor A { computation = DelayActor; delay = 10; }
-    actor B { computation = DelayActor; delay = 10; }
+    actor A000 { computation = DelayActor; delay = 10; }
+    actor A001 { computation = DelayActor; delay = 10; }
 }
 }
 main {
