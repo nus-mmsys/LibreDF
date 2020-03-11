@@ -1,0 +1,45 @@
+rdf exp0 {
+    topology {
+        nodes = Src,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,Snk;
+	edges = e1(Src,A), e2(A,B), e3(B,C), e4(C,D),
+		e5(D,E), e6(E,F), e7(F,G), e8(G,H),
+		e9(H,I), e10(I,J), e11(J,K), e12(K,L),
+		e13(L,M), e14(M,N), e15(N,O), e16(O,P),
+		e17(P,Q), e18(Q,R), e19(R,Snk);
+    }
+    actor Src {
+    	computation = DelaySource;
+	delay = 10;
+	last = 100;
+    }
+    actor A { computation = DelayActor; delay = 10; }
+    actor B { computation = DelayActor; delay = 10; }
+    actor C { computation = DelayActor; delay = 10; }
+    actor D { computation = DelayActor; delay = 10; } 
+    actor E { computation = DelayActor; delay = 10; }
+    actor F { computation = DelayActor; delay = 10; }
+    actor G { computation = DelayActor; delay = 10; }
+    actor H { computation = DelayActor; delay = 10; } 
+    actor I { computation = DelayActor; delay = 10; }
+    actor J { computation = DelayActor; delay = 10; }
+    actor K { computation = DelayActor; delay = 10; }
+    actor L { computation = DelayActor; delay = 10; }
+    actor M { computation = DelayActor; delay = 10; }
+    actor N { computation = DelayActor; delay = 10; }
+    actor O { computation = DelayActor; delay = 10; }
+    actor P { computation = DelayActor; delay = 10; }
+    actor Q { computation = DelayActor; delay = 10; }
+    actor R { computation = DelayActor; delay = 10; }
+
+    actor Snk {
+    	computation = DelaySink;
+	delay = 10;
+    }
+    parameter {
+	logging = false;
+	scheduling = false;
+	policy = 0;
+    }
+}
+main {
+}
