@@ -8,7 +8,6 @@ rdf inc30 {
     parameter {
 	logging = false;
 	scheduling = false;
-	policy = 0;
     }
 }
 rule tr1 {
