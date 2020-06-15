@@ -78,8 +78,11 @@ void Rule::preprocess() {
 
 Graph * Rule::apply(Graph * graph) {
 	g = graph;
-	res->clear();	
+	res->clear();
+	df::Timer t;
+	t.start();	
 	if (matching_check()) {
+		cout << "Matching cost = " << t.endUs() << " us\n";
 		apply();
 		return res;
 	} else

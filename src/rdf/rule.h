@@ -26,6 +26,7 @@
 #include <map>
 #include <time.h>
 #include "graph/graph.h"
+#include "dataflow/core/timer.h"
 
 using namespace std;
 
