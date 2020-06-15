@@ -1,0 +1,57 @@
+rdf inc20 {
+    topology {
+        nodes = Src, Snk;
+	edges = e1(Src,Snk);
+    }
+    actor Src { computation = DelaySource; last=70; delay = 10; }
+    actor Snk { computation = DelaySink; delay = 10; }
+    parameter {
+	logging = false;
+	scheduling = false;
+	policy = 0;
+    }
+}
+rule tr1 {
+left {
+    topology {
+        nodes = Src, Snk;
+	edges = e1(Src,Snk);
+    }
+}
+right {
+    topology {
+        nodes = Src, A001, A002, A003, A004, A005, A006, A007, A008, A009, 
+		A010, A011, A012, A013, A014, A015, A016, A017, A018, A019, 
+		A020, Snk;
+	edges = e1(Src,A001), e2(A001,A002), e3(A002,A003), e4(A003,A004), 
+		e5(A004,A005), e6(A005,A006), e7(A006,A007), e8(A007,A008), e9(A008,A009), 
+		e10(A009,A010), e11(A010,A011), e12(A011,A012), e13(A012,A013), e14(A013,A014), 
+		e15(A014,A015), e16(A015,A016), e17(A016,A017), e18(A017,A018), e19(A018,A019),
+		e20(A019,A020), e21(A020, Snk); 
+
+    }
+    actor A001 { computation = DelayActor; delay = 10; }
+    actor A002 { computation = DelayActor; delay = 10; }
+    actor A003 { computation = DelayActor; delay = 10; }
+    actor A004 { computation = DelayActor; delay = 10; }
+    actor A005 { computation = DelayActor; delay = 10; }
+    actor A006 { computation = DelayActor; delay = 10; }
+    actor A007 { computation = DelayActor; delay = 10; }
+    actor A008 { computation = DelayActor; delay = 10; }
+    actor A009 { computation = DelayActor; delay = 10; }
+    actor A010 { computation = DelayActor; delay = 10; }
+    actor A011 { computation = DelayActor; delay = 10; }
+    actor A012 { computation = DelayActor; delay = 10; }
+    actor A013 { computation = DelayActor; delay = 10; }
+    actor A014 { computation = DelayActor; delay = 10; }
+    actor A015 { computation = DelayActor; delay = 10; }
+    actor A016 { computation = DelayActor; delay = 10; }
+    actor A017 { computation = DelayActor; delay = 10; }
+    actor A018 { computation = DelayActor; delay = 10; }
+    actor A019 { computation = DelayActor; delay = 10; }
+    actor A020 { computation = DelayActor; delay = 10; }
+}
+}
+main {
+   Src.timer = 1000 : tr1;
+}
