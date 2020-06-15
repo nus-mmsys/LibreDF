@@ -3,7 +3,7 @@ rdf inc10 {
         nodes = Src, Snk;
 	edges = e1(Src,Snk);
     }
-    actor Src { computation = DelaySource; last=70; delay = 10; }
+    actor Src { computation = DelaySource; last=100; delay = 10; }
     actor Snk { computation = DelaySink; delay = 10; }
     parameter {
 	logging = false;
@@ -20,22 +20,22 @@ left {
 }
 right {
     topology {
-        nodes = Src, A001, A002, A003, A004, A005, A006, A007, A008, A009, 
-		A010, Snk;
+        nodes = Src, a001, a002, a003, a004, a005, a006, a007, a008, a009, 
+		a010, Snk;
 
-	edges = e1(Src,A001), e2(A001,A002), e3(A002,A003), e4(A003,A004), 
-		e5(A004,A005), e6(A005,A006), e7(A006,A007), e8(A007,A008), e9(A008,A009), e10(A009,A010), e11(A010,Snk);
+	edges = e1(Src,a001), e2(a001,a002), e3(a002,a003), e4(a003,a004), 
+		e5(a004,a005), e6(a005,a006), e7(a006,a007), e8(a007,a008), e9(a008,a009), e10(a009,a010), e11(a010,Snk);
     }
-    actor A001 { computation = DelayActor; delay = 10; }
-    actor A002 { computation = DelayActor; delay = 10; }
-    actor A003 { computation = DelayActor; delay = 10; }
-    actor A004 { computation = DelayActor; delay = 10; }
-    actor A005 { computation = DelayActor; delay = 10; }
-    actor A006 { computation = DelayActor; delay = 10; }
-    actor A007 { computation = DelayActor; delay = 10; }
-    actor A008 { computation = DelayActor; delay = 10; }
-    actor A009 { computation = DelayActor; delay = 10; }
-    actor A010 { computation = DelayActor; delay = 10; }
+    actor a001 { computation = DelayActor; delay = 10; }
+    actor a002 { computation = DelayActor; delay = 10; }
+    actor a003 { computation = DelayActor; delay = 10; }
+    actor a004 { computation = DelayActor; delay = 10; }
+    actor a005 { computation = DelayActor; delay = 10; }
+    actor a006 { computation = DelayActor; delay = 10; }
+    actor a007 { computation = DelayActor; delay = 10; }
+    actor a008 { computation = DelayActor; delay = 10; }
+    actor a009 { computation = DelayActor; delay = 10; }
+    actor a010 { computation = DelayActor; delay = 10; }
 }
 }
 main {
