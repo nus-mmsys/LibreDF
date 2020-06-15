@@ -16,7 +16,7 @@ rdf dec10 {
     actor A008 { computation = DelayActor; delay = 10; }
     actor A009 { computation = DelayActor; delay = 10; }
     actor A010 { computation = DelayActor; delay = 10; }
-    actor Src { computation = DelaySource; last=70; delay = 10; }
+    actor Src { computation = DelaySource; last=100; delay = 10; }
     actor Snk { computation = DelaySink; delay = 10; }
     parameter {
 	logging = false;

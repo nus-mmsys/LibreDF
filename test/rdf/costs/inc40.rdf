@@ -3,7 +3,7 @@ rdf inc40 {
         nodes = Src, Snk;
 	edges = e1(Src,Snk);
     }
-    actor Src { computation = DelaySource; last=70; delay = 10; }
+    actor Src { computation = DelaySource; last=100; delay = 10; }
     actor Snk { computation = DelaySink; delay = 10; }
     parameter {
 	logging = false;

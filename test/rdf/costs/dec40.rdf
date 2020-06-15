@@ -54,7 +54,7 @@ rdf dec40 {
     actor A038 { computation = DelayActor; delay = 10; }
     actor A039 { computation = DelayActor; delay = 10; }
     actor A040 { computation = DelayActor; delay = 10; }
-    actor Src { computation = DelaySource; last=70; delay = 10; }
+    actor Src { computation = DelaySource; last=100; delay = 10; }
     actor Snk { computation = DelaySink; delay = 10; }
     parameter {
 	logging = false;
