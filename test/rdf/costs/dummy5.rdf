@@ -1,33 +1,33 @@
 rdf dummy5 {
     topology {
-        nodes = Src, A1, A2, A3, A4, A5, Snk;
-	edges = e1(Src,A1), e2(A1,A2), e3(A2,A3), e4(A3,A4),
-		e5(A4,A5), e6(A5,Snk);
+        nodes = Src, A001, A002, A003, A004, A005, Snk;
+	edges = e1(Src,A001), e2(A001,A002), e3(A002,A003), e4(A003,A004), 
+		e5(A004,A005), e6(A005,Snk);
     }
+    actor A001 { computation = DelayActor; delay = 10; }
+    actor A002 { computation = DelayActor; delay = 10; }
+    actor A003 { computation = DelayActor; delay = 10; }
+    actor A004 { computation = DelayActor; delay = 10; }
+    actor A005 { computation = DelayActor; delay = 10; }
     actor Src { computation = DelaySource; last=100; delay = 10; }
-
-    actor A1 { computation = DelayActor; delay = 10; }
-    actor A2 { computation = DelayActor; delay = 10; }
-    actor A3 { computation = DelayActor; delay = 10; }
-    actor A4 { computation = DelayActor; delay = 10; }
-    actor A5 { computation = DelayActor; delay = 10; }
     actor Snk { computation = DelaySink; delay = 10; }
     parameter {
 	logging = false;
 	scheduling = false;
+	policy = 0;
     }
 }
 rule tr1 {
 left {
     topology {
-        nodes = Src, A1;
-	edges = e1(Src,A1);
+        nodes = Src, A001;
+	edges = e1(Src,A001); 
     }
 }
 right {
     topology {
-        nodes = Src, A1;
-	edges = e1(Src,A1);
+        nodes = Src, A001;
+	edges = e1(Src,A001);
     }
 }
 }
