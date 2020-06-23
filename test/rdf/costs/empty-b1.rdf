@@ -1,12 +1,12 @@
-rdf dummy-b1 {
+rdf empty-b1 {
     topology {
         nodes = Src, A, Snk;
 	edges = e1(Src,A), e2(A,Snk);
     }
-    actor Src { computation = DelaySource; last=100; delay = 10; output_size=1; }
+    actor Src { computation = DelaySource; last=100; delay = 9; output_size=1; }
 
     actor A { computation = DelayActor; delay = 10; output_size=1; }
-    actor Snk { computation = DelaySink; delay = 10; }
+    actor Snk { computation = DelaySink; delay = 9; }
     parameter {
 	logging = false;
 	scheduling = false;

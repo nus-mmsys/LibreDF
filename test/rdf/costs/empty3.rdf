@@ -1,0 +1,30 @@
+rdf dummy3 {
+    topology {
+        nodes = Src, A1, Snk;
+	edges = e1(Src,A1), e2(A1,Snk);
+    }
+    actor Src { computation = DelaySource; last=100; delay = 10; }
+
+    actor A1 { computation = DelayActor; delay = 10; }
+    actor Snk { computation = DelaySink; delay = 10; }
+    parameter {
+	logging = false;
+	scheduling = false;
+    }
+}
+rule tr1 {
+left {
+    topology {
+        nodes = Src, A1;
+	edges = e1(Src,A1);
+    }
+}
+right {
+    topology {
+        nodes = Src, A1;
+	edges = e1(Src,A1);
+    }
+}
+}
+main {
+}

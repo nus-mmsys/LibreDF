@@ -5,7 +5,7 @@ rdf dummy-b1 {
     }
     actor Src { computation = DelaySource; last=100; delay = 10; output_size=1; }
 
-    actor A { computation = DelayActor; delay = 10; output_size=1; }
+    actor A { computation = DelayActor; delay = 11; output_size=1; }
     actor Snk { computation = DelaySink; delay = 10; }
     parameter {
 	logging = false;
