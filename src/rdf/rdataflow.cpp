@@ -244,7 +244,7 @@ void RDataflow::run() {
   Timer rdftimer;
   Timer reconftimer;
   vector<string> delays;
-  vector<string> reconfs;
+  //vector<string> reconfs;
   while(!check_eos()) {
 	//For demo, this delay was 20 ms.
   	timer.sleep(ch_period);
@@ -256,7 +256,7 @@ void RDataflow::run() {
 		log("[RDF] Rule "+r->get_name()+" is applicable.");
 	}
 
-	reconftimer.start();
+	//reconftimer.start();
 	rdftimer.start();
 
 	iter = pause();
@@ -277,7 +277,7 @@ void RDataflow::run() {
 	}
 
 	delays.push_back(rdftimer.endUs());
-	reconfs.push_back(reconftimer.endUs());
+	//reconfs.push_back(reconftimer.endUs());
 
 	resume();
   }
@@ -293,8 +293,8 @@ void RDataflow::run() {
   for (auto d : delays)
   	 log("Transformation cost = "+d+" us");
 
-  for (auto d : reconfs)
-  	 log("Recondfiguration cost = "+d+" us");
+  //for (auto d : reconfs)
+  //	 log("Recondfiguration cost = "+d+" us");
 
 
   log("Execution time = "+timer.endUs()+" us"); 
