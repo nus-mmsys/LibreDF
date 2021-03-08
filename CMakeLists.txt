@@ -11,7 +11,7 @@ if (APPLE)
 	set(CMAKE_MACOSX_RPATH ON)
 endif (APPLE)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -lpthread")
+set(CMAKE_CXX_FLAGS "-std=c++11 -pthread")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
 add_subdirectory(src)
