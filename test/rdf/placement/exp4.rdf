@@ -10,7 +10,7 @@ rdf exp4 {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 700;
+	last = 200;
     }
     actor S {
 	computation = DelaySplit;
