@@ -10,7 +10,7 @@ rdf exp4-h1 {
     actor Src {
     	computation = DelaySource;
 	delay = 10;
-	last = 700;
+	last = 200;
 	cpu=0;
     }
     actor S {
@@ -22,22 +22,22 @@ rdf exp4-h1 {
     actor A1 {
     	computation = DelayActor;
 	delay = 40;
-	cpu=0;
+	cpu=2;
     }
     actor B1 {
     	computation = DelayActor;
 	delay = 40;
-	cpu=0;
+	cpu=4;
     }
     actor C1 {
     	computation = DelayActor;
 	delay = 40;
-	cpu=0;
+	cpu=6;
     }
     actor D1 {
     	computation = DelayActor;
 	delay = 40;
-	cpu=0;
+	cpu=8;
     }
     actor A2 {
     	computation = DelayActor;
@@ -47,28 +47,28 @@ rdf exp4-h1 {
     actor B2 {
     	computation = DelayActor;
 	delay = 40;
-	cpu=1;
+	cpu=3;
     }
     actor C2 {
     	computation = DelayActor;
 	delay = 40;
-	cpu=1;
+	cpu=5;
     }
     actor D2 {
     	computation = DelayActor;
 	delay = 40;
-	cpu=1;
+	cpu=7;
     }
     actor J {
 	computation = DelayJoin;
 	arity = 2;
 	delay = 2;
-	cpu=1;
+	cpu=9;
     }
     actor Snk {
     	computation = DelaySink;
 	delay = 10;
-	cpu=1;
+	cpu=9;
     }
     parameter {
 	logging = false;
