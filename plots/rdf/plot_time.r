@@ -34,7 +34,7 @@ ggtheme = theme(plot.title = element_text(size=15),
 
 pdf(paste(name,"_lat.pdf", sep=""))
 
-ggplot(data, aes(data$start/scale, (data$latency)/scale)) +
+ggplot(data, aes(start/scale, (latency)/scale)) +
      geom_path(colour = "blue") +
      labs(x="time [second]", y="latency [second]") +
      ggtheme
@@ -57,7 +57,7 @@ if (!anim) {
   data <- read.csv(args[1])
   #lastend = head(c(0,data$end),-1)
   
-  p <- ggplot(data, aes(data$start/scale,  data$sol/((data$period)/scale))) +
+  p <- ggplot(data, aes(start/scale,  sol/((period)/scale))) +
      geom_path(colour = "blue") +
      labs(x="time [second]", y="throughput [token/second]") +
      ggtheme + expand_limits(y = 0)
