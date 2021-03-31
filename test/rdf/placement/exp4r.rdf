@@ -1,0 +1,138 @@
+rdf exp4 {
+    topology {
+        nodes = Src,S,A1,B1,C1,D1,J,Snk;
+	edges = e1(Src,S), e2(S,A1), e3(A1,B1),
+		e4(B1,C1), e5(C1,D1), e6(D1,J), 
+		e12(J,Snk);
+    }
+    actor Src {
+    	computation = DelaySource;
+	delay = 10;
+	last = 200;
+    }
+    actor S {
+	computation = DelaySplit;
+	arity = 1;
+	delay = 2;
+    }
+    actor A1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor B1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor C1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor D1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor J {
+	computation = DelayJoin;
+	arity = 1;
+	delay = 2;
+    }
+    actor Snk {
+    	computation = DelaySink;
+	delay = 10;
+    }
+    parameter {
+	logging = false;
+	scheduling = false;
+	policy = 0;
+    }
+}
+rule tr1 {
+left {
+    topology {
+        nodes = S,A1,B1,C1,D1,J;
+	edges = e2(S,A1), e3(A1,B1),
+		e4(B1,C1), e5(C1,D1), e6(D1,J);
+    }
+    actor S {
+	computation = DelaySplit;
+	arity = 1;
+	delay = 2;
+    }
+    actor A1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor B1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor C1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor D1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor J {
+	computation = DelayJoin;
+	arity = 1;
+	delay = 2;
+    }
+}
+right {
+    topology {
+        nodes = S,A1,B1,C1,D1,
+		ax,bx,cx,dx,J;
+	edges = e2(S,A1), e3(A1,B1),
+		e4(B1,C1), e5(C1,D1), e6(D1,J), 
+		e7(S,ax), e8(ax,bx), e9(bx,cx),
+		e10(cx,dx), e11(dx,J);
+    }
+    actor S {
+	computation = DelaySplit;
+	arity = 2;
+	delay = 2;
+    }
+    actor A1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor B1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor C1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor D1 {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor ax {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor bx {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor cx {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor dx {
+    	computation = DelayActor;
+	delay = 40;
+    }
+    actor J {
+	computation = DelayJoin;
+	arity = 2;
+	delay = 2;
+    }
+}
+}
+main {
+    Src.timer = 5000 : tr1;
+}
