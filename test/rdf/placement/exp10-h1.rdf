@@ -10,18 +10,18 @@ rdf exp10-h1 {
 		e21(H2,K2), e22(K2,L2), e23(L2,J), e24(J,Snk);
     }
     consumption {
-	e1 = 20; e2 = 20; e3 = 20; e4 = 20; e5 = 20; e6 = 20;
-	e7 = 20; e8 = 20; e9 = 20; e10 = 20; e11 = 20; e12 = 20;
-	e13 = 20; e14 = 20; e15 = 20; e16 = 20; e17 = 20; e18 = 20;
-	e19 = 20; e20 = 20; e21 = 20; e22 = 20; e23 = 20; e24 = 20;
+	e1 = 10; e2 = 10; e3 = 10; e4 = 10; e5 = 10; e6 = 10;
+	e7 = 10; e8 = 10; e9 = 10; e10 = 10; e11 = 10; e12 = 10;
+	e13 = 10; e14 = 10; e15 = 10; e16 = 10; e17 = 10; e18 = 10;
+	e19 = 10; e20 = 10; e21 = 10; e22 = 10; e23 = 10; e24 = 10;
     }
     production {
-	e1 = 20; e2 = 20; e3 = 20; e4 = 20; e5 = 20; e6 = 20;
-	e7 = 20; e8 = 20; e9 = 20; e10 = 20; e11 = 20; e12 = 20;
-	e13 = 20; e14 = 20; e15 = 20; e16 = 20; e17 = 20; e18 = 20;
-	e19 = 20; e20 = 20; e21 = 20; e22 = 20; e23 = 20; e24 = 20;
+	e1 = 10; e2 = 10; e3 = 10; e4 = 10; e5 = 10; e6 = 10;
+	e7 = 10; e8 = 10; e9 = 10; e10 = 10; e11 = 10; e12 = 10;
+	e13 = 10; e14 = 10; e15 = 10; e16 = 10; e17 = 10; e18 = 10;
+	e19 = 10; e20 = 10; e21 = 10; e22 = 10; e23 = 10; e24 = 10;
     }
-    actor Src { computation = DelaySource; delay = 10; last = 200; cpu=0; }
+    actor Src { computation = DelaySource; delay = 10; last = 100; cpu=0; }
     actor S { computation = DelaySplit; arity = 2; delay = 2; cpu=0; }
     actor A1 { computation = DelayActor; delay = 40; cpu=2; }
     actor B1 { computation = DelayActor; delay = 40; cpu=2; }
