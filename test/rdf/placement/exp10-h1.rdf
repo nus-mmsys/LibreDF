@@ -1,4 +1,4 @@
-rdf exp4rate-h1 {
+rdf exp10-h1 {
     topology {
         nodes = Src,S,A1,B1,C1,D1,
 		A2,B2,C2,D2,J,Snk;
