@@ -9,18 +9,6 @@ rdf exp10-h1 {
 		e17(D2,E2), e18(E2,F2), e19(F2,G2), e20(G2,H2),
 		e21(H2,K2), e22(K2,L2), e23(L2,J), e24(J,Snk);
     }
-    consumption {
-	e1 = 10; e2 = 10; e3 = 10; e4 = 10; e5 = 10; e6 = 10;
-	e7 = 10; e8 = 10; e9 = 10; e10 = 10; e11 = 10; e12 = 10;
-	e13 = 10; e14 = 10; e15 = 10; e16 = 10; e17 = 10; e18 = 10;
-	e19 = 10; e20 = 10; e21 = 10; e22 = 10; e23 = 10; e24 = 10;
-    }
-    production {
-	e1 = 10; e2 = 10; e3 = 10; e4 = 10; e5 = 10; e6 = 10;
-	e7 = 10; e8 = 10; e9 = 10; e10 = 10; e11 = 10; e12 = 10;
-	e13 = 10; e14 = 10; e15 = 10; e16 = 10; e17 = 10; e18 = 10;
-	e19 = 10; e20 = 10; e21 = 10; e22 = 10; e23 = 10; e24 = 10;
-    }
     actor Src { computation = DelaySource; delay = 10; last = 100; cpu=0; }
     actor S { computation = DelaySplit; arity = 2; delay = 2; cpu=0; }
     actor A1 { computation = DelayActor; delay = 40; cpu=2; }
