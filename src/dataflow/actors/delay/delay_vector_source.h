@@ -34,6 +34,7 @@ private:
   int max, counter;
   int delay;
   int last;
+  int volume;
 
   static df::ActorRegister<DelayVectorSource> reg;
 public:

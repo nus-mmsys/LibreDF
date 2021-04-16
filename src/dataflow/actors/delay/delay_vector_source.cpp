@@ -38,6 +38,12 @@ void DelayVectorSource::init() {
   else
         last = 1000;
 
+  if (!propEmpty("volume"))  	
+  	volume = getPropInt("volume");
+  else
+        volume = 1000000;
+
+
   max = delay * 720000;
 }
 
@@ -50,7 +56,7 @@ void DelayVectorSource::run() {
   start_exec = timer.nowUs();
 
   out->clear_items();
-  for (int k=0; k<1000000; k++)
+  for (int k=0; k<volume; k++)
       out->put_item(stepno);
   
   log("delay source "+to_string(stepno));
