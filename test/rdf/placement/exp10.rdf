@@ -9,30 +9,30 @@ rdf exp10 {
 		e17(D2,E2), e18(E2,F2), e19(F2,G2), e20(G2,H2),
 		e21(H2,K2), e22(K2,L2), e23(L2,J), e24(J,Snk);
     }
-    actor Src { computation = DelaySource; delay = 10; last = 100; }
-    actor S { computation = DelaySplit; arity = 2; delay = 2; }
-    actor A1 { computation = DelayActor; delay = 40; }
-    actor B1 { computation = DelayActor; delay = 40; }
-    actor C1 { computation = DelayActor; delay = 40; }
-    actor D1 { computation = DelayActor; delay = 40; }
-    actor E1 { computation = DelayActor; delay = 40; }
-    actor F1 { computation = DelayActor; delay = 40; }
-    actor G1 { computation = DelayActor; delay = 40; }
-    actor H1 { computation = DelayActor; delay = 40; }
-    actor K1 { computation = DelayActor; delay = 40; }
-    actor L1 { computation = DelayActor; delay = 40; }
-    actor A2 { computation = DelayActor; delay = 40; }
-    actor B2 { computation = DelayActor; delay = 40; }
-    actor C2 { computation = DelayActor; delay = 40; }
-    actor D2 { computation = DelayActor; delay = 40; }
-    actor E2 { computation = DelayActor; delay = 40; }
-    actor F2 { computation = DelayActor; delay = 40; }
-    actor G2 { computation = DelayActor; delay = 40; }
-    actor H2 { computation = DelayActor; delay = 40; }
-    actor K2 { computation = DelayActor; delay = 40; }
-    actor L2 { computation = DelayActor; delay = 40; }
-    actor J { computation = DelayJoin; arity = 2; delay = 2; }
-    actor Snk { computation = DelaySink; delay = 10; }
+    actor Src { computation = DelayVectorSource; delay = 10; last = 100; }
+    actor S { computation = DelayVectorSplit; arity = 2; delay = 2; }
+    actor A1 { computation = DelayVectorActor; delay = 40; }
+    actor B1 { computation = DelayVectorActor; delay = 40; }
+    actor C1 { computation = DelayVectorActor; delay = 40; }
+    actor D1 { computation = DelayVectorActor; delay = 40; }
+    actor E1 { computation = DelayVectorActor; delay = 40; }
+    actor F1 { computation = DelayVectorActor; delay = 40; }
+    actor G1 { computation = DelayVectorActor; delay = 40; }
+    actor H1 { computation = DelayVectorActor; delay = 40; }
+    actor K1 { computation = DelayVectorActor; delay = 40; }
+    actor L1 { computation = DelayVectorActor; delay = 40; }
+    actor A2 { computation = DelayVectorActor; delay = 40; }
+    actor B2 { computation = DelayVectorActor; delay = 40; }
+    actor C2 { computation = DelayVectorActor; delay = 40; }
+    actor D2 { computation = DelayVectorActor; delay = 40; }
+    actor E2 { computation = DelayVectorActor; delay = 40; }
+    actor F2 { computation = DelayVectorActor; delay = 40; }
+    actor G2 { computation = DelayVectorActor; delay = 40; }
+    actor H2 { computation = DelayVectorActor; delay = 40; }
+    actor K2 { computation = DelayVectorActor; delay = 40; }
+    actor L2 { computation = DelayVectorActor; delay = 40; }
+    actor J { computation = DelayVectorJoin; arity = 2; delay = 2; }
+    actor Snk { computation = DelayVectorSink; delay = 10; }
     parameter {
 	logging = false;
 	scheduling = false;
