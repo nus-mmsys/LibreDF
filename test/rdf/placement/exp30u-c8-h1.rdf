@@ -93,8 +93,7 @@ rdf exp30u {
     actor Snk { computation = DelayVectorSink; delay = 10; cpu=0; }
     parameter {
 	logging = false;
-	scheduling = false;
-	policy = 0;
+	scheduling = true;
     }
 }
 main {
