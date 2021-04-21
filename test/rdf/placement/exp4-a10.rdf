@@ -6,7 +6,7 @@ rdf exp4-a10-c12 {
 		e9(G1,H1), e10(H1,K1), e11(K1,L1), e12(L1,J), 
 		e24(J,Snk);
     }
-    actor Src { computation = DelayVectorSource; delay = 10; last = 100; }
+    actor Src { computation = DelayVectorSource; delay = 10; last = 300; }
     actor S { computation = DelayVectorSplit; arity = 1; delay = 2; }
     actor A1 { computation = DelayVectorActor; delay = 40; }
     actor B1 { computation = DelayVectorActor; delay = 40; }
