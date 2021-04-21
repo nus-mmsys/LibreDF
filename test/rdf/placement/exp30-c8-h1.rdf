@@ -1,0 +1,99 @@
+rdf exp30 {
+    topology {
+        nodes = Src,S,
+		A01,A02,A03,A04,A05,A06,A07,A08,A09,A10,
+        	A11,A12,A13,A14,A15,A16,A17,A18,A19,A20,
+        	A21,A22,A23,A24,A25,A26,A27,A28,A29,A30,
+        	B01,B02,B03,B04,B05,B06,B07,B08,B09,B10,
+        	B11,B12,B13,B14,B15,B16,B17,B18,B19,B20,
+        	B21,B22,B23,B24,B25,B26,B27,B28,B29,B30,
+		Snk,J;
+	edges = e01(Src,S), e02(S,A01), 
+		e03(A01,A02), e04(A02,A03), e05(A03,A04), e06(A04,A05), 
+		e07(A05,A06), e08(A06,A07), e09(A07,A08), e10(A08,A09), 
+		e11(A09,A10), e12(A10,A11), e13(A11,A12), e14(A12,A13), 
+		e15(A13,A14), e16(A14,A15), e17(A15,A16), e18(A16,A17), 
+		e19(A17,A18), e20(A18,A19), e21(A19,A20), e22(A20,A21), 
+		e23(A21,A22), e24(A22,A23), e25(A23,A24), e26(A24,A25), 
+		e27(A25,A26), e28(A26,A27), e29(A27,A28), e30(A28,A29), 
+		e31(A29,A30), e32(S,B01), 
+		e33(B01,B02), e34(B02,B03), e35(B03,B04), e36(B04,B05), 
+		e37(B05,B06), e38(B06,B07), e39(B07,B08), e40(B08,B09), 
+		e41(B09,B10), e42(B10,B11), e43(B11,B12), e44(B12,B13), 
+		e45(B13,B14), e46(B14,B15), e47(B15,B16), e48(B16,B17), 
+		e49(B17,B18), e50(B18,B19), e51(B19,B20), e52(B20,B21), 
+		e53(B21,B22), e54(B22,B23), e55(B23,B24), e56(B24,B25), 
+		e57(B25,B26), e58(B26,B27), e59(B27,B28), e60(B28,B29), 
+		e61(B29,B30), e62(A30,J), e63(B30,J), e64(J,Snk);
+    }
+    actor Src { computation = DelayVectorSource; delay = 10; last = 100; cpu=0; }
+    actor S { computation = DelayVectorSplit; arity = 2; delay = 2; cpu=0; }
+    actor A01 { computation = DelayVectorActor; delay = 40; cpu=0; }
+    actor A02 { computation = DelayVectorActor; delay = 40; cpu=0; }
+    actor A03 { computation = DelayVectorActor; delay = 40; cpu=0; }
+    actor A04 { computation = DelayVectorActor; delay = 40; cpu=0; }
+    actor A05 { computation = DelayVectorActor; delay = 40; cpu=0; }
+    actor A06 { computation = DelayVectorActor; delay = 40; cpu=0; }
+    actor A07 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A08 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A09 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A10 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A11 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A12 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A13 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A14 { computation = DelayVectorActor; delay = 40; cpu=2; }
+    actor A15 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A16 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A17 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A18 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A19 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A20 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A21 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A22 { computation = DelayVectorActor; delay = 40; cpu=4; }
+    actor A23 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor A24 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor A25 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor A26 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor A27 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor A28 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor A29 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor A30 { computation = DelayVectorActor; delay = 40; cpu=6; }
+    actor B01 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B02 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B03 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B04 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B05 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B06 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B07 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B08 { computation = DelayVectorActor; delay = 40; cpu=1; }
+    actor B09 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B10 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B11 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B12 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B13 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B14 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B15 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B16 { computation = DelayVectorActor; delay = 40; cpu=3; }
+    actor B17 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B18 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B19 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B20 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B21 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B22 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B23 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B24 { computation = DelayVectorActor; delay = 40; cpu=5; }
+    actor B25 { computation = DelayVectorActor; delay = 40; cpu=7; }
+    actor B26 { computation = DelayVectorActor; delay = 40; cpu=7; }
+    actor B27 { computation = DelayVectorActor; delay = 40; cpu=7; }
+    actor B28 { computation = DelayVectorActor; delay = 40; cpu=7; }
+    actor B29 { computation = DelayVectorActor; delay = 40; cpu=7; }
+    actor B30 { computation = DelayVectorActor; delay = 40; cpu=7; }
+    actor J { computation = DelayVectorJoin; arity = 2; delay = 2; cpu=7; }
+    actor Snk { computation = DelayVectorSink; delay = 10; cpu=7; }
+    parameter {
+	logging = false;
+	scheduling = true;
+    }
+}
+main {
+}
