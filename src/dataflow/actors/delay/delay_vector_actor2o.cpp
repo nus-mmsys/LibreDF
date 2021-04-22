@@ -47,8 +47,8 @@ void DelayVectorActor2O::run() {
 
   start_exec = timer.nowUs();
 
-  
-  out->clear_items();
+  out1->clear_items();
+  out2->clear_items();
   for (int k=0; k<in->vector_size(); k++) {
 	  out1->put_item(in->get_item(k));
 	  out2->put_item(in->get_item(k));

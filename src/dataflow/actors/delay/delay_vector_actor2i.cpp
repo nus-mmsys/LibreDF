@@ -50,7 +50,7 @@ void DelayVectorActor2I::run() {
   
   out->clear_items();
   for (int k=0; k<in1->vector_size(); k++) {
-	  out->put_item(in1->get_item(k)+in2->get_item(k));
+	  out->put_item(in1->get_item(k));
   }
 
   log("delay actor "+to_string(stepno));
