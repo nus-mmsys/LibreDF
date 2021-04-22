@@ -16,8 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DF_DELAY_ACTOR_VECTOR2_H_
-#define DF_DELAY_ACTOR_VECTOR2_H_
+#ifndef DF_DELAY_ACTOR_VECTOR2O_H_
+#define DF_DELAY_ACTOR_VECTOR2O_H_
 
 #include "core/df.h"
 #include "tokens/basic/int_vector.h"
@@ -25,26 +25,26 @@
 #include <iostream>
 #include <string>
 
-class DelayVectorActor2: public df::Actor {
+class DelayVectorActor2O: public df::Actor {
   
 private:
 
-  df::InputPort<df::IntVector> * input1;
-  df::InputPort<df::IntVector> * input2;
-  df::OutputPort<df::IntVector> * output;
+  df::InputPort<df::IntVector> * input;
+  df::OutputPort<df::IntVector> * output1;
+  df::OutputPort<df::IntVector> * output2;
 
   int delay;
   int counter, max;
 
-  static df::ActorRegister<DelayVectorActor2> reg;
+  static df::ActorRegister<DelayVectorActor2O> reg;
 public:
   
-  DelayVectorActor2(const std::string & name);
+  DelayVectorActor2O(const std::string & name);
   virtual void init();
   virtual void reinit();
   virtual void run();
-  virtual ~DelayVectorActor2();
+  virtual ~DelayVectorActor2O();
   
 };
 
-#endif /* DF_DELAY_ACTOR_VECTOR2_H_ */
+#endif /* DF_DELAY_ACTOR_VECTOR_H_ */

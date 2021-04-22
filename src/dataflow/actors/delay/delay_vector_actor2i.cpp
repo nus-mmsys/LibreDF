@@ -16,20 +16,20 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "delay_vector_actor2.h"
+#include "delay_vector_actor2i.h"
 
 using namespace df;
 using namespace std;
 
-ActorRegister<DelayVectorActor2> DelayVectorActor2::reg("DelayVectorActor2");
+ActorRegister<DelayVectorActor2I> DelayVectorActor2I::reg("DelayVectorActor2I");
 
-DelayVectorActor2::DelayVectorActor2(const std::string & name): df::Actor(name) {
-  input1 = createInputPort<df::IntVector>("input");
-  input2 = createInputPort<df::IntVector>("input");
+DelayVectorActor2I::DelayVectorActor2I(const std::string & name): df::Actor(name) {
+  input1 = createInputPort<df::IntVector>("input1");
+  input2 = createInputPort<df::IntVector>("input2");
   output = createOutputPort<df::IntVector>("output");
 }
 
-void DelayVectorActor2::init() {
+void DelayVectorActor2I::init() {
   if (!propEmpty("delay"))
     delay = getPropInt("delay");
   else
@@ -37,10 +37,10 @@ void DelayVectorActor2::init() {
   max = delay * 720000;
 }
 
-void DelayVectorActor2::reinit() {
+void DelayVectorActor2I::reinit() {
 }
 
-void DelayVectorActor2::run() {
+void DelayVectorActor2I::run() {
   auto in1 = consume(input1);
   auto in2 = consume(input2);
   auto out = produce(output);
@@ -65,7 +65,7 @@ void DelayVectorActor2::run() {
   release(output);
 }
 
-DelayVectorActor2::~DelayVectorActor2() {
+DelayVectorActor2I::~DelayVectorActor2I() {
   destroyPort(input1);
   destroyPort(input2);
   destroyPort(output);
