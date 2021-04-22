@@ -62,7 +62,7 @@ rdf exp5 {
     actor D2 { computation = DelayVectorActor; delay = 20; }
     actor E1 { computation = DelayVectorActor; delay = 40; }
     actor J { computation = DelayVectorJoin; arity = 2; delay = 5; }
-    actor Snk { computation = DelayVectorSink; delay = 50; }
+    actor Snk { computation = DelayVectorSink; delay = 15; }
     parameter {
 	logging = false;
 	scheduling = false;
