@@ -21,8 +21,8 @@ rdf exp5 {
 		e40(A20,J), e41(B10,J), e42(C5,J), e43(D2,J), e44(E1,J),
 		e45(J,Snk);
     }
-    actor Src { computation = DelayVectorSource; delay = 10; last = 100; }
-    actor S { computation = DelayVectorSplit; arity = 2; delay = 2; }
+    actor Src { computation = DelayVectorSource; delay = 15; last = 100; }
+    actor S { computation = DelayVectorSplit; arity = 2; delay = 5; }
     actor A01 { computation = DelayVectorActor; delay = 2; }
     actor A02 { computation = DelayVectorActor; delay = 2; }
     actor A03 { computation = DelayVectorActor; delay = 2; }
@@ -61,8 +61,8 @@ rdf exp5 {
     actor D1 { computation = DelayVectorActor; delay = 20; }
     actor D2 { computation = DelayVectorActor; delay = 20; }
     actor E1 { computation = DelayVectorActor; delay = 40; }
-    actor J { computation = DelayVectorJoin; arity = 2; delay = 2; }
-    actor Snk { computation = DelayVectorSink; delay = 10; }
+    actor J { computation = DelayVectorJoin; arity = 2; delay = 5; }
+    actor Snk { computation = DelayVectorSink; delay = 50; }
     parameter {
 	logging = false;
 	scheduling = false;
