@@ -20,7 +20,7 @@ rdf exp7 {
 		e2F(B27,B28), e2G(B28,C21), e2H(C21,C22), e2I(C22,C23), e2J(C23,C24),  
 		e2K(C24,C25), e2L(C25,C26), e2M(C26,C27), e2N(C27,C28), e2O(C28,  J);
     }
-    actor Src { computation = DelayVectorSource; delay = 10; last = 100; }
+    actor Src { computation = DelayVectorSource; delay = 10; last = 50; }
     actor Snk { computation = DelayVectorSink;   delay = 10; }
     actor S { computation = DelayVectorSplit; arity = 2; delay = 5; }
     actor J { computation = DelayVectorJoin;  arity = 2; delay = 5; }
