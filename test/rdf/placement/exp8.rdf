@@ -2,31 +2,33 @@ rdf exp8 {
     topology {
         nodes = Src,S,
 		A01,A02,A03,A04,A05,A06,A07,A08,A09,A10,
-		A11,A12,A13,A14,A15,A16,A17,A18,A19,
+		A11,A12,A13,A14,A15,A16,A17,A18,A19,A20,
 		B01,B02,B03,B04,B05,B06,B07,B08,B09,B10,
-		B11,B12,B13,B14,B15,B16,B17,B18,B19,
+		B11,B12,B13,B14,B15,B16,B17,B18,B19,B20,
 		C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,
-		C11,C12,C13,C14,C15,C16,C17,C18,C19,
+		C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,
 		D01,D02,D03,D04,D05,D06,D07,D08,D09,D10,
-		D11,D12,D13,D14,D15,D16,D17,D18,D19,
+		D11,D12,D13,D14,D15,D16,D17,D18,D19,D20,
 		J,Snk;
 	edges = e0(Src,S), 
 		e100(S,  A01), e101(A01,A02), e102(A02,A03), e103(A03,A04), e104(A04,A05), 
 		e105(A05,A06), e106(A06,A07), e107(A07,A08), e108(A08,A09), e109(A09,A10), 
 		e110(A10,A11), e111(A11,A12), e112(A12,A13), e113(A13,A14), e114(A14,A15),   
-		e115(A15,A16), e116(A16,A17), e117(A17,A18), e118(A18,A19),
-		e200(A19,B01), e201(B01,B02), e202(B02,B03), e203(B03,B04), e204(B04,B05), 
+		e115(A15,A16), e116(A16,A17), e117(A17,A18), e118(A18,A19), e119(A19,A20),
+		e200(A20,B01), e201(B01,B02), e202(B02,B03), e203(B03,B04), e204(B04,B05), 
 		e205(B05,B06), e206(B06,B07), e207(B07,B08), e208(B08,B09), e209(B09,B10), 
 		e210(B10,B11), e211(B11,B12), e212(B12,B13), e213(B13,B14), e214(B14,B15),
-		e215(B15,B16), e216(B16,B17), e217(B17,B18), e218(B18,B19), e219(B19,  J),
+		e215(B15,B16), e216(B16,B17), e217(B17,B18), e218(B18,B19), e219(B19,B20),
+		e220(B20,  J),
 		e300(S,  C01), e301(C01,C02), e302(C02,C03), e303(C03,C04), e304(C04,C05), 
 		e305(C05,C06), e306(C06,C07), e307(C07,C08), e308(C08,C09), e309(C09,C10), 
 		e310(C10,C11), e311(C11,C12), e312(C12,C13), e313(C13,C14), e314(C14,C15), 
-		e315(C15,C16), e316(C16,C17), e317(C17,C18), e318(C18,C19),
-		e400(C19,D01), e401(D01,D02), e402(D02,D03), e403(D03,D04), e404(D04,D05), 
+		e315(C15,C16), e316(C16,C17), e317(C17,C18), e318(C18,C19), e319(C19,C20),
+		e400(C20,D01), e401(D01,D02), e402(D02,D03), e403(D03,D04), e404(D04,D05), 
 		e405(D05,D06), e406(D06,D07), e407(D07,D08), e408(D08,D09), e409(D09,D10), 
 		e410(D10,D11), e411(D11,D12), e412(D12,D13), e413(D13,D14), e414(D14,D15),  
-		e415(D15,D16), e416(D16,D17), e417(D17,D18), e418(D18,D19), e419(D19,  J),
+		e415(D15,D16), e416(D16,D17), e417(D17,D18), e418(D18,D19), e419(D19,D20),
+		e420(D20,  J),
 		e5(J,Snk);
     }
     actor Src { computation = DelayVectorSource; delay = 10; last = 50; }
@@ -52,6 +54,7 @@ rdf exp8 {
     actor A17 { computation = DelayVectorActor; delay = 40; }
     actor A18 { computation = DelayVectorActor; delay = 40; }
     actor A19 { computation = DelayVectorActor; delay = 40; }
+    actor A20 { computation = DelayVectorActor; delay = 40; }
     actor B01 { computation = DelayVectorActor; delay = 40; }
     actor B02 { computation = DelayVectorActor; delay = 40; }
     actor B03 { computation = DelayVectorActor; delay = 40; }
@@ -71,6 +74,7 @@ rdf exp8 {
     actor B17 { computation = DelayVectorActor; delay = 40; }
     actor B18 { computation = DelayVectorActor; delay = 40; }
     actor B19 { computation = DelayVectorActor; delay = 40; }
+    actor B20 { computation = DelayVectorActor; delay = 40; }
     actor C01 { computation = DelayVectorActor; delay = 40; }
     actor C02 { computation = DelayVectorActor; delay = 40; }
     actor C03 { computation = DelayVectorActor; delay = 40; }
@@ -90,6 +94,7 @@ rdf exp8 {
     actor C17 { computation = DelayVectorActor; delay = 40; }
     actor C18 { computation = DelayVectorActor; delay = 40; }
     actor C19 { computation = DelayVectorActor; delay = 40; }
+    actor C20 { computation = DelayVectorActor; delay = 40; }
     actor D01 { computation = DelayVectorActor; delay = 40; }
     actor D02 { computation = DelayVectorActor; delay = 40; }
     actor D03 { computation = DelayVectorActor; delay = 40; }
@@ -109,6 +114,7 @@ rdf exp8 {
     actor D17 { computation = DelayVectorActor; delay = 40; }
     actor D18 { computation = DelayVectorActor; delay = 40; }
     actor D19 { computation = DelayVectorActor; delay = 40; }
+    actor D20 { computation = DelayVectorActor; delay = 40; }
     parameter {
 	logging = false;
 	scheduling = false;
