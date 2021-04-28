@@ -8,6 +8,7 @@ option(BUILD_ML_ACTORS "Build machine-learning actors" ON)
 option(BUILD_OPENCV_ACTORS "Build opencv actors" ON)
 option(BUILD_BASIC_ACTORS "Build basic actors" ON)
 option(BUILD_DELAY_ACTORS "Build delay actors" ON)
+option(BUILD_VOID_ACTORS "Build void actors" ON)
 option(BUILD_COMBINATORICS_ACTORS "Build combinatorics actors" ON)
 option(BUILD_DESIGN_ACTORS "Build design actors" ON)
 option(BUILD_SIGNAL_ACTORS "Build signal actors" ON)
@@ -45,6 +46,11 @@ if (BUILD_DELAY_ACTORS)
   aux_source_directory(actors/delay delay)
 endif()
 
+if (BUILD_VOID_ACTORS)
+  aux_source_directory(tokens/basic basictoken)
+  aux_source_directory(actors/void void)
+endif()
+
 if (BUILD_COMBINATORICS_ACTORS)
   aux_source_directory(tokens/basic basictoken)
   aux_source_directory(actors/combinatorics comb)
@@ -64,7 +70,7 @@ add_library(${PROJECT_NAME} SHARED ${core}
 				${ml} 
 				${ocvcore} ${ocvimg}
 				${ocvgui} ${ocvobj}
-				${ocvvideo} ${ocvtoken}
+				${ocvvideo} ${ocvtoken} ${void}
 				${basic} ${delay} ${basictoken} 
 				${comb} ${design} ${signal}
 				)
