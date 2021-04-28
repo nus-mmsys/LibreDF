@@ -1,0 +1,31 @@
+rdf exp9 {
+    topology {
+        nodes = Src,S,
+		A01,A02,A03,A04,
+		B01,B02,B03,B04,
+		J,Snk;
+	edges = e0(Src,S), 
+		e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), e14(A04,  J), 
+		e20(S,  B01), e21(B01,B02), e22(B02,B03), e23(B03,B04), e24(B04,  J), 
+		e1(J,Snk);
+    }
+    actor Src { computation = VoidVectorSource; last = 50; }
+    actor Snk { computation = VoidVectorSink; }
+    actor S { computation = VoidVectorSplit; arity = 2; }
+    actor J { computation = VoidVectorJoin;  arity = 2; }
+    actor A01 { computation = VoidVectorActor; }
+    actor A02 { computation = VoidVectorActor; }
+    actor A03 { computation = VoidVectorActor; }
+    actor A04 { computation = VoidVectorActor; }
+    actor B01 { computation = VoidVectorActor; }
+    actor B02 { computation = VoidVectorActor; }
+    actor B03 { computation = VoidVectorActor; }
+    actor B04 { computation = VoidVectorActor; }
+    parameter {
+	logging = false;
+	scheduling = false;
+	policy = 0;
+    }
+}
+main {
+}
