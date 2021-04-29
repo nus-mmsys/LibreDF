@@ -1,0 +1,40 @@
+rdf exp10-c10-h1 {
+    topology {
+        nodes = Src,S,
+		A01,A02,A03,A04,A05,A06,A07,A08,
+		B01,B02,B03,B04,B05,B06,B07,B08,
+		J,Snk;
+	edges = e0(Src,S), 
+		e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), e14(A04,A05), 
+		e15(A05,A06), e16(A06,A07), e17(A07,A08), e18(A08,  J), 
+		e20(S,  B01), e21(B01,B02), e22(B02,B03), e23(B03,B04), e24(B04,B05), 
+		e25(B05,B06), e26(B06,B07), e27(B07,B08), e28(B08,  J), 
+		e1(J,Snk);
+    }
+    actor Src { computation = VoidVectorSource; last = 50; cpu=0; }
+    actor Snk { computation = VoidVectorSink; cpu=1; }
+    actor S { computation = VoidVectorSplit; arity = 2; cpu=0; }
+    actor J { computation = VoidVectorJoin;  arity = 2; cpu=1; }
+    actor A01 { computation = VoidVectorActor; cpu=2; }
+    actor A02 { computation = VoidVectorActor; cpu=2; }
+    actor A03 { computation = VoidVectorActor; cpu=4; }
+    actor A04 { computation = VoidVectorActor; cpu=4; }
+    actor A05 { computation = VoidVectorActor; cpu=6; }
+    actor A06 { computation = VoidVectorActor; cpu=6; }
+    actor A07 { computation = VoidVectorActor; cpu=8; }
+    actor A08 { computation = VoidVectorActor; cpu=8; }
+    actor B01 { computation = VoidVectorActor; cpu=3; }
+    actor B02 { computation = VoidVectorActor; cpu=3; }
+    actor B03 { computation = VoidVectorActor; cpu=5; }
+    actor B04 { computation = VoidVectorActor; cpu=5; }
+    actor B05 { computation = VoidVectorActor; cpu=7; }
+    actor B06 { computation = VoidVectorActor; cpu=7; }
+    actor B07 { computation = VoidVectorActor; cpu=9; }
+    actor B08 { computation = VoidVectorActor; cpu=9; }
+    parameter {
+	logging = false;
+	scheduling = true;
+    }
+}
+main {
+}
