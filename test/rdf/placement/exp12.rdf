@@ -1,11 +1,11 @@
 rdf exp12 {
     topology {
         nodes = Src,S,
-		A01,A02,A03,A04,A05,A06,
+		A01,A02,A03,A04,A05,
 		J,Snk;
 	edges = e0(Src,S), 
 		e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
-		e14(A04,A05), e15(A05,A06), e16(A06,  J), 
+		e14(A04,A05), e15(A05,  J), 
 		e1(J,Snk);
     }
     actor Src { computation = VoidVectorSource; last = 500;}
@@ -17,7 +17,6 @@ rdf exp12 {
     actor A03 { computation = VoidVectorActor;}
     actor A04 { computation = VoidVectorActor;}
     actor A05 { computation = VoidVectorActor;}
-    actor A06 { computation = VoidVectorActor;}
     parameter {
 	logging = false;
 	scheduling = true;
@@ -27,73 +26,11 @@ rule tr1 {
 left {
     topology {
         nodes = S,
-		A01,A02,A03,A04,A05,A06,
-		b01,b02,b03,b04,b05,b06,
+		A01,A02,A03,A04,A05,
+		b01,b02,b03,b04,b05,
 		J;
 	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
-		e14(A04,A05), e15(A05,A06), e16(A06,  J), 
-		e20(S,  b01), e21(b01,b02), e22(b02,b03), e23(b03,b04), 
-		e24(b04,b05), b25(b05,b06), b26(b06,  J);
-    }
-    actor S { computation = VoidVectorSplit; arity = 2;}
-    actor J { computation = VoidVectorJoin;  arity = 2;}
-    actor A01 { computation = VoidVectorActor;}
-    actor A02 { computation = VoidVectorActor;}
-    actor A03 { computation = VoidVectorActor;}
-    actor A04 { computation = VoidVectorActor;}
-    actor A05 { computation = VoidVectorActor;}
-    actor A06 { computation = VoidVectorActor;}
-    actor b01 { computation = VoidVectorActor;}
-    actor b02 { computation = VoidVectorActor;}
-    actor b03 { computation = VoidVectorActor;}
-    actor b04 { computation = VoidVectorActor;}
-    actor b05 { computation = VoidVectorActor;}
-    actor b06 { computation = VoidVectorActor;}
-}
-right {
-    topology {
-        nodes = S,
-		A01,A02,A03,A04,A05,A06,
-		J;
-	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04),
-		e14(A04,A05), e15(A05,A06), e16(A06,  J);
-    }
-    actor S { computation = VoidVectorSplit; arity = 1;}
-    actor J { computation = VoidVectorJoin;  arity = 1;}
-    actor A01 { computation = VoidVectorActor;}
-    actor A02 { computation = VoidVectorActor;}
-    actor A03 { computation = VoidVectorActor;}
-    actor A04 { computation = VoidVectorActor;}
-    actor A05 { computation = VoidVectorActor;}
-    actor A06 { computation = VoidVectorActor;}
-}
-}
-rule tr2 {
-left {
-    topology {
-        nodes = S,
-		A01,A02,A03,A04,A05,A06,
-		J;
-	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
-		e14(A04,A05), e15(A05,A06), e16(A06,  J);
-    }
-    actor S { computation = VoidVectorSplit; arity = 1;}
-    actor J { computation = VoidVectorJoin;  arity = 1;}
-    actor A01 { computation = VoidVectorActor;}
-    actor A02 { computation = VoidVectorActor;}
-    actor A03 { computation = VoidVectorActor;}
-    actor A04 { computation = VoidVectorActor;}
-    actor A05 { computation = VoidVectorActor;}
-    actor A06 { computation = VoidVectorActor;}
-}
-right {
-    topology {
-        nodes = S,
-		A01,A02,A03,A04,A05,A06,
-		b01,b02,b03,b04,b05,b06,
-		J;
-	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
-		e14(A04,A05), e15(A06,  J), 
+		e14(A04,A05), e15(A05,  J), 
 		e20(S,  b01), e21(b01,b02), e22(b02,b03), e23(b03,b04), 
 		e24(b04,b05), b25(b05,  J);
     }
@@ -104,15 +41,70 @@ right {
     actor A03 { computation = VoidVectorActor;}
     actor A04 { computation = VoidVectorActor;}
     actor A05 { computation = VoidVectorActor;}
-    actor A06 { computation = VoidVectorActor;}
     actor b01 { computation = VoidVectorActor;}
     actor b02 { computation = VoidVectorActor;}
     actor b03 { computation = VoidVectorActor;}
     actor b04 { computation = VoidVectorActor;}
     actor b05 { computation = VoidVectorActor;}
-    actor b06 { computation = VoidVectorActor;}
 }
-
+right {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04),
+		e14(A04,A05), e15(A05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 1;}
+    actor J { computation = VoidVectorJoin;  arity = 1;}
+    actor A01 { computation = VoidVectorActor;}
+    actor A02 { computation = VoidVectorActor;}
+    actor A03 { computation = VoidVectorActor;}
+    actor A04 { computation = VoidVectorActor;}
+    actor A05 { computation = VoidVectorActor;}
+}
+}
+rule tr2 {
+left {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 1;}
+    actor J { computation = VoidVectorJoin;  arity = 1;}
+    actor A01 { computation = VoidVectorActor;}
+    actor A02 { computation = VoidVectorActor;}
+    actor A03 { computation = VoidVectorActor;}
+    actor A04 { computation = VoidVectorActor;}
+    actor A05 { computation = VoidVectorActor;}
+}
+right {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		b01,b02,b03,b04,b05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J), 
+		e20(S,  b01), e21(b01,b02), e22(b02,b03), e23(b03,b04), 
+		e24(b04,b05), e25(b05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 2;}
+    actor J { computation = VoidVectorJoin;  arity = 2;}
+    actor A01 { computation = VoidVectorActor;}
+    actor A02 { computation = VoidVectorActor;}
+    actor A03 { computation = VoidVectorActor;}
+    actor A04 { computation = VoidVectorActor;}
+    actor A05 { computation = VoidVectorActor;}
+    actor b01 { computation = VoidVectorActor;}
+    actor b02 { computation = VoidVectorActor;}
+    actor b03 { computation = VoidVectorActor;}
+    actor b04 { computation = VoidVectorActor;}
+    actor b05 { computation = VoidVectorActor;}
+}
 }
 
 main {
