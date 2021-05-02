@@ -1,0 +1,117 @@
+rdf exp12-c12-h1 {
+    topology {
+        nodes = Src,S,
+		A01,A02,A03,A04,A05,
+		J,Snk;
+	edges = e0(Src,S), 
+		e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J), 
+		e1(J,Snk);
+    }
+    actor Src { computation = VoidVectorSource; last = 500; cpu=0; }
+    actor Snk { computation = VoidVectorSink; cpu=1; }
+    actor S { computation = VoidVectorSplit; arity = 1; cpu=2; }
+    actor J { computation = VoidVectorJoin;  arity = 1; cpu=3; }
+    actor A01 { computation = VoidVectorActor; cpu=4; }
+    actor A02 { computation = VoidVectorActor; cpu=6; }
+    actor A03 { computation = VoidVectorActor; cpu=8; }
+    actor A04 { computation = VoidVectorActor; cpu=10; }
+    actor A05 { computation = VoidVectorActor; cpu=12; }
+    parameter {
+	logging = false;
+	scheduling = true;
+    }
+}
+rule tr1 {
+left {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		b01,b02,b03,b04,b05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J), 
+		e20(S,  b01), e21(b01,b02), e22(b02,b03), e23(b03,b04), 
+		e24(b04,b05), b25(b05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 2; cpu=2; }
+    actor J { computation = VoidVectorJoin;  arity = 2; cpu=3; }
+    actor A01 { computation = VoidVectorActor; cpu=4; }
+    actor A02 { computation = VoidVectorActor; cpu=6; }
+    actor A03 { computation = VoidVectorActor; cpu=8; }
+    actor A04 { computation = VoidVectorActor; cpu=10; }
+    actor A05 { computation = VoidVectorActor; cpu=12; }
+    actor b01 { computation = VoidVectorActor; cpu=5; }
+    actor b02 { computation = VoidVectorActor; cpu=7; }
+    actor b03 { computation = VoidVectorActor; cpu=9; }
+    actor b04 { computation = VoidVectorActor; cpu=11; }
+    actor b05 { computation = VoidVectorActor; cpu=13; }
+}
+right {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04),
+		e14(A04,A05), e15(A05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 1; cpu=2; }
+    actor J { computation = VoidVectorJoin;  arity = 1; cpu=3; }
+    actor A01 { computation = VoidVectorActor; cpu=4; }
+    actor A02 { computation = VoidVectorActor; cpu=6; }
+    actor A03 { computation = VoidVectorActor; cpu=8; }
+    actor A04 { computation = VoidVectorActor; cpu=10; }
+    actor A05 { computation = VoidVectorActor; cpu=12; }
+}
+}
+rule tr2 {
+left {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 1; cpu=2; }
+    actor J { computation = VoidVectorJoin;  arity = 1; cpu=3; }
+    actor A01 { computation = VoidVectorActor; cpu=4; }
+    actor A02 { computation = VoidVectorActor; cpu=6; }
+    actor A03 { computation = VoidVectorActor; cpu=8; }
+    actor A04 { computation = VoidVectorActor; cpu=10; }
+    actor A05 { computation = VoidVectorActor; cpu=12; }
+}
+right {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		b01,b02,b03,b04,b05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J), 
+		e20(S,  b01), e21(b01,b02), e22(b02,b03), e23(b03,b04), 
+		e24(b04,b05), e25(b05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 2; cpu=2; }
+    actor J { computation = VoidVectorJoin;  arity = 2; cpu=3; }
+    actor A01 { computation = VoidVectorActor; cpu=4; }
+    actor A02 { computation = VoidVectorActor; cpu=6; }
+    actor A03 { computation = VoidVectorActor; cpu=8; }
+    actor A04 { computation = VoidVectorActor; cpu=10; }
+    actor A05 { computation = VoidVectorActor; cpu=12; }
+    actor b01 { computation = VoidVectorActor; cpu=5; }
+    actor b02 { computation = VoidVectorActor; cpu=7; }
+    actor b03 { computation = VoidVectorActor; cpu=9; }
+    actor b04 { computation = VoidVectorActor; cpu=11; }
+    actor b05 { computation = VoidVectorActor; cpu=13; }
+}
+}
+
+main {
+   Src.timer = 5000 : tr2;
+   Src.timer = 25000 : tr1;
+   Src.timer = 45000 : tr2;
+   Src.timer = 65000 : tr1;
+   Src.timer = 85000 : tr2;
+   Src.timer = 105000 : tr1;
+}

@@ -19,7 +19,8 @@ rdf exp12 {
     actor A05 { computation = VoidVectorActor;}
     parameter {
 	logging = false;
-	scheduling = true;
+	scheduling = false;
+	policy = 0;
     }
 }
 rule tr1 {
