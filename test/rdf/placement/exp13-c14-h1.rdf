@@ -1,0 +1,141 @@
+rdf exp13-c14-h1 {
+    topology {
+        nodes = Src,S,
+		A01,A02,A03,A04,A05,
+		B01,B02,B03,B04,B05,
+		J,Snk;
+	edges = e0(Src,   S),
+		e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J), 
+		e20(S,  B01), e21(B01,B02), e22(B02,B03), e23(B03,B04), 
+		e24(B04,B05), e25(B05,  J),
+		e1(J,   Snk);
+    }
+    actor Src { computation = VoidVectorSource; last = 500;cpu=0;}
+    actor Snk { computation = VoidVectorSink;cpu=1;}
+    actor S { computation = VoidVectorSplit; arity = 2;cpu=2;}
+    actor J { computation = VoidVectorJoin;  arity = 2;cpu=3;}
+    actor A01 { computation = VoidVectorActor;cpu=4;}
+    actor A02 { computation = VoidVectorActor;cpu=6;}
+    actor A03 { computation = VoidVectorActor;cpu=8;}
+    actor A04 { computation = VoidVectorActor;cpu=10;}
+    actor A05 { computation = VoidVectorActor;cpu=12;}
+    actor B01 { computation = VoidVectorActor;cpu=5;}
+    actor B02 { computation = VoidVectorActor;cpu=7;}
+    actor B03 { computation = VoidVectorActor;cpu=9;}
+    actor B04 { computation = VoidVectorActor;cpu=11;}
+    actor B05 { computation = VoidVectorActor;cpu=13;}
+    parameter {
+	logging = false;
+	scheduling = true;
+    }
+}
+rule tr1 {
+left {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		B01,B02,B03,B04,B05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J), 
+		e20(S,  B01), e21(B01,B02), e22(B02,B03), e23(B03,B04), 
+		e24(B04,B05), e25(B05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 2;cpu=2;}
+    actor J { computation = VoidVectorJoin;  arity = 2;cpu=3;}
+    actor A01 { computation = VoidVectorActor;cpu=4;}
+    actor A02 { computation = VoidVectorActor;cpu=6;}
+    actor A03 { computation = VoidVectorActor;cpu=8;}
+    actor A04 { computation = VoidVectorActor;cpu=10;}
+    actor A05 { computation = VoidVectorActor;cpu=12;}
+    actor B01 { computation = VoidVectorActor;cpu=5;}
+    actor B02 { computation = VoidVectorActor;cpu=7;}
+    actor B03 { computation = VoidVectorActor;cpu=9;}
+    actor B04 { computation = VoidVectorActor;cpu=11;}
+    actor B05 { computation = VoidVectorActor;cpu=13;}
+}
+right {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		B01,B02,B03,B04,B05,
+		J;
+	edges = e10(S,  A01), e11(A01,B02), e12(B02,A03), e13(A03,B04), 
+		e14(B04,A05), e15(A05,  J), 
+		e20(S,  B01), e21(B01,A02), e22(A02,B03), e23(B03,A04), 
+		e24(A04,B05), e25(B05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 2;cpu=2;}
+    actor J { computation = VoidVectorJoin;  arity = 2;cpu=3;}
+    actor A01 { computation = VoidVectorActor;cpu=4;}
+    actor A02 { computation = VoidVectorActor;cpu=7;}
+    actor A03 { computation = VoidVectorActor;cpu=8;}
+    actor A04 { computation = VoidVectorActor;cpu=11;}
+    actor A05 { computation = VoidVectorActor;cpu=12;}
+    actor B01 { computation = VoidVectorActor;cpu=5;}
+    actor B02 { computation = VoidVectorActor;cpu=6;}
+    actor B03 { computation = VoidVectorActor;cpu=9;}
+    actor B04 { computation = VoidVectorActor;cpu=10;}
+    actor B05 { computation = VoidVectorActor;cpu=13;}
+}
+}
+rule tr2 {
+left {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		B01,B02,B03,B04,B05,
+		J;
+	edges = e10(S,  A01), e11(A01,B02), e12(B02,A03), e13(A03,B04), 
+		e14(B04,A05), e15(A05,  J), 
+		e20(S,  B01), e21(B01,A02), e22(A02,B03), e23(B03,A04), 
+		e24(A04,B05), e25(B05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 2;cpu=2;}
+    actor J { computation = VoidVectorJoin;  arity = 2;cpu=3;}
+    actor A01 { computation = VoidVectorActor;cpu=4;}
+    actor A02 { computation = VoidVectorActor;cpu=7;}
+    actor A03 { computation = VoidVectorActor;cpu=8;}
+    actor A04 { computation = VoidVectorActor;cpu=11;}
+    actor A05 { computation = VoidVectorActor;cpu=12;}
+    actor B01 { computation = VoidVectorActor;cpu=5;}
+    actor B02 { computation = VoidVectorActor;cpu=6;}
+    actor B03 { computation = VoidVectorActor;cpu=9;}
+    actor B04 { computation = VoidVectorActor;cpu=10;}
+    actor B05 { computation = VoidVectorActor;cpu=13;}
+}
+right {
+    topology {
+        nodes = S,
+		A01,A02,A03,A04,A05,
+		B01,B02,B03,B04,B05,
+		J;
+	edges = e10(S,  A01), e11(A01,A02), e12(A02,A03), e13(A03,A04), 
+		e14(A04,A05), e15(A05,  J), 
+		e20(S,  B01), e21(B01,B02), e22(B02,B03), e23(B03,B04), 
+		e24(B04,B05), e25(B05,  J);
+    }
+    actor S { computation = VoidVectorSplit; arity = 2;cpu=2;}
+    actor J { computation = VoidVectorJoin;  arity = 2;cpu=3;}
+    actor A01 { computation = VoidVectorActor;cpu=4;}
+    actor A02 { computation = VoidVectorActor;cpu=6;}
+    actor A03 { computation = VoidVectorActor;cpu=8;}
+    actor A04 { computation = VoidVectorActor;cpu=10;}
+    actor A05 { computation = VoidVectorActor;cpu=12;}
+    actor B01 { computation = VoidVectorActor;cpu=5;}
+    actor B02 { computation = VoidVectorActor;cpu=7;}
+    actor B03 { computation = VoidVectorActor;cpu=9;}
+    actor B04 { computation = VoidVectorActor;cpu=11;}
+    actor B05 { computation = VoidVectorActor;cpu=13;}
+}
+}
+
+main {
+   Src.timer = 5000 : tr2;
+   Src.timer = 25000 : tr1;
+   Src.timer = 45000 : tr2;
+   Src.timer = 65000 : tr1;
+   Src.timer = 85000 : tr2;
+   Src.timer = 105000 : tr1;
+}
