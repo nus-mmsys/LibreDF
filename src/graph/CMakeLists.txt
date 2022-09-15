@@ -1,4 +1,4 @@
-project(tmfgraph)
+project(dfgraph)
 
 include_directories(.)
 

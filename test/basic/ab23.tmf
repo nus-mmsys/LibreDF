@@ -1,4 +1,4 @@
-tmf ab23 {
+df ab23 {
     topology {
         nodes = A,B;
         edges = e1(A,B);

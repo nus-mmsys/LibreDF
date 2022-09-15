@@ -1,4 +1,4 @@
-tmf hamilton20 {
+df hamilton20 {
     topology {
         nodes = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z;
         edges = e1(A,D), e2(B,C), e3(B,E), e4(B,F), e5(C,E), e6(D,G), e7(D,J), e8(E,A), e9(E,F), e10(E,H), e11(F,C), e12(G,B), e13(H,G), e14(H,I), e15(I,F), e16(I,J), e17(J,M), e18(K,R), e19(T,K), e20(K,E), e21(L,C), e22(F,L), e23(M,H), e24(M,O), e25(Q,M), e26(O,N), e27(N,P), e28(O,T), e29(I,O), e30(P,Q), e31(H,P), e32(Q,S), e33(G,Q), e34(R,H), e35(L,R), e36(S,F), e37(E,S), e38(T,K), e39(L,T), e40(U,K), e41(P,U), e42(U,B), e43(U,J), e44(V,C), e45(M,V), e46(V,R), e47(W,E), e48(W,P), e49(L,W), e50(X,G), e51(X,I), e52(F,X), e53(Q,X), e54(Y,J), e55(Y,N), e56(F,Y), e57(S,Y), e58(Z,T), e59(Z,O), e60(Q,Z), e61(X,Z), e62(N,Z);

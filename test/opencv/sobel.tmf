@@ -1,4 +1,4 @@
-tmf sobel {
+df sobel {
     topology {
         nodes = A,B,C,D;
 	edges = e1(A,B), e2(B,C), e3(C,D);

@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ void ImageRead::run() {
 
   file_name = files.back();	
   //log("name: "+ dataset+file_name);
-  frame = cv::imread(dataset+file_name, CV_LOAD_IMAGE_COLOR); 
+  frame = cv::imread(dataset+file_name, cv::IMREAD_COLOR); 
   auto out = produce(output);	
   out->set(frame);
   log("reading image "+to_string(stepno));

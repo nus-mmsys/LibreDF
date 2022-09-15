@@ -1,4 +1,4 @@
-project(tmfdf)
+project(df)
 
 set(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 

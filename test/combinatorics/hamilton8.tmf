@@ -1,4 +1,4 @@
-tmf hamilton8 {
+df hamilton8 {
     topology {
         nodes = A,B,C,D,E,F,G,H;
         edges = e1(A,B), e2(B,C), e3(C,D), e4(D,B), e5(C,A), e6(E,B), e7(A,E), e8(F,C), e9(D,F), e10(B,F), e11(G,C), e12(B,G), e13(H,F), e14(D,H);

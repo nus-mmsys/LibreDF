@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ void VideoWriter::run() {
   if (width == 0 || height == 0) {
 	width = frame.cols;
   	height = frame.rows;
-        video = new cv::VideoWriter(file_name,CV_FOURCC('M','P','4','V'),30, cv::Size(width,height));	
+        video = new cv::VideoWriter(file_name,cv::VideoWriter::fourcc('M','P','4','V'),30, cv::Size(width,height));	
   }
 
   video->write(frame); 

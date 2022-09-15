@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ int Parser::load_from_stream(stringstream& ss) {
 	int ret;
 	graph = new Graph();
 	string gname;
-        read_str(ss, "tmf");
+        read_str(ss, "df");
         ss >> gname;
 	graph->set_name(gname);
 	ret = read_graph(ss, graph);
@@ -67,7 +67,7 @@ std::string Parser::df_all() {
 }
 
 std::string Parser::df_byip(const std::string& ip) {
-	return "tmf " + graph->get_name() + " {\n" + topology + dfactor_byip(ip) + parameter + "\n}";
+	return "df " + graph->get_name() + " {\n" + topology + dfactor_byip(ip) + parameter + "\n}";
 }
 
 int Parser::read_str(stringstream & stream, string str) {

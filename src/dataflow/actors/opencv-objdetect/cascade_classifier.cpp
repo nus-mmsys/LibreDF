@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ void CascadeClassifier::run() {
   df::Mat * ingray = consume(inputGray);	
   df::Mat * inimg = consume(inputImage);	
   frame = inimg->clone(); 
-  classifier.detectMultiScale(*ingray->get(), objects, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30, 30));
+  classifier.detectMultiScale(*ingray->get(), objects, 1.1, 2, 0|cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30));
     for (cv::Rect r : objects) {
     log("detecting rect in "+to_string(stepno)+" ("+to_string(r.x)+", "+to_string(r.y)+", "+to_string(r.width)+", "+to_string(r.height)+")");
     cv::rectangle(frame, r, cv::Scalar(0, 255, 0));

@@ -1,4 +1,4 @@
-tmf cannyshow {
+df cannyshow {
     topology {
         nodes = A,B;
 	edges = e1(A,B);

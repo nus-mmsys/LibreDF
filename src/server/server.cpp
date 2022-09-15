@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 #include "server.h"
 
 Server::Server(Parser * p) {
-	sock = new df::ServerSocket("tmf-server");	
+	sock = new df::ServerSocket("df-server");	
 	parser = p;
 }
 
@@ -29,7 +29,7 @@ int Server::init() {
 	char buf[bufsize];
 
 	sock->listen(SERVER_PORT);
-	std::cout << "waiting tmf-deploy...\n";
+	std::cout << "waiting df-deploy...\n";
 	sock->accept();
 	sock->recv(buf, bufsize);
 	std::cout << buf << std::endl;

@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,11 +32,11 @@ void CvtColor::init() {
   if (!propEmpty("cvt")) {
 	string cvtstr = getProp("cvt");
 	if (cvtstr == "bgr2gray")
-		cvt = CV_BGR2GRAY;
+		cvt = cv::COLOR_BGR2GRAY;
 	if (cvtstr == "gray2bgr")
-		cvt = CV_GRAY2BGR;
+		cvt = cv::COLOR_GRAY2BGR;
   } else {
-	  cvt = CV_BGR2GRAY;
+	  cvt = cv::COLOR_BGR2GRAY;
   }
 }
 

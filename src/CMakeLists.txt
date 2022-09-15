@@ -1,4 +1,4 @@
-project(tmf)
+project(df)
 
 include_directories(.)
 

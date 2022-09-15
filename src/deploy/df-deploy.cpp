@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "analyse/analyse.h"
+#include "deploy.h"
 
 int main(int argc, char * argv[]) {
 
     Parser * parser = new Parser();
-    Analyse * analyse = new Analyse(argc, argv, parser);
+    Deploy * deploy = new Deploy(argc, argv, parser);
 
-    analyse->loop();
+    deploy->run();
 
     return 0;
 }

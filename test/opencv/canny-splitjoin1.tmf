@@ -1,4 +1,4 @@
-tmf canny-splitjoin1 {
+df canny-splitjoin1 {
     topology {
         nodes = A,S,B,C,J,D;
 	edges = e0(A,S),e1(S,B), e2(B,C), e3(C,J), e4(J,D);

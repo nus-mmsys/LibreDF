@@ -1,4 +1,4 @@
-tmf imshow {
+df imshow {
     topology {
         nodes = A,B;
 	edges = e1(A,B);

@@ -1,6 +1,6 @@
 /*
- *   TMF
- *   Copyright (C) TMF Team
+ *   LibreDF
+ *   Copyright (C) A. Shafiei
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 GraphComputation::GraphComputation(int argc, char * argv[], Parser * p) {
 
 	if (argc != 2) {
-		cout << "usage: " << argv[0] << " <file.tmf>\n";
+		cout << "usage: " << argv[0] << " <file.df>\n";
 		exit(0);
 	}
 

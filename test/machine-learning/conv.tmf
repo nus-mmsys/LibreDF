@@ -1,4 +1,4 @@
-tmf conv {
+df conv {
     topology {
         nodes = A,B,C;
 	edges = e1(A,B), e2(B,C);

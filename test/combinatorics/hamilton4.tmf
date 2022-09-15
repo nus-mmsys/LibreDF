@@ -1,4 +1,4 @@
-tmf hamilton4 {
+df hamilton4 {
     topology {
         nodes = A,B,C,D;
         edges = e1(A,B), e2(B,C), e3(C,D), e4(D,B), e5(C,A);
